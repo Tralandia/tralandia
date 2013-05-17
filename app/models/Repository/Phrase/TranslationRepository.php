@@ -29,7 +29,7 @@ class TranslationRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.translationStatus', ':status'))
+			->where($qb->expr()->eq('e.status', ':status'))
 			->setParameter('status', Translation::WAITING_FOR_TRANSLATION);
 
 		if($languages) {
@@ -58,7 +58,7 @@ class TranslationRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.checked', ':checked'))->setParameter('checked', FALSE)
+			->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING)
 			->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 
 		$paginator = new Paginator($qb);
@@ -100,8 +100,7 @@ class TranslationRepository extends \Repository\BaseRepository {
 
 		$qb->select('e')->from($this->_entityName, 'e')
 			->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
-			->andWhere($qb->expr()->eq('e.paid', ':paid'))->setParameter('paid', FALSE)
-			->andWhere($qb->expr()->eq('e.checked', ':checked'))->setParameter('checked', TRUE);
+			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_PAYMENT);
 
 		$qb = $this->filterTranslatedTypes($qb);
 

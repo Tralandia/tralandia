@@ -9,10 +9,10 @@ use Doctrine\ORM\EntityManager;
 
 class FindOutdatedTranslations {
 
-    /**
-     * @var EntityManager
-     */
-    protected $_em;
+	/**
+	 * @var EntityManager
+	 */
+	protected $_em;
 
 	public function __construct(EntityManager $entityManager)
 	{
@@ -22,8 +22,8 @@ class FindOutdatedTranslations {
 	public function getWaitingForCentral(\Entity\Language $language = NULL, $limit = NULL, $offset = NULL)
 	{
 		$query = $this->getTranslationsQuery($language, $limit, $offset);
-		$query->andWhere('e.translationStatus = :status');
-		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_CENTRAL);
+		$query->andWhere('e.status = :status');
+		$query->setParameter('status', Translation::WAITING_FOR_CENTRAL);
 
 		return $query->getQuery()->getResult();
 	}
@@ -31,8 +31,8 @@ class FindOutdatedTranslations {
 	public function getWaitingForCentralCount(\Entity\Language $language = NULL)
 	{
 		$query = $this->getTranslationsQuery($language);
-		$query->andWhere('e.translationStatus = :status');
-		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_CENTRAL);
+		$query->andWhere('e.status = :status');
+		$query->setParameter('status', Translation::WAITING_FOR_CENTRAL);
 
 		$p = new Paginator($query);
 		return $p->count();
@@ -42,8 +42,8 @@ class FindOutdatedTranslations {
 	public function getWaitingForTranslation(\Entity\Language $language = NULL, $limit = NULL, $offset = NULL)
 	{
 		$query = $this->getTranslationsQuery($language, $limit, $offset);
-		$query->andWhere('e.translationStatus = :status');
-		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_TRANSLATION);
+		$query->andWhere('e.status = :status');
+		$query->setParameter('status', Translation::WAITING_FOR_TRANSLATION);
 
 		return $query->getQuery()->getResult();
 	}
@@ -51,8 +51,8 @@ class FindOutdatedTranslations {
 	public function getWaitingForTranslationCount(\Entity\Language $language = NULL)
 	{
 		$query = $this->getTranslationsQuery($language);
-		$query->andWhere('e.translationStatus = :status');
-		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_TRANSLATION);
+		$query->andWhere('e.status = :status');
+		$query->setParameter('status', Translation::WAITING_FOR_TRANSLATION);
 
 		$p = new Paginator($query);
 		return $p->count();

@@ -12,8 +12,7 @@ use Nette\Utils\Arrays;
  * 				indexes={
  * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}),
  * 					@ORM\index(name="translation", columns={"translation"}),
- * 					@ORM\index(name="translationStatus", columns={"translationStatus"}),
- * 					@ORM\index(name="checked", columns={"checked"})
+ * 					@ORM\index(name="status", columns={"status"})
  * 				}
  * 			)
  * @EA\Primary(key="id", value="")
@@ -25,10 +24,12 @@ class Translation extends \Entity\BaseEntity {
 	const AFTER = 'After';
 	const BEFORE = 'Before';
 
-	/* Translation status constants */
-	const UP_TO_DATE = 'upToDate';
-	const WAITING_FOR_TRANSLATION = 'waitingForTranslation';
-	const WAITING_FOR_CENTRAL = 'waitingForCentral';
+	/* Status constants */
+	const WAITING_FOR_CENTRAL = 0;
+	const WAITING_FOR_TRANSLATION = 1;
+	const WAITING_FOR_CHECKING = 2;
+	const WAITING_FOR_PAYMENT = 4;
+	const UP_TO_DATE = 8;
 
 	/**
 	 * @var Collection
@@ -73,22 +74,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $timeTranslated;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $translationStatus;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $paid = TRUE;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $checked;
+	protected $status = self::WAITING_FOR_CENTRAL;
 
 	public function __toString() {
 		if($this->phrase->getType()->isSimple()) {
@@ -190,7 +179,7 @@ class Translation extends \Entity\BaseEntity {
 		return $this;
 	}
 
-	protected function wrongVariationsScheme($expect, $recieved) {
+	protected function wrongVariationsScheme($expect, $received) {
 		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
 	}
 
@@ -215,12 +204,12 @@ class Translation extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Phrase\Translation
@@ -231,7 +220,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -241,7 +230,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -249,7 +238,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->phrase;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Phrase\Translation
@@ -260,7 +249,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -270,7 +259,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -278,7 +267,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -288,7 +277,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -296,7 +285,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->variations;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Translation
@@ -307,7 +296,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -317,7 +306,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -325,7 +314,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->gender;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Translation
@@ -336,7 +325,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -344,7 +333,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->position;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Phrase\Translation
@@ -355,7 +344,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -365,7 +354,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -373,81 +362,23 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->timeTranslated;
 	}
-		
+
 	/**
-	 * @param string
+	 * @param integer
 	 * @return \Entity\Phrase\Translation
 	 */
-	public function setTranslationStatus($translationStatus)
+	public function setStatus($status)
 	{
-		$this->translationStatus = $translationStatus;
+		$this->status = $status;
 
 		return $this;
 	}
-		
-	/**
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function unsetTranslationStatus()
-	{
-		$this->translationStatus = NULL;
 
-		return $this;
-	}
-		
 	/**
-	 * @return string|NULL
+	 * @return integer|NULL
 	 */
-	public function getTranslationStatus()
+	public function getStatus()
 	{
-		return $this->translationStatus;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setPaid($paid)
-	{
-		$this->paid = $paid;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getPaid()
-	{
-		return $this->paid;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setChecked($checked)
-	{
-		$this->checked = $checked;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function unsetChecked()
-	{
-		$this->checked = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getChecked()
-	{
-		return $this->checked;
+		return $this->status;
 	}
 }
