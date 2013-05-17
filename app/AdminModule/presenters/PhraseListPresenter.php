@@ -4,6 +4,7 @@ namespace AdminModule;
 
 
 use Entity\Currency;
+use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Nette\Application\BadRequestException;
 
@@ -205,8 +206,7 @@ class PhraseListPresenter extends BasePresenter {
 			if($this->user->isInRole(Role::TRANSLATOR)) {
 				/** @var $translation \Entity\Phrase\Translation */
 				foreach($phraseValues['changedTranslations'] as $translation) {
-					$translation->setChecked(FALSE);
-					$translation->setPaid(FALSE);
+					$translation->setStatus(Translation::WAITING_FOR_CHECKING);
 				}
 			}
 		}

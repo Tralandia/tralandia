@@ -24,10 +24,10 @@ class UpdateTranslationStatus {
 		} else {
 			foreach($phrase->getTranslations() as $translation) {
 				if($translation == $sourceTranslation || $translation == $centralTranslation) {
-					$translation->setTranslationStatus(Translation::UP_TO_DATE);
+					$translation->setStatus(Translation::UP_TO_DATE);
 				}
 				if($centralTranslation->getTimeTranslated() > $translation->getTimeTranslated()) {
-					$translation->setTranslationStatus(Translation::WAITING_FOR_TRANSLATION);
+					$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
 				}
 			}
 			return $phrase;
@@ -45,12 +45,12 @@ class UpdateTranslationStatus {
 		$sourceTranslation = $phrase->getSourceTranslation();
 		$centralTranslation = $phrase->getCentralTranslation();
 
-		$sourceTranslation->setTranslationStatus(Translation::UP_TO_DATE);
-		$centralTranslation->setTranslationStatus(Translation::WAITING_FOR_TRANSLATION);
+		$sourceTranslation->setStatus(Translation::UP_TO_DATE);
+		$centralTranslation->setStatus(Translation::WAITING_FOR_TRANSLATION);
 
 		foreach($phrase->getTranslations() as $translation) {
 			if($translation == $sourceTranslation || $translation == $centralTranslation) continue;
-			$translation->setTranslationStatus(Translation::WAITING_FOR_CENTRAL);
+			$translation->setStatus(Translation::WAITING_FOR_CENTRAL);
 		}
 
 		return $phrase;

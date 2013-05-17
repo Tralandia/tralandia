@@ -12,8 +12,7 @@ use Nette\Utils\Arrays;
  * 				indexes={
  * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}),
  * 					@ORM\index(name="translation", columns={"translation"}),
- * 					@ORM\index(name="translationStatus", columns={"translationStatus"}),
- * 					@ORM\index(name="checked", columns={"checked"})
+ * 					@ORM\index(name="status", columns={"status"})
  * 				}
  * 			)
  * @EA\Primary(key="id", value="")
@@ -25,10 +24,12 @@ class Translation extends \Entity\BaseEntity {
 	const AFTER = 'After';
 	const BEFORE = 'Before';
 
-	/* Translation status constants */
-	const UP_TO_DATE = 'upToDate';
-	const WAITING_FOR_TRANSLATION = 'waitingForTranslation';
-	const WAITING_FOR_CENTRAL = 'waitingForCentral';
+	/* Status constants */
+	const WAITING_FOR_TRANSLATION = 0;
+	const WAITING_FOR_CENTRAL = 1;
+	const WAITING_FOR_CHECKING = 2;
+	const WAITING_FOR_PAYMENT = 4;
+	const UP_TO_DATE = 8;
 
 	/**
 	 * @var Collection
@@ -73,22 +74,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $timeTranslated;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $translationStatus;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $paid = TRUE;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $checked;
+	protected $status = self::WAITING_FOR_TRANSLATION;
 
 	public function __toString() {
 		if($this->phrase->getType()->isSimple()) {
@@ -190,7 +179,7 @@ class Translation extends \Entity\BaseEntity {
 		return $this;
 	}
 
-	protected function wrongVariationsScheme($expect, $recieved) {
+	protected function wrongVariationsScheme($expect, $received) {
 		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
 	}
 
@@ -375,79 +364,21 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
+	 * @param integer
 	 * @return \Entity\Phrase\Translation
 	 */
-	public function setTranslationStatus($translationStatus)
+	public function setStatus($status)
 	{
-		$this->translationStatus = $translationStatus;
+		$this->status = $status;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Phrase\Translation
+	 * @return integer|NULL
 	 */
-	public function unsetTranslationStatus()
+	public function getStatus()
 	{
-		$this->translationStatus = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTranslationStatus()
-	{
-		return $this->translationStatus;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setPaid($paid)
-	{
-		$this->paid = $paid;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getPaid()
-	{
-		return $this->paid;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setChecked($checked)
-	{
-		$this->checked = $checked;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function unsetChecked()
-	{
-		$this->checked = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getChecked()
-	{
-		return $this->checked;
+		return $this->status;
 	}
 }
