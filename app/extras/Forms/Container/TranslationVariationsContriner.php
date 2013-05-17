@@ -21,6 +21,10 @@ class TranslationVariationContainer extends BaseContainer
 		$this->build($disabled);
 	}
 
+
+	/**
+	 * @param $disabled
+	 */
 	protected function build($disabled)
 	{
 		$translation = $this->translation;
@@ -34,7 +38,7 @@ class TranslationVariationContainer extends BaseContainer
 				foreach ($genderValue as $caseKey => $caseValue) {
 					if($isHtml) {
 						$field = $gender->addTextArea($caseKey, $caseValue);
-						$field->getControlPrototype()->class('texyla');
+						if(!$disabled) $field->getControlPrototype()->class('texyla');
 					} else {
 						$field = $gender->addText($caseKey, $caseValue);
 					}

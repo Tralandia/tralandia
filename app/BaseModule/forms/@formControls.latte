@@ -516,6 +516,7 @@
 	$language = $container->getLanguage();
 }
 {?unset($control)}
+{capture $previewPath}{plink texylaPreview}{/capture}
 <table class="phraseTable table-striped table">
 	<tr>
 
@@ -536,7 +537,7 @@
 		{foreach $plural->getComponents() as $genders}
 		<td>
 			{foreach $genders->getComponents() as $gender}
-			{$gender->getControl()}
+			{$gender->getControl()->addData('preview-path', $previewPath)}
 			{/foreach}
 		</td>
 		{/foreach}
