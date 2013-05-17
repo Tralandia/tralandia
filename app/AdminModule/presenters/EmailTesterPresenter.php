@@ -17,7 +17,7 @@ class EmailTesterPresenter extends BasePresenter {
 	 * @var array
 	 */
 	protected $sendTestTo = [
-		'demo.gregor@gmail.com',
+		'demo.gregor@gmail.com', 'lubiscukriky@yahoo.com','kaligulanebezpecny@hotmail.com'
 	];
 
 	protected $bodyTemplateFile = '/emails/template1.html';

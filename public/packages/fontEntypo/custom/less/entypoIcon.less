@@ -45,7 +45,7 @@
   text-decoration: inherit;
 }
 
-.btn span {
+.btn span:not(.caret) {
     position: relative;
     top: -3px;
     display: block;
@@ -58,7 +58,7 @@
     }
 }
 
-.btn i {
+.btn i[class*="entypo-"] {
   float: left;
   height: 10px;
   left: -5px;
@@ -66,11 +66,11 @@
   text-shadow:none;
 }
 
-.btn.btn-large i {
+.btn.btn-large i[class*="entypo-"] {
   top: -12px;
 }
 
-.btn-mini i {
+.btn-mini i[class*="entypo-"] {
   left: -2px;
   &:before {
     font-size:28px;
