@@ -12,6 +12,12 @@
 		-moz-border-radius:0;
 		border-radius:0;
 
+		.dropdown-menu {
+			right: -8px;
+			left: -130px;
+		}
+
+
 		tr {
 			td {
 				&.col-actions {
@@ -30,6 +36,7 @@
 			font-size: 13px;
 			border-color: #e4e8cf;
 
+			text-align: center;
 			&.col-actions {
 				width: 78px;
 			}
@@ -41,6 +48,10 @@
 			line-height: 32px;
 			border-color: #E4E8CF;
 			background: #f7f8ef;
+
+			&.col-actions {
+				width: 250px;
+			}
 
 		}
 
@@ -66,6 +77,10 @@
 			line-height: 13px;
 			font-weight: normal;
 
+			margin-right: 2px;
+
+			color: #fff;
+
 			&.btn-primary {
 				.basic-gradient(#04C,#08C);
 				border: none;
@@ -83,6 +98,16 @@
 				&:hover {
 					background: #BD362F;
 				}
+			}
+
+			i {
+				line-height: 12px;
+			}
+
+			&.mail {
+				width: 80px;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 
