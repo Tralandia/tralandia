@@ -3,8 +3,8 @@
 namespace AdminModule;
 
 use Nette\Application\BadRequestException;
+use Nette\Application\Responses\TextResponse;
 use Nette\Environment;
-use Nette\Security\User;
 use Security\SimpleAcl;
 
 abstract class BasePresenter extends \SecuredPresenter {
@@ -84,9 +84,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->login($fakeIdentity);
 	}
 
-	/**
-	 * @acl(forPresenter=BasePresenter)
-	 */
+
 	public function actionDecodeNeon() {
 		$input = $this->getHttpRequest()->getPost('input', '');
 		try {
@@ -100,27 +98,18 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->sendPayload();
 	}
 
-	/**
-	 * @acl(forPresenter=BasePresenter)
-	 */
-	public function actionLiveWysi() {
 
-		$content = $this->getHttpRequest()->getPost('content', '');
+	public function actionTexylaPreview() {
 
-		$type = \Service\Emailing\TemplateType::get(1);
-
-		foreach ($this->availableVariables as $variable => $variableData) {
-			$content = str_replace('[' . $variable . ']', $variableData['example'], $content);
-		}
-
-		$this->payload->content = $content;
-		$this->sendPayload();
+		$content = $this->getHttpRequest()->getPost('texy', '');
+		/** @var $texy \TranslationTexy */
+		$texy = $this->getContext()->getService('translationTexy');
+		$html = $texy->process($content);
+		$this->sendResponse(new TextResponse($html));
 
 	}
 
-	/**
-	 * @acl(forPresenter=BasePresenter)
-	 */
+
 	public function actionSuggestion($serviceList, $property, $search, $language) {
 
 		$language = \Service\Dictionary\Language::get($language);

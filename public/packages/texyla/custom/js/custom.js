@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$.texyla.setDefaults({
 		texyCfg: "admin",
 		baseDir: '/packages/texyla/lib/texyla',
-		previewPath: "preview.php",
+		previewPath: "http://www.com.tra.com/admin/phrase-list/texyla-preview",
 		filesPath: null,
 		filesThumbPath: null,
 		filesUploadPath: null
@@ -16,8 +16,6 @@ $(document).ready(function(){
 					'h1', 'h2', 'h3', 'h4',
 					null,
 					'bold', 'italic',
-					null,
-					'center', 'left', 'right', 'justify',
 					null,
 					'ul', 'ol',
 			
