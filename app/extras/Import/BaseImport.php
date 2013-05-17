@@ -418,7 +418,7 @@ class BaseImport {
 	 * @return \Entity\Phrase\Type
 	 */
 	protected function createPhraseType($entityName, $entityAttribute, $level = NULL, $params = NULL) {
-		if (substr($entityName, 0, 7) != '\Entity' && $entityName != 'Html') {
+		if (strpos($entityName, 'Latte') === FALSE) {
 			$entityName = '\Entity'.$entityName;
 		}
 

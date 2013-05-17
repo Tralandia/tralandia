@@ -21,8 +21,9 @@ class ImportHtmlPhrases extends BaseImport {
 	}
 	public function importPhrases() {
 
-		$dictionaryType = $this->createPhraseType('Html', 'Html', 'MARKETING');
-		$dictionaryTypeMulti = $this->createPhraseType('HtmlMulti', 'HtmlMulti', 'MARKETING');
+		$dictionaryType = $this->createPhraseType('Latte', 'Latte', 'MARKETING');
+		$dictionaryTypeMulti = $this->createPhraseType('LatteMulti', 'LatteMulti', 'MARKETING');
+		$dictionaryTypeHtml = $this->createPhraseType('LatteHtml', 'LatteHtml', 'MARKETING');
 
 		$r = q('select * from dictionary where text_type = 2');
 
@@ -30,6 +31,8 @@ class ImportHtmlPhrases extends BaseImport {
 		while ($x = mysql_fetch_array($r)) {
 			if (in_array($x['id'], $this->multiIds)) {
 				$newPhrase = $this->createNewPhrase($dictionaryTypeMulti, $x['id']);
+			} else if ($x['is_html'] == 1)) {
+				$newPhrase = $this->createNewPhrase($dictionaryTypeHtml, $x['id']);
 			} else {
 				$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);
 			}
@@ -68,6 +71,7 @@ class ImportHtmlPhrases extends BaseImport {
 				$thisPhrase->type = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
 			}
 			$thisPhrase->oldId = $x['id'];
+			$thisPhrase->checked = FALSE;
 
 			$thisPhrase->setTranslationText($en, $x['en0']);
 			$thisPhrase->setTranslationText($sk, $x['sk0']);
