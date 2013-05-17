@@ -68,6 +68,7 @@ class ImportHtmlPhrases extends BaseImport {
 				$thisPhrase->type = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
 			}
 			$thisPhrase->oldId = $x['id'];
+			$thisPhrase->checked = FALSE;
 
 			$thisPhrase->setTranslationText($en, $x['en0']);
 			$thisPhrase->setTranslationText($sk, $x['sk0']);
