@@ -25,20 +25,31 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('Html', 'Html')
+		$this->createPhraseType('Latte', 'Latte')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			->setHtml(TRUE)
+			->setHtml(FALSE)
 			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('HtmlMulti', 'HtmlMulti')
+		$this->createPhraseType('LatteMulti', 'LatteMulti')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(1)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
+			->setCheckingRequired(NULL);
+
+		$this->createPhraseType('LatteHtml', 'LatteHtml')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
