@@ -742,6 +742,12 @@ table.formTable {
 
 
 /* phrase form */
+.phraseEditForm {
+	hr {
+		margin: 0;
+	}	
+}
+
 .phraseForm {
 	margin-top: 10px;
 
@@ -751,31 +757,49 @@ table.formTable {
 		}
 	}
 
+
+
 	small {
 		font-size: 12px;
 		color: #888;
+		padding-left: 10px;
 	}
 
-	.phraseFormHeader {
+	table.phraseTable {
+		margin-bottom: 0;
 
-		.span3 {
-			width: 190px;
-			select {
+		td {
+			padding: 10px 0 0 10px;
+		}
+	}
+
+	.phraseFormHeaderCover {
+		height: 65px;
+
+		.phraseFormHeader {
+
+			.span3 {
 				width: 190px;
+				select {
+					width: 190px;
+				}
+			}
+			.span2 {
+				width: 110px;
+				select {
+					width: 100px;
+				}
+			}
+			.checkbox {
+				width: 80px;
+				float: left;
+				padding-top: 28px;
 			}
 		}
-		.span2 {
-			width: 110px;
-			select {
-				width: 100px;
-			}
-		}
-		.checkbox {
-			width: 80px;
-			float: left;
-			padding-top: 28px;
-		}
+
 	}
+
+
 
 	.phraseFormSubHeader {
 		clear: both;
