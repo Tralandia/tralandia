@@ -107,13 +107,13 @@ class PhraseContainer extends BaseContainer
 
 		$to = $this->addContainer('to');
 
-		$toLanguages = $this->getSettings('translatorLanguages');
-		if($toLanguages instanceof Language) {
-			$toLanguages = [$toLanguages];
+		$editableLanguages = $this->getSettings('editableLanguages');
+		if($editableLanguages instanceof Language) {
+			$editableLanguages = [$editableLanguages];
 		}
-		if(is_array($toLanguages)) {
+		if(is_array($editableLanguages)) {
 			$translations = [];
-			foreach($toLanguages as $language) {
+			foreach($editableLanguages as $language) {
 				$translations[] = $phrase->getTranslation($language);
 			}
  		} else {
@@ -208,10 +208,18 @@ class PhraseContainer extends BaseContainer
 			$language = $languageRepository->find($values['sourceLanguage']);
 			$phrase->setSourceLanguage($language);
 		}
+
+		$values['changedTranslations'] = [];
 		foreach($values['to'] as $languageIso => $variations) {
 			$language = $languageRepository->findOneByIso($languageIso);
 			$variations = $variations['variations'];
 			$translation = $phrase->getTranslation($language);
+
+			$oldVariations = $translation->getVariations();
+
+			if($oldVariations != $variations) {
+				$values['changedTranslations'][] = $translation;
+			}
 
 			$translation->setVariations($variations);
 		}
