@@ -15,6 +15,7 @@ parameters:
 				css:
 					- texyla/lib/texyla/css/style.css
 					- texyla/lib/themes/default/theme.css
+					- texyla/custom/less/custom.less
 				js:
 					# Texyla core
 					- texyla/lib/texyla/js/texyla.js
@@ -244,6 +245,7 @@ parameters:
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryUi%
+				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.adminFront%

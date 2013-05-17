@@ -1,4 +1,5 @@
 
+
 $(function() {
 	$('#frm-userEditForm a[rel=changePassword]').click(function() {
 		$this = $(this);
