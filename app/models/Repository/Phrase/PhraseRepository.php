@@ -4,6 +4,7 @@ namespace Repository\Phrase;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
+use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 
 /**
@@ -70,7 +71,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->andWhere($qb->expr()->eq('e.ready', ':ready'))->setParameter('ready', FALSE);
+			->andWhere($qb->expr()->lt('e.status', ':status'))->setParameter('status', Phrase::READY);
 
 		return $qb;
 	}
