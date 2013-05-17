@@ -44,8 +44,8 @@ class InForm extends \BaseModule\Forms\BaseForm {
 			/** @var $presenter \BasePresenter */
 			$presenter = $this->getPresenter();
 
-			$presenter->redirectToCorrectDomain($values->login, $values->password);
-			$presenter->login($values->login, $values->password);
+			$identity = $presenter->redirectToCorrectDomain($values->login, $values->password);
+			$presenter->login($identity);
 
 			$presenter->actionAfterLogin();
 

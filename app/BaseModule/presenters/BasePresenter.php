@@ -481,6 +481,8 @@ abstract class BasePresenter extends Presenter {
 			];
 			$this->redirect(':Front:Sign:afterLogin', $parameters);
 		}
+
+		return $identity;
 	}
 
 
@@ -494,11 +496,15 @@ abstract class BasePresenter extends Presenter {
 	}
 
 
-	public function login($id = NULL, $password = NULL)
+	public function login(\Security\Identity $identity)
 	{
+		if($identity->isInRole(\Entity\User\Role::OWNER)) {
+			$this->flashMessage('o100194', self::FLASH_SUCCESS);
+			$this->redirect(':Front:Sign:in');
+		}
 		$user = $this->getUser();
 		$user->setExpiration('+ 30 days', FALSE);
-		$user->login($id, $password);
+		$user->login($identity);
 	}
 
 }
