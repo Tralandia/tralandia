@@ -5,19 +5,26 @@ namespace Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use Entity\Language;
 use	Extras\Annotation as EA;
+use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\PhraseRepository")
- * @ORM\Table(name="phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
+ * @ORM\Table(name="phrase", indexes={@ORM\index(name="status", columns={"status"})})
  * @EA\Primary(key="id", value="translations")
+ * @EA\Generator(skip="{setStatus}")
  */
 class Phrase extends \Entity\BaseEntityDetails {
 
 	const REQUESTED = 1;
 	const CENTRAL = 5;
 	const SOURCE = 10;
+
+	/* Status constants */
+	const DRAFT = 0;
+	const WAITING_FOR_CENTRAL = 1;
+	const READY = 2;
 
 	/**
 	 * @var Collection
@@ -26,16 +33,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 	protected $translations;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $ready = FALSE;
+	protected $status = self::DRAFT;
 
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $corrected = FALSE;
 
 	/**
 	 * @var Collection
@@ -108,6 +110,38 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $matrix;
 	}
+
+
+	/**
+	 * @param $status
+	 *
+	 * @throws \Nette\InvalidArgumentException
+	 * @return \Entity\Phrase\Phrase
+	 */
+	public function setStatus($status)
+	{
+		if($status != $this->status) {
+			if($status == self::DRAFT) {
+				//$this->updateTranslationsStatus(Translation::DRAFT)
+			} else if ($status == self::WAITING_FOR_CENTRAL) {
+
+			} else if ($status == self::READY) {
+
+			} else {
+				throw new InvalidArgumentException('Zly status');
+			}
+			$this->status = $status;
+		}
+
+		return $this;
+	}
+
+
+	protected function updateTranslationsStatus($status)
+	{
+
+	}
+
 
 	/**
 	 * Vrati translation-y v ziadanom, centralom a source jazyku, ak existuju
@@ -268,14 +302,14 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Translation
 	 * @return \Entity\Phrase\Phrase
@@ -289,7 +323,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Translation
 	 * @return \Entity\Phrase\Phrase
@@ -301,7 +335,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Phrase\Translation[]
 	 */
@@ -309,45 +343,15 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->translations;
 	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Phrase
-	 */
-	public function setReady($ready)
-	{
-		$this->ready = $ready;
 
-		return $this;
-	}
-		
 	/**
-	 * @return boolean|NULL
+	 * @return integer|NULL
 	 */
-	public function getReady()
+	public function getStatus()
 	{
-		return $this->ready;
+		return $this->status;
 	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Phrase\Phrase
-	 */
-	public function setCorrected($corrected)
-	{
-		$this->corrected = $corrected;
 
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getCorrected()
-	{
-		return $this->corrected;
-	}
-		
 	/**
 	 * @param \Entity\Phrase\Type
 	 * @return \Entity\Phrase\Phrase
@@ -358,7 +362,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase
 	 */
@@ -368,7 +372,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type|NULL
 	 */
@@ -376,7 +380,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Phrase\Phrase
@@ -387,7 +391,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase
 	 */
@@ -397,7 +401,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */

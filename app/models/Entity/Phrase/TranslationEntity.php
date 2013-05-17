@@ -25,11 +25,12 @@ class Translation extends \Entity\BaseEntity {
 	const BEFORE = 'Before';
 
 	/* Status constants */
-	const WAITING_FOR_CENTRAL = 0;
-	const WAITING_FOR_TRANSLATION = 1;
-	const WAITING_FOR_CHECKING = 2;
-	const WAITING_FOR_PAYMENT = 4;
-	const UP_TO_DATE = 8;
+	const DRAFT = 0;
+	const WAITING_FOR_CENTRAL = 1;
+	const WAITING_FOR_TRANSLATION = 2;
+	const WAITING_FOR_CHECKING = 4;
+	const WAITING_FOR_PAYMENT = 8;
+	const UP_TO_DATE = 16;
 
 	/**
 	 * @var Collection
@@ -77,7 +78,7 @@ class Translation extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status = self::WAITING_FOR_CENTRAL;
+	protected $status = self::DRAFT;
 
 	public function __toString() {
 		if($this->phrase->getType()->isSimple()) {

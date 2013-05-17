@@ -156,8 +156,7 @@ class PhraseListPresenter extends BasePresenter {
 				function($key, $value) {return $value->getId();}
 			);
 			$phraseContainerSettings['disableSourceLanguageInput'] = TRUE;
-			$phraseContainerSettings['disableReadyInput'] = TRUE;
-			$phraseContainerSettings['disableCorrectedInput'] = TRUE;
+			$phraseContainerSettings['disableStatusSelect'] = TRUE;
 			$showOptions = FALSE;
 		} else {
 			$translator = $this->context->translator;

@@ -83,16 +83,15 @@ class PhraseContainer extends BaseContainer
 			$sourceLanguage->setDisabled($disableSourceLanguage);
 		}
 
-		$readyControl = $this->addCheckbox('ready', 'Ready');
-		$disableReadyInput = $this->getSettings('disableReadyInput');
-		if($disableReadyInput !== NULL) {
-			$readyControl->setDisabled($disableReadyInput);
-		}
-
-		$correctedControl = $this->addCheckbox('corrected', 'Corrected');
-		$disableCorrectedInput = $this->getSettings('disableCorrectedInput');
-		if($disableCorrectedInput !== NULL) {
-			$correctedControl->setDisabled($disableCorrectedInput);
+		$statusOptions = [
+			Phrase::DRAFT => 'Draft',
+			Phrase::WAITING_FOR_CENTRAL => 'Waiting for central',
+			Phrase::READY => 'Ready',
+		];
+		$statusControl = $this->addSelect('status', 'Status', $statusOptions);
+		$disableStatusSelect = $this->getSettings('disableStatusSelect');
+		if($disableStatusSelect !== NULL) {
+			$statusControl->setDisabled($disableStatusSelect);
 		}
 
 		$fromTranslation = $phrase->getTranslation($this->fromLanguage);
@@ -160,8 +159,7 @@ class PhraseContainer extends BaseContainer
 		$this->setDefaults(array(
 			//'phraseType' => $phrase->getType()->getId(),
 			'sourceLanguage' => $phrase->getSourceLanguage()->getId(),
-			'ready' => $phrase->getReady(),
-			'corrected' => $phrase->getCorrected(),
+			'status' => $phrase->getStatus(),
 			'fromTranslations' => $phrase->getTranslation($this->fromLanguage)->getVariations(),
 		));
 	}
@@ -202,8 +200,7 @@ class PhraseContainer extends BaseContainer
 		$phrase = $this->phrase;
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 
-		if(array_key_exists('ready', $values)) $phrase->setReady($values['ready']);
-		if(array_key_exists('corrected', $values)) $phrase->setCorrected($values['corrected']);
+		if(array_key_exists('status', $values)) $phrase->setStatus($values['status']);
 		if(array_key_exists('sourceLanguage', $values)) {
 			$language = $languageRepository->find($values['sourceLanguage']);
 			$phrase->setSourceLanguage($language);
