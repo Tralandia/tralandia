@@ -122,7 +122,7 @@ class PhraseListPresenter extends BasePresenter {
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
 		$this->editableLanguages = [$language];
-		
+
 		$editForm = $this['phraseEditForm'];
 		$editForm->setDefaults([
 			'toLanguages' => $language->getId()
