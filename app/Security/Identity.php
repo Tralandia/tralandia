@@ -28,4 +28,8 @@ class Identity extends NS\Identity
 		return new self($user->getId(), array($user->getRole()->getSlug()), $user->getIdentityData());
 	}
 
+	public function isInRole($role)
+	{
+		return in_array($role, $this->getRoles(), TRUE);
+	}
 }

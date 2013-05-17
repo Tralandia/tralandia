@@ -40,10 +40,14 @@ class RegistrationPresenter extends BasePresenter
 		$form->onSuccess[] = function ($form) use ($self) {
 			$rental = $self->registrationHandler->getRental();
 			$self->onSuccessRegistration($rental);
-			$owner = $rental->getOwner();
-			$self->login($owner);
-			$this->presenter->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
-			$form->presenter->redirect(':Owner:Rental:edit', array('id' => $rental->getId()));
+
+			$self->flashMessage('o100193', RegistrationPresenter::FLASH_SUCCESS);
+			$self->redirect('Home:default');
+
+//			$owner = $rental->getOwner();
+//			$self->login($owner);
+//			$self->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
+//			$self->redirect(':Owner:Rental:edit', array('id' => $rental->getId()));
 		};
 
 
