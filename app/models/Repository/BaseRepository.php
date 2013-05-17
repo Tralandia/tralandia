@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Environment\Collator;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
@@ -68,6 +69,18 @@ class BaseRepository extends EntityRepository {
 		$this->remove($entity);
 		$this->flush();
 	}
+
+
+	/**
+	 * @param $qb
+	 *
+	 * @return int|number
+	 */
+	public function getCount($qb)
+	{
+		return (new Paginator($qb))->count();
+	}
+
 
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();

@@ -3,6 +3,7 @@ namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Entity\Language;
 
 /**
  * PhraseRepository class
@@ -57,6 +58,58 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->findTranslatedQb();
 		$paginator = new Paginator($qb);
 		return $paginator->count();
+	}
+
+
+	/**
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findNotReadyQb()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')->from($this->_entityName, 'e')
+			->andWhere($qb->expr()->eq('e.ready', ':ready'))->setParameter('ready', FALSE);
+
+		return $qb;
+	}
+
+
+	/**
+	 * @return int|number
+	 */
+	public function getNotReadyCount()
+	{
+		return $this->getCount($this->findNotReadyQb());
+	}
+
+
+	/**
+	 * @param \Entity\Language $language
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findNotCheckedQb(Language $language)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')->from($this->_entityName, 'e')
+			->leftJoin('e.translations', 't')
+			->andWhere($qb->expr()->eq('t.language', ':language'))->setParameter('language', $language)
+			->andWhere($qb->expr()->eq('t.checked', ':checked'))->setParameter('checked', FALSE);
+
+		return $qb;
+	}
+
+
+	/**
+	 * @param \Entity\Language $language
+	 *
+	 * @return int|number
+	 */
+	public function getNotCheckedCount(Language $language)
+	{
+		return $this->getCount($this->findNotCheckedQb($language));
 	}
 
 

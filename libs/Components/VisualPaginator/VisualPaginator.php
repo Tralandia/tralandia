@@ -37,7 +37,7 @@ class VisualPaginator extends Control
 	public $templateFile = null;
 
 	/**
-	 * @return Nette\Paginator
+	 * @return \Nette\Utils\Paginator
 	 */
 	public function getPaginator()
 	{

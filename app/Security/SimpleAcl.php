@@ -30,6 +30,7 @@ class SimpleAcl extends Permission
 		$assertion = new MyAssertion($user);
 
 		$roles = $this->roleRepository->findAll();
+		/** @var $role \Entity\User\Role */
 		foreach ($roles as $role) {
 			$parent = NULL;
 			if ($role->hasParent()) {
@@ -46,6 +47,8 @@ class SimpleAcl extends Permission
 		$resources[] = $signPresenter = 'Front:Sign';
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
+		$resources[] = 'Admin:Currency';
+		$resources[] = 'Admin:DictionaryManager';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 
@@ -59,12 +62,14 @@ class SimpleAcl extends Permission
 
 		$this->allow(self::ALL, [$signPresenter, $registrationPresenter], self::ALL);
 
+		$this->deny(RoleEntity::LOGGED, [$signPresenter, $registrationPresenter], self::ALL);
+		$this->allow(RoleEntity::LOGGED, $signPresenter, 'out');
+		$this->allow(RoleEntity::LOGGED, self::ALL, 'restoreOriginalIdentity');
+
 		$this->allow(RoleEntity::OWNER, $ownerModule);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
 
-		$this->deny(RoleEntity::LOGGED, [$signPresenter, $registrationPresenter], self::ALL);
-		$this->allow(RoleEntity::LOGGED, $signPresenter, 'out');
-
+		$this->allow(RoleEntity::TRANSLATOR, $adminModule);
 		$this->allow(RoleEntity::TRANSLATOR, $phrasePresenter, 'editList');
 		$this->allow(RoleEntity::TRANSLATOR, $phraseListPresenter, ['edit', 'toTranslate']);
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
