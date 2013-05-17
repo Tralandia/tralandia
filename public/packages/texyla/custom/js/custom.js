@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 	$.texyla.setDefaults({
 		texyCfg: "admin",
-		baseDir: '/packages/texyla/texyla',
+		baseDir: '/packages/texyla/lib/texyla',
 		previewPath: "preview.php",
 		filesPath: null,
 		filesThumbPath: null,
@@ -25,6 +25,7 @@ $(document).ready(function(){
 				],
 				texyCfg: "admin",
 				bottomLeftToolbar: ['edit', 'preview', 'htmlPreview'],
+				bottomRightEditToolbar: [],
 				buttonType: "button",
 				tabs: true
 			});
