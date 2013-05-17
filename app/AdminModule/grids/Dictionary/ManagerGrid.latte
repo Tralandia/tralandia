@@ -3,7 +3,7 @@
 {/define}
 
 {define #col-lastTranslation}
-	<td>{$cell}</td>
+	<td>{$cell|date}</td>
 {/define}
 
 {define #col-toTranslate}
@@ -18,13 +18,7 @@
 	<td>{$cell}</td>
 {/define}
 
-{define #col-translator}
-	<td>
-		{if $cell}
-			<a href="{plink Language:edit $row->language->getId()}" class="btn btn-small btn-primary">{$cell->getLogin()}</a>
-		{/if}
-	</td>
-{/define}
+
 
 
 {define #row-actions}
@@ -34,11 +28,12 @@
 			{var $buttonText = 'Not live'; $buttonClass = 'btn-danger'; $linkText = 'set LIVE'}
 		{/if}
 		<div class="btn-group">
-			<button class="	btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText}<span class="caret"></span></button>
+			<button class="	btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText} <span class="caret"></span></button>
 			<ul class="dropdown-menu">
 				<li><a href="#">{$linkText}</a></li>
 			</ul>
 		</div>
+		<a href="{plink Language:edit $row->language->getId()}" class="btn btn-small btn-primary mail">{$row->language->getTranslator()->getLogin()}</a>
 		<a href="#" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		<a href="#" class="ajax btn btn-small btn-warning">Mark as paid</a>
 {/define}
