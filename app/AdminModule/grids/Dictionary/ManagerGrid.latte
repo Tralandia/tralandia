@@ -7,11 +7,23 @@
 {/define}
 
 {define #col-toTranslate}
-	<td>{$cell}</td>
+	<td>
+		{if $cell}
+			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+		{else}
+			{$cell}
+		{/if}
+	</td>
 {/define}
 
 {define #col-toCheck}
-	<td>{$cell}</td>
+	<td>
+	{if $cell}
+		<a href="{plink PhraseList:notChecked $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+	{else}
+		{$cell}
+	{/if}
+	</td>
 {/define}
 
 {define #col-wordsToPay}

@@ -71,9 +71,9 @@ common:
 		dictionary:
 			label: Dictionary
 			items:
-				phrase:
-					label: Phrases
-					link: ':Admin:Phrase:list'
+				notReady:
+					label: Not Ready
+					link: ':Admin:PhraseList:notReady'
 				phraseType:
 					label: Phrase Types
 					link: ':Admin:PhraseType:list'

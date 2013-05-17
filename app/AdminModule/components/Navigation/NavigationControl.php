@@ -143,6 +143,14 @@ class NavigationControl extends BaseControl
 			}
 			$left = ArrayHash::from($left);
 			$navigation->left = $left;
+
+		}
+		if($this->user->getIdentity()->isFake()) {
+			$link = [
+				'label' => 'Switch back to ' . $this->user->identity->getOriginalIdentity()->login,
+				'link' => 'restoreOriginalIdentity',
+			];
+			$navigation->right->account->items->restoreOriginalIdentity = ArrayHash::from($link);
 		}
 	}
 
