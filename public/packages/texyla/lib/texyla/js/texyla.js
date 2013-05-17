@@ -70,6 +70,8 @@ jQuery.texyla.setDefaults = function (defaults) {
 };
 
 jQuery.texyla.initPlugin = function (pluginInit) {
+
+	
 	Texyla.prototype.initPlugins.push(pluginInit);
 };
 

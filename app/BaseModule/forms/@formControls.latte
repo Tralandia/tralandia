@@ -457,21 +457,25 @@
 
 	<div class="span5">
 
-		<div n:class="$showDetails ? phraseFormHeader : 'phraseFormHeader hide'">
-			<div class="span2">
-				{label $container['sourceLanguage'] /}
-				{input $container['sourceLanguage']}
+		<div class="phraseFormHeaderCover">
+
+			<div n:class="$showDetails ? phraseFormHeader : 'phraseFormHeader hide'">
+				<div class="span2">
+					{label $container['sourceLanguage'] /}
+					{input $container['sourceLanguage']}
+				</div>
+
+				<div class="checkbox">
+					{input $container['ready']}
+					{label $container['ready'] /}
+				</div>
+
+				<div class="checkbox">
+					{input $container['corrected']}
+					{label $container['corrected'] /}
+				</div>
 			</div>
 
-			<div class="checkbox">
-				{input $container['ready']}
-				{label $container['ready'] /}
-			</div>
-
-			<div class="checkbox">
-				{input $container['corrected']}
-				{label $container['corrected'] /}
-			</div>
 		</div>
 
 		{include #translationVatiations, control => $container['fromVariations']}
@@ -483,14 +487,16 @@
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
 			<div class="phrasecontrol hide {$language->getId()}_phrase">
-				<div class="pull-left" n:ifset="$languageContainer['gender']">
-					{label $languageContainer['gender'] /}
-					{input $languageContainer['gender'] }
-				</div>
+				<div class="phraseFormHeaderCover">
+					<div class="pull-left" n:ifset="$languageContainer['gender']">
+						{label $languageContainer['gender'] /}
+						{input $languageContainer['gender'] }
+					</div>
 
-				<div class="pull-right" n:ifset="$languageContainer['position']">
-					{label $languageContainer['position'] /}
-					{input $languageContainer['position'] }
+					<div class="pull-right" n:ifset="$languageContainer['position']">
+						{label $languageContainer['position'] /}
+						{input $languageContainer['position'] }
+					</div>
 				</div>
 
 				{include #translationVatiations, control => $languageContainer['variations']}
