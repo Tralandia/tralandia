@@ -29,6 +29,12 @@ class PhraseListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Dictionary\FulltextSearch
+	 */
+	protected $fulltextSearch;
+
+	/**
+	 * @autowire
 	 * @var \SupportedLanguages
 	 */
 	protected $supportedLanguages;
@@ -130,6 +136,29 @@ class PhraseListPresenter extends BasePresenter {
 		]);
 
 		$editForm['toLanguages']->setDisabled();
+	}
+
+
+	public function actionSearch($search, $languageId)
+	{
+		$language = $this->languageRepositoryAccessor->get()->find($languageId);
+		if(!$language) {
+			throw new BadRequestException;
+		}
+
+
+		$paginator = $this->getPaginator();
+		$paginator->setItemCount($this->fulltextSearch->getResultCount($search, $language));
+
+		$translations = $this->fulltextSearch->getResult($search, $language, $this->itemsPerPage);
+		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
+
+		$editForm = $this['phraseEditForm'];
+		$editForm->setDefaults([
+			'toLanguages' => $language->getId()
+		]);
+
+		//$editForm['toLanguages']->setDisabled();
 	}
 
 
