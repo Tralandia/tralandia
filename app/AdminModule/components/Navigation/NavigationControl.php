@@ -164,20 +164,14 @@ class NavigationControl extends BaseControl
 			->getControlPrototype()
 				->data('redirect', $rentalLink);
 
-		$userLink = $this->presenter->link(':Admin:User:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
-		$form->addText('user', '')
-			->getControlPrototype()
-				->data('redirect', $userLink);
-
-
-		$phraseLink = $this->presenter->link(':Admin:Phrase:list',['dataGrid-grid-filter' => ['search' => '__query__', 'languageId' => '__languageId__']]);
+		$phraseLink = $this->presenter->link(':Admin:PhraseList:search',['search' => '__query__', 'languageId' => '__languageId__']);
 		$form->addText('phrase', '')
 			->getControlPrototype()
 				->data('redirect', $phraseLink);
 
 		$languages = $this->languageRepository->getForAdminSearch($this->collator);
-		$form->addSelect('languages', '', $languages)
-			->setPrompt('all');
+		$form->addSelect('languages', '', $languages);
+			//->setPrompt('all'); vykomentovane, treba premysliet UI ak najdem hladany vyraz vo viacerich jazykoch...
 
 		return $form;
 	}

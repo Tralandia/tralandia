@@ -51,8 +51,8 @@ class RentalDataSource extends BaseDataSource {
 		if($search) {
 			if($phone = $this->phoneBook->getOrCreate($search)) {
 				$result = $this->em->getRepository(RENTAL_ENTITY)->findByPhone($phone);
-			} else if($email = $this->emailBook->getOrCreate($search)) {
-				$result = $this->em->getRepository(RENTAL_ENTITY)->findByEmail($email);
+			} else if(Validators::isEmail($search)) {
+				$result = $this->em->getRepository(RENTAL_ENTITY)->findByEmailOrUserEmail($search);
 			} else if (is_numeric($search)) {
 				$result = $this->em->getRepository(RENTAL_ENTITY)->findById($search);
 			}

@@ -32,6 +32,7 @@ class RentalGrid extends AdminGridControl {
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
 		$grid->addColumn('email');
+		$grid->addColumn('user');
 
 		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
 
