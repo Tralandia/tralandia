@@ -29,6 +29,22 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+
+	public function findByEmailOrUserEmail($email)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('r')
+			->from($this->_entityName, 'r')
+			->join('r.user', 'u')
+			->where($qb->expr()->eq('r.email', ':email'))
+			->orWhere($qb->expr()->eq('u.login', ':email'))
+			->setParameter('email', $email);
+
+		return $qb->getQuery()->getResult();
+	}
+
+
 	public function findByPrimaryLocation(\Entity\Location\Location $location, $status = NULL) {
 		$qb = $this->_em->createQueryBuilder();
 

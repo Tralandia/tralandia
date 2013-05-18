@@ -256,7 +256,8 @@ services:
 		class: Statistics\Registrations
 
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
-	findOutdatedTranslations: Dictionary\FindOutdatedTranslations
+	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
+	dictionary.fulltextSearch: Dictionary\FulltextSearch
 
 	device: Device
 	deviceDetect: Mobile_Detect
@@ -538,7 +539,7 @@ factories:
 
 	phraseCheckingSupportedGridFactory:
 		class: AdminModule\Grids\PhraseCheckingSupportedGrid
-		arguments: [@phraseRepositoryAccessor::get(), @findOutdatedTranslations, @languageRepositoryAccessor, @translator, @collator]
+		arguments: [@phraseRepositoryAccessor::get(), @dictionary.findOutdatedTranslations, @languageRepositoryAccessor, @translator, @collator]
 		implement: AdminModule\Grids\IPhraseCheckingSupportedGridFactory
 
 	statisticsDictionaryGridFactory:
