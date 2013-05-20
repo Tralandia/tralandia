@@ -7,6 +7,7 @@ use Entity\Currency;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Nette\Application\BadRequestException;
+use Nette\Utils\Strings;
 
 class PhraseListPresenter extends BasePresenter {
 
@@ -55,6 +56,12 @@ class PhraseListPresenter extends BasePresenter {
 	 */
 	protected $phrases;
 
+
+	/**
+	 * @var array|bool
+	 */
+	protected $specialOption;
+
 	/**
 	 * @var array
 	 */
@@ -84,30 +91,46 @@ class PhraseListPresenter extends BasePresenter {
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
+
+		$this->specialOption = [
+			'label' => 'Ready',
+			'type' => 'ready',
+		];
+
+		$this->template->headerText = 'Central Checking';
+
 	}
 
 
-	public function actionNotChecked($id)
+	public function actionNotCheckedTranslations($id)
 	{
 		$languageIso = $id;
 		if(!$languageIso) {
 			throw new BadRequestException;
 		}
 
+		/** @var $language \Entity\Language */
 		$language = $this->languageRepositoryAccessor->get()->findOneByIso($languageIso);
 
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->phraseRepository->getNotCheckedCount($language));
 
-		$qb = $this->phraseRepository->findNotCheckedQb($language);
+		$qb = $this->phraseRepository->findNotCheckedTranslationsQb($language);
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
+
+		$this->specialOption = [
+			'label' => 'Checked',
+			'type' => 'checked',
+		];
 
 		$editForm = $this['phraseEditForm'];
 		$editForm->setDefaults([
 			'toLanguages' => $language->getId()
 		]);
+
+		$this->template->headerText = 'Checking ' . Strings::upper($language->getIso());
 	}
 
 
@@ -120,6 +143,7 @@ class PhraseListPresenter extends BasePresenter {
 		}
 
 
+		/** @var $language \Entity\Language */
 		$language = $this->languageRepositoryAccessor->get()->findOneByIso($to);
 
 		$paginator = $this->getPaginator();
@@ -130,12 +154,19 @@ class PhraseListPresenter extends BasePresenter {
 
 		$this->editableLanguages = [$language];
 
+		$this->specialOption = [
+			'label' => 'Translated',
+			'type' => 'translated',
+		];
+
 		$editForm = $this['phraseEditForm'];
 		$editForm->setDefaults([
 			'toLanguages' => $language->getId()
 		]);
 
 		$editForm['toLanguages']->setDisabled();
+
+		$this->template->headerText = 'Translations to ' . Strings::upper($language->getIso());
 	}
 
 
@@ -159,6 +190,7 @@ class PhraseListPresenter extends BasePresenter {
 		]);
 
 		//$editForm['toLanguages']->setDisabled();
+		$this->template->headerText = 'Search: ' . $search;
 	}
 
 
@@ -174,6 +206,7 @@ class PhraseListPresenter extends BasePresenter {
 
 		$phraseContainerSettings = [];
 
+		$translator = $this->context->translator;
 		if($this->user->isInRole(Role::TRANSLATOR)) {
 			$translatorLanguages = $this->languageRepositoryAccessor->get()->findByTranslator($this->loggedUser);
 			$translatorLanguages = $this->resultSorter->translateAndSort($translatorLanguages);
@@ -181,17 +214,14 @@ class PhraseListPresenter extends BasePresenter {
 
 			$toLanguages = \Tools::arrayMap(
 				$translatorLanguages,
-				function($value) {return $value->getIso();},
+				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());},
 				function($key, $value) {return $value->getId();}
 			);
-			$phraseContainerSettings['disableSourceLanguageInput'] = TRUE;
-			$phraseContainerSettings['disableStatusSelect'] = TRUE;
 			$showOptions = FALSE;
 		} else {
-			$translator = $this->context->translator;
 			$toLanguages = $this->supportedLanguages->getForSelect(
 				function($key, $value) {return $value->getId();},
-				function($value) use($translator) {return $translator->translate($value->getName());}
+				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
 			);
 			$showOptions = TRUE;
 		}
@@ -202,8 +232,6 @@ class PhraseListPresenter extends BasePresenter {
 
 		$form = $this->simpleFormFactory->create();
 
-
-
 		$form->addSelect('toLanguages', '', $toLanguages);
 		$form->addCheckbox('showOptions', '')->setDefaultValue($showOptions);
 
@@ -213,6 +241,11 @@ class PhraseListPresenter extends BasePresenter {
 			$phraseContainer = $listContainer->addPhraseContainer($phrase->getId(), $phrase);
 			$phraseContainer->build($phraseContainerSettings);
 			$phraseContainer->setDefaultValues();
+
+			if($this->specialOption) {
+				$phraseContainer->addCheckbox('specialOptionValue', $this->specialOption['label']);
+				$phraseContainer->addHidden('specialOptionType', $this->specialOption['type']);
+			}
 		}
 
 		$form->addSubmit('save', 'o100151');

@@ -113,6 +113,21 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 
 
+	public function getStatusLabel()
+	{
+		return $this->getStatusLabels()[$this->status];
+	}
+
+	public function getStatusLabels()
+	{
+		return [
+			self::WAITING_FOR_CENTRAL => 'Waiting for central',
+			self::WAITING_FOR_CORRECTION => 'Waiting for correction',
+			self::WAITING_FOR_CORRECTION_CHECKING => 'Waiting for correction checking',
+			self::READY => 'Ready',
+		];
+	}
+
 	/**
 	 * @param $status
 	 *
