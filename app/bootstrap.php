@@ -56,9 +56,8 @@ $dic = $container = $configurator->createContainer();
 
 FormContainer::extensionMethod('addPhraseContainer',
 	function (FormContainer $container, $name, $phrase) use ($dic) {
-		$supportedLanguages = $dic->getService('supportedLanguages');
 		$em = $dic->getService('model');
-		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $supportedLanguages, $em);
+		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $em);
 	});
 
 FormContainer::extensionMethod('addPhoneContainer',
