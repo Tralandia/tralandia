@@ -47,6 +47,12 @@ class PhraseListPresenter extends BasePresenter {
 	protected $findOutdatedTranslations;
 
 	/**
+	 * @autowire
+	 * @var \Dictionary\UpdateTranslationStatus
+	 */
+	protected $updateTranslationStatus;
+
+	/**
 	 * @var \Repository\Phrase\PhraseRepository
 	 */
 	protected $phraseRepository;
@@ -264,12 +270,10 @@ class PhraseListPresenter extends BasePresenter {
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
 			//$phrase = $phraseValues['phrase'];
 
-			if($this->user->isInRole(Role::TRANSLATOR)) {
-				/** @var $translation \Entity\Phrase\Translation */
-				foreach($phraseValues['changedTranslations'] as $translation) {
-					$translation->setStatus(Translation::WAITING_FOR_CHECKING);
-				}
+			foreach($phraseValues['changedTranslations'] as $translation) {
+				$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
 			}
+
 		}
 
 		$phraseRepository->flush();
