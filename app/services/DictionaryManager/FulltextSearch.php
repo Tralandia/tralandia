@@ -49,7 +49,12 @@ class FulltextSearch {
 		$qb = $this->translationRepository->createQueryBuilder();
 
 		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
-		$qb->andWhere($qb->expr()->like('e.variations', ':string'))->setParameter('string', "%$string%");
+		if(is_numeric($string)) {
+			$qb->leftJoin('e.phrase', 'p');
+			$qb->andWhere($qb->expr()->eq('p.id', ':string'))->setParameter('string', $string);
+		} else {
+			$qb->andWhere($qb->expr()->like('e.variations', ':string'))->setParameter('string', "%$string%");
+		}
 
 		return $qb;
 	}

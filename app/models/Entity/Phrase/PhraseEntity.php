@@ -22,9 +22,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	const SOURCE = 10;
 
 	/* Status constants */
-	const DRAFT = 0;
-	const WAITING_FOR_CENTRAL = 1;
-	const READY = 2;
+	const WAITING_FOR_CENTRAL = 0;
+	const WAITING_FOR_CORRECTION = 1;
+	const WAITING_FOR_CORRECTION_CHECKING = 2;
+	const READY = 4;
 
 	/**
 	 * @var Collection
@@ -36,7 +37,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status = self::DRAFT;
+	protected $status = self::WAITING_FOR_CENTRAL;
 
 
 	/**
@@ -121,7 +122,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	public function setStatus($status)
 	{
 		if($status != $this->status) {
-			if($status == self::DRAFT) {
+			if($status == self::WAITING_FOR_CENTRAL) {
 				//$this->updateTranslationsStatus(Translation::DRAFT)
 			} else if ($status == self::WAITING_FOR_CENTRAL) {
 

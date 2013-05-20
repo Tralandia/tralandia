@@ -147,6 +147,7 @@ class NavigationControl extends BaseControl
 		}
 		if($this->user->getIdentity()->isFake()) {
 			$link = [
+				'icon' => 'icon-undo',
 				'label' => 'Switch back to ' . $this->user->identity->getOriginalIdentity()->login,
 				'link' => 'restoreOriginalIdentity',
 			];
