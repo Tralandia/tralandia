@@ -84,7 +84,7 @@ class PhraseContainer extends BaseContainer
 		}
 
 		$statusOptions = [
-			Phrase::DRAFT => 'Draft',
+			Phrase::WAITING_FOR_CENTRAL => 'Draft',
 			Phrase::WAITING_FOR_CENTRAL => 'Waiting for central',
 			Phrase::READY => 'Ready',
 		];

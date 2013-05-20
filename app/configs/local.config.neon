@@ -32,5 +32,5 @@ services:
 			- hideSection('TwiGrid\DataGrid-dataGrid')
 			- hideSection('DumpMailerStorage')
 
-#	nette.mailer: JanDrabek\MailPanel\SessionDumpMailer
+	nette.mailer: JanDrabek\MailPanel\SessionDumpMailer
 

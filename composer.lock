@@ -155,12 +155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "5dda68a37d33791a0682f8c48a125f439352e401"
+                "reference": "6cd0263d972ef5d0c0627a4927d948e042d2d5d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/5dda68a37d33791a0682f8c48a125f439352e401",
-                "reference": "5dda68a37d33791a0682f8c48a125f439352e401",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/6cd0263d972ef5d0c0627a4927d948e042d2d5d8",
+                "reference": "6cd0263d972ef5d0c0627a4927d948e042d2d5d8",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-04-29 09:01:58"
+            "time": "2013-05-10 16:58:23"
         },
         {
             "name": "kdyby/nette-session-panel",
@@ -308,12 +308,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "b1c8f714b613233f6fc42e73337d5e472db8b609"
+                "reference": "cafe5ca6ac173593725b02b7d4c8734d2be70ed3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b1c8f714b613233f6fc42e73337d5e472db8b609",
-                "reference": "b1c8f714b613233f6fc42e73337d5e472db8b609",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/cafe5ca6ac173593725b02b7d4c8734d2be70ed3",
+                "reference": "cafe5ca6ac173593725b02b7d4c8734d2be70ed3",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +333,7 @@
                 {
                     "name": "Serban Ghita",
                     "email": "serbanghita@gmail.com",
-                    "homepage": "http://ghita.org",
+                    "homepage": "http://mobiledetect.net",
                     "role": "Developer"
                 }
             ],
@@ -346,7 +346,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-04-17 13:24:56"
+            "time": "2013-05-07 15:31:44"
         },
         {
             "name": "nette/nette",
@@ -358,7 +358,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/7f98d090d707a8817775cd1e6d6823d04cad44b6",
+                "url": "https://api.github.com/repos/nette/nette/zipball/32471c9306ee6f2157c817d79952c2ecbb306d37",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
