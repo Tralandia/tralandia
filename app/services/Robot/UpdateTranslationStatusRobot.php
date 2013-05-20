@@ -15,7 +15,7 @@ use Nette\Utils\Paginator;
 class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 {
 
-	protected $itemsPerIteration = 2000;
+	protected $itemsPerIteration = 1000;
 
 	protected $itemCount = 0;
 
