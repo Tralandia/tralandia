@@ -91,7 +91,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	public function findNotCheckedQb(Language $language)
+	public function findNotCheckedTranslationsQb(Language $language)
 	{
 		$qb = $this->_em->createQueryBuilder();
 
@@ -111,7 +111,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 */
 	public function getNotCheckedCount(Language $language)
 	{
-		return $this->getCount($this->findNotCheckedQb($language));
+		return $this->getCount($this->findNotCheckedTranslationsQb($language));
 	}
 
 

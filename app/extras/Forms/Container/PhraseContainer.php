@@ -7,6 +7,7 @@ use Entity\Language;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Environment\Environment;
+use Nette\NotImplementedException;
 use Nette\Utils\Arrays;
 
 class PhraseContainer extends BaseContainer
@@ -17,10 +18,6 @@ class PhraseContainer extends BaseContainer
 	 */
 	protected $phrase;
 
-	/**
-	 * @var array
-	 */
-	protected $sourceLanguages;
 
 	/**
 	 * @var \Entity\Language|NULL
@@ -38,10 +35,9 @@ class PhraseContainer extends BaseContainer
 	private $em;
 
 
-	public function __construct(Phrase $phrase, \SupportedLanguages $supportedLanguages, EntityManager $em)
+	public function __construct(Phrase $phrase, EntityManager $em)
 	{
 		$this->phrase = $phrase;
-		$this->sourceLanguages = $supportedLanguages->getForSelect();
 
 		$this->fromLanguage = $phrase->getSourceLanguage();
 		parent::__construct();
@@ -60,7 +56,7 @@ class PhraseContainer extends BaseContainer
 
 	public function getMainControl()
 	{
-		return $this['sourceLanguage'];
+		throw new NotImplementedException();
 	}
 
 
@@ -70,29 +66,29 @@ class PhraseContainer extends BaseContainer
 		return $phraseType->getEntityName() . ':' . $phraseType->getEntityAttribute();
 	}
 
+	public function getSourceLanguage()
+	{
+		return $this->phrase->getSourceLanguage();
+	}
+
+	public function getStatusLabel()
+	{
+		return $this->phrase->getStatusLabel();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isHtmlText()
+	{
+		return $this->phrase->getType()->isHtml();
+	}
+
 
 	public function build($settings) {
 		$this->setSettings($settings);
 		$phrase = $this->phrase;
 		$phraseType = $phrase->getType();
-
-		$sourceLanguage = $this->addSelect('sourceLanguage', 'Source Language:', $this->sourceLanguages);
-
-		$disableSourceLanguage = $this->getSettings('disableSourceLanguageInput');
-		if($disableSourceLanguage !== NULL) {
-			$sourceLanguage->setDisabled($disableSourceLanguage);
-		}
-
-		$statusOptions = [
-			Phrase::WAITING_FOR_CENTRAL => 'Draft',
-			Phrase::WAITING_FOR_CENTRAL => 'Waiting for central',
-			Phrase::READY => 'Ready',
-		];
-		$statusControl = $this->addSelect('status', 'Status', $statusOptions);
-		$disableStatusSelect = $this->getSettings('disableStatusSelect');
-		if($disableStatusSelect !== NULL) {
-			$statusControl->setDisabled($disableStatusSelect);
-		}
 
 		$fromTranslation = $phrase->getTranslation($this->fromLanguage);
 		$this['fromVariations'] = new TranslationVariationContainer($fromTranslation, TRUE);
@@ -158,8 +154,6 @@ class PhraseContainer extends BaseContainer
 
 		$this->setDefaults(array(
 			//'phraseType' => $phrase->getType()->getId(),
-			'sourceLanguage' => $phrase->getSourceLanguage()->getId(),
-			'status' => $phrase->getStatus(),
 			'fromTranslations' => $phrase->getTranslation($this->fromLanguage)->getVariations(),
 		));
 	}
@@ -199,12 +193,6 @@ class PhraseContainer extends BaseContainer
 		$values = $this->getValues(TRUE);
 		$phrase = $this->phrase;
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-
-		if(array_key_exists('status', $values)) $phrase->setStatus($values['status']);
-		if(array_key_exists('sourceLanguage', $values)) {
-			$language = $languageRepository->find($values['sourceLanguage']);
-			$phrase->setSourceLanguage($language);
-		}
 
 		$values['changedTranslations'] = [];
 		foreach($values['to'] as $languageIso => $variations) {

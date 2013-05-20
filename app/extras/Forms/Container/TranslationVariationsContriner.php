@@ -38,7 +38,6 @@ class TranslationVariationContainer extends BaseContainer
 				foreach ($genderValue as $caseKey => $caseValue) {
 					if($isHtml) {
 						$field = $gender->addTextArea($caseKey, $caseValue);
-						if(!$disabled) $field->getControlPrototype()->class('texyla');
 					} else {
 						$field = $gender->addText($caseKey, $caseValue);
 					}
@@ -47,6 +46,7 @@ class TranslationVariationContainer extends BaseContainer
 			}
 		}
 	}
+
 
 	/**
 	 * @return \Entity\Language|NULL

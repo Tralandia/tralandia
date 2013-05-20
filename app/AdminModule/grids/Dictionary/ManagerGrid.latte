@@ -19,7 +19,7 @@
 {define #col-toCheck}
 	<td>
 	{if $cell}
-		<a href="{plink PhraseList:notChecked $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
 	{else}
 		{$cell}
 	{/if}
