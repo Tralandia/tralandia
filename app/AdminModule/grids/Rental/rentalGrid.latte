@@ -10,8 +10,20 @@
 	</td>
 {/define}
 
+{define #col-phone}
+	<td>
+		{$cell->getInternational()}
+	</td>
+{/define}
+
 {define #col-user}
 	<td>
 		{$cell->getLogin()}
 	</td>
+{/define}
+
+{define #row-actions}
+	<a href="{plink :Owner:Rental:edit $primary}" class="btn btn-small btn-primary">edit</a>
+	<a href="{plink :Front:Rental:detail $row}" target="_blank" class="btn btn-small btn-primary">view</a>
+	<a href="{plink :Owner:User:edit $row->getOwner()->getId()}" class="btn btn-small btn-primary">edit user</a>
 {/define}

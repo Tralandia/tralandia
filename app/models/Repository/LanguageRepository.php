@@ -79,7 +79,7 @@ class LanguageRepository extends \Repository\BaseRepository {
 		$rows = $this->findSupported();
 		/** @var $row \Entity\Language */
 		foreach($rows as $row) {
-			$return[$row->getId()] = $row->getIso();
+			$return[$row->getId()] = Strings::upper($row->getIso());
 		}
 		$collator->asort($return);
 
