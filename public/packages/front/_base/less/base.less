@@ -298,6 +298,7 @@ ul.arrows {
 
 	&:hover {
 		.basic-gradient(#B8CC2D,#5D7A0A);
+		background-position: 0;
 	}
 
 	&.active {
@@ -749,15 +750,16 @@ ul.arrows {
 @btnGreenGradientStartColor : #a7ba24 ;
 @btnGreenGradientStopColor : #4c6505 ;
 
-.btn-green {
+.btn.btn-green {
 	border: 1px solid @btnGreenBorderColor;
 	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnGreenGradientStopColor;
 	&:hover , &.active {
+		background-position: 0;
 		color: #fff;
 		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
-		background-position: 0;
+		
 	}
 }
 
