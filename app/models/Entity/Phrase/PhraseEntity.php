@@ -136,18 +136,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	public function setStatus($status)
 	{
-		if($status != $this->status) {
-			if($status == self::WAITING_FOR_CENTRAL) {
-				//$this->updateTranslationsStatus(Translation::DRAFT)
-			} else if ($status == self::WAITING_FOR_CENTRAL) {
-
-			} else if ($status == self::READY) {
-
-			} else {
-				throw new InvalidArgumentException('Zly status');
-			}
-			$this->status = $status;
-		}
+		$this->status = $status;
 
 		return $this;
 	}
