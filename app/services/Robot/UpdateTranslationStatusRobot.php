@@ -82,7 +82,7 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 		$phrases = $qb->getQuery()->getResult();
 
 		foreach($phrases as $phrase) {
-			$this->updateTranslationStatus->updatePhrase($phrase);
+			$this->updateTranslationStatus->resolvePhrase($phrase);
 		}
 		$this->em->flush();
 	}

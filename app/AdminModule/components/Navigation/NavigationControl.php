@@ -171,7 +171,9 @@ class NavigationControl extends BaseControl
 				->data('redirect', $phraseLink);
 
 		$languages = $this->languageRepository->getForAdminSearch($this->collator);
-		$form->addSelect('languages', '', $languages);
+		$defaultLanguage = $this->getParent()->getParameter('languageId', $this->loggedUser->getLanguage()->getId());
+		$form->addSelect('languages', '', $languages)
+			->setDefaultValue($defaultLanguage);
 			//->setPrompt('all'); vykomentovane, treba premysliet UI ak najdem hladany vyraz vo viacerich jazykoch...
 
 		return $form;
