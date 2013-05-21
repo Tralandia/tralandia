@@ -161,7 +161,7 @@ class ImportUsers extends BaseImport {
 		$this->model->flush();
 
 		$supportedLanguages = $this->context->languageRepositoryAccessor->get()->findBySupported(true);
-		$defaultTranslator = $this->context->userRepositoryAccessor->get()->findOneByLogin('toth@tralandia.com');
+		$defaultTranslator = $this->context->userRepositoryAccessor->get()->findOneByLogin('krcalova@tralandia.com');
 
 		foreach ($supportedLanguages as $key => $language) {
 			if (!$language->translator) {
