@@ -53,6 +53,8 @@ class ImportUpdateEmails extends BaseImport {
 				'priceNS' => 'wordPrice',
 				'priceTotal' => 'totalPrice',
 				'deadline' => 'deadline',
+				'email' => 'translator_email',
+				'password' => 'translator_password',
 			],
 		);
 

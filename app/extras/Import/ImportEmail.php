@@ -29,13 +29,12 @@ class ImportEmail extends BaseImport {
 			$template->slug = $x['name'];
 			$template->name = $x['name'];
 			$template->subject = $this->createNewPhrase($subjectType, $x['subject_dic_id']);
-			$template->body = $this->createNewPhrase($bodyType, $x['body_html_dic_id']);
+			$template->body = $this->createNewPhrase($bodyType, $x['body_html_dic_id'], NULL, array('html' => TRUE));
 			//$template->language = $context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['source_language_id']]);
 			$template->oldId = $x['id'];
 			//debug($template); return;
 			$model->persist($template);
 		}
 		$model->flush();
-
 	}
 }

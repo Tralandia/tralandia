@@ -273,7 +273,6 @@ class ImportLocations extends BaseImport {
 			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
-			$namePhrase->ready = TRUE;
 
 			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
@@ -341,7 +340,6 @@ class ImportLocations extends BaseImport {
 			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
-			$namePhrase->ready = TRUE;
 
 			$countryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 
