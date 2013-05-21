@@ -56,8 +56,8 @@ class ImportHtmlPhrases extends BaseImport {
 
 		$en = $languageRepository->findOneByIso('en');
 		$sk = $languageRepository->findOneByIso('sk');
-		$phraseType = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('Html');
-		$phraseTypeMulti = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('HtmlMulti');
+		$phraseType = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('Latte');
+		$phraseTypeMulti = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('LatteMulti');
 
 		$phraseCreator = new \Service\Phrase\PhraseCreator($phraseRepository, $languageRepository);
 
@@ -71,7 +71,6 @@ class ImportHtmlPhrases extends BaseImport {
 				$thisPhrase->type = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
 			}
 			$thisPhrase->oldId = $x['id'];
-			$thisPhrase->checked = FALSE;
 
 			$thisPhrase->setTranslationText($en, $x['en0']);
 			$thisPhrase->setTranslationText($sk, $x['sk0']);

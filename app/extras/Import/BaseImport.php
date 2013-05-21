@@ -335,13 +335,12 @@ class BaseImport {
 		if (!$oldPhraseData) {
 			//debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
 			$oldPhraseData = array(
-				'ready' => 1,
+				//'ready' => 1,
 			);
 			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
 		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
-		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
 		$phrase->sourceLanguage = $sourceLanguage;
@@ -394,7 +393,6 @@ class BaseImport {
 
 		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
-		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
 
 		if(is_string($textLanguage)) {
@@ -418,7 +416,7 @@ class BaseImport {
 	 * @return \Entity\Phrase\Type
 	 */
 	protected function createPhraseType($entityName, $entityAttribute, $level = NULL, $params = NULL) {
-		if (strpos($entityName, 'Latte') === FALSE) {
+		if (strpos($entityName, 'Latte') === FALSE && strpos($entityName, '\Entity') === FALSE) {
 			$entityName = '\Entity'.$entityName;
 		}
 
