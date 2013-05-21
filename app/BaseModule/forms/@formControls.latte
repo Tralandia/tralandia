@@ -458,7 +458,9 @@
 	<div class="span5">
 
 		{include #translationVatiations, control => $container['fromVariations']}
-
+	<small>
+		#{$phrase->getId()}, {$container->getSourceLanguage()->getIso()|upper}, {$container->getStatusLabel()}
+	</small>
 	</div>
 
 	<div class="span6">
@@ -466,32 +468,38 @@
 			{var $language = $languageContainer['variations']->getLanguage()}
 			<div class="phrasecontrol hide {$language->getId()}_phrase">
 				{include #translationVatiations, control => $languageContainer['variations']}
+
+			<div class="phraseFormHeaderCover">
+
+				{ifset $languageContainer['gender']}
+					{input $languageContainer['gender'] }					
+				{/ifset}
+
+				{ifset $languageContainer['position']}
+					{input $languageContainer['position'] }					
+				{/ifset}
+
+
+
+				{if $container->isHtmlText()}
+					<a href="#" data-previewLink="{plink texylaPreview}">preview</a>
+				{/if}
+
+				<div class="pull-right" n:ifset="$container['specialOptionValue']">
+					{label $container['specialOptionValue']}
+						{$container['specialOptionValue']->caption}
+						{input $container['specialOptionValue'] }
+					{/label}
+				</div>
+
+			</div>
+
 			</div>
 		{/foreach}
-		<div class="phraseFormHeaderCover">
-			<div class="pull-left" n:ifset="$languageContainer['gender']">
-				{input $languageContainer['gender'] }
-			</div>
 
-			<div class="pull-right" n:ifset="$languageContainer['position']">
-				{input $languageContainer['position'] }
-			</div>
-		</div>
 
-		{if $container->isHtmlText()}
-			<a href="#" data-previewLink="{plink texylaPreview}">preview</a>
-		{/if}
-
-		<div class="pull-right" n:ifset="$container['specialOptionValue']">
-			{label $container['specialOptionValue']}
-				{$container['specialOptionValue']->caption}
-				{input $container['specialOptionValue'] }
-			{/label}
-		</div>
 	</div>
-	<small>
-		#{$phrase->getId()} {$container->getPhraseTypeString()}, Source: {$container->getSourceLanguage()->getIso()|upper}, {$container->getStatusLabel()}
-	</small>
+
 
 </div>
 

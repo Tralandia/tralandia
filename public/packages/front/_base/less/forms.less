@@ -770,11 +770,31 @@ table.formTable {
 
 		td {
 			padding: 10px 0 0 10px;
+			border: none;
 		}
 	}
 
 	.phraseFormHeaderCover {
-		height: 65px;
+		height: 25px;
+		padding: 0 4px 0 10px;
+
+		input[type=checkbox] {
+			top: -3px;
+			position: relative;			
+		}
+
+		select {
+			width: 70px;
+			float: left;
+			height: 20px;
+			margin: 0 5px 0 0;
+
+			&:first-child {
+				width: 100px;
+			}
+		}
+
+
 
 		.phraseFormHeader {
 
@@ -790,6 +810,9 @@ table.formTable {
 					width: 100px;
 				}
 			}
+
+
+
 			.checkbox {
 				width: 80px;
 				float: left;
@@ -873,7 +896,7 @@ table.formTable {
 
 		select {
 			margin-right: 10px;
-			width: 60px;
+			width: 140px;
 		}
 	}
 }
