@@ -22,8 +22,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('Latte', 'Latte')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -33,8 +32,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('LatteMulti', 'LatteMulti')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -44,8 +42,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('LatteHtml', 'LatteHtml')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -55,8 +52,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(TRUE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Currency', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -66,8 +62,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Location\Location', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -77,8 +72,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(FALSE)
-			->setCheckingRequired(1);
+			->setTranslated(FALSE);
 
 		$this->createPhraseType('\Entity\Location\Type', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -88,8 +82,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\Amenity', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -99,8 +92,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\AmenityType', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -110,8 +102,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\Type', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -121,8 +112,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\Rental', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
@@ -132,8 +122,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(FALSE)
-			->setCheckingRequired(1);
+			->setTranslated(FALSE);
 
 		$this->createPhraseType('\Entity\Rental\Rental', 'teaser')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
@@ -143,8 +132,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(FALSE)
-			->setCheckingRequired(1);
+			->setTranslated(FALSE);
 
 		$this->createPhraseType('\Entity\Email\Template', 'subject')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -154,8 +142,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Email\Template', 'body')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -165,8 +152,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -176,8 +162,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -187,8 +172,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'tabName')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -198,8 +182,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'description')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -209,8 +192,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'ppcKeywords')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -220,8 +202,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Faq\Category', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -231,8 +212,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Faq\Question', 'question')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -242,8 +222,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Faq\Question', 'answer')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -253,8 +232,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\InterviewQuestion', 'question')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -264,8 +242,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\InterviewQuestion', 'questionFe')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -275,8 +252,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Rental\InterviewAnswer', 'answer')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
@@ -286,8 +262,7 @@ class ImportPhraseType extends BaseImport {
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
 			->setHtml(FALSE)
-			->setTranslated(TRUE)
-			->setCheckingRequired(NULL);
+			->setTranslated(TRUE);
 
 		$this->model->flush();
 	}
