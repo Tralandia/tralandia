@@ -75,10 +75,10 @@ FormContainer::extensionMethod('addPhoneContainer',
 	});
 
 FormContainer::extensionMethod('addRentalTypeContainer',
-	function (FormContainer $container, $name, $rentalTypes) use ($dic) {
+	function (FormContainer $container, $name, $rental, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
 		$rentalTypeRepository = $dic->getService('rentalTypeRepositoryAccessor')->get();
-		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rentalTypes, $translator, $rentalTypeRepository);
+		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rental, $rentalTypes, $translator, $rentalTypeRepository);
 	});
 
 FormContainer::extensionMethod('addRentalPhotosContainer',
