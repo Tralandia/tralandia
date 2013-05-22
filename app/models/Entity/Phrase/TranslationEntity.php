@@ -80,12 +80,7 @@ class Translation extends \Entity\BaseEntity {
 	protected $status = self::WAITING_FOR_CENTRAL;
 
 	public function __toString() {
-		if($this->phrase->getType()->isSimple()) {
-			$translation = $this->translation;
-		} else {
-			//$translation = $this->translation;
-			$translation = $this->getDefaultVariation();
-		}
+		$translation = $this->getDefaultVariation();
 		return strlen($translation) ? $translation : '{!!' . $this->id . '}';
 	}
 

@@ -3,9 +3,22 @@
 namespace AdminModule;
 
 
+use Listener\RequestTranslationsEmailListener;
 use Nette\Application\BadRequestException;
 
 class DictionaryManagerPresenter extends AdminPresenter {
+
+	/**
+	 * @autowire
+	 * @var \Listener\RequestTranslationsEmailListener
+	 */
+	protected $requestTranslationsEmailListener;
+
+	/**
+	 * @autowire
+	 * @var \Listener\RequestTranslationsSystemLogListener
+	 */
+	protected $requestTranslationsSystemLogListener;
 
 	/**
 	 * @var array
@@ -19,7 +32,13 @@ class DictionaryManagerPresenter extends AdminPresenter {
 			throw new BadRequestException;
 		}
 
-		$this->onRequestTranslations($language);
+		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsCountToPay($language);
+
+		$this->requestTranslationsSystemLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
+		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
+
+		$this->flashMessage('Request sent!');
+		$this->redirect('list');
 	}
 
 

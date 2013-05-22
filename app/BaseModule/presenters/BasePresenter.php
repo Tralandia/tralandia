@@ -76,6 +76,12 @@ abstract class BasePresenter extends Presenter {
 	protected $device;
 
 	/**
+	 * @autowire
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $em;
+
+	/**
 	 * @var User
 	 */
 	public $loggedUser;

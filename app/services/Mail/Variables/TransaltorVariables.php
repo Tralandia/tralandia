@@ -4,11 +4,11 @@ namespace Mail\Variables;
 use Nette;
 
 /**
- * OwnerVariables class
+ * TranslatorVariables class
  *
  * @author Dávid Ďurika
  */
-class OwnerVariables extends BaseUserVariables {
+class TranslatorVariables extends BaseUserVariables {
 
 
 }
