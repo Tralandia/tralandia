@@ -61,10 +61,7 @@ class PriceContainer extends BaseContainer
 	 */
 	public function getFormattedValues($asArray = FALSE)
 	{
-		$values = $asArray ? array() : new \Nette\ArrayHash;
-		$values['amount'] = $this['amount']->getValue();
-		$values['currency'] = $this['currency']->getValue();
-
+		$values = $this->getValues($asArray);
 		$currency = $this->currencyRepository->find($values['currency']);
 		$values['entity'] = new \Extras\Types\Price($values['amount'], $currency);
 

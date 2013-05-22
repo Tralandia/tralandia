@@ -56,9 +56,13 @@ class RentalEditHandler extends FormHandler
 			$rental->classification = $value->classification;
 		}
 
-//		if ($value = $values['photos']) {
-			// @TODO: nemame dorieseny upload obrazkov
-//		}
+		if ($value = $values['photos']) {
+			 if (isset($value->upload) && count($value->upload)) {
+				 foreach($value->upload as $upload) {
+					 d($upload);
+				 }
+			 }
+		}
 
 		if ($value = $values['priceList']) {
 			$pricelistRows = $rental->getPricelistRows();

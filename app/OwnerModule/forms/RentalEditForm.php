@@ -42,9 +42,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	protected $collator;
 
 	/**
-	 * @var \Extras\Forms\Container\RentalContainer
+	 * @var \Extras\Forms\Container\IRentalContainerFactory;
 	 */
-	protected $rentalContainer;
+	protected $rentalContainerFactory;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
@@ -88,7 +88,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->environment = $environment;
 		$this->country = $environment->getPrimaryLocation();
 		$this->collator = $environment->getLocale()->getCollator();
-		$this->rentalContainer = $rentalContainerFactory->create($this->environment, $this->rental);
+		$this->rentalContainerFactory = $rentalContainerFactory;
 
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
@@ -114,7 +114,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 //			;
 
 		$rental = $this->rental;
-		$rentalContainer = $this->rentalContainer;
+		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
 		$rentalContainer->addRentalPriceListContainer('priceList', $currency, $rental);
@@ -165,7 +165,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		
+
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
 
@@ -207,6 +207,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities);
 
+		$rentalContainer->addRentalPhotosContainer('photos', $rental);
+
 		$this->addSubmit('submit', 'o100083');
 
 		$this->onValidate[] = callback($this, 'validation');
@@ -215,13 +217,13 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function setDefaultsValues()
 	{
-		return $this->rentalContainer->setDefaultsValues();
+		return $this['rental']->setDefaultsValues();
 	}
 
 
 	public function validation(RentalEditForm $form)
 	{
-//		$values = $form->getValues()->rental;
+		$values = $form->getValues()->rental;
 	}
 
 }

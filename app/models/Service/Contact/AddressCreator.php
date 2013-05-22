@@ -41,14 +41,13 @@ class AddressCreator
 		if (!$info) return NULL;
 
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
-		/** @var $locationRepository \Repository\Location\LocationRepository */
-		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
 
 		/** @var $addressEntity \Entity\Contact\Address */
 		$addressEntity = $addressRepository->createNew();
 		$addressEntity->setPrimaryLocation($info[AddressNormalizer::PRIMARY_LOCATION]);
 		$addressEntity->setAddress($info[AddressNormalizer::ADDRESS]);
 		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
+		$addressEntity->setFormattedAddress($address);
 
 		$addressEntity->setLocality($info[AddressNormalizer::LOCALITY]);
 		$addressEntity->setSubLocality($info[AddressNormalizer::SUBLOCALITY]);
