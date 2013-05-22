@@ -73,21 +73,18 @@ class RentalContainer extends BaseContainer
 
 	public function buildContainer()
 	{
+		$this->addAddressContainer('address', $this->rental->address);
 
-		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
-
-
-		$this->addAddressContainer('address', $this->country);
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
-
 		$this->addSelect('placement', 'o100143', $placement)
 			->setOption('help', '')
 			->setPrompt('o854');
 
-
-		$this->addRentalTypeContainer('type', $rentalTypes);
+		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
+		$this->addRentalTypeContainer('type', $this->rental, $rentalTypes);
 
 		$check = \Tools::$checkInOutOption;
+
 		$this->addSelect('checkIn', 'o1586', $check)
 						->setOption('help', $this->translate('151889'))
 						->setPrompt('o854');
@@ -95,6 +92,7 @@ class RentalContainer extends BaseContainer
 		$this->addSelect('checkOut', 'o1588', $check)
 						->setOption('help', $this->translate('151890'))
 						->setPrompt('o854');
+
 
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
@@ -115,7 +113,8 @@ class RentalContainer extends BaseContainer
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('pet', 'o100079', $amenityPets)
 			->setPrompt('o854')
-			->setRequired($this->translate('o100108'))//->setOption('help', $this->translate('o5956'))
+			->setRequired($this->translate('o100108'))
+			//->setOption('help', $this->translate('o5956'))
 		;
 
 		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
@@ -127,10 +126,10 @@ class RentalContainer extends BaseContainer
 		$this->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			->setPrompt('o854')
 			->setRequired($this->translate('o100107'));
-		//->setOption('help', $this->translate('o5956'))
+			//->setOption('help', $this->translate('o5956'))
 		;
 
-		// $this->addRentalPhotosContainer('photos', $this->rental);
+//		 $this->addRentalPhotosContainer('photos', $this->rental);
 
 	}
 
@@ -178,16 +177,11 @@ class RentalContainer extends BaseContainer
 			'bedroomCount' => $rental->bedroomCount,
 			'roomsLayout' => $rental->rooms,
 			'separateGroups' => $rental->getSeparateGroups(),
-			'type' => [
-				'type' => $rental->getType()->getId(),
-				'classification' => $rental->getClassification(),
-			],
 			'checkIn' => $rental->getCheckIn(),
 			'checkOut' => $rental->getCheckOut(),
 			'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
 			'pet' => ($pet ? $pet->getId() : NULL),
 			'placement' => $placement,
-			'address' => $rental->getAddress(),
 
 			'important' => array_map(function ($a) {
 					return $a->getId();
@@ -274,16 +268,6 @@ class RentalContainer extends BaseContainer
 		if(!$address->addressEntity instanceof Address) {
 			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
 		}
-
-		// $url = $rentalValues->url;
-		// if ($url) {
-		// 	if ($url && !strpos('http://', $url)) {
-		// 		$url = 'http://'.$url;
-		// 	}
-		// 	if (!\Nette\Utils\Validators::isUrl($url)) {
-		// 		$form['rental']['url']->getMainControl()->addError('#invalid url');
-		// 	}
-		// }
 
 		$phone = $rentalValues->phone;
 		if ($phone->number && !$phone->entity instanceof Phone) {

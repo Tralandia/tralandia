@@ -2,6 +2,7 @@
 
 namespace Extras\Forms\Container;
 
+use Entity\Rental\Rental;
 use Entity\Contact\Address;
 use Entity\Location\Location;
 use Nette\InvalidArgumentException;
@@ -9,7 +10,6 @@ use Service\Contact\AddressCreator;
 
 class AddressContainer extends BaseContainer
 {
-
 	/**
 	 * @var Address
 	 */
@@ -48,7 +48,7 @@ class AddressContainer extends BaseContainer
 
 		$this->addText('address', '#Address')
 			->getControlPrototype()
-				->setPlaceholder('o100091');
+			->setPlaceholder('o100091');
 
 		$this->addHidden('location');
 		$this->addHidden('latitude');
@@ -104,20 +104,19 @@ class AddressContainer extends BaseContainer
 	{
 		if($this->address) {
 			$defaults = [
-				'address' => $this->address->getAddress(),
 				'location' => $this->address->getPrimaryLocation()->getId(),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
 		} else {
 			$defaults = [
-				'address' => $address,
 				'location' => $this->location->getId(),
 				'latitude' => $this->location->getGps()->getLatitude(),
 				'longitude' => $this->location->getGps()->getLongitude(),
 			];
 		}
-
+		$formattedAddress = $this->address->getFormattedAddress();
+		$defaults['address'] = $formattedAddress;
 		$this->setDefaults($defaults);
 	}
 
@@ -128,29 +127,31 @@ class AddressContainer extends BaseContainer
 
 		if($values instanceof Address) {
 			$valuesTemp = [
-				'address' => $values->getAddress(),
+				'address' => $values->getFormattedAddress(),
 				'location' => $values->getPrimaryLocation()->getId(),
 				'latitude' => $values->getGps()->getLatitude(),
 				'longitude' => $values->getGps()->getLongitude(),
 			];
 			$values = $valuesTemp;
 		}
+
 		parent::setValues($values, $erase);
 	}
 
 
 	public function getFormattedValues($asArray = FALSE)
 	{
-		$values = parent::getValues($asArray);
-		$address = $values['address'];
+		$return = $asArray ? array() : new \Nette\ArrayHash;
+
+		$address = $this['address']->getValue();
 		if($address) {
 			$address = $this->addressCreator->create($address);
-			$values['addressEntity'] = $address;
+			$return['addressEntity'] = $address;
 		} else {
-			$values['addressEntity'] = NULL;
+			$return['addressEntity'] = NULL;
 		}
 
-		return $values;
+		return $return;
 	}
 
 

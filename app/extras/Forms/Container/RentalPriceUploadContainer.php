@@ -28,9 +28,10 @@ class RentalPriceUploadContainer extends BaseContainer
 		$this->manager = $manager;
 		$this->em = $em;
 
-
-		$this->addDynamic('list', $this->containerBuilder,2);
-
+		$pricelistsCount = count($this->rental->getPricelists());
+		$pricelistsCount = ($pricelistsCount < 2) ? 2 : $pricelistsCount;
+		$this->addDynamic('list', $this->containerBuilder, $pricelistsCount);
+		$this->setDefaultsValues();
 	}
 
 	public function containerBuilder(Container $container)
@@ -38,6 +39,7 @@ class RentalPriceUploadContainer extends BaseContainer
 		$container->addText('name', '#name');
 		$container->addSelect('language', '#language', [2,3,4,5]);
 		$container->addUpload('file', '#file');
+		$container->addHidden('entity', 'entity', 0);
 	}
 
 	public function getFormattedValues($asArray = FALSE)
@@ -45,30 +47,46 @@ class RentalPriceUploadContainer extends BaseContainer
 		$values = $asArray
 			? ['list'=>[]]
 			: \Nette\ArrayHash::from(['list'=>[]]);
-
-		$pricelistRepository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
 			foreach($list as $key => $row) {
-				$rowEntity = NULL;
-				if (isset($row->entityId)) {
-					$rowEntity = $pricelistRepository->find($row->entityId);
+				$file = $row['file'];
+				if ($file && $file->isOk()) {
+					/** @var $pricelist \Entity\Rental\PriceList */
+					$pricelist = $this->manager->upload($file);
+					$pricelist->name = $row['name'];
+					$pricelist->rental = $this->rental;
+					$pricelist->language = $languageRepository->find($row['language']);
+				} else if ($row['entity']) {
+					/** @var $pricelist \Entity\Rental\PriceList */
+					$pricelistRepository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
+					$pricelist = $pricelistRepository->find($row['entity']);
 				}
-				if (!$rowEntity) {
-					$rowEntity = $pricelistRepository->createNew();
-				}
-				$rowEntity->name = $this->name;
-				$rowEntity->rental = $this->rental;
-				$rowEntity->language = $languageRepository->find($row['language']);
-				$rowEntity->filePath = '';
-
-				$row['entity'] = $rowEntity;
+				$row['entity'] = $pricelist;
 				$values['list'][$key] = $row;
 			}
 		}
 		return $values;
+	}
+
+	public function setDefaultsValues()
+	{
+		$priceLists = [];
+		$data = $this->rental->getPricelists();
+		foreach($data as $pricelist) {
+			$priceLists[] = [
+				'name' => $pricelist->name,
+				'language' => $pricelist->language,
+				'file' => $pricelist->filePath,
+				'entity' => $pricelist->id
+			];
+		}
+
+		$defaults = $priceLists;
+
+		$this->setDefaults($defaults);
 	}
 
 	public function getMainControl()
