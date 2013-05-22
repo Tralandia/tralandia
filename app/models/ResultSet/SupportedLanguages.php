@@ -50,7 +50,7 @@ class SupportedLanguages {
 		if($key === NULL) $key = function($key, $value){return $value->getId();};
 		if($value === NULL) $value = function($value) {return $value->getIso();};
 
-		return Tools::arrayMap($rows, $value, $key);
+		return Tools::arrayMap($rows, $key, $value);
 
 	}
 

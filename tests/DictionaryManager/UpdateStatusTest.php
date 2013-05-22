@@ -2,6 +2,8 @@
 namespace Tests\DataIntegrity;
 
 use Entity\BaseEntity;
+use Entity\Phrase\Phrase;
+use Entity\Phrase\Translation;
 use Nette, Extras;
 
 
@@ -12,9 +14,8 @@ class UpdateStatusTest extends \Tests\TestCase
 {
 
 	/**
-	 * @var \Repository\LanguageRepository
+	 * @var \Dictionary\UpdateTranslationStatus
 	 */
-	public $languageRepository, $userRepository, $userRoleRepository;
 	public $updateTranslationStatus;
 
 	public $en, $sk, $de;
@@ -23,91 +24,87 @@ class UpdateStatusTest extends \Tests\TestCase
 
 	public function setUp()
 	{
-		$this->languageRepository = $this->getEm()->getRepository(LANGUAGE_ENTITY);
-		$this->userRepository = $this->getEm()->getRepository(USER_ENTITY);
-		$this->userRoleRepository = $this->getEm()->getRepository(USER_ROLE_ENTITY);
+		$languageRepository = $this->getEm()->getRepository(LANGUAGE_ENTITY);
+		$userRepository = $this->getEm()->getRepository(USER_ENTITY);
+		$userRoleRepository = $this->getEm()->getRepository(USER_ROLE_ENTITY);
 
 		$this->updateTranslationStatus = $this->context->getService('dictionary.updateTranslationStatus');
 
-		$this->en = $this->languageRepository->findOneByIso('en');
-		$this->sk = $this->languageRepository->findOneByIso('sk');
-		$this->de = $this->languageRepository->findOneByIso('de');
+		$this->en = $languageRepository->findOneByIso('en');
+		$this->sk = $languageRepository->findOneByIso('sk');
+		$this->de = $languageRepository->findOneByIso('de');
 
-		$this->adminUser = $this->userRepository->findOneByLogin('toth@tralandia.com');
-		$this->translatorUser = $this->userRepository->findOneByLogin('krcalova@tralandia.com');
+		$this->adminUser = $userRepository->findOneByLogin('toth@tralandia.com');
+		$this->translatorUser = $userRepository->findOneByLogin('krcalova@tralandia.com');
 
-		$ownerRole = $this->userRoleRepository->findOneBySlug('owner');
-		$this->ownerUser = $this->userRepository->findOneByRole($ownerRole);
+		$ownerRole = $userRoleRepository->findOneBySlug('owner');
+		$this->ownerUser = $userRepository->findOneByRole($ownerRole);
 	}
 
 	public function testCentralUpdatedByAdmin() {
 		$currency = $this->getEm()->getRepository(CURRENCY_ENTITY)->createNew();
+		/** @var $phrase Phrase */
+		$phrase = $currency->name;
 
-		$currency->name->status = \Entity\Phrase\Phrase::READY;
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			$value->status = \Entity\Phrase\Translation::UP_TO_DATE;
-		}
+		$phrase = $this->setUpToDate($phrase);
 
-		$enTranslation = $currency->name->getTranslation($this->en);
+		$enTranslation = $phrase->getTranslation($this->en);
 		$enTranslation->setTranslation('this is a test');
 
 		$this->updateTranslationStatus->translationUpdated($enTranslation, $this->adminUser);
 
-		$this->assertEquals(\Entity\Phrase\Phrase::WAITING_FOR_CORRECTION, $currency->name->status, 'Phrase Status not updated correctly.');
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			if ($value == $this->en) continue;
-			if ($value->language == $currency->name->sourceLanguage) continue;
+		$this->assertEquals(Phrase::WAITING_FOR_CORRECTION, $phrase->getStatus(), 'Phrase Status not updated correctly.');
+		foreach ($phrase->getTranslations() as $translation) {
+			if ($translation->getLanguage() == $this->en) continue;
+			if ($translation->getLanguage() == $phrase->getSourceLanguage()) continue;
 
-			$this->assertEquals(\Entity\Phrase\Translation::WAITING_FOR_CENTRAL, $value->status, 'Translation Status not updated correctly.');
+			$this->assertEquals(Translation::WAITING_FOR_CENTRAL, $translation->getStatus(), 'Translation Status not updated correctly.');
 		}
 	}
 
 	public function testCentralUpdatedByTranslator() {
 		$currency = $this->getEm()->getRepository(CURRENCY_ENTITY)->createNew();
+		/** @var $phrase Phrase */
+		$phrase = $currency->name;
 
-		$currency->name->status = \Entity\Phrase\Phrase::READY;
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			$value->status = \Entity\Phrase\Translation::UP_TO_DATE;
-		}
+		$phrase = $this->setUpToDate($phrase);
 
-		$enTranslation = $currency->name->getTranslation($this->en);
+		$enTranslation = $phrase->getTranslation($this->en);
 		$enTranslation->setTranslation('this is a test');
 
 		$this->updateTranslationStatus->translationUpdated($enTranslation, $this->translatorUser);
 
-		$this->assertEquals(\Entity\Phrase\Phrase::WAITING_FOR_CORRECTION_CHECKING, $currency->name->status, 'Phrase Status not updated correctly.');
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			if ($value == $this->en) continue;
-			if ($value->language == $currency->name->sourceLanguage) continue;
+		$this->assertEquals(Phrase::WAITING_FOR_CORRECTION_CHECKING, $phrase->getStatus(), 'Phrase Status not updated correctly.');
+		foreach ($phrase->getTranslations() as $translation) {
+			if ($translation->getLanguage() == $this->en) continue;
+			if ($translation->getLanguage() == $phrase->getSourceLanguage()) continue;
 
-			$this->assertEquals(\Entity\Phrase\Translation::WAITING_FOR_CENTRAL, $value->status, 'Translation Status not updated correctly.');
+			$this->assertEquals(Translation::WAITING_FOR_CENTRAL, $translation->getStatus(), 'Translation Status not updated correctly.');
 		}
 	}
 
 	public function testSourceUpdated() {
 		$location = $this->getEm()->getRepository(LOCATION_ENTITY)->createNew();
+		/** @var $phrase Phrase */
+		$phrase = $location->name;
 
-		$location->name->sourceLanguage = $this->de;
-		$location->name->status = \Entity\Phrase\Phrase::READY;
+		$phrase->setSourceLanguage($this->de);
+		$phrase = $this->setUpToDate($phrase);
 
-		foreach ($location->name->getTranslations() as $key => $value) {
-			$value->status = \Entity\Phrase\Translation::UP_TO_DATE;
-		}
-
-		$deTranslation = $location->name->getTranslation($this->de);
+		// @rado tu menis DE co je source
+		$deTranslation = $phrase->getTranslation($this->de);
 		$deTranslation->setTranslation('das ist ein test');
 
 		$this->updateTranslationStatus->translationUpdated($deTranslation, $this->ownerUser);
 
-		$this->assertEquals(\Entity\Phrase\Phrase::WAITING_FOR_CENTRAL, $location->name->status, 'Phrase Status not updated correctly.');
-		foreach ($location->name->getTranslations() as $key => $value) {
-			if ($value == $this->en) {
-				$this->assertEquals(\Entity\Phrase\Translation::WAITING_FOR_TRANSLATION, $value->status, 'Translation Status not updated correctly.');
-
-			} else if ($value->language == $location->name->sourceLanguage) {
-				$this->assertEquals(\Entity\Phrase\Translation::UP_TO_DATE, $value->status, 'Translation Status not updated correctly.');
+		$this->assertEquals(Phrase::WAITING_FOR_CENTRAL, $phrase->getStatus(), 'Phrase Status not updated correctly.');
+		foreach ($phrase->getTranslations() as $translation) {
+			if ($translation->getLanguage() == $this->en) {
+				$this->assertEquals(Translation::WAITING_FOR_TRANSLATION, $translation->getStatus(), 'Translation Status not updated correctly.');
+			} else if ($translation->getLanguage() == $phrase->getSourceLanguage()) {
+				$this->assertEquals(Translation::UP_TO_DATE, $translation->getStatus(), 'Translation Status not updated correctly.');
 			} else {
-				$this->assertEquals(\Entity\Phrase\Translation::WAITING_FOR_CENTRAL, $value->status, 'Translation Status not updated correctly.');
+				$this->assertEquals(Translation::WAITING_FOR_CENTRAL, $translation->getStatus(), 'Translation Status not updated correctly.');
 			}
 		}
 	}
@@ -115,9 +112,9 @@ class UpdateStatusTest extends \Tests\TestCase
 	public function testOtherUpdated() {
 		$currency = $this->getEm()->getRepository(CURRENCY_ENTITY)->createNew();
 
-		$currency->name->status = \Entity\Phrase\Phrase::READY;
+		$currency->name->status = Phrase::READY;
 		foreach ($currency->name->getTranslations() as $key => $value) {
-			$value->status = \Entity\Phrase\Translation::UP_TO_DATE;
+			$value->status = Translation::UP_TO_DATE;
 		}
 
 		$deTranslation = $currency->name->getTranslation($this->de);
@@ -125,12 +122,22 @@ class UpdateStatusTest extends \Tests\TestCase
 
 		$this->updateTranslationStatus->translationUpdated($deTranslation, $this->translatorUser);
 
-		$this->assertEquals(\Entity\Phrase\Phrase::READY, $currency->name->status, 'Phrase Status not updated correctly.');
+		$this->assertEquals(Phrase::READY, $currency->name->status, 'Phrase Status not updated correctly.');
 		foreach ($currency->name->getTranslations() as $key => $value) {
 			if ($value == $this->de) {
-				$this->assertEquals(\Entity\Phrase\Translation::WAITING_FOR_CHECKING, $value->status, 'Translation Status not updated correctly.');
+				$this->assertEquals(Translation::WAITING_FOR_CHECKING, $value->status, 'Translation Status not updated correctly.');
 			}
 		}
+	}
+
+	public function setUpToDate(Phrase $phrase)
+	{
+		$phrase->setStatus(Phrase::READY);
+		foreach ($phrase->getTranslations() as $translation) {
+			$translation->setStatus(Translation::UP_TO_DATE);
+		}
+
+		return $phrase;
 	}
 }
 

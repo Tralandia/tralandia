@@ -42,4 +42,15 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	}
 
 
+	public function actionMarkAsPaid($id)
+	{
+		$language = $this->languageRepositoryAccessor->get()->find($id);
+		if(!$language) {
+			throw new BadRequestException;
+		}
+
+
+	}
+
+
 }

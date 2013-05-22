@@ -70,6 +70,16 @@ class User extends \Entity\BaseEntityDetails {
 		return $this->getRole() == Role::OWNER;
 	}
 
+	public function isSuperAdmin()
+	{
+		return $this->getRole() == Role::SUPERADMIN;
+	}
+
+	public function isTranslator()
+	{
+		return $this->getRole() == Role::TRANSLATOR;
+	}
+
 	public function getIdentityData()
 	{
 		$identity = [

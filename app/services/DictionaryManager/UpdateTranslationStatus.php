@@ -81,14 +81,17 @@ class UpdateTranslationStatus {
 			if($user == $translation->getLanguage()->getTranslator()) {
 				$phrase->setStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING);
 				$sourceTranslation->setStatus(Translation::WAITING_FOR_CHECKING);
-			} else {
+			} else if($user->isSuperAdmin()) {
 				$phrase->setStatus(Phrase::WAITING_FOR_CORRECTION);
 				$sourceTranslation->setStatus(Translation::WAITING_FOR_TRANSLATION);
+			} else {
+				$phrase->setStatus(Phrase::WAITING_FOR_CENTRAL);
+				$sourceTranslation->setStatus(Translation::UP_TO_DATE);
 			}
 
 			foreach($phrase->getTranslations() as $value) {
-				if($sourceAndCentralAreSame && $value == $sourceTranslation) continue;
-				if($value == $centralTranslation) continue;
+				//if($sourceAndCentralAreSame && $value == $sourceTranslation) continue;
+				if($value == $centralTranslation || $value == $sourceTranslation) continue;
 				$value->setStatus(Translation::WAITING_FOR_CENTRAL);
 			}
 		} else {

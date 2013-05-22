@@ -311,14 +311,21 @@ class Tools {
 	 *
 	 * @return array]
 	 */
-	public static function arrayMap(array $array, $value, $key = NULL)
+	public static function arrayMap(array $array, $keyOrValue, $value = NULL)
 	{
-		if(!is_scalar($value)) {
-			$valueCallbac = new Nette\Callback($value);
+		if(func_num_args() > 2) {
+			$key = $keyOrValue;
+		} else {
+			$key = NULL;
+			$value = $keyOrValue;
 		}
 
 		if($key !== NULL && !is_scalar($key)) {
 			$keyCallback = new Nette\Callback($key);
+		}
+
+		if(!is_scalar($value)) {
+			$valueCallbac = new Nette\Callback($value);
 		}
 
 		$return = [];

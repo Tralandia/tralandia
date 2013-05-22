@@ -220,8 +220,8 @@ class PhraseListPresenter extends BasePresenter {
 
 			$toLanguages = \Tools::arrayMap(
 				$translatorLanguages,
-				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());},
-				function($key, $value) {return $value->getId();}
+				function($key, $value) {return $value->getId();},
+				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
 			);
 			$showOptions = FALSE;
 		} else {
