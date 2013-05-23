@@ -39,10 +39,11 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		$emailCompiler->setTemplate($this->getTemplate('dictionary-request-translations'));
 		$emailCompiler->setLayout($this->getLayout());
 
+		$deadline = (new Nette\DateTime())->modify('+5 days')->format('Y-m-d');
 		$emailCompiler->addTranslator('translator', $user);
 		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
 		$emailCompiler->addCustomVariable('totalPrice', $wordsCount * $wordPrice);
-		$emailCompiler->addCustomVariable('deadline', new Nette\DateTime());
+		$emailCompiler->addCustomVariable('deadline', $deadline);
 
 		return $emailCompiler;
 	}
