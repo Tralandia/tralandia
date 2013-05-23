@@ -195,6 +195,7 @@ class PhraseContainer extends BaseContainer
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 
 		$values['changedTranslations'] = [];
+		$values['displayedTranslations'] = [];
 		foreach($values['to'] as $languageIso => $variations) {
 			$language = $languageRepository->findOneByIso($languageIso);
 			$variations = $variations['variations'];
@@ -205,6 +206,7 @@ class PhraseContainer extends BaseContainer
 			if($oldVariations != $variations) {
 				$values['changedTranslations'][] = $translation;
 			}
+			$values['displayedTranslations'][] = $translation;
 
 			$translation->setVariations($variations);
 		}

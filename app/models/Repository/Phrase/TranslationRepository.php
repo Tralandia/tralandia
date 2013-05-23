@@ -26,10 +26,9 @@ class TranslationRepository extends \Repository\BaseRepository {
 		if($languages !== NULL && !is_array($languages)) {
 			$languages = [$languages];
 		}
-		$qb = $this->_em->createQueryBuilder();
+		$qb = $this->createQueryBuilder();
 
-		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.status', ':status'))
+		$qb->where($qb->expr()->eq('e.status', ':status'))
 			->setParameter('status', Translation::WAITING_FOR_TRANSLATION);
 
 		if($languages) {
@@ -55,10 +54,9 @@ class TranslationRepository extends \Repository\BaseRepository {
 
 	public function toCheckCount(Language $language)
 	{
-		$qb = $this->_em->createQueryBuilder();
+		$qb = $this->createQueryBuilder();
 
-		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING)
+		$qb->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING)
 			->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 
 		$paginator = new Paginator($qb);
@@ -94,17 +92,31 @@ class TranslationRepository extends \Repository\BaseRepository {
 	}
 
 
-	public function calculateWordsCountToPay(Language $language)
+	public function findNotPaidQb(Language $language)
 	{
-		$qb = $this->_em->createQueryBuilder();
+		$qb = $this->createQueryBuilder();
 
-		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
+		$qb->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
 			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_PAYMENT);
 
 		$qb = $this->filterTranslatedTypes($qb);
 
+		return $qb;
+	}
+
+	public function findNotPaid(Language $language)
+	{
+		$qb = $this->findNotPaidQb($language);
+
 		$translations = $qb->getQuery()->getResult();
+
+		return $translations;
+	}
+
+
+	public function calculateWordsCountToPay(Language $language)
+	{
+		$translations = $this->findNotPaid($language);
 		$totalCount = 0;
 		/** @var $translation \Entity\Phrase\Translation */
 		foreach($translations as $translation) {

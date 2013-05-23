@@ -306,8 +306,8 @@ class Tools {
 
 	/**
 	 * @param array $array
-	 * @param string|array|Nette\Callback $value
-	 * @param string|array|Nette\Callback|null $key
+	 * @param string|array|Nette\Callback $keyOrValue
+	 * @param string|array|Nette\Callback|null $value
 	 *
 	 * @return array]
 	 */

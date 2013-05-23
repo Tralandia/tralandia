@@ -111,21 +111,20 @@ class UpdateStatusTest extends \Tests\TestCase
 
 	public function testOtherUpdated() {
 		$currency = $this->getEm()->getRepository(CURRENCY_ENTITY)->createNew();
+		/** @var $phrase Phrase */
+		$phrase = $currency->name;
 
-		$currency->name->status = Phrase::READY;
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			$value->status = Translation::UP_TO_DATE;
-		}
+		$phrase = $this->setUpToDate($phrase);
 
-		$deTranslation = $currency->name->getTranslation($this->de);
+		$deTranslation = $phrase->getTranslation($this->de);
 		$deTranslation->setTranslation('das ist ein test');
 
 		$this->updateTranslationStatus->translationUpdated($deTranslation, $this->translatorUser);
 
-		$this->assertEquals(Phrase::READY, $currency->name->status, 'Phrase Status not updated correctly.');
-		foreach ($currency->name->getTranslations() as $key => $value) {
-			if ($value == $this->de) {
-				$this->assertEquals(Translation::WAITING_FOR_CHECKING, $value->status, 'Translation Status not updated correctly.');
+		$this->assertEquals(Phrase::READY, $phrase->getStatus(), 'Phrase Status not updated correctly.');
+		foreach ($phrase->getTranslations() as $translation) {
+			if ($translation->getLanguage() == $this->de) {
+				$this->assertEquals(Translation::WAITING_FOR_CHECKING, $translation->getStatus(), 'Translation Status not updated correctly.');
 			}
 		}
 	}

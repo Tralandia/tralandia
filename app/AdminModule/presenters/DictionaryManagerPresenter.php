@@ -21,6 +21,12 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	protected $requestTranslationsSystemLogListener;
 
 	/**
+	 * @autowire
+	 * @var \Dictionary\MarkAsPaid
+	 */
+	protected $markAsPaid;
+
+	/**
 	 * @var array
 	 */
 	public $onRequestTranslations = [];
@@ -49,7 +55,10 @@ class DictionaryManagerPresenter extends AdminPresenter {
 			throw new BadRequestException;
 		}
 
+		$changedIds = $this->markAsPaid->mark($language, $this->loggedUser);
 
+		$this->flashMessage('Done! ' . count($changedIds) . ' translations mark as paid!', self::FLASH_SUCCESS);
+		$this->redirect('list');
 	}
 
 
