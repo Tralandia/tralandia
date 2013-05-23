@@ -7,6 +7,7 @@ use Entity\Language;
 use Entity\Location\Location;
 use Environment\Environment;
 use Nette\Application\Application;
+use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 use Mail\Variables;
 /**
@@ -47,13 +48,21 @@ class Compiler {
 	protected $customVariables = array();
 
 	/**
+	 * @var \TranslationTexy
+	 */
+	private $texy;
+
+
+	/**
 	 * @param \Environment\Environment $environment
 	 * @param \Nette\Application\Application $application
+	 * @param \TranslationTexy $texy
 	 */
-	public function __construct(Environment $environment, Application $application)
+	public function __construct(Environment $environment, Application $application, \TranslationTexy $texy)
 	{
 		$this->application = $application;
 		$this->setEnvironment($environment);
+		$this->texy = $texy;
 	}
 
 	/**
@@ -250,7 +259,9 @@ class Compiler {
 	protected function getCustomVariable($name)
 	{
 		if(!array_key_exists($name, $this->customVariables)) {
-			throw new \Nette\InvalidArgumentException("Custom variable '$name' does not exist.");
+			$e = new UndeclaredVariable("Custom variable '$name' does not exist.");
+			Debugger::log($e);
+			return NULL;
 		}
 
 		return $this->customVariables[$name];
@@ -309,6 +320,7 @@ class Compiler {
 		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
 		$environmentVariables = $this->getEnvironment();
 		$body = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
+		$body = $this->texy->process($body);
 		return str_replace('{include #content}', $body, $layout->getHtml());
 	}
 
@@ -363,3 +375,5 @@ interface ICompilerFactory {
 	 */
 	public function create(Environment $environment);
 }
+
+class UndeclaredVariable extends \Exception {}

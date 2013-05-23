@@ -13,7 +13,7 @@ abstract class BaseUserVariables extends Nette\Object {
 	/**
 	 * @var \Entity\User\User
 	 */
-	private $user;
+	protected $user;
 
 	/**
 	 * @param \Entity\User\User $user
@@ -39,7 +39,7 @@ abstract class BaseUserVariables extends Nette\Object {
 
 
 	public function getVariablePassword() {
-		$this->getUser()->getPassword();
+		$this->user->getPassword();
 	}
 
 }
