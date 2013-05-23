@@ -691,7 +691,7 @@
 		{var $replicator = $container->getComponent('list')}
 		{foreach $replicator->getComponents() as $component}
 			<div class="priceList">
-				{input $component['roomCount'] , class => ' pull-left'}
+				{input $component['bedroomCount'] , class => ' pull-left'}
 				{input $component['roomType'] , class => 'string pull-left'}
 				{input $component['bedCount'] , class => 'string pull-left'}
 				{input $component['extraBedCount'] , class => 'string pull-left'}

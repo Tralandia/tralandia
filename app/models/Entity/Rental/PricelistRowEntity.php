@@ -35,7 +35,7 @@ class PricelistRow extends \Entity\BaseEntity
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $roomCount = 0;
+	protected $bedroomCount = 0;
 
 	/**
 	 * @var Collection
@@ -161,9 +161,9 @@ class PricelistRow extends \Entity\BaseEntity
 	 * @param integer
 	 * @return \Entity\Rental\PricelistRow
 	 */
-	public function setRoomCount($roomCount)
+	public function setBedroomCount($bedroomCount)
 	{
-		$this->roomCount = $roomCount;
+		$this->bedroomCount = $bedroomCount;
 
 		return $this;
 	}
@@ -171,9 +171,9 @@ class PricelistRow extends \Entity\BaseEntity
 	/**
 	 * @return integer|NULL
 	 */
-	public function getRoomCount()
+	public function getBedroomCount()
 	{
-		return $this->roomCount;
+		return $this->bedroomCount;
 	}
 
 	/**
