@@ -35,7 +35,7 @@ class PricelistRow extends \Entity\BaseEntity
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $roomCount = 0;
+	protected $bedroomCount = 0;
 
 	/**
 	 * @var Collection
@@ -93,12 +93,12 @@ class PricelistRow extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\PricelistRow
@@ -109,7 +109,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -119,7 +119,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -127,7 +127,7 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\PricelistRow
@@ -138,7 +138,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -148,7 +148,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -156,26 +156,26 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->sort;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\PricelistRow
 	 */
-	public function setRoomCount($roomCount)
+	public function setBedroomCount($bedroomCount)
 	{
-		$this->roomCount = $roomCount;
+		$this->bedroomCount = $bedroomCount;
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
-	public function getRoomCount()
+	public function getBedroomCount()
 	{
-		return $this->roomCount;
+		return $this->bedroomCount;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\RoomType
 	 * @return \Entity\Rental\PricelistRow
@@ -186,7 +186,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -196,7 +196,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\RoomType|NULL
 	 */
@@ -204,7 +204,7 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->roomType;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\PricelistRow
@@ -215,7 +215,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -223,7 +223,7 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->bedCount;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\PricelistRow
@@ -234,7 +234,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

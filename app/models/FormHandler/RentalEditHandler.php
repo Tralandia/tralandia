@@ -48,7 +48,7 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['placement']) {
 			$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 			$placementEntity = $placementRepository->find($value);
-			$rental->placement = $placementEntity;
+			$rental->addPlacement($placementEntity);
 		}
 
 		if ($value = $values['type']) {
@@ -59,7 +59,7 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['photos']) {
 			 if (isset($value->upload) && count($value->upload)) {
 				 foreach($value->upload as $upload) {
-					 d($upload);
+					 d($upload->getError());
 				 }
 			 }
 		}

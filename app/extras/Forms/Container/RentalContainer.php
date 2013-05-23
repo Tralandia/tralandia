@@ -259,6 +259,7 @@ class RentalContainer extends BaseContainer
 		$values = $form->getFormattedValues();
 
 		$rentalValues = $values->rental;
+
 		// $photosSort = $rentalValues->photos->sort;
 		// if (count($photosSort) < 3) {
 		// 	$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
