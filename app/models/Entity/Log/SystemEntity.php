@@ -12,12 +12,14 @@ use	Extras\Annotation as EA;
  */
 class System extends \Entity\BaseEntityDetails {
 
+	const TRANSLATION_INVOICE_REQUEST = 'translationInvoiceRequest';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -29,7 +31,7 @@ class System extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $comment;
-	
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\AmenityType
@@ -43,12 +45,12 @@ class System extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -56,7 +58,7 @@ class System extends \Entity\BaseEntityDetails {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Log\System
@@ -67,7 +69,7 @@ class System extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Log\System
 	 */
@@ -77,7 +79,7 @@ class System extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -85,7 +87,7 @@ class System extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Log\System
@@ -96,7 +98,7 @@ class System extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Log\System
 	 */
@@ -106,7 +108,7 @@ class System extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

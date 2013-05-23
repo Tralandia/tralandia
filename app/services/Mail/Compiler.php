@@ -108,13 +108,13 @@ class Compiler {
 		$location = new Variables\LocationVariables($environment->getPrimaryLocation());
 		$language = new Variables\LanguageVariables($environment->getLanguage());
 
-		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language, $this->application);
+		$this->variables['environment'] = new Variables\EnvironmentVariables($location, $language, $this->application);
 		return $this;
 	}
 
 	private function getEnvironment()
 	{
-		return $this->variables['env'];
+		return $this->variables['environment'];
 	}
 
 	/**
@@ -174,6 +174,19 @@ class Compiler {
 	public function addOwner($variableName, \Entity\User\User $user)
 	{
 		$this->variables[$variableName] = new Variables\OwnerVariables($user);
+		return $this;
+	}
+
+
+	/**
+	 * @param $variableName
+	 * @param \Entity\User\User $user
+	 *
+	 * @return $this
+	 */
+	public function addTranslator($variableName, \Entity\User\User $user)
+	{
+		$this->variables[$variableName] = new Variables\TranslatorVariables($user);
 		return $this;
 	}
 
@@ -240,7 +253,7 @@ class Compiler {
 			throw new \Nette\InvalidArgumentException("Custom variable '$name' does not exist.");
 		}
 
-		return $this->customVariables[$name];				
+		return $this->customVariables[$name];
 	}
 
 	/**
@@ -293,9 +306,9 @@ class Compiler {
 	 */
 	protected function buildHtml(\Entity\Email\Layout $layout, \Entity\Email\Template $template)
 	{
-		/** @var $envVariables \Mail\Variables\EnvironmentVariables */
-		$envVariables = $this->getVariable('env');
-		$body = $template->getBody()->getTranslationText($envVariables->getLanguageEntity(), TRUE);
+		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
+		$environmentVariables = $this->getEnvironment();
+		$body = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
 		return str_replace('{include #content}', $body, $layout->getHtml());
 	}
 

@@ -306,19 +306,26 @@ class Tools {
 
 	/**
 	 * @param array $array
-	 * @param string|array|Nette\Callback $value
-	 * @param string|array|Nette\Callback|null $key
+	 * @param string|array|Nette\Callback $keyOrValue
+	 * @param string|array|Nette\Callback|null $value
 	 *
 	 * @return array]
 	 */
-	public static function arrayMap(array $array, $value, $key = NULL)
+	public static function arrayMap(array $array, $keyOrValue, $value = NULL)
 	{
-		if(!is_scalar($value)) {
-			$valueCallbac = new Nette\Callback($value);
+		if(func_num_args() > 2) {
+			$key = $keyOrValue;
+		} else {
+			$key = NULL;
+			$value = $keyOrValue;
 		}
 
 		if($key !== NULL && !is_scalar($key)) {
 			$keyCallback = new Nette\Callback($key);
+		}
+
+		if(!is_scalar($value)) {
+			$valueCallbac = new Nette\Callback($value);
 		}
 
 		$return = [];

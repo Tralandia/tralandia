@@ -94,6 +94,12 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $translator;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $translationPrice;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
 	 */
@@ -455,6 +461,35 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getTranslator()
 	{
 		return $this->translator;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Language
+	 */
+	public function setTranslationPrice($translationPrice)
+	{
+		$this->translationPrice = $translationPrice;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Language
+	 */
+	public function unsetTranslationPrice()
+	{
+		$this->translationPrice = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getTranslationPrice()
+	{
+		return $this->translationPrice;
 	}
 		
 	/**
