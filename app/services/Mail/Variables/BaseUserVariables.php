@@ -37,4 +37,9 @@ abstract class BaseUserVariables extends Nette\Object {
 		return $this->user->getLogin();
 	}
 
+
+	public function getVariablePassword() {
+		$this->getUser()->getPassword();
+	}
+
 }

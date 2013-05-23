@@ -7,6 +7,7 @@ use Entity\Currency;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Nette\Application\BadRequestException;
+use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
 class PhraseListPresenter extends BasePresenter {
@@ -126,6 +127,8 @@ class PhraseListPresenter extends BasePresenter {
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
 
+		$this->editableLanguages = [$language];
+
 		$this->specialOption = [
 			'label' => 'Checked',
 			'type' => 'checked',
@@ -135,6 +138,8 @@ class PhraseListPresenter extends BasePresenter {
 		$editForm->setDefaults([
 			'toLanguages' => $language->getId()
 		]);
+
+		$editForm['toLanguages']->setDisabled();
 
 		$this->template->headerText = 'Checking ' . Strings::upper($language->getIso());
 	}
@@ -220,8 +225,8 @@ class PhraseListPresenter extends BasePresenter {
 
 			$toLanguages = \Tools::arrayMap(
 				$translatorLanguages,
-				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());},
-				function($key, $value) {return $value->getId();}
+				function($key, $value) {return $value->getId();},
+				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
 			);
 			$showOptions = FALSE;
 		} else {
@@ -266,12 +271,21 @@ class PhraseListPresenter extends BasePresenter {
 		$phraseRepository = $this->phraseRepository;
 		$values = $form->getValues(TRUE);
 
+
 		foreach($values['list'] as $phraseId => $values) {
+			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
+			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
 			//$phrase = $phraseValues['phrase'];
 
-			foreach($phraseValues['changedTranslations'] as $translation) {
-				$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+			if($specialOptionType == 'translated' && $specialOptionValue) {
+				foreach($phraseValues['displayedTranslations'] as $translation) {
+					$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+				}
+			} else if($specialOptionType == 'checked' && $specialOptionValue) {
+				foreach($phraseValues['displayedTranslations'] as $translation) {
+					$translation->setStatus(Translation::WAITING_FOR_PAYMENT);
+				}
 			}
 
 		}

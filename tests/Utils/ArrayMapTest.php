@@ -40,9 +40,9 @@ class ArrayMapTest extends TestCase
 	{
 		$array = [['id' => 1],['id' => 2],['id' => 3]];
 
-		$array = \Tools::arrayMap($array, 'id', function($key, $value) {
+		$array = \Tools::arrayMap($array, function($key, $value) {
 			return $value['id'];
-		});
+		}, 'id');
 
 		$expected = [1 => 1,2,3];
 

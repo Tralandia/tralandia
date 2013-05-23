@@ -70,6 +70,16 @@ class User extends \Entity\BaseEntityDetails {
 		return $this->getRole() == Role::OWNER;
 	}
 
+	public function isSuperAdmin()
+	{
+		return $this->getRole() == Role::SUPERADMIN;
+	}
+
+	public function isTranslator()
+	{
+		return $this->getRole() == Role::TRANSLATOR;
+	}
+
 	public function getIdentityData()
 	{
 		$identity = [
@@ -92,14 +102,14 @@ class User extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -110,7 +120,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -120,7 +130,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -128,7 +138,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->login;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -139,7 +149,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -149,7 +159,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -157,7 +167,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->password;
 	}
-		
+
 	/**
 	 * @param \Entity\User\Role
 	 * @return \Entity\User\User
@@ -168,7 +178,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -178,7 +188,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\Role|NULL
 	 */
@@ -186,7 +196,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->role;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
@@ -197,7 +207,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -207,7 +217,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -215,7 +225,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->primaryLocation;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\User\User
@@ -226,7 +236,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -236,7 +246,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -244,7 +254,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\User
@@ -258,7 +268,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\User
@@ -270,7 +280,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
@@ -278,7 +288,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->rentals;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\User\User
@@ -289,7 +299,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -299,7 +309,7 @@ class User extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */

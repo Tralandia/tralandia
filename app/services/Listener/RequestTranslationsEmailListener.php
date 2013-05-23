@@ -3,6 +3,7 @@ namespace Listener;
 
 use AdminModule\DictionaryManagerPresenter;
 use Entity\Language;
+use Entity\User\User;
 use Environment\Environment;
 use Nette;
 
@@ -11,14 +12,14 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 
 	public function getSubscribedEvents()
 	{
-		return ['AdminModule\DictionaryManagerPresenter::onRequestTranslations'];
+		return ['AdminModule\Grids\Dictionary\ManagerGrid::onRequestTranslations'];
 	}
 
-	public function onRequestTranslations(Language $language)
+	public function onRequestTranslations(Language $language, $wordsCountToPay, User $requestedBy)
 	{
 		$message = new \Nette\Mail\Message();
 
-		$emailCompiler = $this->prepareCompiler($language);
+		$emailCompiler = $this->prepareCompiler($language, $wordsCountToPay);
 		$body = $emailCompiler->compileBody();
 
 		$user = $language->getTranslator();
@@ -30,12 +31,18 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 	}
 
 
-	private function prepareCompiler(Language $language)
+	private function prepareCompiler(Language $language, $wordsCount)
 	{
 		$user = $language->getTranslator();
+		$wordPrice = $language->getTranslationPrice();
 		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('dictionary-request-translations'));
 		$emailCompiler->setLayout($this->getLayout());
+
+		$emailCompiler->addTranslator('translator', $user);
+		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
+		$emailCompiler->addCustomVariable('totalPrice', $wordsCount * $wordPrice);
+		$emailCompiler->addCustomVariable('deadline', new Nette\DateTime());
 
 		return $emailCompiler;
 	}

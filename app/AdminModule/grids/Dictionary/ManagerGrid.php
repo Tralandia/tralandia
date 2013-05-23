@@ -15,6 +15,7 @@ class ManagerGrid extends AdminGridControl {
 
 	public function __construct(DictionaryManagerDataSource $dataSource) {
 		$this->dataSource = $dataSource;
+		parent::__construct();
 	}
 
 	public function render() {

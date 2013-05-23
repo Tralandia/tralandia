@@ -258,6 +258,7 @@ services:
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 	dictionary.fulltextSearch: Dictionary\FulltextSearch
+	dictionary.markAsPaid: Dictionary\MarkAsPaid
 
 	device: Device
 	deviceDetect: Mobile_Detect
