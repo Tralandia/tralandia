@@ -14,6 +14,11 @@ class RentalPriceUploadContainer extends BaseContainer
 	protected $rental;
 
 	/**
+	 * @var \Entity\Rental\Pricelist
+	 */
+	protected $pricelists;
+
+	/**
 	 * @var \RentalPriceListManager
 	 */
 	protected $manager;
@@ -27,10 +32,9 @@ class RentalPriceUploadContainer extends BaseContainer
 		$this->rental = $rental;
 		$this->manager = $manager;
 		$this->em = $em;
+		$this->pricelists = $this->rental->getPricelists();
 
-		$pricelistsCount = count($this->rental->getPricelists());
-		$pricelistsCount = ($pricelistsCount < 2) ? 2 : $pricelistsCount;
-		$this->addDynamic('list', $this->containerBuilder, $pricelistsCount);
+		$this->addDynamic('list', $this->containerBuilder, 0);
 		$this->setDefaultsValues();
 	}
 
@@ -73,20 +77,27 @@ class RentalPriceUploadContainer extends BaseContainer
 
 	public function setDefaultsValues()
 	{
+		$count=0;
 		$priceLists = [];
-		$data = $this->rental->getPricelists();
-		foreach($data as $pricelist) {
+		foreach($this->pricelists as $pricelist) {
 			$priceLists[] = [
 				'name' => $pricelist->name,
 				'language' => $pricelist->language,
 				'file' => $pricelist->filePath,
 				'entity' => $pricelist->id
 			];
+			$count++;
 		}
 
-		$defaults = $priceLists;
+		$rowsCount = ($count==0) ? (2) : ($count+1);
 
-		$this->setDefaults($defaults);
+		for($i=0; $i < $rowsCount; $i++) {
+			$defaults = [];
+			if (array_key_exists($i, $priceLists)) {
+				$defaults = $priceLists[$i];
+			}
+			$this['list'][$i]->setValues($defaults);
+		}
 	}
 
 	public function getMainControl()

@@ -18,6 +18,11 @@ class RentalPriceListContainer extends BaseContainer
 	protected $rental;
 
 	/**
+	 * @var \Entity\Rental\PricelistRow
+	 */
+	protected $pricelistRows;
+
+	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
@@ -47,6 +52,7 @@ class RentalPriceListContainer extends BaseContainer
 		$this->translator = $translator;
 		$this->currency = $currency;
 		$this->roomTypes = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->getForSelect($translator, $collator);
+		$this->pricelistRows = $this->rental->getPricelistRows();
 
 		$maxCount = 51;
 
@@ -56,13 +62,14 @@ class RentalPriceListContainer extends BaseContainer
 			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
 		}
 
-		$this->addDynamic('list', $this->containerBuilder,2);
+		$this->addDynamic('list', $this->containerBuilder, 0);
+		$this->setDefaultsValues();
 	}
 
 
 	public function containerBuilder(Container $container)
 	{
-		$container->addSelect('roomCount', '', $this->roomCount);
+		$container->addSelect('bedroomCount', '', $this->roomCount);
 		$container->addSelect('roomType', '', $this->roomTypes);
 		$container->addSelect('bedCount', '', $this->bedCount);
 		$container->addSelect('extraBedCount', '', $this->extraBedCount);
@@ -92,7 +99,7 @@ class RentalPriceListContainer extends BaseContainer
 					$rowEntity = $pricelistRowRepository->createNew();
 				}
 				$rowEntity->rental = $this->rental;
-				$rowEntity->roomCount = $row['roomCount'];
+				$rowEntity->bedroomCount = $row['bedroomCount'];
 				$rowEntity->roomType = $roomTypeRepository->find($row['roomType']);
 				$rowEntity->bedCount = $row['bedCount'];
 				$rowEntity->extraBedCount = $row['extraBedCount'];
@@ -103,6 +110,32 @@ class RentalPriceListContainer extends BaseContainer
 			}
 		}
 		return $values;
+	}
+
+	public function setDefaultsValues()
+	{
+		$count=0;
+		$priceLists = [];
+		foreach($this->pricelistRows as $pricelistRow) {
+			$priceLists[] = [
+				'bedroomCount' => $pricelistRow->getBedroomCount(),
+				'roomType' => $pricelistRow->getRoomType(),
+				'bedCount' => $pricelistRow->getBedCount(),
+				'extraBedCount' => $pricelistRow->getExtraBedCount(),
+				'price' => $pricelistRow->getPrice()
+			];
+			$count++;
+		}
+
+		$rowsCount = ($count==0) ? (2) : ($count+1);
+
+		for($i=0; $i < $rowsCount; $i++) {
+			$defaults = [];
+			if (array_key_exists($i, $priceLists)) {
+				$defaults = $priceLists[$i];
+			}
+			$this['list'][$i]->setValues($defaults);
+		}
 	}
 
 
