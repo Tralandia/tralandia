@@ -91,6 +91,16 @@ class User extends \Entity\BaseEntityDetails {
 		return $identity;
 	}
 
+
+	/**
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->getLogin();
+	}
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */

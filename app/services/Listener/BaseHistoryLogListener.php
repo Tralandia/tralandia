@@ -9,7 +9,7 @@ use Nette;
 use Nette\Mail\IMailer;
 use Doctrine\ORM\EntityManager;
 
-abstract class BaseSystemLogListener extends Nette\Object implements \Kdyby\Events\Subscriber
+abstract class BaseHistoryLogListener extends Nette\Object implements \Kdyby\Events\Subscriber
 {
 
 	/**
@@ -30,12 +30,12 @@ abstract class BaseSystemLogListener extends Nette\Object implements \Kdyby\Even
 	/**
 	 * @param $slug
 	 *
-	 * @return \Entity\Log\System
+	 * @return \Entity\Log\History
 	 */
 	protected function createLog($slug)
 	{
-		/** @var $log \Entity\Log\System */
-		$log = $this->em->getRepository(SYSTEM_LOG_ENTITY)->createNew();
+		/** @var $log \Entity\Log\History */
+		$log = $this->em->getRepository(HISTORY_LOG_ENTITY)->createNew();
 		$log->setSlug($slug);
 		return $log;
 	}
