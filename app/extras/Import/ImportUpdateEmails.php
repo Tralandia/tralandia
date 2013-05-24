@@ -50,7 +50,7 @@ class ImportUpdateEmails extends BaseImport {
 			],
 			'dictionary-request-translations' => [
 				'ns' => 'wordCount',
-				'priceNS' => 'wordPrice',
+				'priceNS' => 'language_wordPrice',
 				'priceTotal' => 'totalPrice',
 				'deadline' => 'deadline',
 				'email' => 'translator_email',
