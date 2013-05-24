@@ -4,13 +4,18 @@ namespace Entity\Log;
 
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
+use Nette\Utils\Arrays;
+use Nette\Utils\Json;
+use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="log_system")
- * @EA\Generator(skip="{setSlug}")
+ * @ORM\Table(name="log_history")
+ * @EA\Generator(skip="{setSlug, setData, getData}")
  */
-class System extends \Entity\BaseEntityDetails {
+class History extends \Entity\BaseEntity {
+
+	const TRANSLATION_INVOICE_REQUEST = 'translationInvoiceRequest';
 
 	/**
 	 * @var string
@@ -31,6 +36,12 @@ class System extends \Entity\BaseEntityDetails {
 	protected $comment;
 
 	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $data;
+
+	/**
 	 * @param string
 	 * @return \Entity\Rental\AmenityType
 	 */
@@ -39,6 +50,24 @@ class System extends \Entity\BaseEntityDetails {
 		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
 		return $this;
+	}
+	/**
+	 * @param string
+	 * @return \Entity\Log\History
+	 */
+	public function setData($data)
+	{
+		$this->data = Json::encode($data);
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getData()
+	{
+		return Json::decode($this->data);
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -59,7 +88,7 @@ class System extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @param string
-	 * @return \Entity\Log\System
+	 * @return \Entity\Log\History
 	 */
 	public function setName($name)
 	{
@@ -69,7 +98,7 @@ class System extends \Entity\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Entity\Log\System
+	 * @return \Entity\Log\History
 	 */
 	public function unsetName()
 	{
@@ -88,7 +117,7 @@ class System extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @param string
-	 * @return \Entity\Log\System
+	 * @return \Entity\Log\History
 	 */
 	public function setComment($comment)
 	{
@@ -98,7 +127,7 @@ class System extends \Entity\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Entity\Log\System
+	 * @return \Entity\Log\History
 	 */
 	public function unsetComment()
 	{
@@ -114,4 +143,15 @@ class System extends \Entity\BaseEntityDetails {
 	{
 		return $this->comment;
 	}
+
+	/**
+	 * @return \Entity\Log\History
+	 */
+	public function unsetData()
+	{
+		$this->data = NULL;
+
+		return $this;
+	}
+
 }
