@@ -16,9 +16,9 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 	/**
 	 * @autowire
-	 * @var \Listener\RequestTranslationsSystemLogListener
+	 * @var \Listener\RequestTranslationsHistoryLogListener
 	 */
-	protected $requestTranslationsSystemLogListener;
+	protected $requestTranslationsHistoryLogListener;
 
 	/**
 	 * @autowire
@@ -40,7 +40,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsCountToPay($language);
 
-		$this->requestTranslationsSystemLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
+		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
 		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
 
 		$this->flashMessage('Request sent!');

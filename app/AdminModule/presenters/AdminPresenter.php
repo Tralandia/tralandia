@@ -10,10 +10,10 @@ use Nette, Extras, Service, Entity, TwiGrid;
  */
 class AdminPresenter extends BasePresenter {
 
-	/** @var Extras\Presenter\Settings */
+	/** @var \Extras\Presenter\Settings */
 	protected $settings;
 
-	/** @var Doctrine\ORM\EntityRepository */
+	/** @var \Doctrine\ORM\EntityRepository */
 	protected $repository;
 
 	/** @var string */

@@ -24,7 +24,7 @@ class AdvancedPhrase extends BaseControl {
 			'box' => 'div class=input-prepend',
 			'addOn' => 'span class=add-on',
 			'inputClass' => 'span3 text input-arge'
-		)
+		),
 	);
 
 	/**
@@ -76,7 +76,7 @@ class AdvancedPhrase extends BaseControl {
 				$wrapperBox->add($box);
 			}
 		}
-		
+
 		return $wrapperBox;
 	}
 
