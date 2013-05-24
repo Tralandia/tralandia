@@ -81,7 +81,7 @@ class ImportRentalImages extends BaseImport {
 			try {
 				$imageEntity = $context->rentalImageManager->saveFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
 				$path = $imageEntity->getFilePath();
-				echo($path.'<br>')
+				echo($path.'<br>');
 				qNew('update __importImages set status = "imported", newPath = "'.$path.'" where id = '.$x['id']);
 				$model->persist($imageEntity);
 			} catch (Nette\UnknownImageFileException $e) {
