@@ -19,9 +19,10 @@ class LanguageGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
-		$grid->addColumn('supported', 'Supported');
-		$grid->addColumn('iso', 'Iso');
-		$grid->addColumn('name', 'Name');
+		$grid->addColumn('iso');
+		$grid->addColumn('name');
+		$grid->addColumn('supported');
+		$grid->addColumn('live');
 
 		return $grid;
 	}

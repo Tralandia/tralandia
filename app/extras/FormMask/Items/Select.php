@@ -35,6 +35,7 @@ class Select extends Text {
 	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Translator $translator) {
 		parent::__construct($name, $label, $entity);
 		$this->translator = $translator;
+		$this->setValueUnSetter(new Extras\Callback($entity, $this->unSetterMethodName($this->name)));
 	}
 
 	/**
@@ -134,7 +135,10 @@ class Select extends Text {
 
 		if ($this->getValueSetter()) {
 			$value = $form->getComponent($this->getName())->getValue();
-			$this->setValue($this->repositoryAccessor->get()->find($value));
+			if($value !== NULL) {
+				$value = $this->repositoryAccessor->get()->find($value);
+			}
+			$this->setValue($value);
 		}
 	}
 }

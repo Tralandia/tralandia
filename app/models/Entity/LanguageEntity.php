@@ -94,8 +94,8 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $translator;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $translationPrice;
 
@@ -175,14 +175,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Language
@@ -193,7 +193,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -201,7 +201,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Language
@@ -212,7 +212,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -222,7 +222,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -230,7 +230,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->iso;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Language
@@ -241,7 +241,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -251,7 +251,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -259,7 +259,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->supported;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Language
@@ -270,7 +270,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -280,7 +280,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -288,7 +288,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->live;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Language
@@ -299,7 +299,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -309,7 +309,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -317,7 +317,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->defaultCollation;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Language
@@ -328,7 +328,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -338,7 +338,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -346,7 +346,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->genders;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Language
@@ -357,7 +357,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -367,7 +367,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -375,7 +375,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->plurals;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Language
@@ -386,7 +386,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -396,7 +396,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -404,7 +404,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->ppcPatterns;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Language
@@ -415,7 +415,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -425,7 +425,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -433,7 +433,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->variationDetails;
 	}
-		
+
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Language
@@ -444,7 +444,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -454,7 +454,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
@@ -462,7 +462,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->translator;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Language
@@ -473,7 +473,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -483,7 +483,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -491,7 +491,7 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return $this->translationPrice;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Language
@@ -504,7 +504,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Language
@@ -515,7 +515,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
