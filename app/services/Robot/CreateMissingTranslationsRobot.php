@@ -57,6 +57,7 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 				/** @var $phrase \Entity\Phrase\Phrase */
 				foreach ($missing[$language->id] as $phrase) {
 					$translation = $phrase->createTranslation($language);
+					$this->phraseRepository->persist($translation);
 				}
 			}
 		}
