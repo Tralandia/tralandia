@@ -158,7 +158,7 @@ class ImportLocations extends BaseImport {
 
 		// Countries
 
-		$dictionaryType = $this->createPhraseType('\Location\TypeService', 'name', 'ACTIVE');
+		$dictionaryType = $this->createPhraseType('\Location\Type', 'name', 'ACTIVE');
 
 		$locationTypeCountry = $this->context->locationTypeEntityFactory->create();
 		$locationTypeCountry->name = $this->createNewPhrase($dictionaryType, 865);

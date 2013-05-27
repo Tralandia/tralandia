@@ -17,7 +17,7 @@ class BaseImport {
 		'rentalImages' => array(
 			'entities' => array(
 			),
-			'subsections' => array('importTodos', 'importImages', 'importClearImages'),
+			'subsections' => array('importTodos', 'importImages', 'importClearImages', 'importRemoveDuplicateImages'),
 			'saveImportStatus' => FALSE,
 		),
 		'phraseType' => array(
