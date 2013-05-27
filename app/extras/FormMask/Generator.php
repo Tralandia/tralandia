@@ -18,10 +18,11 @@ class Generator extends Nette\Object {
 	/** @var array */
 	protected $factories = array();
 
+
 	/**
-	 * @param Extras\FormMask\Mask
+	 * @param Mask $mask
 	 */
-	public function __construct(Extras\FormMask\Mask $mask) {
+	public function __construct(Mask $mask) {
 		$this->mask = $mask;
 	}
 
@@ -32,14 +33,14 @@ class Generator extends Nette\Object {
 	public function build() {
 		foreach ($this->factories as $factory) {
 			$item = $factory->object->create($factory->field->getName(), $factory->field->getLabel(), $this->entity);
-			
+
 			// nastavenie validatorov
 			if ($factory->field->getValidators()) {
 				$item->setValidators($factory->field->getValidators());
 			}
 
 			if ($factory->field->isControlDisabled()) {
-				$item->setDisabled(true);
+				$item->setDisabled(TRUE);
 			}
 
 			// nastavenie veci pre ziskanie itemov ku selektu
@@ -48,6 +49,7 @@ class Generator extends Nette\Object {
 				$params = $factory->field->getControlOption('items');
 				$method = array_shift($params);
 				$item->setItems($method, $params);
+				$item->prompt = $factory->field->getControlOption('prompt');
 			}
 
 			$this->mask->addItem($item);
@@ -68,7 +70,7 @@ class Generator extends Nette\Object {
 
 	/**
 	 * Getter form mask
-	 * @param Extras\FormMask\Items\Foctories\IFactory 
+	 * @param Extras\FormMask\Items\Foctories\IFactory
 	 * @param Extras\Config\Field
 	 * @return Generator
 	 */

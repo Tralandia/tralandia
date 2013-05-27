@@ -21,6 +21,9 @@ abstract class Base {
 	/** @var Extras\Callback */
 	protected $valueSetter;
 
+	/** @var Extras\Callback */
+	protected $valueUnSetter;
+
 	/** @var array */
 	protected $validators = array();
 
@@ -75,6 +78,12 @@ abstract class Base {
 	 * @return mixed
 	 */
 	public function setValue($value) {
+		if($value === NULL) {
+			$valueUnSetter = $this->getValueUnSetter();
+			if ($valueUnSetter) {
+				return $valueUnSetter->invoke($value);
+			}
+		}
 		if (!is_callable($this->getValueSetter())) {
 			throw new Nette\InvalidStateException("Nebol zadaný callback settera hodnot.");
 		}
@@ -117,6 +126,19 @@ abstract class Base {
 		return $this->valueSetter;
 	}
 
+	public function setValueUnSetter(Extras\Callback $valueUnSetter = null) {
+		$this->valueUnSetter = $valueUnSetter;
+		return $this;
+	}
+
+	/**
+	 * Getter settera hodnot
+	 * @return Extras\Callback
+	 */
+	public function getValueUnSetter() {
+		return $this->valueUnSetter;
+	}
+
 	/**
 	 * @return array
 	 */
@@ -150,6 +172,15 @@ abstract class Base {
 	 */
 	protected function setterMethodName($name) {
 		return 'set' . ucfirst($name);
+	}
+
+	/**
+	 * Vrati nazov setter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function unSetterMethodName($name) {
+		return 'unset' . ucfirst($name);
 	}
 
 	/**

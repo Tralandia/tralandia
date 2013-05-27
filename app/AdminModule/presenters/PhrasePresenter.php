@@ -4,33 +4,31 @@ namespace AdminModule;
 
 
 use Entity\User\Role;
+use Nette\Application\BadRequestException;
 
 class PhrasePresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \BaseModule\Forms\ISimpleFormFactory
+	 * @var \Service\Phrase\PhraseCreator
 	 */
-	protected $simpleFormFactory;
+	protected $phraseCreator;
 
-	/**
-	 * @autowire
-	 * @var \ResultSorter
-	 */
-	protected $resultSorter;
+	protected $phrase;
 
-	/**
-	 * @autowire
-	 * @var \SupportedLanguages
-	 */
-	protected $supportedLanguages;
 
-	protected $phraseRepositoryAccessor;
+	public function actionAdd($type)
+	{
+		$phraseRepository = $this->em->getRepository(PHRASE_ENTITY);
+		$phraseTypeRepository = $this->em->getRepository(PHRASE_TYPE_ENTITY);
+		$type = $phraseTypeRepository->findOneBy(['entityName' => $type]);
+		if(!$type) {
+			throw new BadRequestException;
+		}
 
-	public $phrase;
-
-	public function injectDic(\Nette\DI\Container $dic) {
-		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+		$phrase = $this->phraseCreator->create($type);
+		$phraseRepository->save($phrase);
+		$this->redirect('PhraseList:searchId', ['id' => $phrase->getId()]);
 	}
 
 }

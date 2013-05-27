@@ -260,6 +260,9 @@ services:
 	dictionary.fulltextSearch: Dictionary\FulltextSearch
 	dictionary.markAsPaid: Dictionary\MarkAsPaid
 
+
+	phraseCreator: Service\Phrase\PhraseCreator
+
 	device: Device
 	deviceDetect: Mobile_Detect
 
@@ -493,6 +496,10 @@ factories:
 	rentalGridFactory:
 		class: AdminModule\Grids\RentalGrid
 		implement: AdminModule\Grids\IRentalGridFactory
+
+	rentalTypeGridFactory:
+		class: AdminModule\Grids\RentalTypeGrid(@rentalTypeRepositoryAccessor::get())
+		implement: AdminModule\Grids\IRentalTypeGridFactory
 
 	amenityGridFactory:
 		class: AdminModule\Grids\AmenityGrid

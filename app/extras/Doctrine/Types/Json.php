@@ -2,7 +2,7 @@
 
 namespace Doctrine\Types;
 
-use Doctrine\DBAL\Types\Type, 
+use Doctrine\DBAL\Types\Type,
 	Doctrine\DBAL\Platforms\AbstractPlatform,
 	Nette\Utils as NU;
 
@@ -18,7 +18,12 @@ class Json extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return NU\Json::decode($value, NU\Json::FORCE_ARRAY);
+		try {
+			$array = NU\Json::decode($value, NU\Json::FORCE_ARRAY);
+		} catch(NU\JsonException $e) {
+			$array = $value;
+		}
+		return $array;
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {

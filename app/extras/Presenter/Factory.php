@@ -9,6 +9,10 @@ class Factory extends Nette\Application\PresenterFactory {
 	/** @var string */
 	private $tempDir;
 
+	/** @var array */
+	private $cache = array();
+
+
 	/**
 	 * @param  string
 	 */

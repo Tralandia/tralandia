@@ -2,6 +2,9 @@
 
 namespace Robot;
 
+use Doctrine\ORM\EntityManager;
+use Entity\Language;
+
 
 /**
  * MissingTranslationsRobot class
@@ -12,33 +15,53 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 
 	protected $phraseDecoratorFactory;
 
-	protected $phraseRepositoryAccessor;
-	protected $languageRepositoryAccessor;
+	/**
+	 * @var \Repository\Phrase\PhraseRepository
+	 */
+	protected $phraseRepository;
 
-	public function inject(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
-	}
+	/**
+	 * @var \Repository\LanguageRepository
+	 */
+	protected $languageRepository;
 
-	public function injectDic(\Nette\DI\Container $dic) {
-		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+	public function __construct(EntityManager $em)
+	{
+		$this->phraseRepository = $em->getRepository(PHRASE_ENTITY);
+		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 	}
 
 	public function needToRun() {
-		return true;
+		return TRUE;
 	}
 
 	public function run() {
 		$missing = $this->phraseRepositoryAccessor->get()->findMissingTranslations();
+		return $this->_run($missing);
+	}
 
-		$langauges = $this->languageRepositoryAccessor->get()->findById(array_keys($missing));
-		foreach ($langauges as $language) {
-			foreach ($missing[$language->id] as $phrase) {
-				$phraseService = $this->phraseDecoratorFactory->create($phrase);
-				$translaion = $phraseService->createTranslation($language);
+
+	public function runFor(Language $language)
+	{
+		$missing = [];
+		$missing[$language->getId()] = $this->phraseRepository->findMissingTranslationsBy($language);
+		return $this->_run($missing);
+	}
+
+
+	protected function _run($missing)
+	{
+		$languages = $this->languageRepository->findSupported();
+		foreach ($languages as $language) {
+			if(isset($missing[$language->id])) {
+				/** @var $phrase \Entity\Phrase\Phrase */
+				foreach ($missing[$language->id] as $phrase) {
+					$translation = $phrase->createTranslation($language);
+					$this->phraseRepository->persist($translation);
+				}
 			}
 		}
-		$this->phraseRepositoryAccessor->get()->flush();
+		$this->phraseRepository->flush();
 
 		return $missing;
 	}

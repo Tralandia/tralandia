@@ -63,7 +63,10 @@ class PhraseContainer extends BaseContainer
 	public function getPhraseTypeString()
 	{
 		$phraseType = $this->phrase->getType();
-		return $phraseType->getEntityName() . ':' . $phraseType->getEntityAttribute();
+		$return = [];
+		$return[] = $phraseType->getEntityName();
+		$return[] = $phraseType->getEntityAttribute();
+		return implode(':', array_unique($return));
 	}
 
 	public function getSourceLanguage()

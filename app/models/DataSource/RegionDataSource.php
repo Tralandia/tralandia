@@ -14,7 +14,7 @@ class RegionDataSource extends BaseDataSource {
 	private $resultSorter;
 
 	/**
-	 * @var
+	 * @var \Repository\Location\LocationRepository
 	 */
 	private $repository;
 
@@ -28,11 +28,17 @@ class RegionDataSource extends BaseDataSource {
 
 	public function getData($filter, $order, Paginator $paginator = NULL)
 	{
-		$result = $this->repository->findRegions();
+		$result = $this->repository->findRegions(NULL, $paginator->getItemsPerPage(), $paginator->getOffset());
 
 		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 
 		return $orderedResult;
 	}
+
+	public function getDataCount($filter, $order)
+	{
+		return $this->repository->getRegionsCount();
+	}
+
 
 }

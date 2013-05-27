@@ -19,15 +19,23 @@
 					*}
 
 					{if $user->isLoggedIn()}
-						<li class="headerIcon">
-							<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
-						</li>
+						{if $loggedUser->isOwner()}
+							<li class="headerIcon">
+								<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
+							</li>
+						{else}
+							<li class="headerIcon">
+								<a href="{plink $loggedUser->getRole()->getHomePage()}">{$loggedUser->getLogin()}</a>
+							</li>
+						{/if}
 						<li n:if="$user->identity->isFake()" class="headerIcon">
 							<a class="red bold" href="{plink restoreOriginalIdentity}">Switch back to {$user->identity->getOriginalIdentity()->login}</a>
 						</li>
-						<li class="headerIcon">
-							<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
-						</li>
+						{if $loggedUser->isOwner()}
+							<li class="headerIcon">
+								<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
+							</li>
+						{/if}
 						<li class="headerIcon">
 							<a href="{plink :Front:Sign:out}" class="last">{_o1594}</a>
 						</li>

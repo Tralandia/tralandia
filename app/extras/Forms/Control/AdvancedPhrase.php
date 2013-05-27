@@ -101,7 +101,7 @@ class AdvancedPhrase extends BaseControl {
 	 * @return array
 	 */
 	public static function &getWrapper() {
-		return $this->wrapper;
+		//return $this->wrapper;
 	}
 
 	/**

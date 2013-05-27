@@ -25,7 +25,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 * @var TRUE|FALSE
 	 * @return array
 	 */
-	public function findMissingTranslations(\Nette\Utils\Paginator $paginator=NULL)
+	public function findMissingTranslations($languages = NULL, \Nette\Utils\Paginator $paginator = NULL)
 	{
 		$languages = $this->languageRepositoryAccessor->get()->findSupported();
 
@@ -119,7 +119,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
 	 * @return array
 	 */
-	public function findMissingTranslationsBy(\Entity\Language $language, \Nette\Utils\Paginator $paginator=NULL)
+	public function findMissingTranslationsBy(\Entity\Language $language, \Nette\Utils\Paginator $paginator = NULL)
 	{
 		# vyberiem frazy ktore maju preklad v danom jazyku
 		$qb2 = $this->_em->createQueryBuilder();
@@ -142,7 +142,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 			->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED);
 
 		if ($paginator) {
-			$qb->setFirstResult(($paginator->page - 1) * $paginator->itemsPerPage);
+			$qb->setFirstResult($paginator->offset);
 			$qb->setMaxResults($paginator->itemsPerPage);
 		}
 
