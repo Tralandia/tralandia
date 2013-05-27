@@ -16,14 +16,15 @@
 	</td>
 {/define}
 
-{define #col-user}
+{define #col-email}
 	<td>
-		{$cell->getLogin()}
+		{$cell}
+		<small>{$row->getUser()->getLogin()}<small>
 	</td>
 {/define}
 
 {define #row-actions}
 	<a href="{plink :Owner:Rental:edit $primary}" class="btn btn-small btn-primary">edit</a>
 	<a href="{plink :Front:Rental:detail $row}" target="_blank" class="btn btn-small btn-primary">view</a>
-	<a href="{plink :Owner:User:edit $row->getOwner()->getId()}" class="btn btn-small btn-primary">edit user</a>
+	<a href="{plink fakeLogin $row->getOwner()->getId()}" class="btn btn-small btn-primary">login</a>
 {/define}

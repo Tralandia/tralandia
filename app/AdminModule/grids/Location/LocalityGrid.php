@@ -34,6 +34,7 @@ class LocalityGrid extends AdminGridControl {
 		$grid->addColumn('slug');
 
 		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
+		$grid->setPagination(self::ITEMS_PER_PAGE, [$this->dataSource, 'getDataCount']);
 
 		return $grid;
 	}

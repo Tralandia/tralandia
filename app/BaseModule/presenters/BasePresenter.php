@@ -37,6 +37,12 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
+	 * @var \BaseModule\Forms\ISimpleFormFactory
+	 */
+	protected $simpleFormFactory;
+
+	/**
+	 * @autowire
 	 * @var \Environment\Environment
 	 */
 	protected $environment;

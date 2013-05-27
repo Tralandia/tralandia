@@ -11,7 +11,7 @@ form:
 		name:
 			label: Name
 			control:
-				type: advancedPhrase
+				type: readOnlyPhrase
 			validation:
 				- [setRequired, 'Please fill in the name.']
 		iso:

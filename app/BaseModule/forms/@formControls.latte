@@ -459,7 +459,7 @@
 
 		{include #translationVatiations, control => $container['fromVariations']}
 	<small>
-		#{$phrase->getId()}, {$container->getSourceLanguage()->getIso()|upper}, {$container->getStatusLabel()}
+		#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}, {$container->getStatusLabel()}
 	</small>
 	</div>
 
@@ -472,11 +472,11 @@
 			<div class="phraseFormHeaderCover">
 
 				{ifset $languageContainer['gender']}
-					{input $languageContainer['gender'] }					
+					{input $languageContainer['gender'] }
 				{/ifset}
 
 				{ifset $languageContainer['position']}
-					{input $languageContainer['position'] }					
+					{input $languageContainer['position'] }
 				{/ifset}
 
 

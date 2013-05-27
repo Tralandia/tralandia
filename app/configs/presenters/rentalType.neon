@@ -1,0 +1,10 @@
+entity: Entity\Rental\Type
+
+parameters:
+	title: Currencies
+	h1: 'Currency -> %name%'
+
+gridFactory: @rentalTypeGridFactory
+
+form:
+	fields:

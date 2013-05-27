@@ -28,6 +28,7 @@ class AmenityGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
+		$grid->addColumn('type');
 		$grid->addColumn('name', 'Name');
 		$grid->addColumn('slug', 'Slug');
 		$grid->addColumn('important', 'Important');

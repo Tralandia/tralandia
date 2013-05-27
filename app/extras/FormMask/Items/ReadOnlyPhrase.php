@@ -15,7 +15,7 @@ class ReadOnlyPhrase extends AdvancedPhrase {
 	 * @param Extras\Models\Entity\IEntity
 	 * @param Extras\Environment
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Environment $environment) {
+	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, \Environment\Environment $environment) {
 		parent::__construct($name, $label, $entity, $environment);
 		$this->setValueSetter(null);
 	}
@@ -30,7 +30,7 @@ class ReadOnlyPhrase extends AdvancedPhrase {
 			->setPhrase($this->getValue())
 			->setDefaultLanguage($this->environment->getLanguage())
 			->setLink(function(Entity\Phrase\Translation $translation) use($form) {
-				return $form->getPresenter()->link('Phrase:edit', array($translation->phrase->id, $translation->language->id));
+				return $form->getPresenter()->link('PhraseList:edit', array($translation->phrase->id, $translation->language->id));
 			});
 	}
 }

@@ -7,6 +7,11 @@ class TranslationTexy extends \Texy
 	{
 		parent::__construct();
 
+		\TexyConfigurator::safeMode($this);
+		\TexyConfigurator::disableImages($this);
+
+		$this->allowed['longwords'] = FALSE;
+
 		$this->encoding = 'UTF-8';
 		$this->allowedTags = FALSE;
 		$this->mergeLines = FALSE;

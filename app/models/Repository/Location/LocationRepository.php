@@ -105,53 +105,97 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult()[0]['total'];
 	}
 
+
 	/**
+	 * @param $type
+	 * @param null $order
+	 * @param null $limit
+	 * @param null $offset
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findByTypeQb($type, $order = NULL, $limit = NULL, $offset = NULL)
+	{
+		$qb = $this->createQueryBuilder();
+
+		$qb->join('e.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))
+			->setParameter('type', $type);
+
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+		return $qb;
+	}
+
+
+	/**
+	 * @param null $order
+	 * @param null $limit
+	 * @param null $offset
+	 *
 	 * @return array
 	 */
-	public function findCountries()
+	public function findCountries($order = NULL, $limit = NULL, $offset = NULL)
 	{
-		$qb = $this->_em->createQueryBuilder();
-
-		$qb->select('l')
-			->from($this->_entityName, 'l')
-			->join('l.type', 't')
-			->where($qb->expr()->eq('t.slug', ':type'))
-			->setParameter('type', 'country');
+		$qb = $this->findByTypeQb('country');
 
 		return $qb->getQuery()->getResult();
 	}
 
+
 	/**
+	 * @param null $order
+	 * @param null $limit
+	 * @param null $offset
+	 *
 	 * @return array
 	 */
-	public function findRegions()
+	public function findRegions($order = NULL, $limit = NULL, $offset = NULL)
 	{
-		$qb = $this->_em->createQueryBuilder();
-
-		$qb->select('l')
-			->from($this->_entityName, 'l')
-			->join('l.type', 't')
-			->where($qb->expr()->eq('t.slug', ':type'))
-			->setParameter('type', 'region');
+		$qb = $this->findByTypeQb('region');
 
 		return $qb->getQuery()->getResult();
 	}
 
+
 	/**
+	 * @return int|number
+	 */
+	public function getRegionsCount()
+	{
+		$qb = $this->findByTypeQb('region');
+
+		return $this->getCount($qb);
+	}
+
+
+	/**
+	 * @param null $order
+	 * @param null $limit
+	 * @param null $offset
+	 *
 	 * @return array
 	 */
-	public function findLocalities()
+	public function findLocalities($order = NULL, $limit = NULL, $offset = NULL)
 	{
-		$qb = $this->_em->createQueryBuilder();
-
-		$qb->select('l')
-			->from($this->_entityName, 'l')
-			->join('l.type', 't')
-			->where($qb->expr()->eq('t.slug', ':type'))
-			->setParameter('type', 'locality');
+		$qb = $this->findByTypeQb('locality', $order, $limit, $offset);
 
 		return $qb->getQuery()->getResult();
 	}
+
+
+	/**
+	 * @return int|number
+	 */
+	public function getLocalitiesCount()
+	{
+		$qb = $this->findByTypeQb('locality');
+
+		return $this->getCount($qb);
+	}
+
+
 
 	/**
 	 * @param \Nette\Localization\ITranslator $translator

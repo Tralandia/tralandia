@@ -1,6 +1,8 @@
 <?php
 namespace Service\Phrase;
 
+use Doctrine\ORM\EntityManager;
+use Extras\Models\Entity\Entity;
 use Nette;
 use Nette\Utils\Strings;
 use Repository\Phrase\PhraseRepository;
@@ -24,12 +26,14 @@ class PhraseCreator extends Nette\Object
 	 */
 	protected $languageRepository;
 
+
 	/**
-	 * @param \Repository\Phrase\PhraseRepository $phraseRepository
-	 * @param \Repository\LanguageRepository $languageRepository
+	 * @param EntityManager $em
 	 */
-	public function __construct(PhraseRepository $phraseRepository, LanguageRepository $languageRepository)
+	public function __construct(EntityManager $em)
 	{
+		$languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$phraseRepository = $em->getRepository(PHRASE_ENTITY);
 		$this->phraseRepository = $phraseRepository;
 		$this->languageRepository = $languageRepository;
 	}

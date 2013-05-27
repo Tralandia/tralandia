@@ -8,3 +8,48 @@ gridFactory: @languageGridFactory
 
 form:
 	fields:
+		name:
+			label: Name
+			control:
+				type: readOnlyPhrase
+			validation:
+				- [setRequired, 'Please fill in the name.']
+		iso:
+			label: Iso
+			control:
+				type: text
+			validation:
+				- [addRule, :pattern, 'Must be exactly 3 characters long and UPPERCASE.', '[A-Z]{3}']
+		supported:
+			label: Supported
+			control:
+				type: checkbox
+				disabled: true
+
+		defaultCollation:
+			label: Default Collation
+			control: [type: text]
+
+		genders:
+			label: Genders
+			control: [type: neon]
+
+		plurals:
+			label: Plurals
+			control: [type: neon]
+
+		ppcPatterns:
+			label: PPC Patterns
+			control: [type: neon]
+
+		variationDetails:
+			label: Variation Details
+			control: [type: neon]
+
+		translator:
+			label: Translator
+			control:
+				type: select
+				repository: @userRepositoryAccessor
+				items: [findTranslatorsForSelect]
+				prompt: '---'

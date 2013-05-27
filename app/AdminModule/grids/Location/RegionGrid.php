@@ -35,6 +35,7 @@ class RegionGrid extends AdminGridControl {
 		$grid->addColumn('hasPolygons', 'Has polygons');
 
 		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
+		$grid->setPagination(self::ITEMS_PER_PAGE, [$this->dataSource, 'getDataCount']);
 
 		return $grid;
 	}

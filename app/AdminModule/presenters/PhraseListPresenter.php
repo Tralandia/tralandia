@@ -205,6 +205,29 @@ class PhraseListPresenter extends BasePresenter {
 	}
 
 
+	public function actionSearchId($id)
+	{
+		$language = $this->loggedUser->getLanguage();
+		if(!$language) {
+			throw new BadRequestException;
+		}
+
+
+		$paginator = $this->getPaginator();
+		$paginator->setItemCount(1);
+
+		$this->phrases = $this->phraseRepository->findById($id);
+
+		$editForm = $this['phraseEditForm'];
+		$editForm->setDefaults([
+			'toLanguages' => $language->getId()
+		]);
+
+		//$editForm['toLanguages']->setDisabled();
+		$this->template->headerText = 'Search for ID: ' . $id;
+	}
+
+
 	public function actionDefault()
 	{
 		$this->phrases = $this->phraseRepository->findBy(['type' => 9], [], 5);

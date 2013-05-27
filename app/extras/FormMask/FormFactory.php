@@ -12,17 +12,21 @@ class FormFactory {
 	/** @var Generator */
 	private $generator;
 
+
 	/**
-	 * @param Genrator
+	 * @param Generator $generator
 	 */
 	function __construct(Generator $generator) {
 		$this->generator = $generator;
 	}
 
+
 	/**
 	 * Vytvorenie formulara
-	 * @param Extras\Models\Entity\IEntity
-	 * @return CoolForm
+	 *
+	 * @param \Extras\Models\Entity\IEntity $entity
+	 *
+	 * @return \Nette\Application\UI\Form
 	 */
 	public function create(Extras\Models\Entity\IEntity $entity) {
 		$form = new Nette\Application\UI\Form;
