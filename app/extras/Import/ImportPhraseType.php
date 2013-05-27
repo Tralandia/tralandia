@@ -24,6 +24,36 @@ class ImportPhraseType extends BaseImport {
 			->setHtml(FALSE)
 			->setTranslated(TRUE);
 
+		$this->createPhraseType('\Entity\Rental\Placement', 'name')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE);
+
+		$this->createPhraseType('\Entity\Rental\Information', 'name')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE);
+
+		$this->createPhraseType('\Entity\Rental\RoomType', 'name')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(1)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE);
+
 		$this->createPhraseType('Latte', 'Latte')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(0)
@@ -65,7 +95,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Location\Location', 'name')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -155,7 +185,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -165,7 +195,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -175,7 +205,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'tabName')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -185,7 +215,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'description')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -195,7 +225,7 @@ class ImportPhraseType extends BaseImport {
 			->setTranslated(TRUE);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'ppcKeywords')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -256,6 +286,36 @@ class ImportPhraseType extends BaseImport {
 
 		$this->createPhraseType('\Entity\Rental\InterviewAnswer', 'answer')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(FALSE);
+
+		$this->createPhraseType('\Entity\Page', 'name')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE);
+
+		$this->createPhraseType('\Entity\Page', 'titlePattern')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			->setHtml(FALSE)
+			->setTranslated(TRUE);
+
+		$this->createPhraseType('\Entity\Page', 'h1Pattern')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
