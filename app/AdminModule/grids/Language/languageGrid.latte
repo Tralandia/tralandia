@@ -1,6 +1,14 @@
 {define #col-supported}
 	<td>
-		{$row->supported ? 'Yes' : 'No'}
+		{$cell ? 'Yes'}
+	</td>
+{/define}
+{define #col-live}
+	<td>
+		{$cell ? 'Yes'}
 	</td>
 {/define}
 
+{define #row-actions}
+	<a href="{plink edit $primary}" class="btn btn-small btn-primary">edit</a>
+{/define}

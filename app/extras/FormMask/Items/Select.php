@@ -22,6 +22,11 @@ class Select extends Text {
 	protected $translator;
 
 	/**
+	 * @var string
+	 */
+	public $prompt;
+
+	/**
 	 * @param string
 	 * @param string
 	 * @param Extras\Models\Entity\IEntity
@@ -30,6 +35,7 @@ class Select extends Text {
 	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Translator $translator) {
 		parent::__construct($name, $label, $entity);
 		$this->translator = $translator;
+		$this->setValueUnSetter(new Extras\Callback($entity, $this->unSetterMethodName($this->name)));
 	}
 
 	/**
@@ -45,6 +51,7 @@ class Select extends Text {
 	 * Setter nastaveni pre ziskanie itemov
 	 * @param string $method
 	 * @param array  $params
+	 * @return $this
 	 */
 	public function setItems($method, array $params) {
 		$this->itemsParams = $params;
@@ -80,13 +87,13 @@ class Select extends Text {
 		}
 
 		$items = $this->getItemsGetter()->invoke();
-		if (is_array($this->itemsParams)) {
-			$itemsFormated = array();
+		if (count($this->itemsParams)) {
+			$itemsFormatted = array();
 			list($key, $value) = $this->itemsParams;
 			foreach ($items as $item) {
-				$itemsFormated[$item->{$key}] = @$this->translator->translate($item->{$value});
+				$itemsFormatted[$item->{$key}] = @$this->translator->translate($item->{$value});
 			}
-			$items = $itemsFormated;
+			$items = $itemsFormatted;
 		}
 		return $items;
 	}
@@ -100,7 +107,7 @@ class Select extends Text {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
 		$data = $this->getValueGetter()->invoke();
-		return isset($data) ? $data->id : null;
+		return isset($data) ? $data->id : NULL;
 	}
 
 	/**
@@ -109,9 +116,12 @@ class Select extends Text {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addAdvancedSelect($this->getName(), $this->getLabel(), $this->getItems())
+		$control = $form->addAdvancedSelect($this->getName(), $this->getLabel(), $this->getItems())
 			->setDefaultValue($this->getValue())
 			->setDisabled($this->disabled);
+
+		if($this->prompt) $control->setPrompt($this->prompt);
+		return $control;
 	}
 
 	/**
@@ -125,7 +135,10 @@ class Select extends Text {
 
 		if ($this->getValueSetter()) {
 			$value = $form->getComponent($this->getName())->getValue();
-			$this->setValue($this->repositoryAccessor->get()->find($value));
+			if($value !== NULL) {
+				$value = $this->repositoryAccessor->get()->find($value);
+			}
+			$this->setValue($value);
 		}
 	}
 }

@@ -3,8 +3,10 @@
 namespace AdminModule;
 
 
+use Entity\Language;
 use Listener\RequestTranslationsEmailListener;
 use Nette\Application\BadRequestException;
+use Nette\Utils\Strings;
 
 class DictionaryManagerPresenter extends AdminPresenter {
 
@@ -25,6 +27,12 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	 * @var \Dictionary\MarkAsPaid
 	 */
 	protected $markAsPaid;
+
+	/**
+	 * @autowire
+	 * @var \Robot\CreateMissingTranslationsRobot
+	 */
+	protected $createMissingTranslationsRobot;
 
 	/**
 	 * @var array
@@ -50,11 +58,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 	public function actionMarkAsPaid($id)
 	{
-		$language = $this->languageRepositoryAccessor->get()->find($id);
-		if(!$language) {
-			throw new BadRequestException;
-		}
-
+		$language = $this->findLanguage($id);
 		$changedIds = $this->markAsPaid->mark($language, $this->loggedUser);
 
 		$this->flashMessage('Done! ' . count($changedIds) . ' translations mark as paid!', self::FLASH_SUCCESS);
@@ -62,4 +66,51 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	}
 
 
+	public function processSupportNewLanguage($form)
+	{
+		$values = $form->getValues();
+		$language = $this->findLanguage($values->language);
+		$language->setSupported(TRUE);
+		$this->em->flush();
+		$this->createMissingTranslationsRobot->runFor($language);
+		$this->redirect('list');
+	}
+
+
+	/**
+	 * @param $id
+	 *
+	 * @return \Entity\Language
+	 * @throws \Nette\Application\BadRequestException
+	 */
+	protected function findLanguage($id)
+	{
+		$language = $this->languageRepositoryAccessor->get()->find($id);
+		if(!$language) {
+			throw new BadRequestException;
+		}
+
+		return $language;
+	}
+
+	protected function createComponentSupportNewLanguage()
+	{
+		$form = $this->simpleFormFactory->create();
+
+		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+
+		$languages = $languageRepository->findBy(['supported' => Language::NOT_SUPPORTED], ['iso' => 'ASC']);
+
+		$languages = \Tools::arrayMap($languages,
+			function($key, $value) {return $value->getId();},
+			function($value) {return Strings::upper($value->getIso()) . ' - ' . $value->getName()->getCentralTranslationText();}
+		);
+
+		$form->addSelect('language', '', $languages);
+		$form->addSubmit('submit', 'Submit');
+
+		$form->onSuccess[] = $this->processSupportNewLanguage;
+
+		return $form;
+	}
 }

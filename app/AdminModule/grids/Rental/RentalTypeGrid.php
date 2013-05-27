@@ -4,14 +4,14 @@ namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
 
-class LanguageGrid extends AdminGridControl {
+class RentalTypeGrid extends AdminGridControl {
 
 	public function __construct($repository) {
 		$this->repository = $repository;
+		parent::__construct();
 	}
 
 	public function render() {
-
 		$this->template->render();
 	}
 
@@ -19,19 +19,19 @@ class LanguageGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
-		$grid->addColumn('iso');
+		$grid->addColumn('id');
 		$grid->addColumn('name');
-		$grid->addColumn('supported');
-		$grid->addColumn('live');
+		$grid->addColumn('slug');
+		$grid->addColumn('classification');
 
 		return $grid;
 	}
 }
 
-interface ILanguageGridFactory {
+interface IRentalTypeGridFactory {
 
 	/**
-	 * @return ILanguageGridFactory
+	 * @return RentalTypeGrid
 	 */
 	public function create();
 }

@@ -31,9 +31,7 @@ class BaseRepository extends EntityRepository {
 				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
 					$fieldName = $mapping['fieldName'];
 					# @todo hack, porusenie DI
-					$languageRepository = $this->getEntityManager()->getRepository(LANGUAGE_ENTITY);
-					$phraseRepository = $this->getEntityManager()->getRepository(PHRASE_ENTITY);
-					$phraseCreator = new \Service\Phrase\PhraseCreator($phraseRepository, $languageRepository);
+					$phraseCreator = new \Service\Phrase\PhraseCreator($this->getEntityManager());
 					$phraseTypeName = '\\'.$class.':'.$fieldName;
 					$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
 				}

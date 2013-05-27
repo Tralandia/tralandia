@@ -14,7 +14,7 @@ class CountryDataSource extends BaseDataSource {
 	private $resultSorter;
 
 	/**
-	 * @var
+	 * @var \Repository\Location\LocationRepository
 	 */
 	private $repository;
 

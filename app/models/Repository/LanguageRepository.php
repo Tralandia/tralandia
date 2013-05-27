@@ -19,7 +19,7 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 	public function findSupported($order = NULL) {
 		$entityName = $this->_entityName;
-			return $this->findBySupported($entityName::SUPPORTED, $order);
+		return $this->findBySupported($entityName::SUPPORTED, $order);
 	}
 
 	public function findSupportedQb() {

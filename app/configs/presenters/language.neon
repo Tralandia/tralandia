@@ -8,3 +8,29 @@ gridFactory: @languageGridFactory
 
 form:
 	fields:
+		iso:
+			label: Iso
+			control:
+				type: text
+			validation:
+				- [addRule, :pattern, 'Must be exactly 3 characters long and UPPERCASE.', '[A-Z]{3}']
+		name:
+			label: Name
+			control:
+				type: readOnlyPhrase
+				disabled: true
+			validation:
+				- [setRequired, 'Please fill in the name.']
+		translator:
+			label: Translator
+			control:
+				type: select
+				repository: @userRepositoryAccessor
+				items: [findTranslatorsForSelect]
+				prompt: '---'
+		translationPrice:
+			label: Translation Price
+			control:
+				type: text
+			validation:
+				- [addRule, :float, 'Translation Price must by number']

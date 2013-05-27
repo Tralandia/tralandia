@@ -1,85 +1,29 @@
 common:
 	left: # lava starana
-		support:
-			label: Support
-			items:
-				faqCategory:
-					label: FAQ Categories
-					link: ':Admin:FaqCategory:list'
-				faqQuestion:
-					label: FAQ Questions
-					link: ':Admin:FaqQuestion:list'
-
-		statistics:
-			label: Statistics #@todo
-			items:
-				registrations:
-					label: Registrations
-					link: ':Admin:StatisticsRegistrations:list'
-
-
-		user:
-			label: Users
-			items:
-				user:
-					label: All Users
-					link: ':Admin:UserUser:list'
-				testimonial:
-					label: 'Testimonials (by owners)'
-					link: ':Admin:UserTestimonial:list'
-				role:
-					label: Roles
-					link: ':Admin:UserRole:list'
-
-		rental:
-			label: Rentals
-			items:
-				rental:
-					label: All Rentals
-					link: ':Admin:RentalRental:list'
-				information:
-					label: Rental Information
-					link: ':Admin:RentalInformation:list'
-				interviewQuestion:
-					label: Interview Questions
-					link: ':Admin:RentalInterviewQuestion:list'
-				interviewAnswer:
-					label: Interview Answers
-					link: ':Admin:RentalInterviewAnswer:list'
-				reservation:
-					label: Reservations
-					link: ':Admin:VisitorInteraction:list'
-					linkArgs:
-						filter: reservation
-				review:
-					label: Reviews
-					link: ':Admin:VisitorInteraction:list'
-					linkArgs:
-						filter: review
-				rentalType:
-					label: Rental Types
-					link: ':Admin:RentalType:list'
-					separator: true
-				roomType:
-					label: Room Types
-					link: ':Admin:RentalRoomType:list'
-					separator: true
-				interactionType:
-					label: Interaction Types
-					link: ':Admin:VisitorType:list'
-
 		dictionary:
 			label: Dictionary
 			items:
+				addPhrase:
+					label: Add Phrase
+					items:
+						latte:
+							lable: Latte
+							link: ':Admin:Phrase:add'
+							linkArgs:
+								type: Latte
+						latteMulti:
+							lable: LatteMulti
+							link: ':Admin:Phrase:add'
+							linkArgs:
+								type: LatteMulti
+						latteHtml:
+							lable: LatteHtml
+							link: ':Admin:Phrase:add'
+							linkArgs:
+								type: LatteHtml
 				notReady:
 					label: Not Ready
 					link: ':Admin:PhraseList:notReady'
-				phraseType:
-					label: Phrase Types
-					link: ':Admin:PhraseType:list'
-				addPhrase:
-					label: Add Phrase
-					link: ':Admin:Phrase:add'
 				language:
 					separator: true
 					label: Languages
@@ -89,77 +33,31 @@ common:
 					label: Manager
 					link: ':Admin:DictionaryManager:list'
 
-		siteContent:
-			label: Site Content
+		location:
+			label: Locations
 			items:
-				seo:
-					label: SEO
-					items:
-						backlink:
-							label: Backlinks
-							link: ':Admin:SeoBacklink:list'
-						titleSuffix:
-							label: Title Suffixes
-							link: ':Admin:SeoTitleSuffix:list'
-				location:
-					label: Locations
-					items:
-						country:
-							label: Countries
-							link: ':Admin:Country:list'
-						region:
-							label: Regions
-							link: ':Admin:Region:list'
-						locality:
-							label: Localities
-							link: ':Admin:Locality:list'
-				locationType:
-					label: Location Types
-					link: ':Admin:LocationType:list'
-					separator: true
-				amenity:
-					label: Amenities
-					link: ':Admin:RentalAmenity:list'
-				amenityType:
-					label: Amenity Types
-					link: ':Admin:RentalAmenityType:list'
-					separator: true
-				currency:
-					label: Currencies
-					link: ':Admin:Currency:list'
-				domain:
-					label: Domains
-					link: ':Admin:Domain:list'
-		email:
-			label: Email
-			items:
-				template:
-					label: Templates
-					link: ':Admin:EmailTemplate:list'
-				layout:
-					label: Layouts
-					link: ':Admin:EmailLayout:list'
-				tester:
-					label: Template Tester
-					link: ':Admin:EmailTester:sendTemplate'
+				country:
+					label: Countries
+					link: ':Admin:Country:list'
+				region:
+					label: Regions
+					link: ':Admin:Region:list'
+				locality:
+					label: Localities
+					link: ':Admin:Locality:list'
 
-
-		phraseChecking:
-			label: Phrases Checking
-			items:
-				missingCentral:
-					label: Missing Central Translations
-					link: ':Admin:PhraseCheckingCentral:list'
-				missingSupported:
-					label: Missing Supported Translations
-					link: ':Admin:PhraseCheckingSupported:list'
-
-		robot:
-			label: Robot #@todo
-			items:
-				registrations:
-					label: Update Translations Status
-					link: ':Admin:RunRobot:updateTranslationStatus'
+#		email:
+#			label: Email
+#			items:
+#				template:
+#					label: Templates
+#					link: ':Admin:EmailTemplate:list'
+#				layout:
+#					label: Layouts
+#					link: ':Admin:EmailLayout:list'
+#				tester:
+#					label: Template Tester
+#					link: ':Admin:EmailTester:sendTemplate'
 
 	right: # parave strana
 		account:

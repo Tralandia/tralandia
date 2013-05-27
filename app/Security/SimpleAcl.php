@@ -48,13 +48,19 @@ class SimpleAcl extends Permission
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
 		$resources[] = 'Owner:Rental';
-
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';
 		$resources[] = 'Admin:EntityGenerator';
 		$resources[] = 'Admin:Rental';
 		$resources[] = 'Admin:User';
 		$resources[] = 'Admin:RunRobot';
+		$resources[] = 'Admin:Language';
+		$resources[] = 'Admin:RentalType';
+		$resources[] = 'Admin:RentalAmenity';
+		$resources[] = 'Admin:Country';
+		$resources[] = 'Admin:Region';
+		$resources[] = 'Admin:Locality';
+		$resources[] = 'Admin:Domain';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 

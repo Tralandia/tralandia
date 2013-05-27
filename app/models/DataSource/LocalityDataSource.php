@@ -14,7 +14,7 @@ class LocalityDataSource extends BaseDataSource {
 	private $resultSorter;
 
 	/**
-	 * @var
+	 * @var \Repository\Location\LocationRepository
 	 */
 	private $repository;
 
@@ -28,11 +28,16 @@ class LocalityDataSource extends BaseDataSource {
 
 	public function getData($filter, $order, Paginator $paginator = NULL)
 	{
-		$result = $this->repository->findLocalities();
+		$result = $this->repository->findLocalities(NULL, $paginator->getItemsPerPage(), $paginator->getOffset());
 
 		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 
 		return $orderedResult;
+	}
+
+	public function getDataCount($filter, $order)
+	{
+		return $this->repository->getLocalitiesCount();
 	}
 
 }

@@ -72,7 +72,9 @@ class AdminPresenter extends BasePresenter {
 	public function getForm($name, $entity) {
 		$presenter = $this;
 		$model = $this->getService('model');
-		$form = $this->getService("presenter.$name.form")->create($entity);
+		/** @var $formMaskFactory \Extras\FormMask\FormFactory */
+		$formMaskFactory = $this->getService("presenter.$name.form");
+		$form = $formMaskFactory->create($entity);
 		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {
 			$model->flush();
 			$presenter->redirect('edit', $entity->id);
