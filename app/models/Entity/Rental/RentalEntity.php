@@ -25,6 +25,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	const STATUS_LIVE = 6;
 
+	const BY_AGREEMENT = 'byAgreement';
+	const ANYTIME = 'anytime';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="rentals", cascade={"persist"})
@@ -140,14 +143,14 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $amenities;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $checkIn;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $checkOut;
 
@@ -284,6 +287,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		}
 
 		return NULL;
+	}
+
+
+	public function getCheckInFormatted()
+	{
+		return \Tools::$checkInOutOption[$this->checkIn];
+	}
+
+
+	public function getCheckOutFormatted()
+	{
+		return \Tools::$checkInOutOption[$this->checkOut];
 	}
 
 

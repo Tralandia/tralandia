@@ -224,7 +224,7 @@
 
 								{if $rental->checkIn}
 								<li class="clock">
-									<strong>{_o1586} {$rental->checkIn}:00</strong>
+									<strong>{_o1586} {$rental->getCheckInFormatted()}</strong>
 								</li>
 								{/if}
 
@@ -232,7 +232,7 @@
 
 								{if $rental->checkOut}
 								<li class="clock">
-									<strong>{_o1588} {$rental->checkOut}:00</strong>
+									<strong>{_o1588} {$rental->getCheckOutFormatted()}</strong>
 								</li>
 								{/if}
 
