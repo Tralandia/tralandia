@@ -7,7 +7,7 @@ parameters:
 		email: toth.radoslav@gmail.com
 
 	database:
-		debugger: false
+		debugger: true
 
 	templateCache:
 		enabled: true

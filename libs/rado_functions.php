@@ -3,7 +3,7 @@
 function q($query, $show = 0) {
 	static $link;
 
-	d($_SERVER['HTTP_HOST']);
+	//d($_SERVER['HTTP_HOST']);
 	if (!$link) {
 		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
 			$link = mysql_connect('192.168.4.13', 'tralandia_old', '0987267789372');		

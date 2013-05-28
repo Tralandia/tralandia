@@ -217,6 +217,7 @@ class ImportPresenter extends Presenter {
 				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
 			}
 
+			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
 			$this->session->automaticUrls = $automaticUrls;
 			d($automaticUrls); exit;
