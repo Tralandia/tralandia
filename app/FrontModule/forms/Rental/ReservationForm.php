@@ -115,7 +115,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 				$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
 			}
 
-			$children[$i] = ' ' . $i . ' ' . $this->translate('100016', NULL, ['count' => $i]);
+			$children[$i] = ' ' . $i . ' ' . $this->translate('o100061', NULL, ['count' => $i]);
 
 		}
 

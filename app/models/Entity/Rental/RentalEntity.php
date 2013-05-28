@@ -25,6 +25,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	const STATUS_LIVE = 6;
 
+	const BY_AGREEMENT = 'byAgreement';
+	const ANYTIME = 'anytime';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="rentals", cascade={"persist"})
@@ -140,14 +143,14 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $amenities;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $checkIn;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $checkOut;
 
@@ -284,6 +287,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		}
 
 		return NULL;
+	}
+
+
+	public function getCheckInFormatted()
+	{
+		return \Tools::$checkInOutOption[$this->checkIn];
+	}
+
+
+	public function getCheckOutFormatted()
+	{
+		return \Tools::$checkInOutOption[$this->checkOut];
 	}
 
 
@@ -459,6 +474,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return NULL;
 	}
 
+	public function hasFirstInterviewAnswer()
+	{
+		return isset($this->interviewAnswers[0]);
+	}
+
 
 	/**
 	 * @return Bool
@@ -608,7 +628,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
@@ -625,7 +645,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->services = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Rental\Rental
@@ -636,7 +656,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -646,7 +666,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
@@ -654,7 +674,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->user;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
@@ -665,7 +685,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -675,7 +695,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -683,7 +703,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->editLanguage;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -694,7 +714,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -702,7 +722,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->status;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Rental\Rental
@@ -713,7 +733,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -723,7 +743,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Type|NULL
 	 */
@@ -731,7 +751,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param float
 	 * @return \Entity\Rental\Rental
@@ -742,7 +762,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -752,7 +772,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return float|NULL
 	 */
@@ -760,7 +780,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->classification;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -771,7 +791,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -781,7 +801,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -789,7 +809,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->rank;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Information
 	 * @return \Entity\Rental\Rental
@@ -803,7 +823,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Information
 	 * @return \Entity\Rental\Rental
@@ -815,7 +835,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Information[]
 	 */
@@ -823,7 +843,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->missingInformation;
 	}
-		
+
 	/**
 	 * @param \Entity\Contact\Address
 	 * @return \Entity\Rental\Rental
@@ -834,7 +854,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address|NULL
 	 */
@@ -842,7 +862,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->address;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Placement
 	 * @return \Entity\Rental\Rental
@@ -856,7 +876,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Placement
 	 * @return \Entity\Rental\Rental
@@ -868,7 +888,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Placement[]
 	 */
@@ -876,7 +896,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->placements;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -886,7 +906,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -894,7 +914,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Rental
@@ -905,7 +925,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -913,7 +933,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Rental
@@ -924,7 +944,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -932,7 +952,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->teaser;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
@@ -943,7 +963,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -953,7 +973,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -961,7 +981,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->contactName;
 	}
-		
+
 	/**
 	 * @param \Entity\Contact\Phone
 	 * @return \Entity\Rental\Rental
@@ -972,7 +992,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -982,7 +1002,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Phone|NULL
 	 */
@@ -990,7 +1010,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->phone;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
@@ -1001,7 +1021,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1011,7 +1031,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -1019,7 +1039,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->url;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
@@ -1030,7 +1050,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1040,7 +1060,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -1048,7 +1068,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->email;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
@@ -1062,7 +1082,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
@@ -1074,7 +1094,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Language[]
 	 */
@@ -1082,7 +1102,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->spokenLanguages;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
@@ -1096,7 +1116,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
@@ -1108,7 +1128,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
@@ -1116,7 +1136,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->amenities;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -1127,7 +1147,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1137,7 +1157,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1145,7 +1165,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->checkIn;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -1156,7 +1176,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1166,7 +1186,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1174,7 +1194,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->checkOut;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Rental\Rental
@@ -1185,7 +1205,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -1193,7 +1213,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->pricesUponRequest;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1203,7 +1223,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\PricelistRow
 	 * @return \Entity\Rental\Rental
@@ -1217,7 +1237,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\PricelistRow
 	 * @return \Entity\Rental\Rental
@@ -1229,7 +1249,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\PricelistRow[]
 	 */
@@ -1237,7 +1257,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->pricelistRows;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Pricelist
 	 * @return \Entity\Rental\Rental
@@ -1251,7 +1271,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Pricelist
 	 * @return \Entity\Rental\Rental
@@ -1263,7 +1283,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Pricelist[]
 	 */
@@ -1271,7 +1291,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->pricelists;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
 	 * @return \Entity\Rental\Rental
@@ -1285,7 +1305,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
 	 * @return \Entity\Rental\Rental
@@ -1297,7 +1317,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\InterviewAnswer[]
 	 */
@@ -1305,7 +1325,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->interviewAnswers;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1315,7 +1335,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Rental\Rental
@@ -1326,7 +1346,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1336,7 +1356,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -1344,7 +1364,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->calendarUpdated;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
@@ -1358,7 +1378,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
@@ -1370,7 +1390,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Fulltext
 	 * @return \Entity\Rental\Rental
@@ -1384,7 +1404,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Fulltext
 	 * @return \Entity\Rental\Rental
@@ -1396,7 +1416,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Fulltext[]
 	 */
@@ -1404,7 +1424,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->fulltexts;
 	}
-		
+
 	/**
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Rental\Rental
@@ -1418,7 +1438,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Rental\Rental
@@ -1430,7 +1450,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
@@ -1438,7 +1458,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->backLinks;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -1449,7 +1469,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1459,7 +1479,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1467,7 +1487,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->maxCapacity;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -1478,7 +1498,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1488,7 +1508,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1496,7 +1516,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->bedroomCount;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
@@ -1507,7 +1527,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1517,7 +1537,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -1525,7 +1545,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->rooms;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
@@ -1539,7 +1559,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
@@ -1551,7 +1571,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Service[]
 	 */

@@ -190,7 +190,8 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$suggestLocations['localitiesAndRegions'] = $locationRepository->findSuggestForLocalityAndRegion(
 			$string,
-			$this->primaryLocation
+			$this->primaryLocation,
+			$this->language
 		);
 		return $suggestLocations;
 	}

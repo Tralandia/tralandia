@@ -105,7 +105,19 @@ class RentalListPresenter extends BasePresenter {
 			$rental = $this->rentalRepositoryAccessor->get()->find($id);
 		}
 
-		return $this->rentalDecoratorFactory->create($rental);
+		$firstInterviewAnswerText = NULL;
+		if($rental->hasFirstInterviewAnswer()) {
+			$answer = $rental->getFirstInterviewAnswer();
+			$answerText = $this->translate($answer->getAnswer());
+			if(strlen($answerText) > 2) {
+				$firstInterviewAnswerText = $answerText;
+			}
+		}
+
+		return [
+			'service' => $this->rentalDecoratorFactory->create($rental),
+			'firstInterviewAnswerText' => $firstInterviewAnswerText,
+		];
 	}
 
 	protected function createComponentP() {
