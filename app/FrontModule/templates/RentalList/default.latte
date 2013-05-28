@@ -28,7 +28,9 @@
 							tags => $rentalBrickCacheOptions['tags']}
 
 
-						{var $rentalService = $findRental($rentalId); }
+						{var $rentalData = $findRental($rentalId); }
+						{var $rentalService = $rentalData['service']; }
+						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
 
@@ -85,13 +87,9 @@
 									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
 									<p class="answer">
-										{foreach $rental->interviewAnswers as $interviewAnswer}
-											{if !empty($interviewAnswer->answer)}
-												{if $iterator->first}
-													{_$interviewAnswer->answer|firstUpper}
-												{/if}
-											{/if}
-										{/foreach}
+										{if $firstInterviewAnswerText}
+											{$firstInterviewAnswerText}
+										{/if}
 									</p>
 
 
