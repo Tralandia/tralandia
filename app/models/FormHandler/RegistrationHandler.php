@@ -4,7 +4,6 @@ namespace FormHandler;
 
 use Entity\User\Role;
 use Environment\Environment;
-use Service\Contact\AddressCreator;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
 use User\UserCreator;
@@ -67,7 +66,6 @@ class RegistrationHandler extends FormHandler
 		$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
 		$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
-		$emailRepository = $this->em->getRepository(CONTACT_EMAIL_ENTITY);
 
 		$rentalValues = $values->rental;
 
@@ -101,12 +99,6 @@ class RegistrationHandler extends FormHandler
 
 		$this->em->persist($user);
 
-
-		/** @var $email \Entity\Contact\Email */
-		$email = $emailRepository->createNew();
-		$email->setValue($user->getLogin());
-		$this->em->persist($email);
-
 		$rentalCreator = $this->rentalCreator;
 
 		/** @var $address \Entity\Contact\Address */
@@ -119,7 +111,7 @@ class RegistrationHandler extends FormHandler
 		$rental->setType($rentalValues->type->type)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
-			->setEmail($email)
+			->setEmail($values->email)
 			->setUrl($values->url)
 			->setPhone($rentalValues->phone->phone)
 			->setClassification($rentalValues->type->classification)

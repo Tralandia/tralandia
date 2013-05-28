@@ -2,6 +2,7 @@
 namespace Repository\Location;
 
 use Doctrine\ORM\Query\Expr;
+use Entity\Language;
 use Entity\Location\Location;
 use Environment\Collator;
 use Model\Location\ILocationDecoratorFactory;
@@ -296,16 +297,15 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
-	public function findSuggestForLocalityAndRegion($search, $location)
+	public function findSuggestForLocalityAndRegion($search,Location $location, Language $language)
 	{
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('e')
-			->from($this->_entityName, 'e')
-			->leftJoin('e.type', 't')
+		$qb = $this->createQueryBuilder();
+		$qb->leftJoin('e.type', 't')
 			->join('e.name', 'n')
 			->join('n.translations', 'tt')
 			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region'])
 			->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $location)
+			->andWhere($qb->expr()->eq('tt.language', ':language'))->setParameter('language', $language)
 			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%");
 
 		return $qb->getQuery()->getResult();

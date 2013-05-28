@@ -120,6 +120,26 @@ class Tools {
 	public static $timeFormat = '%H:%M';
 	public static $datetimeFormat = '%Y-%m-%d %H:%M';
 
+	public static $checkInOutOption = [
+		\Entity\Rental\Rental::BY_AGREEMENT => \Entity\Rental\Rental::BY_AGREEMENT,
+		\Entity\Rental\Rental::ANYTIME => \Entity\Rental\Rental::ANYTIME,
+		8 => '8:00',
+		9 => '9:00',
+		10 => '10:00',
+		11 => '11:00',
+		12 => '12:00',
+		13 => '13:00',
+		14 => '14:00',
+		15 => '15:00',
+		16 => '16:00',
+		17 => '17:00',
+		18 => '18:00',
+		19 => '19:00',
+		20 => '20:00',
+		21 => '21:00',
+		22 => '22:00',
+	];
+
 	public static function dump() {
 		$params = func_get_args();
 		$trace = debug_backtrace();

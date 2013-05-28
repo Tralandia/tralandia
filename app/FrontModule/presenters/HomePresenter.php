@@ -33,7 +33,7 @@ class HomePresenter extends BasePresenter {
 			$this->setLayout('layoutMobile');
 		}
 
-		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
+		$search = $this->rentalSearchFactory->create($this->primaryLocation);
 		$featuredIds = $search->getFeaturedRentals(99);
 
 		$rentals = array();
