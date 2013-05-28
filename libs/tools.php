@@ -121,8 +121,8 @@ class Tools {
 	public static $datetimeFormat = '%Y-%m-%d %H:%M';
 
 	public static $checkInOutOption = [
-		\Entity\Rental\Rental::BY_AGREEMENT => \Entity\Rental\Rental::BY_AGREEMENT,
-		\Entity\Rental\Rental::ANYTIME => \Entity\Rental\Rental::ANYTIME,
+		\Entity\Rental\Rental::BY_AGREEMENT => 'o100196',
+		\Entity\Rental\Rental::ANYTIME => 'o100197',
 		8 => '8:00',
 		9 => '9:00',
 		10 => '10:00',
