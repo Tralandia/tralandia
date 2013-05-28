@@ -116,11 +116,13 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 
 	/**
-	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
-	 * @return array
+	 * @param Language $language
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	public function findMissingTranslationsBy(\Entity\Language $language, \Nette\Utils\Paginator $paginator = NULL)
+	public function findMissingTranslationsByQb(Language $language)
 	{
+
 		# vyberiem frazy ktore maju preklad v danom jazyku
 		$qb2 = $this->_em->createQueryBuilder();
 		$qb2->select('e.id')
@@ -141,14 +143,38 @@ class PhraseRepository extends \Repository\BaseRepository {
 			->setParameter('language', $language->id)
 			->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED);
 
-		if ($paginator) {
-			$qb->setFirstResult($paginator->offset);
-			$qb->setMaxResults($paginator->itemsPerPage);
-		}
+		return $qb;
+	}
+
+
+	/**
+	 * @param Language $language
+	 *
+	 * @return int|number
+	 */
+	public function findMissingTranslationsCountBy(Language $language)
+	{
+		$qb = $this->findMissingTranslationsByQb($language);
+		return $this->getCount($qb) > 0;
+	}
+
+
+	/**
+	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
+	 * @return array
+	 */
+	public function findMissingTranslationsBy(\Entity\Language $language, $limit = NULL, $offset = NULL)
+	{
+		$qb = $this->findMissingTranslationsByQb($language);
+
+		if ($limit) $qb->setMaxResults($limit);
+		if ($offset) $qb->setFirstResult($offset);
+
 
 		$return = $qb->getQuery()->getResult();
 
 		return $return;
 	}
+
 
 }

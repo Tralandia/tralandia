@@ -13,6 +13,7 @@
 			<td colspan="3">{_o100096}</td>
 		</tr>
 
+		{var $rentalContainer = $form['rental']}
 
 		{include #select, control => $form['country'] , controlClass => 'select2 country selectRedirect notFulltext'}
 		{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}
@@ -23,11 +24,10 @@
 
 		{include #fieldset, text => 'o960'}
 		{*{include #text, control => $form['name']}*}
-		{include #phone, control => $form['phone']}
+		{include #phone, control => $rentalContainer['phone']}
 		{include #url, control => $form['url']}
 
 		{include #fieldset, text => 'o100085'}
-		{var $rentalContainer = $form['rental']}
 		{include #text, control => $rentalContainer['name']}
 
 		{include #rentalType, control => $rentalContainer['type']}
