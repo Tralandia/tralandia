@@ -339,33 +339,16 @@ class ImportRentals extends BaseImport {
 			$model->persist($rental);
 
 
-			// Images
-			$temp = array_unique(array_filter(explode(',', $x['photos'])));
-			if (is_array($temp) && count($temp)) {
-				foreach ($temp as $key => $value) {
-					$t = qNew('select from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
-					if (mysql_num_rows($t) == 0) continue;
-					$img = mysql_fetch_array($t);
-
-					$rentalImage = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
-					$rental->addImage($rentalImage);
-				}
-			}
-
 			// // Images
 			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
 			// if (is_array($temp) && count($temp)) {
-			// 	if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 			// 	foreach ($temp as $key => $value) {
-			// 		$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-			// 		if (!$image) {
-			// 			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
-			// 			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
-			// 			$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
-			// 			$rental->addImage($imageEntity);
-			// 		} else {
-			// 			$rental->addImage($image);
-			// 		}
+			// 		$t = qNew('select from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
+			// 		if (mysql_num_rows($t) == 0) continue;
+			// 		$img = mysql_fetch_array($t);
+
+			// 		$rentalImage = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
+			// 		$rental->addImage($rentalImage);
 			// 	}
 			// }
 

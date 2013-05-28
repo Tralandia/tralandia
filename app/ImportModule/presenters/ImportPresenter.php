@@ -219,7 +219,7 @@ class ImportPresenter extends Presenter {
 
 
 			$this->session->automaticUrls = $automaticUrls;
-			//d($automaticUrls); exit;
+			d($automaticUrls); exit;
 			$this->redirectUrl('http://www.sk.tra.com/import?autoStart=1');
 
 		}
