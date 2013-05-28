@@ -52,16 +52,15 @@ class AmenityRepository extends \Repository\BaseRepository
 	 */
 	protected function findByType($type)
 	{
+		$qb = $this->createQueryBuilder();
 		if ($type instanceof \Entity\Rental\AmenityType) {
-			return parent::findByType($type);
+			$qb->andWhere($qb->expr()->eq('e.type', ':type'))->setParameter('type', $type);
+		} else {
+			$qb->leftJoin('e.type', 't')
+				->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', $type);
 		}
 
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('e')
-			->from($this->_entityName, 'e')
-			->leftJoin('e.type', 't')
-			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', $type)
-			->orderBy('e.sorting', 'ASC');
+		$qb->orderBy('e.sorting', 'ASC');
 
 		return $qb->getQuery()->getResult();
 	}
@@ -181,7 +180,7 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	protected function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
 	{
-		$type = $this->related('type')->findBySlug($type);
+		$type = $this->related('type')->findOneBySlug($type);
 		$return = [];
 		$rows = $this->findByType($type);
 		foreach ($rows as $row) {
