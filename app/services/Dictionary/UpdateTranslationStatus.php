@@ -61,6 +61,19 @@ class UpdateTranslationStatus {
 	}
 
 
+	public function resolveTranslation(Translation $translation)
+	{
+		$phrase = $translation->getPhrase();
+		$centralTranslation = $phrase->getCentralTranslation();
+		$centralTranslationStatus = $centralTranslation->getStatus();
+
+		if($centralTranslationStatus == Translation::UP_TO_DATE) {
+			//$translation->setStatus()
+		}
+
+	}
+
+
 	/**
 	 * @param Translation $translation
 	 * @param User $user

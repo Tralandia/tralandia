@@ -120,11 +120,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 		;
 
-		$phoneContainer = $this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
-
-		$phoneContainer->getPrefixControl()
-			->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
-
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
@@ -134,6 +129,11 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
 		$this['rental'] = $rentalContainer;
+
+		$phoneContainer = $rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
+
+		$phoneContainer->getPrefixControl()
+			->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
 
 		$rentalContainer->addText('name', 'o886')
 			->setOption('help', $this->translate('o100071'))
@@ -173,11 +173,11 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'url' => 'google.com',
 			'password' => 'adsfasdf',
 			'name' => 'Harlem Shake',
-			'phone' => [
-				'prefix' => '421',
-				'number' => '908 123 789'
-			],
 			'rental' => [
+				'phone' => [
+					'prefix' => '421',
+					'number' => '908 123 789'
+				],
 				'name' => 'Chata Test',
 				'maxCapacity' => 15,
 				'type' => [

@@ -72,7 +72,17 @@ class DictionaryManagerPresenter extends AdminPresenter {
 		$language = $this->findLanguage($values->language);
 		$language->setSupported(TRUE);
 		$this->em->flush();
+		$this->redirect('createMissingTranslations', ['id' => $language->getId()]);
+	}
+
+
+	public function actionCreateMissingTranslations($id)
+	{
+		$language = $this->findLanguage($id);
 		$this->createMissingTranslationsRobot->runFor($language);
+		if($this->createMissingTranslationsRobot->needToRunFor($language)) {
+			$this->redirect('this');
+		}
 		$this->redirect('list');
 	}
 

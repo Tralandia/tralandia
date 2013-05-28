@@ -179,7 +179,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
 		$template->formatInputTooShort = $presenter->translate('o100142');
 		$template->bottomLinksCallback = $this->directLinks;
-		$template->hhhh = '4';
 
 		$template->render();
 	}
