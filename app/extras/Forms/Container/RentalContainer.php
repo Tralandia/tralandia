@@ -154,7 +154,7 @@ class RentalContainer extends BaseContainer
 		if(!$address->addressEntity instanceof Address) {
 			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
 		}
-		
+
 		// $url = $rentalValues->url;
 		// if ($url) {
 		// 	if ($url && !strpos('http://', $url)) {
@@ -167,7 +167,7 @@ class RentalContainer extends BaseContainer
 
 		$phone = $rentalValues->phone;
 		if ($phone->number && !$phone->phone instanceof Phone) {
-			$form['rental']['address']->getMainControl()->addError('#invalid phone number');
+			$form['rental']['phone']->getMainControl()->addError('#invalid phone number');
 		}
 
 	}

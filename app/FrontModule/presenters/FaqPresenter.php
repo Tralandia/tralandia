@@ -5,11 +5,11 @@ namespace FrontModule;
 class FaqPresenter extends BasePresenter
 {
 
-	/**
-	 * @autowire
-	 * @var \FrontModule\Forms\IContactFormFactory
-	 */
-	protected $contactFormFactory;
+//	/**
+//	 * @autowire
+//	 * @var \FrontModule\Forms\IContactFormFactory
+//	 */
+//	protected $contactFormFactory;
 
 	protected $faqCategoryRepositoryAccessor;
 

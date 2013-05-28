@@ -4,6 +4,7 @@ namespace Robot;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Language;
+use Entity\Phrase\Translation;
 
 
 /**
@@ -44,8 +45,14 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 	public function runFor(Language $language)
 	{
 		$missing = [];
-		$missing[$language->getId()] = $this->phraseRepository->findMissingTranslationsBy($language);
+		$missing[$language->getId()] = $this->phraseRepository->findMissingTranslationsBy($language, 1500);
 		return $this->_run($missing);
+	}
+
+
+	public function needToRunFor(Language $language)
+	{
+		return $this->phraseRepository->findMissingTranslationsCountBy($language);
 	}
 
 
@@ -57,7 +64,8 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 				/** @var $phrase \Entity\Phrase\Phrase */
 				foreach ($missing[$language->id] as $phrase) {
 					$translation = $phrase->createTranslation($language);
-					$this->phraseRepository->persist($translation);
+
+					//$this->phraseRepository->persist($translation);
 				}
 			}
 		}
