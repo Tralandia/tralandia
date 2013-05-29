@@ -23,6 +23,8 @@
 		base.navigationBarShareShown 	= false;
 		base.favoritesLinks 	= null;
 
+		base.searchListUrl = $('a#shareSearchListLink').attr('data-href');
+		base.$shareTextInput = $('#clipboardLinkShare');
 		/**
 		 * Instalation
 		 */
@@ -145,6 +147,9 @@
 
 		base.share = function()
 		{
+
+
+
 			if (base.navigationBarShareShown){
 				base.hideShare();
 				return false;
@@ -169,6 +174,10 @@
 					});
 				}
 			} else if (tabName=='navigationBarSearchResults') {
+
+
+				base.$shareTextInput.val(base.searchListUrl);
+
 				html = base.$tabs.find('li.share[for="navigationBarSearchResults"] ul')[0].outerHTML;
 				$socialLinks = base.$shareContent.find('#dynamicShareContainer').html(html);
 				Socialite.load($socialLinks);

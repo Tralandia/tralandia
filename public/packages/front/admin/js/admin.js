@@ -51,3 +51,71 @@ $(function(){
 
 });
 
+
+(function($){
+    $.textareaPreview = function(el, options){
+
+        var base = this;
+        
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("textareaPreview", base);
+        
+        // vars
+        base.previewUrl = base.$el.data('previewLink');
+        base.previewTitle = base.$el.data('previewTitle');
+        base.modalBox = $('#myModal');
+        base.modalBoxTitle = base.modalBox.find('.modal-header h3');
+        base.modalBoxContent = base.modalBox.find('.modal-body');
+        base.texyText = '';
+        base.ajaxType = 'POST';
+        // selectors
+        base.controlCover = '.phrasecontrol';
+
+        base.init = function(){
+
+            base.options = $.extend({},$.textareaPreview.defaultOptions, options);
+            base.bind();
+
+        };
+
+        base.bind = function(){
+        	base.$el.on('click',base.click);
+        }
+
+        base.click = function(){
+
+        	base.texyText = base.$el.parents(base.controlCover).find('textarea').val();
+
+			$.ajax({
+				url: base.previewUrl,
+				context: document.body,
+				type: base.ajaxType,
+				data: {
+					texy: base.texyText
+				}
+			}).done(function(data) {
+
+				base.modalBoxTitle.html(base.previewTitle);
+				base.modalBoxContent.html(data);
+
+				base.modalBox.modal();
+
+				base.modalBox.show();
+			});
+
+        }
+
+        base.init();
+    };
+    
+    $.fn.textareaPreview = function(options){
+        return this.each(function(){(new $.textareaPreview(this, options));});
+    };
+    
+})(jQuery);
+
+$(function(){
+	$('.phraseFormHeaderCover a').textareaPreview();
+});

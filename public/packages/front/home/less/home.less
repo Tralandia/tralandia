@@ -7,13 +7,22 @@
 		width: 229px;
 		height: 180px;
 		overflow: hidden;
-		
-		margin-left: 8px; 
+		position: relative;
+		margin-left: 9px; 
 		margin-bottom: 8px;
 		height:135px;
 		width: 229px;
 
 
+		.position {
+			display: none;
+		}
+
+		&.top {
+			.position {
+				display: block;
+			}
+		}
 
 		a {
 			color: #fff;
