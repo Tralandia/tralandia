@@ -173,7 +173,7 @@
 
 								{if count($rental->amenities) > 0}
 								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType()}
+								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
 								{if !count($importantAmenities)}
 									{var
 										$importantAmenities = array_slice($notImportantAmenities,0, 2);
