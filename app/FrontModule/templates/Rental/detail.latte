@@ -204,10 +204,21 @@
 
 									<div class="moreAmenities">
 										{foreach $notImportantAmenities  as $amenities}
+
 											{var $typesIterator = $iterator}
+
 											{foreach $amenities as $amenity}
+
+												{dump  $amenity->type->name}
+
+												{if $iterator->first}
+													<b>{_$amenity->type->name}: </b>
+												{/if}
+
 												{_$amenity->name}{if !$typesIterator->last}, {/if}
+
 											{/foreach}
+
 										{/foreach}
 									</div>
 
