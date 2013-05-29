@@ -189,7 +189,29 @@ class UpdateTranslationStatus {
 	}
 
 	public function setPhraseReady(Phrase $phrase, User $user) {
-		$phrase->setStatus(Phrase::WAITING_READY);
+		$this->_specialUpdate(
+			$phrase,
+			$user,
+			Phrase::READY,
+			Translation::WAITING_FOR_PAYMENT,
+			Translation::WAITING_FOR_TRANSLATION
+		);
+	}
+
+	public function setPhraseReadyForCorrection(Phrase $phrase, User $user) {
+		$this->_specialUpdate(
+			$phrase,
+			$user,
+			Phrase::WAITING_FOR_CORRECTION,
+			Translation::WAITING_FOR_TRANSLATION,
+			Translation::WAITING_FOR_CENTRAL
+		);
+	}
+
+
+	protected function _specialUpdate(Phrase $phrase, User $user, $phraseStatus, $centralStatus, $otherTranslations)
+	{
+		$phrase->setStatus($phraseStatus);
 		$centralTranslation = $phrase->getCentralTranslation();
 		$sourceTranslation = $phrase->getSourceTranslation();
 		$sourceAndCentralAreSame = $sourceTranslation == $centralTranslation;
@@ -198,9 +220,9 @@ class UpdateTranslationStatus {
 			if (!$sourceAndCentralAreSame && $value == $sourceTranslation) {
 				$value->setStatus(Translation::UP_TO_DATE);
 			} else if($value == $centralTranslation) {
-				$value->setStatus(Translation::WAITING_FOR_PAYMENT);
+				$value->setStatus($centralStatus);
 			} else {
-				$value->setStatus(Translation::WAITING_FOR_TRANSLATION);
+				$value->setStatus($otherTranslations);
 			}
 		}
 	}

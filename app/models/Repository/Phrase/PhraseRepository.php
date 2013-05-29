@@ -40,6 +40,9 @@ class PhraseRepository extends \Repository\BaseRepository {
 	}
 
 
+	/**
+	 * @return QueryBuilder
+	 */
 	public function findTranslatedQb()
 	{
 
@@ -65,14 +68,15 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 
 	/**
+	 * @param $status
+	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	public function findNotReadyQb()
+	public function findByStatusQb($status)
 	{
-		$qb = $this->_em->createQueryBuilder();
+		$qb = $this->createQueryBuilder();
 
-		$qb->select('e')->from($this->_entityName, 'e')
-			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', Phrase::WAITING_FOR_CORRECTION_CHECKING);
+		$qb->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', $status);
 
 		$qb = $this->filterTranslatedTypes($qb);
 		return $qb;
@@ -80,11 +84,13 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 
 	/**
+	 * @param $status
+	 *
 	 * @return int|number
 	 */
-	public function getNotReadyCount()
+	public function getCountByStatus($status)
 	{
-		return $this->getCount($this->findNotReadyQb());
+		return $this->getCount($this->findByStatusQb($status));
 	}
 
 
@@ -95,10 +101,9 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 */
 	public function findNotCheckedTranslationsQb(Language $language)
 	{
-		$qb = $this->_em->createQueryBuilder();
+		$qb = $this->createQueryBuilder();
 
-		$qb->select('e')->from($this->_entityName, 'e')
-			->leftJoin('e.translations', 't')
+		$qb->leftJoin('e.translations', 't')
 			->andWhere($qb->expr()->eq('t.language', ':language'))->setParameter('language', $language)
 			->andWhere($qb->expr()->eq('t.status', ':status'))->setParameter('status', Phrase::WAITING_FOR_CORRECTION_CHECKING);
 
