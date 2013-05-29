@@ -7,6 +7,12 @@ common:
 					separator: true
 					label: Manager
 					link: ':Admin:DictionaryManager:list'
+				waitingForCentral:
+					label: Not ready for EN correction
+					link: ':Admin:PhraseList:waitingForCentral'
+				notReady:
+					label: Not Ready
+					link: ':Admin:PhraseList:notReady'
 				addPhrase:
 					label: Add Phrase
 					items:
@@ -25,9 +31,6 @@ common:
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: LatteHtml
-				notReady:
-					label: Not Ready
-					link: ':Admin:PhraseList:notReady'
 				language:
 					separator: true
 					label: Languages
