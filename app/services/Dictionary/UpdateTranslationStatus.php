@@ -25,6 +25,7 @@ class UpdateTranslationStatus {
 
 		$phrase->setStatus(Phrase::READY);
 		if($sourceAndCentralAreSame) {
+			//d('sourceAndCentralAreSame');
 			foreach($phrase->getTranslations() as $translation) {
 				if($translation == $sourceTranslation) {
 					$translation->setStatus(Translation::UP_TO_DATE);
@@ -37,10 +38,12 @@ class UpdateTranslationStatus {
 			}
 			return $phrase;
 		} else {
+			//d('sourceAndCentralAreSame NOT');
 			if($sourceIsNewerThenCentral) {
+				//d('sourceIsNewerThenCentral');
 				return $this->sourceIsNewest($phrase);
 			} else {
-				// ??
+				//d('sourceIsNewerThenCentral NOT');
 			}
 		}
 	}
@@ -139,7 +142,7 @@ class UpdateTranslationStatus {
 	}
 
 
-	public function update_one(Translation $translation)
+	protected function update_one(Translation $translation)
 	{
 		$phrase = $translation->getPhrase();
 		$phrase->setStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING);
@@ -153,7 +156,7 @@ class UpdateTranslationStatus {
 		}
 	}
 
-	public function update_two(Translation $translation)
+	protected function update_two(Translation $translation)
 	{
 		$phrase = $translation->getPhrase();
 		$phrase->setStatus(Phrase::WAITING_FOR_CORRECTION);
@@ -167,7 +170,7 @@ class UpdateTranslationStatus {
 		}
 	}
 
-	public function update_three(Translation $translation)
+	protected function update_three(Translation $translation)
 	{
 		$phrase = $translation->getPhrase();
 		$centralTranslation = $phrase->getCentralTranslation();
@@ -181,6 +184,23 @@ class UpdateTranslationStatus {
 				$value->setStatus(Translation::WAITING_FOR_TRANSLATION);
 			} else {
 				$value->setStatus(Translation::WAITING_FOR_CENTRAL);
+			}
+		}
+	}
+
+	public function setPhraseReady(Phrase $phrase, User $user) {
+		$phrase->setStatus(Phrase::WAITING_READY);
+		$centralTranslation = $phrase->getCentralTranslation();
+		$sourceTranslation = $phrase->getSourceTranslation();
+		$sourceAndCentralAreSame = $sourceTranslation == $centralTranslation;
+
+		foreach($phrase->getTranslations() as $value) {
+			if (!$sourceAndCentralAreSame && $value == $sourceTranslation) {
+				$value->setStatus(Translation::UP_TO_DATE);
+			} else if($value == $centralTranslation) {
+				$value->setStatus(Translation::WAITING_FOR_PAYMENT);
+			} else {
+				$value->setStatus(Translation::WAITING_FOR_TRANSLATION);
 			}
 		}
 	}

@@ -315,6 +315,23 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+	public function findRegionsHavingPolygons($country = NULL)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['region'])
+			->andWhere($qb->expr()->neq('e.polygons', ':polygons'))->setParameter('polygons', 'null');
+			if ($country) {
+				$qb->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $country);
+			}
+			
+			$qb->setMaxResults(5);
+
+		return $qb->getQuery()->getResult();
+	}
+
 	public function getCountriesPhonePrefixes() {
 
 		$qb = $this->_em->createQueryBuilder();

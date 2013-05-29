@@ -20,6 +20,12 @@ class RunRobotPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Dictionary\UpdateTranslationStatus
+	 */
+	protected $updateTranslationStatus;
+
+	/**
+	 * @autowire
 	 * @var \Robot\UpdateTranslationStatusRobot
 	 */
 	protected $updateTranslationStatusRobot;
@@ -72,5 +78,11 @@ class RunRobotPresenter extends BasePresenter {
 			$this->template->nextLink = $nextLink;
 		}
 
+	}
+
+	public function actionTest($id)
+	{
+		$phrase = $this->em->getRepository(PHRASE_ENTITY)->find($id);
+		$this->updateTranslationStatus->resolvePhrase($phrase);
 	}
 }

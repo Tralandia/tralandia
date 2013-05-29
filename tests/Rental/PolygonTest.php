@@ -81,6 +81,8 @@ class PolygonTest extends \Tests\TestCase
 		$this->getContext()->polygonService->setRentalsForLocation($location);
 		$this->assertGreaterThan(0, $location->getAddresses()->count());
 
+		$this->getContext()->model->flush();
+
 	}
 }
 

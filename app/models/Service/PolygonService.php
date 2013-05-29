@@ -83,9 +83,7 @@ class PolygonService {
 				}
 			}
 		}
-		foreach ($matches as $location) {
-			$rental->address->addLocation($location);
-		}
+		$rental->address->setLocations($matches);
 
 		return TRUE;
 	}
@@ -105,14 +103,16 @@ class PolygonService {
 			\Entity\Rental\Rental::STATUS_LIVE
 		);
 
+		$location->clearAddresses();
+
 		// This is only done for regions, not localities or countries
 		// Return false if no latitude, longitude or missing polygons
 		if ($location->type != $locationType || !$location->polygons) {
-			$location->clearAddresses();
 			return FALSE;
 		}
+
 		foreach ($rentals as $rental) {
-			$matches = array();
+			$matches = false;
 			$rentalGps = $rental->getAddress()->getGps();
 			if($rentalGps->isValid()) {
 				$latitude = $rentalGps->getLatitude();
@@ -123,19 +123,18 @@ class PolygonService {
 			foreach ($location->polygons as $key2 => $val2) {
 				if(count($val2) == 4){
 					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){
-						$matches[] = $location;
+						$matches = true;
 						break;
 					}
 				}else if(count($val2) == 3){
 					$distance=(((acos(sin(($val2[0]*pi()/180))*sin(($latitude*pi()/180))+cos(($val2[0]*pi()/180))*cos(($latitude*pi()/180))*cos((($val2[1]-$longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
 					if($distance<$val2[2]){
-						$matches[] = $location;
+						$matches = true;
 						break;
 					}
 				}
 			}
-			//d($rental->id, $latitude, $longitude, $matches);
-			$rental->address->setLocations($matches);
+			if ($matches === TRUE) $rental->address->addLocation($location);
 		}
 		return TRUE;
 	}

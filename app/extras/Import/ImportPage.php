@@ -301,7 +301,7 @@ class ImportPage extends BaseImport {
 			), 
 		),
 		array(
-			'destination' => ':Front:Toc:default', 
+			'destination' => ':Front:Tou:default', 
 			'hash' => '',
 			'h1Pattern' => array(
 				'sk' => 'Podmienky používania', 
@@ -343,11 +343,11 @@ class ImportPage extends BaseImport {
 			if(array_key_exists('parameters', $pageData)) $page->parameters = $pageData['parameters'];
 
 			foreach ($page->titlePattern->getTranslations() as $translation) {
-				$translation->translation = Arrays::get($pageData, array('titlePattern', $translation->language->iso), $pageData['titlePattern']['sk']);
+				$translation->translation = Arrays::get($pageData, array('titlePattern', $translation->language->iso), '');
 			}
 
 			foreach ($page->h1Pattern->getTranslations() as $translation) {
-				$translation->translation = Arrays::get($pageData, array('h1Pattern', $translation->language->iso), $pageData['h1Pattern']['sk']);
+				$translation->translation = Arrays::get($pageData, array('h1Pattern', $translation->language->iso), '');
 			}
 
 			foreach ($page->name->getTranslations() as $translation) {
