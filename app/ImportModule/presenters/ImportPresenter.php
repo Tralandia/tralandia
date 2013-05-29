@@ -220,7 +220,7 @@ class ImportPresenter extends Presenter {
 			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
 			$this->session->automaticUrls = $automaticUrls;
-			//d($automaticUrls); exit;
+			d($automaticUrls); exit;
 			$this->redirectUrl('http://www.sk.tra.com/import?autoStart=1');
 
 		}
