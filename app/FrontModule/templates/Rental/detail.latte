@@ -6,6 +6,10 @@
 
 	{block content}
 
+	{var $featured = $rentalService->isFeatured(); }
+
+	{dump $featured}
+
 	{capture $rentalDetailCacheOptionsKey}
 		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
 	{/capture}
@@ -22,6 +26,11 @@
 
 				<div class="row-fluid objectDetailContent">
 					<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
+
+						{if $featured}
+							top
+						{/if}
+
 						{foreach $rental->getImages(3) as $photo}
 						{if $iterator->first}
 						<div class="imageFirst">
