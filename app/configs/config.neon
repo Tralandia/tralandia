@@ -94,6 +94,16 @@ parameters:
 			key: '[language]_[primaryLocation]'
 			expiration: 'tomorrow'
 			tags: ['[name]']
+		rootHome:
+			enabled: TRUE
+			key: '[language]_rootHome'
+			expiration: 'tomorrow'
+			tags: ['[name]']
+		rootCountries:
+			enabled: TRUE
+			key: '[language]_rootCountries'
+			expiration: 'tomorrow'
+			tags: ['[name]']
 		registrationForm:
 			enabled: TRUE
 			#if: '[formSubmitted]' neda sa to evelvovat

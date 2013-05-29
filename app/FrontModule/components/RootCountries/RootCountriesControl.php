@@ -11,15 +11,20 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $environment;
 
-	/** 
-	 * @var \Extras\Translator 
+	/**
+	 * @var \Extras\Translator
 	 */
 	protected $translator;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
 	 */
-	public $locationRepository;
+	protected $locationRepository;
+
+	/**
+	 * @var \Repository\Rental\RentalRepository
+	 */
+	protected $rentalRepository;
 
 	public function __construct(\Extras\Translator $translator, Environment $environment, EntityManager $em)
 	{
@@ -27,6 +32,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 		$this->environment = $environment;
 		$this->translator = $translator;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
 	}
 
 	public function render()
@@ -34,6 +40,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 		$presenter = $this->getPresenter();
 
+		$template->rentalCounts = $this->rentalRepository->getCounts(NULL, TRUE);
 		$template->countries = $this->getCountries();
 
 		$template->render();
@@ -42,7 +49,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	private function getCountries()
 	{
 		return $this->locationRepository->getCountriesOrdered(
-			$this->translator, 
+			$this->translator,
 			$this->environment->getLocale()->getCollator()
 		);
 	}

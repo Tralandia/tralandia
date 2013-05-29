@@ -5,47 +5,6 @@
 	expire => $homeCacheOptions['expiration'],
 	tags => $homeCacheOptions['tags']}
 
-{* {include clickMap.latte} *}
+{include APP_DIR.'/FrontModule/templates/homeList.latte'}
 
-	<h1>
-		{$pageH1}
-		<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
-	</h1>
-
-	<div class="row-fluid">
-
-
-<div class="span12">
-<div class=" mytabUi ui-tabs">
-
-	<div id="tabs-1" class="ui-tabs-panel">
-		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
-			<li class="span4">
-				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
-				<div class="position">TOP</div>
-				{if $mainImage = $rental['entity']->getMainImage()}
-					<img alt="{_$rental['entity']->name}" n:image="{$mainImage}" />
-				{else}
-					<img alt="{_$rental['entity']->name}" n:fakeImage="" />
-				{/if}
-
-				{foreach $rental['entity']->address->getLocations() as $location}
-				{if $iterator->first}
-
-
-				{/if}
-
-				{/foreach}
-				<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
-
-				</a>
-			</li>
-		</ul>
-
-	</div>
-
-</div>
-</div>
-
-	</div>
 {/cache}
