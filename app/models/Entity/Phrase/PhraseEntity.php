@@ -39,7 +39,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	protected $status = self::WAITING_FOR_CENTRAL;
 
-
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
@@ -179,11 +178,18 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	public function getWordsCount(Language $language)
 	{
-		$sourceTranslationText = $this->getSourceTranslationText();
-		$defaultVariationWordsCount = str_word_count($sourceTranslationText);
+		if ($language->getId() == CENTRAL_LANGUAGE) {
+			$translatedFromText = $this->getSourceTranslationText();
+		} else {
+			$translatedFromText = $this->getCentralTranslationText();
+		}
+		$defaultVariationWordsCount = str_word_count($translatedFromText);
 
-		$variationsCount = $language->getVariationsCount();
-
+		$variationsCount = $this->getType()->getVariationsCount($language);
+		d('variationsCount', $variationsCount);
+		d('wordcount', $defaultVariationWordsCount);
+		d('centralTranslationText', $translatedFromText);
+		d($language);
 		return $defaultVariationWordsCount * $variationsCount;
 	}
 

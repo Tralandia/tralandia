@@ -102,6 +102,23 @@ class Type extends \Entity\BaseEntity {
 		return (bool) $this->html;
 	}
 
+	public function getVariationsCount(\Entity\Language $language) {
+		$count = 1;
+		if ($this->pluralVariationsRequired == TRUE) {
+			$count = $count * count($language->getPluralsNames());
+		}
+
+		if ($this->genderVariationsRequired == TRUE) {
+			$count = $count * count($language->getGendersNames());
+		}
+
+		if ($this->locativesRequired == TRUE) {
+			$count = $count * count($language->getCasesNames());
+		}
+
+		return $count;
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

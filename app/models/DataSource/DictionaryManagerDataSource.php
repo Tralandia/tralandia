@@ -63,6 +63,13 @@ class DictionaryManagerDataSource extends BaseDataSource
 			$row['translator'] = $language->getTranslator();
 			$row['wordsToPay'] = $translationRepository->calculateWordsCountToPay($language);
 
+			$row['toTranslate'] = $row['toTranslate'] == 0 ? '' : $row['toTranslate'];
+			$row['toCheck'] = $row['toCheck'] == 0 ? '' : $row['toCheck'];
+
+			$row['wordsToPay'] = $row['wordsToPay'] == 0 ? '' : $row['wordsToPay'];
+			$row['priceToPay'] = $row['wordsToPay'] * $language->getTranslationPrice();
+
+
 			$return[$key] = $row;
 		}
 
