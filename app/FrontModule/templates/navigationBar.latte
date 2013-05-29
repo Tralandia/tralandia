@@ -31,7 +31,7 @@
 			</li>
 			<li n:class="$navigationBarLastActive!='navigationBarSearchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navigationBarSearchResults">
 				<a href="{$lastSearchResults['searchLink']}"><i class="icon-arrow-left"></i>#Back to list</a>
-				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navigationBarSearchResults">{_o100116}</a>
+				<a data-href="{$lastSearchResults['searchLink']}" id="shareSearchListLink" class="share" for="navigationBarSearchResults">{_o100116}</a>
 				<ul n:ifset="$navigationBarShareLinks" class="social-buttons">
 					<li>{$navigationBarShareLinks->twitterTag}</li>
 					<li>{$navigationBarShareLinks->googlePlusTag}</li>
