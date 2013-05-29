@@ -4,6 +4,8 @@ namespace AdminModule;
 
 
 use Entity\Currency;
+use Entity\Language;
+use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Nette\Application\BadRequestException;
@@ -89,14 +91,38 @@ class PhraseListPresenter extends BasePresenter {
 	}
 
 
+	public function actionWaitingForCentral()
+	{
+		$language = $this->languageRepositoryAccessor->get()->find(CENTRAL_LANGUAGE);
+
+		$paginator = $this->getPaginator();
+		$paginator->setItemCount($this->phraseRepository->getCountByStatus(Phrase::WAITING_FOR_CENTRAL));
+
+		$qb = $this->phraseRepository->findByStatusQb(Phrase::WAITING_FOR_CENTRAL);
+		$qb->setMaxResults($this->itemsPerPage)
+			->setFirstResult($paginator->getOffset());
+		$this->phrases = $qb->getQuery()->getResult();
+
+		$this->specialOption = [
+			'label' => 'Ready for EN correction',
+			'type' => 'readyForCorrection',
+		];
+
+		$this->enableOnlyOneLanguage($language);
+
+		$this->template->headerText = 'Not ready for EN correction';
+
+	}
+
+
 	public function actionNotReady()
 	{
 		$language = $this->languageRepositoryAccessor->get()->find(CENTRAL_LANGUAGE);
 
 		$paginator = $this->getPaginator();
-		$paginator->setItemCount($this->phraseRepository->getNotReadyCount());
+		$paginator->setItemCount($this->phraseRepository->getCountByStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING));
 
-		$qb = $this->phraseRepository->findNotReadyQb();
+		$qb = $this->phraseRepository->findByStatusQb(Phrase::WAITING_FOR_CORRECTION_CHECKING);
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
@@ -106,14 +132,7 @@ class PhraseListPresenter extends BasePresenter {
 			'type' => 'ready',
 		];
 
-		$this->editableLanguages = [$language];
-
-		$editForm = $this['phraseEditForm'];
-		$editForm->setDefaults([
-			'toLanguages' => $language->getId()
-		]);
-
-		$editForm['toLanguages']->setDisabled();
+		$this->enableOnlyOneLanguage($language);
 
 		$this->template->headerText = 'Not Ready Phrases';
 
@@ -138,19 +157,12 @@ class PhraseListPresenter extends BasePresenter {
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
 
-		$this->editableLanguages = [$language];
-
 		$this->specialOption = [
 			'label' => 'Checked',
 			'type' => 'checked',
 		];
 
-		$editForm = $this['phraseEditForm'];
-		$editForm->setDefaults([
-			'toLanguages' => $language->getId()
-		]);
-
-		$editForm['toLanguages']->setDisabled();
+		$this->enableOnlyOneLanguage($language);
 
 		$this->template->headerText = 'Checking ' . Strings::upper($language->getIso());
 	}
@@ -174,19 +186,13 @@ class PhraseListPresenter extends BasePresenter {
 		$translations = $this->findOutdatedTranslations->getWaitingForTranslation($language, $this->itemsPerPage, $paginator->offset);
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
-		$this->editableLanguages = [$language];
 
 		$this->specialOption = [
 			'label' => 'Translated',
 			'type' => 'translated',
 		];
 
-		$editForm = $this['phraseEditForm'];
-		$editForm->setDefaults([
-			'toLanguages' => $language->getId()
-		]);
-
-		$editForm['toLanguages']->setDisabled();
+		$this->enableOnlyOneLanguage($language);
 
 		$this->template->headerText = 'Translations to ' . Strings::upper($language->getIso());
 	}
@@ -243,6 +249,19 @@ class PhraseListPresenter extends BasePresenter {
 	{
 		$this->phrases = $this->phraseRepository->findBy(['type' => 9], [], 5);
 
+	}
+
+
+	protected function enableOnlyOneLanguage(Language $language)
+	{
+		$this->editableLanguages = [$language];
+
+		$editForm = $this['phraseEditForm'];
+		$editForm->setDefaults([
+			'toLanguages' => $language->getId()
+		]);
+
+		$editForm['toLanguages']->setDisabled();
 	}
 
 
@@ -322,6 +341,8 @@ class PhraseListPresenter extends BasePresenter {
 				}
 			} else if($specialOptionType == 'ready' && $specialOptionValue) {
 				$this->updateTranslationStatus->setPhraseReady($phrase, $this->loggedUser);
+			} else if($specialOptionType == 'readyForCorrection' && $specialOptionValue) {
+				$this->updateTranslationStatus->setPhraseReadyForCorrection($phrase, $this->loggedUser);
 			}
 		}
 
