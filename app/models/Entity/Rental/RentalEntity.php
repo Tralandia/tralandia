@@ -366,13 +366,17 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+
 	/**
 	 * @return array
 	 */
-	public function getNotImportantAmenitiesGroupByType()
+
+	public function getNotImportantAmenitiesGroupByType($excluded = NULL)
+
 	{
-		return $this->getAmenitiesByImportantGroupByType(FALSE);
+		return $this->getAmenitiesByImportantGroupByType(FALSE, $excluded);
 	}
+
 
 
 	/**
@@ -380,13 +384,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 *
 	 * @return array
 	 */
-	public function getAmenitiesByImportantGroupByType($important = TRUE)
+
+	public function getAmenitiesByImportantGroupByType($important = TRUE, $excluded = NULL)
 	{
 		$return = [];
 		$sort = [];
 		foreach ($this->getAmenities() as $amenity) {
 			if ($amenity->getImportant() == $important) {
 				$type = $amenity->getType();
+				if(is_array($excluded) && in_array($type->getSlug(), $excluded)) continue;
+
 				$sort[$type->getId()] = $type->getSorting();
 				$return[$type->getId()][$amenity->getId()] = $amenity;
 			}

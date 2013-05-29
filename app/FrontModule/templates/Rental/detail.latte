@@ -173,7 +173,7 @@
 
 								{if count($rental->amenities) > 0}
 								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType()}
+								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
 								{if !count($importantAmenities)}
 									{var
 										$importantAmenities = array_slice($notImportantAmenities,0, 2);
@@ -204,10 +204,21 @@
 
 									<div class="moreAmenities">
 										{foreach $notImportantAmenities  as $amenities}
+
 											{var $typesIterator = $iterator}
+
 											{foreach $amenities as $amenity}
+
+												{dump  $amenity->type->name}
+
+												{if $iterator->first}
+													<b>{_$amenity->type->name}: </b>
+												{/if}
+
 												{_$amenity->name}{if !$typesIterator->last}, {/if}
+
 											{/foreach}
+
 										{/foreach}
 									</div>
 

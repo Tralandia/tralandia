@@ -11,8 +11,8 @@
 		<div class="row-fluid">
 			<div n:foreach="$links as $link" class="span4">
 				<ul n:inner-foreach="$link as $row" class="hp-list arrows">
-					<li>
-						<a n:href="RentalList:, \Routers\FrontRoute::LOCATION => $row->entity" title="{_$row['entity']->name}">{_$row['entity']->name} <span>({$row['count']})</span></a>
+					<li class="arrow">
+						<a n:href="RentalList:, \Routers\FrontRoute::LOCATION => $row->entity" title="{_$row['entity']->name}"><span class="hoverUnderline">{_$row['entity']->name}</span> <span>({$row['count']})</span></a>
 					</li>
 				</ul>
 			</div>
