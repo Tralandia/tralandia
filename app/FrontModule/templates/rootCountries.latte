@@ -1,0 +1,8 @@
+{cache $rootCountriesCacheOptions['key'],
+	if => $rootCountriesCacheOptions['enabled'],
+	expire => $rootCountriesCacheOptions['expiration'],
+	tags => $rootCountriesCacheOptions['tags']}
+	
+{control rootCountries}
+
+{/cache}
