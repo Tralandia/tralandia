@@ -305,8 +305,12 @@ class LocationRepository extends \Repository\BaseRepository {
 			->join('n.translations', 'tt')
 			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region'])
 			->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $location)
-			->andWhere($qb->expr()->eq('tt.language', ':language'))->setParameter('language', $language)
-			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%");
+			->andWhere($qb->expr()->orx(
+				$qb->expr()->eq('tt.language', ':language'),
+				$qb->expr()->eq('tt.language', 'n.sourceLanguage')
+			))
+			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%")
+			->setParameter('language', $language);
 
 		return $qb->getQuery()->getResult();
 	}
