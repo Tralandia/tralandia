@@ -357,16 +357,29 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @return array
+	 */
 	public function getImportantAmenitiesGroupByType()
 	{
 		return $this->getAmenitiesByImportantGroupByType(TRUE);
 	}
 
+
+	/**
+	 * @return array
+	 */
 	public function getNotImportantAmenitiesGroupByType()
 	{
 		return $this->getAmenitiesByImportantGroupByType(FALSE);
 	}
 
+
+	/**
+	 * @param bool $important
+	 *
+	 * @return array
+	 */
 	public function getAmenitiesByImportantGroupByType($important = TRUE)
 	{
 		$return = [];
@@ -622,7 +635,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function hasPlacement()
 	{
-		return count($this->placements) ? true : false;
+		return count($this->placements) ? TRUE : FALSE;
 	}
 
 
