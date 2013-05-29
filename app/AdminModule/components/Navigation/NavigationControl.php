@@ -135,7 +135,7 @@ class NavigationControl extends BaseControl
 				$languageItems['toTranslate'] = [
 					'label' => 'To Translate',
 					'link' => 'PhraseList:toTranslate',
-					'linkArgs' => ['to' => $language->getIso()],
+					'linkArgs' => ['id' => $language->getIso()],
 				];
 				$languageTree['items'] = $languageItems;
 
