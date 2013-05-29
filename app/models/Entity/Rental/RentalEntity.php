@@ -15,8 +15,7 @@ use Nette\Utils\Strings;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug,getPrimaryLocation,setPrimaryLocation,
- * unsetPrimaryLocation, getCalendar, setCalendar}")
+ * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug, getCalendar, setCalendar}")
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -69,12 +68,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals", cascade={"persist"})
 	 */
 	protected $missingInformation;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 */
-	protected $primaryLocation;
 
 	/**
 	 * @var Collection

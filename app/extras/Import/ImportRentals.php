@@ -31,7 +31,7 @@ class ImportRentals extends BaseImport {
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
 		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
-		$interviewQuestionPhraseType = $this->createPhraseType('\Rental\InterviewQuestion', 'question');
+		$interviewAnswerPhraseType = $this->createPhraseType('\Rental\InterviewAnswer', 'answer');
 
 		$model->flush();
 
@@ -254,7 +254,7 @@ class ImportRentals extends BaseImport {
 					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew(FALSE);
 					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);
 
-					$answerPhrase = $this->createNewPhrase($interviewQuestionPhraseType);
+					$answerPhrase = $this->createNewPhrase($interviewAnswerPhraseType);
 					$answerPhrase = $context->phraseDecoratorFactory->create($answerPhrase);
 					foreach ($answers as $oldLanguageId => $value) {
 						if (!strlen($value)) continue;
@@ -339,33 +339,16 @@ class ImportRentals extends BaseImport {
 			$model->persist($rental);
 
 
-			// Images
-			$temp = array_unique(array_filter(explode(',', $x['photos'])));
-			if (is_array($temp) && count($temp)) {
-				foreach ($temp as $key => $value) {
-					$t = qNew('select from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
-					if (mysql_num_rows($t) == 0) continue;
-					$img = mysql_fetch_array($t);
-
-					$rentalImage = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
-					$rental->addImage($rentalImage);
-				}
-			}
-
 			// // Images
 			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
 			// if (is_array($temp) && count($temp)) {
-			// 	if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 			// 	foreach ($temp as $key => $value) {
-			// 		$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-			// 		if (!$image) {
-			// 			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
-			// 			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
-			// 			$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
-			// 			$rental->addImage($imageEntity);
-			// 		} else {
-			// 			$rental->addImage($image);
-			// 		}
+			// 		$t = qNew('select from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
+			// 		if (mysql_num_rows($t) == 0) continue;
+			// 		$img = mysql_fetch_array($t);
+
+			// 		$rentalImage = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
+			// 		$rental->addImage($rentalImage);
 			// 	}
 			// }
 

@@ -207,6 +207,19 @@ class ImportLocations extends BaseImport {
 				$t->updateVariations($variations);
 			}
 
+			$missingNames = array(
+				'tk' => 'Tokelau',
+				'tf' => 'French Southern Territories',
+				'kp' => 'Democratic People\'s Republic of Korea',
+				'hm' => 'Heard Island and McDonald Islands',
+				'gs' => 'South Georgia and the South Sandwich Islands',
+				'bv' => 'Bouvet Island',
+			);
+
+			if (isset($missingNames[$location->iso])) {
+				$namePhrase->setTranslationText($en, $missingNames[$location->iso]);
+			}
+
 			$location->name = $namePhrase;
 
 			$location->type = $locationTypeCountry;

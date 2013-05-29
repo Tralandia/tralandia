@@ -6,6 +6,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * PhraseRepository class
@@ -71,8 +72,9 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->andWhere($qb->expr()->lt('e.status', ':status'))->setParameter('status', Phrase::READY);
+			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', Phrase::WAITING_FOR_CORRECTION_CHECKING);
 
+		$qb = $this->filterTranslatedTypes($qb);
 		return $qb;
 	}
 
@@ -100,6 +102,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 			->andWhere($qb->expr()->eq('t.language', ':language'))->setParameter('language', $language)
 			->andWhere($qb->expr()->eq('t.status', ':status'))->setParameter('status', Phrase::WAITING_FOR_CORRECTION_CHECKING);
 
+		$qb = $this->filterTranslatedTypes($qb);
 		return $qb;
 	}
 
@@ -176,5 +179,18 @@ class PhraseRepository extends \Repository\BaseRepository {
 		return $return;
 	}
 
+	/**
+	 * @param QueryBuilder $qb
+	 *
+	 * @return QueryBuilder
+	 */
+	public function filterTranslatedTypes(QueryBuilder $qb)
+	{
+		$qb->leftJoin('e.type', 'type');
+
+		$qb->andWhere('type.translated = :translated');
+		$qb->setParameter('translated', TRUE);
+		return $qb;
+	}
 
 }

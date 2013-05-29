@@ -207,6 +207,12 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
+		'updateRentalLocations' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();
@@ -512,6 +518,14 @@ class BaseImport {
 
 	public function processTranslation($text) {
 		$text = preg_replace('/\{_([0-9a-zA-Z]{1,25})\}/', '[$1]', $text);
+		$replacementCodes = array(
+			'donateButton',
+		);
+
+		foreach ($replacementCodes as $key => $value) {
+			$text = str_replace('~'.$value.'~', '['.$value.']', $text);
+		}
+
 		if ($text != strip_tags($text)) {
 			$text = $this->html2texy->convert($text);
 		}
