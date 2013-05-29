@@ -30,8 +30,8 @@ class ImportFaq extends BaseImport {
 		while ($question = mysql_fetch_array($questions)) {
 			$faqQuestion = $context->faqQuestionRepositoryAccessor->get()->createNew(FALSE);
 			$faqQuestion->category = $faqCategory;
-			$faqQuestion->question = $this->createNewPhrase($questionType, $x['question_dic_id'], NULL, NULL, $en);
-			$faqQuestion->answer = $this->createNewPhrase($answerType, $x['answer_dic_id'], NULL, NULL, $en);
+			$faqQuestion->question = $this->createNewPhrase($questionType, $question['question_dic_id'], NULL, NULL, $en);
+			$faqQuestion->answer = $this->createNewPhrase($answerType, $question['answer_dic_id'], NULL, NULL, $en);
 			$this->model->persist($faqQuestion);
 		}
 

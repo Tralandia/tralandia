@@ -59,7 +59,7 @@ class ImportHtmlPhrases extends BaseImport {
 		$phraseType = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('Latte');
 		$phraseTypeMulti = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('LatteMulti');
 
-		$phraseCreator = new \Service\Phrase\PhraseCreator($phraseRepository, $languageRepository);
+		$phraseCreator = $this->context->phraseCreator;
 
 		$r = qNew('select * from __importPhrases order by id');
 		while ($x = mysql_fetch_array($r)) {
