@@ -267,6 +267,8 @@ ul.arrows {
 			line-height: 16px;
 			text-align: center;
 			height: 14px;
+			float: left;
+			position: relative;			
 			margin-top: 2px;
 		}
 
@@ -274,6 +276,15 @@ ul.arrows {
 			display: none;
 		}
 	}
+}
+
+.btn.btn-orangeDark, .btn.btn-greenDark {
+	&.active {
+
+		i.icon-spinner {
+			left: -4px;
+		}
+	}	
 }
 
 .btn.btn-orangeDark {
