@@ -19,10 +19,16 @@ abstract class BasePresenter extends Presenter {
 	const FLASH_SUCCESS = 'success';
 	const FLASH_ERROR = 'error';
 
-	/** @persistent */
+	/**
+	 * @persistent
+	 * @var \Entity\Language
+	 */
 	public $language;
 
-	/** @persistent */
+	/**
+	 * @persistent
+	 * @var \Entity\Location\Location
+	 */
 	public $primaryLocation;
 
 	public $page;

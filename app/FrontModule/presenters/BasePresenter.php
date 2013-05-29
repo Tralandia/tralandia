@@ -212,6 +212,9 @@ abstract class BasePresenter extends \BasePresenter {
 				foreach($group as $location) {
 					$temp = [];
 					$temp['name'] = $location->getName()->getTranslationText($this->language);
+					if($this->language->getId() !== $this->primaryLocation->getDefaultLanguage()->getId()) {
+						$temp['nameSource'] = $location->getName()->getSourceTranslationText();
+					}
 					$temp['slug'] = $location->getSlug();
 					if($location->isPrimary()) {
 						$temp['icon'] = '/images/flags/' . $location->getFlagName();
