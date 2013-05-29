@@ -149,10 +149,22 @@ ul.arrows {
 		  font-size: 28px;
 		}
 
-		span {
+		span:not(.hoverUnderline) {
 			padding: 1px 2px;
 			color: #CCC;
 			font-size: 11px;
+		}
+
+		&.arrow {
+			a {
+				&:hover {
+					text-decoration:none;
+
+					span.hoverUnderline {
+						text-decoration: underline;
+					}
+				}
+			}
 		}
 	}
 }
