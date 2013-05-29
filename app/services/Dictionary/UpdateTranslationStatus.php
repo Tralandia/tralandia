@@ -21,20 +21,27 @@ class UpdateTranslationStatus {
 		$centralTranslation = $phrase->getCentralTranslation();
 
 		$sourceAndCentralAreSame = $sourceTranslation == $centralTranslation;
-		$sourceAreNewestThenCentral = $sourceTranslation->getTimeTranslated() > $centralTranslation->getTimeTranslated();
+		$sourceIsNewerThenCentral = $sourceTranslation->getTimeTranslated() > $centralTranslation->getTimeTranslated();
 
-		if(!$sourceAndCentralAreSame && $sourceAreNewestThenCentral) {
-			return $this->sourceIsNewest($phrase);
-		} else {
+		$phrase->setStatus(Phrase::READY);
+		if($sourceAndCentralAreSame) {
 			foreach($phrase->getTranslations() as $translation) {
-				if($translation == $sourceTranslation || $translation == $centralTranslation) {
+				if($translation == $sourceTranslation) {
 					$translation->setStatus(Translation::UP_TO_DATE);
 				}
 				if($centralTranslation->getTimeTranslated() > $translation->getTimeTranslated()) {
 					$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
+				} else {
+					$translation->setStatus(Translation::UP_TO_DATE);
 				}
 			}
 			return $phrase;
+		} else {
+			if($sourceIsNewerThenCentral) {
+				return $this->sourceIsNewest($phrase);
+			} else {
+				// ??
+			}
 		}
 	}
 
@@ -56,6 +63,8 @@ class UpdateTranslationStatus {
 			if($translation == $sourceTranslation || $translation == $centralTranslation) continue;
 			$translation->setStatus(Translation::WAITING_FOR_CENTRAL);
 		}
+
+		$phrase->setStatus(Phrase::WAITING_FOR_CENTRAL);
 
 		return $phrase;
 	}
