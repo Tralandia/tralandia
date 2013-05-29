@@ -31,7 +31,7 @@ class ImportRentals extends BaseImport {
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
 		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
-		$interviewQuestionPhraseType = $this->createPhraseType('\Rental\InterviewQuestion', 'question');
+		$interviewAnswerPhraseType = $this->createPhraseType('\Rental\InterviewAnswer', 'answer');
 
 		$model->flush();
 
@@ -254,7 +254,7 @@ class ImportRentals extends BaseImport {
 					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew(FALSE);
 					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);
 
-					$answerPhrase = $this->createNewPhrase($interviewQuestionPhraseType);
+					$answerPhrase = $this->createNewPhrase($interviewAnswerPhraseType);
 					$answerPhrase = $context->phraseDecoratorFactory->create($answerPhrase);
 					foreach ($answers as $oldLanguageId => $value) {
 						if (!strlen($value)) continue;

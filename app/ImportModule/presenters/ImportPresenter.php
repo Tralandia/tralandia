@@ -197,6 +197,16 @@ class ImportPresenter extends Presenter {
 				$automaticUrls[] = $this->link('default', array('importSection' => 'interactions', 'subsection' => 'importRentalReservations', 'limit' => ($i*$countPerGroup).','.$countPerGroup));	
 			}
 
+			// Translation Statuses
+			$robot = $this->context->updateTranslationStatusRobot;
+			$c = $robot->getIterationCount();
+
+			for ($i=1; $i <= $c; $i++) { 
+				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
+			}
+
+			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
+
 			$automaticUrls = array_merge($automaticUrls, array(
 				$this->link('default', array('importSection' => 'interactions', 'subsection' => 'importRentalToFriend')),
 				$this->link('default', array('importSection' => 'interactions', 'subsection' => 'importSiteReviews')),
@@ -210,17 +220,18 @@ class ImportPresenter extends Presenter {
 			));
 
 			// Translation Statuses
-			$robot = $this->context->updateTranslationStatusRobot;
-			$c = $robot->getIterationCount();
+			//$robot = $this->context->updateTranslationStatusRobot;
+			//$c = $robot->getIterationCount();
 
-			for ($i=1; $i <= $c; $i++) { 
+			for ($i=1; $i <= 10; $i++) { 
 				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
 			}
 
 			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
+
 			$this->session->automaticUrls = $automaticUrls;
-			d($automaticUrls); exit;
+			//d($automaticUrls); exit;
 			$this->redirectUrl('http://www.sk.tra.com/import?autoStart=1');
 
 		}

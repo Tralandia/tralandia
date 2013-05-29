@@ -3,6 +3,10 @@ common:
 		dictionary:
 			label: Dictionary
 			items:
+				dictionaryManager:
+					separator: true
+					label: Manager
+					link: ':Admin:DictionaryManager:list'
 				addPhrase:
 					label: Add Phrase
 					items:
@@ -28,10 +32,6 @@ common:
 					separator: true
 					label: Languages
 					link: ':Admin:Language:list'
-				dictionaryManager:
-					separator: true
-					label: Manager
-					link: ':Admin:DictionaryManager:list'
 
 		location:
 			label: Locations

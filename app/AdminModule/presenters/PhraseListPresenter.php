@@ -91,6 +91,8 @@ class PhraseListPresenter extends BasePresenter {
 
 	public function actionNotReady()
 	{
+		$language = $this->languageRepositoryAccessor->get()->find(CENTRAL_LANGUAGE);
+
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->phraseRepository->getNotReadyCount());
 
@@ -104,7 +106,16 @@ class PhraseListPresenter extends BasePresenter {
 			'type' => 'ready',
 		];
 
-		$this->template->headerText = 'Central Checking';
+		$this->editableLanguages = [$language];
+
+		$editForm = $this['phraseEditForm'];
+		$editForm->setDefaults([
+			'toLanguages' => $language->getId()
+		]);
+
+		$editForm['toLanguages']->setDisabled();
+
+		$this->template->headerText = 'Not Ready Phrases';
 
 	}
 
@@ -299,7 +310,7 @@ class PhraseListPresenter extends BasePresenter {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
-			//$phrase = $phraseValues['phrase'];
+			$phrase = $phraseValues['phrase'];
 
 			if($specialOptionType == 'translated' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
@@ -309,8 +320,9 @@ class PhraseListPresenter extends BasePresenter {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
 					$translation->setStatus(Translation::WAITING_FOR_PAYMENT);
 				}
+			} else if($specialOptionType == 'ready' && $specialOptionValue) {
+				$this->updateTranslationStatus->setPhraseReady($phrase, $this->loggedUser);
 			}
-
 		}
 
 		$phraseRepository->flush();
