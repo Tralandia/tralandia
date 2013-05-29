@@ -49,6 +49,8 @@ class RootHomePresenter extends BasePresenter {
 		}
 
 		$this->template->rentals = $rentals;
+		$counts = $this->rentalRepositoryAccessor->get()->getCounts(NULL, TRUE);
+		$this->template->locationRentalsCount = array_sum($counts);
 	}
 
 }

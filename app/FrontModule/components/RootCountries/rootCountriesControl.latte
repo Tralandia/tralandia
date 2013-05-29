@@ -6,7 +6,7 @@
 		<ul n:inner-foreach="$countries as $country">
 			<li>
 				<a href="{plink :Front:Home:default, Routers\BaseRoute::PRIMARY_LOCATION => $country['entity']}">
-					{var $rentalCount = $country['entity']->getRentalCount()}
+					{var $rentalCount = isset($rentalCounts[$country['entity']->getId()]) ? $rentalCounts[$country['entity']->getId()] : 0}
 					{$country['name']} {if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 				</a>
 			</li>
