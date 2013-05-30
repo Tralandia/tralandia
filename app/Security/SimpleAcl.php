@@ -83,7 +83,7 @@ class SimpleAcl extends Permission
 
 		$this->allow(RoleEntity::TRANSLATOR, $adminModule);
 		$this->allow(RoleEntity::TRANSLATOR, $phrasePresenter, 'editList');
-		$this->allow(RoleEntity::TRANSLATOR, $phraseListPresenter, ['edit', 'toTranslate']);
+		$this->allow(RoleEntity::TRANSLATOR, $phraseListPresenter, ['edit', 'toTranslate', 'search']);
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
 
 		//$this->allow(RoleEntity::ADMIN, $userEntity, self::FAKE_IDENTITY, [$assertion, 'fakeIdentity']);
