@@ -118,8 +118,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$this->template->setFile(APP_DIR.'/FrontModule/components/SearchBar/mobileSearchBarControl.latte');
 		}
 
-		$this->directLinks();
-
 		$template = $this->template;
 		$presenter = $this->getPresenter();
 
@@ -174,6 +172,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$search = $this->getSearch();
 
 		$count = $search->getRentalsCount();
+
 		$template->totalResultsCount = $count;
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
