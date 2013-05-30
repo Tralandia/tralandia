@@ -255,7 +255,7 @@ ul.arrows {
 	.basic-gradient(#fdbe33,#f68703);
 	border: 1px solid #f68703;
 	color: @brown;
-	&:hover {
+	&:hover , &.active {
 		.basic-gradient(#f68703,#fdbe33);
 		background-position: 0;
 	}
@@ -268,20 +268,20 @@ ul.arrows {
 	}
 
 	&.active {
-		background: #AD6A18;
 
-		color: #F68903;
 		cursor: default;
 
 		i.icon-spinner {
 			display: block;
-			width: 14px;
-			line-height: 16px;
+			width: 22px;
+			line-height: 22px;
 			text-align: center;
-			height: 14px;
+			text-shadow:none;
+			height: 22px;
 			float: left;
+			margin-top: 0;
 			position: relative;			
-			margin-top: 2px;
+			font-size: 20px;
 		}
 
 		i.entypo-send {
@@ -290,7 +290,7 @@ ul.arrows {
 	}
 }
 
-.btn.btn-orangeDark, .btn.btn-greenDark {
+.btn.btn-orangeDark, .btn.btn-greenDark , .btn.btn-orange {
 	&.active {
 
 		i.icon-spinner {
@@ -304,8 +304,9 @@ ul.arrows {
 	border: 1px solid rgb(163, 93, 9);
 	color: @white;
 
-	&:hover {
+	&:hover , &.active  {
 		.basic-gradient(#AD6A18,#F68903);
+		background-position: 0;
 	}
 
 }
@@ -319,28 +320,9 @@ ul.arrows {
 	font-size: 14px;
 	margin-top: 5px;
 
-	&:hover {
+	&:hover , &.active {
 		.basic-gradient(#B8CC2D,#5D7A0A);
 		background-position: 0;
-	}
-
-	&.active {
-		background: #749108;
-		color: #E7ECD4;
-		cursor: default;
-
-		i.icon-spinner {
-			display: block;
-			width: 14px;
-			line-height: 16px;
-			text-align: center;
-			height: 14px;
-			margin-top: 2px;
-		}
-
-		i.entypo-send {
-			display: none;
-		}
 	}
 
 }
