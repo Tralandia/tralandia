@@ -459,13 +459,14 @@
 
 		{include #translationVatiations, control => $container['fromVariations']}
 	<small>
-		#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}, {$container->getStatusLabel()}
+		#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}
 	</small>
 	</div>
 
 	<div class="span6">
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
+			{var $status = $languageContainer['variations']->getStatusLabel()}
 			<div class="phrasecontrol hide {$language->getId()}_phrase">
 				{include #translationVatiations, control => $languageContainer['variations']}
 
@@ -491,6 +492,7 @@
 						{input $container['specialOptionValue'] }
 					{/label}
 				</div>
+				<small>{$status}</small>
 
 			</div>
 

@@ -1,8 +1,6 @@
 {var $searchFormClass = 'searchForm'}
 {$jsVariables->for('form.' . $searchFormClass)}
 
-
-
 <div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="sidebar">
 <aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 
@@ -10,6 +8,7 @@
 		if => $searchBarCacheOptions['enabled'],
 		expire => $searchBarCacheOptions['expiration'],
 		tags => $searchBarCacheOptions['tags']}
+
 
 	{form searchForm , class => $searchFormClass }
 		<strong>{_o100003}</strong>
@@ -69,20 +68,22 @@
 		expire => $searchLinksCacheOptions['expiration'],
 		tags => $searchLinksCacheOptions['tags']}
 
-	{var $bottomLinks = $bottomLinksCallback()}
-	{if isset($bottomLinks) && count($bottomLinks->links)}
-	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
-	<ul>
-		<li n:foreach="$bottomLinks->links as $value">
-			<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
-				{$value->name} <span class="counter">{$value->count}</span>
-			</a>
-		</li>
-		{if !$hasLocation}
-		<li class="more"><a href="{plink :Front:Destination:}">{_o100185}</a></li>
+		{if $totalResultsCount > 1 }
+			{var $bottomLinks = $bottomLinksCallback()}
+			{if isset($bottomLinks) && count($bottomLinks->links)}
+			<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
+			<ul>
+				<li n:foreach="$bottomLinks->links as $value">
+					<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
+						{$value->name} <span class="counter">{$value->count}</span>
+					</a>
+				</li>
+				{if !$hasLocation}
+				<li class="more"><a href="{plink :Front:Destination:}">{_o100185}</a></li>
+				{/if}
+			</ul>
+			{/if}
 		{/if}
-	</ul>
-	{/if}
 
 	{/cache}
 	</aside>
