@@ -132,7 +132,7 @@ class Compiler {
 	 *
 	 * @return Compiler
 	 */
-	private function addLanguage($variableName, \Entity\Language $language)
+	public function addLanguage($variableName, \Entity\Language $language)
 	{
 		$this->variables[$variableName] = new Variables\LanguageVariables($language);
 		return $this;
@@ -144,7 +144,7 @@ class Compiler {
 	 *
 	 * @return Compiler
 	 */
-	private function addLocation($variableName, \Entity\Location\Location $location)
+	public function addLocation($variableName, \Entity\Location\Location $location)
 	{
 		$this->variables[$variableName] = new Variables\LocationVariables($location);
 		return $this;
