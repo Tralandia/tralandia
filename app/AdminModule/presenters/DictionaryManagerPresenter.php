@@ -51,8 +51,9 @@ class DictionaryManagerPresenter extends AdminPresenter {
 		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
 		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
 
-		$this->flashMessage('Request sent!');
-		$this->redirect('list');
+		//$this->flashMessage('Request sent!');
+		$this->payload->success = TRUE;
+		$this->sendPayload();
 	}
 
 
@@ -62,7 +63,9 @@ class DictionaryManagerPresenter extends AdminPresenter {
 		$changedIds = $this->markAsPaid->mark($language, $this->loggedUser);
 
 		$this->flashMessage('Done! ' . count($changedIds) . ' translations mark as paid!', self::FLASH_SUCCESS);
-		$this->redirect('list');
+		//$this->redirect('list');
+		$this['dataGrid']['grid']->invalidateRow($id);
+		$this->setView('list');
 	}
 
 
