@@ -455,52 +455,62 @@
 
 <div  n:class="$hasErrors ? 'invalid row-fluid phraseForm' : 'row-fluid phraseForm'">
 
-	<div class="span5">
+	<div class="span5 phraseFormInputCover">
 
 		{include #translationVatiations, control => $container['fromVariations']}
-	<small>
-		#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}
-	</small>
+
 	</div>
 
-	<div class="span6">
+	
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
 			{var $status = $languageContainer['variations']->getStatusLabel()}
-			<div class="phrasecontrol hide {$language->getId()}_phrase">
+			<div class="phrasecontrol hide {$language->getId()}_phrase ">
+			
+				<div class="span5 phraseFormInputCover">
 				{include #translationVatiations, control => $languageContainer['variations']}
-
-			<div class="phraseFormHeaderCover">
-
-				{ifset $languageContainer['gender']}
-					{input $languageContainer['gender'] }
-				{/ifset}
-
-				{ifset $languageContainer['position']}
-					{input $languageContainer['position'] }
-				{/ifset}
-
-
-
-				{if $container->isHtmlText()}
-					<a href="#" data-preview-title="#title preview" data-preview-link="{plink texylaPreview}">preview</a>
-				{/if}
-
-				<div class="pull-right" n:ifset="$container['specialOptionValue']">
-					{label $container['specialOptionValue']}
-						{$container['specialOptionValue']->caption}
-						{input $container['specialOptionValue'] }
-					{/label}
 				</div>
-				<small>{$status}</small>
+
+				<div class="phraseFormHeaderCover span9">
+
+					<small>
+						#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}
+					</small>
+
+					<small>{$status}</small>
+
+					{ifset $languageContainer['gender']}
+						{input $languageContainer['gender'] }
+					{/ifset}
+
+					{ifset $languageContainer['position']}
+						{input $languageContainer['position'] }
+					{/ifset}
+
+
+
+					{if $container->isHtmlText()}
+						<a href="#" data-preview-title="#title preview" data-preview-link="{plink texylaPreview}">preview</a>
+					{/if}
+
+					<div class="pull-right" n:ifset="$container['specialOptionValue']">
+						{label $container['specialOptionValue']}
+							{$container['specialOptionValue']->caption}
+							{input $container['specialOptionValue'] }
+						{/label}
+					</div>
+					
+
+				</div>	
+
 
 			</div>
 
-			</div>
+		
 		{/foreach}
 
 
-	</div>
+	
 
 
 </div>
