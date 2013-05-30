@@ -40,11 +40,16 @@ class DictionaryManagerDataSource extends BaseDataSource
 	{
 		/** @var $translationRepository \Repository\Phrase\TranslationRepository */
 		$translationRepository = $this->em->getRepository(TRANSLATION_ENTITY);
-		$supportedLanguages = $this->supportedLanguages->getSortedByIso();
+		$languages = $this->supportedLanguages->getSortedByIso();
+
+		if(array_key_exists('id', $filter) && is_array($filter['id']) && count($filter['id'])) {
+			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+			$languages = $languageRepository->findById($filter['id']);
+		}
 
 		$return = [];
 		/** @var $language \Entity\Language */
-		foreach ($supportedLanguages as $key => $language) {
+		foreach ($languages as $key => $language) {
 
 			$lastTranslation = $translationRepository->findLastTranslationDate($language);
 			//$lastTranslation = new \DateTime($lastTranslation);
