@@ -2,6 +2,9 @@
 
 namespace Extras\Forms\Container;
 
+use Entity\Phrase\Phrase;
+use Entity\Phrase\Translation;
+
 class TranslationVariationContainer extends BaseContainer
 {
 
@@ -67,6 +70,38 @@ class TranslationVariationContainer extends BaseContainer
 	public function getMainControl()
 	{
 		throw new \Nette\NotImplementedException;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getStatusLabel()
+	{
+		$translation = $this->translation;
+		$phrase = $this->getPhrase();
+
+		$translationStatus = $translation->getStatus();
+		$phraseStatus = $phrase->getStatus();
+
+		$languageName = $translation->getLanguage()->getName()->getCentralTranslationText();
+
+		if($phraseStatus == Phrase::WAITING_FOR_CENTRAL) {
+			return 'Waiting for English to be Prepared for Correction';
+		} else if ($phraseStatus == Phrase::WAITING_FOR_CORRECTION) {
+			return 'Waiting for English to be Corrected by translator';
+		} else if ($phraseStatus == Phrase::WAITING_FOR_CORRECTION_CHECKING) {
+			return 'Waiting for English to be Accepted by Admin';
+		} else if ($phraseStatus == Phrase::READY && $translationStatus == Translation::WAITING_FOR_TRANSLATION) {
+			return 'Waiting for ' . $languageName .' to be Translated';
+		} else if ($translationStatus == Translation::WAITING_FOR_CHECKING) {
+			return 'Waiting for ' . $languageName .' to be Translated';
+		} else if ($translationStatus == Translation::WAITING_FOR_PAYMENT) {
+			return 'Waiting for translation to be paid for';
+		} else if ($phraseStatus == Phrase::READY && $translationStatus == Translation::UP_TO_DATE) {
+			return 'Complete and up to date';
+		}
+
 	}
 
 }
