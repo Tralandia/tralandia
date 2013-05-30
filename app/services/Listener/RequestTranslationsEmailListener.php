@@ -41,6 +41,7 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 
 		$deadline = (new Nette\DateTime())->modify('+5 days')->format('Y-m-d');
 		$emailCompiler->addTranslator('translator', $user);
+		$emailCompiler->addLanguage('language', $language);
 		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
 		$emailCompiler->addCustomVariable('totalPrice', $wordsCount * $wordPrice);
 		$emailCompiler->addCustomVariable('deadline', $deadline);

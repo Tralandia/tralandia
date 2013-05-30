@@ -72,6 +72,7 @@ $(document).ready(function(){
 $.nette.init(function (netteAjaxHandler) {
     $('form.ajax').submit(netteAjaxHandler);
     $('form.ajax').live('submit',netteAjaxHandler);
+    $('a.ajax').click(netteAjaxHandler);
 });
 
 var c = $.nette.ext('snippets');

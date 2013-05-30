@@ -103,12 +103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6"
+                "reference": "06cafcc1c7ede69c75111ffc43e75bd64f86498a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6",
-                "reference": "6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/06cafcc1c7ede69c75111ffc43e75bd64f86498a",
+                "reference": "06cafcc1c7ede69c75111ffc43e75bd64f86498a",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-04-21 21:33:36"
+            "time": "2013-05-26 15:25:57"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -155,12 +155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "6cd0263d972ef5d0c0627a4927d948e042d2d5d8"
+                "reference": "66ce0b3986483089ffe7d2270514ece7f1432d19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/6cd0263d972ef5d0c0627a4927d948e042d2d5d8",
-                "reference": "6cd0263d972ef5d0c0627a4927d948e042d2d5d8",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/66ce0b3986483089ffe7d2270514ece7f1432d19",
+                "reference": "66ce0b3986483089ffe7d2270514ece7f1432d19",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-05-10 16:58:23"
+            "time": "2013-05-26 18:20:06"
         },
         {
             "name": "kdyby/nette-session-panel",
@@ -253,12 +253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Redis.git",
-                "reference": "2b874b981b4ee2213fc90a7337565ab0cacec62f"
+                "reference": "cfcd9b51756617e879d1c0e0f269af06256b6931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/2b874b981b4ee2213fc90a7337565ab0cacec62f",
-                "reference": "2b874b981b4ee2213fc90a7337565ab0cacec62f",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/cfcd9b51756617e879d1c0e0f269af06256b6931",
+                "reference": "cfcd9b51756617e879d1c0e0f269af06256b6931",
                 "shasum": ""
             },
             "require": {
@@ -300,7 +300,7 @@
                 "nette",
                 "redis"
             ],
-            "time": "2013-04-29 09:23:40"
+            "time": "2013-05-26 18:10:45"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -308,12 +308,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "cafe5ca6ac173593725b02b7d4c8734d2be70ed3"
+                "reference": "2.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/cafe5ca6ac173593725b02b7d4c8734d2be70ed3",
-                "reference": "cafe5ca6ac173593725b02b7d4c8734d2be70ed3",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/2.6.1",
+                "reference": "2.6.1",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-05-07 15:31:44"
+            "time": "2013-05-29 14:04:34"
         },
         {
             "name": "nette/nette",
@@ -358,7 +358,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/32471c9306ee6f2157c817d79952c2ecbb306d37",
+                "url": "https://api.github.com/repos/nette/nette/zipball/92e3358c4e42750a2e54c983af39972562eae7c3",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -428,7 +428,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Achtan/datagrid.git",
-                "reference": "15ef6a2e5482244924eb3336cd1aec0ace677cca"
+                "reference": "e22cf01059bc7bc5488460b3dc5df3e48a06b6c7"
             },
             "require": {
                 "nette/nette": ">=2.0.0",
@@ -456,7 +456,7 @@
                 "nette",
                 "nextras"
             ],
-            "time": "2013-03-22 15:03:49"
+            "time": "2013-05-30 08:35:58"
         },
         {
             "name": "nextras/forms",

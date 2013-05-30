@@ -42,12 +42,14 @@ class MarkAsPaid {
 		$ids = $notPaidQb->getQuery()->getResult();
 		$ids = \Tools::arrayMap($ids, 'id');
 
-		$qb = $translationRepository->createQueryBuilder();
-		$qb->update(TRANSLATION_ENTITY, 'e')
-			->set('e.status', ':status')->setParameter('status', Translation::UP_TO_DATE)
-			->where($qb->expr()->in('e.id', $ids));
+		if(count($ids)) {
+			$qb = $translationRepository->createQueryBuilder();
+			$qb->update(TRANSLATION_ENTITY, 'e')
+				->set('e.status', ':status')->setParameter('status', Translation::UP_TO_DATE)
+				->where($qb->expr()->in('e.id', $ids));
 
-		$qb->getQuery()->execute();
+			$qb->getQuery()->execute();
+		}
 		return $ids;
 	}
 
