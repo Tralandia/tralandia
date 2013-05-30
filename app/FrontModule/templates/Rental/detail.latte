@@ -208,7 +208,7 @@
 											{/foreach}
 										{/foreach}
 										<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
-										for="moreAmenities" href="#"><b>{_o100001}</b></a>
+										for="moreAmenities" href="#">{_o100001}</a>
 									</div>
 
 									<div class="moreAmenities">
@@ -218,10 +218,8 @@
 
 											{foreach $amenities as $amenity}
 
-												{dump  $amenity->type->name}
-
 												{if $iterator->first}
-													<b>{_$amenity->type->name}: </b>
+													<b>{_$amenity->type->name|firstUpper}: </b>
 												{/if}
 
 												{_$amenity->name}{if !$typesIterator->last}, {/if}
