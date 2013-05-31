@@ -38,6 +38,13 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+		$this->routeIn($route, 'http://www.com.tra.com/baratsagos-hangulu-gibraltar-vendeghaz-a-r280', 'Rental', array(
+			'action' => 'detail',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(159),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+			FrontRoute::RENTAL => $this->findRental(280),
+		), 'http://en.hu.tra.com/baratsagos-hangulu-gibraltar-vendeghaz-a-r280');
+
 		$this->routeIn($route, 'http://sk.usal.tra.com/registracia', 'Registration', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
@@ -72,7 +79,7 @@ class FrontRouterTest extends BaseRouterTest
 			'action' => 'in',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
 			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::PAGE => $this->findPage(3),
+			FrontRoute::PAGE => $this->findPage(2),
 		));
 
 		$this->routeIn($route, 'http://www.sk.tra.com/houseboaty', 'RentalList', array(
@@ -96,11 +103,11 @@ class FrontRouterTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		));
 
-		$this->routeIn($route, 'http://www.com.tra.com/contacts', 'Contact', array(
+		$this->routeIn($route, 'http://www.com.tra.com/support-tralandia', 'SupportUs', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
-			FrontRoute::PAGE => $this->findPage(2),
+			FrontRoute::PAGE => $this->findPage(16),
 		));
 
 		$this->routeIn($route, 'http://www.com.tra.com/registration', 'Registration', array(
