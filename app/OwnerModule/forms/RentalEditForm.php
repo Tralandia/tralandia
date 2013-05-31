@@ -165,8 +165,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-
-
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
 
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'));
@@ -207,12 +205,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities);
 
-		$rentalContainer->addRentalPhotosContainer('photos', $rental);
-
 		$this->addSubmit('submit', 'o100083');
 
-		$this->onValidate[] = callback($this, 'validation');
-		$this->onValidate[] = $rentalContainer->validation;
+//		$this->onValidate[] = callback($this, 'validation');
+		$this->onValidate[] = callback($rentalContainer, 'validation');
 	}
 
 	public function setDefaultsValues()
@@ -223,7 +219,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function validation(RentalEditForm $form)
 	{
-		$values = $form->getValues()->rental;
+		$this['priceUpload']->validate();
 	}
 
 }

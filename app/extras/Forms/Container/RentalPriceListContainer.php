@@ -91,6 +91,8 @@ class RentalPriceListContainer extends BaseContainer
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
 			foreach($list as $key => $row) {
+				if (!$row['price']) continue;
+
 				$rowEntity = NULL;
 				if (isset($row->entityId)) {
 					$rowEntity = $pricelistRowRepository->find($row->entityId);
@@ -122,12 +124,13 @@ class RentalPriceListContainer extends BaseContainer
 				'roomType' => $pricelistRow->getRoomType(),
 				'bedCount' => $pricelistRow->getBedCount(),
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
-				'price' => $pricelistRow->getPrice()
+				'price' => $pricelistRow->getPrice()->getSourceAmount()
 			];
 			$count++;
 		}
 
-		$rowsCount = ($count==0) ? (2) : ($count+1);
+		// add empty row
+		$rowsCount = $count + 1;
 
 		for($i=0; $i < $rowsCount; $i++) {
 			$defaults = [];

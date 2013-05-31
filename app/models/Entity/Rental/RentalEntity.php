@@ -286,6 +286,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	public function getImages($limit = NULL, $offset = 0)
 	{
+		$return = [];
 		$images = $this->images->slice($offset, $limit);
 		return $images;
 	}
