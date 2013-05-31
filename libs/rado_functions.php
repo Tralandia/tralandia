@@ -6,7 +6,7 @@ function q($query, $show = 0) {
 	//d($_SERVER['HTTP_HOST']);
 	if (!$link) {
 		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
-			$link = mysql_connect('192.168.4.13', 'tralandia_old', '0987267789372');		
+			$link = mysql_connect('127.0.0.1', 'tralandia_old', '0987267789372');		
 		} else {
 			$link = mysql_connect('127.0.0.1', 'root', 'root');		
 		}
@@ -33,7 +33,7 @@ function qNew($query, $show = 0) {
 
 	if (!$link1) {
 		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
-			$link1 = mysql_connect('192.168.4.13', 'tralandia', 'tralandia');
+			$link1 = mysql_connect('127.0.0.1', 'tralandia', '986269962525');
 		} else {
 			$link1 = mysql_connect('127.0.0.1', 'root', 'root');		
 		}

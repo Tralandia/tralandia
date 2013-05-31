@@ -67,22 +67,29 @@ class ImportRentalImages extends BaseImport {
 		
 		$endBy = microtime(true) + 55;
 
+		$i = 0;
 		while(microtime(true) < $endBy) {
 			$r = qNew('select * from __importImages where status = "toImport"  order by id limit 1');
 			$x = mysql_fetch_array($r);
 
-			if (!$x) break;
+			if (!$x) {
+				echo('nothing to process');
+				break;
+			}
 			qNew('update __importImages set status = "processing" where id = '.$x['id']);
 
 			try {
 				$imageEntity = $context->rentalImageManager->saveFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
 				$path = $imageEntity->getFilePath();
+				echo($path.'<br>');
 				qNew('update __importImages set status = "imported", newPath = "'.$path.'" where id = '.$x['id']);
 				$model->persist($imageEntity);
 			} catch (Nette\UnknownImageFileException $e) {
 				qNew('update __importImages set status = "error" where id = '.$x['id']);
 			}
+			$i++;
 		}
+		d($i.' images imported');
 		$model->flush();
 		$this->saveVariables();
 		exit;
