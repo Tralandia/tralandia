@@ -131,9 +131,11 @@ class FrontRoute extends BaseRoute
 					}
 				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)$~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
+						/** @var $rental \Entity\Rental\Rental */
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
+						$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
 					}
 				} else if ($match = Strings::match($pathSegment, '~f([0-9]*)$~')) {
 					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
@@ -330,6 +332,7 @@ class FrontRoute extends BaseRoute
 		}
 
 		if(isset($params[self::RENTAL])) {
+			$params[self::PRIMARY_LOCATION] = $params[self::RENTAL]->getAddress()->getPrimaryLocation();
 			$segments[self::RENTAL] = $params[self::RENTAL]->getSlug() . '-r' . $params[self::RENTAL]->id;
 			unset($params[self::RENTAL]);
 		}
