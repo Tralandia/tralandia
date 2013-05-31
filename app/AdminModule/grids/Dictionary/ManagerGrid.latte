@@ -10,6 +10,7 @@
 	<td>
 		{if $cell}
 			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+			<a href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		{else}
 			{$cell}
 		{/if}
@@ -27,7 +28,7 @@
 {/define}
 
 {define #col-wordsToPay}
-	<td>{$cell}</td>
+	<td>{$cell}{if $cell > 0} w <span style="color: grey; font-size: 9px;">({$row->priceToPay} EUR)</span>{/if}</td>
 {/define}
 
 
@@ -46,7 +47,6 @@
 			</ul>
 		</div>
 		{var $translator = $row->language->getTranslator()}
+		<a n:if="$row->wordsToPay" href="{plink markAsPaid $row->language->getId()}" class="ajax btn btn-small btn-warning" target="_blank">Mark as paid</a>
 		<a href="{plink Language:edit $row->language->getId()}" class="btn btn-small btn-primary mail">{$translator ? $translator->getLogin() : 'NOT SET'}</a>
-		<a href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
-		<a href="{plink markAsPaid $row->language->getId()}" class="ajax btn btn-small btn-warning">Mark as paid</a>
 {/define}

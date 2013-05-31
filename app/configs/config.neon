@@ -58,7 +58,7 @@ parameters:
 	templateCache:
 		enabled: TRUE
 		header:
-			enabled: TRUE
+			enabled: false
 			if: '[!userLoggedIn]'
 			key: '[language]_[primaryLocation]'
 			expiration: '+1 month'

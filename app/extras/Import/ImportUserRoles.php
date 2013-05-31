@@ -56,7 +56,7 @@ class ImportUserRoles extends BaseImport {
 		}
 
 		if ($name == Role::SUPERADMIN) {
-			$role->homePage = ':Admin:Currency:list';
+			$role->homePage = ':Admin:Country:list';
 		} else if($name == Role::TRANSLATOR) {
 			$role->homePage = ':Admin:PhraseList:toTranslate';
 		} else if($name == Role::OWNER) {
