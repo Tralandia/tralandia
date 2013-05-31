@@ -75,6 +75,8 @@ class AdminPresenter extends BasePresenter {
 		/** @var $formMaskFactory \Extras\FormMask\FormFactory */
 		$formMaskFactory = $this->getService("presenter.$name.form");
 		$form = $formMaskFactory->create($entity);
+		
+
 		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {
 			$model->flush();
 			$presenter->redirect('edit', $entity->id);

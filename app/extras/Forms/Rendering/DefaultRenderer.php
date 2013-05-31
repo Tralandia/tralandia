@@ -68,7 +68,7 @@ class DefaultRenderer extends DefaultFormRenderer {
 	);
 
 	public function init() {
-		$this->form->getElementPrototype()->addClass('traform')->addClass('dashboard');
+		$this->form->getElementPrototype()->addClass('form-horizontal adminForm');
 		parent::init();
 	}
 

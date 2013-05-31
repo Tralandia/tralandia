@@ -119,7 +119,9 @@ class DictionaryManagerPresenter extends AdminPresenter {
 			function($value) {return Strings::upper($value->getIso()) . ' - ' . $value->getName()->getCentralTranslationText();}
 		);
 
-		$form->addSelect('language', '', $languages);
+
+		$form->addSelect('language', 'Add new supported language: ', $languages);
+		$form->getElementPrototype()->addClass('form-horizontal adminForm');
 		$form->addSubmit('submit', 'Submit');
 
 		$form->onSuccess[] = $this->processSupportNewLanguage;
