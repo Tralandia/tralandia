@@ -75,7 +75,7 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	private function publicPath($file)
 	{
 		if($this->staticDomain) {
-			$a = $this->staticDomain . str_replace('storage/', '', $this->imageDir);
+			$a = $this->staticDomain . str_replace(array('storage/', 'static/'), '', $this->imageDir);
 		} else {
 			$a = $this->baseUrl . $this->imageDir;
 		}
