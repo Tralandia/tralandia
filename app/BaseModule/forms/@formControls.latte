@@ -602,7 +602,6 @@
 				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
-					{dump $image}
 					<li data-id="{$image->getId()}" class="ui-state-default">
 						<img n:image="$image">
 						<a href="#" class="remove">{_o100088}</a>
@@ -662,7 +661,11 @@
 					<div class="rentalPriceRow">
 						{input $component['name'] , placeholder => 'o100191'}
 						{input $component['language'] , class => 'notFulltext'}
-						<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>{_o100192}</span>{input $component['file']}</span>
+						{if $component['file']->disabled}
+							<span class="file-placeholder">{$component['file']->label}</span>
+						{else}
+							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>{label $component['file']}{/label}</span>{input $component['file']}</span>
+						{/if}
 						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 					</div>
 				{/foreach}

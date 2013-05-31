@@ -4,6 +4,7 @@ namespace FormHandler;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
+use Entity\Rental\Pricelist;
 use \Nette\DI\Container;
 
 class RentalEditHandler extends FormHandler
@@ -34,7 +35,7 @@ class RentalEditHandler extends FormHandler
 
 	public function handleSuccess($values)
 	{
-		d($values);
+//		d($values);
 		$values = $values->rental;
 		$rental = $this->rental;
 
@@ -57,9 +58,14 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['photos']) {
-			 if (isset($value->upload) && count($value->upload)) {
-				 foreach($value->upload as $upload) {
-					 d($upload->getError());
+			 if (isset($value->sort)) {
+				 $rentalImageRepository = $this->em->getRepository(RENTAL_IMAGE_ENTITY);
+				 $i=0;
+				 foreach(explode(',', $value->sort) as $fileId) {
+					$rentalImage = $rentalImageRepository->find($fileId);
+					$rentalImage->sort = $i;
+					$rentalImage->rental = $this->rental;
+					$i++;
 				 }
 			 }
 		}
@@ -77,12 +83,14 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['priceUpload']) {
-			$pricelists = $rental->getPricelists();
-			foreach ($pricelists as $pricelist) {
-				$rental->removePricelist($pricelist);
+			$priceLists = $rental->getPricelists();
+			foreach ($priceLists as $priceList) {
+				$rental->removePricelist($priceList);
 			}
-			foreach ($value->list as $pricelist) {
-				if ($pricelist->entity) $rental->addPricelist($pricelist->entity);
+			foreach ($value->list as $priceList) {
+				if ($priceList->entity instanceof Pricelist) {
+					$rental->addPricelist($priceList->entity);
+				}
 			}
 		}
 
@@ -192,7 +200,11 @@ class RentalEditHandler extends FormHandler
 			$rental->setUrl($value);
 		}
 
-		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'bedroomCount', 'rooms'];
+		if ($value = $values['bedroomCount']) {
+			$rental->bedroomCount = $value;
+		}
+
+		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'rooms'];
 		foreach ($simpleValues as $valueName) {
 			if ($value = $values[$valueName]) {
 				$rental->{$valueName} = $value;

@@ -7,6 +7,7 @@ use Entity\Contact\Address;
 use Entity\Location\Location;
 use Nette\InvalidArgumentException;
 use Service\Contact\AddressCreator;
+use Nette\Localization\ITranslator;
 
 class AddressContainer extends BaseContainer
 {
@@ -25,6 +26,11 @@ class AddressContainer extends BaseContainer
 	 */
 	protected $addressCreator;
 
+	/**
+	 * @var \Nette\Localization\ITranslator
+	 */
+	protected $translator;
+
 
 	/**
 	 * @param Address|Location $addressOrLocation
@@ -32,10 +38,11 @@ class AddressContainer extends BaseContainer
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function __construct($addressOrLocation, AddressCreator $addressCreator)
+	public function __construct($addressOrLocation, AddressCreator $addressCreator, ITranslator $translator)
 	{
 		parent::__construct();
 		$this->addressCreator = $addressCreator;
+		$this->translator = $translator;
 
 		if($addressOrLocation instanceof Address) {
 			$this->address = $addressOrLocation;
@@ -55,6 +62,8 @@ class AddressContainer extends BaseContainer
 		$this->addHidden('longitude');
 
 		$this->setDefaultValues();
+
+		$this->onValidate[] = callback($this, 'validate');
 	}
 
 	public function getMainControl()
@@ -161,6 +170,13 @@ class AddressContainer extends BaseContainer
 	public function getPrimaryLocation()
 	{
 		return $this->address->getPrimaryLocation();
+	}
+
+	public function validate() {
+		$values = $this->getValues();
+		if (!$this->addressCreator->validate($values['address'])) {
+			$this->getMainControl()->addError($this->translator->translate('o100134'));
+		}
 	}
 
 }

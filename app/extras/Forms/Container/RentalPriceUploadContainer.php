@@ -42,8 +42,8 @@ class RentalPriceUploadContainer extends BaseContainer
 	{
 		$container->addText('name', '#name');
 		$container->addSelect('language', '#language', [2,3,4,5]);
-		$container->addUpload('file', '#file');
-		$container->addHidden('entity', 'entity', 0);
+		$container->addUpload('file', 'o100192');
+		$container->addHidden('entity', 0);
 	}
 
 	public function getFormattedValues($asArray = FALSE)
@@ -56,10 +56,9 @@ class RentalPriceUploadContainer extends BaseContainer
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
 			foreach($list as $key => $row) {
-				$file = $row['file'];
-				if ($file && $file->isOk()) {
+				if (isset($row['file']) && $row['file']->isOk()) {
 					/** @var $pricelist \Entity\Rental\PriceList */
-					$pricelist = $this->manager->upload($file);
+					$pricelist = $this->manager->upload($row['file']);
 					$pricelist->name = $row['name'];
 					$pricelist->rental = $this->rental;
 					$pricelist->language = $languageRepository->find($row['language']);
@@ -67,6 +66,8 @@ class RentalPriceUploadContainer extends BaseContainer
 					/** @var $pricelist \Entity\Rental\PriceList */
 					$pricelistRepository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
 					$pricelist = $pricelistRepository->find($row['entity']);
+				} else {
+					continue;
 				}
 				$row['entity'] = $pricelist;
 				$values['list'][$key] = $row;
@@ -89,14 +90,18 @@ class RentalPriceUploadContainer extends BaseContainer
 			$count++;
 		}
 
-		$rowsCount = ($count==0) ? (2) : ($count+1);
+		$rowsCount = $count + 1;
 
 		for($i=0; $i < $rowsCount; $i++) {
-			$defaults = [];
 			if (array_key_exists($i, $priceLists)) {
 				$defaults = $priceLists[$i];
+				$container = $this['list'][$i]->setValues($defaults);
+				$componentFile = $container->getComponents()['file'];
+				$componentFile->caption = basename($defaults['file']);
+				$componentFile->setDisabled();
+			} else {
+				$this['list'][$i]->setValues([]);
 			}
-			$this['list'][$i]->setValues($defaults);
 		}
 	}
 

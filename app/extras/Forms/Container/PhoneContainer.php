@@ -88,4 +88,11 @@ class PhoneContainer extends BaseContainer
 		return $this->getNumberControl();
 	}
 
+	public function validate() {
+		$number = $this['prefix']->getValue() . $this['number']->getValue();
+		if (!$this->phoneBook->isValid($number)) {
+			$this->getMainControl()->addError('#invalid phone number');
+		}
+	}
+
 }

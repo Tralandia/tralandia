@@ -114,7 +114,8 @@ FormContainer::extensionMethod('addRentalPriceListContainer',
 FormContainer::extensionMethod('addAddressContainer',
 	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
 		$addressCreator = $dic->getService('addressCreator');
-		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator);
+		$translator = $dic->getService('translator');
+		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator, $translator);
 	});
 
 
