@@ -31,7 +31,6 @@ Nette.removeError = function(elem) {
 
 Nette.validateControl = function(elem, rules, onlyCheck) {
 
-	console.log('validattion');
 
 	// @todo docasne vypnuta validacia
 	return true;
@@ -69,10 +68,35 @@ $(document).ready(function(){
 
 // $.nette.init();
 
+// $.nette.ext('name', {
+// 	complete: function(data, e , r ){
+// 		console.log(data);
+// 		console.log(r);
+// 		// console.log(netteAjaxHandler);
+		
+// 	}
+// } );
+
+$('a.ajax.btn-warning').click(function (e) {
+
+	var $self = $(this);
+
+    $.nette.ajax({
+        validate: false,
+        complete: function(data){
+        	data.responseText = JSON.parse(data.responseText);
+        	if(data.responseText.success == true){
+        		$self.removeClass('btn-warning').addClass('btn-success');
+        	}
+        }
+    }, this, e);
+});
+
 $.nette.init(function (netteAjaxHandler) {
     $('form.ajax').submit(netteAjaxHandler);
     $('form.ajax').live('submit',netteAjaxHandler);
-    $('a.ajax').click(netteAjaxHandler);
+    // $('a.ajax').click(netteAjaxHandler);
+    // $('a.ajax').live('click',netteAjaxHandler);
 });
 
 var c = $.nette.ext('snippets');
