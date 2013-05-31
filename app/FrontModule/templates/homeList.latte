@@ -21,8 +21,6 @@
 							<div class="position">TOP</div>
 							{if $mainImage = $rental['entity']->getMainImage()}
 								<img alt="{_$rental['entity']->name}" n:image="$mainImage"/>
-							{else}
-								<img alt="{_$rental['entity']->name}" n:fakeImage="" />
 							{/if}
 							<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
 
