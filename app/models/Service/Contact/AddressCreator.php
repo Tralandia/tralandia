@@ -36,9 +36,7 @@ class AddressCreator
 	 */
 	public function create($address)
 	{
-		$info = $this->addressNormalizer->getInfoUsingAddress($address);
-
-		if (!$info) return NULL;
+		if (!$info = $this->validate($address)) return NULL;
 
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
 
@@ -56,6 +54,11 @@ class AddressCreator
 		$addressEntity->setGps($gps);
 
 		return $addressEntity;
+	}
+
+	public function validate($address) {
+		$info = $this->addressNormalizer->getInfoUsingAddress($address);
+		return $info;
 	}
 
 }
