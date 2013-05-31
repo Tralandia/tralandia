@@ -114,6 +114,31 @@ class ImportPresenter extends Presenter {
 			q('SET FOREIGN_KEY_CHECKS = 1;');
 		}
 
+		if (isset($this->params['pairImages'])) {
+			$allRentals = $this->context->rentalRepositoryAccessor->get()->findAll();
+			$count = 0;
+			foreach ($allRentals as $key => $rental) {
+				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rental->getOldId()));
+
+				$temp = array_unique(array_filter(explode(',', $x['photos'])));
+				if (is_array($temp) && count($temp)) {
+					foreach ($temp as $key2 => $value) {
+						$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
+						if (mysql_num_rows($t) == 0) continue;
+						$img = mysql_fetch_array($t);
+						$rentalImage = $this->context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
+						$rental->addImage($rentalImage);
+						$count++;
+						//d($rentalImage); exit;
+					}
+				}
+			}
+			$this->context->model->flush();
+			d($count);
+			$this->redirectUrl('/import');
+		}
+
+
 		if (isset($this->params['createAutoLinks'])) {
 			if ($this->session->developmentMode == TRUE) {
 				$allCountries = array(

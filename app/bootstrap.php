@@ -38,12 +38,11 @@ Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 
-// if(isset($_SERVER['HTTP_HOST']) && \Nette\Utils\Strings::endsWith($_SERVER['HTTP_HOST'], '.tralandia.org')) {
-// 	$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
-// } else {
-// 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
-// }
-$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
+if(isset($_SERVER['HTTP_HOST']) && \Nette\Utils\Strings::endsWith($_SERVER['HTTP_HOST'], '.tralandia.org')) {
+	$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
+} else {
+	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
+}
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$section = 'import';
