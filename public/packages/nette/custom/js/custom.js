@@ -66,17 +66,6 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
 
 $(document).ready(function(){
 
-// $.nette.init();
-
-// $.nette.ext('name', {
-// 	complete: function(data, e , r ){
-// 		console.log(data);
-// 		console.log(r);
-// 		// console.log(netteAjaxHandler);
-		
-// 	}
-// } );
-
 $('a.ajax.btn-warning').click(function (e) {
 
 	var $self = $(this);
@@ -95,8 +84,6 @@ $('a.ajax.btn-warning').click(function (e) {
 $.nette.init(function (netteAjaxHandler) {
     $('form.ajax').submit(netteAjaxHandler);
     $('form.ajax').live('submit',netteAjaxHandler);
-    // $('a.ajax').click(netteAjaxHandler);
-    // $('a.ajax').live('click',netteAjaxHandler);
 });
 
 var c = $.nette.ext('snippets');
