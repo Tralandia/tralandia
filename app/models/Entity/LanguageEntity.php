@@ -162,17 +162,6 @@ class Language extends \Entity\BaseEntityDetails {
 		return $this->translator instanceof User;
 	}
 
-
-	public function getVariationsCount()
-	{
-		$plurals = count($this->getPluralsNames());
-		$genders = count($this->getGendersNames());
-		$case = count($this->getCasesNames());
-
-		return $plurals * $genders * $case;
-	}
-
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */

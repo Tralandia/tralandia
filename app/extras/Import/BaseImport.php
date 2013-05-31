@@ -527,6 +527,7 @@ class BaseImport {
 		}
 
 		if ($text != strip_tags($text)) {
+			$text = strip_tags($text, '<p><a><b><strong><ul><li><ol><i><h1><h2><h3>');
 			$text = $this->html2texy->convert($text);
 		}
 
