@@ -129,7 +129,7 @@ class RentalContainer extends BaseContainer
 			//->setOption('help', $this->translate('o5956'))
 		;
 
-//		 $this->addRentalPhotosContainer('photos', $this->rental);
+		$this->addRentalPhotosContainer('photos', $this->rental);
 
 	}
 
@@ -250,31 +250,9 @@ class RentalContainer extends BaseContainer
 		return $this['type'];
 	}
 
-
-	/**
-	 * @param \Nette\Forms\Form $form
-	 */
-	public function validation(\Nette\Forms\Form $form)
-	{
-		$values = $form->getFormattedValues();
-
-		$rentalValues = $values->rental;
-
-		// $photosSort = $rentalValues->photos->sort;
-		// if (count($photosSort) < 3) {
-		// 	$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
-		// }
-
-		$address = $rentalValues->address;
-		if(!$address->addressEntity instanceof Address) {
-			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
-		}
-
-		$phone = $rentalValues->phone;
-		if ($phone->number && !$phone->entity instanceof Phone) {
-			$form['rental']['phone']->getMainControl()->addError('#invalid phone number');
-		}
-
+	public function validation() {
+		$this['address']->validate();
+		$this['phone']->validate();
 	}
 
 

@@ -10,6 +10,7 @@ define('RENTAL_PLACEMENT_ENTITY', '\Entity\Rental\Placement');
 define('RENTAL_PRICELIST_ROW_ENTITY', '\Entity\Rental\PricelistRow');
 define('RENTAL_PRICELIST_ENTITY', '\Entity\Rental\Pricelist');
 define('RENTAL_ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
+define('RENTAL_IMAGE_ENTITY', '\Entity\Rental\Image');
 define('INTERVIEW_QUESTION_ENTITY', '\Entity\Rental\InterviewQuestion');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
