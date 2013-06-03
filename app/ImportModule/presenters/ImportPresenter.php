@@ -244,9 +244,10 @@ class ImportPresenter extends Presenter {
 				$this->link('default', array('importSection' => 'pathsegments')),
 			));
 
-			// Translation Statuses
-			//$robot = $this->context->updateTranslationStatusRobot;
-			//$c = $robot->getIterationCount();
+			// Create missing translations
+			for ($i=1; $i <= 10; $i++) { 
+				$automaticUrls[] = $this->link('default', array('importSection' => 'createTranslations'));
+			}
 
 			for ($i=1; $i <= 10; $i++) { 
 				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
