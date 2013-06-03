@@ -4,6 +4,7 @@ namespace Extras\Forms\Container;
 
 use Extras\Forms\Control\MfuControl;
 use Image\RentalImageManager;
+use Image\RentalImageStorage;
 
 class RentalPhotosContainer extends BaseContainer
 {
@@ -70,12 +71,25 @@ class RentalPhotosContainer extends BaseContainer
 	public function processUpload(MfuControl $upload, array $files)
 	{
 		$payload = [];
+		$minWidth = RentalImageStorage::MIN_WIDTH;
+		$minHeight = RentalImageStorage::MIN_HEIGHT;
 		foreach($files as $file) {
 			if($file->isOk() && $file->isImage()) {
-				$image = $this->imageManager->save($file->toImage());
+				$image = $file->toImage();
+				if($image->getWidth() <= $minWidth || $image->getHeight() <= $minHeight) {
+					$payload[] = [
+						'error' => 'imageIsSmall',
+					];
+				} else {
+					$imageEntity = $this->imageManager->save($file->toImage());
+					$payload[] = [
+						'id' => $imageEntity->getId(),
+						'path' => $this->imageManager->getImageRelativePath($imageEntity),
+					];
+				}
+			} else {
 				$payload[] = [
-					'id' => $image->getId(),
-					'path' => $this->imageManager->getImageRelativePath($image),
+					'error' => 'wrongFile',
 				];
 			}
 		}
