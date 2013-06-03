@@ -154,4 +154,6 @@ class Helpers {
 
 		return $this->locale->getMonth($month);
 	}
+
+
 }

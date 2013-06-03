@@ -1,6 +1,7 @@
 {define #opentag}
 	{default $class = ''}
 	{default $dataLink = NULL}
+
 	{if $control instanceof \Nette\Forms\Container}
 		{var $hasErrors = count($control->getAllErrors())}
 	{else}
@@ -131,6 +132,7 @@
 	{define #checkbox}
 	{default $class = 'simpleInput checkbox'}
 	{include #opentag , control => $control, class => $class}
+
 		<td>
 			{_$control->caption}
 		</td>
@@ -461,14 +463,14 @@
 
 	</div>
 
-	
+
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
 			{var $status = $languageContainer['variations']->getStatusLabel()}
 			<div class="phrasecontrol hide {$language->getId()}_phrase ">
-			
+
 				<div class="span5 phraseFormInputCover">
-			
+
 				{include #translationVatiations, control => $languageContainer['variations']}
 				</div>
 
@@ -498,14 +500,14 @@
 							{input $container['specialOptionValue'] }
 						{/label}
 					</div>
-					
 
-				</div>	
+
+				</div>
 
 
 			</div>
 
-		
+
 		{/foreach}
 
 </div>
@@ -539,11 +541,11 @@
 	</tr>
 	{foreach $container->getComponents() as $plural}
 	<tr>
-		{if $phrase->type->pluralVariationsRequired}		
+		{if $phrase->type->pluralVariationsRequired}
 		<td>{$language->getPluralName($plural->getName())}</td>
 		{/if}
 		{foreach $plural->getComponents() as $genders}
-		<td>		
+		<td>
 			{foreach $genders->getComponents() as $gender}
 			{$gender->getControl()}
 			{/foreach}
@@ -569,7 +571,7 @@
 {include #opentag , class => 'control-photo' , control => $container}
 <!-- control photo start -->
 
-	<td colspan="3">
+	<td colspan="3" data-smallImageMessage="{_'o100199'}">
 		<div class="row-fluid">
 
 			<div class="span12">
@@ -588,7 +590,6 @@
 		</div>
 		<div class="row-fluid text">
 			<div class="span3">
-
 
 				<span class="btn btn-green fileinput-button">
 					<i class="entypo-upload"></i>
