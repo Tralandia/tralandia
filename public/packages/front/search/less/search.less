@@ -15,6 +15,17 @@
 		cursor: default;
 	}
 
+	.select2-container  .select2-choice {
+		span {
+			display: inline;
+			span {
+				display: inline;
+				color: #888;
+			}						
+		}
+	}
+
+
 	.removeFilter {
 		text-align: center;
 		i:before {
@@ -199,9 +210,13 @@
 				width: 98px;
 				float: left;
 				.basic-border-radius(4px);
+				
 				&.pull-right {
 					float: right;
 				}			
+
+
+	
 
 				a {
 					width: 73px;
@@ -323,7 +338,7 @@
 		}
 
 		&.selected {
-			.select2-container a span {
+			.select2-container a span:not(.nameSource) {
 				color: #444;
 			}
 

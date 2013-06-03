@@ -21,7 +21,7 @@ class CountryGrid extends AdminGridControl {
 	}
 
 	public function render() {
-
+		$this->template->datagridClass = 'countryGrid';
 		$this->template->render();
 	}
 
