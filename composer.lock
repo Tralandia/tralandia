@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5250f40eac3bdbc30728a7de02b36731",
+    "hash": "cec6ec4c241f8fc2cee46f8f5d4a58ef",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -199,55 +199,6 @@
             "time": "2013-05-26 18:20:06"
         },
         {
-            "name": "kdyby/nette-session-panel",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HosipLan/Nette-Session-DebugBar.git",
-                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-Session-DebugBar/zipball/d3b1ad2352a060388f4618467e937bbc1ee666ff",
-                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "*",
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kdyby": "libs/"
-                }
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3",
-                "GPLv2",
-                "GPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com/"
-                },
-                {
-                    "name": "Pavel Železný",
-                    "homepage": "http://pavelzelezny.cz/"
-                }
-            ],
-            "description": "Nette DebugBar panel, that allows you inspect your sessions.",
-            "homepage": "http://kdyby.org",
-            "keywords": [
-                "nette",
-                "panel",
-                "session"
-            ],
-            "time": "2013-02-09 15:14:19"
-        },
-        {
             "name": "kdyby/redis",
             "version": "dev-master",
             "source": {
@@ -358,7 +309,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/92e3358c4e42750a2e54c983af39972562eae7c3",
+                "url": "https://api.github.com/repos/nette/nette/zipball/acacf8c52999d5ba94a40f96acb6c8fbcfd6f6bc",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -570,7 +521,6 @@
         "nextras/forms": 20,
         "nextras/datagrid": 20,
         "kdyby/events": 20,
-        "kdyby/nette-session-panel": 20,
         "kdyby/forms-replicator": 20,
         "kdyby/redis": 20,
         "hosiplan/nette-autowire-properties": 20,
