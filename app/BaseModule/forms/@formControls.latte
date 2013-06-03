@@ -468,6 +468,7 @@
 			<div class="phrasecontrol hide {$language->getId()}_phrase ">
 			
 				<div class="span5 phraseFormInputCover">
+			
 				{include #translationVatiations, control => $languageContainer['variations']}
 				</div>
 
@@ -544,11 +545,11 @@
 	</tr>
 	{foreach $container->getComponents() as $plural}
 	<tr>
-		{if $phrase->type->pluralVariationsRequired}
+		{if $phrase->type->pluralVariationsRequired}		
 		<td>{$language->getPluralName($plural->getName())}</td>
 		{/if}
 		{foreach $plural->getComponents() as $genders}
-		<td>
+		<td>		
 			{foreach $genders->getComponents() as $gender}
 			{$gender->getControl()}
 			{/foreach}
