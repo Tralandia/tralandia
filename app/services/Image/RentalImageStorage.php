@@ -15,6 +15,7 @@ class RentalImageStorage extends FileStorage
 {
 	const CROP = 'crop';
 	const RESIZE = 'resize';
+	const QUALITY = 90;
 
 	protected $paths = [
 		Image::ORIGINAL => [
@@ -54,7 +55,7 @@ class RentalImageStorage extends FileStorage
 			} else {
 				$imageCopy->resize($params['width'], $params['height'], $params['flag']);
 			}
-			$imageCopy->save($path . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
+			$imageCopy->save($path . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION, self::QUALITY);
 		}
 	}
 

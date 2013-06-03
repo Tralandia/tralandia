@@ -10,4 +10,4 @@ parameters:
 		debugger: false
 
 	templateCache:
-		enabled: true
+		enabled: false
