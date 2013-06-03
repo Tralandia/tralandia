@@ -69,7 +69,8 @@
 
 			        		r.push({
 			        			id: v.slug,
-			        			name: v.name
+			        			name: v.name,
+			        			nameSource: v.nameSource
 			        		});
 
 			        	});
@@ -79,16 +80,18 @@
 			    },
 			    formatResult: function(r){
 
-			    	return r.name;
-			    	
+			    	if(typeof r.nameSource != 'undefined'){
+			    		return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
+			    	} else {
+			    		return r.name;
+			    	}
+			    				    	
 			    }, 
 
 			    formatSelection: function(r){
 
-			    	//console.log(r);
-			    	if(typeof r.icon == 'string'){
-			    		return r.name;	
-			    		// return '<img class="flag" src="'+r.icon+'"> '+r.name;	
+			    	if(typeof r.nameSource != 'undefined'){
+			    		return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
 			    	} else {
 			    		return r.name;
 			    	}
@@ -137,7 +140,7 @@ function updateCriteriaCount(){
 		return false;		
 	}
 
-	console.log(url);
+
 
 	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({

@@ -21,7 +21,7 @@ class RegionGrid extends AdminGridControl {
 	}
 
 	public function render() {
-
+		$this->template->datagridClass = 'localityGrid';
 		$this->template->render();
 	}
 
