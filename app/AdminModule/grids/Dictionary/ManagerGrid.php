@@ -20,6 +20,7 @@ class ManagerGrid extends AdminGridControl {
 
 	public function render() {
 
+		$this->template->datagridClass = 'dictionary-manager';
 		$this->template->render();
 	}
 
