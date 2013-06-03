@@ -15,7 +15,7 @@ class RentalImageStorage extends FileStorage
 {
 	const CROP = 'crop';
 	const RESIZE = 'resize';
-	const QUALITY = 95;
+	const QUALITY = 90;
 
 	protected $paths = [
 		Image::ORIGINAL => [
