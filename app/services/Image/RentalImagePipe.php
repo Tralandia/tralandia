@@ -32,8 +32,6 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	 */
 	private $baseUrl;
 
-	private $fakeImages = ['13220628889049', '13609390897461', '13499812200862', '13310616760678', '13585213911982', '13376844217106', '13559275089209', '13492616958914'];
-
 	/**
 	 * @var string
 	 */
@@ -68,12 +66,6 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 
 		return $this->publicPath($targetPath);
 	}
-
-	public function requestFake()
-	{
-		return 'http://www.sk.tra.com/fakeimages/' . $this->fakeImages[array_rand($this->fakeImages)] . '.jpg';
-	}
-
 
 
 	/**
