@@ -249,15 +249,9 @@ table.formTable {
 				.box-size();
 			}
 
-
-
-			.select2-container .select2-choice {
-				height: 28px;
-			}
-
 			.select2-container .select2-choice {
 				background-image: none;
-
+				height: 28px;
 				span {
 					font-weight: normal;
 					line-height: 27px;			
@@ -667,7 +661,11 @@ table.formTable {
 .select2-results .select2-result-label {
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis;	
+	text-overflow: ellipsis;
+
+	span.nameSource {
+		color: #888;
+	}	
 }
 
 
