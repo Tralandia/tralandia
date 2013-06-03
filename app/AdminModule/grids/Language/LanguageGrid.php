@@ -11,7 +11,7 @@ class LanguageGrid extends AdminGridControl {
 	}
 
 	public function render() {
-
+		$this->template->datagridClass = 'languageGrid';
 		$this->template->render();
 	}
 
