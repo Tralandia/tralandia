@@ -47,8 +47,14 @@ class SimpleRoute extends BaseRoute
 		$appRequest = clone $appRequest;
 
 		$presenterName = $appRequest->getPresenterName();
+		list($module,) = explode(':', $presenterName, 2);
 		$params = $appRequest->getParameters();
 		$params = $this->filterOut($params);
+
+		if($module == 'Admin') {
+			$params[self::PRIMARY_LOCATION] = 'com';
+			$params[self::LANGUAGE] = 'www';
+		}
 
 		//$params['action'] = $this->actionName;
 		//$appRequest->setPresenterName($this->presenterName);
