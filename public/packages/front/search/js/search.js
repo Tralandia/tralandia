@@ -90,7 +90,6 @@
 
 			    formatSelection: function(r){
 
-			    	console.log(r);
 			    	if(typeof r.nameSource != 'undefined'){
 			    		return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
 			    	} else {
@@ -141,7 +140,7 @@ function updateCriteriaCount(){
 		return false;		
 	}
 
-	console.log(url);
+
 
 	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({
