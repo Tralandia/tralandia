@@ -17,7 +17,10 @@ class RentalImageStorage extends FileStorage
 	const RESIZE = 'resize';
 	const QUALITY = 90;
 
-	protected $paths = [
+	const MIN_WIDTH = 500;
+	const MIN_HEIGHT = 300;
+
+	protected $sizeOptions = [
 		Image::ORIGINAL => [
 			'method' => self::RESIZE,
 			'width' => 1200,
@@ -48,7 +51,7 @@ class RentalImageStorage extends FileStorage
 
 	protected function createMiniatures($path, Nette\Image $image)
 	{
-		foreach ($this->paths as $key => $params) {
+		foreach ($this->sizeOptions as $key => $params) {
 			$imageCopy = clone $image;
 			if($params['method'] == self::CROP) {
 				$imageCopy->resizeCrop($params['width'], $params['height'], $params['flag']);
@@ -62,10 +65,11 @@ class RentalImageStorage extends FileStorage
 
 	public function delete($imagePath)
 	{
-		foreach ($this->paths as $key => $params) {
+		foreach ($this->sizeOptions as $key => $params) {
 			parent::delete($imagePath . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
 		}
 	}
+
 
 	protected function createFolder()
 	{
