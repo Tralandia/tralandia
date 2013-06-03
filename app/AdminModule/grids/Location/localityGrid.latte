@@ -3,3 +3,7 @@
 		{ifset $row->parent->name}{_$row->parent->name}{/ifset}
 	</td>
 {/define}
+
+{define #row-actions}
+	<a href="{plink edit $primary}" data-datagrid-edit class="ajax btn btn-small btn-primary">Edit</a>
+{/define}
