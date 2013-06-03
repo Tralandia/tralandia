@@ -197,17 +197,23 @@
 $(document).ready(function(){
 
 
+	var socialIconsDetailContainer = '.socialIconsDetail';
+	var socialIconsDetailHeader = '.socialBtnHeader';
+	var socialIconsDetailContentContainer = '.socialBtnContent';
+
 	// load social icons 
-	$('.socialBtnHeader').on('click',function(){
-		Socialite.load($('.socialIconsDetail'));
-		$('.socialIconsDetail').find('.socialBtnHeader').hide();
-		$('.socialIconsDetail').find('.socialBtnContent').show();
+	$(socialIconsDetailHeader).on('click',function(){
+		Socialite.load($(socialIconsDetailContainer),null,null,function(){
+			console.log('pokemon');
+		});
+		$(socialIconsDetailContainer).find(socialIconsDetailHeader).hide();
+		$(socialIconsDetailContainer).find(socialIconsDetailContentContainer).show();
 	});
 
 	$('.socialBtnContent .close').on('click',function(){
 
-		$('.socialIconsDetail').find('.socialBtnHeader').show();
-		$('.socialIconsDetail').find('.socialBtnContent').hide();
+		$(socialIconsDetailContainer).find(socialIconsDetailHeader).show();
+		$(socialIconsDetailContainer).find(socialIconsDetailContentContainer).hide();
 
 	});
 

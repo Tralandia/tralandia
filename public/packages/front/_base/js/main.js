@@ -411,20 +411,26 @@ $('.autoselect').click(A.autoselect);
 
 	// nahrada pre zobrazenie lang menu
 	var socialIconsMenu = false;
+
+
 	$('#socialIcons').click(function(){
 
 		var $arrow = $(this).find('span');
+		var socialShitCover = '#socialIconsMenu';
 
 		if(!socialIconsMenu){
 
 			$arrow.html('&#59231;');
-			$('#socialIconsMenu').show();
-			Socialite.load('#socialIconsMenu');
+			$(socialShitCover).show();
+
+			var loadingWidgetCount = 0;
+
+			Socialite.load(socialShitCover);
 			socialIconsMenu = true;
 		} else {
 
 			$arrow.html('&#59228;');
-			$('#socialIconsMenu').hide();
+			$(socialShitCover).hide();
 			socialIconsMenu = false;
 		}
 
