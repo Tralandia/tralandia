@@ -120,11 +120,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->og['url'] = $this->link('//this');
 		if ($this->name == 'Front:Rental' && $this->action == 'detail') {
 			$image = $this->template->rental->getMainImage();
-			if ($image instanceof \Entity\Rental\Image) {
-				$this->template->og['image'] = $this->rentalImagePipe->request($image);
-			} else {
-				$this->template->og['image'] = $this->rentalImagePipe->requestFake();
-			}
+			$this->template->og['image'] = $this->rentalImagePipe->request($image);
 		} else {
 			$this->template->og['image'] = 'http://www.sk.tra.com/images/logo.png'; //@todo
 		}
@@ -250,9 +246,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$shareLink = $this->generateFavoriteLink();
 		if($shareLink) {
 			$shareText = '#favorites';
-			// @todo toto je tu len docasne lebo sa neimportuju obrazky
-			//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
-			$shareImage = $this->rentalImagePipe->requestFake();
+			$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
 			$shareLinks = $this->shareLinks;
 			$json['twitterShare'] = (string) $shareLinks->getTwitterShareTag($shareLink, $shareText);
 			$json['googlePlusShare'] = (string) $shareLinks->getGooglePlusShareTag($shareLink);
