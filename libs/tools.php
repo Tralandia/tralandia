@@ -187,27 +187,28 @@ class Tools {
 		return $image->getThumbnail($type);
 	}
 
-	public static function resizeCrop($image, $width, $height) {
+	public static function resizeCrop($image, $width, $height, $flags = Nette\Image::FIT) {
 		if ($image->width < $image->height) {
 			$ratio = $width / $image->width;
-			$mod = $image->height * $ratio < $height ? FALSE : TRUE;
+			$mod = $image->height * $ratio < $height ? false : true;
 		} else {
 			$ratio = $height / $image->height;
-			$mod = $image->width * $ratio < $width ? TRUE : FALSE;
+			$mod = $image->width * $ratio < $width ? true : false;
 		}
 
-		if ($mod == TRUE) {
-			$image->resize($width, NULL);
+		if ($mod == true) {
+			$image->resize($width, null, $flags);
 			$offset = ($image->height - $height) / 2;
 			$image->crop(0, $offset, $width, $height);
 		} else {
-			$image->resize(NULL, $height);
+			$image->resize(null, $height, $flags);
 			$offset = ($image->width - $width) / 2;
 			$image->crop($offset, 0, $width, $height);
 		}
 
 		return $image;
 	}
+
 
 	public static function getExt($name) {
 		return strtolower(substr($name, strrpos($name, '.')+1));
