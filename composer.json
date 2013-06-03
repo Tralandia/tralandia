@@ -18,7 +18,6 @@
         "nextras/forms": "@dev",
         "nextras/datagrid": "dev-master",
         "kdyby/events": "dev-master",
-        "kdyby/nette-session-panel": "dev-master",
         "kdyby/forms-replicator": "@dev",
         "kdyby/redis": "@dev",
         "hosiplan/nette-autowire-properties": "dev-master",
