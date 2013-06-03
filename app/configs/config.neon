@@ -36,7 +36,7 @@ parameters:
 
 	projectEmail: 'info@tralandia.com'
 
-	staticDomain: NULL
+	staticDomain: "http://tralandiastatic.com"
 	storageDir: /storage
 
 	settingsDir: %appDir%/configs

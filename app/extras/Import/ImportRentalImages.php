@@ -65,7 +65,7 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 		
-		$endBy = microtime(true) + 5;
+		$endBy = microtime(true) + 50;
 
 		$i = 0;
 		while(microtime(true) < $endBy) {
@@ -89,7 +89,6 @@ class ImportRentalImages extends BaseImport {
 			}
 			$i++;
 		}
-		d($i.' images imported');
 		$model->flush();
 		$this->saveVariables();
 		exit;

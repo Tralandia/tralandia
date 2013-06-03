@@ -577,6 +577,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getCalendar()
 	{
+		if(!$this->getCalendarUpdated()) {
+			return [];
+		}
+		
 		if(!is_array($this->formattedCalendar)) {
 			$days = array_filter(explode(',', $this->calendar));
 			$todayZ = date('z');

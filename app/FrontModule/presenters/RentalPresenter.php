@@ -95,9 +95,8 @@ class RentalPresenter extends BasePresenter {
 
 		$shareLink = $this->link('//Rental:detail', [$rental]);
 		$shareText = $this->translate($rental->getName());
-		// @todo toto je tu len docasne lebo sa neimportuju obrazky
-		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
-		$shareImage = $this->rentalImagePipe->requestFake();
+
+		$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
 		$this->template->twitterShareTag = $shareLinks->getTwitterShareTag($shareLink, $shareText);
 		$this->template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
 		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
@@ -108,9 +107,7 @@ class RentalPresenter extends BasePresenter {
 
 		$shareLink = $lastSearchResults['searchLink'];
 		$shareText = $lastSearchResults['heading'];
-		// @todo toto je tu len docasne lebo sa neimportuju obrazky
-		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
-		$shareImage = $this->rentalImagePipe->requestFake();
+		$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
 		$navigationBarShareLinks = [
 			'twitterTag' => $shareLinks->getTwitterShareTag($shareLink, $shareText),
 			'googlePlusTag' => $shareLinks->getGooglePlusShareTag($shareLink),
@@ -169,9 +166,7 @@ class RentalPresenter extends BasePresenter {
 
 		$shareLink = $this->link('//Rental:detail', [$rental]);
 		$shareText = $this->translate($rental->getName());
-		// @todo toto je tu len docasne lebo sa neimportuju obrazky
-		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
-		$shareImage = $this->rentalImagePipe->requestFake();
+		$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
 		$this->template->twitterShareTag = $shareLinks->getTwitterShareTag($shareLink, $shareText);
 		$this->template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
 		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
@@ -182,9 +177,7 @@ class RentalPresenter extends BasePresenter {
 
 		$shareLink = $lastSearchResults['searchLink'];
 		$shareText = $lastSearchResults['heading'];
-		// @todo toto je tu len docasne lebo sa neimportuju obrazky
-		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
-		$shareImage = $this->rentalImagePipe->requestFake();
+		$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
 		$navigationBarShareLinks = [
 			'twitterTag' => $shareLinks->getTwitterShareTag($shareLink, $shareText),
 			'googlePlusTag' => $shareLinks->getGooglePlusShareTag($shareLink),
@@ -203,9 +196,7 @@ class RentalPresenter extends BasePresenter {
 	public function pinterestShare(Rental $rental, Image $image) {
 		$shareLink = $this->link('//Rental:detail', [$rental]);
 		$shareText = $this->translate($rental->getName());
-		// @todo toto je tu len docasne lebo sa neimportuju obrazky
-		//$shareImage = $this->rentalImagePipe->request($image);
-		$shareImage = $this->rentalImagePipe->requestFake();
+		$shareImage = $this->rentalImagePipe->request($image);
 		return $this->shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 	}
 

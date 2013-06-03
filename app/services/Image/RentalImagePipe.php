@@ -60,8 +60,11 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	 * @param string $size
 	 * @return string
 	 */
-	public function request(\Entity\Rental\Image $image, $size = Image::MEDIUM)
+	public function request($image, $size = Image::MEDIUM)
 	{
+		if (!$image instanceof \Entity\Rental\Image) {
+			return NULL;
+		}
 		$targetPath = $image->getFilePath() . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
 
 		return $this->publicPath($targetPath);
@@ -75,7 +78,7 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	private function publicPath($file)
 	{
 		if($this->staticDomain) {
-			$a = $this->staticDomain . str_replace('static/', '', $this->imageDir);
+			$a = $this->staticDomain . str_replace(array('storage/', 'static/'), '', $this->imageDir);
 		} else {
 			$a = $this->baseUrl . $this->imageDir;
 		}
