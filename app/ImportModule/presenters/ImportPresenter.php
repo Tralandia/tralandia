@@ -224,14 +224,6 @@ class ImportPresenter extends Presenter {
 				$automaticUrls[] = $this->link('default', array('importSection' => 'interactions', 'subsection' => 'importRentalReservations', 'limit' => ($i*$countPerGroup).','.$countPerGroup));	
 			}
 
-			// Translation Statuses
-			$robot = $this->context->updateTranslationStatusRobot;
-			$c = $robot->getIterationCount();
-
-			for ($i=1; $i <= $c; $i++) { 
-				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
-			}
-
 			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
 			$automaticUrls = array_merge($automaticUrls, array(
