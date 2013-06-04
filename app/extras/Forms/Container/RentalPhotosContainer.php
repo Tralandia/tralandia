@@ -74,22 +74,28 @@ class RentalPhotosContainer extends BaseContainer
 		$minWidth = RentalImageStorage::MIN_WIDTH;
 		$minHeight = RentalImageStorage::MIN_HEIGHT;
 		foreach($files as $file) {
-			if($file->isOk() && $file->isImage()) {
-				$image = $file->toImage();
-				if($image->getWidth() <= $minWidth || $image->getHeight() <= $minHeight) {
-					$payload[] = [
-						'error' => 'imageIsSmall',
-					];
+			if($file->isOk()) {
+				if($file->isImage()) {
+					$image = $file->toImage();
+					if($image->getWidth() <= $minWidth || $image->getHeight() <= $minHeight) {
+						$payload[] = [
+							'error' => 'smallImage',
+						];
+					} else {
+						$imageEntity = $this->imageManager->save($file->toImage());
+						$payload[] = [
+							'id' => $imageEntity->getId(),
+							'path' => $this->imageManager->getImageRelativePath($imageEntity),
+						];
+					}
 				} else {
-					$imageEntity = $this->imageManager->save($file->toImage());
 					$payload[] = [
-						'id' => $imageEntity->getId(),
-						'path' => $this->imageManager->getImageRelativePath($imageEntity),
+						'error' => 'wrongFile',
 					];
 				}
 			} else {
 				$payload[] = [
-					'error' => 'wrongFile',
+					'error' => 'uploadFail',
 				];
 			}
 		}
