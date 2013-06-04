@@ -73,14 +73,11 @@ class RentalImageStorage extends FileStorage
 
 	protected function createFolder()
 	{
-		//$c = 0;
 		do {
 			$folders = implode(DIRECTORY_SEPARATOR, str_split(Strings::random(4), 2));
-			$path = $this->filesDir . DIRECTORY_SEPARATOR . date('Y_m/5') . DIRECTORY_SEPARATOR .  $folders;
-			//$c++;
+			$path = $this->filesDir . DIRECTORY_SEPARATOR . date('Y_m/d') . DIRECTORY_SEPARATOR .  $folders;
 		} while (is_dir($path));
 		
-		//echo('Directories: '.$c.'<br>');
 
 		@mkdir($path, 0777, TRUE);
 
