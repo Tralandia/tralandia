@@ -145,6 +145,8 @@ class ImportPresenter extends Presenter {
 					46 => 'sk',
 					193 => 'cz',
 					149 => 'hu',
+					234 => 'at',
+					211 => 'by',
 				);
 			} else {
 				$r = q('select id, iso from countries order by iso');
@@ -195,7 +197,7 @@ class ImportPresenter extends Presenter {
 			// Rentals
 			foreach ($allCountries as $key => $value) {
 				$countPerGroup = 100;
-				if ($this->session->developmentMode == TRUE) {
+				if (false && $this->session->developmentMode == TRUE) {
 					$c = 1;
 				}  else {
 					$c = qc('select count(*) from objects where country_id = '.$key);
