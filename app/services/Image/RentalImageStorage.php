@@ -80,7 +80,7 @@ class RentalImageStorage extends FileStorage
 			$c++;
 		} while (is_dir($path));
 		
-		d('Directories: '.$c);
+		echo('Directories: '.$c.'<br>');
 
 		@mkdir($path, 0777, TRUE);
 
