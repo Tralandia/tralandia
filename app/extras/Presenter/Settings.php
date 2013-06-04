@@ -38,9 +38,12 @@ class Settings extends Nette\Object {
 			return parent::__get($name);
 		}
 
-		if (preg_match('/\$([a-z0-9]+)?\$/', $var, $matches)) {
-			if (isset($this->parameters[$matches[1]])) {
-				$var = str_replace($matches[0], $this->parameters[$matches[1]], $var);
+
+		if ($matches = Nette\Utils\Strings::matchAll($var, '/\$([a-z0-9]+)?\$/')) {
+			foreach($matches as $match) {
+				if (isset($this->parameters[$match[1]])) {
+					$var = str_replace($match[0], $this->parameters[$match[1]], $var);
+				}
 			}
 		}
 		return $var;

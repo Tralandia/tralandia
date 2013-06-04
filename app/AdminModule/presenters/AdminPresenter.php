@@ -63,7 +63,8 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id) {
 		$entity = $this->repository->find($id);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
-		$this->settings->name = $entity->id . ' - dynamika';
+		$this->settings->name = $entity->name->getCentralTranslationText();
+		$this->settings->id = $entity->id;
 	}
 
 	/**
@@ -75,7 +76,7 @@ class AdminPresenter extends BasePresenter {
 		/** @var $formMaskFactory \Extras\FormMask\FormFactory */
 		$formMaskFactory = $this->getService("presenter.$name.form");
 		$form = $formMaskFactory->create($entity);
-		
+
 
 		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {
 			$model->flush();

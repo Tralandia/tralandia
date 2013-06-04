@@ -1,8 +1,8 @@
 entity: Entity\Language
 
 parameters:
-	title: Language types
-	h1: 'Language type -> %name%'
+	title: Language
+	h1: 'Language: %name% (%id%)'
 
 gridFactory: @languageGridFactory
 
