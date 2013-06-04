@@ -130,6 +130,9 @@ class SeoService extends Nette\Object {
 		return $this->getH1();
 	}
 
+	/**
+	 * @return \Entity\Page|bool|null
+	 */
 	public function getPage() {
 		if ($this->page === NULL) {
 			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');

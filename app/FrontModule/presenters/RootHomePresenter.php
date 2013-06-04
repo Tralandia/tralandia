@@ -21,15 +21,9 @@ class RootHomePresenter extends BasePresenter {
 	/**
 	 * @var \Extras\Models\Repository\RepositoryAccessor
 	 */
-	public $locationRepositoryAccessor;
-
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
 	public $rentalRepositoryAccessor;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
