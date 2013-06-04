@@ -331,9 +331,9 @@ class ImportRentals extends BaseImport {
 						$row->price = $t;
 					}
 
-					if (!$row->price) {
-						d($row, $rental->oldId); exit;
-					}
+					// if (!$row->price) {
+					// 	d($row, $rental->oldId); exit;
+					// }
 				}
 			}
 			$model->persist($rental);
