@@ -37,7 +37,7 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 	}
 
 	public function run() {
-		$missing = $this->phraseRepositoryAccessor->get()->findMissingTranslations();
+		$missing = $this->phraseRepository->findMissingTranslations();
 		return $this->_run($missing);
 	}
 

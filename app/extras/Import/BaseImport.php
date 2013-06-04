@@ -201,6 +201,12 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
+		'createTranslations' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 		'updateTranslationStatus' => array(
 			'entities' => array(
 			),
