@@ -57,8 +57,8 @@ parameters:
 
 	templateCache:
 		enabled: TRUE
-		header:
-			enabled: false
+		header: #zle sa generovali linky na prepinanie jazyka
+			enabled: FALSE
 			if: '[!userLoggedIn]'
 			key: '[language]_[primaryLocation]'
 			expiration: '+1 month'

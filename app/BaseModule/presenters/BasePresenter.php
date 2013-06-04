@@ -140,8 +140,6 @@ abstract class BasePresenter extends Presenter {
 			$environmentSection->actualLink = $backLink;
 		}
 
-		//$this->loggedUser = $this->userRepositoryAccessor->get()->find(5);
-		//$this->loggedUser = $this->userRepositoryAccessor->get()->find(643);
 		if($this->user->isLoggedIn()) {
 			$this->loggedUser = $this->userRepositoryAccessor->get()->find($this->user->getId());
 			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
