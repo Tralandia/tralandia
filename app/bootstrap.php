@@ -51,6 +51,8 @@ if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' ||
 if ($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 }
+echo($section); exit;
+
 $dic = $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
 
