@@ -12,7 +12,7 @@ require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -42,9 +42,7 @@ if ($section !== 'production') {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 }
 
-if ($section) {
-	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
-}
+$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$configurator->addConfig(APP_DIR . '/configs/import.config.neon', FALSE);
