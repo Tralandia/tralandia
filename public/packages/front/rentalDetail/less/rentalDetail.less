@@ -339,6 +339,7 @@ table.detailInfoBox {
 
 
 .socialIconTable {
+	position: relative;
 	height: auto;
 	.basic-border-radius(5px);
 	background: @grayBg;
@@ -727,6 +728,7 @@ padding-top: 10px;
 
 
 .sidebarRightDetail {
+	position: relative;
 	font-size: 12px;
 
 	.btn {
@@ -738,6 +740,35 @@ padding-top: 10px;
 		
 	}
 
+	ul.dropdown-menu {
+		width: 300px;
+		height: 21px;
+		left: -60px;
+		padding: 10px 0 ;
+
+		ul {
+			margin: 0;
+			padding: 0;
+
+			li {
+				display: block;
+				float: left;
+				width: 80px;
+
+				&:first-child {
+					margin-left: 10px;
+				}
+
+				&:last-child {
+					width: 40px;
+				}
+			}
+		}
+
+		li.loader {
+			text-align: center;
+		}
+	}
 
 }
 

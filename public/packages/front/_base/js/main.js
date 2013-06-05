@@ -279,11 +279,6 @@ $(document).ready(function(){
 	jsVariablesReplace();
 
 
-// var lang = navigator.language || navigator.userLanguage;
-
-// 	console.log(lang);
-
-
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
 		return false;
@@ -303,11 +298,9 @@ $(document).ready(function(){
 		dropdownCssClass: 'searchSelect'
 	});
 
-var A = new App();
+	var A = new App();
 
-$('.autoselect').click(A.autoselect);
-
-
+	$('.autoselect').click(A.autoselect);
 
 	// $('.socialIconsDetail').socialIconsDetail();
 
@@ -450,12 +443,6 @@ $('body').click(function(event){
 		$('#socialIconsMenu').hide();
 		socialIconsMenu = false;
 	}
-		// if(navBarShare){
-		// 	if (!$(event.target).parents('[for=navBarFavorites]').length) {
-		// 		$('#navBar #shareContent').hide();
-		// 		navBarShare = false;
-		// 	}
-		// }
 
 	});
 
@@ -467,8 +454,6 @@ $('a').live('click',function(){
 		return false;
 	}
 });
-
-
 
 
 $('.pricePhrase').pricePhrase();

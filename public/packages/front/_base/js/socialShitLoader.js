@@ -1,8 +1,4 @@
-$(function(){
-	$('.socialPluginsInit').live('click',function(){
 
-	});
-});
 
 
 function initAllSocialPlugins(){
