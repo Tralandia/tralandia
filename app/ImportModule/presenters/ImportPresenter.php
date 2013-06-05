@@ -144,8 +144,8 @@ class ImportPresenter extends Presenter {
 				$allCountries = array(
 					46 => 'sk',
 					193 => 'cz',
-					149 => 'hu',
-					234 => 'at',
+					//149 => 'hu',
+					//234 => 'at',
 					211 => 'by',
 				);
 			} else {
