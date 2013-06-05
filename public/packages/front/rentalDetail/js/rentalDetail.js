@@ -141,82 +141,53 @@
 	})(jQuery);
 
 
-// social shit 
-// (function($){
-// 	$.socialIconsDetail = function(el, options){
-
-// 		var base = this;
-
-// 		base.$el = $(el);
-// 		base.el = el;
-
-// 		base.$el.data("socialIconsDetail", base);
-		
-// 		base.init = function(){
-			
-// 			base.options = $.extend({},$.socialIconsDetail.defaultOptions, options);            
-
-// 		};
-		
-// 		base.init();
-// 	};
-	
-// 	$.socialIconsDetail.defaultOptions = {
-		
-// 	};
-	
-// 	$.fn.socialIconsDetail = function(options){
-// 		return this.each(function(){
-
-// 			var self = this;
-// 			var $self = $(this);
-
-// 			var $close = $(this).find('a.close');
-
-			
-
-// 			$self.click(function(){
-// 				// initAllSocialPlugins();
-// 				$self.find('.socialBtnContent').removeClass('hide');
-// 				$self.find('.socialBtnHeader').addClass('hide');				
-// 			});
 
 
-// 			$close.click(function(){				
-// 				$self.find('.socialBtnContent').addClass('hide');
-// 				$self.find('.socialBtnHeader').removeClass('hide');	
-// 				return false;			
-// 			});
 
-// 		});
-// 	};
-	
-// })(jQuery);
-
+var socialShitInitDetail = false;
+var socialIconsMenuDetailSelector = '#socialIconsMenuDetail';
+var socialShitFirstInitDetail = false;
 
 $(document).ready(function(){
 
-
-	var socialIconsDetailContainer = '.socialIconsDetail';
 	var socialIconsDetailHeader = '.socialBtnHeader';
-	var socialIconsDetailContentContainer = '.socialBtnContent';
+
+	$('body').click(function(event){
+
+		if(socialShitInitDetail){
+			$(socialIconsMenuDetailSelector).hide();
+			socialShitInitDetail = false;
+		}
+
+	});
 
 	// load social icons 
 	$(socialIconsDetailHeader).on('click',function(){
-		Socialite.load($(socialIconsDetailContainer),null,null,function(){
-			console.log('pokemon');
-		});
-		$(socialIconsDetailContainer).find(socialIconsDetailHeader).hide();
-		$(socialIconsDetailContainer).find(socialIconsDetailContentContainer).show();
+
+		if(socialShitInitDetail){
+			$(socialIconsMenuDetailSelector).hide();
+			socialShitInitDetail = false;
+		} else {
+			Socialite.load($(socialIconsMenuDetailSelector));
+			$(socialIconsMenuDetailSelector).show();
+
+			// loader
+			if(!socialShitFirstInitDetail){
+				$socialLinksList = $('.socialIconTable').find('li.socialIconCover');
+				$socialLoaderList = $('.socialIconTable').find('li.loader');
+
+				setTimeout(function(){
+					$socialLinksList.removeClass('hide');
+					$socialLoaderList.addClass('hide');
+				},2000);					
+			}
+
+			socialShitFirstInitDetail = true;
+			setTimeout(function(){
+				socialShitInitDetail = true;
+			},100);					
+		}
 	});
-
-	$('.socialBtnContent .close').on('click',function(){
-
-		$(socialIconsDetailContainer).find(socialIconsDetailHeader).show();
-		$(socialIconsDetailContainer).find(socialIconsDetailContentContainer).hide();
-
-	});
-
 
 	$('.pinterestShare').click(function(){
 
