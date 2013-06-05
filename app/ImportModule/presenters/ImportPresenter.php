@@ -65,14 +65,12 @@ class ImportPresenter extends Presenter {
 		$redirect = FALSE;
 
 		if (isset($this->params['autoStart'])) {
-			$this->session->automaticNextKey = 0;
 			$this->session->automaticOn = 1;
 			//d($this->session->automaticUrls[0]); exit;
-			$this->redirectUrl($this->session->automaticUrls[0]);
+			$this->redirectUrl($this->getNextUrl());
 		}
 
 		if (isset($this->params['autoStop'])) {
-			$this->session->automaticNextKey = 0;
 			$this->session->automaticOn = 0;
 			$this->redirect('Import:default');
 		}
@@ -122,12 +120,15 @@ class ImportPresenter extends Presenter {
 
 				$temp = array_unique(array_filter(explode(',', $x['photos'])));
 				if (is_array($temp) && count($temp)) {
+					$imageSort = 0;
 					foreach ($temp as $key2 => $value) {
 						$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
 						if (mysql_num_rows($t) == 0) continue;
 						$img = mysql_fetch_array($t);
 						$rentalImage = $this->context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
+						$rentalImage->setSort($imageSort);
 						$rental->addImage($rentalImage);
+						$imageSort++;
 						$count++;
 						//d($rentalImage); exit;
 					}
@@ -249,10 +250,11 @@ class ImportPresenter extends Presenter {
 
 			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
-
-			$this->session->automaticUrls = $automaticUrls;
-			//print_r($automaticUrls);
-			//d($automaticUrls); exit;
+			qNew('truncate table __importUrls');
+			foreach ($automaticUrls as $key => $value) {
+				qNew('insert into __importUrls set url = "'.$value.'"');
+			}
+			d($automaticUrls); exit;
 			$this->redirectUrl('/import?autoStart=1');
 
 		}
@@ -260,6 +262,9 @@ class ImportPresenter extends Presenter {
 		if (isset($this->params['importSection'])) {
 			$section = $this->params['importSection'];
 			$className = 'Extras\Import\Import'.ucfirst($section);
+			$thisUrl = $this->getCurrentUrl();
+			qNew('update __importUrls set started = '.time().' where url = "'.$thisUrl.'"');
+
 			$import = new $className($this->context, $this);
 			if(!$import->savedVariables['importedSections'][$section] || !Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
 				$import->developmentMode = (bool)$this->session->developmentMode;
@@ -282,6 +287,9 @@ class ImportPresenter extends Presenter {
 					$import->doImport();
 				}
 				$import->saveVariables();
+
+				qNew('update __importUrls set finished = '.time().' where url = "'.$thisUrl.'"');
+				qNew('update __importUrls set totalTime = finished - started where url = "'.$thisUrl.'"');
 				
 				$this->flashMessage('Import "'.$section.'" prebehol spravne!', 'success');				
 			} else {
@@ -300,12 +308,12 @@ class ImportPresenter extends Presenter {
 		//$this->sendJson(array());
 		
 		if (isset($this->session->automaticOn) && $this->session->automaticOn == 1) {
-			if (isset($this->session->automaticUrls[$this->session->automaticNextKey+1])) {
-				$this->session->automaticNextKey++;
+			$nextUrl = $this->getNextUrl();
+			if ($nextUrl) {
 				$script = 'Current step: '.$this->session->automaticUrls[$this->session->automaticNextKey-1];
-				$script .= '<br>Step: '.$this->session->automaticNextKey.' of '.count($this->session->automaticUrls);
-				$script .= '<br>Next step: '.$this->session->automaticUrls[$this->session->automaticNextKey];
-				$script .= '<script>document.location.href="'.$this->session->automaticUrls[$this->session->automaticNextKey].'"</script>';
+				$script .= '<br>Steps remaining: '.$this->getRemainingUrls().' of '.$this->getTotalUrls();
+				$script .= '<br>Next step: '.$nextUrl;
+				$script .= '<script>document.location.href="'.$nextUrl.'"</script>';
 				$this->sendResponse(new \Nette\Application\Responses\TextResponse($script));
 			} else {
 				$this->session->automaticOn = 0;
@@ -327,6 +335,30 @@ class ImportPresenter extends Presenter {
 
 		$this->template->sections = $import->createNavigation();
 		$this->template->developmentMode = $import->developmentMode == TRUE ? "TRUE" : "FALSE";
+	}
+
+	private function getNextUrl() {
+		$r = qNew('select url from __importUrls where finished is NULL order by ID asc');
+		$url = mysql_fetch_array($r)['url'];
+		if (strlen($url) > 0) {
+			return $url;
+		} else {
+			return NULL;
+		}
+	}
+
+	private function getTotalUrls() {
+		$r = qNew('select count(*) from __importUrls');
+	}
+
+	private function getRemainingUrls() {
+		$r = qNew('select count(*) from __importUrls where finished is NULL');
+	}
+
+	private function getCurrentUrl() {
+		$url = $this->getHttpRequest()->getUrl();
+		$url = $url->path.($this->query ? '?'.$this->query : '');
+		return $url;
 	}
 
 }
