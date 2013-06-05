@@ -357,7 +357,7 @@ class ImportPresenter extends Presenter {
 
 	private function getCurrentUrl() {
 		$url = $this->getHttpRequest()->getUrl();
-		$url = $url->path.($this->query ? '?'.$this->query : '');
+		$url = $url->path.($url->query ? '?'.$url->query : '');
 		return $url;
 	}
 
