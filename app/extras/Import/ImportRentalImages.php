@@ -69,11 +69,7 @@ class ImportRentalImages extends BaseImport {
 
 		$i = 0;
 		while(microtime(true) < $endBy) {
-			$r = qNew('select * from __importImages where status = "processing" and processId = '.$this->presenter->getParameter('p').' order by id limit 1');
-			
-			if(mysql_num_rows($r)) break;
-
-			$r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' order by id limit 1');
+			$r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' limit 1');
 			$x = mysql_fetch_array($r);
 
 			if (!$x) {
