@@ -99,7 +99,7 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
+		$imageManager = $context->rentalImageManager;
 
 		//$r = qNew('SELECT * from __importImages where status = "toRemove" or status = "error"');
 		$r = qNew('SELECT * from __importImages where id = 2452');
