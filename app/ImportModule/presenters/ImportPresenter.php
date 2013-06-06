@@ -130,12 +130,12 @@ class ImportPresenter extends Presenter {
 						$rental->addImage($rentalImage);
 						$imageSort++;
 						$count++;
-						//d($rentalImage); exit;
+						echo($rentalImage->filePath.'<br>');
 					}
 				}
 			}
 			$this->context->model->flush();
-			d($count);
+			echo($count);
 			exit;
 			$this->redirectUrl('/import');
 		}
