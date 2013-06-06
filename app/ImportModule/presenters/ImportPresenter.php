@@ -116,7 +116,8 @@ class ImportPresenter extends Presenter {
 			$allRentals = qNew('select id, oldId from rental order by id limit 100');
 
 			while ($rentalRow = mysql_fetch_array($allRentals)) {
-				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rental->getOldId()));
+				print_r($rentalRow);
+				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rentalRow['oldId']));
 
 				$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported"');
 				$oldPhotos = array();
