@@ -113,7 +113,7 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['pairImages'])) {
-			$allRentals = $this->context->rentalRepositoryAccessor->get()->findBy(NULL, NULL, 10);
+			$allRentals = $this->context->rentalRepositoryAccessor->get()->findBy(array(), NULL, 10);
 			$count = 0;
 			foreach ($allRentals as $key => $rental) {
 				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rental->getOldId()));
