@@ -529,7 +529,6 @@
 {?unset($control)}
 <table class="phraseTable table-striped table">
 	<tr>
-
 		{if $phrase->type->pluralVariationsRequired}
 		<th colspan="2">Count</th>
 		{/if}
@@ -547,7 +546,13 @@
 		{foreach $plural->getComponents() as $genders}
 		<td>
 			{foreach $genders->getComponents() as $gender}
+
 			{$gender->getControl()}
+
+			<span class="genderName">
+				{$gender->getName()|firstUpper}
+			</span>
+
 			{/foreach}
 		</td>
 		{/foreach}
@@ -571,10 +576,12 @@
 {include #opentag , class => 'control-photo' , control => $container}
 <!-- control photo start -->
 
-	<td colspan="3" data-smallImageMessage="{_'o100199'}" data-wrongFileMessage="{_'o100200'}" data-uploadFailMessage="{_'o100201'}">
+	<td colspan="3" class="photoControlParams" data-small-image-message="{_'o100199'}" data-wrong-file-message="{_'o100200'}" data-upload-fail-message="{_'o100201'}">
 		<div class="row-fluid">
 
 			<div class="span12">
+
+				<ul class="ajaxErrors"></ul>
 
 				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
