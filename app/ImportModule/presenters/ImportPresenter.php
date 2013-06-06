@@ -113,29 +113,30 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['pairImages'])) {
-			$allRentals = $this->context->rentalRepositoryAccessor->get()->findBy(array(), NULL, 10);
-			$count = 0;
-			foreach ($allRentals as $key => $rental) {
+			$allRentals = qNew('select id, oldId from rental order by id limit 100');
+
+			while ($rentalRow = mysql_fetch_array($allRentals)) {
 				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rental->getOldId()));
 
+				$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported"');
+				$oldPhotos = array();
+
+				while ($t2 = mysql_fetch_array($t)) {
+					$oldPhotos[$t2['oldPath']] = $t2;
+				}
+				
 				$temp = array_unique(array_filter(explode(',', $x['photos'])));
 				if (is_array($temp) && count($temp)) {
 					$imageSort = 0;
 					foreach ($temp as $key2 => $value) {
-						$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported" and oldPath = "'.$value.'"');
-						if (mysql_num_rows($t) == 0) continue;
-						$img = mysql_fetch_array($t);
-						$rentalImage = $this->context->rentalImageRepositoryAccessor->get()->findOneByFilePath($img['newPath']);
-						$rentalImage->setSort($imageSort);
-						$rental->addImage($rentalImage);
+						$img = $oldPhotos[$value];
+						if (!$img) continue;
+						exit('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"');
 						$imageSort++;
 						$count++;
-						echo($rentalImage->filePath.'<br>');
 					}
 				}
 			}
-			$this->context->model->flush();
-			echo($count);
 			exit;
 			$this->redirectUrl('/import');
 		}
