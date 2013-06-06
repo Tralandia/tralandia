@@ -101,33 +101,36 @@ class ImportRentalImages extends BaseImport {
 
 		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
 
-		$r = qNew('SELECT * from __importImages where status = "toRemove"');
+		//$r = qNew('SELECT * from __importImages where status = "toRemove" or status = "error"');
+		$r = qNew('SELECT * from __importImages where id = 2452');
 
 		while ($x = mysql_fetch_array($r)) {
 			$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$oldPath);
-			$imageManager->delete($image);
+			if ($image) {
+				$imageManager->delete($image);
+			}
 		}
 		$model->flush();
 		$this->saveVariables();
 		exit;
 	}
 
-	public function importRemoveDuplicateImages() {
+	// public function importRemoveDuplicateImages() {
 
-		$context = $this->context;
-		$model = $this->model;
+	// 	$context = $this->context;
+	// 	$model = $this->model;
 
-		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
+	// 	$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
 
-		$r = qNew('SELECT ri.id as rid FROM rental_image ri LEFT JOIN __importImages ii ON ri.filePath = ii.newPath WHERE ii.id IS NULL LIMIT 1000');
+	// 	$r = qNew('SELECT ri.id as rid FROM rental_image ri LEFT JOIN __importImages ii ON ri.filePath = ii.newPath WHERE ii.id IS NULL LIMIT 1000');
 
-		while ($x = mysql_fetch_array($r)) {
-			$image = $context->rentalImageRepositoryAccessor->get()->find($x['rid']);
-			$imageManager->delete($image);
-		}
+	// 	while ($x = mysql_fetch_array($r)) {
+	// 		$image = $context->rentalImageRepositoryAccessor->get()->find($x['rid']);
+	// 		$imageManager->delete($image);
+	// 	}
 		
-		$model->flush();
-		$this->saveVariables();
-		exit;
-	}
+	// 	$model->flush();
+	// 	$this->saveVariables();
+	// 	exit;
+	// }
 }
