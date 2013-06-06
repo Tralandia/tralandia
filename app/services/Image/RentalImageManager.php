@@ -57,7 +57,7 @@ class RentalImageManager {
 	/**
 	 * @return TRUE|FALSE
 	 */
-	public function delete(Entity\Rental\Image $image)
+	public function delete(\Entity\Rental\Image $image)
 	{
 		$this->storage->delete($image->getFilePath());
 
