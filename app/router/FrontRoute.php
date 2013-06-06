@@ -2,6 +2,7 @@
 
 namespace Routers;
 
+use Entity\BaseEntity;
 use Entity\Page;
 use Nette;
 use Repository\LanguageRepository;
@@ -45,6 +46,23 @@ class FrontRoute extends BaseRoute
 		self::BOARD => 'searchBar-board',
 	];
 
+	public $urlStampOptions = [
+		'action',
+		self::PRIMARY_LOCATION,
+		self::LANGUAGE,
+		self::RENTAL,
+		self::RENTAL_TYPE,
+		self::LOCATION,
+		self::PLACEMENT,
+		self::PRICE_FROM,
+		self::PRICE_TO,
+		self::CAPACITY,
+		self::SPOKEN_LANGUAGE,
+		self::BOARD,
+		self::PAGE,
+		self::FAVORITE_LIST,
+	];
+
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
@@ -62,6 +80,11 @@ class FrontRoute extends BaseRoute
 	 * @var \Device
 	 */
 	protected $device;
+
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	protected $cache;
 
 	/**
 	 * @param \Repository\LanguageRepository $languageRepository
@@ -220,7 +243,56 @@ class FrontRoute extends BaseRoute
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
 	{
 		$appRequest = clone $appRequest;
+
+
+		$urlData = $this->getUrlData($appRequest, $refUrl);
+		$url = $urlData['url'];
+		$params = $urlData['params'];
+
+		$referenceUrlDomain = $refUrl->getScheme() . '://' . $refUrl->getAuthority() . '/';
+		if(!Strings::startsWith($url, $referenceUrlDomain) && $this->device->isSetManually()) {
+			$params[self::DEVICE] = $this->device->getDevice();
+			$appRequest->setParameters($params);
+			$url = $this->route->constructUrl($appRequest, $refUrl);
+		}
+
+		if(!$url) {
+			return NULL;
+		} else {
+			return $url;
+		}
+	}
+
+
+	/**
+	 * @param Nette\Application\Request $appRequest
+	 * @param Nette\Http\Url $refUrl
+	 *
+	 * @return mixed|NULL|string
+	 */
+	protected function getUrlData(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
+	{
+
 		$params = $appRequest->getParameters();
+		$presenter = $appRequest->getPresenterName();
+
+		if($this->cache) {
+			$urlStamp = [
+				'presenter' => $presenter,
+			];
+			foreach($params as $name => $value) {
+				$urlStamp[$name] = $value;
+				if($urlStamp[$name] instanceof BaseEntity) {
+					$urlStamp[$name] = $urlStamp[$name]->getId();
+				}
+			}
+			ksort($urlStamp);
+
+			$urlDataFromCache = $this->cache->load($urlStamp);
+			if($urlDataFromCache) {
+				return $urlDataFromCache;
+			}
+		}
 
 		$pathParametersMapper = array_flip(self::$pathParametersMapper);
 		foreach($params as $key => $value) {
@@ -234,7 +306,6 @@ class FrontRoute extends BaseRoute
 
 		$params[self::HASH] = [];
 
-		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 
 		switch (TRUE) {
@@ -281,25 +352,23 @@ class FrontRoute extends BaseRoute
 
 		$params['action'] = $this->actionName;
 
-		$appRequest->setPresenterName($this->presenterName);
 
+		$appRequest->setPresenterName($this->presenterName);
 		$appRequest->setParameters($params);
 
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 
-		$referenceUrlDomain = $refUrl->getScheme() . '://' . $refUrl->getAuthority() . '/';
-		if(!Strings::startsWith($url, $referenceUrlDomain) && $this->device->isSetManually()) {
-			$params[self::DEVICE] = $this->device->getDevice();
-			$appRequest->setParameters($params);
-			$url = $this->route->constructUrl($appRequest, $refUrl);
+		$urlData = [
+			'url' => $url,
+			'params' => $params,
+		];
+
+		if($this->cache) {
+			$this->cache->save($urlStamp, $urlData);
 		}
 
-		if(!$url) {
-			return NULL;
-		} else {
-			return $url;
-		}
+		return $urlData;
 	}
 
 
@@ -426,6 +495,23 @@ class FrontRoute extends BaseRoute
 		return $segment;
 	}
 
+
+	/**
+	 * @return Nette\Caching\Cache
+	 */
+	public function getCache()
+	{
+		return $this->cache;
+	}
+
+
+	/**
+	 * @param Nette\Caching\Cache $cache
+	 */
+	public function setCache(Nette\Caching\Cache $cache)
+	{
+		$this->cache = $cache;
+	}
 }
 
 
