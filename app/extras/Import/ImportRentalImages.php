@@ -105,7 +105,7 @@ class ImportRentalImages extends BaseImport {
 		$r = qNew('SELECT * from __importImages where id = 2452');
 
 		while ($x = mysql_fetch_array($r)) {
-			$image = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath('http://www.tralandia.com/u/'.$x['newPath']);
+			$image = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($x['newPath']);
 			if ($image) {
 				$imageManager->delete($image);
 			}
