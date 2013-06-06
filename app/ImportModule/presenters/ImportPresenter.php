@@ -132,11 +132,12 @@ class ImportPresenter extends Presenter {
 					foreach ($temp as $key2 => $value) {
 						$img = $oldPhotos[$value];
 						if (!$img) continue;
-						exit('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"');
+						echo('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"<br>');
 						$imageSort++;
 						$count++;
 					}
 				}
+				exit;
 			}
 			exit;
 			$this->redirectUrl('/import');
