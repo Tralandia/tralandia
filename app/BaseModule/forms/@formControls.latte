@@ -529,7 +529,6 @@
 {?unset($control)}
 <table class="phraseTable table-striped table">
 	<tr>
-
 		{if $phrase->type->pluralVariationsRequired}
 		<th colspan="2">Count</th>
 		{/if}
@@ -547,7 +546,13 @@
 		{foreach $plural->getComponents() as $genders}
 		<td>
 			{foreach $genders->getComponents() as $gender}
+
 			{$gender->getControl()}
+
+			<span class="genderName">
+				{$gender->getName()|firstUpper}
+			</span>
+
 			{/foreach}
 		</td>
 		{/foreach}
