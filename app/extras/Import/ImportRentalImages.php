@@ -101,8 +101,8 @@ class ImportRentalImages extends BaseImport {
 
 		$imageManager = $context->rentalImageManager;
 
-		//$r = qNew('SELECT * from __importImages where status = "toRemove" or status = "error"');
-		$r = qNew('SELECT * from __importImages where id = 2452');
+		$r = qNew('SELECT * from __importImages where status = "toRemove" or status = "error"');
+		//$r = qNew('SELECT * from __importImages where id = 2452');
 
 		while ($x = mysql_fetch_array($r)) {
 			$image = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($x['newPath']);
@@ -112,6 +112,7 @@ class ImportRentalImages extends BaseImport {
 		}
 		$model->flush();
 		$this->saveVariables();
+		$r = qNew('DELETE from __importImages where status = "toRemove" or status = "error"');
 		exit;
 	}
 
