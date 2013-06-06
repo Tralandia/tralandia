@@ -65,7 +65,7 @@
 								</a>
 							</div>
 						</li>
-						
+
 					{/if}
 
 				</ul>
@@ -74,11 +74,10 @@
 					<li>
 						<ul n:inner-foreach="$column as $language">
 							<li>
-								{var $name = $language->getName()->getTranslationText($language);}
 								{if $language->getId() == $environment->getLanguage()->getId()}
-									<span>{$name}</span>
+									<span>{_$language->getName(), NULL, NULL, NULL, $language}</span>
 								{else}
-									<a href="{plink this, language => $language}">{$name}</a>
+									<a href="{plink this, language => $language}">{_$language->getName(), NULL, NULL, NULL, $language}</a>
 								{/if}
 							</li>
 						</ul>

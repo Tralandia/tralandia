@@ -144,6 +144,7 @@ services:
 #		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
 
 	# CACHE
+	frontRouteCache: Nette\Caching\Cache(@cacheStorage, 'FrontRoute')
 	templateCache: Nette\Caching\Cache(@cacheStorage, 'Nette.Templating.Cache')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
@@ -438,6 +439,7 @@ factories:
 			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
+			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
 

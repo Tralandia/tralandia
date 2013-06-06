@@ -42,12 +42,15 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $this;
 	}
 
-	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL)
+	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL,Language $language = NULL)
 	{
 		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
 			$variation[self::VARIATION_COUNT] = $count;
 		}
-		$translation = $this->getTranslation($phrase, $variation);
+
+		if(!$language) $language = $this->language;
+
+		$translation = $this->getTranslation($phrase, $variation, $language);
 
 		if($translation && count($variables)) {
 			$keys = array_keys($variables);
@@ -58,13 +61,15 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $translation;
 	}
 
+
 	/**
 	 * @param $phrase
 	 * @param array $variation
+	 * @param \Entity\Language $language
 	 *
 	 * @return bool|float|int|mixed|NULL|string
 	 */
-	protected function getTranslation($phrase, array $variation = NULL)
+	protected function getTranslation($phrase, array $variation = NULL, Language $language)
 	{
 		//d($phrase);
 		if($phrase instanceof \Service\Phrase\PhraseService) {
@@ -80,12 +85,12 @@ class Translator implements \Nette\Localization\ITranslator {
 			unset($variation[self::VARIATION_COUNT]);
 
 			if($variationCount !== NULL) {
-				$variation[self::VARIATION_PLURAL] = $this->language->getPlural($variationCount);
+				$variation[self::VARIATION_PLURAL] = $language->getPlural($variationCount);
 			}
 
 			$variation = array_merge(
 				[
-					self::VARIATION_PLURAL => $this->language->getPlural(NULL),
+					self::VARIATION_PLURAL => $language->getPlural(NULL),
 					self::VARIATION_GENDER => NULL,
 					self::VARIATION_CASE => NULL
 				],
@@ -93,7 +98,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		}
 
 
-		$translationKey = $this->getCacheKey($phraseId, $variation);
+		$translationKey = $this->getCacheKey($phraseId, $variation, $language);
 
 		$translation = $this->cache->load($translationKey);
 		//$translation = NULL;
@@ -114,7 +119,7 @@ class Translator implements \Nette\Localization\ITranslator {
 				$translation = '{!'.$phraseId.'!}';
 			}
 
-			if (!$translation && $translations = $phrase->getMainTranslations($this->language)) {
+			if (!$translation && $translations = $phrase->getMainTranslations($language)) {
 				foreach($translations as $translationEntity) {
 					/** @var $translationEntity \Entity\Phrase\Translation */
 					$translationText = NULL;
@@ -141,28 +146,30 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			if(!$translation) $translation = '{?'.$translationKey.'?}';
 			$this->cache->save($translationKey, $translation, [
-				Cache::TAGS => ['translator', 'language/'.$this->language->getId()],
+				Cache::TAGS => ['translator', 'language/'.$language->getId()],
 			]);
 		}
 
 		return $translation;
 	}
 
+
 	/**
 	 * @param $phraseId
 	 * @param array $variation
+	 * @param \Entity\Language $language
 	 *
 	 * @return string
 	 */
-	private function getCacheKey($phraseId, array $variation = NULL)
+	private function getCacheKey($phraseId, array $variation = NULL, Language $language)
 	{
 		if($variation === NULL) {
-			$translationKey = $phraseId.'_'.$this->language->id;
+			$translationKey = $phraseId.'_'.$language->getId();
 		} else {
 			// if (!isset($variation['count'])) $variation['count'] = NULL;
 			// if (!isset($variation['gender'])) $variation['gender'] = NULL;
 			// if (!isset($variation['case'])) $variation['case'] = NULL;
-			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
+			$translationKey = $phraseId.'_'.$language->getId().'_'.implode('_', $variation);
 		}
 
 		return $translationKey;
