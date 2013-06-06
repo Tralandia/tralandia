@@ -116,7 +116,6 @@ class ImportPresenter extends Presenter {
 			$allRentals = qNew('select id, oldId from rental order by id limit 100');
 
 			while ($rentalRow = mysql_fetch_array($allRentals)) {
-				print_r($rentalRow);
 				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rentalRow['oldId']));
 
 				$t = qNew('select * from __importImages where oldRentalId = '.$x['id'].' and status = "imported"');
@@ -132,13 +131,13 @@ class ImportPresenter extends Presenter {
 					foreach ($temp as $key2 => $value) {
 						$img = $oldPhotos[$value];
 						if (!$img) continue;
-						echo('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"<br>');
+						qNew('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"');
 						$imageSort++;
 						$count++;
 					}
 				}
-				exit;
 			}
+			echo($count);
 			exit;
 			$this->redirectUrl('/import');
 		}
