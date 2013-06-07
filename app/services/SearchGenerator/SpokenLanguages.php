@@ -59,7 +59,7 @@ class SpokenLanguages {
 
 		$languages = $search->getCollectedResults(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE);
 
-		return $this->em->getRepository(LANGUAGE_ENTITY)->findById(array_keys($languages));
+		return count($languages) ? $this->em->getRepository(LANGUAGE_ENTITY)->findById(array_keys($languages)) : NULL;
 	}
 
 }
