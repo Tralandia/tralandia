@@ -12,7 +12,7 @@ require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -38,19 +38,16 @@ Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 
-if(isset($_SERVER['HTTP_HOST']) && \Nette\Utils\Strings::endsWith($_SERVER['HTTP_HOST'], '.tralandia.org')) {
-	$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
-} else {
+if ($section !== 'production') {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 }
 
+$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
+
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
-	$section = 'import';
+	$configurator->addConfig(APP_DIR . '/configs/import.config.neon', FALSE);
 }
 
-if ($section) {
-	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
-}
 $dic = $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
 
