@@ -356,7 +356,7 @@ class Tools {
 			} else if(isset($keyCallback)) {
 				$newKey = $keyCallback->invokeArgs([$oldKey, $oldValue]);
 			} else {
-				$newKey = $value[$key];
+				$newKey = $oldValue[$key];
 			}
 
 			if(isset($valueCallbac)) {

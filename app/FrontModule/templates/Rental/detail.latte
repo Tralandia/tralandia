@@ -31,7 +31,7 @@
 							<div class="position">TOP</div>
 						{/if}
 
-						{foreach $rental->getImages(3) as $photo}
+						{foreach $rental->getSortedImages(3) as $photo}
 						{if $iterator->first}
 						<div class="imageFirst">
 							{/if}
@@ -271,15 +271,15 @@
 											<li>{$twitterShareTag}</li>
 											<li>{$googlePlusShareTag}</li>
 											<li>{$facebookShareTag}</li>
-											<li>{$pinterestShareTag}</li>										
+											<li>{$pinterestShareTag}</li>
 										</ul>
 									</li>
-									<li class="loader"><i class="icon-spinner icon-spin"></i></li>	
-								</ul>	
+									<li class="loader"><i class="icon-spinner icon-spin"></i></li>
+								</ul>
 
 							</div>
 
-						
+
 
 							<div class="sidebarContact">
 								<div class="sidebarTitle">{_o12275}</div>
@@ -367,7 +367,7 @@
 								<div class="metaObjectInfo" id="gallery">
 
 									<ul class="bigGallery">
-										{foreach $rental->getImages() as $photo}
+										{foreach $rental->getSortedImages() as $photo}
 										<li>
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{$pinterestShare($rental, $photo)}
