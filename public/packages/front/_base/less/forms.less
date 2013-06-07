@@ -674,73 +674,95 @@ table.formTable {
 	}		
 }
 
-.control-photo.invalid {
+
+
+.control-photo {
+
+	&.invalid {
+		.help {
+			display: block;
+		}		
+	}
+
 	.help {
-		display: block;
+		padding: 10px;
+		margin-bottom: 15px;
+		display: none;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		position: relative;
+		background: #c2e1f5;
+
+		background-image: linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+		background-image: -o-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+		background-image: -moz-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+		background-image: -webkit-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+		background-image: -ms-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+
+		background-image: -webkit-gradient(
+			linear,
+			left bottom,
+			left top,
+			color-stop(0, #C2E1F5),
+			color-stop(1, #D2E8F5)
+		);
+
+		border: 1px solid rgb(115, 158, 185);	
+		position: relative;
+		background: #fdddd7;
+		border: 1px solid #ff0000;
+
+		background: #fdddd7;
+		border-color: #ff0000;
+		color: #ff0000;	
+
+		&:after , &:before {
+			top: 100%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;			
+		}
+
+		&:after {
+			border-color: rgba(253, 221, 215, 0);
+			border-top-color: #fdddd7;
+			border-width: 10px;
+			left: 10%;
+			margin-left: -10px;				
+		}
+
+		&:before {
+			border-color: rgba(255, 0, 0, 0);
+			border-top-color: #ff0000;
+			border-width: 11px;
+			left: 10%;
+			margin-left: -11px;				
+		}
+	}	
+
+	ul.ajaxErrors {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			padding: 10px 5px;
+			background: red;
+			color: #fff;
+			
+			&:last-child {
+				margin-bottom:10px;
+			}
+		}
 	}
 }
 
-.control-photo .help {
 
-	padding: 10px;
-	margin-bottom: 15px;
-	display: none;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	position: relative;
-	background: #c2e1f5;
 
-	background-image: linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-	background-image: -o-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-	background-image: -moz-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-	background-image: -webkit-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-	background-image: -ms-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0, #C2E1F5),
-		color-stop(1, #D2E8F5)
-	);
-
-	border: 1px solid rgb(115, 158, 185);	
-	position: relative;
-	background: #fdddd7;
-	border: 1px solid #ff0000;
-
-	background: #fdddd7;
-	border-color: #ff0000;
-	color: #ff0000;	
-}
-
-.control-photo .help:after, .control-photo .help:before {
-	top: 100%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-
-.control-photo .help:after {
-	border-color: rgba(253, 221, 215, 0);
-	border-top-color: #fdddd7;
-	border-width: 10px;
-	left: 10%;
-	margin-left: -10px;	
-
-}
-.control-photo .help:before {
-	border-color: rgba(255, 0, 0, 0);
-	border-top-color: #ff0000;
-	border-width: 11px;
-	left: 10%;
-	margin-left: -11px;	
-
-}
 
 
 /* phrase form */
@@ -758,6 +780,18 @@ table.formTable {
 			width: 95%;		
 		}
 	}
+
+	.genderName {
+		position: relative;
+		top: -39px;
+		padding-right: 10px;
+		font-size: 9px;
+		color: #888;
+		right: 0;
+		float: right;
+		height: 0;
+	}
+
 
 	small {
 		font-size: 12px;

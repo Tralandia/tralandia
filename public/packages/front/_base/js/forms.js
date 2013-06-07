@@ -658,6 +658,15 @@ $(function(){
 			var self = this;
 			var $self = $(this);
 
+			var $controlParams = $self.find('.photoControlParams');
+			var $ajaxErrors = $self.find('.ajaxErrors');
+
+			var errors = {
+				wrongFile: $controlParams.data('wrongFileMessage'),
+				uploadFail: $controlParams.data('uploadFailMessage'),
+				smallImage: $controlParams.data('smallImageMessage')
+			};
+
 			var $uploadButton = $self.find('button');
 			var $uploadButtonReal = $self.find('input[type=file]');
 
@@ -722,21 +731,19 @@ $(function(){
 				dataType: 'json',
 				add: function (e, data) {
 
+					$ajaxErrors.html('');
+
 					if(!firstStart){
 
 						var html = '';
 						$.each(data.originalFiles,function(k,v){							
 							html+= '<li class="loading" id="+divId+"><i class="icon-spinner icon-spin"></i></li>';
-
-						});						
-
-
-
-						console.log(data.originalFiles);
+						});
 
 						$listGallery.append(html);
 						//return false;
 						firstStart = true;
+						
 					}
 
 					data.submit();
@@ -745,11 +752,23 @@ $(function(){
 
 					$listGallery.find('li.loading').each(function(index){
 						
-						if(index == 0){
-							$(this).attr({
-								class: 'ui-state-default',
-								'data-id': data.result[0].id
-							}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
+						if(index == 0){							
+
+							if(data.result[0].error){
+
+								$ajaxErrors.append('<li>'+data.originalFiles[0].name+' <strong>'+errors[data.result[0].error]+'</strong></li>')
+
+								$(this).remove();
+
+							} else {
+
+								$(this).attr({
+									class: 'ui-state-default',
+									'data-id': data.result[0].id
+								}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
+
+							}
+
 						} else {
 							return false;
 						}
