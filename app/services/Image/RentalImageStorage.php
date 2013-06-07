@@ -77,6 +77,7 @@ class RentalImageStorage extends FileStorage
 			$folders = implode(DIRECTORY_SEPARATOR, str_split(Strings::random(4), 2));
 			$path = $this->filesDir . DIRECTORY_SEPARATOR . date('Y_m/d') . DIRECTORY_SEPARATOR .  $folders;
 		} while (is_dir($path));
+		
 
 		@mkdir($path, 0777, TRUE);
 

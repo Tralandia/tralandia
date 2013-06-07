@@ -5,14 +5,13 @@ namespace Entity\Rental;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 
-use    Extras\Annotation as EA;
+use Extras\Annotation as EA;
 use Extras\FileStorage;
 
 use Nette\Http\FileUpload;
 
 /**
  * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="rental_image", indexes={@ORM\index(name="sort", columns={"sort"})})
  * @EA\Primary(key="id", value="name")
  */

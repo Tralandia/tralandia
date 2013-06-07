@@ -67,9 +67,9 @@ class ImportRentalImages extends BaseImport {
 		
 		$endBy = microtime(true) + 50;
 
+		$r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' limit 100');
 		$i = 0;
 		while(microtime(true) < $endBy) {
-			$r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' order by id limit 1');
 			$x = mysql_fetch_array($r);
 
 			if (!$x) {
@@ -99,35 +99,39 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
+		$imageManager = $context->rentalImageManager;
 
-		$r = qNew('SELECT * from __importImages where status = "toRemove"');
+		$r = qNew('SELECT * from __importImages where status = "toRemove" or status = "error"');
+		//$r = qNew('SELECT * from __importImages where id = 2452');
 
 		while ($x = mysql_fetch_array($r)) {
-			$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$oldPath);
-			$imageManager->delete($image);
+			$image = $context->rentalImageRepositoryAccessor->get()->findOneByFilePath($x['newPath']);
+			if ($image) {
+				$imageManager->delete($image);
+			}
 		}
 		$model->flush();
 		$this->saveVariables();
+		$r = qNew('DELETE from __importImages where status = "toRemove" or status = "error"');
 		exit;
 	}
 
-	public function importRemoveDuplicateImages() {
+	// public function importRemoveDuplicateImages() {
 
-		$context = $this->context;
-		$model = $this->model;
+	// 	$context = $this->context;
+	// 	$model = $this->model;
 
-		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
+	// 	$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
 
-		$r = qNew('SELECT ri.id as rid FROM rental_image ri LEFT JOIN __importImages ii ON ri.filePath = ii.newPath WHERE ii.id IS NULL LIMIT 1000');
+	// 	$r = qNew('SELECT ri.id as rid FROM rental_image ri LEFT JOIN __importImages ii ON ri.filePath = ii.newPath WHERE ii.id IS NULL LIMIT 1000');
 
-		while ($x = mysql_fetch_array($r)) {
-			$image = $context->rentalImageRepositoryAccessor->get()->find($x['rid']);
-			$imageManager->delete($image);
-		}
+	// 	while ($x = mysql_fetch_array($r)) {
+	// 		$image = $context->rentalImageRepositoryAccessor->get()->find($x['rid']);
+	// 		$imageManager->delete($image);
+	// 	}
 		
-		$model->flush();
-		$this->saveVariables();
-		exit;
-	}
+	// 	$model->flush();
+	// 	$this->saveVariables();
+	// 	exit;
+	// }
 }
