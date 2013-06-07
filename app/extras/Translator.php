@@ -115,11 +115,9 @@ class Translator implements \Nette\Localization\ITranslator {
 				}
 			}
 
-			if(!$phrase) {
-				$translation = '{!'.$phraseId.'!}';
-			}
+			if(!$phrase) $translation = FALSE;
 
-			if (!$translation && $translations = $phrase->getMainTranslations($language)) {
+			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
 				foreach($translations as $translationEntity) {
 					/** @var $translationEntity \Entity\Phrase\Translation */
 					$translationText = NULL;
@@ -144,7 +142,8 @@ class Translator implements \Nette\Localization\ITranslator {
 				}
 			}
 
-			if(!$translation) $translation = '{?'.$translationKey.'?}';
+			//if(!$translation) $translation = '{?'.$translationKey.'?}';
+			if(!$translation) $translation = FALSE;
 			$this->cache->save($translationKey, $translation, [
 				Cache::TAGS => ['translator', 'language/'.$language->getId()],
 			]);
