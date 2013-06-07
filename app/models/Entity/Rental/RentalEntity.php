@@ -184,12 +184,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $calendar;
 
 	/**
-	 * toto nieje stlpec v DB je to len pomocna premenna
-	 * @var array
-	 */
-	protected $formattedCalendar;
-
-	/**
 	 * @var datetime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -237,6 +231,20 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	protected $services;
 
+	/**
+	 * toto nieje stlpec v DB je to len pomocna premenna
+	 * @var array
+	 */
+	private $formattedCalendar;
+
+
+	/**
+	 * toto nieje stlpec v DB je to len pomocna premenna
+	 * @var array
+	 */
+	private $sortedImages;
+
+
 
 	public function getOwnerId()
 	{
@@ -246,7 +254,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	public function getMainImage()
 	{
-		$t = $this->images->first();
+		$t = $this->getSortedImages(1);
 
 		return $t;
 	}
@@ -255,6 +263,24 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getImages($limit = NULL, $offset = 0)
 	{
 		$images = $this->images->slice($offset, $limit);
+		return $images;
+	}
+
+
+	public function getSortedImages($limit = NULL, $offset = 0)
+	{
+		if(!$this->sortedImages) {
+			$sortedImages = $this->images->toArray();
+			usort($sortedImages, function($a, $b) { return ($a->sort < $b->sort) ? -1 : 1;});
+			//usort($sortedImages, function($a, $b) { return $a < $b;});
+			$this->sortedImages = $sortedImages;
+		}
+
+		$images = $this->sortedImages;
+
+		if($limit !== NULL || $offset > 0) {
+			$images = array_slice($images, $offset, $limit);
+		}
 
 		return $images;
 	}
@@ -580,7 +606,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		if(!$this->getCalendarUpdated()) {
 			return [];
 		}
-		
+
 		if(!is_array($this->formattedCalendar)) {
 			$days = array_filter(explode(',', $this->calendar));
 			$todayZ = date('z');
