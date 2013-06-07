@@ -261,7 +261,7 @@ class BaseImport {
 	public function dropAllTables() {
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
-		$skipTables = array('__importVariables', '__importPhrases', '__importImages', 'rental_image', 'contact_phone');
+		$skipTables = array('__importVariables', '__importPhrases', '__importImages', '__importUrls', 'rental_image', 'contact_phone');
 		while ($table = mysql_fetch_array($allTables)) {
 			if (in_array($table[0], $skipTables)) continue;
 			qNew('drop table '.$table[0]);
