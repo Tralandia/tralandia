@@ -255,6 +255,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getMainImage()
 	{
 		$t = $this->getSortedImages(1);
+		$t = reset($t);
 
 		return $t;
 	}
