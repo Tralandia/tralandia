@@ -200,9 +200,9 @@ class ImportPresenter extends Presenter {
 
 			// Rentals
 			foreach ($allCountries as $key => $value) {
-				$countPerGroup = 100;
-				if (false && $this->session->developmentMode == TRUE) {
-					$c = 1;
+				$countPerGroup = 10;
+				if ($this->session->developmentMode == TRUE) {
+					$c = 10;
 				}  else {
 					$c = qc('select count(*) from objects where country_id = '.$key);
 					$c = ceil($c/$countPerGroup);
@@ -243,8 +243,9 @@ class ImportPresenter extends Presenter {
 			));
 
 			// Create missing translations
-			for ($i=1; $i <= 10; $i++) { 
-				$automaticUrls[] = $this->link('default', array('importSection' => 'createTranslations'));
+			$r = q('select iso from languages where translated = 1');
+			while ($x = mysql_fetch_array($r)) {
+				$automaticUrls[] = $this->link('default', array('importSection' => 'createTranslations', 'languageIso' => $x['0']));
 			}
 
 			for ($i=1; $i <= 10; $i++) { 
@@ -257,7 +258,7 @@ class ImportPresenter extends Presenter {
 			foreach ($automaticUrls as $key => $value) {
 				qNew('insert into __importUrls set url = "'.$value.'"');
 			}
-			d($automaticUrls); exit;
+			//d($automaticUrls); exit;
 			$this->redirectUrl('/import?autoStart=1');
 
 		}
@@ -266,38 +267,29 @@ class ImportPresenter extends Presenter {
 			$section = $this->params['importSection'];
 			$className = 'Extras\Import\Import'.ucfirst($section);
 			$thisUrl = $this->getCurrentUrl();
-			qNew('update __importUrls set started = '.time().' where url = "'.$thisUrl.'"');
 
+			$encodedThisUrl = str_replace(',', '%2C', $thisUrl);
+
+			qNew('update __importUrls set started = '.time().' where url = "'.$encodedThisUrl.'"');
 			$import = new $className($this->context, $this);
-			if(!$import->savedVariables['importedSections'][$section] || !Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
-				$import->developmentMode = (bool)$this->session->developmentMode;
-			
-				if (isset($this->params['subsection'])) {
-					$subsection = $this->params['subsection'];
-					$import->setSubsections($section);
-					$import->savedVariables['importedSubSections'][$section][$subsection] = 1;
-					if (end($import->sections[$section]['subsections']) == $subsection) {
-						$import->savedVariables['importedSections'][$section] = 1;		
-					}
-					$import->saveVariables();
-					$import->doImport($subsection);
-				} else {
-					//$import->undoSection($section);
-
-					$import->savedVariables['importedSections'][$section] = 1;
-					//d($import->savedVariables['importedSections']);
-					$import->saveVariables();
-					$import->doImport();
-				}
+			$import->developmentMode = (bool)$this->session->developmentMode;
+		
+			if (isset($this->params['subsection'])) {
+				$subsection = $this->params['subsection'];
+				$import->setSubsections($section);
 				$import->saveVariables();
-
-				qNew('update __importUrls set finished = '.time().' where url = "'.$thisUrl.'"');
-				qNew('update __importUrls set totalTime = finished - started where url = "'.$thisUrl.'"');
-				
-				$this->flashMessage('Import "'.$section.'" prebehol spravne!', 'success');				
+				$import->doImport($subsection);
 			} else {
-				$this->flashMessage('Import "'.$section.'" uz bol spreaveny!');
+				$import->saveVariables();
+				$import->doImport();
 			}
+			$import->saveVariables();
+
+			qNew('update __importUrls set finished = '.time().' where url = "'.$encodedThisUrl.'"');
+			qNew('update __importUrls set totalTime = finished - started where url = "'.$encodedThisUrl.'"');
+			
+			$this->flashMessage('Import "'.$section.'" prebehol spravne!', 'success');				
+
 			$redirect = TRUE;
 		}
 
@@ -313,7 +305,7 @@ class ImportPresenter extends Presenter {
 		if (isset($this->session->automaticOn) && $this->session->automaticOn == 1) {
 			$nextUrl = $this->getNextUrl();
 			if ($nextUrl) {
-				$script = 'Current step: '.$this->session->automaticUrls[$this->session->automaticNextKey-1];
+				$script = 'Current step: '.$this->getCurrentUrl();
 				$script .= '<br>Steps remaining: '.$this->getRemainingUrls().' of '.$this->getTotalUrls();
 				$script .= '<br>Next step: '.$nextUrl;
 				$script .= '<script>document.location.href="'.$nextUrl.'"</script>';
@@ -352,10 +344,13 @@ class ImportPresenter extends Presenter {
 
 	private function getTotalUrls() {
 		$r = qNew('select count(*) from __importUrls');
+
+		return mysql_fetch_array($r)[0];
 	}
 
 	private function getRemainingUrls() {
 		$r = qNew('select count(*) from __importUrls where finished is NULL');
+		return mysql_fetch_array($r)[0];
 	}
 
 	private function getCurrentUrl() {
