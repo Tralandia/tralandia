@@ -43,8 +43,8 @@ table.formTable {
 				top: 4px;
 				left: 0px;
 			}
-		}	
-	}	
+		}
+	}
 }
 
 small.sublitLoadingText {
@@ -73,7 +73,7 @@ table.formTable {
 
 	.btn.btn-cancel {
 		margin-left: 10px;
-	}	
+	}
 
 	tr.formHeading td {
 		padding: 10px 0px 15px 0px;
@@ -107,9 +107,9 @@ table.formTable {
 			text-align: center;
 			color: red;
 			text-decoration: none;
-			line-height: 30px;				
+			line-height: 30px;
 			i {
-			
+
 			}
 		}
 
@@ -117,7 +117,7 @@ table.formTable {
 			width: 100px;
 			overflow: hidden;
 			white-space: nowrap;
-			text-overflow: ellipsis;			
+			text-overflow: ellipsis;
 		}
 
 	}
@@ -142,7 +142,7 @@ table.formTable {
 				width: 100%;
 				-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 				-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-				box-sizing: border-box;         /* Opera/IE 8+ */				
+				box-sizing: border-box;         /* Opera/IE 8+ */
 			}
 
 			textarea {
@@ -163,7 +163,7 @@ table.formTable {
 							border-color: @inputErrorBorderColor;
 							b {
 								background: @inputErrorBackgroundPrepend;
-							}							
+							}
 						}
 
 
@@ -206,7 +206,7 @@ table.formTable {
 					top: -2px;
 					left: 0;
 
-				}		
+				}
 		}
 	}
 
@@ -259,7 +259,7 @@ table.formTable {
 				height: 28px;
 				span {
 					font-weight: normal;
-					line-height: 27px;			
+					line-height: 27px;
 				}
 				div {
 					width: 24px;
@@ -277,11 +277,12 @@ table.formTable {
 			}
 			.select2-container {
 
-				a {			
+				a {
+					.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
 					border: 1px solid #b0c13b;
 
 					div {
-						
+
 						border-left: 1px solid #b0c13b;
 					}
 				}
@@ -292,7 +293,7 @@ table.formTable {
 						.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
 						border-top: none;
 					}
-				}				
+				}
 			}
 
 			.select2-dropdown-open .select2-choice div {
@@ -329,7 +330,7 @@ table.formTable {
 			font-size: 15px;
 			line-height: 15px;
 			height: 46px;
-			color: @darkBlue;		
+			color: @darkBlue;
 			td {
 				padding-top: 20px;
 				padding-bottom: 10px;
@@ -377,7 +378,7 @@ table.formTable {
 		span label {
 			font-size: 12px;
 			color: #999999;
-			line-height: 14px;			
+			line-height: 14px;
 		}
 	}
 
@@ -387,7 +388,7 @@ table.formTable {
 			background-color: @inputErrorBackgroundPrepend;
 			border-color: @inputErrorBorderColor;
 			color:@inputErrorBorderColor;
-		}						
+		}
 	}
 
 	.input-append .add-on, .input-prepend .add-on {
@@ -412,13 +413,13 @@ table.formTable {
 			border-color: @inputErrorBorderColor;
 			background-color: @inputErrorBackgroundColor;
 			color: @inputErrorBorderColor;
-		}		
+		}
 	}
 
 	textarea {
 		margin-bottom: 15px;
-		margin-top: 10px;		
-	}	
+		margin-top: 10px;
+	}
 
 	.input-append, .input-prepend {
 		margin: 0px;
@@ -434,7 +435,7 @@ table.formTable {
 			}
 
 			.invalidAlert {
-									
+
 					padding: 10px;
 					margin-bottom: 15px;
 					display: block;
@@ -458,14 +459,14 @@ table.formTable {
 						color-stop(1, #D2E8F5)
 					);
 
-					border: 1px solid rgb(115, 158, 185);	
+					border: 1px solid rgb(115, 158, 185);
 					position: relative;
 					background: #fdddd7;
 					border: 1px solid #ff0000;
 
 								background: #fdddd7;
 								border-color: #ff0000;
-								color: #ff0000;	
+								color: #ff0000;
 				}
 				.invalidAlert:after, .invalidAlert:before {
 					top: 100%;
@@ -482,7 +483,7 @@ table.formTable {
 					border-top-color: #fdddd7;
 					border-width: 10px;
 					left: 10%;
-					margin-left: -10px;	
+					margin-left: -10px;
 
 				}
 				.invalidAlert:before {
@@ -490,9 +491,9 @@ table.formTable {
 					border-top-color: #ff0000;
 					border-width: 11px;
 					left: 10%;
-					margin-left: -11px;	
+					margin-left: -11px;
 
-				}				
+				}
 
 		}
 
@@ -502,19 +503,19 @@ table.formTable {
 				tr:nth-child(2){
 					td {
 						width: auto;
-						/*padding-right: 10px;*/	
+						/*padding-right: 10px;*/
 
 						&:nth-child(5) {
 							padding-right: 0;
-						}			
-					}				
+						}
+					}
 				}
 
 				input {
 					width: 100%;
 					.box-size();
 					height: 30px;
-					
+
 				}
 
 
@@ -603,7 +604,7 @@ table.formTable {
 					width: 91px;
 					text-overflow: ellipsis;
 					top: 1px;
-					padding-right: 12px;					
+					padding-right: 12px;
 				}
 			}
 
@@ -616,8 +617,20 @@ table.formTable {
 				margin: 0;
 				margin-right: 6px;
 			}
-		}	
-	}	
+
+			.file-placeholder {
+				display: inline-block;
+				width: 160px;
+				height: 30px;
+
+				label {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+		}
+	}
 
 }
 .mainForm.select2-drop {
@@ -645,7 +658,7 @@ table.formTable {
 
 #map_canvas {
 	img {
-	    max-width: none;    
+	    max-width: none;
 	}
 
 	.icon-spin {
@@ -655,7 +668,7 @@ table.formTable {
 		height: 50px;
 		line-height: 52px;
 		text-align: center;
-		font-size: 40px;	
+		font-size: 40px;
 	}
 }
 
@@ -670,13 +683,13 @@ table.formTable {
 
 	span.nameSource {
 		color: #888;
-	}	
+	}
 }
 
 .select2-results .select2-highlighted {
 	span.nameSource {
 		color: #fff;
-	}		
+	}
 }
 
 
@@ -686,7 +699,7 @@ table.formTable {
 	&.invalid {
 		.help {
 			display: block;
-		}		
+		}
 	}
 
 	.help {
@@ -713,14 +726,14 @@ table.formTable {
 			color-stop(1, #D2E8F5)
 		);
 
-		border: 1px solid rgb(115, 158, 185);	
+		border: 1px solid rgb(115, 158, 185);
 		position: relative;
 		background: #fdddd7;
 		border: 1px solid #ff0000;
 
 		background: #fdddd7;
 		border-color: #ff0000;
-		color: #ff0000;	
+		color: #ff0000;
 
 		&:after , &:before {
 			top: 100%;
@@ -729,7 +742,7 @@ table.formTable {
 			height: 0;
 			width: 0;
 			position: absolute;
-			pointer-events: none;			
+			pointer-events: none;
 		}
 
 		&:after {
@@ -737,7 +750,7 @@ table.formTable {
 			border-top-color: #fdddd7;
 			border-width: 10px;
 			left: 10%;
-			margin-left: -10px;				
+			margin-left: -10px;
 		}
 
 		&:before {
@@ -745,9 +758,9 @@ table.formTable {
 			border-top-color: #ff0000;
 			border-width: 11px;
 			left: 10%;
-			margin-left: -11px;				
+			margin-left: -11px;
 		}
-	}	
+	}
 
 	ul.ajaxErrors {
 		list-style: none;
@@ -755,11 +768,10 @@ table.formTable {
 		padding: 0;
 
 		li {
-			padding: 5px;
+			padding: 10px 5px;
 			background: red;
 			color: #fff;
-			text-align: center;
-			.border-radius(4px);
+
 			&:last-child {
 				margin-bottom:10px;
 			}
@@ -775,7 +787,7 @@ table.formTable {
 .phraseEditForm {
 	hr {
 		margin: 0;
-	}	
+	}
 
 	label {
 		&.selectAll {
@@ -791,7 +803,7 @@ table.formTable {
 
 	table {
 		input , textarea {
-			width: 95%;		
+			width: 95%;
 		}
 
 		tr {
@@ -874,7 +886,7 @@ table.formTable {
 
 		input[type=checkbox] {
 			top: -3px;
-			position: relative;			
+			position: relative;
 		}
 
 		select {
