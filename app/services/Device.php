@@ -50,6 +50,7 @@ class Device {
 	 */
 	public function isMobile()
 	{
+		return false;
 		if($this->section->device == self::MOBILE) {
 			return TRUE;
 		} else if($this->section->device == self::DESKTOP) {
