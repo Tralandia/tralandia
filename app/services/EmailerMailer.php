@@ -5,7 +5,6 @@
  * Created at: 6/7/13 2:16 PM
  */
 
-use Nette;
 use Nette\Mail\Message;
 
 class EmailerMailer implements Nette\Mail\IMailer {
@@ -21,16 +20,35 @@ class EmailerMailer implements Nette\Mail\IMailer {
 	{
 		$params = [];
 
-		$params['from_email'] = $mail->getFrom();
-		$params['from_name'] = $mail->getFrom();
-		$params['to_email'] = $mail->getHeader('Cc');
-		$params['to_name'] = $mail->getHeader('Cc');
-		$params['bcc_email'] = $mail->getHeader('Bcc');
+		$from = $mail->getFrom();
+		$fromKeys = array_keys($from);
+		$fromEmail = array_shift($fromKeys);
+		$fromName = reset($from);
+		$params['from_email'] = $fromEmail;
+		$params['from_name'] = $fromName;
+
+		$to = $mail->getHeader('To');
+		$toKeys = array_keys($to);
+		$toEmail = array_shift($toKeys);
+		$toName = reset($to);
+		$params['to_email'] = $toEmail;
+		$params['to_name'] = $toName;
+
+		$bcc = $mail->getHeader('Bcc');
+		if(is_array($bcc)) {
+			$bccKeys = array_keys($bcc);
+			$bccEmail = array_shift($bccKeys);
+		} else {
+			$bccEmail = NULL;
+		}
+		$params['bcc_email'] = $bccEmail;
+
 		$params['subject'] = $mail->getSubject();
 		$params['body'] = $mail->getBody();
 		$params['body_html'] = $mail->getHtmlBody();
 
-		$this->addEmailToEmailer($params);
+		// @todo treba nastavit testovaci rezim, aby sa to neposielalo na realne emaily
+		//$this->addEmailToEmailer([$params]);
 	}
 
 
@@ -51,7 +69,7 @@ class EmailerMailer implements Nette\Mail\IMailer {
 				$t[] = '"'.$val['subject'].'"';
 				$t[] = '"'.addslashes(gzcompress($val['body'])).'"';
 				$t[] = '"'.addslashes(gzcompress($val['body_html'])).'"';
-				$t[] = '"'.$val['attachments'].'"';
+				$t[] = NULL; //'"'.$val['attachments'].'"';
 				$t[] = '"'.$this->getDomainFromEmail($val['to_email']).'"';
 				$t[] = 0; // test
 

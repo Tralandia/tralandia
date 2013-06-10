@@ -157,7 +157,7 @@ class RentalPresenter extends BasePresenter {
 		}
 
 		$this->template->separateGroups = $rental->getSeparateGroups();
-		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
+		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
 		$this->template->dateUpdated = $rental->updated;

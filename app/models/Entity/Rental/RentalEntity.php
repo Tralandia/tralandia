@@ -296,20 +296,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
-	/**
-	 * @return Amenity|null
-	 */
-	public function getPetAmenity()
-	{
-		$pet = $this->getAmenitiesByType('animal', 1);
-		if (count($pet)) {
-			return $pet[0];
-		}
-
-		return NULL;
-	}
-
-
 	public function getCheckInFormatted()
 	{
 		return \Tools::$checkInOutOption[$this->checkIn];
@@ -545,8 +531,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		$animals = $this->getAmenitiesByType(array('animal'));
 
-		return (bool)count($animals) == 1;
+		return (bool)count($animals) >= 1;
 	}
+
+
+
+	/**
+	 * @return Amenity|null
+	 */
+	public function getPetAmenity()
+	{
+		$pet = $this->getAmenitiesByType('animal', 1);
+		if (count($pet)) {
+			return $pet[0];
+		}
+
+		return NULL;
+	}
+
+
+
 
 
 	/**

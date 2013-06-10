@@ -70,7 +70,7 @@ parameters:
 			tags: ['[name]']
 		searchBar:
 			enabled: TRUE
-			key: '[language]_[primaryLocation]'
+			key: '[language]_[primaryLocation]_[homepage]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		searchLinks:
@@ -152,7 +152,7 @@ services:
 	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
 
-#	nette.mailer: EmailerMailer
+	nette.mailer: EmailerMailer
 
 	# SEARCH
 	rentalSearchService:

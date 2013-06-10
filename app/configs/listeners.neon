@@ -2,7 +2,7 @@ services:
 
 #	forgotPasswordEmailListener: [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
 #	registrationEmailListener: [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
-#	reservationOwnerEmailListener: [class: Listener\ReservationOwnerEmailListener, tags: [kdyby.subscriber]]
+	reservationOwnerEmailListener: [class: Listener\ReservationOwnerEmailListener, tags: [kdyby.subscriber]]
 #	newTicketEmailListener: [class: Listener\NewTicketEmailListener, tags: [kdyby.subscriber]]
 	polygonCalculatorListener: [class: Listener\PolygonCalculatorListener, tags: [kdyby.subscriber]]
 	requestTranslationsEmailListener: [class: Listener\RequestTranslationsEmailListener, tags: [kdyby.subscriber]]
