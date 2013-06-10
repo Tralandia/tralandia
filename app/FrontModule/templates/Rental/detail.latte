@@ -209,7 +209,7 @@
 													<b>{_$amenity->type->name|firstUpper}: </b>
 												{/if}
 
-												{_$amenity->name}{if !$typesIterator->last}, {/if}
+												{_$amenity->name}{if !$iterator->last}, {else}.{/if}
 
 											{/foreach}
 

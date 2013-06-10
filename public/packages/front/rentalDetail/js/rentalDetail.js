@@ -28,7 +28,7 @@
   					zoom: zoomVal,
   					scrollwheel: false,
   					center: myLatlng,
-  					mapTypeId: google.maps.MapTypeId.ROADMAP
+  					mapTypeId: google.maps.MapTypeId.HYBRID
   				}
   				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
 
