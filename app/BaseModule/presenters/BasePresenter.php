@@ -183,6 +183,7 @@ abstract class BasePresenter extends Presenter {
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
+		$this->template->rand = rand(1, 1000);
 
 		$this->fillTemplateWithCacheOptions($this->template);
 	}
@@ -231,7 +232,7 @@ abstract class BasePresenter extends Presenter {
 			eval("\$options['enabled'] = {$options['enabled']};");
 
 			$template->{$propertyName} = $options;
-			d($optionName, $options);
+			//d($optionName, $options);
 		}
 
 	}

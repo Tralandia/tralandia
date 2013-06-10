@@ -12,11 +12,11 @@
 
 			<div id="tabs-1" class="ui-tabs-panel">
 				<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
-	
-				{var $rentalService = $rental['service']; } 
+
+				{var $rentalService = $rental['service']; }
 				{var $featured = $rentalService->isFeatured(); }
 
-					<li n:class="$featured ? top, span4">
+					<li n:class="$featured ? top, span4" data-cache="{$rand}">
 						<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
 							<div class="position">TOP</div>
 							{if $mainImage = $rental['entity']->getMainImage()}
