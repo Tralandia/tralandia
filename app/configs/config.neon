@@ -152,7 +152,7 @@ services:
 	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
 
-#	nette.mailer: EmailerMailer
+	nette.mailer: EmailerMailer
 
 	# SEARCH
 	rentalSearchService:
