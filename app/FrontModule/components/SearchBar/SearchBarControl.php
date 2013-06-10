@@ -147,7 +147,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		}
 		placement*/
 
-		if($this->priceFrom) {
+		if($this->priceFrom !== NULL) {
 			$jsVariables['data-price-from'] = $this->priceFrom;
 		}
 
@@ -178,9 +178,17 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
 		$template->formatInputTooShort = $presenter->translate('o100142');
 		$template->bottomLinksCallback = $this->directLinks;
+		$template->isHomepage = $this->isHomepage;
 
 		$template->render();
 	}
+
+
+	public function isHomepage()
+	{
+		return $this->presenter->getName() == 'Front:Home';
+	}
+
 
 	public function directLinks()
 	{

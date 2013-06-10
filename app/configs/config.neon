@@ -70,7 +70,7 @@ parameters:
 			tags: ['[name]']
 		searchBar:
 			enabled: TRUE
-			key: '[language]_[primaryLocation]'
+			key: '[language]_[primaryLocation]_[homepage]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		searchLinks:

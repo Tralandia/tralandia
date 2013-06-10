@@ -201,9 +201,10 @@ abstract class BasePresenter extends Presenter {
 		unset($templateCache['enabled']);
 		$url = $this->getHttpRequest()->getUrl();
 		$url = $url->getHostUrl() . $url->getPath();
+		$homepage = $this->getName() == 'Front:Home' ? 'homepage' : 'notHomepage';
 		foreach($templateCache as $optionName => $options) {
-			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]'];
-			$replaceVariables = [$optionName, $language, $primaryLocation, $url];
+			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]', '[homepage]'];
+			$replaceVariables = [$optionName, $language, $primaryLocation, $url, $homepage];
 
 			$propertyName = $optionName . 'CacheOptions';
 
@@ -230,7 +231,7 @@ abstract class BasePresenter extends Presenter {
 			eval("\$options['enabled'] = {$options['enabled']};");
 
 			$template->{$propertyName} = $options;
-			//d($optionName, $options);
+			d($optionName, $options);
 		}
 
 	}
