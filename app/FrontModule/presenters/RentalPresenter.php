@@ -131,10 +131,10 @@ class RentalPresenter extends BasePresenter {
 		}
 
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
-		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
-		foreach ($interviewAnswers as $key => $answer) {
-			if (preg_match("/^{\?.+\?}$/", $this->translate($answer->answer))) {
-				unset($interviewAnswers[$key]);
+		$interviewAnswers = [];
+		foreach ($rental->getInterviewAnswers() as $key => $answer) {
+			if($answerText = $this->translate($answer->getAnswer())) {
+				$interviewAnswers[$key] = $answerText;
 			}
 		}
 
