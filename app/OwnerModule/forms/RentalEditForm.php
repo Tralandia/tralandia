@@ -118,7 +118,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this['rental'] = $rentalContainer;
 
 		$rentalContainer->addRentalPriceListContainer('priceList', $currency, $rental);
-		$rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
+		$pricelistUpload = $rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
@@ -207,8 +207,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$this->addSubmit('submit', 'o100083');
 
-//		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = callback($rentalContainer, 'validation');
+		$this->onValidate[] = callback($pricelistUpload, 'validate');
 	}
 
 	public function setDefaultsValues()
