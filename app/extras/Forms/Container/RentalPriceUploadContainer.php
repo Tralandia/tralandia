@@ -110,5 +110,8 @@ class RentalPriceUploadContainer extends BaseContainer
 		return NULL;
 	}
 
+	public function validate() {
+		d('test');
+	}
 
 }
