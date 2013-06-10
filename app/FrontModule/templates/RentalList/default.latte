@@ -4,7 +4,11 @@
 
 {block content}
 
-<h1>{$pageH1} <span class="counter">({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]})</span></h1>
+<h1>{$pageH1}
+	<span class="counter">
+		({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, #strana {$paginatorPage}{/if})
+	</span>
+</h1>
 
 <div class="row-fluid">
 	<div class="span12">
@@ -33,7 +37,7 @@
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
-						
+
 						{var $lastClass = ''}
 						{if $foreachIterator->last}
 							{var $lastClass = 'last'}

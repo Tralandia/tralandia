@@ -7,6 +7,7 @@ use Entity\Rental\Rental;
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
 use Nette\ArrayHash;
+use Nette\Utils\Html;
 use Nette\Utils\Strings;
 
 

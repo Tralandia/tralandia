@@ -83,6 +83,7 @@ class RentalListPresenter extends BasePresenter {
 
 		$this->template->rentals = $rentals;
 		$this->template->findRental = array($this, 'findRental');
+		$this->template->paginatorPage = $paginator->getPage();
 	}
 
 
