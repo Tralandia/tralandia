@@ -99,7 +99,7 @@ class SearchForm extends BaseForm
 			->setAttribute('data-placeholder', $this->translate('o100113'));
 		placement*/
 
-		$this->addSelect(FrontRoute::PRICE_FROM, 'o100093', $prices)
+		$this->addSelect(FrontRoute::PRICE_FROM, 'o100093', [0 => '0 ' . $this->environment->getCurrency()->getIso()] + $prices)
 			->setPrompt('')
 			->setAttribute('data-placeholder', $this->translate('o100093'));
 
