@@ -284,6 +284,17 @@ $(document).ready(function(){
 		return false;
 	});
 
+	$('.toggleHide').toggle(function(){
+		$(this).addClass('active');
+		$(this).find('span').html($(this).data('closeText'));
+		$($(this).data('toggleHideFor')+'.hide').removeClass('hide');
+		return false;
+	} , function(){
+		$(this).removeClass('active');
+		$(this).find('span').html($(this).data('openText'));
+		$($(this).data('toggleHideFor')).addClass('hide');
+		return false;
+	});
 
 
 	$('form:not(.searchForm) .select2.notFulltext').select2({
