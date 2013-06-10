@@ -363,8 +363,6 @@ $(function(){
 		return false;
 	});
 
-
-
 });
 
 
