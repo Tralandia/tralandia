@@ -29,21 +29,21 @@
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
 		</div>
-		<div class="inputFilterSearch price">
+		<div class="inputFilterSearch price {$isHomepage() ? hide}">
 			<i class="icon-money22">$</i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected'}
 		</div>
-		<div class="inputFilterSearch price pull-right">
+		<div class="inputFilterSearch price pull-right {$isHomepage() ? hide}">
 			<i class="icon-money22">$</i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
 		</div>
-		<div class="inputFilterSearch">
+		<div class="inputFilterSearch {$isHomepage() ? hide}">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
 		</div>
-		<div class="inputFilterSearch">
+		<div class="inputFilterSearch {$isHomepage() ? hide}">
 			<i class="icon-food"></i>
 			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected'}
 		</div>
-		<div class="inputFilterSearch">
+		<div class="inputFilterSearch {$isHomepage() ? hide}">
 			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>

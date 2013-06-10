@@ -5,6 +5,7 @@ namespace Mail;
 use Entity\Email;
 use Entity\Language;
 use Entity\Location\Location;
+use Entity\Phrase\Phrase;
 use Environment\Environment;
 use Nette\Application\Application;
 use Nette\Diagnostics\Debugger;
@@ -21,6 +22,12 @@ class Compiler {
 	 * @var \Nette\Application\Application
 	 */
 	protected $application;
+
+
+	/**
+	 * @var \Environment\Environment
+	 */
+	protected $environment;
 
 	/**
 	 * @var \Entity\Email\Template
@@ -117,9 +124,12 @@ class Compiler {
 		$location = new Variables\LocationVariables($environment->getPrimaryLocation());
 		$language = new Variables\LanguageVariables($environment->getLanguage());
 
+		$this->environment = $environment;
+
 		$this->variables['environment'] = new Variables\EnvironmentVariables($location, $language, $this->application);
 		return $this;
 	}
+
 
 	private function getEnvironment()
 	{
@@ -345,13 +355,13 @@ class Compiler {
 	protected function replaceVariables($html, array $variables)
 	{
 		$replace = array();
+		$environment = $this->getEnvironment();
 		foreach ($variables as $variable) {
 			if(array_key_exists($variable['fullname'], $replace)) continue;
 
 			if(array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
 				if(Strings::contains($methodName, 'Link')) {
-					$environment = $this->getEnvironment();
 					$val = $this->getVariable($variable['prefix'])->{$methodName}($environment);
 				} else {
 					$val = $this->getVariable($variable['prefix'])->{$methodName}();
@@ -359,7 +369,8 @@ class Compiler {
 			} else {
 				$val = $this->getCustomVariable($variable['name']);
 			}
-			$replace[$variable['originalname']] = $val;
+			if($val instanceof Phrase) $val = $this->environment->getTranslator()->translate($val);
+			$replace[$variable['originalname']] = (string) $val;
 		}
 
 		return str_replace(array_keys($replace), array_values($replace), $html);

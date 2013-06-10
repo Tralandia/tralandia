@@ -9,10 +9,10 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 
 	public function getSubscribedEvents()
 	{
-		return [];
+		return ['FrontModule\Forms\Rental\ReservationForm::onReservationSent'];
 	}
 
-	public function onSuccess(RentalReservation $reservation)
+	public function onReservationSent(RentalReservation $reservation)
 	{
 		$message = new \Nette\Mail\Message();
 
@@ -20,6 +20,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 		$body = $emailCompiler->compileBody();
 
 		$message->setHtmlBody($body);
+		$message->setFrom($reservation->getSenderEmail(), $reservation->getSenderName());
 		$message->addTo($reservation->getRental()->getOwner()->getLogin());
 
 		$this->mailer->send($message);

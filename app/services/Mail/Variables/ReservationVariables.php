@@ -29,7 +29,7 @@ class ReservationVariables extends Nette\Object {
 	}
 
 	public function getVariableSenderPhone() {
-		return $this->reservation->getSenderPhone();
+		return $this->reservation->getSenderPhone()->getInternational();
 	}
 
 	public function getVariableArrivalDate() {
@@ -46,5 +46,10 @@ class ReservationVariables extends Nette\Object {
 
 	public function getVariableChildrenCount() {
 		return $this->reservation->getChildrenCount();
+	}
+
+	public function getVariableMessage()
+	{
+		return $this->reservation->getMessage();
 	}
 }
