@@ -24,5 +24,4 @@ parameters:
 	webTempPath: /webtemp
 
 services:
-	nette.mailer:
-		class: JanDrabek\MailPanel\SessionDumpMailer
+	nette.mailer: EmailerMailer
