@@ -113,18 +113,17 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setAttribute('placeholder', 'email@email.com')
 			->addRule(self::EMAIL, $this->translate('o100144'));
-		;
+
 		$this->addPassword('password', 'o997')
 			->setOption('help', $this->translate('o100145'))
 			->setOption('prepend', '<i class="icon-lock"></i>')
 			->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
-		;
 
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-			->addRule(self::URL, $this->translate('o100102'));
-		;
+			->addCondition(self::FILLED)
+				->addRule(self::URL, $this->translate('o100102'));
 
 
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
