@@ -125,6 +125,10 @@ abstract class BasePresenter extends \BasePresenter {
 		}
 		$this->template->og['site_name'] = 'Tralandia';
 
+		$this->template->companyName = 'Tralandia, s.r.o.';
+		$this->template->siteName = ucfirst($domain);
+
+
 		parent::beforeRender();
 	}
 
