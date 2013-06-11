@@ -288,6 +288,11 @@ $(document).ready(function(){
 		$(this).addClass('active');
 		$(this).find('span').html($(this).data('closeText'));
 		$($(this).data('toggleHideFor')+'.hide').removeClass('hide');
+
+		if($(this).hasClass('onClickThisHide')){
+			$(this).hide();
+		}
+
 		return false;
 	} , function(){
 		$(this).removeClass('active');

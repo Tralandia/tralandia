@@ -49,9 +49,9 @@
 		</div>
 
 		{if $isHomepage()}
-		<div>
-			<a class="searchMoreFilter toggleHide" data-toggle-hide-for=".inputFilterSearch.toggleHide" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i><i class="icon-angle-up"></i> <span>#show filter options</span></a>
-		</div>
+		
+			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHide" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i></i> <span>#show filter options</span></a>
+		
 		{/if}
 
 
@@ -60,7 +60,7 @@
 		</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
-		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>
+		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="icon-search"></i> {_o100092}</a>
 	{/form}
 
 
