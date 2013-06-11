@@ -71,7 +71,7 @@
 							{/if}
 							{if $firstAnswer}
 							<tr>
-								<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
+								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'" colspan="2">{$firstAnswer|firstUpper}</td>
 							</tr>
 							{/if}
 						</table>

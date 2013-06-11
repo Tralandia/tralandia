@@ -4,7 +4,7 @@
 <div class="faqPage">
 	{foreach $categories as $category}
 	<div class="category">
-		<h2><i class="entypo-arrow-right2"></i> {_$category->name}</h2>
+		<h2><i class="entypo-arrow-right2"></i> {_$category->name}</h2>			
 			{foreach $category->questions as $question}
 			<h3>{_$question->question}</h3>
 				<p>{_$question->answer} </p>
