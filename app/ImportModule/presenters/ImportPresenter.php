@@ -258,6 +258,7 @@ class ImportPresenter extends Presenter {
 			foreach ($automaticUrls as $key => $value) {
 				qNew('insert into __importUrls set url = "'.$value.'"');
 			}
+			print_r($automaticUrls); exit;
 			//d($automaticUrls); exit;
 			$this->redirectUrl('/import?autoStart=1');
 
