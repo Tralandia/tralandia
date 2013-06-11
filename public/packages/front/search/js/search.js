@@ -189,6 +189,8 @@ function generateRedirectUrl(count){
 
 function updateCriteriaCount(){
 
+	$('#advancedSearchCriteriaButton:not(.active)').trigger('click');
+
 	var url = generateRedirectUrl(true);
 
 	if(url){

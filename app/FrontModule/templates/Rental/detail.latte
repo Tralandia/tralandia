@@ -198,21 +198,25 @@
 									</div>
 
 									<div class="moreAmenities">
+										<table>
 										{foreach $notImportantAmenities  as $amenities}
-
-											{var $typesIterator = $iterator}
+											<tr>
+											{var $typesIterator = $iterator}																									
 
 											{foreach $amenities as $amenity}
 
 												{if $iterator->first}
-													<b>{_$amenity->type->name|firstUpper}: </b>
+													<td class="typeName"><b>{_$amenity->type->name|firstUpper}: </b></td><td class="list">
 												{/if}
 
-												{_$amenity->name}{if !$iterator->last}, {else}.{/if}
-
+												{_$amenity->name}{if !$iterator->last}, {/if}
+												{if $typesIterator->last}
+													</td>
+												{/if}
 											{/foreach}
-
+											</tr>
 										{/foreach}
+										</table>
 									</div>
 
 								</li>
