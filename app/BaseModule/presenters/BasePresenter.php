@@ -190,6 +190,8 @@ abstract class BasePresenter extends Presenter {
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 		$this->template->rand = rand(1, 1000);
+		$this->template->companyName = 'Trlandia';
+		$this->template->siteName = 'Trlandia';
 
 		$this->fillTemplateWithCacheOptions($this->template);
 	}
