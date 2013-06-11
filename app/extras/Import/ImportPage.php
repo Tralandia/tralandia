@@ -282,22 +282,22 @@ class ImportPage extends BaseImport {
 			), 
 		),
 		array(
-			'destination' => ':Front:Faq:default', 
+			'destination' => ':Front:Contacts:default', 
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Časté otázky', 
-				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
+				'sk' => 'Kontakty', 
+				'en' => 'Contacts',
+				'cs' => 'Kontakty', 
 			), 
 			'titlePattern' => array(
-				'sk' => 'Časté otázky', 
-				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
+				'sk' => 'Kontakty', 
+				'en' => 'Contacts',
+				'cs' => 'Kontakty', 
 			),
 			'name' => array(
-				'sk' => 'Časté otázky', 
-				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
+				'sk' => 'Kontakty', 
+				'en' => 'Contacts',
+				'cs' => 'Kontakty', 
 			), 
 		),
 		array(
