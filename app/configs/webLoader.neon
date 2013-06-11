@@ -184,6 +184,7 @@ parameters:
 					- front/calendarWidget/js/calendarWidget.js
 					# search sidebar
 					- front/search/js/search.js
+					- front/_base/js/antirobot.js
 
 			jqueryAppear:
 				js:
