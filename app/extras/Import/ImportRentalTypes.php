@@ -16,7 +16,7 @@ class ImportRentalTypes extends BaseImport {
 
 	protected $rentalTypes = array(
 		array('hotel', 'hotels', 'hotel', 'hotely', array(2, 4, 412)),
-		array('spa', 'spas', 'kupele', 'kupele', array(8)),
+		array('spa', 'spas', 'kúpele', 'kúpele', array(8)),
 		array('villa', 'villas', 'vila', 'vily', array(17)),
 		array('castle', 'castles', 'zámok', 'zámky', array(347, 348, 349)),
 		array('camp', 'camps', 'kemp', 'kempy', array(7, 351)),
