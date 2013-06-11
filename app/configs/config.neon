@@ -154,6 +154,8 @@ services:
 
 	nette.mailer: EmailerMailer
 
+	testerOptions: TesterOptions
+
 	# SEARCH
 	rentalSearchService:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())

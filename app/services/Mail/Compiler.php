@@ -254,7 +254,9 @@ class Compiler {
 	protected function getVariable($name)
 	{
 		if(!array_key_exists($name, $this->variables)) {
-			throw new \Nette\InvalidArgumentException("Variable '$name' does not exist.");
+			$e = new UndeclaredVariable("Variable '$name' does not exist.");
+			Debugger::log($e);
+			return NULL;
 		}
 
 		return $this->variables[$name];
@@ -370,6 +372,7 @@ class Compiler {
 				$val = $this->getCustomVariable($variable['name']);
 			}
 			if($val instanceof Phrase) $val = $this->environment->getTranslator()->translate($val);
+			if($val instanceof \DateTime) $val = $this->environment->getLocale()->formatDate($val);
 			$replace[$variable['originalname']] = (string) $val;
 		}
 

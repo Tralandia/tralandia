@@ -9,6 +9,28 @@ use Nette\Mail\Message;
 
 class EmailerMailer implements Nette\Mail\IMailer {
 
+
+	/**
+	 * @var TesterOptions
+	 */
+	private $tester;
+
+
+	public function __construct(TesterOptions $tester)
+	{
+		$this->tester = $tester;
+	}
+
+
+	/**
+	 * @return null|string
+	 */
+	public function getTesterEmail()
+	{
+		return $this->tester ? $this->tester->getEmail() : NULL;
+	}
+
+
 	/**
 	 * Sends email.
 	 *
@@ -27,10 +49,16 @@ class EmailerMailer implements Nette\Mail\IMailer {
 		$params['from_email'] = $fromEmail;
 		$params['from_name'] = $fromName;
 
-		$to = $mail->getHeader('To');
-		$toKeys = array_keys($to);
-		$toEmail = array_shift($toKeys);
-		$toName = reset($to);
+		$testerEmail = $this->getTesterEmail();
+		if($testerEmail) {
+			$toEmail = $testerEmail;
+			$toName = $testerEmail;
+		} else {
+			$to = $mail->getHeader('To');
+			$toKeys = array_keys($to);
+			$toEmail = array_shift($toKeys);
+			$toName = reset($to);
+		}
 		$params['to_email'] = $toEmail;
 		$params['to_name'] = $toName;
 
@@ -47,8 +75,7 @@ class EmailerMailer implements Nette\Mail\IMailer {
 		$params['body'] = $mail->getBody();
 		$params['body_html'] = $mail->getHtmlBody();
 
-		// @todo treba nastavit testovaci rezim, aby sa to neposielalo na realne emaily
-		//$this->addEmailToEmailer([$params]);
+		$this->addEmailToEmailer([$params]);
 	}
 
 
@@ -57,10 +84,10 @@ class EmailerMailer implements Nette\Mail\IMailer {
 		foreach($params as $key => $val){
 			if(Nette\Utils\Validators::isEmail($val['to_email']) && Nette\Utils\Validators::isEmail($val['from_email'])){
 				$t = array();
-				$t[] = 1;//(int)$val['urgency'];
+				$t[] = 5;//(int)$val['urgency'];
 				$t[] = 1;//(int)$val['confirmed'];
 				$t[] = 1;//(int)$val['batch_id'];
-				$t[] = NULL;//(int)$val['stamp'];
+				$t[] = time();//(int)$val['stamp'];
 				$t[] = '"'.$val['from_email'].'"';
 				$t[] = '"'.$val['from_name'].'"';
 				$t[] = '"'.$val['to_email'].'"';
@@ -69,7 +96,7 @@ class EmailerMailer implements Nette\Mail\IMailer {
 				$t[] = '"'.$val['subject'].'"';
 				$t[] = '"'.addslashes(gzcompress($val['body'])).'"';
 				$t[] = '"'.addslashes(gzcompress($val['body_html'])).'"';
-				$t[] = NULL; //'"'.$val['attachments'].'"';
+				$t[] = '""'; //'"'.$val['attachments'].'"';
 				$t[] = '"'.$this->getDomainFromEmail($val['to_email']).'"';
 				$t[] = 0; // test
 
@@ -101,12 +128,14 @@ class EmailerMailer implements Nette\Mail\IMailer {
 		//if(Invoicing::$testMode) pr($query);
 
 		if($r =@mysql_query($query, $emailerConnection)){
-			if (stripos($query, "insert into emailer")!==false) {
+			if (stripos($query, "insert into emailer")!==FALSE) {
 				$r = mysql_insert_id($emailerConnection);
 			}
 			return $r;
 		} else {
-			return FALSE;
+			throw new Exception(mysql_error($emailerConnection));
+			//Debugger::log($e);
+			//return FALSE;
 		}
 	}
 
