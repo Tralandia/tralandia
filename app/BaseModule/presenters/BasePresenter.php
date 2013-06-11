@@ -94,6 +94,12 @@ abstract class BasePresenter extends Presenter {
 	protected $em;
 
 	/**
+	 * @autowire
+	 * @var \TesterOptions
+	 */
+	protected $testerOptions;
+
+	/**
 	 * @var User
 	 */
 	public $loggedUser;
@@ -523,6 +529,12 @@ abstract class BasePresenter extends Presenter {
 		$user = $this->getUser();
 		$user->setExpiration('+ 30 days', FALSE);
 		$user->login($identity);
+	}
+
+
+	public function actionSetTester($id)
+	{
+		$this->testerOptions->setEmail($id);
 	}
 
 }
