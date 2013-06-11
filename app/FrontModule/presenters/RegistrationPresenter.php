@@ -41,7 +41,7 @@ class RegistrationPresenter extends BasePresenter
 			$rental = $self->registrationHandler->getRental();
 			$self->onSuccessRegistration($rental);
 
-			$self->flashMessage('o100193', RegistrationPresenter::FLASH_SUCCESS);
+			$self->flashMessage('o100193', RegistrationPresenter::FLASH_ERROR);
 			$self->redirect('Home:default');
 
 //			$owner = $rental->getOwner();
