@@ -100,6 +100,8 @@ class ImportRentals extends BaseImport {
 			$address = $context->contactAddressRepositoryAccessor->get()->createNew(FALSE);
 			$address->status = \Entity\Contact\Address::STATUS_UNCHECKED;
 
+			$x['address'] = str_replace('\\n', '', $x['address']);
+
 			$address->address = implode('\n', array_filter(array(trim($x['address']))));
 			$address->subLocality = $x['sublocality'];
 			$address->postalCode = $x['post_code'];

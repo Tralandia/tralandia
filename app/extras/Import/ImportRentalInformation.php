@@ -76,8 +76,9 @@ class ImportRentalInformation extends BaseImport {
 
 		foreach ($roomTypes as $key => $value) {
 			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew(FALSE);
+			$t->name = $this->createNewPhrase($nameDictionaryType);
+			$t->name->setTranslationText($en, $key);
 
-			$t->name = $context->phraseRepositoryAccessor->get()->findOneByOldId($value);
 			$t->slug = $key;
 			$model->persist($t);
 		}

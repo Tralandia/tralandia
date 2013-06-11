@@ -250,7 +250,7 @@ class ImportAmenities extends BaseImport {
 			array('in village', 'na dedine', 'in-village'),
 			array('in town', 'v meste', 'in-town'),
 			array('in downtown', 'v centre mesta', 'in-downtown'),
-			array('remote', 'na-samote', 'remote'),
+			array('remote', 'na samote', 'remote'),
 			array('on beach', 'na pláži', 'on-beach'),
 			array('by ocean', 'pri oceáne', 'by-ocean'),
 			array('by sea', 'pri mori', 'by-sea'),
