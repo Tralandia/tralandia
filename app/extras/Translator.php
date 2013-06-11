@@ -48,6 +48,10 @@ class Translator implements \Nette\Localization\ITranslator {
 			$variation[self::VARIATION_COUNT] = $count;
 		}
 
+		if($phrase == 'o32989') {
+			$t = 1;
+		}
+
 		if(!$language) $language = $this->language;
 
 		$translation = $this->getTranslation($phrase, $variation, $language);
