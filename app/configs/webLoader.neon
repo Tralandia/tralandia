@@ -100,6 +100,9 @@ parameters:
 			fontAwesome:
 				css:
 					- fontAwesome/lib/less/font-awesome.less
+			icoMoon:
+				css:
+					- icoMoon/custom/icoMoon.less					
 
 			calendarIframe:
 				css:
@@ -276,6 +279,7 @@ parameters:
 				-  %webloader.packages.nette%
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
+				-  %webloader.packages.icoMoon%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -312,6 +316,7 @@ parameters:
 				-  %webloader.packages.nette%
 				-  %webloader.packages.navigationBarScroll%
 				-  %webloader.packages.socialite%
+				-  %webloader.packages.icoMoon%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
