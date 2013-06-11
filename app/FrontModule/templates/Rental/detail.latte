@@ -388,13 +388,11 @@
 							<h3>{_o25231}</h3>
 							<ul class="interviewList">
 								{foreach $interviewAnswers as $interviewAnswer}
-								{if !empty($interviewAnswer->answer)}
 								<li>
 									<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
 
 									<p>{_$interviewAnswer->answer|firstUpper}</p>
 								</li>
-								{/if}
 								{/foreach}
 							</ul>
 							<div class="clearfix"></div>

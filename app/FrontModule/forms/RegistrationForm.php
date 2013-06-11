@@ -163,7 +163,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	public function setDefaultsValues()
 	{
-		$defaults = [
+		/*$defaults = [
 			'country' => $this->environment->getPrimaryLocation()->getId(),
 			'language' => $this->environment->getLanguage()->getId(),
 
@@ -195,7 +195,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 
 		];
-		$this->setDefaults($defaults);
+		$this->setDefaults($defaults);*/
 	}
 
 
