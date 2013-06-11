@@ -135,7 +135,7 @@ class RentalPresenter extends BasePresenter {
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
 			if($answerText = $this->translate($answer->getAnswer())) {
-				$interviewAnswers[$key] = $answerText;
+				$interviewAnswers[] = $answer;
 			}
 		}
 

@@ -8,6 +8,7 @@ use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Extras\Annotation as EA;
 use Nette\DateTime;
+use Nette\Http\Url;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
@@ -15,7 +16,7 @@ use Nette\Utils\Strings;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug, getCalendar, setCalendar}")
+ * @EA\Generator(skip="{getImages, getPrice, setPrice, setSlug, getCalendar, setCalendar, setUrl}")
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -673,6 +674,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return count($this->placements) ? TRUE : FALSE;
 	}
 
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setUrl($url)
+	{
+		if(!$url instanceof Url) {
+			$url = new Url($url);
+		}
+		$this->url = "$url";
+
+		return $this;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -1057,17 +1073,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getPhone()
 	{
 		return $this->phone;
-	}
-
-	/**
-	 * @param string
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setUrl($url)
-	{
-		$this->url = $url;
-
-		return $this;
 	}
 
 	/**
