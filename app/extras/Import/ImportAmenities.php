@@ -12,7 +12,7 @@ use Nette\Application as NA,
 
 class ImportAmenities extends BaseImport {
 
-	private $importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi', 'small-pets', 'medium-pets', 'any-pets');
+	private $importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi', 'small-pets', 'medium-pets', 'any-pets', 'breakfast', 'lunch', 'dinner', 'full-board', 'half-board-breakfast-and-dinner', 'half-board-breakfast-and-lunch', 'half-board-lunch-and-dinner', 'all-inclusive', 'self-catering');
 
 	public function doImport($subsection = NULL) {
 
