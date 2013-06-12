@@ -4,6 +4,22 @@
 /****************************************************************************************
 /* base html elements
 /***************************************************************************************/
+
+.testerPanel {
+position: fixed;
+right: -50px;
+background: red;
+padding: 2px 5px;
+color: #fff;
+top: 60px;
+width: 123px;
+font-size: 11px;
+transform: rotate(90deg);
+-ms-transform: rotate(90deg); /* IE 9 */
+-webkit-transform: rotate(90deg); /* Safari and Chrome */
+
+}
+
 body {
 	background: #eef2d1;
 	font-family: Arial,Helvetica,sans-serif;
@@ -971,32 +987,14 @@ ul.arrows {
 	top: 10px;
 	margin-right: 5px;
 	float: right;
-	height:10px;
-	line-height: 10px;
-	padding: 5px 8px;
-	background-image: linear-gradient(bottom, #F24100 0%, #F26900 100%);
-	background-image: -o-linear-gradient(bottom, #F24100 0%, #F26900 100%);
-	background-image: -moz-linear-gradient(bottom, #F24100 0%, #F26900 100%);
-	background-image: -webkit-linear-gradient(bottom, #F24100 0%, #F26900 100%);
-	background-image: -ms-linear-gradient(bottom, #F24100 0%, #F26900 100%);
-
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-
-	font-weight: bold;
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0, #F24100),
-		color-stop(1, #F26900)
-	);
-	color: #fff;
+	height: 8px;
+	line-height: 8px;
+	padding: 5px 7px;
+	.border-radius(3px);
+	#gradient > .vertical(#f26900,#f24100);
+	color: @white;
 	font-size: 11px;
-	border: 1px solid #fff;
-
+	border: 1px solid @white;
 }
 
 img.flag {
