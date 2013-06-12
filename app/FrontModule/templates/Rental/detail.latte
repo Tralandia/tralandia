@@ -139,9 +139,9 @@
 
 						{if !$pricesAvailable}
 						{if $rental->pricesUponRequest}
-						#len na dotaz
+						{_o100204}
 						{else}
-						#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"
+						{_o100205, NULL, NULL, ['price' => $rental->price]}						
 						{/if}
 						{/if}
 
