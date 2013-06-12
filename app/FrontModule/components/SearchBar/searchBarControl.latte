@@ -31,27 +31,27 @@
 		<div class="inputFilterSearch price pull-right">
 			<i class="icon-dollar"></i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
 		</div>		
-		<div class="inputFilterSearch toggleHide {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
 		</div>
 
-		<div class="inputFilterSearch toggleHide {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
 		</div>
-		<div class="inputFilterSearch toggleHide {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-food"></i>
 			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected'}
 		</div>
-		<div class="inputFilterSearch toggleHide {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>
 
 		{if $isHomepage()}
 		
-			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHide" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i></i> <span>#show filter options</span></a>
+			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i></i> <span>#show filter options</span></a>
 		
 		{/if}
 
