@@ -6,17 +6,21 @@
  */
 
 use Nette\Mail\Message;
+use Tester\Options;
 
 class EmailerMailer implements Nette\Mail\IMailer {
 
 
 	/**
-	 * @var TesterOptions
+	 * @var Options
 	 */
 	private $tester;
 
 
-	public function __construct(TesterOptions $tester)
+	/**
+	 * @param \Tester\ITester $tester
+	 */
+	public function __construct(\Tester\ITester $tester)
 	{
 		$this->tester = $tester;
 	}

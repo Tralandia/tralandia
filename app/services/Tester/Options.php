@@ -1,11 +1,16 @@
 <?php
+namespace Tester;
+
+use Nette;
+
 /**
  * This file is part of the Tralandia.
  * User: david
  * Created at: 6/11/13 8:12 AM
  */
 
-class TesterOptions {
+class Options implements ITester
+{
 
 
 	/**
@@ -46,11 +51,10 @@ class TesterOptions {
 	public function getEmail()
 	{
 		$email = $this->section->email;
-		if(!$email) {
+		if (!$email) {
 			$email = $this->defaultEmail;
 		}
 
 		return $email;
 	}
-
 }
