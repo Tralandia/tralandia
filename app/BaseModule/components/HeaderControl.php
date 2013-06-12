@@ -107,7 +107,16 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->facebookPage = $shareLinks->facebookPage;
 		$template->googlePlusProfile = $shareLinks->googlePlusProfile;
 
+		$template->getLogoutLink = $this->getLogoutLink;
+
 		$template->render();
+	}
+
+
+	public function getLogoutLink()
+	{
+		$presenter = $this->presenter;
+		return $presenter->link(':Front:Sign:out', ['nextLink' => $presenter->link('//this')]);
 	}
 
 

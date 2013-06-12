@@ -154,7 +154,7 @@ services:
 
 	nette.mailer: EmailerMailer
 
-	testerOptions: TesterOptions
+	tester: Tester\Options
 
 	# SEARCH
 	rentalSearchService:
