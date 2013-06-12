@@ -968,12 +968,21 @@ $(function() {
 	});
 	
 
-$('button[type=submit]').click(function(){
-	$(this).addClass('active');
-});
-$('button[type=submit]').live('click',function(){
-	$(this).addClass('active');
-});	
+	$('form[method="post"]').submit(function(){
+
+		var $button = $(this).find('button[type=submit]');
+
+		$button.addClass('active').attr('disabled',1);
+
+		var attr = $button.attr('data-loading-text');
+
+		if (typeof attr !== 'undefined' && attr !== false) {
+		    $button.find('small').html($button.data('loadingText'));
+		}
+
+	});
+
+
 
 	$('.priceList .remove').on('click',removePriceLine);
 	$('.priceList .remove').live('click',removePriceLine);

@@ -720,6 +720,7 @@
 {*
 	Submit Button Container -------------------------------------------
 	@param $control \Nette\Forms\Controls\SubmitButton
+	@param $dataLoadingText string
 	*}
 	{define #submit}
 	{default $class = 'simpleInput'}
@@ -728,8 +729,8 @@
 
 		</td>
 		<td colspan="2">
-			<button type="submit" class="btn btn-greenDark" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i class="entypo-send"></i> <i class="icon-spinner icon-spin"></i> {_$control->caption}
+			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-greenDark" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i class="entypo-send"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
 			</button>
 		</td>
 	</tr>
