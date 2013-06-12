@@ -351,47 +351,22 @@ $(function(){
 
 	
 
-	$('.btnSearchClose').on('click',function(){
-		
-		console.log('remove');
-		
-		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
-		$(this).remove();
-		updateCriteriaCount();
-		updateSerachLinkUrl();		
-		$('#select2-drop').hide();
-
-		return false;
-
-	});
-
-	$('.btnSearchClose').live('click',function(){
-		
-		console.log('remove');
-		
-		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
-		$(this).remove();
-		updateCriteriaCount();
-		updateSerachLinkUrl();		
-		$('#select2-drop').hide();
-
-		return false;
-	});
+	$('.btnSearchClose').on('click',closeCriteriaSelectButton)
+						.live('click',closeCriteriaSelectButton);
 
 });
 
-// function closeCriteriaSelectButton(){
-// 		$(this).parent().removeClass('selected');
-// 		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
-// 		$(this).remove();
-// 		updateCriteriaCount();
-// 		updateSerachLinkUrl();		
-// 		$('#select2-drop').hide();
+function closeCriteriaSelectButton(){
+		
+		$(this).parent().removeClass('selected');
+		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
+		$(this).remove();
+		updateCriteriaCount();
+		updateSerachLinkUrl();		
+		$('#select2-drop').hide();
 
-// 		return false;	
-// }
+		return false;
+}
 
 
 

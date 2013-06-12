@@ -1,0 +1,11 @@
+#container {
+	margin: 10px auto;	
+	text-align: left;
+	width: 986px;
+	overflow: visible;
+}
+
+#socialMediaLinks {
+	right: -53px;
+	top: -11px;
+}
