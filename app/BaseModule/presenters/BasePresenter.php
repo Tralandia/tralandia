@@ -95,7 +95,7 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
-	 * @var \TesterOptions
+	 * @var \Tester\Options
 	 */
 	protected $testerOptions;
 
@@ -103,6 +103,12 @@ abstract class BasePresenter extends Presenter {
 	 * @var User
 	 */
 	public $loggedUser;
+
+	/**
+	 * @autowire
+	 * @var \Tester\ITester
+	 */
+	public $tester;
 
 
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
@@ -190,6 +196,10 @@ abstract class BasePresenter extends Presenter {
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 		$this->template->rand = rand(1, 1000);
+
+		if($this->tester instanceof \Tester\Options) {
+			$this->template->tester = $this->tester;
+		}
 
 		$this->fillTemplateWithCacheOptions($this->template);
 	}
