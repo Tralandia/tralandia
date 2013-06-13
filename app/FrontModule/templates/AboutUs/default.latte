@@ -7,7 +7,11 @@
 <ul class="aboutUs">
 	{foreach $testimonials as $testimonial}
 	<li>
-		{if $testimonial->rental !== NULL}<img n:image="$testimonial->rental->getMainImage()"/>{/if}
+		{if $testimonial->rental !== NULL}
+			<img n:image="$testimonial->rental->getMainImage()"/> 
+		{else}
+			<img class="placeholder" src="/images/tra-logo-icon.png"/>
+		{/if}
 
 		<div class="description">
 			<p>{$testimonial->testimonial}</p>
