@@ -515,23 +515,36 @@
 .select2-drop.searchSelect  {
 	border: 1px solid #fff;
 
-	-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
-	-moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
-	-o-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
-	box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);	
+	.box-shadow(0 4px 5px rgba(0, 0, 0, .3));
 
 	.select2-search {
+
 		&:before {
-			font-family: entypo;
-			content: '\1F50D';
-			font-size: 30px;
-			line-height: 27px;
-			height: 0;
+
 			float: right;
-			position: relative;
-			right: 10px;
-			top: -2px;
+			top: 2px;
 			z-index: 9000;
+
+			font-family: FontAwesome;
+			font-weight: normal;
+			font-style: normal;
+			text-decoration: inherit;
+			-webkit-font-smoothing: antialiased;
+			font-size: 15px;
+			right: 5px;
+			position: relative;
+
+			/* sprites.less reset */
+			display: inline;
+			width: auto;
+			height: auto;
+			line-height: normal;
+			vertical-align: baseline;
+			background-image: none;
+			background-position: 0% 0%;
+			background-repeat: repeat;
+			margin-top: 0;
+			content: "\f002"; 
 			color: #999999;
 		}
 	}
