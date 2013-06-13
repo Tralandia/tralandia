@@ -297,7 +297,7 @@
 									<table>
 										{if $rental->contactName}
 										<tr>
-											<td class="iconCover"><i class="entypo-contact"></i></td>
+											<td class="iconCover"><i class="icon-user"></i></td>
 											<td>
 												<strong>{$rental->contactName}</strong>
 											</td>
@@ -307,7 +307,7 @@
 
 										{if $rental->phone->international}
 										<tr>
-											<td class="iconCover"><i class="entypo-phone"></i></td>
+											<td class="iconCover"><i class="icon-phone"></i></td>
 											<td>
 
 												<strong>{$rental->phone->international} </strong>
@@ -318,7 +318,7 @@
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
 										<tr>
-											<td class="iconCover"><i class="entypo-adress"></i></td>
+											<td class="iconCover"><i class="icon-compass"></i></td>
 											<td>
 												<strong>{_o2431} </strong><br/>
 
@@ -334,7 +334,7 @@
 
 										{if $rental->url}
 										<tr>
-											<td class="iconCover"><i class="entypo-www"></i></td>
+											<td class="iconCover"><i class="icon-link"></i></td>
 											<td>
 												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
 												</td>
