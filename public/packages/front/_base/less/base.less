@@ -775,14 +775,13 @@ ul.arrows {
 
 .btn.btn-green {
 	border: 1px solid @btnGreenBorderColor;
-	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
+	#gradient > .vertical(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnGreenGradientStopColor;
 	&:hover , &.active {
 		background-position: 0;
 		color: #fff;
-		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
-		
+		#gradient > .vertical(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
 	}
 }
 
