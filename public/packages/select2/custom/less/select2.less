@@ -37,6 +37,56 @@
 
 
 
+
+.select2-container {
+	.select2-choice {
+		div {
+			b {
+				background-image: none;
+				background: none;
+				font-weight: normal;
+				padding-top: 2px;
+				
+				&:before  { 
+					font-family: FontAwesome;
+					font-weight: normal;
+					font-style: normal;
+					text-decoration: inherit;
+					-webkit-font-smoothing: antialiased;
+					font-size: 18px;
+					/* sprites.less reset */
+					display: inline;
+					width: auto;
+					height: auto;
+					line-height: normal;
+					vertical-align: baseline;
+					background-image: none;
+					background-position: 0% 0%;
+					background-repeat: repeat;
+					margin-top: 0;
+					content: "\f107"; 
+				}
+			}
+		}
+	}
+
+	&.select2-dropdown-open {
+		.select2-choice {
+			div {
+				b {
+					background-image: none;
+					&:before {
+						content:'\f106';
+					}
+				}
+			}
+		}		
+	}
+}
+
+
+
+
 .select2-drop {
 	border: 0px;
 }

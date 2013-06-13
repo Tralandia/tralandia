@@ -314,9 +314,6 @@
 
 		}
 
-
-
-
 		.select2-container .select2-choice {
 			border: none;
 			background: #fff;
@@ -450,13 +447,17 @@
 				display: block;	
 				line-height: 16px;
 				
-				padding: 3px 10px 3px 30px;
+				padding: 3px 10px 3px 9px;
 				&:hover {
 					text-decoration: none;
 
 					span.entypo-remove {
 						visibility: visible;
 					}					
+				}
+
+				i {
+					color: @brown;
 				}
 
 				span.entypo-remove {
@@ -473,45 +474,6 @@
 				margin-bottom: 10px;
 			}
 			
-			&:before {
-				  font-family: "entypo";
-				  font-weight: normal;
-				  font-style: normal;
-				  
-				  text-decoration: inherit;
-				  content:'\E75E';
-				  color: @brown;
-				  font-size: 25px;
-				  margin-right: 3px;
-				  float: left;
-				  line-height: 19px;
-				  height: 20px;
-				  position: absolute;
-				  left: 15px;
-				  width: 0;
-
-			}
-
-
-
-			&.more {
-
-				a {
-					color: @brown;
-				}
-
-				&:before {
-					content:'\E75C';
-					left: 15px;
-				}
-
-				&.open {
-					&:before {
-						content:'\E75F';	
-					}					
-				}
-
-			}
 		}
 
 
