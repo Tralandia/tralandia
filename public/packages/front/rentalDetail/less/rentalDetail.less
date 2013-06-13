@@ -59,7 +59,9 @@ form.reservationform {
 		}
 
 		.select2-container .select2-choice div b:before {
-			left: 3px;
+			left: 4px;
+			position: relative;
+			font-size: 14px;
 		}
 
 		.reservationSuccessInfo {
@@ -171,6 +173,7 @@ form.reservationform {
 			border-top-left-radius: 3px;
 			border-top-right-radius: 0;				
 		}
+
 
 		.input-append .add-on:last-child {
 			border-radius: 0;
@@ -524,6 +527,8 @@ table.detailInfoBox {
 			font-size: 26px;
 			line-height: 31px;
 			padding-left: 2px;
+			display: block;
+			width: 25px;
 			color: @brown;
 			margin-right: 9px;		
 		}
@@ -759,8 +764,15 @@ padding-top: 10px;
 	font-size: 12px;
 
 	.btn {
-		font-size: 14px;		
+		font-size: 14px;	
+
+		i {
+			position: relative;
+			top: 1px;
+		}	
 	}
+
+
 
 	a.toggle {
 		font-size: 12px;
@@ -809,7 +821,8 @@ padding-top: 10px;
 }
 
 .sidebarTitle {
-	.basic-gradient(#b7c546,#869c19);
+	
+	#gradient > .vertical(#b7c546,#869c19);
 	color: @white;
 	font-weight: bold;
 	text-align: center;
@@ -831,6 +844,7 @@ padding-top: 10px;
 
 	.input-append .add-on {
 		background: #eaf0d7;
+		padding: 4px 8px;
 	}
 
 	ul {
@@ -856,16 +870,13 @@ padding-top: 10px;
 
 		i {
 			color: @lightGreen;
+			margin-bottom: 6px;
 			&:before {
-				font-size: 33px;
-				margin-right: 3px;
-				position: relative;
-				top: -1px;
-			}
-			&.icon-globe:before {
 				font-size: 17px;
-				left: -1px;
+				margin-right: 3px;
+
 			}
+
 		}
 
 		td.iconCover {
@@ -920,12 +931,13 @@ padding-top: 10px;
 		}
 
 		a {			
-			.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+			#gradient > .vertical(rgb(255, 255, 255),rgb(229, 236, 199));
 			border: 1px solid #b0c13b;
 
 			div {
-				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+				#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
 				border-left: 1px solid #b0c13b;
+				.border-radius(0px);
 			}
 		}
 

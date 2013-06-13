@@ -259,7 +259,7 @@
 					<div class="span3 sidebarRightDetail">
 
 						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><span class="entypo-heart">{_o100140}</span></button>
+						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart"></i> {_o100140}</button>
 						{/if}
 
 							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
@@ -297,7 +297,7 @@
 									<table>
 										{if $rental->contactName}
 										<tr>
-											<td class="iconCover"><i class="entypo-contact"></i></td>
+											<td class="iconCover"><i class="icon-user"></i></td>
 											<td>
 												<strong>{$rental->contactName}</strong>
 											</td>
@@ -307,7 +307,7 @@
 
 										{if $rental->phone->international}
 										<tr>
-											<td class="iconCover"><i class="entypo-phone"></i></td>
+											<td class="iconCover"><i class="icon-phone"></i></td>
 											<td>
 
 												<strong>{$rental->phone->international} </strong>
@@ -318,7 +318,7 @@
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
 										<tr>
-											<td class="iconCover"><i class="entypo-adress"></i></td>
+											<td class="iconCover"><i class="icon-compass"></i></td>
 											<td>
 												<strong>{_o2431} </strong><br/>
 
@@ -334,7 +334,7 @@
 
 										{if $rental->url}
 										<tr>
-											<td class="iconCover"><i class="entypo-www"></i></td>
+											<td class="iconCover"><i class="icon-link"></i></td>
 											<td>
 												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
 												</td>

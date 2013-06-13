@@ -61,7 +61,7 @@
 						<li>
 							<div class="dropdown lang">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
-									{_$environment->getLanguage()->name} <i class="entypo-chevron-down"></i>
+									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
 								</a>
 							</div>
 						</li>
@@ -75,9 +75,9 @@
 						<ul n:inner-foreach="$column as $language">
 							<li>
 								{if $language->getId() == $environment->getLanguage()->getId()}
-									<span>{_$language->getName(), NULL, NULL, NULL, $language}</span>
+									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}">{_$language->getName(), NULL, NULL, NULL, $language}</a>
+									<a href="{plink this, language => $language}"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
