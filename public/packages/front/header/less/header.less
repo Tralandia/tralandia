@@ -1,4 +1,5 @@
 @import '../../_base/less/lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
 #header {
 
 	.inner {
@@ -368,9 +369,7 @@
 		ul {
 
 			&.withShadow {
-				background: -webkit-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
-				background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
-				background: linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+				#gradient > .vertical(#ffffff,#f7f7f7);
 				box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.21);
 			}
 
@@ -400,6 +399,17 @@
 
 					&.last {
 						border-right: none;
+						padding-right: 0;
+					}
+
+					&#langMenuOptionsOpen {
+						padding-right: 0;
+
+						i {
+							position: relative;
+							top: -1px;
+							font-size: 14px;							
+						}
 					}
 
 					&.red {
@@ -420,22 +430,7 @@
 							text-decoration: none;
 						}
 
-						i {
-							position: relative;
-							top: 5px;
-							float: left;
-							&.entypo-language {
 
-								&:before {
-									color: @brown;
-									position: relative;
-									top: -3px;
-
-									font-size: 30px;
-								}
-
-							}
-						}
 
 						img {
 							border : 1px solid @lightGreen;
