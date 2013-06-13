@@ -268,11 +268,11 @@ ul.arrows {
 }
 
 .btn.btn-orange {
-	.basic-gradient(#fdbe33,#f68703);
+	#gradient > .vertical(#fdbe33,#f68703);
 	border: 1px solid #f68703;
 	color: @brown;
 	&:hover , &.active {
-		.basic-gradient(#f68703,#fdbe33);
+		#gradient > .vertical(#f68703,#fdbe33);
 		background-position: 0;
 	}
 }
@@ -897,7 +897,8 @@ ul.arrows {
 }
 
 .btn.btn-compare{
-	.basic-gradient(#FEFEFE,#D9DFEB);
+	
+	#gradient > .vertical(#FEFEFE,#D9DFEB);
 	color: #444;
 	border: 1px solid rgb(147, 172, 218);
 	width: 100%;
@@ -905,14 +906,16 @@ ul.arrows {
 
 	&:hover {
 		background-position: 0;
-		.basic-gradient(#D9DFEB,#FEFEFE);
+		#gradient > .vertical(#D9DFEB,#FEFEFE);
 	}
 
 	&.selected {
 		color: #fff;
 		border: 1px solid #27407e;
 
-		.basic-gradient(#5b78af,#27407e);
+		
+
+		#gradient > .vertical(#5b78af,#27407e);
 
 		&:hover {
 			.basic-gradient(#27407e,#5b78af);
