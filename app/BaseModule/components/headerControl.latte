@@ -75,9 +75,9 @@
 						<ul n:inner-foreach="$column as $language">
 							<li>
 								{if $language->getId() == $environment->getLanguage()->getId()}
-									<span>{_$language->getName(), NULL, NULL, NULL, $language}</span>
+									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}">{_$language->getName(), NULL, NULL, NULL, $language}</a>
+									<a href="{plink this, language => $language}"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>

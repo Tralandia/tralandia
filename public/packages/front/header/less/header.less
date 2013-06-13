@@ -231,28 +231,26 @@
 				border: none;
 				line-height: 20px;
 				color: @darkGreen;
+
+				small {
+					font-size: 11px;
+				}
+
+				i {
+					color: @brown;
+				}
+
 				&:hover {
 					background: none;
-					text-decoration: underline;
+					text-decoration: none;
 
-					&:before {
-						text-decoration: none;
+					small {
+						text-decoration: underline;
 					}
+
 				}
 
-				&:before {
-					font-family: "entypo";
-					font-weight: normal;
-					font-style: normal;
-					font-size: 24px;
-					color: @brown;
-					text-decoration: inherit;
-					content: '\E75E';
-					float: left;
-					width: 0px;
-					position: relative;
-					left: -12px;
-				}
+
 			}
 
 			span {
@@ -261,20 +259,17 @@
 				clear: both;
 				font-weight: bold;
 				line-height: 20px;
-				padding: 0 10px;
-				padding-left: 20px;
+				padding: 0 7px;
 				white-space: normal;
 				&:hover {
 					text-decoration: none;
+
+					small {
+						text-decoration: none;
+					}
 				}
 
-				&:before {
-					content: '\2713';
-					left: -14px;
-					font-size: 25px;
-					top: 0px;
-					color: @brown;
-				}
+
 			}
 
 			ul {
@@ -291,7 +286,6 @@
 					a {
 
 						padding: 0 10px;
-						padding-left: 20px;
 						white-space: normal;
 
 						img {
