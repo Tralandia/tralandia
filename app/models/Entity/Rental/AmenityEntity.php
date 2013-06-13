@@ -65,8 +65,6 @@ class Amenity extends \Entity\BaseEntityDetails
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**

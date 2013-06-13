@@ -208,7 +208,7 @@ class ImportPresenter extends Presenter {
 			// Rentals
 
 			foreach ($allCountries as $key => $value) {
-				$countPerGroup = 100;
+				$countPerGroup = 20;
 				if ($this->session->developmentMode == TRUE) {
 					$c = 10;
 				}  else {
@@ -224,7 +224,7 @@ class ImportPresenter extends Presenter {
 			$automaticUrls[] = 	$this->link('default', array('importSection' => 'invoice'));
 
 			// Reservations
-			$countPerGroup = 1000;
+			$countPerGroup = 500;
 			if ($this->session->developmentMode == TRUE) {
 				$c = 1;
 			}  else {

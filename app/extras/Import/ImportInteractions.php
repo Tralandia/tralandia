@@ -88,7 +88,12 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userRentalToFriendEntityFactory->create();
-			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);
+			if (isset($this->languagesByOldId[$x['language']])) {
+				$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);
+			} else {
+				$interaction->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+			}
+
 			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
@@ -117,8 +122,17 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userSiteReviewRepositoryAccessor->get()->createNew(FALSE);
-			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
-			$interaction->primaryLocation = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
+			if (isset($this->languagesByOldId[$x['language_id']])) {
+				$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
+			} else {
+				$interaction->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+			}
+
+			if (isset($this->locationsByOldId[$x['country_id']])) {
+				$interaction->primaryLocation = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
+			} else {
+				$interaction->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneByIso('sk');
+			}
 
 			if ($x['from_type'] == 'client') {
 				$t = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['from_email']);
