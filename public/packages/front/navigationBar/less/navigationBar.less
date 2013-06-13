@@ -1,5 +1,6 @@
 
 @import '../../_base/less/lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
 
 #favoritesStaticContainerPlaceholder {
 	height: 231px;
@@ -25,7 +26,8 @@
 		height: 24px;
 		overflow: hidden;
 		background: #fff;
-		.basic-gradient(#526ea8,#334c83);
+		
+		#gradient > .vertical(#526ea8,#334c83);
 		.basic-border-radius(4px 4px 0 0);
 	}
 
