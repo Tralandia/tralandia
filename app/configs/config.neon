@@ -50,7 +50,7 @@ parameters:
 		user: root
 		password: root
 		host: 127.0.0.1
-		dbname: tralandia
+		dbname: tralandia2
 		charset: utf8
 		driver: pdo_mysql
 		debugger: false

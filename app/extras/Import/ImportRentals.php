@@ -18,6 +18,7 @@ class ImportRentals extends BaseImport {
 	protected $rentalPairing = array();
 
 	public function doImport($subsection = NULL) {
+		// Debugger::timer('intro');
 		//\Extras\Models\Service::flush(TRUE);
 
 		$this->loadRentalPairing();
@@ -63,10 +64,18 @@ class ImportRentals extends BaseImport {
 
 		$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
 		$r = q('select * from objects where country_id = '.$countryId.' order by id limit '.$this->presenter->getParameter('limit'));
+		//$r = q('select * from objects where country_id = '.$countryId.' order by id limit 5');
+		//$r = q('select * from objects where id >= 13015 limit 200');
+		// d('intro', Debugger::timer('intro'));
 
 		$updateTimes = array();
 		$rentalIdIncrement = 100;
+		Debugger::timer();
+
+		$i = 0; $batchSize = 20;
 		while ($x = mysql_fetch_array($r)) {
+			d('Next rental: '.$x['id']);
+			// Debugger::timer();
 			$updateTimes[$x['id']] = $x['date_updated'];
 
 			/** @var $rental \Entity\Rental\Rental */
@@ -87,6 +96,7 @@ class ImportRentals extends BaseImport {
 				}
 			}
 			$rental->user = $user;
+			// d('user', Debugger::timer());
 
 			$rental->editLanguage = $context->languageRepositoryAccessor->get()->findOneByOldId($x['edit_language_id']);
 
@@ -95,6 +105,7 @@ class ImportRentals extends BaseImport {
 			if (isset($this->rentalPairing[$oldRentalType])) {
 				$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneBySlug($this->rentalPairing[$oldRentalType]));
 			}
+			// d('type', Debugger::timer());
 
 			// Address
 			$address = $context->contactAddressRepositoryAccessor->get()->createNew(FALSE);
@@ -121,6 +132,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			$rental->address = $address;
+			// d('address', Debugger::timer());
 
 			//$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
@@ -138,6 +150,7 @@ class ImportRentals extends BaseImport {
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
 
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id'], NULL, NULL, $rental->editLanguage);
+			// d('name/teaser', Debugger::timer());
 
 			// Contact Name
 			$rental->contactName = $x['contact_name'];
@@ -152,6 +165,7 @@ class ImportRentals extends BaseImport {
 					}
 				}
 			}
+			// d('phones', Debugger::timer());
 
 			// Contact Email
 			$rental->setEmail($x['contact_email']);
@@ -163,6 +177,7 @@ class ImportRentals extends BaseImport {
 			if (!$rental->url && \Nette\Utils\Validators::isUrl($x['url'])) {
 				$rental->setUrl($x['url']);
 			}
+			// d('email/url', Debugger::timer());
 			// Spoken Languages
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
@@ -171,6 +186,7 @@ class ImportRentals extends BaseImport {
 					if ($t) $rental->addSpokenLanguage($t);
 				}
 			}
+			// d('spoken', Debugger::timer());
 
 			// Amenities
 			$allAmenities = array();
@@ -185,6 +201,7 @@ class ImportRentals extends BaseImport {
 				}
 				$allAmenities[$thisId] = $thisAmenity;
 			}
+			// d('Amenity Intro', Debugger::timer());
 
 			// Activities
 			$temp = array_unique(array_filter(explode(',,', $x['activities'])));
@@ -193,6 +210,7 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities['activity-'.$value])) $rental->addAmenity($allAmenities['activity-'.$value]);
 				}
 			}
+			// d('amenities activities', Debugger::timer());
 
 			// Food
 			$temp = array_unique(array_filter(explode(',,', $x['food'])));
@@ -201,6 +219,7 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities['board-'.$value])) $rental->addAmenity($allAmenities['board-'.$value]);
 				}
 			}
+			// d('amenities food', Debugger::timer());
 
 			// Owner
 			$temp = array_unique(array_filter(explode(',,', $x['owner'])));
@@ -209,6 +228,7 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities['owner-availability-'.$value])) $rental->addAmenity($allAmenities['owner-availability-'.$value]);
 				}
 			}
+			// d('amenities owner', Debugger::timer());
 
 			// Amentities General
 			$temp = array_unique(array_filter(explode(',,', $x['amenities_general'])));
@@ -217,6 +237,7 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
 				}
 			}
+			// d('amenities general', Debugger::timer());
 
 			// Amenities Congress
 			$temp = array_unique(array_filter(explode(',,', $x['amenities_congress'])));
@@ -225,6 +246,7 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities['congress-'.$value])) $rental->addAmenity($allAmenities['congress-'.$value]);
 				}
 			}
+			// d('amenities congress', Debugger::timer());
 
 			// Amenities Wellness
 			$temp = array_unique(array_filter(explode(',,', $x['amenities_wellness'])));
@@ -233,11 +255,13 @@ class ImportRentals extends BaseImport {
 					if (isset($allAmenities['wellness-'.$value])) $rental->addAmenity($allAmenities['wellness-'.$value]);
 				}
 			}
+			// d('amenities wellness', Debugger::timer());
 
 			// Amenities Separate Groups
 			if ($x['separate_groups'] == 1) {
 				$rental->addAmenity($context->rentalAmenityRepositoryAccessor->get()->findOneBySlug('separate-groups-yes'));
 			}
+			// d('amenities separate groups', Debugger::timer());
 
 			// Interview
 			$temp = unserialize(stripslashes($x['interview']));
@@ -271,6 +295,7 @@ class ImportRentals extends BaseImport {
 				}
 
 			}
+			// d('interview', Debugger::timer());
 
 			$rental->checkIn = (int)$x['check_in'];
 
@@ -291,10 +316,12 @@ class ImportRentals extends BaseImport {
 					$rental->price = $t;
 				}
 			}
+			// d('prices', Debugger::timer());
 
 			if (strlen($x['capacity_max'])) {
 				$rental->maxCapacity = $x['capacity_max'];
 			}
+			// d('capacity', Debugger::timer());
 
 			// Pricelist Rows
 			$temp = unserialize(stripslashes($x['prices_simple']));
@@ -339,6 +366,7 @@ class ImportRentals extends BaseImport {
 				}
 			}
 			$model->persist($rental);
+			// d('pricelistrows', Debugger::timer());
 
 
 			// Images
@@ -356,6 +384,7 @@ class ImportRentals extends BaseImport {
 					$imageSort++;
 				}
 			}
+			// d('images', Debugger::timer());
 
 			// Classification
 			if ($x['classification'] > 0 && $x['classification'] != 9 ) {
@@ -377,6 +406,7 @@ class ImportRentals extends BaseImport {
 					$rental->addPricelist($pricelist);
 				}
 			}
+			// d('uploadpricelists', Debugger::timer());
 
 			// Calendar
 			$temp = array_unique(array_filter(explode(',', $x['calendar'])));
@@ -393,20 +423,30 @@ class ImportRentals extends BaseImport {
 			}
 
 			$rental->calendar = $temp;
+			// d('calendar', Debugger::timer());
 
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
 
-			$rentalDecorator = $context->rentalDecoratorFactory->create($rental);
-			$rentalDecorator->calculateRank();
+			//$rentalDecorator = $context->rentalDecoratorFactory->create($rental);
+			//$rentalDecorator->calculateRank();
+			// d('rankCalculation', Debugger::timer());
 			//d($rental->phones);
 			$model->persist($rental);
+			// d('persist', Debugger::timer());
+			// Debugger::timer();
+		 //    if (($i % $batchSize) == 0) {
+		 //        $model->flush();
+			// 	d('flush', Debugger::timer());
+		 //    }
+		 //    $i++;
 		}
 		$model->flush();
+		d('flush', Debugger::timer());
 
 		foreach ($updateTimes as $key => $value) {
-			qNew('update rental set updated = '.date("Y-m-d H:i:s", $value).' where oldId = '.$key);
+			qNew('update rental set updated = "'.date("Y-m-d H:i:s", $value).'" where oldId = '.$key);
 		}
 
 		$this->saveVariables();

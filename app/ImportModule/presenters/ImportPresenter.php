@@ -75,6 +75,13 @@ class ImportPresenter extends Presenter {
 			$this->redirect('Import:default');
 		}
 
+		if (isset($this->params['addIndexes'])) {
+			$r = qNew('show tables');
+			while ($x = mysql_fetch_array($r)) {
+				qNew('ALTER TABLE `'.$x[0].'` DROP INDEX `oldId`;');
+			}
+			$this->redirect('Import:default');
+		}
 
 		if (isset($this->params['toggleDevelopmentMode'])) {
 			$this->session->developmentMode = !$this->session->developmentMode;
@@ -199,8 +206,9 @@ class ImportPresenter extends Presenter {
 			$automaticUrls[] = 	$this->link('default', array('importSection' => 'rentalInformation'));
 
 			// Rentals
+
 			foreach ($allCountries as $key => $value) {
-				$countPerGroup = 10;
+				$countPerGroup = 100;
 				if ($this->session->developmentMode == TRUE) {
 					$c = 10;
 				}  else {
@@ -319,7 +327,12 @@ class ImportPresenter extends Presenter {
 				$this->redirect('Import:default');
 			}
 		}
-		if ($redirect) {
+
+		// d('count', count($_SERVER['timers']));
+		// d('sum', array_sum($_SERVER['timers']));
+		// d('countNew', count($_SERVER['timersNew']));
+		// d('sumNew', array_sum($_SERVER['timersNew']));
+		if (false && $redirect) {
 			$this->redirect('Import:default');
 		}
 	}

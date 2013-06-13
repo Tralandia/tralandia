@@ -22,12 +22,6 @@ class Amenity extends \Entity\BaseEntityDetails
 	protected $type;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="amenities")
-	 */
-	protected $rentals;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
@@ -103,39 +97,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->type;
 	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Amenity
-	 */
-	public function addRental(\Entity\Rental\Rental $rental)
-	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Amenity
-	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rentals->removeElement($rental);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getRentals()
-	{
-		return $this->rentals;
-	}
-		
+				
 	/**
 	 * @return string|NULL
 	 */

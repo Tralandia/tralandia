@@ -99,12 +99,6 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $translationPrice;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
-	 */
-	protected $rentals;
-
 	public function getPluralsNames()
 	{
 		if(isset($this->plurals['names'])) {
@@ -169,7 +163,6 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
 	/**
@@ -479,37 +472,5 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getTranslationPrice()
 	{
 		return $this->translationPrice;
-	}
-
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Language
-	 */
-	public function addRental(\Entity\Rental\Rental $rental)
-	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Language
-	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rentals->removeElement($rental);
-
-		return $this;
-	}
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getRentals()
-	{
-		return $this->rentals;
 	}
 }

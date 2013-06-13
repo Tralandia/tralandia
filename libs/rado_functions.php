@@ -2,7 +2,7 @@
 
 function q($query, $show = 0) {
 	static $link;
-
+	//$start = microtime(true);
 	//d($_SERVER['HTTP_HOST']);
 	if (!$link) {
 		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
@@ -21,6 +21,7 @@ function q($query, $show = 0) {
 
 	if ($show == 1) d($query);
 	if ($r =@mysql_query($query, $link)) {
+		//$_SERVER['timers'][] = microtime(true) - $start;
 		return $r;
 	} else {
 		d($query." ---> mySQL Error: ".mysql_error($link));
@@ -30,6 +31,7 @@ function q($query, $show = 0) {
 
 function qNew($query, $show = 0) {
 	static $link1;
+	//$start = microtime(true);
 
 	if (!$link1) {
 		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
@@ -48,6 +50,7 @@ function qNew($query, $show = 0) {
 
 	if ($show == 1) d($query);
 	if ($r = @mysql_query($query, $link1)) {
+		//$_SERVER['timersNew'][] = microtime(true) - $start;
 		return $r;
 	} else {
 		d($query." ---> mySQL Error: ".mysql_error($link1));

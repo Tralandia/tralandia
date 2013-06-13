@@ -27,12 +27,6 @@ class Placement extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="placements", cascade={"persist"})
-	 */
-	protected $rentals;
-
-	/**
 	 * @param string
 	 * @return \Entity\Rental\AmenityType
 	 */
@@ -50,7 +44,6 @@ class Placement extends \Entity\BaseEntity {
 	{
 		parent::__construct();
 
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -78,37 +71,5 @@ class Placement extends \Entity\BaseEntity {
 	public function getName()
 	{
 		return $this->name;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Placement
-	 */
-	public function addRental(\Entity\Rental\Rental $rental)
-	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Placement
-	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rentals->removeElement($rental);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getRentals()
-	{
-		return $this->rentals;
 	}
 }

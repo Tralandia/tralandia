@@ -67,6 +67,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\JoinTable(name="information_rental",
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id")}
+	 *      )
 	 */
 	protected $missingInformation;
 
@@ -79,6 +83,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Placement", mappedBy="rentals")
+	 * @ORM\JoinTable(name="placement_rental",
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id")}
+	 *      )
 	 */
 	protected $placements;
 
@@ -126,13 +134,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Language")
+	 * @ORM\JoinTable(name="language_rental",
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id")}
+	 *      )
 	 */
 	protected $spokenLanguages;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity")
+	 * @ORM\JoinTable(name="amenity_rental",
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id")}
+	 *      )
 	 */
 	protected $amenities;
 
@@ -883,7 +899,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		if(!$this->missingInformation->contains($missingInformation)) {
 			$this->missingInformation->add($missingInformation);
 		}
-		$missingInformation->addRental($this);
 
 		return $this;
 	}
@@ -895,7 +910,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function removeMissingInformation(\Entity\Rental\Information $missingInformation)
 	{
 		$this->missingInformation->removeElement($missingInformation);
-		$missingInformation->removeRental($this);
 
 		return $this;
 	}
@@ -936,7 +950,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		if(!$this->placements->contains($placement)) {
 			$this->placements->add($placement);
 		}
-		$placement->addRental($this);
 
 		return $this;
 	}
@@ -948,7 +961,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function removePlacement(\Entity\Rental\Placement $placement)
 	{
 		$this->placements->removeElement($placement);
-		$placement->removeRental($this);
 
 		return $this;
 	}
@@ -1131,7 +1143,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		if(!$this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->add($spokenLanguage);
 		}
-		$spokenLanguage->addRental($this);
 
 		return $this;
 	}
@@ -1143,7 +1154,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function removeSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
 		$this->spokenLanguages->removeElement($spokenLanguage);
-		$spokenLanguage->removeRental($this);
 
 		return $this;
 	}
@@ -1162,10 +1172,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function addAmenity(\Entity\Rental\Amenity $amenity)
 	{
+		\Nette\Diagnostics\Debugger::timer();
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
-		$amenity->addRental($this);
 
 		return $this;
 	}
@@ -1177,7 +1187,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function removeAmenity(\Entity\Rental\Amenity $amenity)
 	{
 		$this->amenities->removeElement($amenity);
-		$amenity->removeRental($this);
 
 		return $this;
 	}
