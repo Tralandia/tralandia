@@ -2,28 +2,35 @@
 	{var $currentRental = $rental}
 {/ifset}
 
-{var $hideNavigationBar = (
+{* {var $hideNavigationBar = (
 		!(isset($lastSearchResults) && count($lastSearchResults['rentals']))
 		&& !count($favoriteRentals)
 		&& !count($lastSeenRentals)
+	)} *}
+
+{var $hideNavigationBar = (		
+		!count($favoriteRentals)
 	)
 }
+
+{dump $favoriteRentals}
+
 
 <div id="favoritesStaticContainerPlaceholder" class="hide"></div>
 <div n:class="$hideNavigationBar ? 'hide', span12" data-favorites-link="{link Rental:generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="navigationBar" id="navigationBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navigationBarTabs">
-			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
+{* 			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 			<li n:class="$navigationBarLastActive=='navigationBarSearchResults' ? active" for="navigationBarSearchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
-			{/if}
+			{/if} *}
 			<li n:class="$navigationBarLastActive=='navigationBarFavorites' ? active, !count($favoriteRentals) ? 'hide'" for="navigationBarFavorites">
 				<i class="icon-heart"></i> {_o100035}
 			</li>
-			<li n:class="$navigationBarLastActive=='navigationBarLastSeen' ? active, !count($lastSeenRentals) ? 'hide'" n:ifset="$lastSeenRentals" for="navigationBarLastSeen">
+{* 			<li n:class="$navigationBarLastActive=='navigationBarLastSeen' ? active, !count($lastSeenRentals) ? 'hide'" n:ifset="$lastSeenRentals" for="navigationBarLastSeen">
 				<i class="icon-eye-open"></i> {_o100114}
-			</li>
+			</li> *}
 
 			{* links right *}
 			<li n:class="$navigationBarLastActive!='navigationBarFavorites' ? hide, share, pull-right" for="navigationBarFavorites">
@@ -86,7 +93,7 @@
 				</div>
 
 				{* Last seen objects *}
-				<div n:class="$navigationBarLastActive=='navigationBarLastSeen' ? active, tab-pane" id="navigationBarLastSeen">
+{* 				<div n:class="$navigationBarLastActive=='navigationBarLastSeen' ? active, tab-pane" id="navigationBarLastSeen">
 					{if isset($lastSeenRentals)}
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
@@ -101,10 +108,10 @@
 						</ul>
 					</div>
 					{/if}
-				</div>
+				</div> *}
 
 				{* Last search results *}
-				<div n:class="$navigationBarLastActive=='navigationBarSearchResults' ? active, tab-pane" id="navigationBarSearchResults">
+{* 				<div n:class="$navigationBarLastActive=='navigationBarSearchResults' ? active, tab-pane" id="navigationBarSearchResults">
 					{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
@@ -122,7 +129,7 @@
 						</ul>
 					</div>
 					{/if}
-				</div>
+				</div> *}
 			</div>
 			{* <a class="rightArrow entypo-slider-right"></a> *}
 		</div>

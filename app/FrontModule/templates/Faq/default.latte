@@ -4,12 +4,15 @@
 <div class="faqPage">
 	{foreach $categories as $category}
 	<div class="category">
-		<h2><i class="entypo-arrow-right2"></i> {_$category->name}</h2>			
+		<h2><a href="#" class="toggleHide" data-toggle-hide-for=".questionContent{$category->id}"><i class="entypo-arrow-right2"></i> <span>{_$category->name}</span></a></h2>		
+		{dump $category}
+		<div class="questionContent{$category->id} hide">
 			{foreach $category->questions as $question}
 			<h3>{_$question->question}</h3>
-				<p>{_$question->answer} </p>
-				<a class="loadContactForm" href="mailto:{$projectEmail}">{_o100198}</a>
+				<p>{_$question->answer} </p>				
 			{/foreach}
+			<a class="loadContactForm" href="mailto:{$projectEmail}">{$projectEmail}</a>
+		</div>
 	</div>
 	{/foreach}
 </div>

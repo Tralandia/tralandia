@@ -1,0 +1,44 @@
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.container , .container .row , .container .row .span12 {
+	position: relative;
+}
+
+#topWidget {
+	background-repeat: no-repeat;
+}
+
+#container {
+	margin: 10px auto;	
+	text-align: left;
+	width: 966px;
+	/*overflow: hidden;*/
+
+	/*background:pink \0/IE9;*/
+}
+
+
+#socialMediaLinks {
+	top: 0;
+	right: -23px;
+}
+
+
+
+
+#siteName {
+	line-height: 41px;
+	margin-top: -6px;
+}
+
+#logo {
+	background-image: url("../images/tra-logo-icon.png");
+	width: 103px;
+	height: 100px;
+}

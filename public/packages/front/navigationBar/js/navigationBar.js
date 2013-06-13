@@ -247,6 +247,7 @@
 
 		base.favoritesSync = function()
 		{
+
 			if(!Favorites.checkChanges()){
 				Favorites.updateList();
 				base.checkTabs();
