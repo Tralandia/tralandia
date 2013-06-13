@@ -1,6 +1,6 @@
 
 @import './lessFunctions.less';
-@import '../../bootstrap/lib/less/mixins.less';
+@import '../../../bootstrap/lib/less/mixins.less';
 /****************************************************************************************
 /****************************************************************************************
 /****************************************************************************************
@@ -259,9 +259,11 @@ table.formTable {
 				}
 				div {
 					width: 24px;
+					#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
 					.basic-border-radius(0px);
 					b:before {
-						left: 5px;
+						left: 6px;
+						position: relative;
 					}
 				}
 			}
@@ -271,13 +273,11 @@ table.formTable {
 			}
 			.select2-container {
 
-
 				a {			
-					#gradient > .vertical(rgb(255, 255, 255),rgb(229, 236, 199));
 					border: 1px solid #b0c13b;
 
 					div {
-						#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
+						
 						border-left: 1px solid #b0c13b;
 					}
 				}
