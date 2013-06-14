@@ -3,7 +3,12 @@
 	{control js}
 	{include og.latte}
 {control head:end}
-<body data-locale-code="{$localeCode}">
+
+<!--[if lt IE 7]>      <body data-locale-code="{$localeCode}" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <body data-locale-code="{$localeCode}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <body data-locale-code="{$localeCode}" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <body data-locale-code="{$localeCode}" class="no-js"> <!--<![endif]-->
+
 	<div class="container baseRadius pageContainerRadius" id="container">
 		<div class="row">
 
