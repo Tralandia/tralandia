@@ -155,6 +155,8 @@ parameters:
 					- front/contact/less/contact.less
 					# ticket
 					- front/ticket/less/ticket.less
+					# ie optimalizacia
+					- front/_base/less/ie.less
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
