@@ -327,8 +327,8 @@ ul.arrows {
 
 }
 
-.btn.btn-greenDark {
-	.basic-gradient(#A7BA24,#4C6505);
+.btn.btn-greenDark {	
+	#gradient > .vertical(#A7BA24,#4C6505);
 	border: 1px solid #4C6505;
 	color: @white;
 	padding: 5px 15px;
@@ -336,30 +336,34 @@ ul.arrows {
 	font-size: 14px;
 	margin-top: 5px;
 
-	&:hover , &.active {
-		.basic-gradient(#B8CC2D,#5D7A0A);
+	&:hover , &.active {		
+		#gradient > .vertical(#B8CC2D,#5D7A0A);
 		background-position: 0;
 	}
 
 }
 
 .btn.btn-silver {
-	.basic-gradient(#e8e8e8,#adadad);
+	
+	#gradient > .vertical(#e8e8e8,#adadad);
 	border: 1px solid #adadad;
 	color: #333;
-	&:hover {
-		.basic-gradient(#adadad,#e8e8e8);
+	&:hover {		
+		#gradient > .vertical(#adadad,#e8e8e8);
 		background-position: 0;
 	}
 }
 
 .btn.btn-cancel {
-	.basic-gradient(rgb(255, 255, 255),rgb(230, 230, 230));
+	
+
+	#gradient > .vertical(rgb(255, 255, 255),rgb(230, 230, 230));
 	border: 1px solid rgb(206, 206, 206);
 	color: rgb(114, 114, 114);
 	padding: 2px 10px;
 	&:hover {
-		.basic-gradient(rgb(230, 230, 230),rgb(255, 255, 255));
+		
+		#gradient > .vertical(rgb(230, 230, 230),rgb(255, 255, 255));
 		background-position: 0;
 	}
 }
@@ -371,14 +375,15 @@ ul.arrows {
 
 	.yellow-gradient {
 		text-shadow: -1px -1px 0px #f68703;
-		border-top: 1px solid #f68703;
-		.basic-gradient(#fdbe33,#f68703);
+		border-top: 1px solid #f68703;		
+		#gradient > .vertical(#fdbe33,#f68703);
 	}
 
 	.yellow-gradient .btn {
 		border: 1px solid #f68703;
 		color: #c87009;
-		.basic-gradient(#fff,#ffe4ab);
+		
+		#gradient > .vertical(#fff,#ffe4ab);
 		.basic-shadow(18px , #ffe4ab);
 
 		&:hover {
@@ -433,9 +438,7 @@ ul.arrows {
 
 	.inner {
 		border: 1px solid @white;
-		-webkit-border-radius: 7px;
-		-moz-border-radius: 7px;
-		border-radius: 7px;
+		.border-radius(7px);
 	}
 }
 
@@ -472,7 +475,8 @@ ul.arrows {
 
 
 .gadientGreen {
-	.basic-gradient( @lightGreen , @darkGreen );
+	
+	#gradient > .vertical( @lightGreen , @darkGreen );
 	color: @white;
 }
 
@@ -759,12 +763,14 @@ ul.arrows {
 
 .btn-red {
 	border: 1px solid @btnRedBorderColor;
-	.basic-gradient(@btnRedGradientStartColor,@btnRedGradientStopColor);
+	
+	#gradient > .vertical(@btnRedGradientStartColor,@btnRedGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnRedGradientStopColor;
 	&:hover {
 		color: #fff;
-		.basic-gradient(@btnRedGradientStopColor,@btnRedGradientStartColor);
+		
+		#gradient > .vertical(@btnRedGradientStopColor,@btnRedGradientStartColor);
 	}
 }
 
