@@ -1,4 +1,5 @@
 @import '../../_base/less/lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
 
 
 
@@ -88,44 +89,45 @@ div#tabs-1 div.row-fluid.rentalList {
 		position: relative;
 		top: 0px;
 
-		.basic-gradient(#FEFEFE,#D9DFEB);
+		
+		#gradient > .vertical(#FEFEFE,#D9DFEB);
 
 		span:before {
 			font-size: 22px;
 		}
 
-		&:hover {
-			.basic-gradient(#FEFEFE,#D9DFEB);
+		i {
+			margin-top: -1px;
+			&:before {
+				font-size: 10px;
+			}
+		}
+
+		&:hover {			
+			#gradient > .vertical(#FEFEFE,#D9DFEB);
 			background-position: 0;
 		}
 
 		&.active {
+			color: #444;
+			border: 1px solid rgb(147, 172, 218);
 
-
-	color: #444;
-	border: 1px solid rgb(147, 172, 218);
-
-			[class*="entypo-"]:before {
-				color: #444;
-			}
-
-			&:hover  {	
-				.basic-gradient(#D9DFEB,#FEFEFE);
+			&:hover  {					
+				#gradient > .vertical(#D9DFEB,#FEFEFE);
 			}
 
 			&.selected {
 
 				color: #fff;
-				border: 1px solid #27407e;
-				.basic-gradient(#5b78af,#27407e);
+				border: 1px solid #27407e;				
+				#gradient > .vertical(#5b78af,#27407e);
 
-				span.entypo-heart:before {
-					
+				span.entypo-heart:before {					
 					color: #f68905;
 				}
 
-				&:hover {
-					.basic-gradient(#27407e,#5b78af);
+				&:hover {					
+					#gradient > .vertical(#27407e,#5b78af);
 				}
 
 			}
@@ -149,8 +151,8 @@ div#tabs-1 div.row-fluid.rentalList {
 			width: 245px;
 			height: 145px;
 			z-index: 1;
-
-			.basic-border-radius(5px);
+			
+			.border-radius(5px);
 			&.ownerImage {
 				top: 0;
 			}
@@ -166,7 +168,7 @@ div#tabs-1 div.row-fluid.rentalList {
 		padding: 0 5px;
 		background: #fff;
 		font-size: 11px;
-			.basic-border-radius(5px);
+			.border-radius(5px);
 		p {
 			font-size: 11px;			
 		}
