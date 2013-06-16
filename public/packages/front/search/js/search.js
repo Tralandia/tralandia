@@ -259,7 +259,7 @@ function searchCriteriumSetActive(select){
 
 	if(!$(select).hasClass('selectRedirect')){
 		if ($(select).parent().find('.btnSearchClose').length == 0){
-			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="entypo-no"></i></a>');
+			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="icon-remove"></i></a>');
 		}
 	}		
 }
