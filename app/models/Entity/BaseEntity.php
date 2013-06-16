@@ -9,6 +9,7 @@ use Nette\Utils\Strings;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
+ * @ORM\Table(indexes={@ORM\index(name="oldId", columns={"oldId"})})
  * @ORM\HasLifecycleCallbacks
  */
 class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security\IResource {

@@ -56,7 +56,11 @@ class Address extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="addresses")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location")
+	 * @ORM\JoinTable(name="location_address",
+	 *      joinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id")}
+	 *      )
 	 */
 	protected $locations;
 
@@ -333,7 +337,6 @@ class Address extends \Entity\BaseEntity {
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
-		$location->addAddress($this);
 
 		return $this;
 	}
@@ -345,7 +348,6 @@ class Address extends \Entity\BaseEntity {
 	public function removeLocation(\Entity\Location\Location $location)
 	{
 		$this->locations->removeElement($location);
-		$location->removeAddress($this);
 
 		return $this;
 	}
