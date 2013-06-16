@@ -66,7 +66,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Information", cascade={"persist"})
 	 * @ORM\JoinTable(name="information_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id")}
@@ -82,7 +82,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Placement", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Placement")
 	 * @ORM\JoinTable(name="placement_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id")}
@@ -687,7 +687,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function hasPlacement()
 	{
-		return count($this->placements) ? TRUE : FALSE;
+		return $this->placements->count() ? TRUE : FALSE;
 	}
 
 	/**

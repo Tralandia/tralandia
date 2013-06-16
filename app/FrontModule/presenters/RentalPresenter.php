@@ -131,6 +131,8 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 
+		$p = $rental->getPlacement();
+
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
