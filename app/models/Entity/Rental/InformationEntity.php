@@ -32,13 +32,6 @@ class Information extends \Entity\BaseEntityDetails
 	 */
 	protected $compulsory = FALSE;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="missingInformation")
-	 */
-	protected $rentals;
-
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -46,7 +39,6 @@ class Information extends \Entity\BaseEntityDetails
 	{
 		parent::__construct();
 
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -106,35 +98,4 @@ class Information extends \Entity\BaseEntityDetails
 		return $this->compulsory;
 	}
 		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Information
-	 */
-	public function addRental(\Entity\Rental\Rental $rental)
-	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Information
-	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rentals->removeElement($rental);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getRentals()
-	{
-		return $this->rentals;
-	}
 }

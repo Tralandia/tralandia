@@ -82,12 +82,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $domain;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Address", inversedBy="locations")
-	 */
-	protected $addresses;
-
 	/* ----------------------------- attributes from country ----------------------------- */
 
 	/**
@@ -144,7 +138,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Contact\Address
+	 * @return \Entity\Location\Location
 	 */
 	public function setGps(\Extras\Types\Latlong $latlong)
 	{
@@ -210,20 +204,6 @@ class Location extends \Entity\BaseEntityDetails {
 		return $this;
 	}
 
-	/**
-	 * @param NULL
-	 * @return \Entity\Location\Location
-	 */
-	public function clearAddresses()
-	{
-		foreach ($this->addresses as $key => $value) {
-			$value->removeLocation($this);
-		}
-		$this->addresses->clear();
-
-		return $this;
-	}
-
 	public function getFlagName()
 	{
 		$parentIso = $this->getParent()->getIso();
@@ -256,7 +236,6 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -490,39 +469,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->domain;
 	}
-		
-	/**
-	 * @param \Entity\Contact\Address
-	 * @return \Entity\Location\Location
-	 */
-	public function addAddress(\Entity\Contact\Address $address)
-	{
-		if(!$this->addresses->contains($address)) {
-			$this->addresses->add($address);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Address
-	 * @return \Entity\Location\Location
-	 */
-	public function removeAddress(\Entity\Contact\Address $address)
-	{
-		$this->addresses->removeElement($address);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Address[]
-	 */
-	public function getAddresses()
-	{
-		return $this->addresses;
-	}
-		
+				
 	/**
 	 * @param string
 	 * @return \Entity\Location\Location

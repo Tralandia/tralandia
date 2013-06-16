@@ -103,8 +103,6 @@ class PolygonService {
 			\Entity\Rental\Rental::STATUS_LIVE
 		);
 
-		$location->clearAddresses();
-
 		// This is only done for regions, not localities or countries
 		// Return false if no latitude, longitude or missing polygons
 		if ($location->type != $locationType || !$location->polygons) {
