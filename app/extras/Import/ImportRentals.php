@@ -394,7 +394,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Pricelists
-			$temp = unserialize(stripslashes($x['prices_upload']));
+			$temp = @unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (!file_exists('http://www.tralandia.sk/u/'.$value[4])) continue;
