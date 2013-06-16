@@ -2,7 +2,7 @@
 {$jsVariables->for('form.' . $searchFormClass)}
 
 <div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="sidebar">
-<aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
+<div class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 
 	{cache $searchBarCacheOptions['key'],
 		if => $searchBarCacheOptions['enabled'],
@@ -91,5 +91,5 @@
 		{/if}
 
 	{/cache}
-	</aside>
+	</div>
 </div>
