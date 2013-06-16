@@ -260,3 +260,28 @@ z_yo
 z_za
 z_zh
 z_zu
+
+
+
+
+
+# crontab - tralandia.com
+# minuta	hodina	den v měsíci	měsíc	den v týdnu	adresa stránky	
+5	8	*	*	*	http://www.tralandia.com/live/cron/rank_suggestions.php?yesterday=1	upravit	odstranit
+0	11	*	*	*	http://www.tralandia.com/live/cron/invoice_reminder.php	upravit	odstranit
+10	0	*	*	*	http://www.tralandia.com/live/cron/create_fulltext.php	upravit	odstranit
+*/5	*	*	*	*	http://www.tralandia.com/live/cron/ticket_fetcher.php	upravit	odstranit
+0	1	10	*	*	http://www.tralandia.com/live/cron/update_seo_urls_priority.php	upravit	odstranit
+0	7	*	*	Út	http://www.tralandia.com/live/ajax/ppc_export.php?updateUrlsAttractions=1	upravit	odstranit
+5	7	2	*	*	http://www.tralandia.com/live/ajax/ppc_export.php?updateUrlsObjects=1	upravit	odstranit
+0	0	*	*	*	http://www.tralandia.com/live/cron/currencies_load.php	upravit	odstranit
+0	10	*	*	*	http://www.tralandia.com/live/cron/survey_48h_after_checked.php	upravit	odstranit
+55	*	*	*	*	http://www.tralandia.com/live/cron/update_objects_search.php	upravit	odstranit
+20	2	1	*	*	http://www.tralandia.com/live/cron/cron.php	upravit	odstranit
+*/15	16	*	*	*	http://www.tralandia.com/live/cron/object_notifications.php?batch=1	upravit	odstranit
+*/10	17	*	*	*	http://www.tralandia.com/live/cron/object_notifications.php?batch=2	upravit	odstranit
+*/10	18	*	*	*	http://www.tralandia.com/live/cron/object_notifications.php?batch=2	upravit	odstranit
+30	0	*	*	*	http://www.tralandia.com/live/cron/delete_telmark_cache.php	upravit	odstranit
+*/5	3	*	*	*	http://www.tralandia.com/live/cron/object_notifications.php?batch=3	upravit	odstranit
+*/5	4	*	*	*	http://www.tralandia.com/live/cron/object_notifications.php?batch=3	upravit	odstranit
+0	9	*	*	Út	http://www.tralandia.com/live/cron/rank_suggestions.php?all=1	upravit	odstranit
