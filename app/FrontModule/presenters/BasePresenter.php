@@ -249,7 +249,8 @@ abstract class BasePresenter extends \BasePresenter {
 		$shareLink = $this->generateFavoriteLink();
 		if($shareLink) {
 			$shareText = '#favorites';
-			$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+			//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+			$shareImage = '';
 			$shareLinks = $this->shareLinks;
 			$json['twitterShare'] = (string) $shareLinks->getTwitterShareTag($shareLink, $shareText);
 			$json['googlePlusShare'] = (string) $shareLinks->getGooglePlusShareTag($shareLink);

@@ -545,6 +545,8 @@ abstract class BasePresenter extends Presenter {
 	public function actionSetTester($id)
 	{
 		$this->testerOptions->setEmail($id);
+		$this->flashMessage('Tester set to: ' . $id);
+		$this->redirect(':Front:Home:');
 	}
 
 }
