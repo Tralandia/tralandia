@@ -5,10 +5,10 @@ function q($query, $show = 0) {
 	//$start = microtime(true);
 	//d($_SERVER['HTTP_HOST']);
 	if (!$link) {
-		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
-			$link = mysql_connect('127.0.0.1', 'tralandia_old', '0987267789372');		
-		} else {
+		if (strpos($_SERVER['HTTP_HOST'], 'tra.com') !== FALSE) {
 			$link = mysql_connect('127.0.0.1', 'root', 'root');		
+		} else {
+			$link = mysql_connect('127.0.0.1', 'tralandia_old', '0987267789372');		
 		}
 		q("SET NAMES utf8");
 		q("SET character_set_client = utf8;");
@@ -34,10 +34,10 @@ function qNew($query, $show = 0) {
 	//$start = microtime(true);
 
 	if (!$link1) {
-		if (strpos($_SERVER['HTTP_HOST'], 'tralandia.org') !== FALSE) {
-			$link1 = mysql_connect('127.0.0.1', 'tralandia', '986269962525');
-		} else {
+		if (strpos($_SERVER['HTTP_HOST'], 'tra.com') !== FALSE) {
 			$link1 = mysql_connect('127.0.0.1', 'root', 'root');		
+		} else {
+			$link1 = mysql_connect('127.0.0.1', 'tralandia', '986269962525');
 		}
 		qNew("SET NAMES utf8");
 		qNew("SET character_set_client = utf8;");
