@@ -96,7 +96,7 @@ class FrontRoute extends BaseRoute
 		$this->device = $device;
 		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
 		//$mask = '//[!<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>/][<hash .*>]';
-		$mask = '//[! ' . $domainMask . '/][<hash .*>]';
+		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
 	}
