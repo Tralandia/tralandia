@@ -49,6 +49,13 @@ common:
 					label: Localities
 					link: ':Admin:Locality:list'
 
+		cache:
+			label: Cache
+			items:
+				dashboard:
+					label: Dashboard
+					link: ':Admin:Cache:dashboard'
+
 #		email:
 #			label: Email
 #			items:
