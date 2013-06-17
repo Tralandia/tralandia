@@ -34,7 +34,7 @@ parameters:
 	envOptions:
 		sendEmail: TRUE
 
-	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%"
+	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%%domain%%"
 
 	projectEmail: 'info@tralandia.com'
 
