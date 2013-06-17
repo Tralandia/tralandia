@@ -16,13 +16,19 @@ class EmailerMailer implements Nette\Mail\IMailer {
 	 */
 	private $tester;
 
+	/**
+	 * @var Entity\Location\Location
+	 */
+	private $primaryLocation;
+
 
 	/**
 	 * @param \Tester\ITester $tester
 	 */
-	public function __construct(\Tester\ITester $tester)
+	public function __construct(\Entity\Location\Location $primaryLocation, \Tester\ITester $tester)
 	{
 		$this->tester = $tester;
+		$this->primaryLocation = $primaryLocation;
 	}
 
 
@@ -50,7 +56,9 @@ class EmailerMailer implements Nette\Mail\IMailer {
 		$fromKeys = array_keys($from);
 		$fromEmail = array_shift($fromKeys);
 		$fromName = reset($from);
-		$params['from_email'] = $fromEmail;
+
+		$domain = $this->primaryLocation->getFirstDomain();
+		$params['from_email'] = 'info@' . $domain->getDomain();
 		$params['from_name'] = $fromName;
 
 		$testerEmail = $this->getTesterEmail();
