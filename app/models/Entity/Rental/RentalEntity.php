@@ -72,7 +72,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Information", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Information", cascade={"persist"})
 	 * @ORM\JoinTable(name="information_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id")}
@@ -88,7 +88,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Placement")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Placement")
 	 * @ORM\JoinTable(name="placement_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id")}
