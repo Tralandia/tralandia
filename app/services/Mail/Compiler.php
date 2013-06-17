@@ -321,6 +321,18 @@ class Compiler {
 		return $html;
 	}
 
+	public function compileSubject()
+	{
+		$template = $this->getTemplate();
+		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
+		$environmentVariables = $this->getEnvironment();
+		$subjectHtml = $template->getSubject()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
+		$variables = $this->findAllVariables($subjectHtml);
+		$html = $this->replaceVariables($subjectHtml, $variables);
+
+		return $html;
+	}
+
 	/**
 	 * @param \Entity\Email\Layout $layout
 	 * @param \Entity\Email\Template $template
