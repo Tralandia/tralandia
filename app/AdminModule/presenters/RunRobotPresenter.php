@@ -59,7 +59,9 @@ class RunRobotPresenter extends BasePresenter {
 	}
 
 	public function actionRecalculateRanks() {
-		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('rank' => NULL), null, 50);
+		//$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('rank' => NULL), null, 50);
+		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('status' => 0), null, 50);
+
 		$i = 0;
 		foreach ($rentals as $rental) {
 			$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
