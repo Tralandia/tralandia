@@ -64,14 +64,13 @@
 						{if $teaser || $firstAnswer}
 						<table class="teaser">
 							{if $teaser}
-							<tr>
-								<td class="icon">&#128227;</td>
+							<tr>								
 								<td class="content">{$teaser}</td>
 							</tr>
 							{/if}
 							{if $firstAnswer}
 							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'" colspan="2">{$firstAnswer|firstUpper}</td>
+								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper}</td>
 							</tr>
 							{/if}
 						</table>
