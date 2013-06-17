@@ -763,7 +763,7 @@ $(function(){
 							} else {
 
 								$(this).attr({
-									class: 'ui-state-default',
+									'class': 'ui-state-default',
 									'data-id': data.result[0].id
 								}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
 
