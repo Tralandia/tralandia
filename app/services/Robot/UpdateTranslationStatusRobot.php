@@ -74,7 +74,9 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 
 	public function run()
 	{
+		d($this);
 		$paginator = $this->getPaginator();
+		d($paginator);
 		$qb = $this->phraseRepository->findTranslatedQb();
 		$qb->setFirstResult($paginator->getOffset())
 			->setMaxResults($paginator->getItemsPerPage());
