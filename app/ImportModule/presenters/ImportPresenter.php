@@ -263,6 +263,12 @@ class ImportPresenter extends Presenter {
 
 			$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations'));
 
+			// Update Rental Locations
+			foreach ($allCountries as $key => $value) {
+				$automaticUrls[] = $this->link('default', array('importSection' => 'updateRentalLocations', 'countryIso' => $value));
+			}
+
+
 			qNew('truncate table __importUrls');
 			foreach ($automaticUrls as $key => $value) {
 				qNew('insert into __importUrls set url = "'.$value.'"');
