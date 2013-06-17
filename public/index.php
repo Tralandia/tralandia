@@ -1,5 +1,20 @@
 <?php
-// ini_set('display_errors', '1'); error_reporting(E_ALL);
+//ini_set('display_errors', '1'); error_reporting(E_ALL);
+
+
+if(array_key_exists('tester', $_GET) && $_GET['tester'] == 1) {
+	$host = explode('.', $_SERVER['HTTP_HOST']);
+	$host = array_slice($host, '-2');
+	setcookie("tester", 1);
+	header("Location: " . $_SERVER['REDIRECT_URL']);
+	die();
+}
+
+if(!array_key_exists('tester', $_COOKIE) || !$_COOKIE['tester']) {
+	require __DIR__ . '/landingPage/index.html';
+	exit;
+}
+
 
 // the identification of this site
 define('SITE', '');
