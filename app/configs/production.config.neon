@@ -17,6 +17,7 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
+	domainMask: "<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>"
 	staticDomain: "http://tralandiastatic.com"
 	storageDir: /../../static
 

@@ -35,7 +35,10 @@ class RouterFactory
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, ISimpleRouteFactory $simpleRouteFactory,
+	private $domainMask;
+
+
+	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
 								IBaseRouteFactory $baseRouteFactory,
 								IFrontRouteFactory $frontRouteFactory,
 								IOwnerRouteListFactory $ownerRouteListFactory)
@@ -46,6 +49,7 @@ class RouterFactory
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->ownerRouteListFactory = $ownerRouteListFactory;
+		$this->domainMask = $domainMask;
 	}
 
 	/**
@@ -59,7 +63,7 @@ class RouterFactory
 		$router = new RouteList();
 
 
-		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
+		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'www',
