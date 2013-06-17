@@ -61,6 +61,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Admin:Region';
 		$resources[] = 'Admin:Locality';
 		$resources[] = 'Admin:Domain';
+		$resources[] = 'Admin:Cache';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 
