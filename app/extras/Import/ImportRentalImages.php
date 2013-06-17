@@ -79,7 +79,7 @@ class ImportRentalImages extends BaseImport {
 			qNew('update __importImages set status = "processing" where id = '.$x['id']);
 
 			try {
-				$imageEntity = $context->rentalImageManager->saveFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
+				$imageEntity = $context->rentalImageManager->saveFromFile('http://do1815200.ipp.domains.sk/u/'.$x['oldPath']);
 				$path = $imageEntity->getFilePath();
 				echo($path.'<br>');
 				qNew('update __importImages set status = "imported", newPath = "'.$path.'" where id = '.$x['id']);
