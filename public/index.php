@@ -2,11 +2,9 @@
 //ini_set('display_errors', '1'); error_reporting(E_ALL);
 
 
-if(array_key_exists('tester', $_GET) && $_GET['tester'] == 1) {
-	$host = explode('.', $_SERVER['HTTP_HOST']);
-	$host = array_slice($host, '-2');
-	setcookie("tester", 1);
-	header("Location: " . $_SERVER['REDIRECT_URL']);
+if(array_key_exists('tester', $_GET)) {
+	setcookie("tester", (int)$_GET['tester']);
+	header("Location: /");
 	die();
 }
 

@@ -35,8 +35,11 @@ class RunRobotPresenter extends BasePresenter {
 	 * @var \Model\Rental\IRentalDecoratorFactory
 	 */
 	protected $rentalDecoratorFactory;
+	
+	protected $rentalRepositoryAccessor;
 
 	public function inject(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 	}
@@ -56,13 +59,23 @@ class RunRobotPresenter extends BasePresenter {
 	}
 
 	public function actionRecalculateRanks() {
-		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
+		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('rank' => NULL), null, 50);
+		$i = 0;
 		foreach ($rentals as $rental) {
 			$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
 			$rentalDecorator->calculateRank();
+			// $i++;
+			// if (($i % 50) == 0) {
+			// 	$this->rentalRepositoryAccessor->get()->flush();
+			// 	$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('rank' => NULL), null, 50);
+			// 	$i=0;
+			// }
 		}
 		$this->rentalRepositoryAccessor->get()->flush();
-		$this->sendResponse(new TextResponse('done'));
+		$script = '<br>Working...';
+		$script .= '<script>document.location.href="/admin/run-robot/recalculate-ranks"</script>';
+		$this->sendResponse(new \Nette\Application\Responses\TextResponse($script));
+		// $this->sendResponse(new TextResponse('done'));
 	}
 
 	public function actionUpdateTranslationStatus($iteration = 1)
