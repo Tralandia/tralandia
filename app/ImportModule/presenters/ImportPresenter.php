@@ -120,7 +120,7 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['pairImages'])) {
-			$allRentals = qNew('select id, oldId from rental order by id limit 50');
+			$allRentals = qNew('select id, oldId from rental order by id limit '.(int)$this->presenter->getParameter('limit'));
 			$count = 0;
 
 			while ($rentalRow = mysql_fetch_array($allRentals)) {
