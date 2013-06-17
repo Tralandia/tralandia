@@ -49,7 +49,7 @@
 										<div class="position">TOP</div>
 
 										{if $mainImage = $rental->getMainImage()}
-											<img n:image="$mainImage"/>
+											<img alt="{_$rental->name}" n:image="$mainImage"/>
 										{/if}
 
 									</a>
@@ -57,7 +57,7 @@
 								<div class="span8">
 									<h2>
 										<a href="{link Rental:detail $rental}" title="{_$rental->name}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}
-										<i class="entypo-star"></i>{/for}{/if}</span></h2>
+										<i class="entypo-star"></i>{/for}</span>{/if}</h2>
 
 										{* {if $mainImage = $rental->getMainImage()} *}
 										{if 1}
@@ -97,7 +97,7 @@
 										<table class="holder">
 											<tbody>
 											<tr>
-												<td width="90%">
+												<td class="rentalShortInfo">
 													<b>{_o100041} {$rental->price}</b> {_o100004},
 													<b>{_o924}</b> {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} {if $rental->bedroomCount > 0}({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 
