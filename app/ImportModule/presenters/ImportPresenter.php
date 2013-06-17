@@ -137,7 +137,7 @@ class ImportPresenter extends Presenter {
 				if (is_array($temp) && count($temp)) {
 					$imageSort = 0;
 					foreach ($temp as $key2 => $value) {
-						$img = $oldPhotos[$value];
+						$img = @$oldPhotos[$value];
 						if (!$img) continue;
 						qNew('update rental_image set rental_id = '.$rentalRow['id'].', sort = '.$imageSort.' where filePath = "'.$img['newPath'].'"');
 						$imageSort++;
