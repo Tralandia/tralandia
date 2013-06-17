@@ -67,7 +67,8 @@ class ImportRentalImages extends BaseImport {
 		
 		$endBy = microtime(true) + 50;
 
-		$r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' limit 100');
+		// $r = qNew('select * from __importImages where status = "toImport" and processId = '.$this->presenter->getParameter('p').' limit 100');
+		$r = qNew('select * from __importImages where status = "toImport" limit 100');
 		$i = 0;
 		while(microtime(true) < $endBy) {
 			$x = mysql_fetch_array($r);
@@ -76,6 +77,7 @@ class ImportRentalImages extends BaseImport {
 				echo('nothing to process');
 				break;
 			}
+			exit('http://do1815200.ipp.domains.sk/u/'.$x['oldPath']);
 			qNew('update __importImages set status = "processing" where id = '.$x['id']);
 
 			try {
