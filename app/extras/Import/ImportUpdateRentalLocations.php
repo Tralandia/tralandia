@@ -14,12 +14,13 @@ class ImportUpdateRentalLocations extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$regions = $this->context->locationRepositoryAccessor->get()->findRegionsHavingPolygons();
+		$country = $this->context->locationRepositoryAccessor->get()->findOneByIso($this->presenter->getParameter('countryIso'));
+		$regions = $this->context->locationRepositoryAccessor->get()->findRegionsHavingPolygons($country);
+		// d(count($regions)); exit;
 		foreach ($regions as $key => $region) {
 			$this->context->polygonService->setRentalsForLocation($region);
 		}
-		$this->model->flush();
-
+	$this->model->flush();
 	}
 
 }
