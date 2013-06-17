@@ -3,7 +3,8 @@ php:
 
 nette:
 	session:
-		cookie_domain: '.tralandia.org'
+		cookie_path: '/'
+		cookie_domain: NULL
 
 
 parameters:
