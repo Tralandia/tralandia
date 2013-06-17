@@ -34,6 +34,8 @@ parameters:
 	envOptions:
 		sendEmail: TRUE
 
+	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%"
+
 	projectEmail: 'info@tralandia.com'
 
 	staticDomain: "http://tralandiastatic.com"
@@ -166,7 +168,7 @@ services:
 
 	# ROUTER
 	routerFactory:
-		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
+		class: Routers\RouterFactory(%domainMask%, [defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -428,7 +430,7 @@ factories:
 
 	frontRouteFactory:
 		class: Routers\FrontRoute
-		arguments: [ @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]
+		arguments: [ %domainMask%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -443,7 +445,7 @@ factories:
 			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
-			- setCache(@frontRouteCache)
+#			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
 
