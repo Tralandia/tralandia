@@ -327,7 +327,7 @@ class LocationRepository extends \Repository\BaseRepository {
 				$qb->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $country);
 			}
 			
-			$qb->setMaxResults(5);
+			//$qb->setMaxResults(100);
 
 		return $qb->getQuery()->getResult();
 	}
