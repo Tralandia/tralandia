@@ -19,6 +19,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 		$emailCompiler = $this->prepareCompiler($reservation);
 		$body = $emailCompiler->compileBody();
 
+		$message->setSubject($emailCompiler->compileSubject());
 		$message->setHtmlBody($body);
 		$message->setFrom($reservation->getSenderEmail(), $reservation->getSenderName());
 		$message->addTo($reservation->getRental()->getOwner()->getLogin());
