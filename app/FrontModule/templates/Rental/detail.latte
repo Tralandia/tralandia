@@ -377,7 +377,8 @@
 
 									<ul class="bigGallery">
 										{foreach $rental->getSortedImages() as $photo}
-										<li>
+										<li n:class="$iterator->odd ? odd">										
+										
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{$pinterestShare($rental, $photo)}
 										</li>

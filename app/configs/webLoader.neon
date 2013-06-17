@@ -102,7 +102,12 @@ parameters:
 					- fontAwesome/lib/less/font-awesome.less
 			icoMoon:
 				css:
-					- icoMoon/custom/icoMoon.less					
+					- icoMoon/custom/icoMoon.less
+
+			jqueryPlacehoder:
+				js:
+					- jqueryPlaceholder/lib/jquery.placeholder.min.js
+					- jqueryPlaceholder/custom/js/jqueryPlaceholderInit.js
 
 			calendarIframe:
 				css:
@@ -282,6 +287,7 @@ parameters:
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
+				-  %webloader.packages.jqueryPlacehoder%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -301,6 +307,7 @@ parameters:
 				-  %webloader.packages.Front%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
+				-  %webloader.packages.jqueryPlacehoder%
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -319,6 +326,7 @@ parameters:
 				-  %webloader.packages.navigationBarScroll%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
+				-  %webloader.packages.jqueryPlacehoder%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -337,5 +345,5 @@ parameters:
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.socialite%
-
+				-  %webloader.packages.jqueryPlacehoder%
 
