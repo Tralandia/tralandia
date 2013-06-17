@@ -21,7 +21,8 @@ $configurator->addParameters([
 	'centralLanguage' => CENTRAL_LANGUAGE,
 ]);
 
-$configurator->setDebugMode(true);
+
+// $configurator->setDebugMode(FALSE);
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)

@@ -56,8 +56,8 @@
 								</div>
 								<div class="span8">
 									<h2>
-										<a href="{link Rental:detail $rental}" title="{_$rental->name}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}
-										<span class="classification"><i class="entypo-star"></i>{/for}{/if}</span></h2>
+										<a href="{link Rental:detail $rental}" title="{_$rental->name}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}
+										<i class="entypo-star"></i>{/for}{/if}</span></h2>
 
 										{* {if $mainImage = $rental->getMainImage()} *}
 										{if 1}
@@ -93,7 +93,7 @@
 									</p>
 
 
-									<div class="panel baseBorder ">
+									<div class="panel baseBorder">
 										<table class="holder">
 											<tbody>
 											<tr>
