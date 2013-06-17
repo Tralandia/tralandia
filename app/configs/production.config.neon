@@ -26,4 +26,4 @@ parameters:
 	webTempPath: /webtemp
 
 services:
-	nette.mailer: EmailerMailer
+	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
