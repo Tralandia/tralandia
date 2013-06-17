@@ -33,6 +33,10 @@
 
 .lt-ie9 { /* IE8 &< */
 
+	.navigationBar #scrollInnerContent li {
+		background-size: cover;
+		-ms-behavior: url(@{filePath}/backgroundSizePolyfill/backgroundsize.min.htc);
+	}
 
 	a, 
 	a:hover, 
@@ -44,7 +48,7 @@
 
 	/* homepage rental list transparent label */
 	.hp-list li.span4 .label {		
-		background: url(@{filePath}/img/black-transparent.png) repeat;
+		background: url(@{filePath}/front/_base/img/black-transparent.png) repeat;
 	}
 
 	/* png logo */
@@ -54,7 +58,7 @@
 
 	/* social shit header background */
 	.socialIcons {
-		background: url(@{filePath}/img/black-transparent.png) repeat;
+		background: url(@{filePath}/front/_base/img/black-transparent.png) repeat;
 	}
 
 	/* rental detail gallery */
