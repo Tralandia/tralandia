@@ -19,9 +19,7 @@ class ImportUpdateTranslationStatus extends BaseImport {
 
 		//$this->terminate();
 
-		if($robot->needToRun()) {
-			$robot->run();
-		}
+		$robot->run();
 	}
 
 }
