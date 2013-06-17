@@ -120,7 +120,7 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['pairImages'])) {
-			$allRentals = qNew('select id, oldId from rental order by id');
+			$allRentals = qNew('select id, oldId from rental order by id limit 50');
 
 			while ($rentalRow = mysql_fetch_array($allRentals)) {
 				$x = mysql_fetch_array(q('select id, photos from objects where id = '.$rentalRow['oldId']));
