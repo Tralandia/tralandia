@@ -68,6 +68,10 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 
 	public function needToRun()
 	{
+		d($this);
+		$paginator = $this->getPaginator();
+		d($paginator);
+
 		return $this->getNextIteration() <= $this->getIterationCount();
 	}
 
