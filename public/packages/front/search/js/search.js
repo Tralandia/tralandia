@@ -44,7 +44,7 @@
 					return minimumInputLengthtext;
 				},
 				initSelection: function(element, callback) {					
-					this.self = element;        		
+					// this.self = element;        		
 					callback({id:0,name:$(element).attr('data-placeholder')});
 				},
 
