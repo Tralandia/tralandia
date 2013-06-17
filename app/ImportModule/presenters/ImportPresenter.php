@@ -89,34 +89,62 @@ class ImportPresenter extends Presenter {
 			$redirect = TRUE;
 		}
 
-		if (isset($this->params['dropAllTables'])) {
-			$import = new I\BaseImport($this->context, $this);
-			$import->developmentMode = (bool)$this->session->developmentMode;
-			$import->dropAllTables();
+		// if (isset($this->params['dropAllTables'])) {
+		// 	$import = new I\BaseImport($this->context, $this);
+		// 	$import->developmentMode = (bool)$this->session->developmentMode;
+		// 	$import->dropAllTables();
 
-			$this->flashMessage('Dropping Done');
-			$redirect = TRUE;
-		}
-		if (isset($this->params['undoSection'])) {
-			$import = new I\BaseImport($this->context, $this);
-			$import->developmentMode = (bool)$this->session->developmentMode;
-			$import->undoSection($this->params['undoSection']);
-			$this->flashMessage('Section UNDONE');
-			$redirect = TRUE;
-		}
+		// 	$this->flashMessage('Dropping Done');
+		// 	$redirect = TRUE;
+		// }
+		// if (isset($this->params['undoSection'])) {
+		// 	$import = new I\BaseImport($this->context, $this);
+		// 	$import->developmentMode = (bool)$this->session->developmentMode;
+		// 	$import->undoSection($this->params['undoSection']);
+		// 	$this->flashMessage('Section UNDONE');
+		// 	$redirect = TRUE;
+		// }
 
-		if (isset($this->params['removeNewTablesFromOldDb'])) {
-			q('SET FOREIGN_KEY_CHECKS = 0;');
-			$tables = q('show tables');
-			while ($x = mysql_fetch_array($tables)) {
-				$cols = q('show columns from '.$x[0].' like "oldId"');
-				$cols = mysql_fetch_array($cols);
-				if ($cols) {
-					debug($x[0]);
-					q('drop table '.$x[0]);
-				}
+		// if (isset($this->params['removeNewTablesFromOldDb'])) {
+		// 	q('SET FOREIGN_KEY_CHECKS = 0;');
+		// 	$tables = q('show tables');
+		// 	while ($x = mysql_fetch_array($tables)) {
+		// 		$cols = q('show columns from '.$x[0].' like "oldId"');
+		// 		$cols = mysql_fetch_array($cols);
+		// 		if ($cols) {
+		// 			debug($x[0]);
+		// 			q('drop table '.$x[0]);
+		// 		}
+		// 	}
+		// 	q('SET FOREIGN_KEY_CHECKS = 1;');
+		// }
+
+		if (isset($this->params['updateRegionArrays'])) {
+			$translations = qNew('select id, phrase_id, variations from phrase_translation where translation = "Array"');
+			d(mysql_num_rows($translations));
+			while ($translation = mysql_fetch_array($translations)) {
+
+				$region = qNew('select id, oldId from location where name_id = '.$translation['phrase_id']);
+				$region = mysql_fetch_array($region);
+
+				$regionOld = q('select name, id from regions where id = '.$region['oldId']);
+				if (!mysql_num_rows($regionOld)) continue;
+				$regionOld = mysql_fetch_array($regionOld);
+				$regionName = $regionOld[0];
+				$regionId = $regionOld[1];
+
+				d($regionName, $regionId);
+				$variations = json_decode($translation['variations']);
+				//d($variations);
+				$variations[0][0]->nominative = $regionName;
+				//d($variations);
+				//qNew('update phrase_translation set translation = "'.$regionName.'", variations = "'.mysql_real_escape_string(json_encode($variations)).'"');
+				echo('update phrase_translation set translation = "'.$regionName.'", variations = "'.mysql_real_escape_string(json_encode($variations)).'" where id = '.$translation['id']);
+				echo('<br>');
+
+
 			}
-			q('SET FOREIGN_KEY_CHECKS = 1;');
+			exit;
 		}
 
 		if (isset($this->params['pairImages'])) {
