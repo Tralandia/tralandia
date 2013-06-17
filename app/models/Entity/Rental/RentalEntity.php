@@ -14,7 +14,13 @@ use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
- * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
+ * @ORM\Table(name="rental",
+ * 		indexes={
+ * 			@ORM\index(name="status", columns={"status"}),
+ * 			@ORM\index(name="slug", columns={"slug"}),
+ * 			@ORM\index(name="rank", columns={"rank"}),
+ * 			@ORM\index(name="calendarUpdated", columns={"calendarUpdated"})
+ * 		})
  * @EA\Primary(key="id", value="slug")
  * @EA\Generator(skip="{getImages, getPrice, setPrice, setSlug, getCalendar, setCalendar, setUrl}")
  */
