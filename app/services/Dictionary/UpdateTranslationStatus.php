@@ -31,7 +31,7 @@ class UpdateTranslationStatus {
 					$translation->setStatus(Translation::UP_TO_DATE);
 					continue;
 				}
-				if($centralTranslation->getTimeTranslated() > $translation->getTimeTranslated()) {
+				if($centralTranslation->getTimeTranslated() > $translation->getTimeTranslated() || strlen($translation->getTranslation()) == 0 ) {
 					$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
 				} else {
 					$translation->setStatus(Translation::UP_TO_DATE);
