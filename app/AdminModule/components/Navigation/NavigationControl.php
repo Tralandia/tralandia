@@ -165,10 +165,13 @@ class NavigationControl extends BaseControl
 			->getControlPrototype()
 				->data('redirect', $rentalLink);
 
-		$phraseLink = $this->presenter->link(':Admin:PhraseList:search',['search' => '__query__', 'languageId' => '__languageId__']);
+		$phraseLink = $this->presenter->link(':Admin:PhraseList:search',['search' => '__query__', 'languageId' => '__languageId__', 'allTypes' => '__allTypes__']);
 		$form->addText('phrase', '')
 			->getControlPrototype()
 				->data('redirect', $phraseLink);
+
+
+		$form->addCheckbox('allTypes', '');
 
 		$languages = $this->languageRepository->getForAdminSearch($this->collator);
 		$defaultLanguage = $this->getParent()->getParameter('languageId', $this->loggedUser->getLanguage()->getId());
