@@ -29,7 +29,7 @@ class ManagerGrid extends AdminGridControl {
 		$grid = $this->getGrid();
 
 		$grid->addColumn('name', 'ISO');
-		$grid->addColumn('lastTranslation', 'Last Translation');
+		//$grid->addColumn('lastTranslation', 'Last Translation');
 		$grid->addColumn('toTranslate', 'To translate');
 		$grid->addColumn('toCheck', 'To check');
 		$grid->addColumn('wordsToPay', 'To pay');

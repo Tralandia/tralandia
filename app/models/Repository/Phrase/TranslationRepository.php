@@ -83,8 +83,8 @@ class TranslationRepository extends \Repository\BaseRepository {
 	 */
 	public function filterTranslatedTypes(QueryBuilder $qb)
 	{
-		$qb->leftJoin('e.phrase', 'phrase');
-		$qb->leftJoin('phrase.type', 'type');
+		$qb->innerJoin('e.phrase', 'phrase');
+		$qb->innerJoin('phrase.type', 'type');
 
 		$qb->andWhere('type.translated = :translated');
 		$qb->setParameter('translated', TRUE);
