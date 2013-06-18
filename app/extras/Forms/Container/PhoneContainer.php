@@ -27,8 +27,11 @@ class PhoneContainer extends BaseContainer
 
 		$this->addSelect('prefix', NULL, $phonePrefixes);
 
-		$this->addText('number', $label)
-			->setOption('help', $translator->translate('o1038'));
+		$numberErrorValidateMessage = (!$translator->translate('151882')) ? ' ' : $translator->translate('151882');
+
+		$this->addText('number', $label)			
+			->setOption('help', $translator->translate('o1038'))
+			->setRequired($numberErrorValidateMessage);
 
 	}
 
