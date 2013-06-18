@@ -72,10 +72,16 @@ $(function(){
 
         base.deleteCurrentPhrase = function(){
 
+				$parent = base.$el.parents('.phraseForm');
+				$parent.parents('.phraseEditForm').find('hr:first').remove();
+				$parent.remove();
+
 			$.getJSON(base.$el.attr('href'), function(data) {
 				
+
+
 				if(data.success == true){
-					base.$el.parents('.phraseForm').remove();
+					// base.$el.parents('.phraseForm').remove();
 				} else {
 					alert('delete error');
 				}

@@ -88,9 +88,11 @@ class RentalContainer extends BaseContainer
 		$this->addRentalTypeContainer('type', $rentalTypes);
 
 		$check = \Tools::$checkInOutOption;
-		$this->addSelect('checkIn', 'o1586', $check);
+		$this->addSelect('checkIn', 'o1586', $check)
+						->setPrompt('o854');
 
-		$this->addSelect('checkOut', 'o1588', $check);
+		$this->addSelect('checkOut', 'o1588', $check)
+						->setPrompt('o854');
 
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
