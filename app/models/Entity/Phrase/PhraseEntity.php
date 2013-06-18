@@ -54,6 +54,13 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $used = FALSE;
+
+
+	/**
 	 * @param \Entity\Language $language
 	 * @param string|null $translationText
 	 *
@@ -143,13 +150,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $this;
 	}
 
-
-	protected function updateTranslationsStatus($status)
-	{
-
-	}
-
-
 	/**
 	 * Vrati translation-y v ziadanom, centralom a source jazyku, ak existuju
 	 *
@@ -189,10 +189,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$defaultVariationWordsCount = str_word_count($translatedFromText);
 
 		$variationsCount = $this->getType()->getVariationsCount($language);
-		d('variationsCount', $variationsCount);
-		d('wordcount', $defaultVariationWordsCount);
-		d('centralTranslationText', $translatedFromText);
-		d($language);
+
 		return $defaultVariationWordsCount * $variationsCount;
 	}
 
@@ -423,4 +420,23 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->sourceLanguage;
 	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getUsed()
+	{
+		return $this->used;
+	}
+
+
+	/**
+	 * @param boolean $used
+	 */
+	public function setUsed($used)
+	{
+		$this->used = $used;
+	}
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace Extras;
 
+use Entity\Phrase\Phrase;
 use Nette\Caching\Cache;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
@@ -75,7 +76,6 @@ class Translator implements \Nette\Localization\ITranslator {
 	 */
 	protected function getTranslation($phrase, array $variation = NULL, Language $language)
 	{
-		//d($phrase);
 		if($phrase instanceof \Service\Phrase\PhraseService) {
 			$phraseId = $phrase->getEntity()->getId();
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
@@ -105,7 +105,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $this->getCacheKey($phraseId, $variation, $language);
 
 		$translation = $this->cache->load($translationKey);
-		//$translation = NULL;
+
 		if($translation === NULL) {
 
 			if(is_scalar($phrase)) {
@@ -120,6 +120,11 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$phrase) $translation = FALSE;
+
+			if($phrase instanceof Phrase && !$phrase->getUsed()) {
+				$phrase->setUsed(TRUE);
+				$this->phraseRepositoryAccessor->get()->update($phrase);
+			}
 
 			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
 				foreach($translations as $translationEntity) {

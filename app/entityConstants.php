@@ -22,4 +22,5 @@ define('TRANSLATION_ENTITY', '\Entity\Phrase\Translation');
 define('SYSTEM_LOG_ENTITY', '\Entity\Log\System');
 define('HISTORY_LOG_ENTITY', '\Entity\Log\History');
 define('SITE_REVIEW_ENTITY', '\Entity\User\SiteReview');
+define('DOMAIN_ENTITY', '\Entity\Domain');
 
