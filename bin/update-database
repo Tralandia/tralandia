@@ -3,4 +3,4 @@
 WORKING_DIR=`pwd`
 
 sh $WORKING_DIR/bin/install
-php $WORKING_DIR/public/index.php orm:schema-tool:update --force
+php $WORKING_DIR/public/index.php orm:schema-tool:update --dump-sql
