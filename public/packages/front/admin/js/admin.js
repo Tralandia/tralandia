@@ -53,6 +53,49 @@ $(function(){
 
 
 (function($){
+    $.phraseDelete = function(el, options){
+
+        var base = this;
+
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("phraseDelete", base);
+        
+        base.init = function(){
+        	base.bind();
+        };
+        
+        base.bind = function(){
+        	base.$el.on('click',base.deleteCurrentPhrase);
+        }
+
+        base.deleteCurrentPhrase = function(){
+
+			$.getJSON(base.$el.attr('href'), function(data) {
+				
+				if(data.success == true){
+					base.$el.parents('.phraseForm').remove();
+				} else {
+					alert('delete error');
+				}
+			});
+
+        	return false;
+        }
+
+        base.init();
+    };
+    
+    $.fn.phraseDelete = function(radius, options){
+        return this.each(function(){
+            (new $.phraseDelete(this, radius, options));});
+    };
+    
+})(jQuery);
+
+
+(function($){
     $.textareaPreview = function(el, options){
 
         var base = this;
@@ -117,5 +160,6 @@ $(function(){
 })(jQuery);
 
 $(function(){
-	$('.phraseFormHeaderCover a').textareaPreview();
+	$('.phraseFormHeaderCover a.ajaxDelete').phraseDelete();
+	$('.phraseFormHeaderCover a.preview').textareaPreview();
 });
