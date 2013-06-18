@@ -30,28 +30,32 @@ $(function(){
 
 	$('input.adminSearch').keypress(function(e) {
 		if(e.which == 13) {
-			
-			var patternQ = '__query__';
-			var patternIso = '__languageId__';
+
+			var patterns = {
+					patternQ: '__query__',
+					patternIso: '__languageId__',
+					patternType: '__allTypes__'
+				}; 
 
 			var url = '-- ';
 
 			if($(this).hasClass('adminSearchDictionary')){
-				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val())).replace(patternIso,encodeURIComponent($('select.dictionaryLanguage').val()));
+				url = $(this).attr('data-redirect')
+					.replace(patterns.patternQ,encodeURIComponent($(this).val()))
+					.replace(patterns.patternIso,encodeURIComponent($('select.dictionaryLanguage').val()))
+					.replace(patterns.patternType,Number($('input[name=allTypes]').is(":checked")));
 			} else {
 				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val()));
 			}
 
 			window.location = url;
-			
-			// console.log(url);
 
 		}
 	});
 
 });
 
-
+//  remove phrase link
 (function($){
     $.phraseDelete = function(el, options){
 
@@ -99,6 +103,8 @@ $(function(){
     };
     
 })(jQuery);
+
+
 
 
 (function($){
