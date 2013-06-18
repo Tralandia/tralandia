@@ -202,7 +202,7 @@ abstract class BasePresenter extends \BasePresenter {
 			if($groupName == 'rentalId') {
 				$json[$groupName] = [
 					'id' => $group->getId(),
-					'name' => $group->getName()->getTranslationText($this->language)
+					'name' => $this->translate($group->getName())
 				];
 			} else if($groupName == 'rentals') {
 				$json[$groupName] = $group;
@@ -210,9 +210,12 @@ abstract class BasePresenter extends \BasePresenter {
 				/** @var $location \Entity\Location\Location */
 				foreach($group as $location) {
 					$temp = [];
-					$temp['name'] = $location->getName()->getTranslationText($this->language);
+					$temp['name'] = $this->translate($location->getName());
 					if($this->language->getId() !== $this->primaryLocation->getDefaultLanguage()->getId()) {
 						$temp['nameSource'] = $location->getName()->getSourceTranslationText();
+					}
+					if($temp['name'] == $temp['nameSource']) {
+						unset($temp['nameSource']);
 					}
 					$temp['slug'] = $location->getSlug();
 					if($location->isPrimary()) {
