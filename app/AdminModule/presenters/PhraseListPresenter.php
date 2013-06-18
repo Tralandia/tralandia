@@ -209,7 +209,7 @@ class PhraseListPresenter extends BasePresenter {
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->fulltextSearch->getResultCount($search, $language));
 
-		$translations = $this->fulltextSearch->getResult($search, $language, $this->itemsPerPage);
+		$translations = $this->fulltextSearch->getResult($search, $language, $this->itemsPerPage, $paginator->offset);
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
 		$editForm = $this['phraseEditForm'];

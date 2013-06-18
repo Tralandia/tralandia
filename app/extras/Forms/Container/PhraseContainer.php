@@ -9,6 +9,7 @@ use Entity\Phrase\Translation;
 use Environment\Environment;
 use Nette\NotImplementedException;
 use Nette\Utils\Arrays;
+use Nette\Utils\Strings;
 
 class PhraseContainer extends BaseContainer
 {
@@ -85,6 +86,15 @@ class PhraseContainer extends BaseContainer
 	public function isHtmlText()
 	{
 		return $this->phrase->getType()->isHtml();
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isLatteType()
+	{
+		return Strings::startsWith($this->phrase->getType()->getEntityName(), 'Latte');
 	}
 
 
