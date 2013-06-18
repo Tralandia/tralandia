@@ -105,7 +105,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
 		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
+														
 		$this->addSelect('language', 'o4639', $languages)->setOption('help', $this->translate('o5957'));
+
 
 
 		$this->addText('email', 'o1096')
