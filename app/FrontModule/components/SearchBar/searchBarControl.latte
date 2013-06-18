@@ -78,13 +78,18 @@
 			{if isset($bottomLinks) && count($bottomLinks->links)}
 			<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 			<ul>
+				{if !$hasLocation}
+				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
+				{/if}
+
 				<li n:foreach="$bottomLinks->links as $value">
 					<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
 						<i class="icon-angle-right"></i> {$value->name} <span class="counter">{$value->count}</span>
 					</a>
 				</li>
+
 				{if !$hasLocation}
-				<li><a href="{plink :Front:Destination:}"><i class="icon-angle-down"></i> {_o100185}</a></li>
+				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
 				{/if}
 			</ul>
 			{/if}
