@@ -55,21 +55,21 @@ class EnvironmentVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableSiteDomain() {
-		return 'sk.tralandia.com';
+		return $this->getVariableSiteName();
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getVariableSiteName() {
-		return 'sk.tralandia.com';
+		return ucfirst($this->getLocationEntity()->getFirstDomain());
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getVariableLoginLink() {
-		return $this->link('//Sign:in');
+		return $this->link('//:Front:Sign:in');
 	}
 
 	/**
