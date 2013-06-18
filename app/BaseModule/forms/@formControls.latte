@@ -491,11 +491,11 @@
 					{/ifset}
 
 					{if $container->isHtmlText()}
-						<a href="#" data-preview-title="#title preview" data-preview-link="{plink texylaPreview}">preview</a>
+						<a href="#" data-preview-title="#title preview" class="preview" data-preview-link="{plink texylaPreview}">preview</a>
 					{/if}
 
 					{if $container->isLatteType()}
-						<a href="{plink Phrase:delete $phrase->getId()}" class="ajax">delete</a>
+						<a href="{plink Phrase:delete $phrase->getId()}" class="ajaxDelete">delete</a>
 					{/if}
 
 
