@@ -198,8 +198,9 @@ class PhraseListPresenter extends BasePresenter {
 	}
 
 
-	public function actionSearch($search, $languageId, $allTypes = false)
+	public function actionSearch($search, $languageId, $allTypes)
 	{
+		$allTypes = (bool) $allTypes;
 		$language = $this->languageRepositoryAccessor->get()->find($languageId);
 		if(!$language) {
 			throw new BadRequestException;
