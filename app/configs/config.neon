@@ -282,6 +282,7 @@ services:
 
 
 	phraseCreator: Service\Phrase\PhraseCreator
+	phraseRemover: Service\Phrase\PhraseRemover
 
 	device: Device
 	deviceDetect: Mobile_Detect

@@ -14,6 +14,12 @@ class PhrasePresenter extends BasePresenter {
 	 */
 	protected $phraseCreator;
 
+	/**
+	 * @autowire
+	 * @var \Service\Phrase\PhraseRemover
+	 */
+	protected $phraseRemover;
+
 	protected $phrase;
 
 
@@ -29,6 +35,15 @@ class PhrasePresenter extends BasePresenter {
 		$phrase = $this->phraseCreator->create($type);
 		$phraseRepository->save($phrase);
 		$this->redirect('PhraseList:searchId', ['id' => $phrase->getId()]);
+	}
+
+
+	public function actionDelete($id)
+	{
+		$phrase = $this->findPhrase($id);
+		$this->phraseRemover->remove($phrase);
+		$this->payload->success = true;
+		$this->sendPayload();
 	}
 
 }

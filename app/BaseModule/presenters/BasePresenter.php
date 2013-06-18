@@ -549,4 +549,36 @@ abstract class BasePresenter extends Presenter {
 		$this->redirect(':Front:Home:');
 	}
 
+
+	/* -------------------------- EM helpers ---------------------- */
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 *
+	 * @return \Entity\Phrase\Phrase|null
+	 */
+	public function findPhrase($id, $need = TRUE)
+	{
+		return $this->findHelper(PHRASE_ENTITY, $id, $need);
+	}
+
+
+	/**
+	 * @param $entityName
+	 * @param $id
+	 * @param bool $need
+	 *
+	 * @return object
+	 * @throws Exception
+	 */
+	private function findHelper($entityName, $id, $need = TRUE)
+	{
+		$entity = $this->em->getRepository($entityName)->find($id);
+		if(!$entity && $need) {
+			throw new Exception("{$entityName}::{$id} not exists.");
+		}
+		return $entity;
+	}
+
 }
