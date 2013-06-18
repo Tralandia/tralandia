@@ -21,9 +21,9 @@ class FulltextSearch {
 	}
 
 
-	public function getResult($string, Language $language = NULL, $allTypes = FALSE, $limit = NULL, $offset = NULL)
+	public function getResult($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE, $limit = NULL, $offset = NULL)
 	{
-		$qb = $this->createQb($string, $language, $allTypes)
+		$qb = $this->createQb($string, $language, $allTypes, $notUsed)
 			->setMaxResults($limit)
 			->setFirstResult($offset);
 
@@ -31,9 +31,9 @@ class FulltextSearch {
 	}
 
 
-	public function getResultCount($string, Language $language = NULL, $allTypes = FALSE)
+	public function getResultCount($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE)
 	{
-		$qb = $this->createQb($string, $language, $allTypes);
+		$qb = $this->createQb($string, $language, $allTypes, $notUsed);
 		return $this->translationRepository->getCount($qb);
 	}
 
@@ -45,7 +45,7 @@ class FulltextSearch {
 	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function createQb($string, Language $language = NULL, $allTypes = FALSE)
+	protected function createQb($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE)
 	{
 		$qb = $this->translationRepository->createQueryBuilder();
 
@@ -63,9 +63,18 @@ class FulltextSearch {
 		if(!$allTypes) {
 			if(!$phraseIsJoined) {
 				$qb->leftJoin('e.phrase', 'p');
+				$phraseIsJoined = true;
 			}
 			$qb->innerJoin('p.type', 't');
 			$qb->andWhere($qb->expr()->like('t.entityName', ':entityName'))->setParameter('entityName', "Latte%");
+		}
+
+		if($notUsed) {
+			if(!$phraseIsJoined) {
+				$qb->leftJoin('e.phrase', 'p');
+				$phraseIsJoined = true;
+			}
+			$qb->andWhere($qb->expr()->eq('p.used', ':used'))->setParameter('used', FALSE);
 		}
 
 		return $qb;
