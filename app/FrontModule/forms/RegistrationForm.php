@@ -105,7 +105,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
 		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
+														
 		$this->addSelect('language', 'o4639', $languages)->setOption('help', $this->translate('o5957'));
+
 
 
 		$this->addText('email', 'o1096')
@@ -143,7 +145,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			$rentalContainer->addText('price', 'o100078')
 				->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 				->setOption('help', $this->translate('o100073'))
-				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
+				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
+				->setRequired('151883');
 		} else {
 			$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
 			$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
