@@ -49,7 +49,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->leftJoin('e.type', 'type')
+			->innerJoin('e.type', 'type')
 			->andWhere($qb->expr()->eq('type.translated', ':translated'))->setParameter('translated', TRUE);
 
 		return $qb;
@@ -103,7 +103,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	{
 		$qb = $this->createQueryBuilder();
 
-		$qb->leftJoin('e.translations', 't')
+		$qb->innerJoin('e.translations', 't')
 			->andWhere($qb->expr()->eq('t.language', ':language'))->setParameter('language', $language)
 			->andWhere($qb->expr()->eq('t.status', ':status'))->setParameter('status', Phrase::WAITING_FOR_CORRECTION_CHECKING);
 
@@ -135,8 +135,8 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb2 = $this->_em->createQueryBuilder();
 		$qb2->select('e.id')
 			->from('\Entity\Phrase\Phrase', 'e')
-			->leftJoin('e.translations', 'translations')
-			->leftJoin('e.type', 'type')
+			->innerJoin('e.translations', 'translations')
+			->innerJoin('e.type', 'type')
 			->where('type.translateTo = :supported')
 			->andWhere('translations.language = :language');
 
@@ -145,7 +145,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 		$qb->select('p')
 			->from('\Entity\Phrase\Phrase', 'p')
-			->leftJoin('p.type', 'ttt')
+			->innerJoin('p.type', 'ttt')
 			->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
 			->andWhere('ttt.translateTo = :supported')
 			->setParameter('language', $language->id)
@@ -191,7 +191,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 */
 	public function filterTranslatedTypes(QueryBuilder $qb)
 	{
-		$qb->leftJoin('e.type', 'type');
+		$qb->innerJoin('e.type', 'type');
 
 		$qb->andWhere('type.translated = :translated');
 		$qb->setParameter('translated', TRUE);
