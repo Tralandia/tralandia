@@ -170,7 +170,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		/** @var $domain \Entity\Domain */
 		$domain = $this->domainRepository->findOneByDomain($host);
-		return $domain->getLocations()->first();
+		return $domain->getLocation();
 	}
 
 }
