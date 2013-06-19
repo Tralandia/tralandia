@@ -18,16 +18,19 @@ common:
 					items:
 						latte:
 							lable: Latte
+							icon: icon-angle-right
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: Latte
 						latteMulti:
 							lable: LatteMulti
+							icon: icon-angle-right
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: LatteMulti
 						latteHtml:
 							lable: LatteHtml
+							icon: icon-angle-right
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: LatteHtml
@@ -73,5 +76,4 @@ common:
 		account:
 			items:
 				logout:
-					icon: icon-off
 					link: ':Front:Sign:out'

@@ -91,7 +91,7 @@ class SearchForm extends BaseForm
 
 		$this->addSelect(FrontRoute::RENTAL_TYPE, 'o20926', $rentalTypes)
 			->setPrompt('')
-			->setAttribute('data-placeholder', $this->translate('o20926'));
+			->setAttribute('data-placeholder', $this->translate('151884'));
 
 		/*placement
 		$this->addSelect(FrontRoute::PLACEMENT, 'o100113', $placement)
@@ -117,7 +117,7 @@ class SearchForm extends BaseForm
 
 		$this->addSelect(FrontRoute::SPOKEN_LANGUAGE, 'o20930', $languages)
 			->setPrompt('')
-			->setAttribute('data-placeholder', $this->translate('o20930'));
+			->setAttribute('data-placeholder', $this->translate('151885'));
 
 		$this->addSubmit('submit', 'o100092');
 	}

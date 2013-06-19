@@ -4,5 +4,4 @@ common:
 		account:
 			items:
 				logout:
-					icon: icon-off
 					link: ':Front:Sign:out'
