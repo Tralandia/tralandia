@@ -108,9 +108,17 @@
 }
 
 
-	.hp-list li.span4 .label {		
-		background: url(@{filePath}/front/_base/img/black-transparent.png) repeat;
-	}
+/* IE 10  source: http://www.impressivewebs.com/ie10-css-hacks/ */
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+   /* IE10-specific styles go here */
+
+   body {
+   		background: red;
+   }
+}
+
+
 
 /************************************************************************************
 	FIREFOX 
