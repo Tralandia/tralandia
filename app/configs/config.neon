@@ -58,6 +58,13 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
+	smtp:
+		host: mail.tralandia.com
+		username: robot@tralandia.com
+		password: R03OT
+
+
+
 	templateCache:
 		enabled: TRUE
 		header: #zle sa generovali linky na prepinanie jazyka
@@ -157,6 +164,7 @@ services:
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
 	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
+#	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
 
 	tester: Tester\Options
 #	tester: Tester\NoTester

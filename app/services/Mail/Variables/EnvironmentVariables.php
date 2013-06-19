@@ -62,7 +62,7 @@ class EnvironmentVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableSiteName() {
-		return ucfirst($this->getLocationEntity()->getFirstDomain());
+		return ucfirst($this->getLocationEntity()->getFirstDomain()->getDomain());
 	}
 
 	/**
