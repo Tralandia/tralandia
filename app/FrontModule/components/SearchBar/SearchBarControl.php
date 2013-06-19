@@ -208,7 +208,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		if(!count($links) && !$this->rentalType) {
 			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::RENTAL_TYPE;
-			$bottomLinks['title'] = 'o20926';
+			$bottomLinks['title'] = '151884';
 			$bottomLinks['iconClass'] = 'icon-home';
 		}
 		/*placement
