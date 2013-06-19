@@ -344,8 +344,7 @@ class ImportPresenter extends Presenter {
 			while ($country = mysql_fetch_array($r)) {
 				$domain = $country['iso'].'.tralandia.com';
 				qNew('insert into domain set domain = "'.$domain.'"');
-				d('update location set domain_id = '.mysql_insert_id().' where id = '.$country['id']);
-				exit('tu som');
+				qNew('update location set domain_id = '.mysql_insert_id().' where id = '.$country['id']);
 			}
 
 			exit('tu som');
