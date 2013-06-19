@@ -339,6 +339,18 @@ class ImportPresenter extends Presenter {
 			$redirect = TRUE;
 		}
 
+		if (isset($this->params['setDomains'])) {
+			$r = qNew('select * from location where type_id = 3 and domain_id is null');
+			while ($country = mysql_fetch_array($r)) {
+				$domain = $country['iso'].'.tralandia.com';
+				qNew('insert into domain set domain = "'.$domain.'"');
+				d('update location set domain_id = '.mysql_insert_id().' where id = '.$country['id']);
+				exit;
+			}
+
+			exit('tu som');
+		}
+
 		if (isset($this->params['getPhraseMacro'])) {
 			$import = new \Extras\Import\ImportHtmlPhrases;
 			$newPhrase = \Service\Dictionary\Phrase::getByOldId($this->params['getPhraseMacro']);

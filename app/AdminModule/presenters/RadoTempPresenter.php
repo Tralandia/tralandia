@@ -110,117 +110,121 @@ class RadoTempPresenter extends BasePresenter {
 		$aa->updateUsingAddress('800-1018 E 61st St, Sioux Falls, South Dakota 57108');
 	}
 
-	public function actionPolygons() {
-		$testValues = array(
-			array('45.470725', '-98.47566'),
-		);
-
-		$lat = new \Extras\Types\Latlong($testValues[0][0], 'latitude');
-		$long = new \Extras\Types\Latlong($testValues[0][1], 'longitude');
-
-		$rental = $this->rentalRepositoryAccessor->get()->find(1);
-		$normalizer = $this->addressNormalizerFactory->create($rental->address);
-		$normalizer->updateUsingAddress('Demänovská Dolina 584, Slovensko');
-		$this->polygonService->setLocationsForRental($rental);
-
-
-		// $location = $this->locationRepositoryAccessor->get()->find(335);
-		// $this->polygonService->setRentalsForLocation($location);
-		//d($rental->address);
-
-		$this->rentalRepositoryAccessor->get()->persist($rental);
-		$this->rentalRepositoryAccessor->get()->flush();
+	public function actionDomains() {
+		exit('done');
 	}
 
-	public function actionRank() {
-		$rental = $this->rentalRepositoryAccessor->get()->find(1);
-		$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
-		$rentalDecorator->calculateRank();
+	// public function actionPolygons() {
+	// 	$testValues = array(
+	// 		array('45.470725', '-98.47566'),
+	// 	);
 
-		$this->rentalRepositoryAccessor->get()->persist($rental);
-		$this->rentalRepositoryAccessor->get()->flush();
-	}
+	// 	$lat = new \Extras\Types\Latlong($testValues[0][0], 'latitude');
+	// 	$long = new \Extras\Types\Latlong($testValues[0][1], 'longitude');
 
-	public function actionGoogleMapsApi() {
-		$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator() );
-
-		// $response = $service->geocode('Springfield');
-
-		// // Make sure we have a good result
-		// if ( $response->isValid() && $response->hasResults() ) {
-		//   d($response->getFormattedAddress());
-		// } else {
-		//   d('Invalid Response');
-		// }
-
-		// while ($response->valid()) {
-		// 	// Get the State name
-		// 	//d($response->getAddressComponentName(\GoogleGeocodeResponseV3::ACT_LOCALITY));
-		// 	d($response->getFormattedAddress());
-		// 	$response->next();
-		// }
-
-		$response = $service->reverseGeocode( 34.1346702, -118.4389877 );
-
-		while ( $response->valid() ) {
-			// Address component type we're checking for
-			$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;
-
-			// Is it a city-level result?
-			if ( $response->assertType( $component ) ) {
-				// Get the city name
-				d($response->getAddressComponentName( $component ));
-				break;
-			}
-			$response->next();
-		}
-
-		// Show that the API assumes "Portland, OR" for "Portland USA"
-		d($service->geocode( 'Portland USA' )->getFormattedAddress());
-
-		// Now geocode the state of Maine and bias results to its viewport
-		$maine = $service->geocode( 'Maine, USA' );
-		$service->biasViewportByBoundsObject( $maine->getViewport() );
-
-		// Re-geocode "Portland USA"
-		d($service->geocode( 'Portland USA' )->getFormattedAddress());
+	// 	$rental = $this->rentalRepositoryAccessor->get()->find(1);
+	// 	$normalizer = $this->addressNormalizerFactory->create($rental->address);
+	// 	$normalizer->updateUsingAddress('Demänovská Dolina 584, Slovensko');
+	// 	$this->polygonService->setLocationsForRental($rental);
 
 
-		// Establish an ambiguous location
-		$location = 'Toledo';
+	// 	// $location = $this->locationRepositoryAccessor->get()->find(335);
+	// 	// $this->polygonService->setRentalsForLocation($location);
+	// 	//d($rental->address);
 
-		// Bias for the USA
-		$service->biasRegion( 'com' );
-		d($service->geocode( $location )->getFormattedAddress());
+	// 	$this->rentalRepositoryAccessor->get()->persist($rental);
+	// 	$this->rentalRepositoryAccessor->get()->flush();
+	// }
 
-		// Bias for Spain
-		$service->biasRegion( 'es' );
-		d($service->geocode( $location )->getFormattedAddress());
-	}
+	// public function actionRank() {
+	// 	$rental = $this->rentalRepositoryAccessor->get()->find(1);
+	// 	$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
+	// 	$rentalDecorator->calculateRank();
 
-	public function actionGoogleReverseGeocode() {
-		$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator(), NULL, array('language' => 'pl') );
-		$response = $service->reverseGeocode(51.053205, 21.988672);
-		while ( $response->valid() ) {
-			// Address component type we're checking for
-			$components = array(
-				\GoogleGeocodeResponseV3::ACT_LOCALITY,
-				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
-				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2,
-				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3,
-			);
+	// 	$this->rentalRepositoryAccessor->get()->persist($rental);
+	// 	$this->rentalRepositoryAccessor->get()->flush();
+	// }
 
-			foreach ($components as $key => $value) {
-				d($value, $response->getAddressComponentName( $value ));
-			}
+	// public function actionGoogleMapsApi() {
+	// 	$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator() );
 
-			$response->next();
-		}
-	}
+	// 	// $response = $service->geocode('Springfield');
 
-	public function actionStatsRegistrations() {
-		d($this->rentalRegistrationsStats->getData());
-	}
+	// 	// // Make sure we have a good result
+	// 	// if ( $response->isValid() && $response->hasResults() ) {
+	// 	//   d($response->getFormattedAddress());
+	// 	// } else {
+	// 	//   d('Invalid Response');
+	// 	// }
+
+	// 	// while ($response->valid()) {
+	// 	// 	// Get the State name
+	// 	// 	//d($response->getAddressComponentName(\GoogleGeocodeResponseV3::ACT_LOCALITY));
+	// 	// 	d($response->getFormattedAddress());
+	// 	// 	$response->next();
+	// 	// }
+
+	// 	$response = $service->reverseGeocode( 34.1346702, -118.4389877 );
+
+	// 	while ( $response->valid() ) {
+	// 		// Address component type we're checking for
+	// 		$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;
+
+	// 		// Is it a city-level result?
+	// 		if ( $response->assertType( $component ) ) {
+	// 			// Get the city name
+	// 			d($response->getAddressComponentName( $component ));
+	// 			break;
+	// 		}
+	// 		$response->next();
+	// 	}
+
+	// 	// Show that the API assumes "Portland, OR" for "Portland USA"
+	// 	d($service->geocode( 'Portland USA' )->getFormattedAddress());
+
+	// 	// Now geocode the state of Maine and bias results to its viewport
+	// 	$maine = $service->geocode( 'Maine, USA' );
+	// 	$service->biasViewportByBoundsObject( $maine->getViewport() );
+
+	// 	// Re-geocode "Portland USA"
+	// 	d($service->geocode( 'Portland USA' )->getFormattedAddress());
+
+
+	// 	// Establish an ambiguous location
+	// 	$location = 'Toledo';
+
+	// 	// Bias for the USA
+	// 	$service->biasRegion( 'com' );
+	// 	d($service->geocode( $location )->getFormattedAddress());
+
+	// 	// Bias for Spain
+	// 	$service->biasRegion( 'es' );
+	// 	d($service->geocode( $location )->getFormattedAddress());
+	// }
+
+	// public function actionGoogleReverseGeocode() {
+	// 	$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator(), NULL, array('language' => 'pl') );
+	// 	$response = $service->reverseGeocode(51.053205, 21.988672);
+	// 	while ( $response->valid() ) {
+	// 		// Address component type we're checking for
+	// 		$components = array(
+	// 			\GoogleGeocodeResponseV3::ACT_LOCALITY,
+	// 			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
+	// 			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2,
+	// 			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3,
+	// 		);
+
+	// 		foreach ($components as $key => $value) {
+	// 			d($value, $response->getAddressComponentName( $value ));
+	// 		}
+
+	// 		$response->next();
+	// 	}
+	// }
+
+	// public function actionStatsRegistrations() {
+	// 	d($this->rentalRegistrationsStats->getData());
+	// }
 
 
 }
