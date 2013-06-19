@@ -81,7 +81,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$homepageUrl = $this->presenter->link('//:Front:Home:');
 		$template->homepageUrl = $homepageUrl;
 		$template->homepageSeo = $this->seoFactory->create($template->homepageUrl, $this->presenter->getLastCreatedRequest());
-		$template->domainHost = ucfirst(strstr($domain, '.', TRUE));
+		$template->domainHost = 'Tralandia';
 		$template->domainExtension = strstr($domain, '.');
 
 
