@@ -1,7 +1,7 @@
 {var $searchFormClass = 'searchForm'}
 {$jsVariables->for('form.' . $searchFormClass)}
 
-<div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="sidebar">
+<div class="span3" data-searchCount="{link getSearchCount!}" id="sidebar">
 <div class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 
 	{cache $searchBarCacheOptions['key'],
