@@ -2,6 +2,7 @@
 
 namespace Routers;
 
+use Doctrine\ORM\EntityManager;
 use Nette;
 use Nette\Application\Routers\Route;
 use Repository\LanguageRepository;
@@ -27,6 +28,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	 */
 	protected $locationRepository;
 
+	protected $domainRepository;
 	/**
 	 * @var \Nette\Application\Routers\Route
 	 */
@@ -42,17 +44,17 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	 */
 	protected $actionName;
 
+
 	/**
 	 * @param string $mask
 	 * @param array $metadata
-	 * @param \Repository\LanguageRepository $languageRepository
-	 * @param \Repository\Location\LocationRepository $locationRepository
+	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct($mask, $metadata, LanguageRepository $languageRepository,
-								LocationRepository $locationRepository)
+	public function __construct($mask, $metadata, EntityManager $em)
 	{
-		$this->languageRepository = $languageRepository;
-		$this->locationRepository = $locationRepository;
+		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$this->domainRepository = $em->getRepository(DOMAIN_ENTITY);
 
 		if(!isset($metadata[self::PRIMARY_LOCATION])) $metadata[self::PRIMARY_LOCATION] = 'sk';
 		if(!isset($metadata[self::LANGUAGE])) $metadata[self::LANGUAGE] = 'www';
@@ -120,16 +122,19 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
 
-		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
-			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
+		if(isset($params['host'])) {
+			$primaryLocation = $this->getPrimaryLocationFromHost($params['host']);
+			unset($params['host']);
+		} else {
+			$primaryLocation = $this->locationRepository->findOneByIso($primaryLocation);
 		}
 
-		$primaryLocation = $this->locationRepository->findOneByIso($primaryLocation);
 		$params[self::PRIMARY_LOCATION] = $primaryLocation;
 
 		$languageIso = $params[self::LANGUAGE];
 		$language = $languageIso == 'www' ? $params[self::PRIMARY_LOCATION]->defaultLanguage : $this->languageRepository->findOneByIso($languageIso);
 		$params[self::LANGUAGE] = $language;
+
 
 		return $params;
 	}
@@ -143,7 +148,15 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		/** @var $primaryLocation \Entity\Location\Location */
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
-		$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
+
+		$defaults = $this->route->getDefaults();
+
+		if(array_key_exists('host', $defaults)) {
+			$params['host'] = $primaryLocation->getDomain()->getDomain();
+			unset($params[self::PRIMARY_LOCATION]);
+		} else {
+			$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
+		}
 
 
 		$language = $params[self::LANGUAGE];
@@ -151,6 +164,13 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		$params[self::LANGUAGE] = $languageIso;
 
 		return $params;
+	}
+
+	private function getPrimaryLocationFromHost($host)
+	{
+		/** @var $domain \Entity\Domain */
+		$domain = $this->domainRepository->findOneByDomain($host);
+		return $domain->getLocations()->first();
 	}
 
 }
