@@ -13,7 +13,8 @@ class SimpleRouterTest extends BaseRouterTest
 	public $route;
 
 	protected function setUp() {
-		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner)>/<presenter>[/<action>[/<id>]]';
+		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner)>/<presenter>[/<action>[/<id>]]';
+		$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'www',
@@ -27,10 +28,18 @@ class SimpleRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
-		$this->routeOut($route, 'Front:Sign', array(
-			'action' => 'in',
-			'primaryLocation' => $this->findLocation(56),
-			'language' => $this->findLanguage(144),
+//		$this->routeOut($route, 'Front:Sign', array(
+//			'action' => 'in',
+//			'primaryLocation' => $this->findLocation(56),
+//			'language' => $this->findLanguage(144),
+//		));
+
+
+		$this->routeIn($route, 'http://www.usal.tralandia.com/admin/foo/bar', 'Admin:Foo', array(
+			'action' => 'bar',
+			'id' => NULL,
+			'primaryLocation' => $this->findLocation(269),
+			'language' => $this->findLanguage(38),
 		));
 
 		$this->routeIn($route, 'http://www.sk.tra.com/owner/rental/first-rental', 'Owner:Rental', array(
