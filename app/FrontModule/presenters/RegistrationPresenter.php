@@ -3,6 +3,8 @@
 namespace FrontModule;
 
 
+use Nette\Utils\Html;
+
 class RegistrationPresenter extends BasePresenter
 {
 
@@ -27,6 +29,12 @@ class RegistrationPresenter extends BasePresenter
 	public function actionDefault()
 	{
 		$this->checkPermission($this->getName(), $this->getAction());
+
+		$jsRegistrationVariables = [];
+		$jsRegistrationVariables['data-location-id'] = $this->primaryLocation->getId();
+		$jsRegistrationVariables['data-language-id'] = $this->language->getId();
+
+		$this->template->jsRegistrationVariables = Html::el('variables')->addAttributes($jsRegistrationVariables);;
 		$this->template->registrationFormSubmitted = $this->request->isPost();
 	}
 
