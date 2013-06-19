@@ -13,6 +13,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 {
 
 	use TMailer;
+	use TBaseMailerConstruct;
 
 	/**
 	 * Sends email.

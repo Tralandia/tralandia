@@ -13,6 +13,9 @@ use Nette;
 class SendmailMailer extends Nette\Mail\SendmailMailer
 {
 	use TMailer;
+	use TBaseMailerConstruct;
+
+
 
 	public function send(Nette\Mail\Message $message)
 	{
