@@ -104,63 +104,70 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$languages = $this->languageRepository->getForSelectWithLinks($this->translator, $this->collator, $this->uiPresenter);
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
-		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
-														
-		$this->addSelect('language', 'o4639', $languages)->setOption('help', $this->translate('o5957'));
+		$countrySelect = $this->addSelect('country', 'o1094', $countries);
+		//1347
+		if($this->country->isWorld()) {
+			$countrySelect->setPrompt('o5956');
+		} else {
+			$countrySelect->setOption('help', $this->translate('o5956'));
+
+			$this->addSelect('language', 'o4639', $languages)->setOption('help', $this->translate('o5957'));
 
 
 
-		$this->addText('email', 'o1096')
-			->setOption('help', $this->translate('o3095'))
-			->setOption('prepend', '<i class="icon-envelope"></i>')
-			->setAttribute('placeholder', 'email@email.com')
-			->addRule(self::EMAIL, $this->translate('o100144'));
+			$this->addText('email', 'o1096')
+				->setOption('help', $this->translate('o3095'))
+				->setOption('prepend', '<i class="icon-envelope"></i>')
+				->setAttribute('placeholder', 'email@email.com')
+				->addRule(self::EMAIL, $this->translate('o100144'));
 
-		$this->addPassword('password', 'o997')
-			->setOption('help', $this->translate('o100145'))
-			->setOption('prepend', '<i class="icon-lock"></i>')
-			->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
+			$this->addPassword('password', 'o997')
+				->setOption('help', $this->translate('o100145'))
+				->setOption('prepend', '<i class="icon-lock"></i>')
+				->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 
-		$this->addText('url', 'o977')
-			->setOption('help', $this->translate('o978'))
-			->setOption('prepend', 'http://')
-			->addCondition(self::FILLED)
+			$this->addText('url', 'o977')
+				->setOption('help', $this->translate('o978'))
+				->setOption('prepend', 'http://')
+				->addCondition(self::FILLED)
 				->addRule(self::URL, $this->translate('o100102'));
 
 
-		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
-		$this['rental'] = $rentalContainer;
+			$rentalContainer = $this->rentalContainerFactory->create($this->environment);
+			$this['rental'] = $rentalContainer;
 
-		$phoneContainer = $rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
+			$phoneContainer = $rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
-		$phoneContainer->getPrefixControl()
-			->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
+			$phoneContainer->getPrefixControl()
+				->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
 
-		$rentalContainer->addText('name', 'o886')
-			->setOption('help', $this->translate('o100071'))
-			->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+			$rentalContainer->addText('name', 'o886')
+				->setOption('help', $this->translate('o100071'))
+				->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
-		$currency = $this->country->getDefaultCurrency();
-		if($currency) {
-			$rentalContainer->addText('price', 'o100078')
-				->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
-				->setOption('help', $this->translate('o100073'))
-				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
-				->setRequired('151883');
-		} else {
-			$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
-			$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
+			$currency = $this->country->getDefaultCurrency();
+			if($currency) {
+				$rentalContainer->addText('price', 'o100078')
+					->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
+					->setOption('help', $this->translate('o100073'))
+					->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
+					->setRequired('151883');
+			} else {
+				$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
+				$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
+			}
+
+			$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
+			$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)//->setOption('help', $this->translate('o5956'))
+			;
+
+
+			$this->addSubmit('submit', 'o1099');
+
+			$this->onValidate[] = callback($this, 'validation');
+			$this->onValidate[] = $rentalContainer->validation;
 		}
 
-		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)//->setOption('help', $this->translate('o5956'))
-		;
-
-
-		$this->addSubmit('submit', 'o1099');
-
-		$this->onValidate[] = callback($this, 'validation');
-		$this->onValidate[] = $rentalContainer->validation;
 	}
 
 

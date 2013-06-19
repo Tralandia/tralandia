@@ -13,48 +13,54 @@
 			{* <td colspan="3">{_o100096}</td> *}
 		</tr>
 
-		{var $rentalContainer = $form['rental']}
 
 		{include #select, control => $form['country'] , controlClass => 'select2 country selectRedirect notFulltext'}
-		{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}
 
-		{include #fieldset, text => 'o100084'}
-		{include #email, control => $form['email']}
-		{include #password, control => $form['password']}
+		{if !$isWorld}
 
-		{include #fieldset, text => 'o960'}
-		{*{include #text, control => $form['name']}*}
-		{include #phone, control => $rentalContainer['phone']}
-		{include #url, control => $form['url']}
 
-		{include #fieldset, text => 'o100085'}
-		{include #text, control => $rentalContainer['name']}
+			{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}
+			{var $rentalContainer = $form['rental']}
 
-		{include #rentalType, control => $rentalContainer['type']}
-		{if $rentalContainer['price'] instanceof \Nette\Forms\Controls\TextInput}
-			{include #text, control => $rentalContainer['price']}
-		{else}
-			{include #price, control => $rentalContainer['price']}
+			{include #fieldset, text => 'o100084'}
+			{include #email, control => $form['email']}
+			{include #password, control => $form['password']}
+
+			{include #fieldset, text => 'o960'}
+			{*{include #text, control => $form['name']}*}
+			{include #phone, control => $rentalContainer['phone']}
+			{include #url, control => $form['url']}
+
+			{include #fieldset, text => 'o100085'}
+			{include #text, control => $rentalContainer['name']}
+
+			{include #rentalType, control => $rentalContainer['type']}
+			{if $rentalContainer['price'] instanceof \Nette\Forms\Controls\TextInput}
+				{include #text, control => $rentalContainer['price']}
+			{else}
+				{include #price, control => $rentalContainer['price']}
+			{/if}
+			{include #text, control => $rentalContainer['maxCapacity']}
+			{include #checkbox, control => $rentalContainer['separateGroups']}
+			{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}
+			{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
+			{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+			{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
+
+
+			{include #fieldset, text => 'o100086'}
+			{include #address, control => $rentalContainer['address']}
+			{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+
+			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
+			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
+
+			{include #fieldset, text => 'o980'}
+			{include #rentalPhotos, control => $rentalContainer['photos']}
+
+			{include #submit, control => $form['submit'], icon => 'entypo-ok' , dataLoadingText => 'o100203'}
+
 		{/if}
-		{include #text, control => $rentalContainer['maxCapacity']}
-		{include #checkbox, control => $rentalContainer['separateGroups']}
-		{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}
-		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
-		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
-		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
-
-
-		{include #fieldset, text => 'o100086'}
-		{include #address, control => $rentalContainer['address']}
-		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
-
-		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
-
-		{include #fieldset, text => 'o980'}
-		{include #rentalPhotos, control => $rentalContainer['photos']}
-
-		{include #submit, control => $form['submit'], icon => 'entypo-ok' , dataLoadingText => 'o100203'}
 	</table>
 {/form}
 {/cache}

@@ -196,6 +196,7 @@ abstract class BasePresenter extends Presenter {
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 		$this->template->rand = rand(1, 1000);
+		$this->template->isWorld = $this->primaryLocation->isWorld();
 
 		if($this->tester instanceof \Tester\Options) {
 			$this->template->tester = $this->tester;
