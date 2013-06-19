@@ -479,7 +479,7 @@ _selectSetSelectedValue();
 });
 
 // replace js variables
-
+// docasne riesenie @todo zapracovat 
 function jsVariablesReplace() {
 
 	var dataPrefix = 'data-js-';
@@ -493,8 +493,21 @@ function jsVariablesReplace() {
 			k = k.replace( rmultiDash, "$1-$2" ).toLowerCase();
 
 			var currentElement = $(selector+' ['+dataPrefix+k+']');
-			var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
-			currentElement.attr(dataAttrName,v);
+
+			if(typeof currentElement.attr(dataPrefix+k) != 'undefined'){
+
+				var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
+				currentElement.attr(dataAttrName,v);
+
+			} else {
+				
+				currentElement = $(selector+' [name='+k+']');
+				
+				setTimeout(function(){
+					currentElement.select2('val',v);
+				},10); 
+			}
+
 		})
 
 	});
