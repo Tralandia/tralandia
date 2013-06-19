@@ -44,10 +44,14 @@ trait TMailer {
 
 
 		$from = $message->getFrom();
+		$fromKeys = array_keys($from);
+		$fromEmail = array_shift($fromKeys);
 		$fromName = reset($from);
 
 		$domain = $this->primaryLocation->getFirstDomain();
 		$message->setFrom('info@' . $domain->getDomain(), ucfirst($domain->getDomain()));
+
+		$message->addReplyTo($fromEmail, $fromName);
 
 		return $message;
 	}
