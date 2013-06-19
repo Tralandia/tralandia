@@ -130,6 +130,6 @@ class Domain extends \Entity\BaseEntity {
 	 */
 	public function getLocation()
 	{
-		return $this->locations;
+		return $this->location;
 	}
 }
