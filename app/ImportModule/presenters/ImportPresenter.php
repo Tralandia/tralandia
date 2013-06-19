@@ -345,7 +345,7 @@ class ImportPresenter extends Presenter {
 				$domain = $country['iso'].'.tralandia.com';
 				qNew('insert into domain set domain = "'.$domain.'"');
 				d('update location set domain_id = '.mysql_insert_id().' where id = '.$country['id']);
-				exit;
+				exit('tu som');
 			}
 
 			exit('tu som');
