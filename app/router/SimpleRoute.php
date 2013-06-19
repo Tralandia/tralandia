@@ -52,7 +52,7 @@ class SimpleRoute extends BaseRoute
 		$params = $this->filterOut($params);
 
 		if($module == 'Admin') {
-			$params[self::PRIMARY_LOCATION] = 'com';
+			if(array_key_exists(self::PRIMARY_LOCATION, $params)) $params[self::PRIMARY_LOCATION] = 'com';
 			$params[self::LANGUAGE] = 'www';
 		}
 
