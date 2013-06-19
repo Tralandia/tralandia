@@ -27,10 +27,6 @@ class RouterFactory
 	 * @var IFrontRouteFactory
 	 */
 	protected $frontRouteFactory;
-	/**
-	 * @var IOwnerRouteListFactory
-	 */
-	protected $ownerRouteListFactory;
 
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
@@ -40,15 +36,13 @@ class RouterFactory
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
 								IBaseRouteFactory $baseRouteFactory,
-								IFrontRouteFactory $frontRouteFactory,
-								IOwnerRouteListFactory $ownerRouteListFactory)
+								IFrontRouteFactory $frontRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->baseRouteFactory = $baseRouteFactory;
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
-		$this->ownerRouteListFactory = $ownerRouteListFactory;
 		$this->domainMask = $domainMask;
 	}
 

@@ -179,10 +179,10 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function setDefaultsValues()
 	{
-		$defaultData = $this->lastReservation->getData();
-		if($defaultData) {
-			$this->setDefaults($defaultData);
-		}
+//		$defaultData = $this->lastReservation->getData();
+//		if($defaultData) {
+//			$this->setDefaults($defaultData);
+//		}
 	}
 
 	public function process(ReservationForm $form)

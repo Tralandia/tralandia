@@ -38,16 +38,16 @@ class Domain extends \Entity\BaseEntity {
 	protected $locations;
 
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Domain
@@ -58,7 +58,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -66,7 +66,7 @@ class Domain extends \Entity\BaseEntity {
 	{
 		return $this->domain;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Domain
@@ -77,7 +77,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -85,7 +85,7 @@ class Domain extends \Entity\BaseEntity {
 	{
 		return $this->expires;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Domain
@@ -96,7 +96,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Domain
 	 */
@@ -106,7 +106,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -114,7 +114,7 @@ class Domain extends \Entity\BaseEntity {
 	{
 		return $this->registratorDetails;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
@@ -128,7 +128,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
@@ -140,7 +140,7 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]
 	 */
