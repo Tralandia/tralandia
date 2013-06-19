@@ -33,7 +33,7 @@ class Domain extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Location\Location", mappedBy="domain")
+	 * @ORM\OneToOne(targetEntity="Entity\Location\Location", mappedBy="domain")
 	 */
 	protected $locations;
 
