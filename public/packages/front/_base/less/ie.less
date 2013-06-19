@@ -1,4 +1,4 @@
-@filePath: '../packages/front/_base';
+@filePath: '../packages';
 
 /************************************************************************************
 	INTERNET EXPLORER
@@ -37,9 +37,17 @@
 	.btn.btn-white,
 	.position,
 	.btn.btn-orange,
+	.btn.btn-greenDark,
 	.btn.btn-compare.selected {
 		filter: none;
 		/*overflow: hidden;*/
+	}
+
+	/* fix remove link from favorites bar */
+
+	.navigationBar #scrollInnerContent li a.removeLink {
+		right: auto;
+		left: 61px;
 	}
 
 }
@@ -62,6 +70,15 @@
 	/* homepage rental list transparent label */
 	.hp-list li.span4 .label {		
 		background: url(@{filePath}/front/_base/img/black-transparent.png) repeat;
+	}
+
+	/* fix sidebar last element margin */
+	#sidebar ul {
+		margin-bottom: 10px;
+	}
+
+	.select2-container .select2-choice div {
+		background: #dbe4b9;
 	}
 
 	/* png logo */
@@ -90,6 +107,10 @@
 
 }
 
+
+	.hp-list li.span4 .label {		
+		background: url(@{filePath}/front/_base/img/black-transparent.png) repeat;
+	}
 
 /************************************************************************************
 	FIREFOX 
