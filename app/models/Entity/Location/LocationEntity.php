@@ -78,7 +78,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
+	 * @ORM\OneToOne(targetEntity="Entity\Domain", inversedBy="location")
 	 */
 	protected $domain;
 
