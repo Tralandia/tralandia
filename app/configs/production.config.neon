@@ -39,4 +39,4 @@ services:
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
 	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
 
-#	tester: Tester\NoTester
+	tester: Tester\NoTester
