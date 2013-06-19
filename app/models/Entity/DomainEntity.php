@@ -35,7 +35,7 @@ class Domain extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Location\Location", mappedBy="domain")
 	 */
-	protected $locations;
+	protected $location;
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -44,8 +44,6 @@ class Domain extends \Entity\BaseEntity {
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
 	/**
@@ -119,24 +117,10 @@ class Domain extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
 	 */
-	public function addLocation(\Entity\Location\Location $location)
+	public function setLocation(\Entity\Location\Location $location)
 	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
+		$this->location = $location;
 		$location->setDomain($this);
-
-		return $this;
-	}
-
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Domain
-	 */
-	public function removeLocation(\Entity\Location\Location $location)
-	{
-		$this->locations->removeElement($location);
-		$location->unsetDomain();
 
 		return $this;
 	}
