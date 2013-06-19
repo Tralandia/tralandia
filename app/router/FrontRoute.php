@@ -2,6 +2,7 @@
 
 namespace Routers;
 
+use Doctrine\ORM\EntityManager;
 use Entity\BaseEntity;
 use Entity\Page;
 use Nette;
@@ -91,14 +92,14 @@ class FrontRoute extends BaseRoute
 	 * @param \Repository\Location\LocationRepository $locationRepository
 	 * @param \Device $device
 	 */
-	public function __construct($domainMask, LanguageRepository $languageRepository, LocationRepository $locationRepository, \Device $device)
+	public function __construct($domainMask, EntityManager $em, \Device $device)
 	{
 		$this->device = $device;
 		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
 		//$mask = '//[!<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>/][<hash .*>]';
 		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
-		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
+		parent::__construct($mask, $metadata, $em);
 	}
 
 

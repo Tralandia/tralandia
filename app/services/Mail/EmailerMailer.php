@@ -7,6 +7,7 @@
 
 namespace Mail;
 
+use Nette;
 use Nette\Mail\Message;
 
 class EmailerMailer extends \Nette\Mail\SendmailMailer
