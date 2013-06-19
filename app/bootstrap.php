@@ -22,7 +22,7 @@ $configurator->addParameters([
 ]);
 
 
-//$configurator->setDebugMode(true);
+// $configurator->setDebugMode(true);
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
