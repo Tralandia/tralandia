@@ -89,7 +89,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
-		$this->template->domain = ucfirst($domain);
+		$this->template->domain = 'Tralandia'. strstr($domain, '.');
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
 
