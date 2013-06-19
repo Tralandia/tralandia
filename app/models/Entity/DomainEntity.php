@@ -128,7 +128,7 @@ class Domain extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]
 	 */
-	public function getLocations()
+	public function getLocation()
 	{
 		return $this->locations;
 	}
