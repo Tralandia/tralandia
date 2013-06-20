@@ -297,6 +297,16 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+
+	public function findAllLocalityAndRegion()
+	{
+		$qb = $this->createQueryBuilder();
+		$qb->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region']);
+
+		return $qb->getQuery()->getResult();
+	}
+
 	public function findSuggestForLocalityAndRegion($search,Location $location, Language $language)
 	{
 		$qb = $this->createQueryBuilder();
@@ -326,7 +336,7 @@ class LocationRepository extends \Repository\BaseRepository {
 			if ($country) {
 				$qb->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $country);
 			}
-			
+
 			//$qb->setMaxResults(100);
 
 		return $qb->getQuery()->getResult();

@@ -22,12 +22,14 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected $pageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
+	protected $locationTypeRepositoryAccessor;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 	}
 
@@ -88,7 +90,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected function persistLocationsSegments()
 	{
-		$locations = $this->locationRepositoryAccessor->get()->findAll();
+		$locations = $this->locationRepositoryAccessor->get()->findAllLocalityAndRegion();
 		foreach ($locations as $location) {
 			//$locationService = $this->locationDecoratorFactory->create($location);
 			$country = $location->getPrimaryParent('country');
