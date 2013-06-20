@@ -1,0 +1,6 @@
+#!/bin/bash
+
+WORKING_DIR=`pwd`
+
+git pull
+sh $WORKING_DIR/bin/install-production
