@@ -82,7 +82,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->homepageUrl = $homepageUrl;
 		$template->homepageSeo = $this->seoFactory->create($template->homepageUrl, $this->presenter->getLastCreatedRequest());
 		$template->domainHost = 'Tralandia';
-		$template->domainExtension = strstr($domain, '.');
+		$template->domainExtension = '.' . substr($domain, strpos($domain, 'tralandia') + 10);
 
 
 		$template->supportedLanguages = array_chunk($supportedLanguages, round(count($supportedLanguages)/3));
