@@ -478,7 +478,9 @@
 
 					<small>
 						#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}
-						({$phrase->getUsed() ? 'Used' : 'NOTused'})
+						{if $container->isLatteType()}
+							({$phrase->getUsed() ? 'Used' : 'NOTused'})
+						{/if}
 					</small>
 
 					<small>{$status}</small>
