@@ -2,5 +2,12 @@
 
 WORKING_DIR=`pwd`
 
+echo "spustam: git pull"
+echo
+
 git pull
+
+echo "spustam: install-production"
+echo
+
 sh $WORKING_DIR/bin/install-production
