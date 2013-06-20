@@ -19,13 +19,9 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
-#	domainMask: "<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>"
 	domainMask: "<language ([a-z]{2}|www)>.<host [a-z.]+>"
 
-	staticDomain: "http://tralandiastatic.com"
-	storageDir: /../../static
 
-#	webTempDir: /../../static/webtemp
 	webTempDir: /webtemp
 	webTempPath: /webtemp
 

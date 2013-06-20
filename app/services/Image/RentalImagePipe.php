@@ -20,38 +20,21 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	/**
 	 * @var string
 	 */
-	private $imageDir;
-
-	/**
-	 * @var string
-	 */
-	private $wwwDir;
-
-	/**
-	 * @var string
-	 */
 	private $baseUrl;
 
-	/**
-	 * @var string
-	 */
-	private $staticDomain;
-
 
 	/**
-	 * @param string $wwwDir
-	 * @param $imageDir
+	 * @param $imagePath
 	 * @param $staticDomain
-	 * @param \Nette\Http\Request $httpRequest
+	 * @param Request $httpRequest
 	 */
-	public function __construct($wwwDir, $imageDir, $staticDomain, Request $httpRequest)
+	public function __construct($imagePath, $staticDomain, Request $httpRequest)
 	{
-		$this->wwwDir = $wwwDir;
-		$this->imageDir = $imageDir;
-		$this->staticDomain = $staticDomain;
-
-		// base of public url
-		$this->baseUrl = rtrim($httpRequest->url->baseUrl, '/');
+		if($staticDomain) {
+			$this->baseUrl = $staticDomain . $imagePath;
+		} else {
+			$this->baseUrl = rtrim($httpRequest->url->baseUrl, '/') . $imagePath;
+		}
 	}
 
 
@@ -77,12 +60,7 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	 */
 	private function publicPath($file)
 	{
-		if($this->staticDomain) {
-			$a = $this->staticDomain . str_replace(array('storage/', 'static/'), '', $this->imageDir);
-		} else {
-			$a = $this->baseUrl . $this->imageDir;
-		}
-		return $a . str_replace($this->wwwDir, '', $file);
+		return $this->baseUrl . $file;
 	}
 
 }

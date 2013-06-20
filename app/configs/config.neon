@@ -40,10 +40,12 @@ parameters:
 	projectEmail: 'info@tralandia.com'
 
 	staticDomain: "http://tralandiastatic.com"
-	storageDir: /storage
+	storageDir: /../../static
+	storagePath: ''
 
 	settingsDir: %appDir%/configs
 	rentalImageDir: %storageDir%/rental_images
+	rentalImagePath: %storagePath%/rental_images
 	rentalPricelistDir: %storageDir%/rental_pricelists
 
 	webTempDir: /webtemp
@@ -259,7 +261,7 @@ services:
 
 
 	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
-	rentalImagePipe: Image\RentalImagePipe(%wwwDir%, %rentalImageDir%, %staticDomain%)
+	rentalImagePipe: Image\RentalImagePipe(%rentalImagePath%, %staticDomain%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
 	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
 
