@@ -374,4 +374,14 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $return;
 
 	}
+
+
+	public function findCountriesWithRentals()
+	{
+		$qb = $this->findByTypeQb('country');
+
+		$qb->andWhere($qb->expr()->gte('e.rentalCount', ':minRentalCount'))->setParameter('minRentalCount', 1);
+
+		return $qb->getQuery()->getResult();
+	}
 }

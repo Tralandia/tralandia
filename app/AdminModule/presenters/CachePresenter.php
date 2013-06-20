@@ -3,9 +3,16 @@
 namespace AdminModule;
 
 
+use Nette\ArrayHash;
 use Nette\Caching\Cache;
 
 class CachePresenter extends BasePresenter {
+
+	/**
+	 * @autowire
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
+	protected $rentalSearchServiceFactory;
 
 	public function actionDashboard()
 	{
@@ -33,5 +40,21 @@ class CachePresenter extends BasePresenter {
 		$this->flashMessage('Done');
 		$this->redirect('dashboard');
 
+	}
+
+
+	public function actionSearchCache()
+	{
+		$primaryLocations = $this->em->getRepository(LOCATION_ENTITY)->findCountriesWithRentals();
+
+		$cachesInfo = new ArrayHash;
+		foreach($primaryLocations as $location) {
+			$cache = $this->rentalSearchServiceFactory->create($location);
+			$cachesInfo[$location->getId()] = new ArrayHash;
+			$cachesInfo[$location->getId()]['location'] = $location;
+			$cachesInfo[$location->getId()]['cache'] = $cache;
+		}
+
+		$this->template->cachesInfo = $cachesInfo;
 	}
 }
