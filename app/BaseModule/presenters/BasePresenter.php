@@ -94,12 +94,6 @@ abstract class BasePresenter extends Presenter {
 	protected $em;
 
 	/**
-	 * @autowire
-	 * @var \Tester\Options
-	 */
-	protected $testerOptions;
-
-	/**
 	 * @var User
 	 */
 	public $loggedUser;
@@ -545,8 +539,10 @@ abstract class BasePresenter extends Presenter {
 
 	public function actionSetTester($id)
 	{
-		$this->testerOptions->setEmail($id);
-		$this->flashMessage('Tester set to: ' . $id);
+		if($this->tester instanceof \Tester\Options) {
+			$this->tester->setEmail($id);
+			$this->flashMessage('Tester set to: ' . $id);
+		}
 		$this->redirect(':Front:Home:');
 	}
 
