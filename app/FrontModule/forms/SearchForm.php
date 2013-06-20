@@ -109,7 +109,7 @@ class SearchForm extends BaseForm
 
 		$this->addSelect(FrontRoute::CAPACITY, 'o20928', $capacity)
 			->setPrompt('')
-			->setAttribute('data-placeholder', $this->translate('o20928'));
+			->setAttribute('data-placeholder', $this->translate('562'));
 
 		$this->addSelect(FrontRoute::BOARD, 'o100080', $boards)
 			->setPrompt('')
