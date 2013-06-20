@@ -14,6 +14,11 @@
 // 		exit;
 // 	}
 // }
+// 
+
+// logovanie user agentov 
+//$log = '/var/www/agents.log';
+//error_log('[' . date('Y-m-d H:i:s') . ']' . "\t" . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\t " . $_SERVER['SERVER_NAME'] . $_SERVER['REDIRECT_URL'] . PHP_EOL, 3, $log);
 
 // the identification of this site
 define('SITE', '');
