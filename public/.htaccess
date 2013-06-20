@@ -177,8 +177,6 @@ php_flag suhosin.simulation On
   RewriteCond %{REMOTE_ADDR} ^46\.161\.41\.24$
   RewriteRule ^.*$ - [F,L]
 
-  RewriteCond %{HTTP_HOST} tralandia\.hr [NC]
-  RewriteRule (.*) http://www.tralandia.com.hr/$1 [R=301,QSA,L]
 
   # front controller
   RewriteCond %{REQUEST_FILENAME} !-f
