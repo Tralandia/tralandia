@@ -117,7 +117,7 @@ class FrontRoute extends BaseRoute
 			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
-			if(isset($params[self::HASH])) {
+				if(isset($params[self::HASH])) {
 				$params[self::HASH] = array_filter(explode('/', $params[self::HASH]));
 			}
 			$params = $this->filterIn($params);
