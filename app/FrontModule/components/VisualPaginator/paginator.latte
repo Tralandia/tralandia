@@ -2,9 +2,9 @@
 <div class="grid-paginator pagination pull-right">
 	<ul>
 	{if $paginator->getPage() - 1 >= $paginator->getFirstPage()}
-		<li><a href="{link this, p => $paginator->getPage() - 1}" class="entypo-prev"></a></li>
+		<li><a href="{link this, p => $paginator->getPage() - 1}"><i class="icon-chevron-left"></i></a></li>
 	{else}
-		<li class="disabled"><a href="#" class="entypo-prev"></a></li>
+		<li class="disabled"><a href="#"><i class="icon-chevron-left"></i></a></li>
 	{/if}
 
 
@@ -19,9 +19,9 @@
 
 
 	{if $paginator->getPage() + 1 <= $paginator->getLastPage()}
-		<li><a href="{link this, p => $paginator->getPage() + 1}" class="entypo-next"></a></li>
+		<li><a href="{link this, p => $paginator->getPage() + 1}"><i class="icon-chevron-right"></i></a></li>
 	{else}
-		<li class="disabled"><a href="#" class="entypo-next"></a></li>
+		<li class="disabled"><a href="#"><i class="icon-chevron-right"></i></a></li>
 	{/if}
 	</ul>
 </div>
