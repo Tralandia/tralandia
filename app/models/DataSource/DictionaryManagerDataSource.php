@@ -66,7 +66,7 @@ class DictionaryManagerDataSource extends BaseDataSource
 			$row['toCheck'] = $row['toCheck'] == 0 ? '' : $row['toCheck'];
 
 			$row['wordsToPay'] = $row['wordsToPay'] == 0 ? '' : $row['wordsToPay'];
-			$row['priceToPay'] = $row['wordsToPay'] * $language->getTranslationPrice();
+			$row['priceToPay'] = $language->getTranslationPriceForWords($row['wordsToPay']);
 
 
 			$return[$key] = $row;

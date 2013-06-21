@@ -18,6 +18,8 @@ abstract class BaseControl extends Control {
 			$template->setFile($path); // automatické nastavení šablony
 		}
 
+		$template->rand = rand(1, 1000);
+
 		return $template;
 	}
 
