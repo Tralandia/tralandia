@@ -10,7 +10,7 @@
 		tags => $searchBarCacheOptions['tags']}
 
 
-	{form searchForm , class => $searchFormClass }
+	{form searchForm , class => $searchFormClass, data-cache => $rand }
 		<strong>{_o100003}</strong>
 		<div class="inputFilterSearch selected">
 			<i class="icon-flag"></i>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="inputFilterSearch price pull-right">
 			<i class="icon-dollar"></i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
-		</div>		
+		</div>
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
@@ -49,8 +49,8 @@
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>
 
-		{if $isHomepage()}		
-			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i> <span>{_151879}</span></a>		
+		{if $isHomepage()}
+			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i> <span>{_151879}</span></a>
 		{/if}
 
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
