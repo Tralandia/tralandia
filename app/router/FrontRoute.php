@@ -182,6 +182,14 @@ class FrontRoute extends BaseRoute
 						$page = $segmentList[self::PAGE];
 						list( , , $presenter, $params['action']) = array_filter(explode(':', $page->destination));
 						$params[self::PAGE] = $segmentList[self::PAGE];
+						if($page->getDestination() == ':Front:CalendarIframe:default') {
+							$rentalId = $pathSegments[1];
+							if($rental = $this->rentalRepositoryAccessor->get()->find($rentalId)) {
+								/** @var $rental \Entity\Rental\Rental */
+								$params[self::RENTAL] = $rental;
+								$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
+							}
+						}
 					} else {
 						foreach ($segmentList as $key => $value) {
 							$params[$key] = $value;

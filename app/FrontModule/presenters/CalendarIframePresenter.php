@@ -15,13 +15,7 @@ class CalendarIframePresenter extends BasePresenter {
 
 	public function actionDefault($rental, $months)
 	{
-		//$selectedData = $rental->getCalendar();
-		$selectedData = [
-			new DateTime('2013-03-14'),
-			new DateTime('2013-03-15'),
-			new DateTime('2013-05-04'),
-			new DateTime('2013-04-21'),
-		];
+		$selectedData = $rental->getCalendar();
 
 		$this->template->monthsCount = $months;
 		$this->template->selectedData = $selectedData;
