@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace BaseModule\Components;
 
 use Nette\DateTime;
@@ -14,7 +14,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		parent::__construct();
 		$this->locale = $locale;
 	}
-	
+
 	public function renderIframe($monthsCount, array $selectedDays = NULL){
 		$template = $this->template;
 		$template->containerClass = 'iframe';
@@ -33,7 +33,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		if(!isset($template->containerClass)){
 			$template->containerClass = 'rentalDetail';
 		}
-		 
+
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
 		$months = [];
@@ -102,9 +102,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	{
 		if($selectedDays === NULL) return $months;
 
-		foreach($selectedDays as $date1) {
-			$date = new \Nette\DateTime();
-			$date->from($date1);
+		foreach($selectedDays as $date) {
 			$yearMonth = $date->format('Y-m');
 			$day = $date->format('d');
 			if(isset($months[$yearMonth]['days'][$day])) {
