@@ -79,10 +79,30 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	protected $status = self::WAITING_FOR_CENTRAL;
 
+
 	public function __toString() {
 		$translation = $this->getDefaultVariation();
 		return strlen($translation) ? $translation : '{!!' . $this->id . '}';
 	}
+
+
+	public function getStatusLabel()
+	{
+		return $this->getStatusLabels()[$this->status];
+	}
+
+	public function getStatusLabels()
+	{
+		return [
+			self::WAITING_FOR_CENTRAL => 'Waiting for central',
+			self::WAITING_FOR_TRANSLATION => 'Waiting for translation',
+			self::WAITING_FOR_CHECKING => 'Waiting for checking',
+			self::WAITING_FOR_PAYMENT => 'Waiting for payment',
+			self::UP_TO_DATE => 'Up to date',
+		];
+	}
+
+
 
 
 	/**
@@ -199,12 +219,12 @@ class Translation extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Phrase\Translation
@@ -215,7 +235,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -225,7 +245,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -233,7 +253,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->phrase;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Phrase\Translation
@@ -244,7 +264,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -254,7 +274,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -262,7 +282,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -272,7 +292,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -280,7 +300,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->variations;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Translation
@@ -291,7 +311,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -301,7 +321,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -309,7 +329,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->gender;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Translation
@@ -320,7 +340,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -328,7 +348,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->position;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Phrase\Translation
@@ -339,7 +359,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -349,7 +369,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -357,7 +377,7 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->timeTranslated;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Phrase\Translation
@@ -368,7 +388,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
