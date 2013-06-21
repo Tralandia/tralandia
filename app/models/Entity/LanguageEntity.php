@@ -156,6 +156,11 @@ class Language extends \Entity\BaseEntityDetails {
 		return $this->translator instanceof User;
 	}
 
+	public function getTranslationPriceForWords($wordsCount)
+	{
+		return ceil($wordsCount * $this->getTranslationPrice());
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */

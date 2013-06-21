@@ -34,7 +34,6 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 	private function prepareCompiler(Language $language, $wordsCount)
 	{
 		$user = $language->getTranslator();
-		$wordPrice = $language->getTranslationPrice();
 		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('dictionary-request-translations'));
 		$emailCompiler->setLayout($this->getLayout());
@@ -43,7 +42,7 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		$emailCompiler->addTranslator('translator', $user);
 		$emailCompiler->addLanguage('language', $language);
 		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
-		$emailCompiler->addCustomVariable('totalPrice', $wordsCount * $wordPrice);
+		$emailCompiler->addCustomVariable('totalPrice', $language->getTranslationPriceForWords($wordsCount));
 		$emailCompiler->addCustomVariable('deadline', $deadline);
 
 		return $emailCompiler;
