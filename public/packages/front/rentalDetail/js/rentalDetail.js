@@ -193,9 +193,11 @@ $(document).ready(function(){
 
 		Socialite.load($(this)[0]);
 
+		$(this).find('i').remove();
+
 		if(!$(this).hasClass('opened')){
 			$(this).addClass('opened');
-			$(this).find('i').remove();
+			
 			return false;			
 		}
 
