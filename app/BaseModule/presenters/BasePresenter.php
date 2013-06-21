@@ -254,6 +254,7 @@ abstract class BasePresenter extends Presenter {
 		$helpers = $this->getContext()->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
 		$template->_imagePipe = $this->rentalImagePipe;
+
 		return $template;
 	}
 
