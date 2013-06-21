@@ -277,6 +277,30 @@ ul.arrows {
 	}
 }
 
+.btn-success {
+	background: #fff;
+	border-color:#ccc;
+	.border-radius(3px);
+
+	.caret {
+		border-top-color: rgb(0, 0, 0);
+		border-bottom-color: rgb(0, 0, 0);		
+	}
+	
+	&:hover  {
+		background: #ddd;
+		background-position: 0;
+	}
+}
+
+.btn-group {
+	&.open {
+		.btn-success.dropdown-toggle {
+			background: #ccc;
+		}
+	}
+}
+
 .btn.btn-orange , .btn.btn-orangeDark, .btn.btn-greenDark {
 
 	i.icon-spinner {
