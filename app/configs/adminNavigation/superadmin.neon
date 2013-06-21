@@ -38,6 +38,10 @@ common:
 					separator: true
 					label: Languages
 					link: ':Admin:Language:list'
+				resolvePhrase:
+					separator: true
+					label: Update Phrase Status
+					link: ':Admin:Phrase:updatePhraseStatus'
 
 		location:
 			label: Locations
