@@ -1,15 +1,15 @@
 {block content}
 
-<h1>{_o827}</h1>
+<h1>{$pageH1}</h1>
 <div class="faqPage">
 	{foreach $categories as $category}
 	<div class="category">
-		<h2><a href="#" class="toggleHide" data-toggle-hide-for=".questionContent{$category->id}"><i class="entypo-arrow-right2"></i> <span>{_$category->name}</span></a></h2>		
+		<h2><a href="#" class="toggleHide" data-toggle-hide-for=".questionContent{$category->id}"><i class="entypo-arrow-right2"></i> <span>{_$category->name}</span></a></h2>
 		{dump $category}
 		<div class="questionContent{$category->id} hide">
 			{foreach $category->questions as $question}
 			<h3>{_$question->question}</h3>
-				<p>{_$question->answer} </p>				
+				<p>{_$question->answer} </p>
 			{/foreach}
 			<a class="loadContactForm" href="mailto:{$projectEmail}">{$projectEmail}</a>
 		</div>
