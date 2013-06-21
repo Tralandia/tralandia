@@ -705,51 +705,42 @@ width: 345px;
 			}			
 		}		
 
-padding-top: 10px;
+		padding-top: 10px;
 
-		&.clock {
-			
-			clear: both;
+		&.clock {					
 			&:before {
-				content:'\1F554';
+				content: "\f017";
 			}			
 		}	
 
 		&.board {			
 			&:before {
-				font-family: 'FontAwesome';
-				font-size: 15px;
 				content:'\f0f4';
 			}			
 		}
 		&.dog {			
 			padding-top: 10px;
 			&:before {
-				font-family: 'FontAwesome';
-				font-size: 15px;
-				left: -14px;
 				content: "\f113";
 			}			
 		}
 
 		&.monitor {			
 			&:before {
-				font-family: 'entypo';
-				font-size: 27px;
-				content:'\1F4BB';
+				content: "\f108";
 			}			
 		}		
 
 		&.bell {			
 			&:before {
-				font-family: 'entypo';
-				font-size: 32px;
-				content:'\1F514';
-				left: -14px;				
+				content: "\f0F3";			
 			}			
 		}		
 
 		&:before {
+			font-family: 'FontAwesome';
+			font-size: 15px;
+			left: -14px;			
 			margin-right: 11px;
 		}
 		
@@ -986,8 +977,9 @@ padding-top: 10px;
 			position: absolute;
 			bottom: 10px;
 			text-align: center;
-			font-size: 40px;
+			font-size: 26px;
 			line-height: 33px;
+			overflow: hidden;
 			color: #fff;
 			cursor: pointer;
 			background: rgba(0,0,0,0.5);
@@ -1020,6 +1012,14 @@ padding-top: 10px;
 			img {
 				width: auto;
 				height: auto;
+			}
+
+			i {
+				position: relative;
+				top: 5px;
+				display: block;
+				left: 4px;
+				height: 30px;
 			}
 			
 		}

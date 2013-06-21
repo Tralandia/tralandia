@@ -46,11 +46,12 @@
 			{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
 			{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
 			{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
+			{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
 
 			{include #fieldset, text => 'o100086'}
 			{include #address, control => $rentalContainer['address']}
-			{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+			
 
 			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
