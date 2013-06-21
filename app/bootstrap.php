@@ -22,8 +22,11 @@ $configurator->addParameters([
 ]);
 
 
-// $configurator->setDebugMode(true);
-$configurator->enableDebugger(ROOT_DIR . '/log');
+//$configurator->setDebugMode(false);
+
+$logEmail = 'durika.d@gmail.com';
+$configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
+
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
@@ -31,6 +34,12 @@ $robotLoader->addDirectory(APP_DIR)
 	->register();
 
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
+
+$logger = new \Diagnostics\ErrorLogger;
+$logger->email = $logEmail;
+$logger->directory = ROOT_DIR . '/log';
+Nette\Diagnostics\Debugger::$logger = $logger;
+
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
