@@ -25,11 +25,19 @@ class ErrorLogger extends Nette\Diagnostics\Logger {
 		$t[] = 'username=uns';
 		$t[] = 'password=ykZ@p8h';
 		$t[] = 'sender=TRAxError';
-		$t[] = 'recipient=+421902318926';
 		$t[] = 'message='.urlencode($smsText);
-		$smsUrl = 'http://www.123sms.sk/api/rest/?'.implode('&', $t);
 
-		$content = file_get_contents($smsUrl);
+		$rado = $t;
+		$david = $t;
+
+		$rado[] = 'recipient=+421902318926';
+		$david[] = 'recipient=+421948035665';
+
+		$radoUrl = 'http://www.123sms.sk/api/rest/?'.implode('&', $rado);
+		$davidUrl = 'http://www.123sms.sk/api/rest/?'.implode('&', $david);
+
+		$content = file_get_contents($radoUrl);
+		$content = file_get_contents($davidUrl);
 
 		$mailer = array('\Nette\Diagnostics\Logger', 'defaultMailer');
 		Nette\Callback::create($mailer)->invoke($message, implode(', ', $email));
