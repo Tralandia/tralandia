@@ -38,6 +38,14 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+		$this->routeIn($route, 'http://www.sk.tra.com/external/calendar/calendar.php?id=1&months=8', 'CalendarIframe', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::RENTAL => $this->findRental(1),
+			'months' => '8',
+		), 'http://www.sk.tra.com/kalendar-obsadenosti/1?months=8');
+
 		$this->routeIn($route, 'http://us.ch.tra.com/', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(158),
@@ -95,13 +103,6 @@ class FrontRouterTest extends BaseRouterTest
 			'months' => '8',
 		), 'http://www.sk.tra.com/?id=test&months=8');
 
-		$this->routeIn($route, 'http://www.sk.tra.com/external/calendar/calendar.php?id=1&months=8', 'CalendarIframe', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::RENTAL => $this->findRental(1),
-			'months' => '8',
-		), 'http://www.sk.tra.com/kalendar-obsadenosti/1?months=8');
 
 		$this->routeIn($route, 'http://www.sk.tra.com/prihlasenie', 'Sign', array(
 			'action' => 'in',

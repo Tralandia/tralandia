@@ -117,7 +117,7 @@ class FrontRoute extends BaseRoute
 			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
-				if(isset($params[self::HASH])) {
+			if(isset($params[self::HASH])) {
 				$params[self::HASH] = array_filter(explode('/', $params[self::HASH]));
 			}
 			$params = $this->filterIn($params);
@@ -126,7 +126,7 @@ class FrontRoute extends BaseRoute
 			unset($params[self::HASH]);
 
 			if(is_array($pathSegments) && 'external/calendar/calendar.php' == join('/',$pathSegments)) {
-				if(isset($params['id']) && $rental = $this->rentalRepositoryAccessor->get()->find($params['id'])) {
+				if(isset($params['id']) && $rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($params['id'])) {
 					$params[self::RENTAL] = $rental;
 					$presenter = 'CalendarIframe';
 					$params['action'] = 'default';
