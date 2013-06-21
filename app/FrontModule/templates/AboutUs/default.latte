@@ -1,6 +1,6 @@
 {block content}
 
-<h1>{_o826, NULL, NULL, ['siteName' => $domain]}</h1>
+<h1>{$pageH1}</h1>
 
 {!_o830, NULL, NULL, ['siteName' => $domain]|texy}
 
@@ -8,7 +8,7 @@
 	{foreach $testimonials as $testimonial}
 	<li>
 		{if $testimonial->rental !== NULL}
-			<img n:image="$testimonial->rental->getMainImage()"/> 
+			<img n:image="$testimonial->rental->getMainImage()"/>
 		{else}
 			<img class="placeholder" src="/images/tra-logo-icon.png"/>
 		{/if}
