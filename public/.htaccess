@@ -8,6 +8,7 @@ php_flag suhosin.simulation On
   RewriteEngine On
   # RewriteBase /
 
+  RewriteCond %{REMOTE_HOST} .*tralandia.com
   RewriteCond %{HTTP_USER_AGENT} .*HTTrack.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Teleport.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*twiceler.* [OR]
