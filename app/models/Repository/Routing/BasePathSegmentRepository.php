@@ -39,7 +39,11 @@ abstract class BasePathSegmentRepository extends \Repository\BaseRepository {
 		$qb->andWhere($qb->expr()->eq('e.pathSegment', ':pathSegment'))
 			->setParameter(':pathSegment', $pathSegment);
 
+		$qb->setMaxResults(1)
+			->orderBy('e.id', 'DESC');
+
 		$t = $qb->getQuery()->getOneOrNullResult();
+
 		return $t;
 	}
 
