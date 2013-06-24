@@ -87,9 +87,10 @@ class FrontRoute extends BaseRoute
 	 */
 	protected $cache;
 
+
 	/**
-	 * @param \Repository\LanguageRepository $languageRepository
-	 * @param \Repository\Location\LocationRepository $locationRepository
+	 * @param string $domainMask
+	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Device $device
 	 */
 	public function __construct($domainMask, EntityManager $em, \Device $device)
@@ -469,6 +470,7 @@ class FrontRoute extends BaseRoute
 			if(!$pathSegment) {
 				$pathSegment = $pathSegmentOldRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
 				if(!$pathSegment) continue;
+				$pathSegment = $pathSegment->getPathSegmentNew();
 			}
 			$keyTemp = $pathSegmentTypesFlip[$pathSegment->getType()];
 			$accessor = $keyTemp.'RepositoryAccessor';
