@@ -137,6 +137,8 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 
 		$params[self::LANGUAGE] = $language;
 
+		unset($params['www']);
+
 
 		return $params;
 	}
@@ -164,6 +166,8 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		$language = $params[self::LANGUAGE];
 		$languageIso = $language->iso == $primaryLocation->defaultLanguage->iso ? 'www' : $language->iso;
 		$params[self::LANGUAGE] = $languageIso;
+
+		$params['www'] = NULL;
 
 		return $params;
 	}
