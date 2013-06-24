@@ -17,6 +17,8 @@ use Service\Rental\RentalSearchService;
 class OptionGenerator
 {
 
+	const PRICE_ITERATION_COUNT = 10;
+
 	/**
 	 * @var \Environment\Environment
 	 */
@@ -325,7 +327,7 @@ class OptionGenerator
 
 		$options = array();
 		$iso = $currency->getIso();
-		for ($i = 1; $i < 10; $i++) {
+		for ($i = 1; $i < self::PRICE_ITERATION_COUNT; $i++) {
 			$key = $i * $searchInterval;
 
 			$options[$key] = "$key $iso";
@@ -349,7 +351,7 @@ class OptionGenerator
 
 		$options = array();
 		$iso = $currency->getIso();
-		for ($i = $from ? : 1; $i < 10; $i++) {
+		for ($i = $from ? : 1; $i < self::PRICE_ITERATION_COUNT; $i++) {
 			$key = $i * $searchInterval;
 			if (!isset($collection[$key])) continue;
 
