@@ -26,6 +26,11 @@
 							{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rentalId}
 						{/capture}
 
+						{var $lastClass = ''}
+						{if $foreachIterator->last}
+							{var $lastClass = 'last'}
+						{/if}
+
 						{cache $rentalBrickCacheOptionsKey,
 							if => $rentalBrickCacheOptions['enabled'],
 							expire => $rentalBrickCacheOptions['expiration'],
@@ -38,10 +43,7 @@
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
 
-						{var $lastClass = ''}
-						{if $foreachIterator->last}
-							{var $lastClass = 'last'}
-						{/if}
+
 							<div class="row-fluid rentalList {$lastClass}" data-cache="{$rand}">
 								<div class="span4">
 									<a href="{link Rental:detail $rental}" n:class="$featured ? top : classic">
