@@ -189,7 +189,7 @@ class PhraseListPresenter extends BasePresenter {
 
 
 		$this->specialOption = [
-			'label' => 'Translated',
+			'label' => 'Complete',
 			'type' => 'translated',
 		];
 
