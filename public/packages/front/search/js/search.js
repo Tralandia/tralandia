@@ -33,6 +33,8 @@
 
 			var placeholder = $(this).attr('data-placeholder');
 
+			var noResults = $(this).data('noResultsText');
+
 			// var conditionsText = $('.sidebarLocation').attr('data-conditions-text');
 
 			var minimumInputLengthtext = $(this).attr('data-format-input-too-short');
@@ -49,56 +51,80 @@
 				},
 
 
-			    placeholder: placeholder,
-			    minimumInputLength: 3,
-			 	// data:[{id:0,type:'other',name:'enhancement'},{id:1,type:'other',name:'bug'},{id:2,type:'other',name:'duplicate'},{id:3,type:'other',name:'invalid'},{id:4,type:'other',name:'wontfix'}],
+				placeholder: placeholder,
+				minimumInputLength: 3,
+				// data:[{id:0,type:'other',name:'enhancement'},{id:1,type:'other',name:'bug'},{id:2,type:'other',name:'duplicate'},{id:3,type:'other',name:'invalid'},{id:4,type:'other',name:'wontfix'}],
 
-			    ajax: { 
-			        url: url,
-			        dataType: 'json',
-			        data: function (term, page) {
-			            return {
-			                string: term, 
-			            };
-			        },
-			        results: function (data, page) {
+				ajax: { 
+					url: url,
+					dataType: 'json',
+					data: function (term, page) {
+						return {
+							string: term, 
+						};
+					},
+					results: function (data, page) {
 
-			        	var r =[];
+						var r =[];					
 
-			        	$.each(data.localitiesAndRegions,function(k,v){
+						if(typeof data.localitiesAndRegions != 'undefined'){
+							
+							$.each(data.localitiesAndRegions,function(k,v){
 
-			        		r.push({
-			        			id: v.slug,
-			        			name: v.name,
-			        			nameSource: v.nameSource
-			        		});
+								r.push({
+									id: v.slug,
+									name: v.name,
+									nameSource: v.nameSource
+								});
 
-			        	});
+							});
 
-			            return {results:r};
-			        }
-			    },
-			    formatResult: function(r){
+							return {results:r};    		
+						} else {
+							r.results = ''; 
+							return r ;
+						}
 
-			    	if(typeof r.nameSource != 'undefined'){
-			    		return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
-			    	} else {
-			    		return r.name;
-			    	}
-			    				    	
-			    }, 
 
-			    formatSelection: function(r){
+					}
+				},
 
-			    	if(typeof r.nameSource != 'undefined'){
-			    		return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
-			    	} else {
-			    		return r.name;
-			    	}
-			    },
+				formatNoMatches: function(search){
+					return noResults;
+				},
+
+				formatResult: function(r){
+
+					if(r == false){
+						console.log(r);
+					} else {
+						if(typeof r.nameSource != 'undefined'){
+							return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
+						} else {
+							return r.name;
+						}						
+					}
+
+				}, 
+
+				formatSelection: function(r){
+
+
+
+					if(r == false){
+						console.log(r);
+					} else {
+						if(typeof r.nameSource != 'undefined'){
+							return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
+						} else {
+							return r.name;
+						}						
+					}
+
+				},
 			   
-			    
-			    escapeMarkup: function (m) { return m; }
+				
+				escapeMarkup: function (m) { return m; }
 			});
 
 
@@ -151,7 +177,7 @@ function generateRedirectUrl(count){
 
 	// remove empty eements from array
 	path = $.grep(path,function(n){
-	    return(n);
+		return(n);
 	});
 
 	path = path.join('/');
@@ -209,7 +235,7 @@ function updateCriteriaCount(){
 		}).done(function(d) {
 		  $('#getSearchCount').html(d.label);
 			  if(d.count == 0){
-			  	$('#searchControlLink').attr('href','#');
+				$('#searchControlLink').attr('href','#');
 			  }
 		});			
 	} else {

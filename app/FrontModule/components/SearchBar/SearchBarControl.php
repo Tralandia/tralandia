@@ -177,6 +177,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
 		$template->formatInputTooShort = $presenter->translate('o100142');
+		$template->noResultsText = $presenter->translate('151891');
 		$template->bottomLinksCallback = $this->directLinks;
 		$template->isHomepage = $this->isHomepage;
 
