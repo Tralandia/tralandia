@@ -3,6 +3,7 @@
 namespace AdminModule;
 
 
+use Dictionary\TranslationsNotCompleteException;
 use Entity\Currency;
 use Entity\Language;
 use Entity\Phrase\Phrase;
@@ -334,7 +335,11 @@ class PhraseListPresenter extends BasePresenter {
 
 			if($specialOptionType == 'translated' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
-					$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+					try {
+						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+					} catch(TranslationsNotCompleteException $e) {
+						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
+					}
 				}
 			} else if($specialOptionType == 'checked' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
@@ -348,7 +353,7 @@ class PhraseListPresenter extends BasePresenter {
 		}
 
 		$phraseRepository->flush();
-		$this->flashMessage('Success', 'success');
+		//$this->flashMessage('Success', 'success');
 		$this->redirect('this');
 	}
 
