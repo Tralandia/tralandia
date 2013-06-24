@@ -29,7 +29,7 @@
 							</li>
 						{/if}
 						<li n:if="$user->identity->isFake()" class="headerIcon">
-							<a class="red bold" href="{plink restoreOriginalIdentity}">Switch back to {$user->identity->getOriginalIdentity()->login}</a>
+							<a class="red bold" href="{plink :Front:Sign:restoreOriginalIdentity}">Switch back to {$user->identity->getOriginalIdentity()->login}</a>
 						</li>
 						{if $loggedUser->isOwner()}
 							<li class="headerIcon">
