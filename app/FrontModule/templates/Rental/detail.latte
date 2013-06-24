@@ -30,14 +30,11 @@
 							<div class="position">TOP</div>
 						{/if}
 
-						{foreach $rental->getSortedImages(3) as $photo}
-						{if $iterator->first}
-						<div class="imageFirst">
-							{/if}
+						{foreach $rental->getSortedImages(3) as $photo}						
+						<div n:class="$iterator->first ? imageFirst">
 							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
-						{if $iterator->first}
+							<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
 						</div>
-						{/if}
 						{/foreach}
 
 						<img class="mapsImage"
