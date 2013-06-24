@@ -128,10 +128,14 @@ class RentalSearchService extends Nette\Object
 
 	public function setPriceCriterion($from = NULL, $to = NULL)
 	{
-		$from == NULL && $from = $to;
-		$to == NULL && $to = $from;
+		$from == NULL && $from = 0;
 
-		if($from >= $to && $from !== NULL) {
+		if($to == NULL) {
+			$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
+			$to = max($priceOptions);
+		}
+
+		if($from <= $to) {
 			$this->criteria[self::CRITERIA_PRICE] = ['from' => $from, 'to' => $to];
 			$this->resetResults();
 		}
