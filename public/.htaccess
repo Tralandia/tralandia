@@ -8,7 +8,6 @@ php_flag suhosin.simulation On
   RewriteEngine On
   # RewriteBase /
 
-  RewriteCond %{REMOTE_HOST} .*tralandia.com
   RewriteCond %{HTTP_USER_AGENT} .*HTTrack.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Teleport.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*twiceler.* [OR]
@@ -44,6 +43,10 @@ php_flag suhosin.simulation On
   RewriteCond %{HTTP_USER_AGENT} spider [OR]
   RewriteCond %{HTTP_USER_AGENT} psbot [OR]
   RewriteCond %{HTTP_USER_AGENT} spbot [OR]
+  RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
+  RewriteCond %{HTTP_USER_AGENT} BLEXBot [OR]
+  RewriteCond %{HTTP_USER_AGENT} Infohelfer [OR]
+  RewriteCond %{HTTP_USER_AGENT} Vagabondo [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Teleport [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Aculinx [OR]
