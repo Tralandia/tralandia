@@ -217,6 +217,20 @@ class Translation extends \Entity\BaseEntity {
 	}
 
 
+	public function isComplete()
+	{
+		foreach ($this->getVariations() as $pluralKey => $genders) {
+			foreach ($genders as $genderKey => $cases) {
+				foreach ($cases as $caseKey => $caseValue) {
+					if(!strlen($caseValue)) return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */

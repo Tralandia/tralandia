@@ -221,7 +221,7 @@ class PhraseContainer extends BaseContainer
 			}
 			$values['displayedTranslations'][] = $translation;
 
-			$translation->setVariations($variations);
+			$translation->updateVariations($variations);
 		}
 
 		$values['phrase'] = $phrase;

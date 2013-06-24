@@ -101,10 +101,15 @@ class UpdateTranslationStatus {
 	 * @param Translation $translation
 	 * @param User $user
 	 *
+	 * @throws TranslationsNotCompleteException
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function translationUpdated(Translation $translation, User $user)
 	{
+		if(!$translation->isComplete()) {
+			throw new TranslationsNotCompleteException;
+		}
+
 		$phrase = $translation->getPhrase();
 
 		$sourceTranslation = $phrase->getSourceTranslation();
@@ -239,3 +244,6 @@ class UpdateTranslationStatus {
 	}
 
 }
+
+
+class TranslationsNotCompleteException extends \Exception {}
