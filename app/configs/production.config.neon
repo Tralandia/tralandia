@@ -19,7 +19,7 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
-	domainMask: "<language ([a-z]{2}|www)>.<host [a-z.]+>"
+	domainMask: "[!<www www.>]<language ([a-z]{2}|www)>.<host [a-z\\.]+>"
 
 
 	webTempDir: /webtemp
@@ -29,6 +29,9 @@ parameters:
 		host: mail.tralandia.com
 		username: robot@tralandia.com
 		password: R03OT
+
+	templateCache:
+		enabled: TRUE
 
 
 services:
