@@ -28,7 +28,7 @@ class UpdateTranslationStatus {
 		if(!strlen($centralTranslation->getTranslation())) {
 			foreach($phrase->getTranslations() as $translation) {
 				if($translation == $sourceTranslation) {
-					$translation->setStatus(Translation::UP_TO_DATE);
+					$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
 					continue;
 				}
 				$translation->setStatus(Translation::WAITING_FOR_CENTRAL);
