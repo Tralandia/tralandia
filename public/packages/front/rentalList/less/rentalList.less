@@ -307,6 +307,18 @@ div#tabs-1 div.row-fluid.rentalList {
 			top: 1px;
 		}
 	}
+
+	li {
+		&.disabled {
+			&.current {
+				a {
+					#gradient > .vertical(@lightGreen,@darkGreen);
+					color: @white;
+					border-color: @lightGreen;
+				}
+			}
+		}
+	}
 }
 
 table.holder {

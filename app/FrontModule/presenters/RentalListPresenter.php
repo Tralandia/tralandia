@@ -63,7 +63,7 @@ class RentalListPresenter extends BasePresenter {
 
 		$vp = $this['p'];
 		$paginator = $vp->getPaginator();
-		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
+		$paginator->itemsPerPage = 10;
 		$paginator->itemCount = $itemCount;
 
 		$this->template->totalResultsCount = $paginator->itemCount;
