@@ -214,7 +214,7 @@ abstract class BasePresenter extends \BasePresenter {
 					if($this->language->getId() !== $this->primaryLocation->getDefaultLanguage()->getId()) {
 						$temp['nameSource'] = $location->getName()->getSourceTranslationText();
 					}
-					if($temp['name'] == $temp['nameSource']) {
+					if(isset($temp['nameSource']) && $temp['name'] == $temp['nameSource']) {
 						unset($temp['nameSource']);
 					}
 					$temp['slug'] = $location->getSlug();
