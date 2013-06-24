@@ -81,8 +81,8 @@
 
 							return {results:r};    		
 						} else {
-							r.results = ''; 
-							return r ;
+							
+							return {results:''} ;
 						}
 
 
@@ -96,7 +96,7 @@
 				formatResult: function(r){
 
 					if(r == false){
-						console.log(r);
+						
 					} else {
 						if(typeof r.nameSource != 'undefined'){
 							return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
@@ -112,7 +112,7 @@
 
 
 					if(r == false){
-						console.log(r);
+						
 					} else {
 						if(typeof r.nameSource != 'undefined'){
 							return r.name+' <span class="nameSource">('+r.nameSource+')</span>';
