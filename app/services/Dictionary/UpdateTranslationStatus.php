@@ -4,7 +4,6 @@ namespace Dictionary;
 
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
-use Entity\User\Role;
 use Entity\User\User;
 
 class UpdateTranslationStatus {

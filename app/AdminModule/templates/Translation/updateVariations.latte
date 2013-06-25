@@ -1,0 +1,12 @@
+{# content}
+
+<h1>Update Translation Variations</h1>
+
+{control updateVariationsForm}
+
+
+{ifset $viewTranslation}
+	{?\Nette\Diagnostics\Debugger::dump($viewTranslation->getVariations())}
+{/ifset}
+
+{/#}

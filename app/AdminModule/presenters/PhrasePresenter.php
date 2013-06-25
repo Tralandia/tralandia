@@ -55,6 +55,9 @@ class PhrasePresenter extends BasePresenter {
 	}
 
 
+	/* ------- Update Phrase Status --------- */
+
+
 	public function actionUpdatePhraseStatus($viewPhrase)
 	{
 		if($viewPhrase) {

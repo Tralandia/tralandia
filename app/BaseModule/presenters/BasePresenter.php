@@ -563,6 +563,18 @@ abstract class BasePresenter extends Presenter {
 
 
 	/**
+	 * @param $id
+	 * @param bool $need
+	 *
+	 * @return \Entity\Phrase\Translation|null
+	 */
+	public function findTranslation($id, $need = TRUE)
+	{
+		return $this->findHelper(TRANSLATION_ENTITY, $id, $need);
+	}
+
+
+	/**
 	 * @param $entityName
 	 * @param $id
 	 * @param bool $need
