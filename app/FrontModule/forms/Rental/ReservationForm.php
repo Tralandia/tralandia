@@ -73,8 +73,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
 
-		$this->addText('name')
-			->setRequired('o100158')
+		$nameControl = $this->addText('name')
+			//->setRequired('o100158')
 			->getControlPrototype()
 				->setPlaceholder('o1031');
 
@@ -85,15 +85,20 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$date = $this->addContainer('date');
 		$today = (new DateTime)->modify('today');
-		$date->addAdvancedDatePicker('from')
-			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')])
+		$dateFromControl = $date->addAdvancedDatePicker('from')
 			->getControlPrototype()
 			->setPlaceholder('o1043');
 
-		$date->addAdvancedDatePicker('to')
-			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')])
+		$dateFromControl->addCondition(self::FILLED)
+			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+
+		$dateToControl = $date->addAdvancedDatePicker('to')
 			->getControlPrototype()
 				->setPlaceholder('o1044');
+
+		$dateToControl->addCondition(self::FILLED)
+			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+
 
 
 		$phoneContainer = $this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
@@ -126,10 +131,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addSelect('children','',$children)
 			->setValue(0);
 
-		$this->addTextArea('message')
-			->addRule(self::MIN_LENGTH, 'o100162', 3)
+		$messageControl = $this->addTextArea('message')
 			->getControlPrototype()
 			->setPlaceholder('o12279');
+
+		$messageControl->addCondition(self::FILLED)
+			->addRule(self::MIN_LENGTH, 'o100162', 3);
 
 
 		$this->addSubmit('submit', 'o100017');
@@ -148,7 +155,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$from = $values->date->from;
 		$to = $values->date->to;
 
-		if(!($to > $from)) {
+		if(($from || $to) && !($to > $from)) {
 			$form['date']['to']->addError($this->translate('o100160'));
 		}
 
@@ -157,7 +164,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		}
 
 		$phone = $values->phone->phone;
-		if(!$phone) {
+		if($phone !== NULL) {
 			$form['phone']['number']->addError($form->translate('o100159'));
 		}
 
@@ -198,9 +205,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setRental($this->rental);
 		$reservation->setSenderEmail($values->email);
 		$reservation->setSenderName($values->name);
-		$reservation->setSenderPhone($values->phone->phone);
-		$reservation->setArrivalDate($values->date->from);
-		$reservation->setDepartureDate($values->date->to);
+		if($values->phone->phone) $reservation->setSenderPhone($values->phone->phone);
+		if($values->date->from) $reservation->setArrivalDate($values->date->from);
+		if($values->date->to) $reservation->setDepartureDate($values->date->to);
 		$reservation->setAdultsCount($values->parents);
 		$reservation->setChildrenCount($values->children);
 		$reservation->setMessage($values->message);

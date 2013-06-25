@@ -35,11 +35,6 @@ $robotLoader->addDirectory(APP_DIR)
 
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 
-$logger = new \Diagnostics\ErrorLogger;
-$logger->email = $logEmail;
-$logger->directory = ROOT_DIR . '/log';
-Nette\Diagnostics\Debugger::$logger = $logger;
-
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
@@ -50,6 +45,11 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 
 if ($section !== 'production') {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
+} else {
+	$logger = new \Diagnostics\ErrorLogger;
+	$logger->email = $logEmail;
+	$logger->directory = ROOT_DIR . '/log';
+	Nette\Diagnostics\Debugger::$logger = $logger;
 }
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
