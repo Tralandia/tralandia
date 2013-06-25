@@ -196,11 +196,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$bottomLinks = [];
 		$links = [];
 		if(!$this->location && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
-			if ($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
-				$count = 200;
-			} else {
-				$count = 30;
-			}
+			$count = 30;
 			$links = $this->searchOptionGenerator->generateLocationLinks($count, $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::LOCATION;
 			$bottomLinks['title'] = 'o100098';
