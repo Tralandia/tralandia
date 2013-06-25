@@ -296,6 +296,7 @@ function searchCriteriumSetInactive(select){
 }
 
 function _updatePriceTo(){	
+
 	var priceFromValue = $('select.sidebarPriceFrom').val();
 
 	var priceToValue = $('select.sidebarPriceTo').val();
@@ -388,7 +389,8 @@ function closeCriteriaSelectButton(){
 		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
 		updateCriteriaCount();
-		updateSerachLinkUrl();		
+		updateSerachLinkUrl();	
+		_updatePriceTo();	
 		$('#select2-drop').hide();
 
 		return false;
