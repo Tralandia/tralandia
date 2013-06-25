@@ -109,6 +109,13 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template->getLogoutLink = $this->getLogoutLink;
 
+		$backgroundImage = "/images/headerBanner/{$primaryLocation->getIso()}.jpg";
+		if(!is_file(WWW_DIR . $backgroundImage)) {
+			$backgroundImage = "/images/headerBanner/fi.jpg";
+		}
+
+		$template->backgroundImage = $backgroundImage;
+
 		$template->render();
 	}
 
