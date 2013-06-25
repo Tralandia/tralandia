@@ -28,12 +28,12 @@ class UpdateTranslationStatus {
 		if(!strlen($centralTranslation->getTranslation())) {
 			foreach($phrase->getTranslations() as $translation) {
 				if($translation == $sourceTranslation) {
-					$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
+					$translation->setStatus(Translation::UP_TO_DATE);
 					continue;
 				}
 				$translation->setStatus(Translation::WAITING_FOR_CENTRAL);
 			}
-			$centralTranslation->setStatus(Translation::UP_TO_DATE);
+			$centralTranslation->setStatus(Translation::WAITING_FOR_TRANSLATION);
 
 			return $phrase;
 		}
