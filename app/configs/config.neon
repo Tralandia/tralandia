@@ -286,6 +286,7 @@ services:
 		class: Statistics\Registrations
 
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
+	dictionary.updateTranslationVariations: Dictionary\UpdateTranslationVariations
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 	dictionary.fulltextSearch: Dictionary\FulltextSearch
 	dictionary.markAsPaid: Dictionary\MarkAsPaid
