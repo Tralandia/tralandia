@@ -34,10 +34,11 @@ class Phone extends Nette\Object {
 		return $this->phoneRepository->get()->findOneByValue($this->prepareNumber($number));
 	}
 
+
 	/**
-	 * Skusi najst cislo, ak nenajde vytvori nove a vrati jeho zaznam
-	 * @param string $number
-	 * @return Entity\Contact\Phone
+	 * @param $number
+	 *
+	 * @return Entity\Contact\Phone|false
 	 */
 	public function getOrCreate($number) {
 		if (!$phone = $this->find($number)) {

@@ -27,11 +27,11 @@ class PhoneContainer extends BaseContainer
 
 		$this->addSelect('prefix', NULL, $phonePrefixes);
 
-		$numberErrorValidateMessage = (!$translator->translate('151882')) ? ' ' : $translator->translate('151882');
+		//$numberErrorValidateMessage = (!$translator->translate('151882')) ? ' ' : $translator->translate('151882');
 
-		$this->addText('number', $label)			
-			->setOption('help', $translator->translate('o1038'))
-			->setRequired($numberErrorValidateMessage);
+		$this->addText('number', $label)
+			->setOption('help', $translator->translate('o1038'));
+			//->setRequired($numberErrorValidateMessage); toto je tu naschal zakomentovane, nie stale chceme mat cislo povinne
 
 	}
 
@@ -65,8 +65,14 @@ class PhoneContainer extends BaseContainer
 	public function getValues($asArray = FALSE)
 	{
 
-		$phone = $this['prefix']->getValue() . $this['number']->getValue();
-		$phone = $this->phoneBook->getOrCreate($phone);
+		$number = $this['number']->getValue();
+
+		if($number) {
+			$phone = $this['prefix']->getValue() . $this['number']->getValue();
+			$phone = $this->phoneBook->getOrCreate($phone);
+		} else {
+			$phone = NULL;
+		}
 
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		$values['prefix'] = $this['prefix']->getValue();
@@ -79,7 +85,7 @@ class PhoneContainer extends BaseContainer
 
 	public function getMainControl()
 	{
-		return $this['number'];
+		return $this->getNumberControl();
 	}
 
 }
