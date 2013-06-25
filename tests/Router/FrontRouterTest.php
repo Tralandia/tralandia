@@ -38,11 +38,11 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
-		$this->routeIn($route, 'http://www.cz.tra.org/karavany', 'RentalList', array(
+		$this->routeIn($route, 'http://www.as.tralandia.com/', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(203),
-			FrontRoute::LANGUAGE => $this->findLanguage(28),
-		), 'http://www.tralandia.cz/');
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(243),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+		));
 
 		$this->routeIn($route, 'http://www.sk.tralandia.cz/', 'Home', array(
 			'action' => 'default',
@@ -56,6 +56,19 @@ class FrontRouterTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 			'page' => $this->findPage(1),
 		));
+
+		$this->routeIn($route, 'http://hu.usal.tralandia.com/', 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::LANGUAGE => $this->findLanguage(62),
+		));
+
+		$this->routeOut($route, 'Registration', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+		), 'http://www.usal.tralandia.com/registration', 'http://www.tralandia.com/');
+
 
 
 		$this->routeIn($route, 'http://www.sk.tra.com/kalendar-obsadenosti/1?months=8', 'CalendarIframe', array(
