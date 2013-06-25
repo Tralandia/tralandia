@@ -3,6 +3,7 @@
 namespace Routers;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Language;
 use Nette;
 use Nette\Application\Routers\Route;
 use Repository\LanguageRepository;
@@ -123,7 +124,15 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
 
 		if(isset($params['host'])) {
-			$primaryLocation = $this->getPrimaryLocationFromHost($params['host']);
+			$params['www'] = substr($params['www'], 0, -1);
+			if(!$primaryLocation = $this->getPrimaryLocationFromHost($params[self::LANGUAGE] . '.' . $params['host'])) {
+				if(!$primaryLocation = $this->getPrimaryLocationFromHost($params['host'])) {
+					$primaryLocation = $this->locationRepository->findOneByIso('com');
+				}
+			} else {
+				$params[self::LANGUAGE] = $params['www'];
+			}
+
 			unset($params['host']);
 		} else {
 			$primaryLocation = $this->locationRepository->findOneByIso($primaryLocation);
@@ -133,7 +142,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 
 		$languageIso = $params[self::LANGUAGE];
 		$language = $languageIso == 'www' ? $params[self::PRIMARY_LOCATION]->defaultLanguage : $this->languageRepository->findOneByIso($languageIso);
-		if(!$language) $language = $params[self::PRIMARY_LOCATION]->defaultLanguage;
+		if(!$language instanceof Language || !$language->getSupported()) $language = $params[self::PRIMARY_LOCATION]->defaultLanguage;
 
 		$params[self::LANGUAGE] = $language;
 
@@ -176,6 +185,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		/** @var $domain \Entity\Domain */
 		$domain = $this->domainRepository->findOneByDomain($host);
+		if(!$domain) return NULL;
 		return $domain->getLocation();
 	}
 

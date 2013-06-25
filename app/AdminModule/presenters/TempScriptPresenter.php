@@ -29,7 +29,7 @@ class TempScriptPresenter extends BasePresenter {
 			$name->createTranslation($language, $location->getLocalName());
 		}
 		$this->em->flush();
-		
+
 		$this->sendPayload();
 	}
 
