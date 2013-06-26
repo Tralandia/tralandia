@@ -1,6 +1,5 @@
 // static page history plugin
 
-
 (function($){
 	$.historyPlugin = function(el, options){
 
@@ -15,10 +14,15 @@
 
 		base.init = function(){
 			base.options = $.extend({},$.historyPlugin.defaultOptions, options);
+			// base.returnHistory = $.extend({},$.historyPlugin.returnHistory);
 			// console.log(base._getPageData());
-			base.historySet();
-			console.log( base._getHistory());
+			// base.historySet();
+			// console.log( base._getHistory());
+
+			console.log(base._getPageType());
 		};
+
+		
 
 
 
@@ -26,6 +30,17 @@
 		*	PLUGIN METHOD
 		*/
 
+		base._getPageType = function(){
+			if($("div.rentalDetailPage").length > 0){
+				return 'detail';
+			} else if ($("form.searchForm").length > 0 && $(".rentalList").length > 0) {
+				return 'list';
+			} else if ($("form.searchForm").length > 0) {
+				return 'home';
+			} else {
+				return 'rootHome';
+			}
+		}
 
 		base.historySet = function(){
 			base._setHistory(base._getPageData()); // set new history to local storage
@@ -34,15 +49,15 @@
 		// history method
 
 		base._getHistory = function(){
-			return $.jStorage.get(base.options.localsotrageKeyName);
+			return $.jStorage.get(base.options.localSotrageKeyName);
 		};
 
 		base._setHistory = function(v){
-			return $.jStorage.set(base.options.localsotrageKeyName,v);
+			return $.jStorage.set(base.options.localSotrageKeyName,v);
 		};
 
 		base._deleteHistory = function(){
-			return $.jStorage.set(base.options.localsotrageKeyName,null);
+			return $.jStorage.set(base.options.localSotrageKeyName,null);
 		};		
 
 		/********************************************************************************
@@ -98,6 +113,7 @@
 		base.init();
 	};
 	
+
     $.historyPlugin.defaultOptions = {
 
         selectorRentalPostRow: "",
@@ -106,19 +122,36 @@
     };	
 	
 	$.fn.historyPlugin = function(options){
-		return this.each(function(){(new $.historyPlugin(this, options));});
+        return this.each(function() {
+
+            // if plugin has not already been attached to the element
+            if (undefined == $(this).data('historyPlugin')) {
+
+                // create a new instance of the plugin
+                // pass the DOM element and the user-provided options as arguments
+                var plugin = new $.historyPlugin(this, options);
+
+                // in the jQuery version of the element
+                // store a reference to the plugin object
+                // you can later access the plugin and its methods and properties like
+                // element.data('pluginName').publicMethod(arg1, arg2, ... argn) or
+                // element.data('pluginName').settings.propertyName
+                $(this).data('historyPlugin', plugin);
+
+            }
+
+        });
 	};
 	
 })(jQuery);
 
 $(function(){
-	$('body').historyPlugin({
+	var inithistory = $('body').historyPlugin({
 
 		selectorRentalPostRow: '.rentalList',
-
 		selectorPaginator: '.pagination',
-
 		selectorListInfo: 'variables[name=listInfo]',
-		localsotrageKeyName: 'historyPlugin'
+		localSotrageKeyName: 'historyPlugin'
 	});
+
 });
