@@ -98,6 +98,12 @@ class PhraseContainer extends BaseContainer
 	}
 
 
+	public function showDeleteLink()
+	{
+		return $this->isLatteType() && $this->getSettings('isAdmin');
+	}
+
+
 	public function build($settings) {
 		$this->setSettings($settings);
 		$phrase = $this->phrase;

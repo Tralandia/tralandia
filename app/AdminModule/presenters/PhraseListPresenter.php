@@ -290,6 +290,7 @@ class PhraseListPresenter extends BasePresenter {
 				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
 			);
 			$showOptions = TRUE;
+			$phraseContainerSettings['isAdmin'] = TRUE;
 		}
 
 		if(is_array($this->editableLanguages)) {
