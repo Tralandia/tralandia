@@ -164,7 +164,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		}
 
 		$phone = $values->phone->phone;
-		if($phone !== NULL) {
+		if($phone === FALSE) {
 			$form['phone']['number']->addError($form->translate('o100159'));
 		}
 
