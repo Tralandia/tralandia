@@ -89,14 +89,17 @@
 
 		base._initDetail = function(){
 
-			base._setRentalDetailVariables();
+			if(base._getHistory() != null){
 
-			if(base._isRentalInHistory()){
-				base._renderNavigationBar();
-			} else {
-				base._deleteHistory();
-				console.log('nepatri do mojej historie');
-				// @todo ajax function
+				base._setRentalDetailVariables();
+
+				if(base._isRentalInHistory()){
+					base._renderNavigationBar();
+				} else {
+					base._deleteHistory();
+					console.log('nepatri do mojej historie');
+					// @todo ajax function
+				}				
 			}
 
 		};
@@ -204,11 +207,14 @@
 		};
 
 		base._getHomeData = function(){
+
+			var rentals = base._getHomeRentals();
+
 			return {
-				rentalCount: base._getHomeInfo().rentalCount,
+				rentalCount: rentals.length,
 				listTitle: base._getHomeInfo().listTitle,					
 				listUrl: document.URL,
-				listData: base._getHomeRentals(),
+				listData: rentals,
 				paginator: false,		
 			};
 		}
