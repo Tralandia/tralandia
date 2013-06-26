@@ -4,6 +4,7 @@ namespace Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Nette\Utils\Arrays;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
@@ -22,26 +23,40 @@ class BaseEntityDetails extends \Entity\BaseEntity {
      */
     public function setDetails($details) {
         $this->details = $details;
- 
+
         return $this;
     }
- 
- 
+
+
     /**
      * @return self
      */
     public function unsetDetails() {
         $this->details = NULL;
- 
+
         return $this;
     }
- 
- 
+
+
     /**
-     * @return \Extras\Types\Json|NULL
+     * @return array
      */
     public function getDetails() {
+		if($this->details === NULL) {
+			$this->details = [];
+		}
+
         return $this->details;
+    }
+
+
+	/**
+	 * @param mixed $key
+	 *
+	 * @return mixed|NULL
+	 */
+	public function getDetail($key) {
+		return Arrays::get($this->getDetails(), $key, NULL);
     }
 
 }

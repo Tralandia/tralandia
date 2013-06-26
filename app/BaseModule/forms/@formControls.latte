@@ -457,6 +457,8 @@
 
 <div  n:class="$hasErrors ? 'invalid row-fluid phraseForm' : 'row-fluid phraseForm'">
 
+	<div n:if="$container->getHelpDescription()">Help: {!$container->getHelpDescription()}</div>
+
 	<div class="span5 phraseFormInputCover">
 
 		{include #translationVatiations, control => $container['fromVariations']}
@@ -478,12 +480,14 @@
 
 					<small>
 						#{$phrase->getId()}, {$container->getPhraseTypeString()}, {$container->getSourceLanguage()->getIso()|upper}
-						{if $container->isLatteType()}
+						{if $container->showUsedStatus()}
 							({$phrase->getUsed() ? 'Used' : 'NOTused'})
 						{/if}
 					</small>
 
-					<small>{$status}</small>
+					{if $container->showPhraseStatus()}
+						<small>{$status}</small>
+					{/if}
 
 					{ifset $languageContainer['gender']}
 						{input $languageContainer['gender'] }
