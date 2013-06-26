@@ -23,12 +23,18 @@ class DestinationPresenter extends BasePresenter {
 
 	}
 
-	public function renderDefault() {
+	public function renderDefault()
+	{
+		$this->template->getLinks = $this->getLocationsLinks;
+	}
 
+
+	public function getLocationsLinks()
+	{
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 
 		$links = $this->searchOptionGenerator->generateLocationLinks(NULL, $search);
-		$this->template->links = array_chunk((array) $links, ceil(count($links)/3));
+		return array_chunk((array) $links, ceil(count($links)/3));
 	}
 
 }
