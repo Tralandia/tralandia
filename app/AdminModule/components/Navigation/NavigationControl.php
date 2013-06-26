@@ -7,6 +7,7 @@ use BaseModule\Components\BaseControl,
 	Nette\Utils\Arrays,
 	Nette\Utils\Strings;
 use BaseModule\Forms\ISimpleFormFactory;
+use Dictionary\FindOutdatedTranslations;
 use Doctrine\ORM\EntityManager;
 use Entity\User\Role;
 use Environment\Collator;
@@ -48,14 +49,21 @@ class NavigationControl extends BaseControl
 	 */
 	private $em;
 
+	/**
+	 * @var \Dictionary\FindOutdatedTranslations
+	 */
+	private $outdatedTranslations;
+
 
 	/**
 	 * @param User $user
 	 * @param ISimpleFormFactory $simpleFormFactory
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Environment\Collator $collator
+	 * @param \Dictionary\FindOutdatedTranslations $outdatedTranslations
 	 */
-	public function __construct(User $user, ISimpleFormFactory $simpleFormFactory, EntityManager $em, Collator $collator)
+	public function __construct(User $user, ISimpleFormFactory $simpleFormFactory, EntityManager $em,
+								Collator $collator, FindOutdatedTranslations $outdatedTranslations)
 	{
 		$this->user = $user;
 		$this->simpleFormFactory = $simpleFormFactory;
@@ -63,12 +71,16 @@ class NavigationControl extends BaseControl
 		$this->loggedUser = $em->getRepository(USER_ENTITY)->find($user->getId());
 		$this->collator = $collator;
 		$this->em = $em;
+		$this->outdatedTranslations = $outdatedTranslations;
 	}
 
 
 	public function render()
 	{
 		$template = $this->template;
+
+		$template->userRole = $this->user->isInRole(Role::TRANSLATOR) ? 'Translator' : 'Admin';
+		$template->userEmail = $this->user->getIdentity()->login;
 
 		$template->leftItems = $this->prepareNavigation($this->getNavigation()->left);
 		$template->rightItems = $this->prepareNavigation($this->getNavigation()->right);
@@ -97,8 +109,6 @@ class NavigationControl extends BaseControl
 			if (isset($value->link)) {
 				$linkArgs = (isset($value->linkArgs) ? $value->linkArgs : array());
 				$value->href = $this->presenter->link($value->link,(array) $linkArgs);
-			} else {
-				$value->href = '#';
 			}
 
 			if (isset($value->items)) {
@@ -125,18 +135,27 @@ class NavigationControl extends BaseControl
 	{
 		$navigation = $this->getNavigation();
 		if($this->user->isInRole(Role::TRANSLATOR)) {
+			/** @var $translationRepository \Repository\Phrase\TranslationRepository */
+			$translationRepository = $this->em->getRepository(TRANSLATION_ENTITY);
 			$left = [];
 			$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findByTranslator($this->loggedUser);
 			foreach($languages as $language) {
 				$languageTree = [];
 				$languageTree['label'] = $language->getName()->getCentralTranslationText() . ' (' . $language->getIso() . ')';
 
+				$toTranslateCount = $this->outdatedTranslations->getWaitingForTranslationCount($language);
 				$languageItems = [];
 				$languageItems['toTranslate'] = [
-					'label' => 'To Translate',
+					'label' => "To Translate ($toTranslateCount)",
 					'link' => 'PhraseList:toTranslate',
 					'linkArgs' => ['id' => $language->getIso()],
 				];
+
+				$translatedWordsCount = $translationRepository->calculateTranslatedWordsCount($language);
+				$languageItems['translatedWords'] = [
+					'label' => "Translated $translatedWordsCount"
+				];
+
 				$languageTree['items'] = $languageItems;
 
 				$left[$language->getIso()] = $languageTree;
