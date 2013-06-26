@@ -15,18 +15,45 @@
 
 		base.init = function(){
 			base.options = $.extend({},$.historyPlugin.defaultOptions, options);
-			console.log(base._getPageData());
+			// console.log(base._getPageData());
+			base.historySet();
+			console.log( base._getHistory());
 		};
+
+
+
+		/********************************************************************************
+		*	PLUGIN METHOD
+		*/
+
+
+		base.historySet = function(){
+			base._setHistory(base._getPageData()); // set new history to local storage
+		}
+
+		// history method
+
+		base._getHistory = function(){
+			return $.jStorage.get(base.options.localsotrageKeyName);
+		};
+
+		base._setHistory = function(v){
+			return $.jStorage.set(base.options.localsotrageKeyName,v);
+		};
+
+		base._deleteHistory = function(){
+			return $.jStorage.set(base.options.localsotrageKeyName,null);
+		};		
+
+		/********************************************************************************
+		*	RENTAL LIST METHOD
+		*/
 
 		// fetch rentals to array 
 		base._getListRentals = function(){
 			var r = [];
 			$(base.options.selectorRentalPostRow).each(function(k,v){
-				r.push({
-					id: parseInt($(v).find('button').attr('rel')),
-					name: $(v).find(base.options.selectorRentalLink).html(),
-					url: $(v).find(base.options.selectorRentalLink).attr('href'),
-				});
+				r.push($(this).find('variables').data('info'));
 			});
 			return r ;			
 		};
@@ -51,24 +78,17 @@
 			return paginator;
 		};
 
-		// get rental list name
-		base._getRentalListName = function(){
-			var name = $(base.options.selectorListTitle).clone();
-				name.find('span').remove();
-				return name.html();
-		};
 
-		// get rental list count
-		base._getRentalListFullCount = function(){
-			return parseInt($(base.options.selectorRentalCount).html().match(/[0-9]+/g)[0]);
-		};
+		base._getListInfo = function(){
+			return $(base.options.selectorListInfo).data('info');
+		}
 
 		// get all rental list data
 		base._getPageData = function(){
 
 			return {
-				rentalCount: base._getRentalListFullCount(),
-				listTitle: base._getRentalListName(),					
+				rentalCount: base._getListInfo().rentalCount,
+				listTitle: base._getListInfo().listTitle,					
 				listUrl: document.URL,
 				listData: base._getListRentals(),
 				paginator: base._getPaginator(),		
@@ -79,10 +99,9 @@
 	};
 	
     $.historyPlugin.defaultOptions = {
-        selectorListTitle: "",
-        selectorRentalCount: "",
+
         selectorRentalPostRow: "",
-        selectorRentalLink: "",
+        selectorListInfo: "",
         selectorPaginator: "",
     };	
 	
@@ -94,12 +113,12 @@
 
 $(function(){
 	$('body').historyPlugin({
-		selectorListTitle: '#content h1',
-		selectorRentalCount: 'h1 span',
+
 		selectorRentalPostRow: '.rentalList',
 
-		selectorRentalLink: 'h2 a',
-
 		selectorPaginator: '.pagination',
+
+		selectorListInfo: 'variables[name=listInfo]',
+		localsotrageKeyName: 'historyPlugin'
 	});
 });
