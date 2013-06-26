@@ -116,6 +116,11 @@ parameters:
 			key: '[language]_rootCountries'
 			expiration: 'tomorrow'
 			tags: ['[name]']
+		allDestinations:
+			enabled: TRUE
+			key: '[language]_[primaryLocation]'
+			expiration: 'tomorrow'
+			tags: ['[name]']
 		registrationForm:
 			enabled: TRUE
 			#if: '[formSubmitted]' neda sa to evelvovat

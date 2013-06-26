@@ -95,7 +95,7 @@ class Phone extends Nette\Object {
 	private function serviceRequest($number,Entity\Location\Location $defaultCountry = NULL) {
 		$query = [];
 		$query['phoneNumber'] = $this->prepareNumber($number);
-		if($defaultCountry) $query['defaultCountry'] = $defaultCountry->getIso();
+		if($defaultCountry) $query['defaultCountry'] = substr($defaultCountry->getIso(), 0, 2);
 		$query = http_build_query($query);
 		$response = file_get_contents($this->serviceUrl . $query);
 		$response = Nette\Utils\Json::decode(str_replace('\'', '"', $response));

@@ -1,14 +1,19 @@
+{#content}
+{cache $allDestinationsCacheOptions['key'],
+	if => $allDestinationsCacheOptions['enabled'],
+	expire => $allDestinationsCacheOptions['expiration'],
+	tags => $allDestinationsCacheOptions['tags']}
 
-{block #content}
 
-<h1>
+	<h1>
 	{_o100185}
 	{* <span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span> *}
 </h1>
 
-<div class=" mytabUi ui-tabs">
+<div class=" mytabUi ui-tabs" data-cache="{$rand}">
 	<div id="tabs-1" class="ui-tabs-panel">
 		<div class="row-fluid">
+			{var $links = $getLinks()}
 			<div n:foreach="$links as $link" class="span4">
 				<ul n:inner-foreach="$link as $row" class="hp-list arrows">
 					<li class="arrow">
@@ -19,3 +24,7 @@
 		</div>
 	</div>
 </div>
+
+
+{/cache}
+{/#}
