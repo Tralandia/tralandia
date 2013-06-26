@@ -70,10 +70,12 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected function persistPagesSegments($languageList)
 	{
 		$pages = $this->pageRepositoryAccessor->get()->findAll();
+		$centralLanguage = $this->languageRepositoryAccessor->get()->find(CENTRAL_LANGUAGE);
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
 				$thisPathSegment = $this->translate($page->name, $language);
+				if (Strings::length($thisPathSegment) == 0) $thisPathSegment = $this->translate($page->name, $centralLanguage);
 				if (Strings::length($thisPathSegment) == 0) continue;
 
 				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
