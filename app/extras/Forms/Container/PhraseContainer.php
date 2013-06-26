@@ -64,10 +64,10 @@ class PhraseContainer extends BaseContainer
 	public function getPhraseTypeString()
 	{
 		$phraseType = $this->phrase->getType();
-		$return = [];
-		$return[] = $phraseType->getEntityName();
-		$return[] = $phraseType->getEntityAttribute();
-		return implode(':', array_unique($return));
+
+		$return = $phraseType->getEntityParsedName();
+		$return[] = ucfirst($phraseType->getEntityAttribute());
+		return implode(' -> ', array_unique($return));
 	}
 
 	public function getSourceLanguage()
@@ -78,6 +78,12 @@ class PhraseContainer extends BaseContainer
 	public function getStatusLabel()
 	{
 		return $this->phrase->getStatusLabel();
+	}
+
+
+	public function getHelpDescription()
+	{
+		return $this->phrase->getHelpDescription();;
 	}
 
 	/**
@@ -227,4 +233,26 @@ class PhraseContainer extends BaseContainer
 		$values['phrase'] = $phrase;
 		return $values;
 	}
+
+
+	public function showDeleteLink()
+	{
+		return $this->isLatteType() && $this->getSettings('isAdmin');
+	}
+
+
+	public function showUsedStatus()
+	{
+		return $this->isLatteType();
+	}
+
+
+	public function showPhraseStatus()
+	{
+		return $this->getSettings('isAdmin');
+	}
+
+
+
+
 }

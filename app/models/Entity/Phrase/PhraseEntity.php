@@ -27,6 +27,9 @@ class Phrase extends \Entity\BaseEntityDetails {
 	const WAITING_FOR_CORRECTION_CHECKING = 2;
 	const READY = 4;
 
+
+	const TRANSLATION_HELP = 'translationHelp';
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Translation", mappedBy="phrase", cascade={"persist", "remove"})
@@ -310,6 +313,13 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$this->getTranslation($language)->translation = $value;
 		return $this;
 	}
+
+
+	public function getHelpDescription()
+	{
+		return $this->getDetail(self::TRANSLATION_HELP);
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

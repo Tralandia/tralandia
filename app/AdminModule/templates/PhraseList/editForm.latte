@@ -8,7 +8,11 @@
 		</div>
 
 		<div class="span3">
-			{input $form['toLanguages'], class => 'toLanguages pull-right'}
+			{var $hideClass = ''}
+			{if $form['toLanguages']->isDisabled()}
+				{var $hideClass = 'hide'}
+			{/if}
+			{input $form['toLanguages'], class => 'toLanguages pull-right ' . $hideClass}
 		</div>
 
 	</div>
