@@ -133,7 +133,8 @@
 
 			var data = base._getInformationFromHistory();
 				dataHistory = base._getHistory();
-				console.log(data);
+
+				
 
 				base.$prevlink.attr('href',data.prevLink.url)
 							  .attr('title',data.prevLink.name);
@@ -149,8 +150,9 @@
 
 		base._getInformationFromHistory = function(){
 
-			var data = base._getHistory().listData;
-
+			var dataHistory = base._getHistory();
+			var data = dataHistory.listData;
+			
 			var r = {
 				lengthHistory: data.length
 			};
@@ -169,7 +171,9 @@
 				r.prevLink = false;
 			}
 
-			if(data.length > (r.currentObjectPosition-1)){
+
+
+			if(r.currentObjectPosition < dataHistory.rentalCount){
 				r.nextLink = data[r.currentObjectPosition];
 			} else {
 				r.nextLink = false;
@@ -241,6 +245,8 @@
 
 			return paginator;
 		};
+
+
 
 
 		base._getListInfo = function(){
