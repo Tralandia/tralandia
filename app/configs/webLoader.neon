@@ -114,6 +114,12 @@ parameters:
 				css:
 					- front/_base/less/calendar.less
 					- front/calendarIframe/less/calendarIframe.less
+			historyPlugin:
+				js:
+					- front/historyPlugin/js/historyPlugin.js
+			staticNavigationBar:
+				js:
+					- front/staticNavigationBar/js/staticNavigationBar.js
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -196,6 +202,7 @@ parameters:
 					# search sidebar
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
+					
 
 			jqueryAppear:
 				js:
@@ -328,6 +335,7 @@ parameters:
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
