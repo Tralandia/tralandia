@@ -38,11 +38,15 @@ class Phone extends Nette\Object {
 	/**
 	 * @param $number
 	 *
+	 * @param null $prefix
+	 *
 	 * @return Entity\Contact\Phone|false
 	 */
-	public function getOrCreate($number) {
+	public function getOrCreate($number, $prefix = NULL) {
 		if (!$phone = $this->find($number)) {
-			$response = $this->serviceRequest($number);
+			$defaultCountry = NULL;
+			if($prefix) $defaultCountry = $this->locationRepository->get()->findOneByPhonePrefix($prefix);
+			$response = $this->serviceRequest($number, $defaultCountry);
 			if (!isset($response->validationResult) || $response->validationResult->isValidNumber != 'true') {
 				return FALSE;
 			}
@@ -88,10 +92,11 @@ class Phone extends Nette\Object {
 	 * @param string $number
 	 * @return int
 	 */
-	private function serviceRequest($number) {
-		$query = http_build_query(array(
-			'phoneNumber' => $this->prepareNumber($number)
-		));
+	private function serviceRequest($number,Entity\Location\Location $defaultCountry = NULL) {
+		$query = [];
+		$query['phoneNumber'] = $this->prepareNumber($number);
+		if($defaultCountry) $query['defaultCountry'] = $defaultCountry->getIso();
+		$query = http_build_query($query);
 		$response = file_get_contents($this->serviceUrl . $query);
 		$response = Nette\Utils\Json::decode(str_replace('\'', '"', $response));
 		return $response;
