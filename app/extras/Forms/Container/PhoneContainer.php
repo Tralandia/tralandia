@@ -69,7 +69,7 @@ class PhoneContainer extends BaseContainer
 
 		if($number) {
 			$phone = $this['prefix']->getValue() . $this['number']->getValue();
-			$phone = $this->phoneBook->getOrCreate($phone);
+			$phone = $this->phoneBook->getOrCreate($phone, $this['prefix']->getValue());
 		} else {
 			$phone = NULL;
 		}
