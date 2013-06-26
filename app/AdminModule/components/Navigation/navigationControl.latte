@@ -2,9 +2,10 @@
 	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
 
 		<div class="widget">
-
 			{form searchForm , class => 'adminSearchForm'}
-				{input rental, class => 'adminSearch', placeholder => 'Search rental'}
+				{ifset $form['rental']}
+					{input rental, class => 'adminSearch', placeholder => 'Search rental'}
+				{/ifset}
 
 				<div class="input-prepend">
 					<span class="add-on select">
@@ -12,8 +13,14 @@
 					</span>
 					{input phrase, class => 'adminSearch adminSearchDictionary', placeholder => 'Search dictionary'}
 				</div>
-				{label allTypes}{input allTypes} Show entity phrases{/label}
-				{label notUsed}{input notUsed} Not used{/label}
+
+				{ifset $form['allTypes']}
+					{label allTypes}{input allTypes} Show entity phrases{/label}
+				{/ifset}
+
+				{ifset $form['notUsed']}
+					{label notUsed}{input notUsed} Not used{/label}
+				{/ifset}
 			{/form}
 
 

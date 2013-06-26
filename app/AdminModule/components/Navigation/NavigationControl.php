@@ -160,25 +160,39 @@ class NavigationControl extends BaseControl
 	{
 		$form = $this->simpleFormFactory->create();
 
-		$rentalLink = $this->presenter->link(':Admin:Rental:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
-		$form->addText('rental', '')
-			->getControlPrototype()
+		if($this->user->isInRole(Role::TRANSLATOR)) {
+			$parameters = [
+				'search' => '__query__',
+				'languageId' => '__languageId__',
+				'allTypes' => '1',
+				'notUsed' => '0',
+			];
+
+		} else {
+
+			$parameters = [
+				'search' => '__query__',
+				'languageId' => '__languageId__',
+				'allTypes' => '__allTypes__',
+				'notUsed' => '__notUsed__',
+			];
+
+			$rentalLink = $this->presenter->link(':Admin:Rental:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
+			$form->addText('rental', '')
+				->getControlPrototype()
 				->data('redirect', $rentalLink);
 
-		$parameters = [
-			'search' => '__query__',
-			'languageId' => '__languageId__',
-			'allTypes' => '__allTypes__',
-			'notUsed' => '__notUsed__',
-		];
+
+			$form->addCheckbox('allTypes', '');
+			$form->addCheckbox('notUsed', '');
+
+		}
+
 		$phraseLink = $this->presenter->link(':Admin:PhraseList:search', $parameters);
 		$form->addText('phrase', '')
 			->getControlPrototype()
 				->data('redirect', $phraseLink);
 
-
-		$form->addCheckbox('allTypes', '');
-		$form->addCheckbox('notUsed', '');
 
 		$languages = $this->languageRepository->getForAdminSearch($this->collator);
 		$defaultLanguage = $this->getParent()->getParameter('languageId', $this->loggedUser->getLanguage()->getId());
