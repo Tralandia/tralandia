@@ -4,6 +4,8 @@
 	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
 </h1>
 
+<variables n:syntax="asp" name="homeInfo" data-info='{"rentalCount":"<%$locationRentalsCount%>","listTitle":"<%$pageH1%>"}'></variables>
+
 <div class="row-fluid">
 
 
@@ -17,6 +19,7 @@
 				{var $featured = $rentalService->isFeatured(); }
 
 					<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
+					<variables n:syntax="asp" data-info='{"name":"<%_$rental['entity']->name%>","url":"<%link Rental:detail $rental['entity']%>","id":"<%$rental['entity']->id%>"}'></variables>
 						<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
 							<div class="position">TOP</div>
 							{if $mainImage = $rental['entity']->getMainImage()}
