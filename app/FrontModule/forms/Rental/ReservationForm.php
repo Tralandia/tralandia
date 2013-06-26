@@ -70,7 +70,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function buildForm()
 	{
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->environment->getLocale()->getCollator());
 
 
 		$nameControl = $this->addText('name')
