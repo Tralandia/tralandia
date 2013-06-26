@@ -342,7 +342,7 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
-	public function getCountriesPhonePrefixes() {
+	public function getCountriesPhonePrefixes(Collator $collator) {
 
 		$qb = $this->_em->createQueryBuilder();
 
@@ -370,6 +370,8 @@ class LocationRepository extends \Repository\BaseRepository {
 				$return[$row['phonePrefix']] = strtoupper($row['iso']) . ' (+'.$row['phonePrefix'].')';
 			}
 		}
+
+		$collator->asort($return);
 
 		return $return;
 
