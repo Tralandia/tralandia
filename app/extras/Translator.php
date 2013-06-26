@@ -81,6 +81,9 @@ class Translator implements \Nette\Localization\ITranslator {
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
 			$phraseId = $phrase->getId();
 		} else {
+			if(!Strings::match($phrase, '~o[0-9]+~') && !is_numeric($phrase)) {
+				return $phrase;
+			}
 			$phraseId = $phrase;
 		}
 
@@ -106,6 +109,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		$translation = $this->cache->load($translationKey);
 
+		//$translation = NULL;
 		if($translation === NULL) {
 
 			if(is_scalar($phrase)) {
@@ -120,6 +124,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$phrase) $translation = FALSE;
+			else $phraseId = $phrase->getId();
 
 			if($phrase instanceof Phrase && !$phrase->getUsed()) {
 				$phrase->setUsed(TRUE);
@@ -153,8 +158,9 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			//if(!$translation) $translation = '{?'.$translationKey.'?}';
 			if(!$translation) $translation = FALSE;
+			//d($phraseId, $translation);
 			$this->cache->save($translationKey, $translation, [
-				Cache::TAGS => ['translator', 'language/'.$language->getId()],
+				Cache::TAGS => ['translator', 'language/'.$language->getId(), 'phrase/'.$phraseId],
 			]);
 		}
 

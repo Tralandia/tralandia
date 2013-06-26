@@ -9,6 +9,7 @@ use Entity\Language;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
+use Extras\Cache\Cache;
 use Nette\Application\BadRequestException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
@@ -327,7 +328,7 @@ class PhraseListPresenter extends BasePresenter {
 		$phraseRepository = $this->phraseRepository;
 		$values = $form->getValues(TRUE);
 
-
+		$phrasesIds = [];
 		foreach($values['list'] as $phraseId => $values) {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
@@ -351,11 +352,26 @@ class PhraseListPresenter extends BasePresenter {
 			} else if($specialOptionType == 'readyForCorrection' && $specialOptionValue) {
 				$this->updateTranslationStatus->setPhraseReadyForCorrection($phrase, $this->loggedUser);
 			}
+			$phrasesIds[] = $phraseId;
 		}
 
 		$phraseRepository->flush();
+		$this->invalidatePhrasesCache($phrasesIds);
 		//$this->flashMessage('Success', 'success');
 		$this->redirect('this');
+	}
+
+
+	public function invalidatePhrasesCache($phrasesIds)
+	{
+		$cache = $this->getContext()->getService('translatorCache');
+
+		foreach($phrasesIds as $phraseId) {
+			$cache->clean([
+				Cache::TAGS => ['phrase/'.$phraseId]
+			]);
+		}
+
 	}
 
 
