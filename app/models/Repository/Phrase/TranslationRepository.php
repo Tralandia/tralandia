@@ -59,6 +59,8 @@ class TranslationRepository extends \Repository\BaseRepository {
 		$qb->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING)
 			->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 
+		$qb = $this->filterTranslatedTypes($qb);
+
 		$paginator = new Paginator($qb);
 		return $paginator->count();
 	}
@@ -117,6 +119,26 @@ class TranslationRepository extends \Repository\BaseRepository {
 	public function calculateWordsCountToPay(Language $language)
 	{
 		$translations = $this->findNotPaid($language);
+		$totalCount = 0;
+		/** @var $translation \Entity\Phrase\Translation */
+		foreach($translations as $translation) {
+			$totalCount += $translation->getPhrase()->getWordsCount($language);
+		}
+
+		return $totalCount;
+	}
+
+
+	public function calculateTranslatedWordsCount(Language $language)
+	{
+		$qb = $this->createQueryBuilder();
+
+		$qb->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
+			->andWhere($qb->expr()->in('e.status', ':status'))->setParameter('status', [Translation::WAITING_FOR_PAYMENT, Translation::WAITING_FOR_CHECKING]);
+
+		$qb = $this->filterTranslatedTypes($qb);
+
+		$translations = $qb->getQuery()->getResult();
 		$totalCount = 0;
 		/** @var $translation \Entity\Phrase\Translation */
 		foreach($translations as $translation) {
