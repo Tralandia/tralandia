@@ -19,6 +19,24 @@
 		expire => $rentalDetailCacheOptions['expiration'],
 		tags => $rentalDetailCacheOptions['tags']}
 
+	<div class="span12">
+		<div id="staticNavBar">
+
+			<div class="backToList"><a class="listName"><i class="icon-double-angle-left"></i><span></span> (<small class="listFullCount"></small>)</a></div>
+
+			<div class="info">
+
+				<a class="paginator prev"><i class="icon-angle-left"></i></a>
+			
+					<span class="objectPosition"></span> / <span class="objectText"></span> <span class="listFullCount"></span>
+				
+				<a class="paginator next"><i class="icon-angle-right"></i></a>
+
+			</div>
+
+		</div>
+	</div>
+
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 			<div id="content" class="noPadding">
@@ -42,6 +60,8 @@
 					</div>
 
 					<div class="span5">
+
+						<variables n:syntax="asp" name="rentalDetailInfo" data-info='{"id":"<%$rental->id%>","name":"<%_$rental->name%>","rentalText":"#ubytko z"}'></variables>
 
 						<h1 class="addToViewList" id="{$rental->id}">
 							{_$rental->name}

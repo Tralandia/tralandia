@@ -1,0 +1,81 @@
+@import '../../../bootstrap/lib/less/mixins.less';
+
+@barHeight: 30px;
+@darFontSize: 12px;
+
+#staticNavBar {
+	background: rgb(236, 236, 236);
+	height: @barHeight;
+	margin: 0 25px;
+	clear: both;
+	line-height: @barHeight;
+	font-size: @darFontSize;
+	.border-radius(5px 5px 0 0);
+	overflow: hidden;
+	color: rgb(126, 126, 126);
+	margin-bottom: -1px;
+	i {
+		font-size: 19px;
+	}
+
+	small {
+		font-size: @darFontSize;
+	}
+
+	.paginator {
+		display: block;
+		height: @barHeight;
+		width: @barHeight;
+		float: left;
+		text-align: center;
+		#gradient > .vertical(rgb(192, 192, 192),rgb(143, 143, 143));
+		color: #fff;
+
+		text-decoration: none;
+
+		&.next {
+			float: right;
+		}
+	}
+
+	.backToList {
+		float: left;
+
+		a {
+			text-decoration: none;
+			display: block;
+			height: @barHeight;
+			width: auto;	
+			color: rgb(126, 126, 126);
+
+			&:hover {
+				span {
+					text-decoration: none;
+				}
+			}
+
+			i {
+				display: block;
+				height: @barHeight;
+				width: @barHeight;
+				float: left;
+				display: block;
+				height: @barHeight;
+				width: @barHeight;
+				line-height: @barHeight;
+				float: left;
+				text-align: center;
+				background: #ddd;
+				color: #fff;
+				margin: 0;
+				margin-right: 10px;		
+			}
+		}
+	}
+
+	.info {
+		float: right;
+		width: 300px;
+		text-align: center;
+	}
+}

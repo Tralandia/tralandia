@@ -114,6 +114,14 @@ parameters:
 				css:
 					- front/_base/less/calendar.less
 					- front/calendarIframe/less/calendarIframe.less
+			historyPlugin:
+				css:
+					- front/historyPlugin/less/historyPlugin.less
+				js:
+					- front/historyPlugin/js/historyPlugin.js
+			staticNavigationBar:
+				js:
+					- front/staticNavigationBar/js/staticNavigationBar.js
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -196,6 +204,7 @@ parameters:
 					# search sidebar
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
+					
 
 			jqueryAppear:
 				js:
@@ -282,13 +291,13 @@ parameters:
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
-
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%				
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -309,6 +318,7 @@ parameters:
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -328,6 +338,7 @@ parameters:
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
