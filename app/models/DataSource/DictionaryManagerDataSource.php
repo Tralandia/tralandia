@@ -58,7 +58,15 @@ class DictionaryManagerDataSource extends BaseDataSource
 			$row['language'] = $language;
 			//$row['lastTranslation'] = $lastTranslation;
 			$row['toTranslate'] = $this->outdatedTranslations->getWaitingForTranslationCount($language);
+			$translationsToTranslate = $this->outdatedTranslations->getWaitingForTranslation($language);
+			$row['wordsToTranslate'] = $translationRepository->calculateWordsInTranslations($translationsToTranslate);
+			$row['priceToTranslate'] = $language->getTranslationPriceForWords($row['wordsToTranslate']);
+
 			$row['toCheck'] = $translationRepository->toCheckCount($language);
+			$translationsToCheck = $translationRepository->toCheckQb($language)->getQuery()->getResult();
+			$row['wordsToCheck'] = $translationRepository->calculateWordsInTranslations($translationsToCheck);
+			$row['priceToCheck'] = $language->getTranslationPriceForWords($row['wordsToCheck']);
+
 			$row['wordsToPay'] = $translationRepository->calculateWordsCountToPay($language);
 			$row['translator'] = $language->getTranslator();
 

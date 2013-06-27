@@ -52,15 +52,23 @@ class TranslationRepository extends \Repository\BaseRepository {
 	}
 
 
-	public function toCheckCount(Language $language)
+	public function toCheckQB(Language $language = NULL)
 	{
 		$qb = $this->createQueryBuilder();
 
-		$qb->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING)
-			->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+		$qb->where($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING);
+
+		if($language) $qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 
 		$qb = $this->filterTranslatedTypes($qb);
 
+		return $qb;
+	}
+
+
+	public function toCheckCount(Language $language)
+	{
+		$qb = $this->toCheckQB($language);
 		$paginator = new Paginator($qb);
 		return $paginator->count();
 	}
@@ -139,10 +147,16 @@ class TranslationRepository extends \Repository\BaseRepository {
 		$qb = $this->filterTranslatedTypes($qb);
 
 		$translations = $qb->getQuery()->getResult();
+		return $this->calculateWordsInTranslations($translations);
+	}
+
+
+	public function calculateWordsInTranslations(array $translations)
+	{
 		$totalCount = 0;
 		/** @var $translation \Entity\Phrase\Translation */
 		foreach($translations as $translation) {
-			$totalCount += $translation->getPhrase()->getWordsCount($language);
+			$totalCount += $translation->getPhrase()->getWordsCount($translation->getLanguage());
 		}
 
 		return $totalCount;
