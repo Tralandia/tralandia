@@ -9,7 +9,7 @@
 {define #col-toTranslate}
 	<td>
 		{if $cell}
-			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank">{$cell}</a>&nbsp;=&nbsp;{$row->wordsToTranslate}&nbsp;w.<br/>({$row->priceToTranslate} EUR)
 			<a href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		{else}
 			{$cell}
@@ -20,7 +20,7 @@
 {define #col-toCheck}
 	<td>
 	{if $cell}
-		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>
+		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>&nbsp;=&nbsp;{$row->wordsToCheck}&nbsp;w.<br/>({$row->priceToCheck} EUR)
 	{else}
 		{$cell}
 	{/if}
