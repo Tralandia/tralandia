@@ -7,7 +7,7 @@
 			<li>
 				<a href="{plink :Front:Home:default, Routers\BaseRoute::PRIMARY_LOCATION => $country['entity']}"><i class="icon-angle-right"></i> 
 					{var $rentalCount = isset($rentalCounts[$country['entity']->getId()]) ? $rentalCounts[$country['entity']->getId()] : 0}
-					{$country['name']} {if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
+					{$country['name']}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 				</a>
 			</li>
 		</ul>
