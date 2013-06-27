@@ -19,17 +19,20 @@ common:
 						latte:
 							lable: Latte
 							icon: icon-angle-right
+							data-confirm-text: rly?
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: Latte
 						latteMulti:
 							lable: LatteMulti
+							data-confirm-text: rly?
 							icon: icon-angle-right
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: LatteMulti
 						latteHtml:
 							lable: LatteHtml
+							data-confirm-text: rly?
 							icon: icon-angle-right
 							link: ':Admin:Phrase:add'
 							linkArgs:
