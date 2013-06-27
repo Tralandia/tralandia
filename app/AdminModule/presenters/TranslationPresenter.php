@@ -49,4 +49,39 @@ class TranslationPresenter extends BasePresenter {
 		$this->redirect('updateVariations', ['viewTranslation' => $translation->getId()]);
 	}
 
+
+	public function actionUpdatePhraseTranslationsVariations()
+	{
+	}
+
+
+	protected function createComponentUpdatePhraseTranslationsVariationsForm()
+	{
+		$form = $this->simpleFormFactory->create();
+		$form->addText('phrases', 'Phrases');
+		$form->addSubmit('submit');
+
+		$form->onSuccess[] = $this->updatePhraseTranslationsVariationsFormSuccess;
+
+		return $form;
+	}
+
+	public function updatePhraseTranslationsVariationsFormSuccess(Form $form)
+	{
+		$values = $form->getValues();
+
+		$phrases = $values->phrases;
+		$phrases = explode(',', $phrases);
+		$phrases = array_map('trim', $phrases);
+
+		foreach($phrases as $phrase) {
+			$phraseEntity = $this->findPhrase($phrase);
+			$this->variationUpdater->updatePhrase($phraseEntity);
+		}
+
+		$this->em->flush();
+
+		$this->redirect('updatePhraseTranslationsVariations');
+	}
+
 }
