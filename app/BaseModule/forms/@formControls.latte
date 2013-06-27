@@ -469,6 +469,9 @@
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
 			{var $status = $languageContainer['variations']->getStatusLabel()}
+
+			{var $helpclass = ''}
+
 			<div class="phrasecontrol hide {$language->getId()}_phrase ">
 
 				<div class="span5 phraseFormInputCover">
@@ -539,10 +542,10 @@
 	$language = $container->getLanguage();
 }
 {?unset($control)}
-<table class="phraseTable table-striped table">
+<table class="phraseTable table">
 	<tr>
 		{if $phrase->type->pluralVariationsRequired}
-		<th colspan="2">Count</th>
+		
 		{/if}
 		{if $phrase->type->genderVariationsRequired}
 		{foreach $language->genders as $genderName}
@@ -552,18 +555,19 @@
 	</tr>
 	{foreach $container->getComponents() as $plural}
 	<tr>
-		{if $phrase->type->pluralVariationsRequired}
-		<td>{$language->getPluralName($plural->getName())}</td>
-		{/if}
-		{foreach $plural->getComponents() as $genders}
-		<td>
-			{foreach $genders->getComponents() as $gender}
 
-			{$gender->getControl()}
+		{foreach $plural->getComponents() as $genders}
+		<td class="control">
+			{foreach $genders->getComponents() as $gender}
 
 			<span class="genderName">
 				{$gender->getName()|firstUpper}
+				{if $phrase->type->pluralVariationsRequired}
+				{$language->getPluralName($plural->getName())}
+				{/if}				
 			</span>
+
+			{$gender->getControl()}
 
 			{/foreach}
 		</td>

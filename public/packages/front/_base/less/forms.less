@@ -774,6 +774,8 @@ table.formTable {
 	}	
 }
 
+
+
 .phraseForm {
 	margin-top: 10px;
 
@@ -781,24 +783,45 @@ table.formTable {
 		input , textarea {
 			width: 95%;		
 		}
+
+		tr {
+			td {
+				&.plural {
+					width: 62px;
+					font-size: 11px;
+					line-height: 29px;
+				}
+
+				&.control {
+					position: relative;
+				}
+			}
+		}
+
+
+		.genderName {
+			position: absolute;
+			top: -6px;
+			font-size: 9px;
+			color: #888888;
+			left: 15px;
+			line-height: 12px;
+			padding: 2px 5px;
+			background: #eeeeee;
+			border: 1px solid #cccccc;
+			border-bottom: none;
+			height: 12px;
+			.border-radius(3px 3px 0 0);
+		}
+
 	}
 
-	.genderName {
-		position: relative;
-		top: -39px;
-		padding-right: 10px;
-		font-size: 9px;
-		color: #888;
-		right: 0;
-		float: right;
-		height: 0;
-	}
+
 
 
 	small {
 		font-size: 12px;
 		color: #888;
-		padding-left: 10px;
 	}
 
 	table.phraseTable {
@@ -812,9 +835,28 @@ table.formTable {
 
 	.phraseFormHeaderCover {
 		height: 25px;
-		width: 715px;
+		width: 705px;
+		padding: 0 10px;
 		margin: 0;
 		margin-top: -8px;
+
+		label {
+			color: @darkGreen;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		a {
+			font-size: 12px;
+
+			font-weight: bold;
+
+			&.ajaxDelete {
+				color: red;
+			}
+		}
 
 		input[type=checkbox] {
 			top: -3px;
