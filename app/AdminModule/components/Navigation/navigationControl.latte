@@ -1,7 +1,6 @@
 <div class="span3" role="sidebar" id="sidebar">
 	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
-		{$userEmail}
-		{$userRole}
+		<div class="userRoleInfo">{$userEmail} <br/> {$userRole}</div>
 		<div class="widget">
 			{form searchForm , class => 'adminSearchForm'}
 				{ifset $form['rental']}
