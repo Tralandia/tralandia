@@ -145,7 +145,7 @@
 				base.$nextLink.attr('href',data.nextLink.url)
 							  .attr('title',data.nextLink.name);
 
-				base.$listName.html(dataHistory.listTitle).attr('href',dataHistory.listUrl);							  						  
+				base.$listName.attr('href',dataHistory.listUrl).find('span').html(dataHistory.listTitle);							  						  
 				base.$listFullCount.html(dataHistory.rentalCount);							  						  
 				base.$rentalListPosition.html(data.currentObjectPosition);							  						  
 

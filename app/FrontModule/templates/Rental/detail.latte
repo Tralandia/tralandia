@@ -19,15 +19,23 @@
 		expire => $rentalDetailCacheOptions['expiration'],
 		tags => $rentalDetailCacheOptions['tags']}
 
+	<div class="span12">
 		<div id="staticNavBar">
-			<a class="paginator prev"> < </a>
+
+			<div class="backToList"><a class="listName"><i class="icon-double-angle-left"></i><span></span></a></div>
+
 			<div class="info">
-				<span class="objectPosition"></span>
-				<span class="listFullCount"></span>
-				<a class="listName"></a>
+
+				<a class="paginator prev"><i class="icon-angle-left"></i></a>
+			
+					<span class="objectPosition"></span>/<span class="listFullCount"></span>
+				
+				<a class="paginator next"><i class="icon-angle-right"></i></a>
+
 			</div>
-			<a class="paginator next"> > </a>
+
 		</div>
+	</div>
 
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">

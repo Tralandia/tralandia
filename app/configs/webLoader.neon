@@ -115,6 +115,8 @@ parameters:
 					- front/_base/less/calendar.less
 					- front/calendarIframe/less/calendarIframe.less
 			historyPlugin:
+				css:
+					- front/historyPlugin/less/historyPlugin.less
 				js:
 					- front/historyPlugin/js/historyPlugin.js
 			staticNavigationBar:

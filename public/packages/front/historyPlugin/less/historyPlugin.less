@@ -1,0 +1,70 @@
+@import '../../../bootstrap/lib/less/mixins.less';
+
+@barHeight: 30px;
+
+#staticNavBar {
+	background: #dadada;
+	height: @barHeight;
+	margin: 0 25px;
+	clear: both;
+	line-height: @barHeight;
+
+	.border-radius(5px 5px 0 0);
+	overflow: hidden;
+
+	.paginator {
+		display: block;
+		height: @barHeight;
+		width: @barHeight;
+		float: left;
+		text-align: center;
+		#gradient > .vertical(rgb(192, 192, 192),rgb(143, 143, 143));
+		color: #fff;
+
+		text-decoration: none;
+
+		&.next {
+			float: right;
+		}
+	}
+
+	.backToList {
+		float: left;
+
+		a {
+			text-decoration: none;
+			display: block;
+			height: @barHeight;
+			width: auto;	
+			color: #333;
+
+			&:hover {
+				span {
+					text-decoration: none;
+				}
+			}
+
+			i {
+				display: block;
+				height: @barHeight;
+				width: @barHeight;
+				float: left;
+				display: block;
+				height: @barHeight;
+				width: @barHeight;
+				line-height: @barHeight;
+				float: left;
+				text-align: center;
+				background: #ddd;
+				color: #fff;
+				margin: 0;
+				margin-right: 10px;		
+			}
+		}
+	}
+
+	.info {
+		float: right;
+		width: 300px;
+	}
+}
