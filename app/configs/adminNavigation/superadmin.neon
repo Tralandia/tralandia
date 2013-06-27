@@ -49,6 +49,10 @@ common:
 					separator: true
 					label: Update Translation Variations
 					link: ':Admin:Translation:updateVariations'
+				updatePhraseTranslationsVariations:
+					separator: true
+					label: Update Phrase's Translations Variations
+					link: ':Admin:Translation:updatePhraseTranslationsVariations'
 
 		location:
 			label: Locations

@@ -92,7 +92,7 @@ parameters:
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		rentalBrick:
-			enabled: TRUE
+			enabled: false
 			key: '[language]_[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']

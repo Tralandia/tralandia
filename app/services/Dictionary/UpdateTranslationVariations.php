@@ -8,6 +8,7 @@
 namespace Dictionary;
 
 
+use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Nette;
 
@@ -28,6 +29,14 @@ class UpdateTranslationVariations {
 			}
 		}
 		$translation->setVariations($newVariations);
+	}
+
+
+	public function updatePhrase(Phrase $phrase)
+	{
+		foreach($phrase->getTranslations() as $translation) {
+			$this->update($translation);
+		}
 	}
 
 }
