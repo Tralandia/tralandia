@@ -97,7 +97,7 @@ parameters:
 			expiration: '+1 month'
 			tags: ['[name]']
 		rentalDetail:
-			enabled: TRUE
+			enabled: false
 			key: '[language]_[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
