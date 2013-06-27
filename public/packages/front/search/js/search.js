@@ -297,17 +297,21 @@ function searchCriteriumSetInactive(select){
 
 function _updatePriceTo(){	
 
-	var priceFromValue = $('select.sidebarPriceFrom').val();
+	var $priceTo = $('select.sidebarPriceTo');
+	var $priceFrom = $('select.sidebarPriceFrom');
 
-	var priceToValue = $('select.sidebarPriceTo').val();
+	var priceFromValue = $priceFrom.val();
+
+	var priceToValue = $priceTo.val();
 
 	if(priceToValue > 0 ){
 		if(priceFromValue > priceToValue){
-			 $('select.sidebarPriceTo').select2('val','');
+			$priceTo.parents('.inputFilterSearch').removeClass('selected').find('.btnSearchClose').remove();
+			$priceTo.select2('val','');
 		}
 	}
 
-	$('select.sidebarPriceTo option').each(function(k,v){
+	$priceTo.find('option').each(function(k,v){
 		$(this).attr('disabled',false);
 		if($(this).val() <= priceFromValue){
 			$(this).attr('disabled',true);
