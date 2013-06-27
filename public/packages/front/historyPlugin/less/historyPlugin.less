@@ -1,16 +1,26 @@
 @import '../../../bootstrap/lib/less/mixins.less';
 
 @barHeight: 30px;
+@darFontSize: 12px;
 
 #staticNavBar {
-	background: #dadada;
+	background: rgb(236, 236, 236);
 	height: @barHeight;
 	margin: 0 25px;
 	clear: both;
 	line-height: @barHeight;
-
+	font-size: @darFontSize;
 	.border-radius(5px 5px 0 0);
 	overflow: hidden;
+	color: rgb(126, 126, 126);
+	margin-bottom: -1px;
+	i {
+		font-size: 19px;
+	}
+
+	small {
+		font-size: @darFontSize;
+	}
 
 	.paginator {
 		display: block;
@@ -36,7 +46,7 @@
 			display: block;
 			height: @barHeight;
 			width: auto;	
-			color: #333;
+			color: rgb(126, 126, 126);
 
 			&:hover {
 				span {
@@ -66,5 +76,6 @@
 	.info {
 		float: right;
 		width: 300px;
+		text-align: center;
 	}
 }

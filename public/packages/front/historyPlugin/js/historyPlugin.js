@@ -111,7 +111,7 @@
 			base.$rentalListPosition = $(base.options.selectorNavBarObjectPosition);
 			base.$listFullCount = $(base.options.selectorNavBarFullCount);
 			base.$listName = $(base.options.selectorNavBarListName);
-
+			base.$objectText = $(base.options.selectorObjectText);
 
 			base.rentalDetailVariables = $(base.options.selectorRentalinfo).data('info');
 		};
@@ -135,9 +135,10 @@
 		base._renderNavigationBar = function(){
 
 			var data = base._getInformationFromHistory();
-				dataHistory = base._getHistory();
 
-				
+				// console.log(base.rentalDetailVariables);
+
+				dataHistory = base._getHistory();
 
 				base.$prevlink.attr('href',data.prevLink.url)
 							  .attr('title',data.prevLink.name);
@@ -146,7 +147,8 @@
 							  .attr('title',data.nextLink.name);
 
 				base.$listName.attr('href',dataHistory.listUrl).find('span').html(dataHistory.listTitle);							  						  
-				base.$listFullCount.html(dataHistory.rentalCount);							  						  
+				base.$listFullCount.html(dataHistory.rentalCount);	
+				base.$objectText.html(base.rentalDetailVariables.rentalText);
 				base.$rentalListPosition.html(data.currentObjectPosition);							  						  
 
 		};		
@@ -298,6 +300,7 @@ $(function(){
 		selectorRentalinfo: 'variables[name=rentalDetailInfo]',
 		selectorNavBarPrevLink: '#staticNavBar a.prev',
 		selectorNavBarNextLink: '#staticNavBar a.next',
+		selectorObjectText: '#staticNavBar .objectText',
 
 		selectorNavBarObjectPosition: '#staticNavBar .objectPosition',
 		selectorNavBarFullCount: '#staticNavBar .listFullCount',
