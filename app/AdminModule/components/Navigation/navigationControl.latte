@@ -1,4 +1,4 @@
-<div class="span3" role="sidebar" id="sidebar">
+<div class="span3 adminSidebar" role="sidebar" id="sidebar">
 	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
 		<div class="userRoleInfo">{$userEmail} <br/> {$userRole}</div>
 		<div class="widget">
@@ -33,7 +33,7 @@
 					{ifset $itemL2->href}
 						<a n:class="$itemL2->class" href="{$itemL2->href}" n:attr="target => $itemL2->target, data-confirm-text => $itemL2['data-confirm-text']">{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}<i class="icon icon-angle-right"></i> {$itemL2->label}</a>
 					{else}
-						<span>{$itemL2->label}</span>
+						<span><i class="icon icon-angle-right"></i> {$itemL2->label}</span>
 					{/ifset}
 					{if isset($itemL2->items) && count($itemL2->items)}
 						<ul n:inner-foreach="$itemL2->items as $itemL3">

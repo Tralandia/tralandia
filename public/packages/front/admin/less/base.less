@@ -28,7 +28,7 @@
 
 }
 
-#sidebar {
+#sidebar.adminSidebar {
 
 	.userRoleInfo {
 		padding: 10px 10px 0 10px;
@@ -43,13 +43,31 @@
 	ul {
 		position: relative;
 
-		ul {
-			padding-left: 17px;
+		li {
+			ul {
+				li {
+					a {
+						padding-left: 33px;
+					}
+				}
+			}			
 		}
+
 
 		li {
 			span {
 				padding-left: 23px;
+				color: @darkGreen;
+				
+				i {
+					color: #7d3300;
+					position: relative;
+					left: 15px;
+					top:2px;
+					width: 0;
+					display: block;
+					float: left;					
+				}
 			}
 		}
 	}

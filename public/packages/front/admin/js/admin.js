@@ -1,3 +1,46 @@
+// confirm link
+(function($){
+
+    $.confirmLink = function(el, options){
+
+        var base = this;
+
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("confirmLink", base);
+        
+        base.confirmText = base.$el.data('confirmText');
+
+        base.init = function(){
+        	base.bind();
+        };
+        
+        base.bind = function(){
+        	base.$el.live('click',base.confirmDialog);
+        }
+
+        base.confirmDialog = function(){
+
+        	if(typeof base.confirmText != 'undefined'){
+        		return confirm(base.confirmText);
+        	} else {
+        		return true;
+        	}
+        	        	
+        }
+
+        base.init();
+    };
+    
+    $.fn.confirmLink = function(radius, options){
+        return this.each(function(){
+            (new $.confirmLink(this, radius, options));});
+    };
+    
+})(jQuery);
+
+
 
 
 $(function() {
@@ -176,4 +219,6 @@ $(function(){
 $(function(){
 	$('.phraseFormHeaderCover a.ajaxDelete').phraseDelete();
 	$('.phraseFormHeaderCover a.preview').textareaPreview();
+
+	$('#sidebar.adminSidebar a').confirmLink();
 });
