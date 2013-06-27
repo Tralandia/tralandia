@@ -1,7 +1,6 @@
 <div class="span3" role="sidebar" id="sidebar">
 	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
-		{$userEmail}
-		{$userRole}
+		<div class="userRoleInfo">{$userEmail} <br/> {$userRole}</div>
 		<div class="widget">
 			{form searchForm , class => 'adminSearchForm'}
 				{ifset $form['rental']}
@@ -32,13 +31,13 @@
 			<ul n:inner-foreach="$itemL1->items as $itemL2">
 				<li>
 					{ifset $itemL2->href}
-						<a n:class="$itemL2->class" href="{$itemL2->href}" {!$itemL2->target}>{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset} {$itemL2->label}</a>
+						<a n:class="$itemL2->class" href="{$itemL2->href}" {!$itemL2->target}>{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}<i class="icon icon-angle-right"></i> {$itemL2->label}</a>
 					{else}
 						<span>{$itemL2->label}</span>
 					{/ifset}
 					{if isset($itemL2->items) && count($itemL2->items)}
 						<ul n:inner-foreach="$itemL2->items as $itemL3">
-							<li><a n:class="$itemL3->class" href="{$itemL3->href}" {!$itemL3->target}>{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset} {$itemL3->label}</a></li>
+							<li><a n:class="$itemL3->class" href="{$itemL3->href}" {!$itemL3->target}>{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset}<i class="icon icon-angle-right"></i> {$itemL3->label}</a></li>
 						</ul>
 						{var $itemL2->separator = TRUE}
 					{/if}
@@ -58,10 +57,10 @@
 			<h4>{$itemL1->label}</h4>
 			<ul n:inner-foreach="$itemL1->items as $itemL2">
 				<li>
-					<a n:class="$itemL2->class" href="{$itemL2->href}" {!$itemL2->target}>{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset} {$itemL2->label}</a>
+					<a n:class="$itemL2->class" href="{$itemL2->href}" {!$itemL2->target}>{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}<i class="icon icon-angle-right"></i> {$itemL2->label}</a>
 					{if isset($itemL2->items) && count($itemL2->items)}
 						<ul n:inner-foreach="$itemL2->items as $itemL3">
-							<li><a n:class="$itemL3->class" href="{$itemL3->href}" {!$itemL3->target}>{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset} {$itemL3->label}</a></li>
+							<li><a n:class="$itemL3->class" href="{$itemL3->href}" {!$itemL3->target}>{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset}<i class="icon icon-angle-right"></i> {$itemL3->label}</a></li>
 							{*ifset $itemL2->separator}
 								<li class="divider"></li>
 							{/ifset*}
