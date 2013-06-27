@@ -101,10 +101,11 @@ class NavigationControl extends BaseControl
 			if (!isset($value->label)) {
 				$value->label = ucfirst($key);
 			}
-			if (isset($value->target)) {
-				$value->target = 'target="' . $value->target . '"';
-			} else {
-				$value->target = '';
+			if (!isset($value->target)) {
+				$value->target = NULL;
+			}
+			if (!isset($value['data-confirm-text'])) {
+				$value['data-confirm-text'] = NULL;
 			}
 			if (isset($value->link)) {
 				$linkArgs = (isset($value->linkArgs) ? $value->linkArgs : array());
