@@ -363,19 +363,6 @@ class PhraseListPresenter extends BasePresenter {
 	}
 
 
-	public function invalidatePhrasesCache($phrasesIds)
-	{
-		$cache = $this->getContext()->getService('translatorCache');
-
-		foreach($phrasesIds as $phraseId) {
-			$cache->clean([
-				Cache::TAGS => ['phrase/'.$phraseId]
-			]);
-		}
-
-	}
-
-
 	protected function getPaginator()
 	{
 		/** @var $vp \VisualPaginator */
