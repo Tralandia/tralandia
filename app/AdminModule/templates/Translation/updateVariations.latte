@@ -6,7 +6,9 @@
 
 
 {ifset $viewTranslation}
-	{?\Nette\Diagnostics\Debugger::dump($viewTranslation->getVariations())}
+	<pre>
+		{?print_r($viewTranslation->getVariations())}
+	</pre>
 {/ifset}
 
 {/#}
