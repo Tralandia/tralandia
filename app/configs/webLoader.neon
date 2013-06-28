@@ -163,6 +163,8 @@ parameters:
 					- front/ticket/less/ticket.less
 					# ie optimalizacia
 					- front/_base/less/ie.less
+					# retina display
+					- front/_base/less/retina.less
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
