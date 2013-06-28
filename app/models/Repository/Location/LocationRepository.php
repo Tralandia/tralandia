@@ -259,13 +259,14 @@ class LocationRepository extends \Repository\BaseRepository {
 		$locations = array();
 		foreach($this->findCountries() as $row) {
 			/** @var $row \Entity\Location\Location */
-			$parent = $row->getParent();
-			$prefix = NULL;
-			if($parent && $parent->getIso()) {
-				$prefix = $translator->translate($parent->getName());
-			}
+			// $parent = $row->getParent();
+			// $prefix = NULL;
+			// if($parent && $parent->getIso()) {
+			// 	$prefix = $translator->translate($parent->getName());
+			// }
 
-			$text = ($prefix ? $prefix . ' - ' : '') . $translator->translate($row->getName());
+			// $text = ($prefix ? $prefix . ' - ' : '') . $translator->translate($row->getName());
+			$text = $translator->translate($row->getName());
 
 			$sort[$text] = $row->id;
 			$locations[$row->id] = [
