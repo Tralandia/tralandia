@@ -9,7 +9,9 @@
 {define #col-toTranslate}
 	<td>
 		{if $cell}
+
 			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank">{$cell}</a>&nbsp;=&nbsp;{$row->wordsToTranslate}&nbsp;w.<br/>({$row->priceToTranslate} EUR)
+
 			<a href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		{else}
 			{$cell}
@@ -20,7 +22,9 @@
 {define #col-toCheck}
 	<td>
 	{if $cell}
+
 		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"><i class="icon-external-link"></i> {$cell}</a>&nbsp;=&nbsp;{$row->wordsToCheck}&nbsp;w.<br/>({$row->priceToCheck} EUR)
+
 	{else}
 		{$cell}
 	{/if}
@@ -31,22 +35,29 @@
 	<td>{$cell}{if $cell > 0} w <span style="color: grey; font-size: 9px;">({$row->priceToPay} EUR)</span>{/if}</td>
 {/define}
 
-
-
-
 {define #row-actions}
 		{if $row->language->live}
 			{var $buttonText = 'Live'; $buttonClass = 'btn-success'; $linkText = 'turn off'}
 		{else}
 			{var $buttonText = 'Not live'; $buttonClass = 'btn-danger'; $linkText = 'set LIVE'}
 		{/if}
-		<div class="btn-group">
+{* 		<div class="btn-group">
 			<button class="	btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText} <span class="caret"></span></button>
 			<ul class="dropdown-menu">
 				<li><a href="#">{$linkText}</a></li>
 			</ul>
-		</div>
+		</div> *}
 		{var $translator = $row->language->getTranslator()}
 		<a n:if="$row->wordsToPay" href="{plink markAsPaid $row->language->getId()}" class="ajax btn btn-small btn-warning" target="_blank">Mark as paid</a>
-		<a href="{plink Language:edit $row->language->getId()}" class="btn btn-small btn-primary mail">{$translator ? $translator->getLogin() : 'NOT SET'}</a>
+
+		{if $translator}
+			{$translator->getLogin()}
+			<a href="{plink Phrase:fakeLogin $translator->getId()}" class="mail btn btn-green">login</a>
+		{else}
+			<i>not set</i>
+		{/if}
+
+
+
+		<a href="{plink Language:edit $row->language->getId()}" class="mail btn btn-primary">change</a>
 {/define}
