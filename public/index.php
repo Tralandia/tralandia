@@ -1,22 +1,22 @@
 <?php
 //ini_set('display_errors', '1'); error_reporting(E_ALL);
 
-// if (PHP_SAPI != 'cli') {
+ if (PHP_SAPI != 'cli') {
 
-// 	if(array_key_exists('tester', $_GET)) {
-// 		setcookie("tester", (int)$_GET['tester']);
-// 		header("Location: /");
-// 		die();
-// 	}
+ 	if(array_key_exists('tester', $_GET)) {
+ 		setcookie("tester", (int)$_GET['tester']);
+ 		header("Location: /");
+ 		die();
+ 	}
 
-// 	if(!array_key_exists('tester', $_COOKIE) || !$_COOKIE['tester']) {
-// 		require __DIR__ . '/landingPage/index.html';
-// 		exit;
-// 	}
-// }
+ 	if(!array_key_exists('tester', $_COOKIE) || !$_COOKIE['tester']) {
+ 		require __DIR__ . '/landingPage/index.html';
+ 		exit;
+ 	}
+ }
 
 
-// logovanie user agentov 
+// logovanie user agentov
 //$log = '/var/www/agents.log';
 //error_log('[' . date('Y-m-d H:i:s') . ']' . "\t" . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\t " . $_SERVER['SERVER_NAME'] . $_SERVER['REDIRECT_URL'] . PHP_EOL, 3, $log);
 

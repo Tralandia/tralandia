@@ -34,6 +34,7 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $phrase;
 
