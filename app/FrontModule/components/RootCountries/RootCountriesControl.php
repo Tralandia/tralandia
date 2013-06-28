@@ -58,14 +58,17 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 		foreach($countries as $key => $country) {
 			if($country['entity']->getParent()->getId() == $us->getId()) {
 				$countries[$us->getId()]['entity'] = $us;
+				$countries[$us->getId()]['name'] = $this->translator->translate($us->getName());
 				$countries[$us->getId()]['children'][$country['entity']->getId()] = $country;
 				unset($countries[$key]);
 			} else if($country['entity']->getParent()->getId() == $ca->getId()) {
-				$countries[$ca->getId()]['entity'] = $us;
+				$countries[$ca->getId()]['entity'] = $ca;
+				$countries[$ca->getId()]['name'] = $this->translator->translate($ca->getName());
 				$countries[$ca->getId()]['children'][$country['entity']->getId()] = $country;
 				unset($countries[$key]);
 			} else if($country['entity']->getParent()->getId() == $au->getId()) {
-				$countries[$au->getId()]['entity'] = $us;
+				$countries[$au->getId()]['entity'] = $au;
+				$countries[$au->getId()]['name'] = $this->translator->translate($au->getName());
 				$countries[$au->getId()]['children'][$country['entity']->getId()] = $country;
 				unset($countries[$key]);
 			}
