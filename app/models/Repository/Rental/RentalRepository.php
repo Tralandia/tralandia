@@ -107,6 +107,8 @@ class RentalRepository extends \Repository\BaseRepository {
 			->join('a.primaryLocation', 'l');
 		if ($primaryLocation) {
 			$qb->where($qb->expr()->eq('a.primaryLocation', $primaryLocation->id));
+		} else {
+			$qb->groupBy('a.primaryLocation');
 		}
 		if ($live) {
 			$qb->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE));
@@ -116,9 +118,6 @@ class RentalRepository extends \Repository\BaseRepository {
 			$qb->andWhere($qb->expr()->lt('r.created', '?2'));
 			$qb->setParameter(1, $dateFrom, \Doctrine\DBAL\Types\Type::DATETIME);
 			$qb->setParameter(2, $dateTo, \Doctrine\DBAL\Types\Type::DATETIME);
-		}
-		if (!$primaryLocation) {
-			$qb->groupBy('a.primaryLocation');
 		}
 
 		$result = $qb->getQuery()->getResult();

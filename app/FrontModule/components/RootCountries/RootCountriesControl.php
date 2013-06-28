@@ -38,9 +38,8 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	public function render()
 	{
 		$template = $this->template;
-		$presenter = $this->getPresenter();
 
-		$template->rentalCounts = $this->rentalRepository->getCounts(NULL, TRUE);
+		$template->rentalCounts = $rentalCounts = $this->rentalRepository->getCounts(NULL, TRUE);
 		$template->countries = $this->getCountries();
 
 		$template->render();
@@ -48,10 +47,31 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
 	private function getCountries()
 	{
-		return $this->locationRepository->getCountriesOrdered(
+		$countries =  $this->locationRepository->getCountriesOrdered(
 			$this->translator,
 			$this->environment->getLocale()->getCollator()
 		);
+
+		$us = $this->locationRepository->findOneByIso('us');
+		$ca = $this->locationRepository->findOneByIso('ca');
+		$au = $this->locationRepository->findOneByIso('au');
+		foreach($countries as $key => $country) {
+			if($country['entity']->getParent()->getId() == $us->getId()) {
+				$countries[$us->getId()]['entity'] = $us;
+				$countries[$us->getId()]['children'][$country['entity']->getId()] = $country;
+				unset($countries[$key]);
+			} else if($country['entity']->getParent()->getId() == $ca->getId()) {
+				$countries[$ca->getId()]['entity'] = $us;
+				$countries[$ca->getId()]['children'][$country['entity']->getId()] = $country;
+				unset($countries[$key]);
+			} else if($country['entity']->getParent()->getId() == $au->getId()) {
+				$countries[$au->getId()]['entity'] = $us;
+				$countries[$au->getId()]['children'][$country['entity']->getId()] = $country;
+				unset($countries[$key]);
+			}
+		}
+
+		return $countries;
 	}
 
 }
