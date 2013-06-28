@@ -356,8 +356,9 @@ class PhraseListPresenter extends BasePresenter {
 		}
 
 		$phraseRepository->flush();
-		$this->invalidatePhrasesCache($phrasesIds);
-		//$this->flashMessage('Success', 'success');
+
+		//$this->invalidatePhrasesCache($phrasesIds); @todo docasne vypnute, aby to nespomalovalo
+
 		$this->redirect('this');
 	}
 
