@@ -23,6 +23,8 @@
   				var lat = parseFloat(coordinates[0]);
   				var lng = parseFloat(coordinates[1]);
 
+  				var iconBase = '../../../../images/markers/';
+
   				var myLatlng = new google.maps.LatLng(lat,lng);
   				var mapOptions = {
   					zoom: zoomVal,
@@ -34,7 +36,8 @@
 
   				var marker = new google.maps.Marker({
   					position: myLatlng,
-  					map: map
+  					map: map,
+  					icon: iconBase + 'map-pointer-heart.png'
   				});
 
 			        //console.log(lat+' '+lng);
