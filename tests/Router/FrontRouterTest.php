@@ -38,6 +38,13 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+		$this->routeIn($route, 'http://it.tralandia.lu/case-vacanze', 'RentalList', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(124),
+			FrontRoute::LANGUAGE => $this->findLanguage(73),
+			FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->findLocation(545),
+		));
+
 		$this->routeIn($route, 'http://www.as.tralandia.com/', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(243),
