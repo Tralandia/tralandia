@@ -18,6 +18,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="AmenityType", inversedBy="amenities")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $type;
 
@@ -30,6 +31,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $name;
 
@@ -61,12 +63,12 @@ class Amenity extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\AmenityType
 	 * @return \Entity\Rental\Amenity
@@ -77,7 +79,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Amenity
 	 */
@@ -87,7 +89,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\AmenityType|NULL
 	 */
@@ -95,7 +97,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->type;
 	}
-				
+
 	/**
 	 * @return string|NULL
 	 */
@@ -103,7 +105,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Amenity
@@ -114,7 +116,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -122,7 +124,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Rental\Amenity
@@ -133,7 +135,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -141,7 +143,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->important;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Amenity
@@ -152,7 +154,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
