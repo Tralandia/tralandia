@@ -51,6 +51,8 @@ trait TMailer {
 		$domain = $this->primaryLocation->getFirstDomain();
 		$message->setFrom('info@' . $domain->getDomain(), ucfirst($domain->getDomain()));
 
+		$message->addBcc('emailer@tralandia.com');
+
 		$message->addReplyTo($fromEmail, $fromName);
 
 		return $message;
