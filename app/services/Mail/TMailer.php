@@ -44,16 +44,19 @@ trait TMailer {
 
 
 		$from = $message->getFrom();
-		$fromKeys = array_keys($from);
-		$fromEmail = array_shift($fromKeys);
-		$fromName = reset($from);
+		if($from) {
+			$fromKeys = array_keys($from);
+			$fromEmail = array_shift($fromKeys);
+			$fromName = reset($from);
+
+			$message->addReplyTo($fromEmail, $fromName);
+		}
 
 		$domain = $this->primaryLocation->getFirstDomain();
 		$message->setFrom('info@' . $domain->getDomain(), ucfirst($domain->getDomain()));
 
 		$message->addBcc('emailer@tralandia.com');
 
-		$message->addReplyTo($fromEmail, $fromName);
 
 		return $message;
 	}

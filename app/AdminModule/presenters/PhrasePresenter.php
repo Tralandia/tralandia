@@ -99,4 +99,32 @@ class PhrasePresenter extends BasePresenter {
 		$this->redirect('updatePhraseStatus', ['viewPhrase' => $phrase->getId()]);
 	}
 
+
+	/* ------- Set As Up To Date ------ */
+
+	protected function createComponentSetAsUpToDateForm()
+	{
+		$form = $this->simpleFormFactory->create();
+		$form->addText('phrase', 'Phrase');
+		$form->addSubmit('submit');
+
+		$form->onSuccess[] = $this->setAsUpToDateFormSuccess;
+
+		return $form;
+	}
+
+	public function setAsUpToDateFormSuccess(Form $form)
+	{
+		$values = $form->getValues();
+
+		$phrase = $this->findPhrase($values->phrase);
+		$this->statusUpdater->setAsUpToDate($phrase);
+
+		$this->em->flush();
+
+		$this->redirect('updatePhraseStatus', ['viewPhrase' => $phrase->getId()]);
+	}
+
+
+
 }
