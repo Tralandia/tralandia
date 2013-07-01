@@ -37,6 +37,21 @@ class UpdateTranslationStatus {
 			return $phrase;
 		}
 
+		if(!$centralTranslation->isComplete()) {
+			foreach($phrase->getTranslations() as $translation) {
+				if($translation == $sourceTranslation) {
+					$translation->setStatus(Translation::UP_TO_DATE);
+					continue;
+				}
+				$translation->setStatus(Translation::WAITING_FOR_CENTRAL);
+			}
+			$centralTranslation->setStatus(Translation::WAITING_FOR_TRANSLATION);
+
+			$phrase->setStatus(Phrase::WAITING_FOR_CENTRAL);
+
+			return $phrase;
+		}
+
 		if($sourceAndCentralAreSame) {
 			foreach($phrase->getTranslations() as $translation) {
 				if($translation == $sourceTranslation) {
@@ -56,6 +71,24 @@ class UpdateTranslationStatus {
 			} else {
 			}
 		}
+	}
+
+
+	/**
+	 * @param Phrase $phrase
+	 *
+	 * @return Phrase
+	 */
+	public function setAsUpToDate(Phrase $phrase)
+	{
+		$phrase->setStatus(Phrase::READY);
+
+		foreach($phrase->getTranslations() as $translation) {
+			$translation->setStatus(Translation::UP_TO_DATE);
+		}
+
+		return $phrase;
+
 	}
 
 
