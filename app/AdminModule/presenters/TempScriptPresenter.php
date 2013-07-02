@@ -33,4 +33,25 @@ class TempScriptPresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
+
+	public function actionUpdateReservationEmail()
+	{
+		/** @var $emailTemplate \Entity\Email\Template */
+		$emailTemplate = $this->em->getRepository(EMAIL_TEMPLATE_ENTITY)->findOneBySlug('reservation-form');
+
+		$body = $emailTemplate->getBody();
+
+		$pattern = '#\[(reservation_senderName|reservation_senderEmail|reservation_senderPhone|reservation_arrivalDate|reservation_departureDate|reservation_adultsCount|reservation_childrenCount|reservation_message)\]#';
+		foreach($body->getTranslations() as $translation) {
+			if($translation->getLanguage()->getIso() == 'en') continue;
+			if($translation->getLanguage()->getIso() == 'sk') continue;
+			$t = $translation->getTranslation();
+			$tNew = preg_replace($pattern, "[$1]\n", $t);
+
+			$translation->setTranslation($tNew);
+		}
+
+		$this->em->flush();
+	}
+
 }
