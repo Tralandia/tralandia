@@ -24,7 +24,9 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 
 		$user = $language->getTranslator();
 
+		$message->setSubject($emailCompiler->compileSubject());
 		$message->setHtmlBody($body);
+
 		$message->addTo($user->getLogin());
 
 		$this->mailer->send($message);
@@ -38,7 +40,7 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		$emailCompiler->setTemplate($this->getTemplate('dictionary-request-translations'));
 		$emailCompiler->setLayout($this->getLayout());
 
-		$deadline = (new Nette\DateTime())->modify('+5 days')->format('Y-m-d');
+		$deadline = (new Nette\DateTime())->modify('+2 days')->format('Y-m-d');
 		$emailCompiler->addTranslator('translator', $user);
 		$emailCompiler->addLanguage('language', $language);
 		$emailCompiler->addCustomVariable('wordCount', $wordsCount);

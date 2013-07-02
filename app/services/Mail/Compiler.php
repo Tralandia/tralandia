@@ -11,6 +11,8 @@ use Nette\Application\Application;
 use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 use Mail\Variables;
+use Security\Authenticator;
+
 /**
  * Compiler class
  *
@@ -23,6 +25,10 @@ class Compiler {
 	 */
 	protected $application;
 
+	/**
+	 * @var \Security\Authenticator
+	 */
+	protected $authenticator;
 
 	/**
 	 * @var \Environment\Environment
@@ -63,11 +69,13 @@ class Compiler {
 	/**
 	 * @param \Environment\Environment $environment
 	 * @param \Nette\Application\Application $application
+	 * @param \Security\Authenticator $authenticator
 	 * @param \TranslationTexy $texy
 	 */
-	public function __construct(Environment $environment, Application $application, \TranslationTexy $texy)
+	public function __construct(Environment $environment, Application $application, Authenticator $authenticator, \TranslationTexy $texy)
 	{
 		$this->application = $application;
+		$this->authenticator = $authenticator;
 		$this->setEnvironment($environment);
 		$this->texy = $texy;
 	}
@@ -180,7 +188,7 @@ class Compiler {
 	 */
 	public function addVisitor($variableName, \Entity\User\User $user)
 	{
-		$this->variables[$variableName] = new Variables\VisitorVariables($user);
+		$this->variables[$variableName] = new Variables\VisitorVariables($user, $this->authenticator);
 		return $this;
 	}
 
@@ -192,7 +200,7 @@ class Compiler {
 	 */
 	public function addOwner($variableName, \Entity\User\User $user)
 	{
-		$this->variables[$variableName] = new Variables\OwnerVariables($user);
+		$this->variables[$variableName] = new Variables\OwnerVariables($user, $this->authenticator);
 		return $this;
 	}
 
@@ -205,7 +213,7 @@ class Compiler {
 	 */
 	public function addTranslator($variableName, \Entity\User\User $user)
 	{
-		$this->variables[$variableName] = new Variables\TranslatorVariables($user);
+		$this->variables[$variableName] = new Variables\TranslatorVariables($user, $this->authenticator);
 		return $this;
 	}
 
@@ -317,6 +325,7 @@ class Compiler {
 		$html = $this->buildHtml($layout, $template);
 		$variables = $this->findAllVariables($html);
 		$html = $this->replaceVariables($html, $variables);
+		$html = $this->texy->process($html);
 
 		return $html;
 	}
@@ -344,7 +353,6 @@ class Compiler {
 		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
 		$environmentVariables = $this->getEnvironment();
 		$body = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
-		$body = $this->texy->process($body);
 		return str_replace('{include #content}', $body, $layout->getHtml());
 	}
 
