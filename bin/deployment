@@ -4,6 +4,8 @@ WORKING_DIR=`pwd`
 
 sh $WORKING_DIR/bin/publish-maintenance
 
+sleep 1
+
 echo
 echo "spustam: git pull"
 echo
@@ -15,5 +17,7 @@ echo "spustam: install-production"
 echo
 
 sh $WORKING_DIR/bin/install-production
+
+sleep 1
 
 sh $WORKING_DIR/bin/publish-index
