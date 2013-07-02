@@ -86,7 +86,7 @@ parameters:
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		searchLinks:
-			enabled: TRUE
+			enabled: false
 			if: '[!urlWithGet]'
 			key: '[url]'
 			expiration: 'tomorrow'
