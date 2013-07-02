@@ -214,6 +214,7 @@ abstract class BasePresenter extends Presenter {
 		$url = $this->getHttpRequest()->getUrl();
 		$url = $url->getHostUrl() . $url->getPath();
 		$homepage = $this->getName() == 'Front:Home' ? 'homepage' : 'notHomepage';
+		$isHomePage = $this->getName() == 'Front:Home';
 		foreach($templateCache as $optionName => $options) {
 			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]', '[homepage]'];
 			$replaceVariables = [$optionName, $language, $primaryLocation, $url, $homepage];
@@ -224,8 +225,8 @@ abstract class BasePresenter extends Presenter {
 
 			if(array_key_exists('if', $options)) {
 				$options['if'] = str_replace(
-					['[!userLoggedIn]', '[!urlWithGet]'],
-					[$userLoggedIn ? 0 : 1, $urlWithGet ? 0 : 1],
+					['[!userLoggedIn]', '[!urlWithGet]', '[homepage]'],
+					[$userLoggedIn ? 0 : 1, $urlWithGet ? 0 : 1, $isHomePage ? 1 : 0],
 					$options['if']
 				);
 				$options['enabled'] .= ' && (' . $options['if'] . ')';
