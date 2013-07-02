@@ -105,6 +105,15 @@ class BaseRepository extends EntityRepository {
 	// 	return $query->getResult();
 	// }
 
+
+	public function findByIds($ids)
+	{
+		$qb = $this->createQueryBuilder();
+		$qb->where($qb->expr()->in('e.id', $ids));
+
+		return $qb->getQuery()->getResult();
+	}
+
 	public function fetchPairs($key, $value = NULL) {
 		$collection = array();
 		//debug($this->findAll());
