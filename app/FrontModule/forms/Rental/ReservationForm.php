@@ -168,6 +168,10 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			$form['phone']['number']->addError($form->translate('o100159'));
 		}
 
+		if(strpos($values->message, "http://") !== false || stripos($values->message, '[/url]') !== false) {
+			$form['message']->addError($this->translate('151893'));
+		}
+
 		try {
 			$this->reservationProtector->canSendReservation($values->email);
 		} catch (\TooManyReservationForEmailException $e) {
