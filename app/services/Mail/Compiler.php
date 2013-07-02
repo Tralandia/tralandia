@@ -322,10 +322,17 @@ class Compiler {
 	{
 		$template = $this->getTemplate();
 		$layout = $this->getLayout();
-		$html = $this->buildHtml($layout, $template);
+
+		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
+		$environmentVariables = $this->getEnvironment();
+		$html = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
+
 		$variables = $this->findAllVariables($html);
 		$html = $this->replaceVariables($html, $variables);
+
 		$html = $this->texy->process($html);
+
+		$html = str_replace('{include #content}', $html, $layout->getHtml());
 
 		return $html;
 	}
@@ -340,20 +347,6 @@ class Compiler {
 		$html = $this->replaceVariables($subjectHtml, $variables);
 
 		return $html;
-	}
-
-	/**
-	 * @param \Entity\Email\Layout $layout
-	 * @param \Entity\Email\Template $template
-	 *
-	 * @return string
-	 */
-	protected function buildHtml(\Entity\Email\Layout $layout, \Entity\Email\Template $template)
-	{
-		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
-		$environmentVariables = $this->getEnvironment();
-		$body = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
-		return str_replace('{include #content}', $body, $layout->getHtml());
 	}
 
 	/**
