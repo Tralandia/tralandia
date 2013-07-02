@@ -24,8 +24,22 @@
 		<hr>
 	{/foreach}
 
+
 	{include #submit, control => $form['save']}
+	<label style="padding: 20px;" for="selectAll" class="pull-right"><input style="margin: 0px;" id="selectAll" type="checkbox" value="1" name="selectAll" /> Select all</label>
 
 <div class="clearfix"></div>
 
 {/form}
+
+<script type="text/javascript">
+	$(function() {
+		$('#selectAll').change(function() {
+			if($(this).is(':checked')) {
+				$('.phraseEditForm :input[type=checkbox]').attr('checked', 'checked');
+			} else {
+				$('.phraseEditForm :input[type=checkbox]').removeAttr('checked');
+			}
+		});
+	});
+</script>

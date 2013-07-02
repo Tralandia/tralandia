@@ -2,6 +2,8 @@
 namespace Mail\Variables;
 
 use Nette;
+use Routers\BaseRoute;
+use Security\Authenticator;
 
 /**
  * BaseUserVariables class
@@ -16,10 +18,18 @@ abstract class BaseUserVariables extends Nette\Object {
 	protected $user;
 
 	/**
-	 * @param \Entity\User\User $user
+	 * @var \Security\Authenticator
 	 */
-	public function __construct(\Entity\User\User $user) {
+	private $authenticator;
+
+
+	/**
+	 * @param \Entity\User\User $user
+	 * @param \Security\Authenticator $authenticator
+	 */
+	public function __construct(\Entity\User\User $user, Authenticator $authenticator) {
 		$this->user = $user;
+		$this->authenticator = $authenticator;
 	}
 
 	/**
@@ -38,8 +48,19 @@ abstract class BaseUserVariables extends Nette\Object {
 	}
 
 
-	public function getVariablePassword() {
-		$this->user->getPassword();
+	/**
+	 * @return NULL|string
+	 */
+	public function getVariablePassword()
+	{
+		return $this->user->getPassword();
+	}
+
+
+	public function getVariableLoginLink(EnvironmentVariables $environment)
+	{
+		$hash = $this->authenticator->calculateAutoLoginHash($this->getUser());
+		return $environment->link('//:Admin:PhraseList:toTranslate', [BaseRoute::AUTOLOGIN => $hash]);
 	}
 
 }
