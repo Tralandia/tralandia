@@ -24,6 +24,12 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 	/**
 	 * @autowire
+	 * @var \Listener\TranslationsSetAsPaidHistoryLogListener
+	 */
+	protected $translationsSetAsPaidHistoryLogListener;
+
+	/**
+	 * @autowire
 	 * @var \Dictionary\MarkAsPaid
 	 */
 	protected $markAsPaid;
@@ -33,6 +39,12 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	 * @var \Robot\CreateMissingTranslationsRobot
 	 */
 	protected $createMissingTranslationsRobot;
+
+	/**
+	 * @autowire
+	 * @var \Dictionary\FindOutdatedTranslations
+	 */
+	protected $outdatedTranslations;
 
 	/**
 	 * @var array
@@ -46,7 +58,9 @@ class DictionaryManagerPresenter extends AdminPresenter {
 			throw new BadRequestException;
 		}
 
-		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsCountToPay($language);
+		$translationsToTranslate = $this->outdatedTranslations->getWaitingForTranslation($language);
+		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsInTranslations($translationsToTranslate);
+
 
 		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
 		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
@@ -61,6 +75,8 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	{
 		$language = $this->findLanguage($id);
 		$changedIds = $this->markAsPaid->mark($language, $this->loggedUser);
+
+		$this->translationsSetAsPaidHistoryLogListener->onMarkAsPaid($language, $changedIds, $this->loggedUser);
 
 		$this->flashMessage('Done! ' . count($changedIds) . ' translations mark as paid!', self::FLASH_SUCCESS);
 		//$this->redirect('list');
