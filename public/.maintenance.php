@@ -16,4 +16,4 @@ if (PHP_SAPI != 'cli') {
 }
 
 
-require WWW_DIR . '/bootstrap.php';
+require __DIR__ . '/bootstrap.php';
