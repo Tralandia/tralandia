@@ -76,6 +76,7 @@ class TempScriptPresenter extends BasePresenter {
 		$this->payload->translationsCount = count($translations);
 		$this->payload->wordsCount = $translationsRepository->calculateWordsInTranslations($translations);
 		$this->payload->langauge = $language->getName()->getCentralTranslationText();
+		$this->payload->langaugeId = $language->getId();
 		$this->payload->langaugeIso = $language->getIso();
 		$this->sendPayload();
 	}
