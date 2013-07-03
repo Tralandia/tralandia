@@ -54,4 +54,31 @@ class TempScriptPresenter extends BasePresenter {
 		$this->em->flush();
 	}
 
+
+	public function actionCountTranslatedWords($id)
+	{
+		$iso = $id;
+		/** @var $language \Entity\Language */
+		$language = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso($iso);
+
+		if(!$language) throw new \Exception('Zly iso kod jazyka!');
+
+		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
+		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
+
+		$qb = $translationsRepository->createQueryBuilder();
+		$qb = $translationsRepository->filterTranslatedTypes($qb);
+
+		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+
+		$translations = $qb->getQuery()->getResult();
+
+		$this->payload->translationsCount = count($translations);
+		$this->payload->wordsCount = $translationsRepository->calculateWordsInTranslations($translations);
+		$this->payload->langauge = $language->getName()->getCentralTranslationText();
+		$this->payload->langaugeId = $language->getId();
+		$this->payload->langaugeIso = $language->getIso();
+		$this->sendPayload();
+	}
+
 }
