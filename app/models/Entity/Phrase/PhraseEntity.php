@@ -189,6 +189,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 		} else {
 			$translatedFromText = $this->getCentralTranslationText();
 		}
+
+		// zrusim premenne [premenne]
+		$translatedFromText = preg_replace('#\[[a-zA-Z-_]+\]#', '', $translatedFromText);
+
 		$defaultVariationWordsCount = str_word_count($translatedFromText);
 
 		$variationsCount = $this->getType()->getVariationsCount($language);
