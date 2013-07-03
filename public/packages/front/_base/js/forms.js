@@ -2,8 +2,14 @@ $(function(){
 
 	$('.showOptionsCheckbox').on('change',function(){
 		$('.phraseFormHeader').toggleClass('hide');
-	});	
+	});
 	$('.priceListRowsContainer input[type=file]').fileInputUi();
+
+
+    $('input[name=nospam]').each(function(e){
+        $('input[name=nospam]').val('no'+'spam');
+    });
+
 
 });
 
@@ -21,7 +27,7 @@ $(function(){
 		base.$button = base.$el.parents('.btn').find('span');
 
 		base.$el.data("fileInputUi", base);
-			
+
 		base.btnSelector = '.btn';
 		base.btnInactiveClass = 'btn-green';
 		base.btnActiveClass = 'btn-orange';
@@ -30,7 +36,7 @@ $(function(){
 		{
 			base.bind();
 		};
-		
+
 		base.bind = function()
 		{
 			base.$el.on('change',base.change);
@@ -60,15 +66,15 @@ $(function(){
 
 		base.init();
 	};
-	
 
-	
+
+
 	$.fn.fileInputUi = function(options){
 		return this.each(function(){
 			(new $.fileInputUi(this, options));
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -83,14 +89,14 @@ $(function(){
 		base.select = $('.toLanguages');
 
 		base.$el.data("phraseForm", base);
-		
+
 		base.init = function(){
 			base.defaultRender();
 			base.bind();
 		};
-		
+
 		base.defaultRender = function(){
-			base.showCurrentLanguage();			
+			base.showCurrentLanguage();
 		}
 
 		base.bind = function(){
@@ -108,15 +114,15 @@ $(function(){
 
 		base.init();
 	};
-	
 
-	
+
+
 	$.fn.phraseForm = function(options){
 		return this.each(function(){
 			(new $.phraseForm(this, options));
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -130,13 +136,13 @@ $(function(){
 		base.el = el;
 
 		base.$el.data("invalidScroll", base);
-		
+
 		base.init = function(){
 			base.findInvalidInput();
 		};
-		
+
 		base.findInvalidInput = function(){
-			
+
 				var invalid = base.$el.find('.invalid:first');
 
 				if(invalid.length > 0){
@@ -149,22 +155,22 @@ $(function(){
 
 					$.scrollTo('#'+invalidGenerateId,1200);
 					return false;
-				
-				}	
+
+				}
 
 		}
 
 		base.init();
 	};
-	
 
-	
+
+
 	$.fn.invalidScroll = function(options){
 		return this.each(function(){
 			(new $.invalidScroll(this, options));
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -178,46 +184,46 @@ $(function(){
 		base.el = el;
 
 		base.$el.data("pricePhrase", base);
-		
+
 		base.init = function(){
-			
-			base.options = $.extend({},$.pricePhrase.defaultOptions, options);            
+
+			base.options = $.extend({},$.pricePhrase.defaultOptions, options);
 
 		};
-		
+
 
 		base.init();
 	};
-	
+
 	$.pricePhrase.defaultOptions = {
 
 	};
-	
+
 	$.fn.pricePhrase = function(options){
 		return this.each(function(){
 
 			var self = this;
 
 			$(self).find('select.select2').each(function( index ) {
-				$(this).on('change',function(){                                        
+				$(this).on('change',function(){
 
 					var currentVal = $(this).val();
 					var forId = '#'+$(this).attr('rel');
-					
+
 					$(this).find('option').each(function(i){
-						
+
 						if(currentVal == $(this).val()){
 							$(forId).val($(this).attr('data-sufix'));
 						}
 					});
-					
-				}); 
-			}); 
+
+				});
+			});
 
 
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -230,26 +236,26 @@ $(function(){
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
 		var base = this;
-		
+
 		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
-		
+
 		// Add a reverse reference to the DOM object
 		base.$el.data("mapControl", base);
-		
+
 		base.init = function(){
-			
-			base.options = $.extend({},$.mapControl.defaultOptions, options);            
+
+			base.options = $.extend({},$.mapControl.defaultOptions, options);
 
 		};
 
 
-		
+
 
 		base.init();
 	};
-	
+
 	$.mapControl.defaultOptions = {
 
 	};
@@ -273,7 +279,7 @@ $(function(){
 	}
 
 	$.mapControl.removeError = function(elem){
-		
+
 		var errorMessageDiv = $('#'+$(elem).attr('data-validation-message-div-id'));
 		var controlGroup = $('#'+$(elem).attr('data-validation-control-div-id'));
 
@@ -281,13 +287,13 @@ $(function(){
 
 		if(controlGroup.hasClass('error')){
 			controlGroup.removeClass('error');
-		}		 
+		}
 
 	}
 
-	// add error message 
+	// add error message
 	$.mapControl.addError = function(elem,message){
-		
+
 		var errorMessageDiv = $('#'+elem.attr('data-validation-message-div-id'));
 		var controlGroup = $('#'+elem.attr('data-validation-control-div-id'));
 
@@ -295,21 +301,21 @@ $(function(){
 
 		if(!controlGroup.hasClass('error')){
 			controlGroup.addClass('error');
-		}		
+		}
 	}
 
 	// before ajax request validation
 	$.mapControl.responseValidation = function(data){
 		$.each(data.elements,function(k,v){
 			if(!v.status){
-				
+
 				$input = $($("[name='"+k+"']"));
 				$input.val(v.value);
-				
+
 				if(v.message){
 					$.mapControl.addError($input,v.message);
 				}
-				
+
 
 			}
 		});
@@ -318,7 +324,7 @@ $(function(){
 	// js validation client site with Nette validator
 	// using after send ajax request
 	$.mapControl.validateInputs = function(p){
-		
+
 		var o = {
 			valid : true,
 			data: {}
@@ -336,18 +342,18 @@ $(function(){
 					$.mapControl.removeError(this);
 				}
 
-				o.data[inputName] = $(this).val();		
+				o.data[inputName] = $(this).val();
 
 			}
 
-		}); 
+		});
 
 		return o;
 
 	}
 
 
-	
+
 	$.fn.mapControl = function(options){
 		return this.each(function(){
 			(new $.mapControl(this, options));
@@ -376,7 +382,7 @@ $(function(){
 				//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var lat = parseFloat($inputLat.val());
-				var lng = parseFloat($inputLng.val());				
+				var lng = parseFloat($inputLng.val());
 
 				// var lat = parseFloat($(this).attr('data-latitude'));
 				// var lng = parseFloat($(this).attr('data-longitude'));
@@ -398,7 +404,7 @@ $(function(){
 				});
 
 				google.maps.event.addListener(map, 'click', function(event) {
-					
+
 					$.mapControl.call();
 
 					marker.setPosition(event.latLng);
@@ -407,29 +413,29 @@ $(function(){
 					var lng = event.latLng.hb;
 					$inputLat.val(lat);
 					$inputLng.val(lng);
-					
+
 
 					$('#gps_position').html(lat+' '+lng);
 				  //map.setCenter(event.latLng);
 
 
 				  v = $.mapControl.validateInputs($self);
-				  
-				  
+
+
 					// send data
-					
+
 					$.mapControl.ajax(requestUrl,v.data , function(data){
-						
+
 						if(!data.status){
 							$.mapControl.responseValidation(data);
-							
+
 							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 							//	marker.setPosition(newPosition);
 						}
 					});
-					
 
-				});  
+
+				});
 
 
 
@@ -438,24 +444,24 @@ $(function(){
 				$self.find('button').click(function(){
 
 					v = $.mapControl.validateInputs($self);
-					
+
 					if(v.valid){
 						// send data
-						
+
 						$.mapControl.ajax(requestUrl,v.data , function(data){
 							//console.log(data);
 							if(!data.status){
 								$.mapControl.responseValidation(data);
-								
+
 								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 								marker.setPosition(newPosition);
 							}
 						});
 					}
-					
+
 					return false;
 				});
-				
+
 
 
 			});
@@ -466,38 +472,38 @@ $(function(){
 
 
 
-// calendar edit function 
+// calendar edit function
 (function($){
 	$.calendarEdit = function(el, options){
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
 		var base = this;
-		
+
 		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
-		
+
 		// Add a reverse reference to the DOM object
 		base.$el.data("calendarEdit", base);
-		
+
 		base.init = function(){
 
-			base.options = $.extend({},$.calendarEdit.defaultOptions, options);            
+			base.options = $.extend({},$.calendarEdit.defaultOptions, options);
 
 		};
-		
+
 
 		base.init();
 	};
-	
+
 	$.calendarEdit.defaultOptions = {
-		
+
 	};
-	
+
 
 	$.calendarEdit.conteiner = [];
 
-	$.calendarEdit.addToInput = function(a,$elem){		
+	$.calendarEdit.addToInput = function(a,$elem){
 
 		$elem.val(a.toString());
 
@@ -508,15 +514,15 @@ $(function(){
 		$.calendarEdit.conteiner.push(d);
 
 		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
-	};	
+	};
 
 	$.calendarEdit.removeDate = function(d,$elem){
-		
+
 		var p = $.calendarEdit.conteiner.indexOf(d);
 
 		$.calendarEdit.conteiner.splice(p,1);
 		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
-	};		
+	};
 
 	$.fn.calendarEdit = function(options){
 		return this.each(function(){
@@ -531,28 +537,28 @@ $(function(){
 				$.calendarEdit.conteiner = defaultValue.split(',');
 			}
 
-			
+
 
 			$calendarForm.find('.calendar').each(function(i){
 
 				var calendar = this;
 				var $calendar = $(this);
-				
+
 				$calendar.find('.day.active').click(function(){
-					
+
 					var currentTime = $(this).attr('data-date');
-					
+
 					if(!$(this).hasClass('selected')){
 
 						$(this).addClass('selected');
-						
+
 						$.calendarEdit.addDate(currentTime,$input);
 
 					} else {
 						$(this).removeClass('selected');
-						
+
 						$.calendarEdit.removeDate(currentTime,$input);
-						
+
 					}
 
 					var statusClass = {
@@ -567,7 +573,7 @@ $(function(){
 
 						$(this).removeClass(statusClass.last);
 						$(this).removeClass(statusClass.middle);
-						$(this).removeClass(statusClass.first);                            
+						$(this).removeClass(statusClass.first);
 
 						if($(this).hasClass('selected') && stats == 0 ){
 							$(this).addClass(statusClass.first);
@@ -577,21 +583,21 @@ $(function(){
 
 						else if($(this).hasClass('selected') && (stats == 1 || stats == 2) ){
 							$(this).addClass(statusClass.middle);
-							
+
 							stats = 2;
 						}
 
 						else if(!$(this).hasClass('selected') && (stats == 2 || stats == 1) ){
 							$(this).addClass(statusClass.last);
-							
+
 							stats = 0;
 						}
 
 					});
 
 					return false;
-					
-				});			   
+
+				});
 
 });
 
@@ -617,22 +623,22 @@ $(function(){
 		base.el = el;
 
 		base.$el.data("galleryControl", base);
-		
+
 		base.init = function(){
-			
-			base.options = $.extend({},$.galleryControl.defaultOptions, options);            
+
+			base.options = $.extend({},$.galleryControl.defaultOptions, options);
 
 		};
-		
+
 		base.init();
 	};
-	
-	$.galleryControl.defaultOptions = {
-		
-	};
-	
 
-	// return sort array 
+	$.galleryControl.defaultOptions = {
+
+	};
+
+
+	// return sort array
 	$.galleryControl.sortableArray = function($elem){
 
 		var o = [];
@@ -679,8 +685,8 @@ $(function(){
 			var removeUrl = $listGallery.attr('data-remove-url');
 
 			var $removeLinkElement = $listGallery.find('li a');
-			
-			// default sort photos 
+
+			// default sort photos
 			$.galleryControl.saveSortableValues($sortInput,$listGallery);
 
 			// upload button ui
@@ -690,9 +696,9 @@ $(function(){
 				return false;
 			});
 
-			// remove image function 
-			$removeLinkElement.live('click',function(){						
-				
+			// remove image function
+			$removeLinkElement.live('click',function(){
+
 				var $el = $(this);
 
 				$el.parent().css({
@@ -709,8 +715,8 @@ $(function(){
 						$(this).remove();
 						$.galleryControl.saveSortableValues($sortInput,$listGallery);
 					}
-					);					
-				
+					);
+
 				return false;
 			});
 
@@ -736,14 +742,14 @@ $(function(){
 					if(!firstStart){
 
 						var html = '';
-						$.each(data.originalFiles,function(k,v){							
+						$.each(data.originalFiles,function(k,v){
 							html+= '<li class="loading" id="+divId+"><i class="icon-spinner icon-spin"></i></li>';
 						});
 
 						$listGallery.append(html);
 						//return false;
 						firstStart = true;
-						
+
 					}
 
 					data.submit();
@@ -751,8 +757,8 @@ $(function(){
 				done: function (e, data) {
 
 					$listGallery.find('li.loading').each(function(index){
-						
-						if(index == 0){							
+
+						if(index == 0){
 
 							if(data.result[0].error){
 
@@ -802,20 +808,20 @@ $(function(){
 		base.el = el;
 
 		base.$el.data("formMapControl", base);
-		
+
 		base.init = function(){
-			
+
 			base.options = $.extend({},$.formMapControl.defaultOptions, options);
 
 		};
-		
+
 		base.init();
 	};
-	
-	$.formMapControl.defaultOptions = {        
+
+	$.formMapControl.defaultOptions = {
 
 	};
-	
+
 	$.formMapControl.lazyLoadScript = function(url, callback) {
 
 		var script = document.createElement("script")
@@ -842,7 +848,7 @@ $(function(){
 	$.fn.formMapControl = function( options){
 		return this.each(function(){
 			(new $.formMapControl(this,options));
-			
+
 
 			var lat = $('#map_canvas').attr('data-latitude'),
 			lng = $('#map_canvas').attr('data-longitude'),
@@ -850,14 +856,14 @@ $(function(){
 			image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
 			zoom = $('#map_canvas').attr('data-zoom') || 12;
 
-			
+
 			var mapOptions = {
 				center: latlng,
 				zoom: parseInt(zoom),
 				scrollwheel: false,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
-			
+
 			var map = new google.maps.Map(document.getElementById('map_canvas'),
 				mapOptions);
 
@@ -872,28 +878,28 @@ $(function(){
 
 			var infowindow = new google.maps.InfoWindow();
 
-			var marker = false; 
+			var marker = false;
 
 			if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
 
 				marker = new google.maps.Marker({
 					map: map,
 					position:latlng
-				});       
-				
+				});
+
 			}
-			
+
 			google.maps.event.addListener(map, 'click', function(event) {
-				
+
 				if(marker){
 					marker.setPosition(event.latLng);
 				} else {
 					marker = new google.maps.Marker({
 						map: map,
 						position:event.latLng
-					}); 				
+					});
 				}
-				
+
 			// set geocoder
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
@@ -920,7 +926,7 @@ $(function(){
 			map.fitBounds(place.geometry.viewport);
 		  } else {
 			map.setCenter(place.geometry.location);
-			map.setZoom(17);  
+			map.setZoom(17);
 		  }
 
 		  if(marker){
@@ -929,9 +935,9 @@ $(function(){
 			marker = new google.maps.Marker({
 				map: map,
 				position:place.geometry.location
-			}); 				
+			});
 		  }
-		  
+
 	  });
 
 			return false;
@@ -960,13 +966,13 @@ $(function() {
 	$(document.body).on('appear', '.mapControl', function(e, $affected) {
 		if(typeof $('body').attr('data-google-map-init') == 'undefined' ){
 			var lang = $('html').attr('lang');
-			var script = document.createElement("script"); 
-			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang; 
-			document.body.appendChild(script); 
-			$('body').attr('data-google-map-init',true);  
+			var script = document.createElement("script");
+			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang;
+			document.body.appendChild(script);
+			$('body').attr('data-google-map-init',true);
 		}
 	});
-	
+
 
 	$('form[method="post"]').submit(showButtonLoader)
 							.live('submit',showButtonLoader);
@@ -990,11 +996,11 @@ function showButtonLoader(){
 
 		if (typeof attr !== 'undefined' && attr !== false) {
 		    $button.find('small').html($button.data('loadingText'));
-		}	
+		}
 }
 
 
-// 
+//
 
 function removePriceLine(){
 		if($('.priceList').length > 1){
@@ -1007,7 +1013,7 @@ function removePriceLine(){
 function createNewLineInPriceList(){
 
 	 var pattern = $('.priceList:first').clone();
-		
+
 		pattern.find('select,input').removeAttr('id');
 		pattern.find('select').removeClass('select2').removeClass('select2-offscreen');
 		pattern.find('.select2-container').remove();
@@ -1016,13 +1022,13 @@ function createNewLineInPriceList(){
 
 		pattern.find('select,input').each(function(){
 			var originName = $(this).attr('name');
-				$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));	 			
+				$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));
 		})
 
- 	
+
 
 		$('.pricelistControl').append(pattern);
-		
+
 	return false;
 }
 
@@ -1037,7 +1043,7 @@ function createNewLineInPriceList(){
 		base.el = el;
 
 		base.$el.data("rentalPriceUpload", base);
-		
+
 		base.init = function(){
 			base.initElementSelectors();
 			base.initElements();
@@ -1064,7 +1070,7 @@ function createNewLineInPriceList(){
 			base.$removeButton.click(base.removeRow);
 			base.$removeButton.live('click',base.removeRow);
 		}
-		
+
 		base.removeRow = function(){
 			var count = $(base.listContainer).find(base.rowSelector).length;
 			if(count > 1){
@@ -1079,15 +1085,15 @@ function createNewLineInPriceList(){
 					$uploadButton.removeClass('btn-orange').addClass('btn-green').find('span').html($uploadButton.data('placeholder'));
 				}
 			}
-			
+
 		}
 
 		base._resetValue = function($input){
 			switch ($input[0].tagName){
 				case 'INPUT' :
 					$input.val('');
-					
-					if($input[0].type == 'file'){	
+
+					if($input[0].type == 'file'){
 						// console.log($input.parents('.btn'));
 						// console.log('tututututuu');
 						$input.parents('.btn').removeClass('btn-orange').addClass('btn-green').find('span').html($input.parents('.btn').data('placeholder'));
@@ -1097,7 +1103,7 @@ function createNewLineInPriceList(){
 					break;
 				case 'SELECT' :
 					$input.find('option').attr('selected',false);
-					break;					
+					break;
 			}
 		}
 
@@ -1112,13 +1118,13 @@ function createNewLineInPriceList(){
 			var count = (base.$el.find(base.rowSelector).length);
 
 			pattern.find(base.inputElements).each(function(){
-				
+
 				// console.log($(this)[0].tagName);
 
 				base._resetValue($(this));
 
 				var originName = $(this).attr('name');
-					$(this).attr('name',originName.replace("[0]","["+(count)+"]"));	 			
+					$(this).attr('name',originName.replace("[0]","["+(count)+"]"));
 			})
 
 
@@ -1135,15 +1141,15 @@ function createNewLineInPriceList(){
 
 		base.init();
 	};
-	
 
-	
+
+
 	$.fn.rentalPriceUpload = function(options){
 		return this.each(function(){
 			(new $.rentalPriceUpload(this, options));
 		});
 	};
-	
+
 })(jQuery);
 
 
