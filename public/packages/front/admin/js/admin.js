@@ -1,43 +1,43 @@
 // confirm link
 (function($){
 
-    $.confirmLink = function(el, options){
+	$.confirmLink = function(el, options){
 
-        var base = this;
+		var base = this;
 
-        base.$el = $(el);
-        base.el = el;
+		base.$el = $(el);
+		base.el = el;
 
-        base.$el.data("confirmLink", base);
-        
-        base.confirmText = base.$el.data('confirmText');
+		base.$el.data("confirmLink", base);
+		
+		base.confirmText = base.$el.data('confirmText');
 
-        base.init = function(){
-        	base.bind();
-        };
-        
-        base.bind = function(){
-        	base.$el.live('click',base.confirmDialog);
-        }
+		base.init = function(){
+			base.bind();
+		};
+		
+		base.bind = function(){
+			base.$el.live('click',base.confirmDialog);
+		}
 
-        base.confirmDialog = function(){
+		base.confirmDialog = function(){
 
-        	if(typeof base.confirmText != 'undefined'){
-        		return confirm(base.confirmText);
-        	} else {
-        		return true;
-        	}
-        	        	
-        }
+			if(typeof base.confirmText != 'undefined'){
+				return confirm(base.confirmText);
+			} else {
+				return true;
+			}
+						
+		}
 
-        base.init();
-    };
-    
-    $.fn.confirmLink = function(radius, options){
-        return this.each(function(){
-            (new $.confirmLink(this, radius, options));});
-    };
-    
+		base.init();
+	};
+	
+	$.fn.confirmLink = function(radius, options){
+		return this.each(function(){
+			(new $.confirmLink(this, radius, options));});
+	};
+	
 })(jQuery);
 
 
@@ -102,24 +102,24 @@ $(function(){
 
 //  remove phrase link
 (function($){
-    $.phraseDelete = function(el, options){
+	$.phraseDelete = function(el, options){
 
-        var base = this;
+		var base = this;
 
-        base.$el = $(el);
-        base.el = el;
+		base.$el = $(el);
+		base.el = el;
 
-        base.$el.data("phraseDelete", base);
-        
-        base.init = function(){
-        	base.bind();
-        };
-        
-        base.bind = function(){
-        	base.$el.on('click',base.deleteCurrentPhrase);
-        }
+		base.$el.data("phraseDelete", base);
+		
+		base.init = function(){
+			base.bind();
+		};
+		
+		base.bind = function(){
+			base.$el.on('click',base.deleteCurrentPhrase);
+		}
 
-        base.deleteCurrentPhrase = function(){
+		base.deleteCurrentPhrase = function(){
 
 				$parent = base.$el.parents('.phraseForm');
 				$parent.parents('.phraseEditForm').find('hr:first').remove();
@@ -136,57 +136,57 @@ $(function(){
 				}
 			});
 
-        	return false;
-        }
+			return false;
+		}
 
-        base.init();
-    };
-    
-    $.fn.phraseDelete = function(radius, options){
-        return this.each(function(){
-            (new $.phraseDelete(this, radius, options));});
-    };
-    
+		base.init();
+	};
+	
+	$.fn.phraseDelete = function(radius, options){
+		return this.each(function(){
+			(new $.phraseDelete(this, radius, options));});
+	};
+	
 })(jQuery);
 
 
 
 
 (function($){
-    $.textareaPreview = function(el, options){
+	$.textareaPreview = function(el, options){
 
-        var base = this;
-        
-        base.$el = $(el);
-        base.el = el;
+		var base = this;
+		
+		base.$el = $(el);
+		base.el = el;
 
-        base.$el.data("textareaPreview", base);
-        
-        // vars
-        base.previewUrl = base.$el.data('previewLink');
-        base.previewTitle = base.$el.data('previewTitle');
-        base.modalBox = $('#myModal');
-        base.modalBoxTitle = base.modalBox.find('.modal-header h3');
-        base.modalBoxContent = base.modalBox.find('.modal-body');
-        base.texyText = '';
-        base.ajaxType = 'POST';
-        // selectors
-        base.controlCover = '.phrasecontrol';
+		base.$el.data("textareaPreview", base);
+		
+		// vars
+		base.previewUrl = base.$el.data('previewLink');
+		base.previewTitle = base.$el.data('previewTitle');
+		base.modalBox = $('#myModal');
+		base.modalBoxTitle = base.modalBox.find('.modal-header h3');
+		base.modalBoxContent = base.modalBox.find('.modal-body');
+		base.texyText = '';
+		base.ajaxType = 'POST';
+		// selectors
+		base.controlCover = '.phrasecontrol';
 
-        base.init = function(){
+		base.init = function(){
 
-            base.options = $.extend({},$.textareaPreview.defaultOptions, options);
-            base.bind();
+			base.options = $.extend({},$.textareaPreview.defaultOptions, options);
+			base.bind();
 
-        };
+		};
 
-        base.bind = function(){
-        	base.$el.on('click',base.click);
-        }
+		base.bind = function(){
+			base.$el.on('click',base.click);
+		}
 
-        base.click = function(){
+		base.click = function(){
 
-        	base.texyText = base.$el.parents(base.controlCover).find('textarea').val();
+			base.texyText = base.$el.parents(base.controlCover).find('textarea').val();
 
 			$.ajax({
 				url: base.previewUrl,
@@ -205,15 +205,15 @@ $(function(){
 				base.modalBox.show();
 			});
 
-        }
+		}
 
-        base.init();
-    };
-    
-    $.fn.textareaPreview = function(options){
-        return this.each(function(){(new $.textareaPreview(this, options));});
-    };
-    
+		base.init();
+	};
+	
+	$.fn.textareaPreview = function(options){
+		return this.each(function(){(new $.textareaPreview(this, options));});
+	};
+	
 })(jQuery);
 
 $(function(){
@@ -221,4 +221,15 @@ $(function(){
 	$('.phraseFormHeaderCover a.preview').textareaPreview();
 
 	$('#sidebar.adminSidebar a').confirmLink();
+});
+
+
+$(function() {
+	$('#selectAll').change(function() {
+		if($(this).is(':checked')) {
+			$('.phraseEditForm :input[type=checkbox]').attr('checked', 'checked');
+		} else {
+			$('.phraseEditForm :input[type=checkbox]').removeAttr('checked');
+		}
+	});
 });
