@@ -3,6 +3,8 @@
 namespace AdminModule;
 
 
+use Entity\Phrase\Translation;
+
 class TempScriptPresenter extends BasePresenter {
 
 
@@ -69,7 +71,8 @@ class TempScriptPresenter extends BasePresenter {
 		$qb = $translationsRepository->createQueryBuilder();
 		$qb = $translationsRepository->filterTranslatedTypes($qb);
 
-		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
+			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', Translation::UP_TO_DATE);
 
 		$translations = $qb->getQuery()->getResult();
 
