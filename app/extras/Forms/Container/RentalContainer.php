@@ -89,9 +89,11 @@ class RentalContainer extends BaseContainer
 
 		$check = \Tools::$checkInOutOption;
 		$this->addSelect('checkIn', 'o1586', $check)
+						->setOption('help', $this->translate('151889'))
 						->setPrompt('o854');
 
 		$this->addSelect('checkOut', 'o1588', $check)
+						->setOption('help', $this->translate('151890'))
 						->setPrompt('o854');
 
 		$this->addText('maxCapacity', 'o100072')
