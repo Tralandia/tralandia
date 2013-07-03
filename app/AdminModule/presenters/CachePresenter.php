@@ -16,7 +16,7 @@ class CachePresenter extends BasePresenter {
 
 	public function actionDashboard()
 	{
-
+		$this->template->languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
 	}
 
 	public function actionInvalidatePhraseCache($id)
@@ -28,6 +28,11 @@ class CachePresenter extends BasePresenter {
 	public function actionInvalidateTranslatorCache()
 	{
 		$this->invalidateCache('translatorCache', ['translator']);
+	}
+
+	public function actionInvalidateLanguageCache($id)
+	{
+		$this->invalidateCache('translatorCache', ['language/'.$id]);
 	}
 
 	public function actionInvalidateCache($id)
