@@ -995,8 +995,10 @@ function showButtonLoader(){
 		var attr = $button.attr('data-loading-text');
 
 		if (typeof attr !== 'undefined' && attr !== false) {
-		    $button.find('small').html($button.data('loadingText'));
-		}
+		    // $button.find('small').html($button.data('loadingText'));
+		    $(this).parent().find('small.sublitLoadingText').html($button.data('loadingText'));
+		}	
+
 }
 
 
