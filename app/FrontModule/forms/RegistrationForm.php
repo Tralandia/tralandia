@@ -102,7 +102,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	{
 		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator, $this->uiPresenter);
 		$languages = $this->languageRepository->getForSelectWithLinks($this->translator, $this->collator, $this->uiPresenter);
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
 
 		$countrySelect = $this->addSelect('country', 'o1094', $countries);
 		//1347
