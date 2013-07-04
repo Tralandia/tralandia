@@ -84,4 +84,25 @@ class TempScriptPresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
+
+	public function actionRenameZero()
+	{
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findAll();
+
+		/** @var $language \Entity\Language */
+		foreach($languages as $language) {
+			$plurals = $language->getPlurals();
+			$names = $plurals['names'];
+
+			$names[1] = str_replace('Zero', '0', $names[1]);
+			if(array_key_exists(2, $names)) $names[2] = str_replace('Zero', '0', $names[2]);
+
+			$plurals['names'] = $names;
+
+			$language->setPlurals($plurals);
+		}
+
+		$this->em->flush();
+	}
+
 }
