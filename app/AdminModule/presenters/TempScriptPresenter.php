@@ -7,6 +7,12 @@ use Entity\Phrase\Translation;
 
 class TempScriptPresenter extends BasePresenter {
 
+	/**
+	 * @autowire
+	 * @var \Dictionary\UpdateTranslationVariations
+	 */
+	protected $variationUpdater;
+
 
 	public function actionCreateMissingTranslationsForLocations()
 	{
@@ -100,6 +106,36 @@ class TempScriptPresenter extends BasePresenter {
 			$plurals['names'] = $names;
 
 			$language->setPlurals($plurals);
+		}
+
+		$this->em->flush();
+	}
+
+
+	public function actionUpdateSlovenianTranslations()
+	{
+		/** @var $language \Entity\Language */
+		$language = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso('sl');
+		$plurals = [
+			'rule' => '($n==1) ? 0 : ($n==2) ? 1 : (($n>=3 && $n<=4) ? 2 : 3)',
+			'names' => ['Singular', '2', '3, 4', '0, 5 or more'],
+		];
+		$language->setPlurals($plurals);
+
+		$this->em->flush();
+
+		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
+		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
+
+		$qb = $translationsRepository->createQueryBuilder();
+		$qb = $translationsRepository->filterTranslatedTypes($qb);
+
+		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+
+		$translations = $qb->getQuery()->getResult();
+		
+		foreach($translations as $translation) {
+			$this->variationUpdater->update($translation);
 		}
 
 		$this->em->flush();
