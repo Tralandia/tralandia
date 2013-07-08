@@ -71,6 +71,8 @@ class RegistrationHandlerTest extends \Tests\TestCase
 				'address' => [
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
 				],
+				'checkIn' => 8,
+				'checkOut' => 9,
 			],
 		];
 
