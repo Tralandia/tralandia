@@ -38,8 +38,20 @@ class RentalCreator
 
 	public function create(\Entity\Contact\Address $address, User $user, $rentalName)
 	{
+		$language = $user->getLanguage();
+
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
+
+		$rental->setSlug($rentalName);
+
+		$rental->getName()->setSourceLanguage($language);
+		$rental->getTeaser()->setSourceLanguage($language);
+
+		$answers = $rental->getInterviewAnswers();
+		foreach($answers as $answer) {
+			$answer->getAnswer()->setSourceLanguage($language);
+		}
 
 		$this->addressNormalizer->update($address, TRUE);
 		$rental->setAddress($address);
