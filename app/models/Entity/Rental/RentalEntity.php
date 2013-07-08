@@ -702,6 +702,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function setUrl($url)
 	{
+		if(!Strings::startsWith($url, 'http://') || !Strings::startsWith($url, 'https://')) {
+			$url = 'http://' . $url;
+		}
 		if(!$url instanceof Url) {
 			$url = new Url($url);
 		}
