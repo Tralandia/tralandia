@@ -116,6 +116,8 @@ class RegistrationHandler extends FormHandler
 			->setPhone($rentalValues->phone->phone)
 			->setClassification($rentalValues->type->classification)
 			->setMaxCapacity($rentalValues->maxCapacity)
+			->setCheckIn($rentalValues->checkIn)
+			->setCheckOut($rentalValues->checkOut)
 			->setFloatPrice($rentalValues->price);
 
 		$board = is_object($rentalValues->board) ? ((array)$rentalValues->board->getIterator()) : $rentalValues->board;
