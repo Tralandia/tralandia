@@ -67,17 +67,17 @@ class User extends \Entity\BaseEntityDetails {
 
 	public function isOwner()
 	{
-		return $this->getRole() == Role::OWNER;
+		return $this->getRole()->getSlug() == Role::OWNER;
 	}
 
 	public function isSuperAdmin()
 	{
-		return $this->getRole() == Role::SUPERADMIN;
+		return $this->getRole()->getSlug() == Role::SUPERADMIN;
 	}
 
 	public function isTranslator()
 	{
-		return $this->getRole() == Role::TRANSLATOR;
+		return $this->getRole()->getSlug() == Role::TRANSLATOR;
 	}
 
 	public function getIdentityData()

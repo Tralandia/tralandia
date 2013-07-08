@@ -351,6 +351,14 @@ class PhraseListPresenter extends BasePresenter {
 				$this->updateTranslationStatus->setPhraseReady($phrase, $this->loggedUser);
 			} else if($specialOptionType == 'readyForCorrection' && $specialOptionValue) {
 				$this->updateTranslationStatus->setPhraseReadyForCorrection($phrase, $this->loggedUser);
+			} else {
+				foreach($phraseValues['changedTranslations'] as $translation) {
+					try {
+						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+					} catch(TranslationsNotCompleteException $e) {
+						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
+					}
+				}
 			}
 			$phrasesIds[] = $phraseId;
 		}

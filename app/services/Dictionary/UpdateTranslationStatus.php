@@ -138,7 +138,10 @@ class UpdateTranslationStatus {
 	 */
 	public function translationUpdated(Translation $translation, User $user)
 	{
-		if(!$translation->isComplete()) {
+		$isUserTranslator = $translation->getLanguage()->getTranslator() == $user;
+		$isUserAdmin = $user->isSuperAdmin();
+
+		if(!$translation->isComplete() && $isUserTranslator) {
 			throw new TranslationsNotCompleteException;
 		}
 
@@ -148,8 +151,6 @@ class UpdateTranslationStatus {
 		$centralTranslation = $phrase->getCentralTranslation();
 		$sourceAndCentralAreSame = $sourceTranslation == $centralTranslation;
 
-		$isUserTranslator = $translation->getLanguage()->getTranslator() == $user;
-		$isUserAdmin = $user->isSuperAdmin();
 
 
 		if($translation == $sourceTranslation && $sourceAndCentralAreSame) {
