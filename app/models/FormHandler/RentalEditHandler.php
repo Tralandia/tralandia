@@ -35,7 +35,6 @@ class RentalEditHandler extends FormHandler
 
 	public function handleSuccess($values)
 	{
-//		d($values);
 		$values = $values->rental;
 		$rental = $this->rental;
 
@@ -87,11 +86,11 @@ class RentalEditHandler extends FormHandler
 			foreach ($priceLists as $priceList) {
 				$rental->removePricelist($priceList);
 			}
-//			foreach ($value->list as $priceList) {
-//				if ($priceList->entity instanceof Pricelist) {
-//					$rental->addPricelist($priceList->entity);
-//				}
-//			}
+			foreach ($value->list as $priceList) {
+				if ($priceList->entity instanceof Pricelist) {
+					$rental->addPricelist($priceList->entity);
+				}
+			}
 		}
 
 		if ($value = $values['phone']) {

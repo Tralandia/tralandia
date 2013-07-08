@@ -2,8 +2,8 @@
 
 namespace Extras\Forms\Container;
 
-use Extras\Forms\Control\MfuControl;
 use Nette\Forms\Container;
+use Nette\Forms\Controls\SubmitButton;
 
 class RentalPriceUploadContainer extends BaseContainer
 {
@@ -44,6 +44,16 @@ class RentalPriceUploadContainer extends BaseContainer
 		$container->addSelect('language', '#language', [2,3,4,5]);
 		$container->addUpload('file', 'o100192');
 		$container->addHidden('entity', 0);
+//		$container->addSubmit('remove', '#remove')
+//			->setValidationScope(FALSE)
+//			->setAttribute('class', 'ajax')
+//			->onClick[] = callback($this, 'removeElementClicked');
+	}
+
+	public function removeElementClicked(SubmitButton $button)
+	{
+		$replicator = $button->parent->parent;
+		$replicator->remove($button->parent, TRUE);
 	}
 
 	public function getFormattedValues($asArray = FALSE)
