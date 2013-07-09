@@ -102,7 +102,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function buildForm()
 	{
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
 		$supportedLanguages = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
@@ -146,16 +146,15 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$interviewContainer->addContainer($question->getId());
 		}
 
-		$namePhrase = $this->phraseRepository->findOneByOldId('886');
-		$teaserPhrase = $this->phraseRepository->findOneByOldId('890');
 		foreach($supportedLanguages as $language) {
 			$iso = $language->getIso();
-			$nameContainer->addText($iso, $namePhrase->getTranslationText($language))
+
+			$nameContainer->addText($iso, $this->translate('o886', null, null, null, $language))
 				->setOption('prepend', $iso)
 				->setOption('help', $this->translate('o100071'));
 				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
-			$teaserContainer->addText($iso, $teaserPhrase->getTranslationText($language))
+			$teaserContainer->addText($iso, $this->translate('o890', null, null, null, $language))
 				->setOption('prepend', $iso)
 				->setOption('help', '');
 			$i = 1;
@@ -165,7 +164,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
+		$rentalContainer->addText('roomCount', $this->translate('o100075'));
 
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'));
 
