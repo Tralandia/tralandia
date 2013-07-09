@@ -121,7 +121,12 @@ class TempScriptPresenter extends BasePresenter {
 		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
 		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
 
-		$translations = $translationsRepository->findBy(['language' => $language->getId()], NULL, $limit, $offset);
+		$qb = $translationsRepository->createQueryBuilder();
+		$qb = $translationsRepository->filterTranslatedTypes($qb);
+
+		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+
+		$translations = $qb->getQuery()->getResult();
 
 		foreach($translations as $translation) {
 			$this->variationUpdater->update($translation);
@@ -130,11 +135,6 @@ class TempScriptPresenter extends BasePresenter {
 		$this->em->flush();
 
 
-//		$count = count($translations);
-//		if($count) {
-//			$this->redirect('this', ['iso' => $iso, 'limit' => $limit, 'offset' => ($offset+$limit)]);
-//		} else {
-//		}
 		$this->payload->success = true;
 		$this->sendPayload();
 	}
