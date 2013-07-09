@@ -32,6 +32,7 @@ class TranslationVariationContainer extends BaseContainer
 	{
 		$translation = $this->translation;
 		$phrase = $translation->getPhrase();
+		$translationText = $translation->getTranslation();
 		$isHtml = $phrase->getType()->isHtml();
 
 		foreach ($translation->getVariations() as $pluralKey => $genders) {
@@ -39,7 +40,7 @@ class TranslationVariationContainer extends BaseContainer
 			foreach ($genders as $genderKey => $genderValue) {
 				$gender = $plural->addContainer($genderKey);
 				foreach ($genderValue as $caseKey => $caseValue) {
-					if($isHtml) {
+					if($isHtml || strlen($translationText) >= 60 ) {
 						$field = $gender->addTextArea($caseKey, $caseValue);
 					} else {
 						$field = $gender->addText($caseKey, $caseValue);

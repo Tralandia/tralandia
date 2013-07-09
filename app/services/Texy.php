@@ -11,6 +11,7 @@ class TranslationTexy extends \Texy
 		\TexyConfigurator::disableImages($this);
 
 		$this->allowed['longwords'] = FALSE;
+		$this->allowed['paragraph'] = FALSE;
 
 		$this->encoding = 'UTF-8';
 		$this->allowedTags = FALSE;

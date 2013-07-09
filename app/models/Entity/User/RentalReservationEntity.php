@@ -68,19 +68,19 @@ class RentalReservation extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $message;
 
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\User\RentalReservation
@@ -91,7 +91,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -101,7 +101,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -109,7 +109,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalReservation
@@ -120,7 +120,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -130,7 +130,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -138,7 +138,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalReservation
@@ -149,7 +149,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -157,7 +157,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->senderEmail;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalReservation
@@ -168,7 +168,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -176,7 +176,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->senderName;
 	}
-		
+
 	/**
 	 * @param \Entity\Contact\Phone
 	 * @return \Entity\User\RentalReservation
@@ -187,7 +187,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -197,7 +197,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Phone|NULL
 	 */
@@ -205,7 +205,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->senderPhone;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\User\RentalReservation
@@ -216,7 +216,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -226,7 +226,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -234,7 +234,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->arrivalDate;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\User\RentalReservation
@@ -245,7 +245,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -255,7 +255,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -263,7 +263,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->departureDate;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\User\RentalReservation
@@ -274,7 +274,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -282,7 +282,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->adultsCount;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\User\RentalReservation
@@ -293,7 +293,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalReservation
 	 */
@@ -303,7 +303,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -311,7 +311,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->childrenCount;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalReservation
@@ -322,7 +322,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

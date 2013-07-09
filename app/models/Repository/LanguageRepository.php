@@ -22,6 +22,11 @@ class LanguageRepository extends \Repository\BaseRepository {
 		return $this->findBySupported($entityName::SUPPORTED, $order);
 	}
 
+	public function findLive($order = NULL) {
+		$entityName = $this->_entityName;
+		return $this->findByLive($entityName::LIVE, $order);
+	}
+
 	public function findSupportedQb() {
 
 		$qb = $this->_em->createQueryBuilder();
@@ -34,6 +39,22 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 	public function getSupportedSortedByName(ITranslator $translator, Collator $collator) {
 		$supported = $this->findSupported();
+
+		$return = array();
+		foreach ($supported as $key => $language) {
+			$return[$translator->translate($language->name)] = $language;
+		}
+
+		// TODO: Zoradit pomocou \Collator
+		// $collator->asort($return);
+
+		return $return;
+
+	}
+
+
+	public function getLiveSortedByName(ITranslator $translator, Collator $collator) {
+		$supported = $this->findLive();
 
 		$return = array();
 		foreach ($supported as $key => $language) {

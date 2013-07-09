@@ -4,6 +4,7 @@ namespace AdminModule;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\TextResponse;
+use Nette\Caching\Cache;
 use Nette\Environment;
 use Security\SimpleAcl;
 
@@ -119,6 +120,18 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 		$this->payload->suggestion = $suggestion;
 		$this->sendPayload();
+
+	}
+
+	public function invalidatePhrasesCache($phrasesIds)
+	{
+		$cache = $this->getContext()->getService('translatorCache');
+
+		foreach($phrasesIds as $phraseId) {
+			$cache->clean([
+				Cache::TAGS => ['phrase/'.$phraseId]
+			]);
+		}
 
 	}
 

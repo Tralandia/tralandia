@@ -73,11 +73,9 @@
 		{if $totalResultsCount > 1 }
 			{var $bottomLinks = $bottomLinksCallback()}
 			{if isset($bottomLinks) && count($bottomLinks->links)}
-			<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
+			<h4 data-cache="{$rand}"><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 			<ul>
-				{if !$hasLocation}
-				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
-				{/if}
+
 
 				<li n:foreach="$bottomLinks->links as $value">
 					<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
@@ -86,7 +84,7 @@
 				</li>
 
 				{if !$hasLocation}
-				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
+				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> <b>{_o100185}</b></a></li>
 				{/if}
 			</ul>
 			{/if}

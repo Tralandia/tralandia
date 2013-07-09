@@ -20,6 +20,8 @@ class Language extends \Entity\BaseEntityDetails {
 
 	const SUPPORTED = TRUE;
 	const NOT_SUPPORTED = FALSE;
+	const LIVE = TRUE;
+	const NOT_LIVE = FALSE;
 	const NOMINATIVE = 'nominative';
 	const LOCATIVE = 'locative';
 
