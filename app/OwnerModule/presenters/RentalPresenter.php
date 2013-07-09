@@ -9,8 +9,6 @@ use Nette\Environment;
 class RentalPresenter extends BasePresenter
 {
 
-	public $rentalRepositoryAccessor;
-
 	/**
 	 * @var \Entity\Rental\Rental
 	 */
@@ -27,12 +25,6 @@ class RentalPresenter extends BasePresenter
 	 * @var \FormHandler\IRentalEditHandlerFactory
 	 */
 	protected $rentalEditHandlerFactory;
-
-
-	public function injectDic(\Nette\DI\Container $dic)
-	{
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
 
 
 	public function actionFirstRental()
