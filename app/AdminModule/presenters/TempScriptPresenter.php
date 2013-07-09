@@ -112,28 +112,17 @@ class TempScriptPresenter extends BasePresenter {
 	}
 
 
-	public function actionUpdateSlovenianTranslations()
+	public function actionUpdateTranslationsForLanguage($iso, $limit, $offset)
 	{
 		/** @var $language \Entity\Language */
-		$language = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso('sl');
-		$plurals = [
-			'rule' => '($n==1) ? 0 : ($n==2) ? 1 : (($n>=3 && $n<=4) ? 2 : 3)',
-			'names' => ['Singular', '2', '3, 4', '0, 5 or more'],
-		];
-		$language->setPlurals($plurals);
+		$language = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso($iso);
 
-		$this->em->flush();
 
 		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
 		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
 
-		$qb = $translationsRepository->createQueryBuilder();
-		$qb = $translationsRepository->filterTranslatedTypes($qb);
+		$translations = $translationsRepository->findBy([], NULL, $limit, $offset);
 
-		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
-
-		$translations = $qb->getQuery()->getResult();
-		
 		foreach($translations as $translation) {
 			$this->variationUpdater->update($translation);
 		}
