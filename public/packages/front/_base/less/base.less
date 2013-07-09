@@ -1071,22 +1071,28 @@ img.flag {
 	font-size: 30px;
 	margin-top: 5px;
 
-height: 27px;
-line-height: 27px;
+height: 25px;
+line-height: 26px;
 display: block;
-width: 26px;
+width: 25px;
 padding: 0;
 
 	&:hover {
 		text-decoration:none;
+
+		i {
+			color: #fff;
+			background: #cf3301;
+			.border-radius(7px);
+		}
 	}
 
 	i {
-		height: 27px;
-		line-height: 27px;
-		display: block;
-		width: 26px;
-		padding: 0;		
+height: 25px;
+line-height: 26px;
+display: block;
+width: 25px;
+padding: 0;	
 	}	
 
 	&.googlePlus {
@@ -1104,6 +1110,13 @@ padding: 0;
 	&.facebook {
 		color: #3c599f;
 		margin-top: 0;
+
+		&:hover {
+			i {
+				background: #3c599f;
+				color: #fff;
+			}
+		}
 	}
 }
 
