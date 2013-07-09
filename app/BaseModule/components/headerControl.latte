@@ -19,6 +19,14 @@
 					*}
 
 					{if $user->isLoggedIn()}
+
+
+						<li class="headerIcon">
+							<a href="{plink :Front:SupportUs:default}" class="green">
+								<strong>{_o100195}</strong>
+							</a>
+						</li>
+											
 						{if $loggedUser->isOwner()}
 							<li class="headerIcon">
 								<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
@@ -72,7 +80,7 @@
 
 				</ul>
 
-				<ul class="dropdown-menu" id="langMenuOptions" n:inner-foreach="$supportedLanguages as $column">
+				<ul class="dropdown-menu" id="langMenuOptions" n:inner-foreach="$liveLanguages as $column">
 					<li>
 						<ul n:inner-foreach="$column as $language">
 							<li>

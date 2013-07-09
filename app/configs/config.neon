@@ -86,9 +86,9 @@ parameters:
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		searchLinks:
-			enabled: TRUE
-			if: '[!urlWithGet]'
-			key: '[url]'
+			enabled: true
+			if: '[homepage]' # '[!urlWithGet]'
+			key: '[language]_[primaryLocation]_[homepage]' # '[url]'
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		rentalBrick:

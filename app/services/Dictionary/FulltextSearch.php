@@ -42,6 +42,7 @@ class FulltextSearch {
 	 * @param $string
 	 * @param \Entity\Language $language
 	 * @param bool $allTypes
+	 * @param bool $notUsed
 	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
@@ -53,6 +54,7 @@ class FulltextSearch {
 
 		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 		if(is_numeric($string)) {
+			$allTypes = true;
 			$qb->leftJoin('e.phrase', 'p');
 			$phraseIsJoined = true;
 			$qb->andWhere($qb->expr()->eq('p.id', ':string'))->setParameter('string', $string);

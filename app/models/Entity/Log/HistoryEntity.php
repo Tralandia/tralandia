@@ -16,6 +16,7 @@ use Nette\Utils\Strings;
 class History extends \Entity\BaseEntity {
 
 	const TRANSLATION_INVOICE_REQUEST = 'translationInvoiceRequest';
+	const TRANSLATIONS_SET_AS_PAID = 'translationsSetAsPaid';
 
 	/**
 	 * @var string

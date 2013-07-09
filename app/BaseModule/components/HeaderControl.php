@@ -59,7 +59,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$languageRepository = $this->em->getRepository('\Entity\Language');
 		$translator = $this->environment->getTranslator();
 		$collator = $this->environment->getLocale()->getCollator();
-		$supportedLanguages = $languageRepository->getSupportedSortedByName($translator, $collator);
+		$liveLanguages = $languageRepository->getLiveSortedByName($translator, $collator);
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
@@ -85,7 +85,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->domainExtension = '.' . substr($domain, strpos($domain, 'tralandia') + 10);
 
 
-		$template->supportedLanguages = array_chunk($supportedLanguages, round(count($supportedLanguages)/3));
+		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
 
 		$template->environment = $this->environment;
 		$template->pageSeo = $this->pageSeo;

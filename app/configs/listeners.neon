@@ -8,4 +8,5 @@ services:
 	polygonCalculatorListener: [class: Listener\PolygonCalculatorListener, tags: [kdyby.subscriber]]
 	requestTranslationsEmailListener: [class: Listener\RequestTranslationsEmailListener, tags: [kdyby.subscriber]]
 	requestTranslationsHistoryLogListener: [class: Listener\RequestTranslationsHistoryLogListener, tags: [kdyby.subscriber]]
+	translationsSetAsPaidHistoryLogListener: [class: Listener\TranslationsSetAsPaidHistoryLogListener, tags: [kdyby.subscriber]]
 

@@ -76,15 +76,14 @@ abstract class CoolForm extends Form {
 	}
 
 	public function addSubmit($name, $caption = NULL, $nospam = TRUE) {
-		// @todo dorobit
-		// if ($nospam && !isset($this['nospam'])) {
-		// 	$noSpam = $this->addHidden('nospam', 'Fill in „nospam“')
-		// 			->addRule(Form::FILLED, 'You are a spambot!')
-		// 			->addRule(Form::EQUAL, 'You are a spambot!', 'nospam');
+		 if ($nospam && !isset($this['nospam'])) {
+		 	$noSpam = $this->addHidden('nospam', 'Fill in „nospam“')
+		 			->addRule(Form::FILLED, 'You are a spambot!')
+		 			->addRule(Form::EQUAL, 'You are a spambot!', 'nospam');
 
-		// 	$noSpam->getLabelPrototype()->class('nospam');
-		// 	$noSpam->getControlPrototype()->class('nospam');
-		// }
+		 	$noSpam->getLabelPrototype()->class('nospam');
+		 	$noSpam->getControlPrototype()->class('nospam');
+		 }
 
 		return parent::addSubmit($name, $caption);
 	}

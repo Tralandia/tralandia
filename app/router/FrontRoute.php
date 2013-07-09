@@ -185,7 +185,7 @@ class FrontRoute extends BaseRoute
 						$params[self::PAGE] = $segmentList[self::PAGE];
 						if($page->getDestination() == ':Front:CalendarIframe:default') {
 							$rentalId = $pathSegments[1];
-							if($rental = $this->rentalRepositoryAccessor->get()->find($rentalId)) {
+							if($rentalId && $rental = $this->rentalRepositoryAccessor->get()->find($rentalId)) {
 								/** @var $rental \Entity\Rental\Rental */
 								$params[self::RENTAL] = $rental;
 								$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
