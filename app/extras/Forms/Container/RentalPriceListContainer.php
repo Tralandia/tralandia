@@ -69,7 +69,7 @@ class RentalPriceListContainer extends BaseContainer
 
 	public function containerBuilder(Container $container)
 	{
-		$container->addSelect('bedroomCount', '', $this->roomCount);
+		$container->addSelect('roomCount', '', $this->roomCount);
 		$container->addSelect('roomType', '', $this->roomTypes);
 		$container->addSelect('bedCount', '', $this->bedCount);
 		$container->addSelect('extraBedCount', '', $this->extraBedCount);
@@ -101,7 +101,7 @@ class RentalPriceListContainer extends BaseContainer
 					$rowEntity = $pricelistRowRepository->createNew();
 				}
 				$rowEntity->rental = $this->rental;
-				$rowEntity->bedroomCount = $row['bedroomCount'];
+				$rowEntity->roomCount = $row['roomCount'];
 				$rowEntity->roomType = $roomTypeRepository->find($row['roomType']);
 				$rowEntity->bedCount = $row['bedCount'];
 				$rowEntity->extraBedCount = $row['extraBedCount'];
@@ -120,7 +120,7 @@ class RentalPriceListContainer extends BaseContainer
 		$priceLists = [];
 		foreach($this->pricelistRows as $pricelistRow) {
 			$priceLists[] = [
-				'bedroomCount' => $pricelistRow->getBedroomCount(),
+				'roomCount' => $pricelistRow->getRoomCount(),
 				'roomType' => $pricelistRow->getRoomType(),
 				'bedCount' => $pricelistRow->getBedCount(),
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
