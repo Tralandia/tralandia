@@ -121,13 +121,22 @@ class TempScriptPresenter extends BasePresenter {
 		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
 		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
 
-		$translations = $translationsRepository->findBy([], NULL, $limit, $offset);
+		$translations = $translationsRepository->findBy(['language_id' => $language->getId()], NULL, $limit, $offset);
 
 		foreach($translations as $translation) {
 			$this->variationUpdater->update($translation);
 		}
 
 		$this->em->flush();
+
+
+//		$count = count($translations);
+//		if($count) {
+//			$this->redirect('this', ['iso' => $iso, 'limit' => $limit, 'offset' => ($offset+$limit)]);
+//		} else {
+//		}
+		$this->payload->success = true;
+		$this->sendPayload();
 	}
 
 }
