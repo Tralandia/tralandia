@@ -121,7 +121,7 @@ class TempScriptPresenter extends BasePresenter {
 		/** @var $translationsRepository \Repository\Phrase\TranslationRepository */
 		$translationsRepository = $this->em->getRepository(TRANSLATION_ENTITY);
 
-		$translations = $translationsRepository->findBy(['language_id' => $language->getId()], NULL, $limit, $offset);
+		$translations = $translationsRepository->findBy(['language' => $language->getId()], NULL, $limit, $offset);
 
 		foreach($translations as $translation) {
 			$this->variationUpdater->update($translation);
