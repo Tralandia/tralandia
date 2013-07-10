@@ -8,7 +8,7 @@
 
 	{var $featured = $rentalService->isFeatured(); }
 
-	{dump $featured}
+	
 
 	{capture $rentalDetailCacheOptionsKey}
 		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
