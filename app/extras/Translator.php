@@ -102,12 +102,11 @@ class Translator implements \Nette\Localization\ITranslator {
 					self::VARIATION_CASE => NULL
 				],
 				$variation);
+
+			ksort($variation);
 		}
 
-
-		$translationKey = $this->getCacheKey($phraseId, $variation, $language);
-
-		$translation = $this->cache->load($translationKey);
+		$translation = $this->loadTranslationFromCache($phraseId, $language, $variation);
 
 		//$translation = NULL;
 		if($translation === NULL) {
@@ -124,7 +123,6 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$phrase) $translation = FALSE;
-			else $phraseId = $phrase->getId();
 
 			if($phrase instanceof Phrase && !$phrase->getUsed()) {
 				$phrase->setUsed(TRUE);
@@ -158,13 +156,49 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			//if(!$translation) $translation = '{?'.$translationKey.'?}';
 			if(!$translation) $translation = FALSE;
-			//d($phraseId, $translation);
-			$this->cache->save($translationKey, $translation, [
-				Cache::TAGS => ['translator', 'language/'.$language->getId(), 'phrase/'.$phraseId],
-			]);
+
+			$this->saveTranslationToCache($phraseId, $language, $variation, $translation);
 		}
 
 		return $translation;
+	}
+
+
+	private function loadTranslationFromCache($phraseId, Language $language, array $variation = NULL)
+	{
+		$phraseCache = $this->cache->load($phraseId);
+
+		if(!$phraseCache) return NULL;
+
+
+		$translationCache =  Arrays::get($phraseCache, $language->getIso(), NULL);
+
+		if($translationCache) {
+			if($variation === NULL) {
+				return Arrays::get($translationCache, 'default', NULL);
+			} else {
+				return Arrays::get($translationCache, implode('_', $variation), NULL);
+			}
+		} else {
+			return NULL;
+		}
+	}
+
+
+	private function saveTranslationToCache($phraseId, Language $language, array $variation = NULL, $value)
+	{
+		$phraseCache = $this->cache->load($phraseId);
+
+		if($variation === NULL) {
+			$phraseCache[$language->getIso()]['default'] = $value;
+		} else {
+			$phraseCache[$language->getIso()][implode('_', $variation)] = $value;
+		}
+
+		$this->cache->save($phraseId, $phraseCache, [
+			Cache::TAGS => ['translator'],
+		]);
+
 	}
 
 
