@@ -551,6 +551,19 @@ abstract class BasePresenter extends Presenter {
 
 	/* -------------------------- EM helpers ---------------------- */
 
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 *
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function findRental($id, $need = TRUE)
+	{
+		return $this->findHelper(RENTAL_ENTITY, $id, $need);
+	}
+
+
 	/**
 	 * @param $id
 	 * @param bool $need
