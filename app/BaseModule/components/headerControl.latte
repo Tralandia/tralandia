@@ -8,6 +8,7 @@
 			 style="background-image: url({$basePath}{$backgroundImage});">
 
 
+
 		<div id="siteOptions">
 
 
@@ -49,6 +50,11 @@
 						</li>
 						<li><a href="{plink :Front:SupportUs:default}" class="last">{_o100195}</a></li>
 					{else}
+
+						<li class="headerIcon">
+							<img src="/images/flags/{$isoCode}.png" />
+						</li>
+
 						<li class="headerIcon">
 							<a href="{$homepageUrl}">{_o100042}</a>
 						</li>

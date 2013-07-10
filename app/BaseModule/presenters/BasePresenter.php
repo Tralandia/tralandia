@@ -201,6 +201,8 @@ abstract class BasePresenter extends Presenter {
 
 	public function fillTemplateWithCacheOptions($template)
 	{
+
+
 		$parameters = $this->getContext()->getParameters();
 
 		$language = 'language/' . $this->environment->getLanguage()->getIso();
