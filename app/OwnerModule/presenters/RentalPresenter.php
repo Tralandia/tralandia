@@ -49,6 +49,11 @@ class RentalPresenter extends BasePresenter
 
 		$this->checkPermission($this->rental, 'edit');
 
+		$rentalEditForm = $this->getComponent('rentalEditForm');
+		if(!$rentalEditForm->isSubmitted()){
+			$rentalEditForm['rental']['priceList']->setDefaultsValues();
+		}
+
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
 		$this->template->rental = $this->rental;
@@ -62,6 +67,10 @@ class RentalPresenter extends BasePresenter
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
 		$rentalEditHandler = $this->rentalEditHandlerFactory->create($this->rental);
 		$rentalEditHandler->attach($form);
+
+		$form->onSuccess[] = function($form) {
+			$form->getPresenter()->redirect('this');
+		};
 
 		return $form;
 	}

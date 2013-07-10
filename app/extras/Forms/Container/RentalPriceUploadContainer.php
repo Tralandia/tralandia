@@ -2,6 +2,8 @@
 
 namespace Extras\Forms\Container;
 
+use Doctrine\ORM\EntityManager;
+use Extras\Translator;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\SubmitButton;
 
@@ -25,8 +27,11 @@ class RentalPriceUploadContainer extends BaseContainer
 
 	protected $em;
 
+	protected $languages = [];
 
-	public function __construct(\Entity\Rental\Rental $rental = NULL, \RentalPriceListManager $manager, $em)
+
+	public function __construct(\Entity\Rental\Rental $rental = NULL, \RentalPriceListManager $manager,
+								\AllLanguages $allLanguages, Translator $translator, EntityManager $em)
 	{
 		parent::__construct();
 		$this->rental = $rental;
@@ -34,26 +39,18 @@ class RentalPriceUploadContainer extends BaseContainer
 		$this->em = $em;
 		$this->pricelists = $this->rental->getPricelists();
 
+		$this->languages = $allLanguages->getForSelect(NULL, function($v) use($translator) {return $translator->translate($v->getName());});
+
 		$this->addDynamic('list', $this->containerBuilder, 0);
 		$this->setDefaultsValues();
 	}
 
 	public function containerBuilder(Container $container)
 	{
-		$container->addText('name', '#name');
-		$container->addSelect('language', '#language', [2,3,4,5]);
+		$container->addText('name', '');
+		$container->addSelect('language', '', $this->languages);
 		$container->addUpload('file', 'o100192');
 		$container->addHidden('entity', 0);
-//		$container->addSubmit('remove', '#remove')
-//			->setValidationScope(FALSE)
-//			->setAttribute('class', 'ajax')
-//			->onClick[] = callback($this, 'removeElementClicked');
-	}
-
-	public function removeElementClicked(SubmitButton $button)
-	{
-		$replicator = $button->parent->parent;
-		$replicator->remove($button->parent, TRUE);
 	}
 
 	public function getFormattedValues($asArray = FALSE)
@@ -88,31 +85,17 @@ class RentalPriceUploadContainer extends BaseContainer
 
 	public function setDefaultsValues()
 	{
-		$count=0;
 		$priceLists = [];
 		foreach($this->pricelists as $pricelist) {
 			$priceLists[] = [
 				'name' => $pricelist->name,
-				'language' => $pricelist->language,
+				'language' => $pricelist->language->getId(),
 				'file' => $pricelist->filePath,
 				'entity' => $pricelist->id
 			];
-			$count++;
 		}
 
-		$rowsCount = $count + 1;
-
-		for($i=0; $i < $rowsCount; $i++) {
-			if (array_key_exists($i, $priceLists)) {
-				$defaults = $priceLists[$i];
-				$container = $this['list'][$i]->setValues($defaults);
-				$componentFile = $container->getComponents()['file'];
-				$componentFile->caption = basename($defaults['file']);
-				$componentFile->setDisabled();
-			} else {
-				$this['list'][$i]->setValues([]);
-			}
-		}
+		$this->setDefaults(['list' => $priceLists]);
 	}
 
 	public function getMainControl()

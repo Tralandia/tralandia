@@ -140,7 +140,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'rooms', 'other'];
+		$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'room', 'other'];
 		foreach ($amenities as $amenityName) {
 			$value = $values[$amenityName];
 			$amenities = $rental->getAmenitiesByType($amenityName);
@@ -193,9 +193,6 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['url']) {
-			if (preg_match("/^http:\/\//", $value)==0) {
-				$value = 'http://'.$value;
-			}
 			$rental->setUrl($value);
 		}
 
@@ -203,12 +200,14 @@ class RentalEditHandler extends FormHandler
 			$rental->bedroomCount = $value;
 		}
 
-		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'rooms'];
+		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity'];
 		foreach ($simpleValues as $valueName) {
 			if ($value = $values[$valueName]) {
 				$rental->{$valueName} = $value;
 			}
 		}
+
+		$rental->rooms = $values['roomsLayout'];
 
 		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
 		$rentalRepository->flush();

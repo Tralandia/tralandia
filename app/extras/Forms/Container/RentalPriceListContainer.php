@@ -63,7 +63,6 @@ class RentalPriceListContainer extends BaseContainer
 		}
 
 		$this->addDynamic('list', $this->containerBuilder, 0);
-		$this->setDefaultsValues();
 	}
 
 
@@ -116,7 +115,6 @@ class RentalPriceListContainer extends BaseContainer
 
 	public function setDefaultsValues()
 	{
-		$count=0;
 		$priceLists = [];
 		foreach($this->pricelistRows as $pricelistRow) {
 			$priceLists[] = [
@@ -126,19 +124,9 @@ class RentalPriceListContainer extends BaseContainer
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
 				'price' => $pricelistRow->getPrice()->getSourceAmount()
 			];
-			$count++;
 		}
 
-		// add empty row
-		$rowsCount = $count + 1;
-
-		for($i=0; $i < $rowsCount; $i++) {
-			$defaults = [];
-			if (array_key_exists($i, $priceLists)) {
-				$defaults = $priceLists[$i];
-			}
-			$this['list'][$i]->setValues($defaults);
-		}
+		$this->setDefaults(['list' => $priceLists]);
 	}
 
 
