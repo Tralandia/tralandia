@@ -48,6 +48,7 @@ class SimpleAcl extends Permission
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
 		$resources[] = 'Owner:Rental';
+		$resources[] = 'Owner:User';
 
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';

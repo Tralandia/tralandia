@@ -545,7 +545,7 @@
 <table class="phraseTable table">
 	<tr>
 		{if $phrase->type->pluralVariationsRequired}
-		
+
 		{/if}
 		{if $phrase->type->genderVariationsRequired}
 		{foreach $language->genders as $genderName}
@@ -564,7 +564,7 @@
 				{$gender->getName()|firstUpper}
 				{if $phrase->type->pluralVariationsRequired}
 				{$language->getPluralName($plural->getName())}
-				{/if}				
+				{/if}
 			</span>
 
 			{$gender->getControl()}
@@ -695,7 +695,7 @@
 		{var $replicator = $container->getComponent('list')}
 		{foreach $replicator->getComponents() as $component}
 			<div class="priceList">
-				{input $component['bedroomCount'] , class => ' pull-left'}
+				{input $component['roomCount'] , class => ' pull-left'}
 				{input $component['roomType'] , class => 'string pull-left'}
 				{input $component['bedCount'] , class => 'string pull-left'}
 				{input $component['extraBedCount'] , class => 'string pull-left'}

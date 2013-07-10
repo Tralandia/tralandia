@@ -800,7 +800,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function setUrl($url)
 	{
-		if(!Strings::startsWith($url, 'http://') || !Strings::startsWith($url, 'https://')) {
+		if(!Strings::startsWith($url, 'http://') && !Strings::startsWith($url, 'https://')) {
 			$url = 'http://' . $url;
 		}
 		if(!$url instanceof Url) {
@@ -1279,7 +1279,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function addAmenity(\Entity\Rental\Amenity $amenity)
 	{
-		\Nette\Diagnostics\Debugger::timer();
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
