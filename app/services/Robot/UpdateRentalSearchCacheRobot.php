@@ -2,6 +2,7 @@
 
 namespace Robot;
 
+use Entity\Rental\Rental;
 use Nette\Utils\Strings;
 
 /**
@@ -40,10 +41,27 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 		}
 		$cache->save();
 
+		$this->updateOrderCache();
+
+	}
+
+	public function runForRental(Rental $rental)
+	{
+		$cache = $this->rentalSearchFactory->create($this->primaryLocation);
+
+		$cache->addRental($rental);
+
+		$cache->save();
+
+		$this->updateOrderCache();
+	}
+
+	private function updateOrderCache()
+	{
 		$cache = $this->rentalOrderFactory->create($this->primaryLocation);
 		$cache->reset();
-		//d($cache->getOrderList());
-		//d($cache->getFeaturedList());
+//		d($cache->getOrderList());
+//		d($cache->getFeaturedList());
 		$cache->save();
 	}
 }
