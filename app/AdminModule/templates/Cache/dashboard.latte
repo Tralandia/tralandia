@@ -14,13 +14,6 @@
 		<li><a n:href="invalidateCache rentalBrick">Invalidate Rental Brick Cache</a></li>
 		<li><a n:href="invalidateCache rentalDetail">Invalidate Rental Detail Cache</a></li>
 	</ul>
-	<h3>Other</h3>
-	<ul>
-		<li><a n:href="invalidateTranslatorCache">Invalidate Translator Cache</a></li>
-		<li n:foreach="$languages as $language">
-			<a n:href="invalidateLanguageCache $language->getId()">Invalidate {$language->getIso()|upper} Cache</a>
-		</li>
-	</ul>
 </p>
 
 {/#}

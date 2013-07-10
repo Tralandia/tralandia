@@ -25,16 +25,6 @@ class CachePresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
-	public function actionInvalidateTranslatorCache()
-	{
-		$this->invalidateCache('translatorCache', ['translator']);
-	}
-
-	public function actionInvalidateLanguageCache($id)
-	{
-		$this->invalidateCache('translatorCache', ['language/'.$id]);
-	}
-
 	public function actionInvalidateCache($id)
 	{
 		$this->invalidateCache('templateCache', [$id]);

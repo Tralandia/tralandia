@@ -4,9 +4,4 @@ parameters:
 		#debugger: true
 
 	templateCache:
-		enabled: false
-
-
-	staticDomain: NULL
-	storageDir: /storage
-	storagePath: /storage
+		enabled: true
