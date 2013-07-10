@@ -12,3 +12,4 @@ parameters:
 
 	staticDomain: NULL
 	storageDir: /storage
+	storagePath: /storage

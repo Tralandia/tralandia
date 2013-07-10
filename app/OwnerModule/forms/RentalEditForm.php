@@ -134,6 +134,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('contactEmail', 'o1096')
 			->setOption('help', $this->translate('o3095'));
 
+
 		$rentalContainer->addPriceContainer('price', 'o100078');
 
 		$languages = array();
