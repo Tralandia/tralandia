@@ -201,26 +201,4 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	}
 
-
-	/**
-	 * @param $phraseId
-	 * @param array $variation
-	 * @param \Entity\Language $language
-	 *
-	 * @return string
-	 */
-	private function getCacheKey($phraseId, array $variation = NULL, Language $language)
-	{
-		if($variation === NULL) {
-			$translationKey = $phraseId.'_'.$language->getId();
-		} else {
-			// if (!isset($variation['count'])) $variation['count'] = NULL;
-			// if (!isset($variation['gender'])) $variation['gender'] = NULL;
-			// if (!isset($variation['case'])) $variation['case'] = NULL;
-			$translationKey = $phraseId.'_'.$language->getId().'_'.implode('_', $variation);
-		}
-
-		return $translationKey;
-	}
-
 }
