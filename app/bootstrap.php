@@ -100,7 +100,9 @@ FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
 		$em = $dic->getService('model');
 		$manager = $dic->getService('rentalPriceListManager');
-		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $em);
+		$translator = $dic->getService('translator');
+		$allLanguages = $dic->getService('allLanguages');
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $allLanguages, $translator, $em);
 	});
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
