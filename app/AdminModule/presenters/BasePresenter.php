@@ -128,9 +128,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$cache = $this->getContext()->getService('translatorCache');
 
 		foreach($phrasesIds as $phraseId) {
-			$cache->clean([
-				Cache::TAGS => ['phrase/'.$phraseId]
-			]);
+			$cache->remove($phraseId);
 		}
 
 	}
