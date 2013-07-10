@@ -124,8 +124,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
-			->setOption('prepend', 'http://')
-			->addRule(self::URL, $this->translate('o100102'));
+			->setOption('prepend', 'http://');
 
 		$rentalContainer->addPriceContainer('price', 'o100078');
 
@@ -164,7 +163,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		$rentalContainer->addText('roomCount', $this->translate('o100075'));
+		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
 
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'));
 
@@ -199,13 +198,14 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('parking', 'o100178', $amenities);
 
 		$amenities = $this->amenityRepository->findByRoomTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('rooms', 'o100176', $amenities);
+		$rentalContainer->addMultiOptionList('room', 'o100176', $amenities);
 
 		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities);
 
 		$this->addSubmit('submit', 'o100083');
 
+		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = callback($rentalContainer, 'validation');
 		$this->onValidate[] = callback($pricelistUpload, 'validate');
 	}
@@ -218,7 +218,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function validation(RentalEditForm $form)
 	{
-		$this['priceUpload']->validate();
+		$values = $form->getValues();
+
+		$r = 1;
 	}
 
 }
