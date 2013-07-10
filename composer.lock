@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "cec6ec4c241f8fc2cee46f8f5d4a58ef",
+    "hash": "4705d19cb22a4d7db0a7b48155a3861c",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -52,13 +52,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janmarek/mockista.git",
-                "reference": "e53eb003525f57b3cd3c48b5630a898b5a078251"
+                "reference": "300c8bc71256cf04c426a5a37c0608577a7908b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janmarek/mockista/zipball/e53eb003525f57b3cd3c48b5630a898b5a078251",
-                "reference": "e53eb003525f57b3cd3c48b5630a898b5a078251",
+                "url": "https://api.github.com/repos/janmarek/mockista/zipball/300c8bc71256cf04c426a5a37c0608577a7908b4",
+                "reference": "300c8bc71256cf04c426a5a37c0608577a7908b4",
                 "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
             "autoload": {
@@ -69,18 +72,20 @@
                     "Mockista/functions.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Jiří Knesl",
-                    "homepage": "http://www.knesl.com/"
+                    "name": "Jan Marek",
+                    "email": "mail@janmarek.net",
+                    "homepage": "http://www.janmarek.net/",
+                    "role": "Author"
                 },
                 {
-                    "name": "Jan Marek",
-                    "homepage": "http://www.janmarek.net/"
+                    "name": "Jiří Knesl",
+                    "homepage": "http://www.knesl.com/"
                 }
             ],
             "description": "Mockista is library for mocking, which I've written, because I find mocking in PHPUnit awful.",
@@ -95,7 +100,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2013-02-25 22:33:22"
+            "time": "2013-06-24 12:24:03"
         },
         {
             "name": "kdyby/events",
@@ -103,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "06cafcc1c7ede69c75111ffc43e75bd64f86498a"
+                "reference": "4b28b5729e5a1b075bf2b7002a054c878ccedcef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/06cafcc1c7ede69c75111ffc43e75bd64f86498a",
-                "reference": "06cafcc1c7ede69c75111ffc43e75bd64f86498a",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/4b28b5729e5a1b075bf2b7002a054c878ccedcef",
+                "reference": "4b28b5729e5a1b075bf2b7002a054c878ccedcef",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +134,7 @@
                     "src/Doctrine/compatibility.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -147,7 +152,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-05-26 15:25:57"
+            "time": "2013-07-09 00:51:48"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -155,12 +160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "66ce0b3986483089ffe7d2270514ece7f1432d19"
+                "reference": "c7bd08e3b066ed30ec3bb30089f08981d46b3623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/66ce0b3986483089ffe7d2270514ece7f1432d19",
-                "reference": "66ce0b3986483089ffe7d2270514ece7f1432d19",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/c7bd08e3b066ed30ec3bb30089f08981d46b3623",
+                "reference": "c7bd08e3b066ed30ec3bb30089f08981d46b3623",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +180,7 @@
                     "Kdyby\\Replicator\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -196,7 +201,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-05-26 18:20:06"
+            "time": "2013-07-06 16:06:59"
         },
         {
             "name": "kdyby/redis",
@@ -204,12 +209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Redis.git",
-                "reference": "cfcd9b51756617e879d1c0e0f269af06256b6931"
+                "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Kdyby/Redis/zipball/cfcd9b51756617e879d1c0e0f269af06256b6931",
-                "reference": "cfcd9b51756617e879d1c0e0f269af06256b6931",
+                "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
                 "shasum": ""
             },
             "require": {
@@ -251,7 +256,7 @@
                 "nette",
                 "redis"
             ],
-            "time": "2013-05-26 18:10:45"
+            "time": "2013-06-30 13:36:22"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -259,12 +264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "2.6.1"
+                "reference": "a2987b5942301d0a10125018a2bb94f1d6f3ad50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/2.6.1",
-                "reference": "2.6.1",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/a2987b5942301d0a10125018a2bb94f1d6f3ad50",
+                "reference": "a2987b5942301d0a10125018a2bb94f1d6f3ad50",
                 "shasum": ""
             },
             "require": {
@@ -276,7 +281,7 @@
                     "Mobile_Detect.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -297,7 +302,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-05-29 14:04:34"
+            "time": "2013-07-09 09:03:14"
         },
         {
             "name": "nette/nette",
@@ -309,7 +314,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/acacf8c52999d5ba94a40f96acb6c8fbcfd6f6bc",
+                "url": "https://api.github.com/repos/nette/nette/zipball/1719e61ee4dc7ea7317ff4bc797c2d935eebfaa7",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -339,7 +344,7 @@
                     "Nette/loader.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -381,6 +386,12 @@
                 "url": "https://github.com/Achtan/datagrid.git",
                 "reference": "e22cf01059bc7bc5488460b3dc5df3e48a06b6c7"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Achtan/datagrid/zipball/e22cf01059bc7bc5488460b3dc5df3e48a06b6c7",
+                "reference": "e22cf01059bc7bc5488460b3dc5df3e48a06b6c7",
+                "shasum": ""
+            },
             "require": {
                 "nette/nette": ">=2.0.0",
                 "php": ">=5.3.0"
@@ -407,6 +418,9 @@
                 "nette",
                 "nextras"
             ],
+            "support": {
+                "source": "https://github.com/Achtan/datagrid/tree/master"
+            },
             "time": "2013-05-30 08:35:58"
         },
         {
@@ -513,6 +527,12 @@
             "alias_normalized": "dev-@",
             "version": "9999999-dev",
             "package": "nette/nette"
+        },
+        {
+            "alias": "@dev",
+            "alias_normalized": "dev-@",
+            "version": "9999999-dev",
+            "package": "kdyby/redis"
         }
     ],
     "minimum-stability": "dev",
