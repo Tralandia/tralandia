@@ -63,7 +63,6 @@ class RegistrationHandler extends FormHandler
 		$userRepository = $this->em->getRepository(USER_ENTITY);
 		$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-		$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
 		$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 
@@ -87,7 +86,6 @@ class RegistrationHandler extends FormHandler
 			$error->addError('o2610', 'email');
 		}
 
-		$rentalValues->type->type = $rentalTypeRepository->find($rentalValues->type->type);
 		if (!$rentalValues->type->type) {
 			$error->addError("Invalid rental type", 'rentalType');
 		}
@@ -113,7 +111,7 @@ class RegistrationHandler extends FormHandler
 			->addSpokenLanguage($values->language)
 			->setEmail($values->email)
 			->setUrl($values->url)
-			->setPhone($rentalValues->phone->phone)
+			->setPhone($rentalValues->phone->entity)
 			->setClassification($rentalValues->type->classification)
 			->setMaxCapacity($rentalValues->maxCapacity)
 			->setCheckIn($rentalValues->checkIn)
