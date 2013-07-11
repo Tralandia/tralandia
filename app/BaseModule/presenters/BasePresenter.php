@@ -201,6 +201,8 @@ abstract class BasePresenter extends Presenter {
 
 	public function fillTemplateWithCacheOptions($template)
 	{
+
+
 		$parameters = $this->getContext()->getParameters();
 
 		$language = 'language/' . $this->environment->getLanguage()->getIso();
@@ -550,6 +552,19 @@ abstract class BasePresenter extends Presenter {
 
 
 	/* -------------------------- EM helpers ---------------------- */
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 *
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function findRental($id, $need = TRUE)
+	{
+		return $this->findHelper(RENTAL_ENTITY, $id, $need);
+	}
+
 
 	/**
 	 * @param $id

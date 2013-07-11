@@ -102,12 +102,11 @@ class Translator implements \Nette\Localization\ITranslator {
 					self::VARIATION_CASE => NULL
 				],
 				$variation);
+
+			ksort($variation);
 		}
 
-
-		$translationKey = $this->getCacheKey($phraseId, $variation, $language);
-
-		$translation = $this->cache->load($translationKey);
+		$translation = $this->loadTranslationFromCache($phraseId, $language, $variation);
 
 		//$translation = NULL;
 		if($translation === NULL) {
@@ -124,7 +123,6 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$phrase) $translation = FALSE;
-			else $phraseId = $phrase->getId();
 
 			if($phrase instanceof Phrase && !$phrase->getUsed()) {
 				$phrase->setUsed(TRUE);
@@ -158,35 +156,49 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			//if(!$translation) $translation = '{?'.$translationKey.'?}';
 			if(!$translation) $translation = FALSE;
-			//d($phraseId, $translation);
-			$this->cache->save($translationKey, $translation, [
-				Cache::TAGS => ['translator', 'language/'.$language->getId(), 'phrase/'.$phraseId],
-			]);
+
+			$this->saveTranslationToCache($phraseId, $language, $variation, $translation);
 		}
 
 		return $translation;
 	}
 
 
-	/**
-	 * @param $phraseId
-	 * @param array $variation
-	 * @param \Entity\Language $language
-	 *
-	 * @return string
-	 */
-	private function getCacheKey($phraseId, array $variation = NULL, Language $language)
+	private function loadTranslationFromCache($phraseId, Language $language, array $variation = NULL)
 	{
-		if($variation === NULL) {
-			$translationKey = $phraseId.'_'.$language->getId();
+		$phraseCache = $this->cache->load($phraseId);
+
+		if(!$phraseCache) return NULL;
+
+
+		$translationCache =  Arrays::get($phraseCache, $language->getIso(), NULL);
+
+		if($translationCache) {
+			if($variation === NULL) {
+				return Arrays::get($translationCache, 'default', NULL);
+			} else {
+				return Arrays::get($translationCache, implode('_', $variation), NULL);
+			}
 		} else {
-			// if (!isset($variation['count'])) $variation['count'] = NULL;
-			// if (!isset($variation['gender'])) $variation['gender'] = NULL;
-			// if (!isset($variation['case'])) $variation['case'] = NULL;
-			$translationKey = $phraseId.'_'.$language->getId().'_'.implode('_', $variation);
+			return NULL;
+		}
+	}
+
+
+	private function saveTranslationToCache($phraseId, Language $language, array $variation = NULL, $value)
+	{
+		$phraseCache = $this->cache->load($phraseId);
+
+		if($variation === NULL) {
+			$phraseCache[$language->getIso()]['default'] = $value;
+		} else {
+			$phraseCache[$language->getIso()][implode('_', $variation)] = $value;
 		}
 
-		return $translationKey;
+		$this->cache->save($phraseId, $phraseCache, [
+			Cache::TAGS => ['translator'],
+		]);
+
 	}
 
 }
