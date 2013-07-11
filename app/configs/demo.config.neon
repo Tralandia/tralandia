@@ -7,3 +7,7 @@ parameters:
 
 	database:
 		debugger: false
+
+	staticDomain: NULL
+	storageDir: /storage
+	storagePath: /storage
