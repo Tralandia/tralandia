@@ -674,7 +674,7 @@ $(function(){
 			};
 
 			var $uploadButton = $self.find('button');
-			var $sortInput = $self.find('#frm-rentalEditForm-rental-photos-sort');
+			var $sortInput = $self.find('input[type=hidden]');
 			var $listGallery = $self.find('#sortable');
             var $removeLinkElement = $listGallery.find('li a');
 //			var $uploadButtonReal = $self.find('input[type=file]');
