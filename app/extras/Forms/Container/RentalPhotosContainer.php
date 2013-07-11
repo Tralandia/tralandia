@@ -58,7 +58,7 @@ class RentalPhotosContainer extends BaseContainer
 	 */
 	public function getImages()
 	{
-		$images = $this->getValues()->images;
+		$images = $this->getFormattedValues()->images;
 		if(!count($images)) return [];
 		return $images;
 	}
@@ -105,7 +105,7 @@ class RentalPhotosContainer extends BaseContainer
 		}
 	}
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		$sort = $this['sort']->getValue();
