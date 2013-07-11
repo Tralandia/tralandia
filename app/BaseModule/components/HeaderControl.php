@@ -2,6 +2,7 @@
 namespace BaseModule\Components;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Location\Location;
 use Entity\User\User;
 use Environment\Environment;
 use Nette\DateTime;
@@ -84,7 +85,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->domainHost = 'Tralandia';
 		$template->domainExtension = '.' . substr($domain, strpos($domain, 'tralandia') + 10);
 
-		$template->isoCode = $this->environment->getPrimaryLocation()->getIso();
+		$template->isoCode = $this->environment->getPrimaryLocation()->getIso(Location::LAST_2_CHARACTERS);
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
 
