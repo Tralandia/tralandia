@@ -1,0 +1,42 @@
+{# content}
+
+<table class="table">
+	<tr>
+		<td>Locations</td>
+		<td n:inner-foreach="$info[Service\Rental\RentalSearchService::CRITERIA_LOCATION] as $value">
+			{_$value->getName()}{if !$iterator->last}; {/if}
+		</td>
+	</tr>
+	<tr>
+		<td>Rental Types</td>
+		<td n:inner-foreach="$info[Service\Rental\RentalSearchService::CRITERIA_RENTAL_TYPE] as $value">
+			{_$value->getName()}{if !$iterator->last}; {/if}
+		</td>
+	</tr>
+	<tr>
+		<td>Spoken Language</td>
+		<td n:inner-foreach="$info[Service\Rental\RentalSearchService::CRITERIA_SPOKEN_LANGUAGE] as $value">
+			{_$value->getName()}{if !$iterator->last}; {/if}
+		</td>
+	</tr>
+	<tr>
+		<td>Board</td>
+		<td n:inner-foreach="$info[Service\Rental\RentalSearchService::CRITERIA_BOARD] as $value">
+			{_$value->getName()}{if !$iterator->last}; {/if}
+		</td>
+	</tr>
+	<tr>
+		<td>Capacity</td>
+		<td>
+			{$info[Service\Rental\RentalSearchService::CRITERIA_CAPACITY]}
+		</td>
+	</tr>
+	<tr>
+		<td>Price</td>
+		<td>
+			{$info[Service\Rental\RentalSearchService::CRITERIA_PRICE]}
+		</td>
+	</tr>
+</table>
+
+{/#}
