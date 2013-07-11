@@ -5,6 +5,7 @@ namespace AdminModule;
 
 use Nette\ArrayHash;
 use Nette\Caching\Cache;
+use Service\Rental\RentalSearchService;
 
 class CachePresenter extends BasePresenter {
 
@@ -13,6 +14,12 @@ class CachePresenter extends BasePresenter {
 	 * @var \Service\Rental\IRentalSearchServiceFactory
 	 */
 	protected $rentalSearchServiceFactory;
+
+	/**
+	 * @autowire
+	 * @var \Extras\Cache\IRentalSearchCachingFactory
+	 */
+	protected $rentalSearchCachingFactory;
 
 	/**
 	 * @autowire
@@ -47,6 +54,25 @@ class CachePresenter extends BasePresenter {
 		$this->flashMessage('Done');
 		$this->redirect('dashboard');
 
+	}
+
+
+	public function actionViewRentalSearchCache($id)
+	{
+		$rental = $this->findRental($id);
+		$searchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
+		$info = $i = $searchCaching->getRentalCacheInfo($rental);
+
+		$searchCaching->regenerate();
+
+		$info[RentalSearchService::CRITERIA_LOCATION] = $this->em->getRepository(LOCATION_ENTITY)->findById($info[RentalSearchService::CRITERIA_LOCATION]);
+		$info[RentalSearchService::CRITERIA_RENTAL_TYPE] = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findById($info[RentalSearchService::CRITERIA_RENTAL_TYPE]);
+		$info[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE] = $this->em->getRepository(LANGUAGE_ENTITY)->findById($info[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE]);
+		$info[RentalSearchService::CRITERIA_BOARD] = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findById($info[RentalSearchService::CRITERIA_BOARD]);
+		$info[RentalSearchService::CRITERIA_CAPACITY] = implode('; ', $info[RentalSearchService::CRITERIA_CAPACITY]);
+		$info[RentalSearchService::CRITERIA_PRICE] = implode('; ', $info[RentalSearchService::CRITERIA_PRICE]);
+
+		$this->template->info = $info;
 	}
 
 

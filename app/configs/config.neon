@@ -166,8 +166,8 @@ services:
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@translatorRedisStorage, 'Translator')
-	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
-	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
+	rentalSearchCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalSearchCache')
+	rentalOrderCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalOrderCache')
 
 
 	translatorRedisClient:
@@ -176,6 +176,14 @@ services:
 
 	translatorRedisStorage:
 		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
+		autowired: false
+
+	searchRedisClient:
+		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
+		autowired: false
+
+	searchRedisStorage:
+		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
 		autowired: false
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
