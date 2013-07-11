@@ -2,14 +2,15 @@
 
 namespace Extras\Forms\Container;
 
+use Entity\Rental\Rental;
 use Entity\Contact\Address;
 use Entity\Location\Location;
 use Nette\InvalidArgumentException;
 use Service\Contact\AddressCreator;
+use Nette\Localization\ITranslator;
 
 class AddressContainer extends BaseContainer
 {
-
 	/**
 	 * @var Address
 	 */
@@ -25,6 +26,11 @@ class AddressContainer extends BaseContainer
 	 */
 	protected $addressCreator;
 
+	/**
+	 * @var \Nette\Localization\ITranslator
+	 */
+	protected $translator;
+
 
 	/**
 	 * @param Address|Location $addressOrLocation
@@ -32,10 +38,11 @@ class AddressContainer extends BaseContainer
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function __construct($addressOrLocation, AddressCreator $addressCreator)
+	public function __construct($addressOrLocation, AddressCreator $addressCreator, ITranslator $translator)
 	{
 		parent::__construct();
 		$this->addressCreator = $addressCreator;
+		$this->translator = $translator;
 
 		if($addressOrLocation instanceof Address) {
 			$this->address = $addressOrLocation;
@@ -48,13 +55,15 @@ class AddressContainer extends BaseContainer
 
 		$this->addText('address', '#Address')
 			->getControlPrototype()
-				->setPlaceholder('o100091');
+			->setPlaceholder('o100091');
 
 		$this->addHidden('location');
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
 
 		$this->setDefaultValues();
+
+		$this->onValidate[] = callback($this, 'validate');
 	}
 
 	public function getMainControl()
@@ -92,8 +101,8 @@ class AddressContainer extends BaseContainer
 	 */
 	public function getAddressEntity()
 	{
-		$address = $this->getValues()->addressEntity;
-		return $address ? $address : $this->address;
+		$address = $this->getValues();
+		return isset($address->addressEntity) ? $address->addressEntity : $this->address;
 	}
 
 
@@ -104,20 +113,19 @@ class AddressContainer extends BaseContainer
 	{
 		if($this->address) {
 			$defaults = [
-				'address' => $this->address->getAddress(),
 				'location' => $this->address->getPrimaryLocation()->getId(),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
+			$formattedAddress = $this->address->getFormattedAddress();
+			$defaults['address'] = $formattedAddress;
 		} else {
 			$defaults = [
-				'address' => $address,
 				'location' => $this->location->getId(),
 				'latitude' => $this->location->getGps()->getLatitude(),
 				'longitude' => $this->location->getGps()->getLongitude(),
 			];
 		}
-
 		$this->setDefaults($defaults);
 	}
 
@@ -128,30 +136,31 @@ class AddressContainer extends BaseContainer
 
 		if($values instanceof Address) {
 			$valuesTemp = [
-				'address' => $values->getAddress(),
+				'address' => $values->getFormattedAddress(),
 				'location' => $values->getPrimaryLocation()->getId(),
 				'latitude' => $values->getGps()->getLatitude(),
 				'longitude' => $values->getGps()->getLongitude(),
 			];
 			$values = $valuesTemp;
 		}
+
 		parent::setValues($values, $erase);
 	}
 
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
+		$return = $asArray ? array() : new \Nette\ArrayHash;
 
-		$values = parent::getValues($asArray);
-		$address = $values['address'];
+		$address = $this['address']->getValue();
 		if($address) {
 			$address = $this->addressCreator->create($address);
-			$values['addressEntity'] = $address;
+			$return['addressEntity'] = $address;
 		} else {
-			$values['addressEntity'] = NULL;
+			$return['addressEntity'] = NULL;
 		}
 
-		return $values;
+		return $return;
 	}
 
 
@@ -161,6 +170,13 @@ class AddressContainer extends BaseContainer
 	public function getPrimaryLocation()
 	{
 		return $this->address->getPrimaryLocation();
+	}
+
+	public function validate() {
+		$values = $this->getValues();
+		if (!$this->addressCreator->validate($values['address'])) {
+			$this->getMainControl()->addError($this->translator->translate('o100134'));
+		}
 	}
 
 }

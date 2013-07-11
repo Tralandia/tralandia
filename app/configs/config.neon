@@ -313,6 +313,7 @@ services:
 	# ==============================
 
 	supportedLanguages: SupportedLanguages
+	allLanguages: AllLanguages
 
 	# ==============================
 	# ==================== DATA SOURCES
