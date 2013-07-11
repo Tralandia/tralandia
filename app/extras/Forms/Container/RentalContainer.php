@@ -73,7 +73,11 @@ class RentalContainer extends BaseContainer
 
 	public function buildContainer()
 	{
-		$this->addAddressContainer('address', $this->rental->address);
+		if($this->rental) {
+			$this->addAddressContainer('address', $this->rental->address);
+		} else {
+			$this->addAddressContainer('address', $this->country);
+		}
 
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 		$this->addSelect('placement', 'o100143', $placement)

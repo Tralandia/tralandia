@@ -27,7 +27,7 @@ class RentalTypeContainer extends BaseContainer
 	 * @param ITranslator $translator
 	 * @param $rentalTypeRepository
 	 */
-	public function __construct(Rental $rental, array $rentalTypes, ITranslator $translator, TypeRepository $rentalTypeRepository)
+	public function __construct(Rental $rental = NULL, array $rentalTypes, ITranslator $translator, TypeRepository $rentalTypeRepository)
 	{
 		parent::__construct();
 
@@ -60,10 +60,13 @@ class RentalTypeContainer extends BaseContainer
 
 	public function setDefaultValues()
 	{
-		$defaults = [
-			'type' => $this->rental->getType()->getId(),
-			'classification' => $this->rental->getClassification()
-		];
+		$defaults = [];
+		if($this->rental) {
+			$defaults = [
+				'type' => $this->rental->getType()->getId(),
+				'classification' => $this->rental->getClassification()
+			];
+		}
 		return $this->setDefaults($defaults);
 	}
 

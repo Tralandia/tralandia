@@ -117,6 +117,8 @@ class AddressContainer extends BaseContainer
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
+			$formattedAddress = $this->address->getFormattedAddress();
+			$defaults['address'] = $formattedAddress;
 		} else {
 			$defaults = [
 				'location' => $this->location->getId(),
@@ -124,8 +126,6 @@ class AddressContainer extends BaseContainer
 				'longitude' => $this->location->getGps()->getLongitude(),
 			];
 		}
-		$formattedAddress = $this->address->getFormattedAddress();
-		$defaults['address'] = $formattedAddress;
 		$this->setDefaults($defaults);
 	}
 
