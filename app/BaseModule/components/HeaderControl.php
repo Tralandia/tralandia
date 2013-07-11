@@ -84,6 +84,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->domainHost = 'Tralandia';
 		$template->domainExtension = '.' . substr($domain, strpos($domain, 'tralandia') + 10);
 
+		$template->isoCode = $this->environment->getPrimaryLocation()->getIso();
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
 
