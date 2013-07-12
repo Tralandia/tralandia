@@ -22,6 +22,12 @@ class RoomType extends \Entity\BaseEntity
 	protected $name;
 
 	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $textPriceFor;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
@@ -43,12 +49,12 @@ class RoomType extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\RoomType
@@ -59,7 +65,7 @@ class RoomType extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -67,7 +73,26 @@ class RoomType extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-		
+
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Rental\RoomType
+	 */
+	public function setTextPriceFor(\Entity\Phrase\Phrase $textPriceFor)
+	{
+		$this->textPriceFor = $textPriceFor;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getTextPriceFor()
+	{
+		return $this->textPriceFor;
+	}
+
 	/**
 	 * @return string|NULL
 	 */

@@ -51,7 +51,7 @@
 		</div>
 
 		{if $isHomepage()}
-			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-angle-down"></i> <span>{_151879}</span></a>
+			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-plus"></i> <span>{_151879}</span></a>
 		{/if}
 
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
@@ -75,9 +75,7 @@
 			{if isset($bottomLinks) && count($bottomLinks->links)}
 			<h4 data-cache="{$rand}"><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 			<ul>
-				{if !$hasLocation}
-				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
-				{/if}
+
 
 				<li n:foreach="$bottomLinks->links as $value">
 					<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
@@ -86,7 +84,7 @@
 				</li>
 
 				{if !$hasLocation}
-				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> {_o100185}</a></li>
+				<li class="allDestinations"><a href="{plink :Front:Destination:}"><i class="icon-angle-right"></i> <b>{_o100185}</b></a></li>
 				{/if}
 			</ul>
 			{/if}

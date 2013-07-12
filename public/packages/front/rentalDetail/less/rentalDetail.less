@@ -558,7 +558,6 @@ table.detailInfoBox {
 .objectDetailServicesIconList.list {
 	list-style: none;
 	margin: 0;
-	margin-top: 10px;
 
 
 	table {
@@ -584,9 +583,7 @@ table.detailInfoBox {
 		line-height: 15px;
 
 		clear: both;
-		strong {
-			display: block;
-		}
+		padding-top: 5px;
 
 		b {
 			display: block;
@@ -657,10 +654,7 @@ table.detailInfoBox {
 		}
 
 		strong {
-			color: @darkGreen;
-width: 345px;
-			margin-right: 25px;
-			float: right;				
+			color: @darkGreen;				
 		}
 
 		&:last-child {
@@ -696,7 +690,7 @@ width: 345px;
 			}			
 		}		
 
-		padding-top: 10px;
+		
 
 		&.clock {					
 			&:before {
@@ -726,7 +720,24 @@ width: 345px;
 			&:before {
 				content: "\f0F3";			
 			}			
-		}		
+		}
+
+		&.other ,
+		&.activity,
+		&.relax ,
+		&.service,
+		&.welness ,
+		&.congress,
+		&.heating,
+		&.parking,
+		&.kitchen ,
+		&.bathroom,
+		&.room,
+		&.children {
+			&:before {
+				content: "\f058";
+			}
+		}
 
 		&:before {
 			font-family: 'FontAwesome';
@@ -857,6 +868,11 @@ width: 345px;
 				font-size: 17px;
 				margin-right: 3px;
 
+			}
+
+			&.icon-globe {
+				right: -2px;
+				position: relative;				
 			}
 
 		}

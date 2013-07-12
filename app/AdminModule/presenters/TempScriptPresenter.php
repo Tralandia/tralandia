@@ -3,6 +3,7 @@
 namespace AdminModule;
 
 
+use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 
 class TempScriptPresenter extends BasePresenter {
@@ -134,6 +135,75 @@ class TempScriptPresenter extends BasePresenter {
 
 		$this->em->flush();
 
+
+		$this->payload->success = true;
+		$this->sendPayload();
+	}
+
+
+	public function actionCreatePhraseForRoomTypesPriceText()
+	{
+		$roomTypes = $this->em->getRepository(ROOM_TYPE_ENTITY)->findAll();
+		$en = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso('en');
+		$sk = $this->em->getRepository(LANGUAGE_ENTITY)->findOneByIso('sk');
+
+
+		$translations = [
+			'room' => [
+				'en' => 'Price per one room',
+				'sk' => 'Cena za jednu izbu',
+			],
+			'apartment' => [
+				'en' => 'Price per one apartment',
+				'sk' => 'Cena za jeden apartmán',
+			],
+			'building' => [
+				'en' => 'Price per building',
+				'sk' => 'Cena za celý objekt',
+			]
+		];
+
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($this->em);
+		/** @var $roomType \Entity\Rental\RoomType */
+		foreach($roomTypes as $roomType) {
+			$textPriceFor = $roomType->getTextPriceFor();
+			if($textPriceFor instanceof Phrase) continue;
+
+			$phraseTypeName = '\Entity\Rental\RoomType:textPriceFor';
+			$roomType->setTextPriceFor($phraseCreator->create($phraseTypeName));
+
+			$textPriceFor = $roomType->getTextPriceFor();
+
+			$translation = $translations[$roomType->getSlug()]['en'];
+			$textPriceFor->getTranslation($en)->setTranslation($translation);
+			$translation = $translations[$roomType->getSlug()]['sk'];
+			$textPriceFor->getTranslation($sk)->setTranslation($translation);
+		}
+
+		$this->em->flush();
+
+		$this->payload->success = true;
+		$this->sendPayload();
+	}
+
+
+	public function actionCreatePhraseForLanguageNameSpoken()
+	{
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findAll();
+
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($this->em);
+		/** @var $language \Entity\Language */
+		foreach($languages as $language) {
+			$nameSpoken = $language->getNameSpoken();
+			if($language instanceof Phrase) continue;
+
+			$phraseTypeName = '\Entity\Language:nameSpoken';
+			$language->setNameSpoken($phraseCreator->create($phraseTypeName));
+		}
+
+		$this->em->flush();
 
 		$this->payload->success = true;
 		$this->sendPayload();

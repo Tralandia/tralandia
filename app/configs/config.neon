@@ -82,13 +82,13 @@ parameters:
 			tags: ['[name]']
 		searchBar:
 			enabled: TRUE
-			key: '[language]_[primaryLocation]_[homepage]'
+			key: '[language]_[primaryLocation]_[zeroSearch]'
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		searchLinks:
 			enabled: true
-			if: '[homepage]' # '[!urlWithGet]'
-			key: '[language]_[primaryLocation]_[homepage]' # '[url]'
+			if: '[zeroSearch]' # '[!urlWithGet]'
+			key: '[language]_[primaryLocation]_[zeroSearch]' # '[url]'
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		rentalBrick:

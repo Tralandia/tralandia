@@ -418,33 +418,20 @@ $(document).ready(function(){
 		return false;
 	});
 
-	// nahrada pre zobrazenie lang menu
-	var socialIconsMenu = false;
+	
+
+	$('#socialIcons').socialShareMenu();
 
 
-	$('#socialIcons').click(function(){
 
-		var $arrow = $(this).find('span');
-		var socialShitCover = '#socialIconsMenu';
 
-		if(!socialIconsMenu){
 
-			$arrow.html('&#59231;');
-			$(socialShitCover).show();
 
-			var loadingWidgetCount = 0;
 
-			Socialite.load(socialShitCover);
-			socialIconsMenu = true;
-		} else {
 
-			$arrow.html('&#59228;');
-			$(socialShitCover).hide();
-			socialIconsMenu = false;
-		}
 
-		return false;
-	});
+
+
 
 
 $('body').click(function(event){
@@ -554,6 +541,96 @@ function _selectSetSelectedValue(){
 
 }
 
+
+
+(function($){
+	$.socialShareMenu = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("socialShareMenu", base);
+		
+		base.initMenu = false;
+		base.openMenu = false;
+		base.socialShitCover = '#socialIconsMenu';
+
+		base.init = function(){
+						
+			base.options = $.extend({},$.socialShareMenu.defaultOptions, options);
+			base.bind();
+			base.urlInit();
+		};
+
+		base.bind = function(){
+			base.$el.click(base._toggleOpenMenu);
+		};
+
+		base.urlInit = function(){
+
+			if(window.location.hash == '#share'){
+
+				setTimeout(function(){
+					
+					base._toggleOpenMenu();
+
+				},10);
+			}
+		}
+
+		base._toggleOpenMenu = function(){
+
+			if(!base.initMenu){
+				base._firstOpen();
+				base.initMenu = true;
+				base.openMenu = true;
+			} else if (!base.openMenu){
+				base._openMenu();
+				base.openMenu = true;
+			} else {
+				base._closeMenu();
+				base.openMenu = false
+			}
+
+			return false;
+
+		};
+
+		base._firstOpen = function(){
+
+			// $(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
+			// $(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
+			// $(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
+
+			base._openMenu();
+
+			Socialite.load(base.socialShitCover);
+		};
+		
+		base._openMenu = function(){
+
+			var $arrow = $(this).find('span');
+			
+			$arrow.html('&#59231;');
+			$(base.socialShitCover).show();			
+						
+		};
+
+		base._closeMenu = function(){
+			$(base.socialShitCover).hide();
+		}
+
+		base.init();
+	};
+	
+	$.socialShareMenu.defaultOptions = {
+	};
+	
+	$.fn.socialShareMenu = function(options){return this.each(function(){(new $.socialShareMenu(this, options));});};
+	
+})(jQuery);
 
 
 
