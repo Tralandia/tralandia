@@ -6,6 +6,7 @@ use Entity\Location\Location;
 use Entity\User\User;
 use Environment\Environment;
 use Nette\DateTime;
+use Routers\FrontRoute;
 use Service\Seo\ISeoServiceFactory;
 use Service\Seo\SeoService;
 
@@ -74,6 +75,11 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 				NULL,
 				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
 			);
+			$world = $this->em->getRepository(LOCATION_ENTITY)->findOneBySlug('world');
+			$params = [
+				FrontRoute::PRIMARY_LOCATION => $world
+			];
+			$template->worldLink = $this->presenter->link('RootHome:default', $params);
 		}
 
 		$template->localeCode = $this->environment->getLocale()->getCode();
