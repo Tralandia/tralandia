@@ -8,7 +8,7 @@
 
 	{var $featured = $rentalService->isFeatured(); }
 
-	
+
 
 	{capture $rentalDetailCacheOptionsKey}
 		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
@@ -30,7 +30,7 @@
 							<div class="position">TOP</div>
 						{/if}
 
-						{foreach $rental->getSortedImages(3) as $photo}						
+						{foreach $rental->getSortedImages(3) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
 							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
@@ -61,7 +61,7 @@
 						{if $teaser || $firstAnswer}
 						<table class="teaser">
 							{if $teaser}
-							<tr>								
+							<tr>
 								<td class="content">{$teaser}</td>
 							</tr>
 							{/if}
@@ -97,7 +97,7 @@
 							{if count($rental->pricelistRows) > 0}
 							{var $pricesAvailable = true}
 							<ul class="detailPriceList">
-								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price|price}</strong> {_o100004}</span>
+								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
 								<ul>
 
@@ -137,7 +137,7 @@
 						{if $rental->pricesUponRequest}
 						{_o100204}
 						{else}
-						{_o100205, NULL, NULL, ['price' => $rental->price]}						
+						{_o100205, NULL, NULL, ['price' => $rental->price]}
 						{/if}
 						{/if}
 
@@ -191,9 +191,9 @@
 											{_o1588} {_$rental->getCheckOutFormatted()}
 										{/if}
 
-										
+
 										{var $other = $rental->getAmenitiesByType(array('other','heating','parking'))}
-										{if $other}									
+										{if $other}
 											{foreach $other  as $amenities}
 											{foreach $amenities as $amenity}
 											{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
@@ -202,7 +202,7 @@
 										{/if}
 									</div>
 								</li>
-								
+
 
 								{var $children = $rental->getAmenitiesByType(array('children'))}
 								{if $children}
@@ -247,7 +247,7 @@
 										{/foreach}
 									</div>
 								</li>
-								{/if}	
+								{/if}
 
 								{var $board = $rental->getAmenitiesByType(array('board'))}
 								{if $board}
@@ -292,7 +292,7 @@
 										{/foreach}
 									</div>
 								</li>
-								{/if}	
+								{/if}
 
 								{var $congress = $rental->getAmenitiesByType(array('congress'))}
 								{if $congress}
@@ -322,7 +322,7 @@
 										{/foreach}
 									</div>
 								</li>
-								{/if}			
+								{/if}
 
 								{var $bathroom = $rental->getAmenitiesByType(array('bathroom'))}
 								{if $bathroom}
@@ -337,7 +337,7 @@
 										{/foreach}
 									</div>
 								</li>
-								{/if}		
+								{/if}
 
 								{var $room = $rental->getAmenitiesByType(array('room'))}
 								{if $room}
@@ -352,13 +352,13 @@
 										{/foreach}
 									</div>
 								</li>
-								{/if}	
-																								
+								{/if}
 
 
 
 
-								
+
+
 
 
 
@@ -444,11 +444,11 @@
 								<div class="socialBtnHeader">
 
 
-									<i class="facebook icon-facebook"></i> 
-									<i class="gplus icon-google-plus"></i> 
-									<i class="twitter icon-twitter"></i> 
-									<i class="pinterest icon-pinterest"></i> 
-									
+									<i class="facebook icon-facebook"></i>
+									<i class="gplus icon-google-plus"></i>
+									<i class="twitter icon-twitter"></i>
+									<i class="pinterest icon-pinterest"></i>
+
 								</div>
 
 								<ul class="dropdown-menu" role="menu" id="socialIconsMenuDetail">
@@ -554,8 +554,8 @@
 
 									<ul class="bigGallery">
 										{foreach $rental->getSortedImages() as $photo}
-										<li n:class="$iterator->odd ? odd">										
-										
+										<li n:class="$iterator->odd ? odd">
+
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
 										</li>
