@@ -25,6 +25,16 @@
 
 {define #row-actions}
 	<a href="{plink :Owner:Rental:edit $primary}" class="btn btn-small btn-primary">edit</a>
-	<a href="{plink :Front:Rental:detail $row}" target="_blank" class="btn btn-small btn-primary">view</a>
-	<a href="{plink fakeLogin $row->getOwner()->getId()}" class="btn btn-small btn-primary">login</a>
+	<div class="btn-group">
+		<button class="btn btn-mini dropdown-toggle btn-inverse" data-toggle="dropdown">Actions <span class="caret"></span></button>
+		<ul class="dropdown-menu">
+			<li><a href="{plink :Front:Rental:detail $row}" target="_blank" >View on FE</a></li>
+			<li><a href="{plink fakeLogin $row->getOwner()->getId()}" >Login as User</a></li>
+			<li class="divider"></li>
+			<li><a href="{plink :Admin:Cache:viewRentalSearchCache $row->getId()}" target="_blank">View Search Cache</a></li>
+			<li><a href="{plink :Admin:Cache:invalidateRentalSearchCache $row->getId()}" class="ajax">Invalidate Search Cache</a></li>
+		</ul>
+	</div>
+
+
 {/define}

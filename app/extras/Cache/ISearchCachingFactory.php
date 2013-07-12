@@ -2,13 +2,9 @@
 namespace Extras\Cache;
 
 interface ISearchCachingFactory {
-	
+
 	public function create(\Entity\Location\Location $location);
 
-}
-
-interface IRentalSearchCachingFactory {
-	public function create(\Entity\Location\Location $location);
 }
 
 interface IRentalSearchKeysCachingFactory {
@@ -16,7 +12,7 @@ interface IRentalSearchKeysCachingFactory {
 }
 
 interface ISearchCacheFactory {
-	
+
 	public function create( $namespace);
 
 }

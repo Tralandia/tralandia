@@ -9,13 +9,13 @@
 		base.el = el;
 
 		base.$el.data("confirmLink", base);
-		
+
 		base.confirmText = base.$el.data('confirmText');
 
 		base.init = function(){
 			base.bind();
 		};
-		
+
 		base.bind = function(){
 			base.$el.live('click',base.confirmDialog);
 		}
@@ -27,17 +27,17 @@
 			} else {
 				return true;
 			}
-						
+
 		}
 
 		base.init();
 	};
-	
+
 	$.fn.confirmLink = function(radius, options){
 		return this.each(function(){
 			(new $.confirmLink(this, radius, options));});
 	};
-	
+
 })(jQuery);
 
 
@@ -79,7 +79,7 @@ $(function(){
 					patternIso: '__languageId__',
 					patternType: '__allTypes__',
 					patternUsed: '__notUsed__'
-				}; 
+				};
 
 			var url = '-- ';
 
@@ -90,7 +90,7 @@ $(function(){
 					.replace(patterns.patternType,Number($('input[name=allTypes]').is(":checked")))
 					.replace(patterns.patternUsed,Number($('input[name=notUsed]').is(":checked")));
 			} else {
-				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val()));
+				url = $(this).attr('data-redirect').replace(patterns.patternQ,encodeURIComponent($(this).val()));
 			}
 
 			window.location = url;
@@ -110,11 +110,11 @@ $(function(){
 		base.el = el;
 
 		base.$el.data("phraseDelete", base);
-		
+
 		base.init = function(){
 			base.bind();
 		};
-		
+
 		base.bind = function(){
 			base.$el.on('click',base.deleteCurrentPhrase);
 		}
@@ -126,7 +126,7 @@ $(function(){
 				$parent.remove();
 
 			$.getJSON(base.$el.attr('href'), function(data) {
-				
+
 
 
 				if(data.success == true){
@@ -141,12 +141,12 @@ $(function(){
 
 		base.init();
 	};
-	
+
 	$.fn.phraseDelete = function(radius, options){
 		return this.each(function(){
 			(new $.phraseDelete(this, radius, options));});
 	};
-	
+
 })(jQuery);
 
 
@@ -156,12 +156,12 @@ $(function(){
 	$.textareaPreview = function(el, options){
 
 		var base = this;
-		
+
 		base.$el = $(el);
 		base.el = el;
 
 		base.$el.data("textareaPreview", base);
-		
+
 		// vars
 		base.previewUrl = base.$el.data('previewLink');
 		base.previewTitle = base.$el.data('previewTitle');
@@ -209,11 +209,11 @@ $(function(){
 
 		base.init();
 	};
-	
+
 	$.fn.textareaPreview = function(options){
 		return this.each(function(){(new $.textareaPreview(this, options));});
 	};
-	
+
 })(jQuery);
 
 $(function(){

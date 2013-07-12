@@ -2,23 +2,37 @@
 
 namespace Extras\Cache;
 
+use Doctrine\ORM\EntityManager;
+use Entity\Location\Location;
+use Entity\Rental\Rental;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
 
 class RentalSearchCaching extends \Nette\Object {
 
 	const CACHE_LIFETIME = '';
+
+	/**
+	 * @var Cache
+	 */
 	protected $cache;
+
 	protected $cacheContent;
 	protected $cacheLoaded = FALSE;
+
+	/**
+	 * @var \Entity\Location\Location
+	 */
 	protected $location;
-	protected $rentalRepositoryAccessor;
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	private $em;
 
-	public function __construct($location, Cache $searchCache) {
+
+	public function __construct(Location $location, Cache $searchCache, EntityManager $em) {
+		$this->em = $em;
 		$this->location = $location;
 		$this->cache = $searchCache;
 		$this->load();
@@ -48,6 +62,44 @@ class RentalSearchCaching extends \Nette\Object {
 			}
 		}
 	}
+
+
+	public function getRentalCacheInfo(Rental $rental)
+	{
+		$return = [];
+		foreach ($this->cacheContent as $key => $value) {
+			foreach ($value as $key2 => $value2) {
+				if (isset($value2[$rental->id])) $return[$key][$key2] = $key2;
+			}
+		}
+
+		return $return;
+	}
+
+
+	public function regenerate()
+	{
+		$data = [];
+
+		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
+
+		$qb = $rentalRepository->createQueryBuilder('r');
+		$qb->select('r.id AS rentalId, l.id AS locationId')
+			->innerJoin('r.address', 'a')
+			->innerJoin('a.locations', 'l')
+			->where('a.primaryLocation = ?1')->setParameter(1, $this->location->getId());
+
+		$rentalsLocations = $qb->getQuery()->getResult();
+
+		foreach($rentalsLocations as $value) {
+			$data[RentalSearchService::CRITERIA_LOCATION][$value['locationId']][$value['rentalId']] = $value['rentalId'];
+		}
+
+		return $data;
+
+
+	}
+
 
 	public function addRental(\Entity\Rental\Rental $rental) {
 		$this->removeRental($rental);
@@ -111,3 +163,14 @@ class RentalSearchCaching extends \Nette\Object {
 		$this->save();
 	}
 }
+
+
+interface IRentalSearchCachingFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return RentalSearchCaching
+	 */
+	public function create(\Entity\Location\Location $location);
+}
+
