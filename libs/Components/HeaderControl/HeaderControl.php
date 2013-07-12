@@ -94,12 +94,6 @@ class HeaderControl extends RenderableContainer
 		parent::__construct($parent, $name);
 
 		$this->setContentType(self::TEXT_HTML);
-
-		try {
-			$this->setFavicon('favicon.ico');
-		} catch (FileNotFoundException $e) {
-
-		}
 	}
 
 	public function setDocType($docType)
