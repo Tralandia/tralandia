@@ -31,6 +31,9 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $primaryLocation;
 
+	/**
+	 * @var \Entity\Page
+	 */
 	public $page;
 
 	public $userRepositoryAccessor;
@@ -215,11 +218,13 @@ abstract class BasePresenter extends Presenter {
 		unset($templateCache['enabled']);
 		$url = $this->getHttpRequest()->getUrl();
 		$url = $url->getHostUrl() . $url->getPath();
+		$zeroSearchValues = ['Front:Home', 'Front:AboutUs', 'Front:SupportUs', 'Front:Faq', 'Front:Tou', 'Front:Sign', 'Front:Registration'];
+		$zeroSearch = in_array($this->getName(), $zeroSearchValues) ? 'zeroSearch' : 'search';
 		$homepage = $this->getName() == 'Front:Home' ? 'homepage' : 'notHomepage';
 		$isHomePage = $this->getName() == 'Front:Home';
 		foreach($templateCache as $optionName => $options) {
-			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]', '[homepage]'];
-			$replaceVariables = [$optionName, $language, $primaryLocation, $url, $homepage];
+			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]', '[homepage]', '[zeroSearch]'];
+			$replaceVariables = [$optionName, $language, $primaryLocation, $url, $homepage, $zeroSearch];
 
 			$propertyName = $optionName . 'CacheOptions';
 
@@ -227,8 +232,8 @@ abstract class BasePresenter extends Presenter {
 
 			if(array_key_exists('if', $options)) {
 				$options['if'] = str_replace(
-					['[!userLoggedIn]', '[!urlWithGet]', '[homepage]'],
-					[$userLoggedIn ? 0 : 1, $urlWithGet ? 0 : 1, $isHomePage ? 1 : 0],
+					['[!userLoggedIn]', '[!urlWithGet]', '[homepage]', '[zeroSearch]'],
+					[$userLoggedIn ? 0 : 1, $urlWithGet ? 0 : 1, $isHomePage ? 1 : 0, $zeroSearch == 'zeroSearch' ? 1 : 0],
 					$options['if']
 				);
 				$options['enabled'] .= ' && (' . $options['if'] . ')';
