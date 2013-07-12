@@ -31,6 +31,8 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 	public function run() {
 		$rentals = $this->rentalRepository->findByPrimaryLocation($this->primaryLocation, \Entity\Rental\Rental::STATUS_LIVE);
 
+		//$rentals = array_slice($rentals, 0, 100);
+
 		$cache = $this->rentalSearchFactory->create($this->primaryLocation);
 		if(count($rentals)) {
 			d(Strings::upper($this->primaryLocation->getIso()).': '.count($rentals) . ' objektov');
