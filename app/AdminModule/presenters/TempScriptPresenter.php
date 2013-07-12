@@ -187,4 +187,26 @@ class TempScriptPresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
+
+	public function actionCreatePhraseForLanguageNameSpoken()
+	{
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findAll();
+
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($this->em);
+		/** @var $language \Entity\Language */
+		foreach($languages as $language) {
+			$nameSpoken = $language->getNameSpoken();
+			if($language instanceof Phrase) continue;
+
+			$phraseTypeName = '\Entity\Language:nameSpoken';
+			$language->setNameSpoken($phraseCreator->create($phraseTypeName));
+		}
+
+		$this->em->flush();
+
+		$this->payload->success = true;
+		$this->sendPayload();
+	}
+
 }
