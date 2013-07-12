@@ -302,7 +302,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$search->setRentalTypeCriterion($this->rentalType);
 		}
 
-		$search->setPriceCriterion($this->priceFrom, $this->priceTo);
+		if ($this->priceFrom || $this->priceTo) {
+			$search->setPriceCriterion($this->priceFrom, $this->priceTo);
+		}
 
 		if ($this->capacity) {
 			$search->setCapacityCriterion($this->capacity);
