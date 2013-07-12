@@ -178,7 +178,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="float", nullable=true)
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $price;
 
