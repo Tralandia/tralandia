@@ -82,7 +82,7 @@ class RentalListPresenter extends BasePresenter {
 //		}
 
 		$this->template->rentals = $rentals;
-		$this->template->findRental = array($this, 'findRental');
+		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();
 	}
 
@@ -97,7 +97,7 @@ class RentalListPresenter extends BasePresenter {
 		}
 	}
 
-	public function findRental($id)
+	public function findRentalData($id)
 	{
 		//d($id);
 		if($id instanceof \Entity\Rental\Rental) {
@@ -126,5 +126,4 @@ class RentalListPresenter extends BasePresenter {
 		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
 		return $vp;
 	}
-
 }

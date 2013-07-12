@@ -122,9 +122,17 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
+
+
 		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://');
+
+		$rentalContainer->addText('contactName', '151894')
+			->setOption('help', $this->translate('151895'));
+
+		$rentalContainer->addText('contactEmail', 'o1096')
+			->setOption('help', $this->translate('o3095'));
 
 		$rentalContainer->addPriceContainer('price', 'o100078');
 
@@ -171,7 +179,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
 
 		$amenities = $this->amenityRepository->findByActivityTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities);
+		$rentalContainer->addMultiOptionList('activity', '1390', $amenities);
 
 		$amenities = $this->amenityRepository->findByRelaxTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('relax', 'o100170', $amenities);
