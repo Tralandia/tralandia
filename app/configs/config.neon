@@ -145,7 +145,7 @@ parameters:
 #	journal: on
 #	database: 0
 #	session: {database: 1}
-#
+
 doctrine:
 	connections:
 		default: %database%
@@ -173,6 +173,7 @@ services:
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 	rentalSearchCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalOrderCache')
+
 
 	cacheStorage:
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
