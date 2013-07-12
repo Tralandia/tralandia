@@ -36,8 +36,8 @@
 
   				var marker = new google.maps.Marker({
   					position: myLatlng,
-  					map: map,
-  					icon: iconBase + 'map-pointer-heart.png'
+  					map: map
+  					// icon: iconBase + 'map-pointer-heart.png'
   				});
 
 			        //console.log(lat+' '+lng);
