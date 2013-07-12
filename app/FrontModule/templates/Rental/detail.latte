@@ -115,7 +115,7 @@
 								<ul>
 
 									{foreach $rental->pricelistRows as $pricelistRow}
-									<li tooltip="true" title="{_o100040} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => 1]}{/if}">
+									<li tooltip="true" title="{_$pricelistRow->roomType->textPriceFor}">
 										{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
 										<span>
 											({$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}{if $pricelistRow->extraBedCount} + {$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if})
@@ -165,24 +165,24 @@
 
 
 								{if count($rental->amenities) > 0}
-								
+
 									<div class="amenitiesStart">
 										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability','separate-groups']) as $amenities}
 										<li class="{reset($amenities)->getType()->getSlug()}">
 										{dump $amenities}
-										
+
 											{var $firstAmenity = false}
 											{var $lastAmenity = false}
 											{if $iterator->first}
 											{var $firstAmenity = true}
 											{/if}
 											{if $iterator->last}{var $lastAmenity = true}{/if}
-											
+
 											{foreach $amenities as $amenity}
 
 												{if $iterator->first}
 												<div class="content">
-													<strong>{_$amenity->type->name|firstUpper}:</strong>		
+													<strong>{_$amenity->type->name|firstUpper}:</strong>
 
 													{else}
 
@@ -191,12 +191,12 @@
 												{/if}
 
 
-												
+
 											{/foreach}
 											</div>
 										</li>
 										{/foreach}
-									
+
 									</div>
 
 								{/if}
