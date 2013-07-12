@@ -63,7 +63,7 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	 */
 	protected function getLayout($id = 1)
 	{
-		return $this->em->getRepository(EMAIL_TEMPLATE_LAYOUT)->find($id);
+		return $this->em->getRepository(EMAIL_LAYOUT_ENTITY)->find($id);
 	}
 
 	protected function getCompiler(Location $location, Language $language)
