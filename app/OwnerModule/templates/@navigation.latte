@@ -4,19 +4,19 @@
 			<strong>{$owner->login}</strong>
 		</div> *}
 		{if isset($rentalList)}
-		<h4><i class="icon-cog"></i> {_o100152}</h4>
+		<h4>{_o100152}</h4>
 		<ul>
-			<li><a n:href=":Owner:User:edit">{_o100146}</a></li>
+			<li><a n:href=":Owner:User:edit"><i class="icon icon-angle-right"></i> {_o100146}</a></li>
 
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
-				<li><a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a></li>
+				<li><a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a></li>
 			{/foreach}
 
 			{ifset $firstRental}
-			<li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id">{_o100153}</a></li>
-			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id">{_o100184} <span class="counter">{$reservationsCount}</span></a></li>
-			<li><a n:href=":Front:Sign:out">{_o100154}</a></li>
+			<li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100153}</a></li>
+			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100184} <span class="counter">{$reservationsCount}</span></a></li>
+			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_o100154}</a></li>
 			{/ifset}
 		</ul>
 		{/if}
