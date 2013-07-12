@@ -4,6 +4,7 @@ namespace FrontModule;
 
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
+use Nette\Utils\Html;
 use Nette\Utils\Strings;
 
 /**
@@ -66,6 +67,15 @@ class RentalListPresenter extends BasePresenter {
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
 		$paginator->itemCount = $itemCount;
 
+
+		/** @var $head \HeaderControl */
+		$head = $this['head'];
+		$nextLink = $this->link('//this', ['p' => $paginator->getPage() + 1]);
+		$nextTag = Html::el('meta')->rel('next')->href($nextLink);
+		$head->addTag($nextTag);
+
+
+
 		$this->template->totalResultsCount = $paginator->itemCount;
 
 		if(isset($search)) {
@@ -124,6 +134,7 @@ class RentalListPresenter extends BasePresenter {
 	protected function createComponentP() {
 		$vp = new \VisualPaginator();
 		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
+
 		return $vp;
 	}
 }
