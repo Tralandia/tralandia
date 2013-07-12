@@ -73,7 +73,10 @@ class HeaderControl extends RenderableContainer
 
 	/** @var array header meta tags */
 	private $metaTags = array();
-	
+
+	/** @var array|Html[] header tags */
+	private $tags = array();
+
 	/** @var Html &lt;html&gt; tag */
 	private $htmlTag;
 
@@ -295,6 +298,18 @@ class HeaderControl extends RenderableContainer
 		return $this->metaTags;
 	}
 
+	public function addTag(Html $tag)
+	{
+		$this->tags[] = $tag;
+
+		return $this; //fluent interface
+	}
+
+	public function getTags()
+	{
+		return $this->tags;
+	}
+
 	public function setAuthor($author)
 	{
 		$this->setMetaTag('author', $author);
@@ -356,32 +371,32 @@ class HeaderControl extends RenderableContainer
 	{
 		return $this->getMetaTag('robots');
 	}
-	
+
 	public function setHtmlTag(Html $htmlTag)
 	{
 		$this->htmlTag = $htmlTag;
-		
+
 		return $this; // fluent interface
 	}
-	
+
 	public function getHtmlTag()
 	{
 		if ($this->htmlTag == NULL) {
 			$html = Html::el('html');
-		
+
 			if ($this->xml) {
 				$html->attrs['xmlns'] = 'http://www.w3.org/1999/xhtml';
 				$html->attrs['xml:lang'] = $this->language;
 				$html->attrs['lang'] = $this->language;
 			}
-		
+
 			if ($this->docType == self::HTML_5) {
 				$html->attrs['lang'] = $this->language;
 			}
-			
+
 			$this->htmlTag = $html;
 		}
-		
+
 		return $this->htmlTag;
 	}
 
@@ -410,7 +425,7 @@ class HeaderControl extends RenderableContainer
 		if (!headers_sent()) {
 			$response->setContentType($contentType, 'utf-8');
 		}
-		
+
 		if ($contentType == self::APPLICATION_XHTML) {
 			echo "<?xml version='1.0' encoding='utf-8'?>\n";
 		}
@@ -442,6 +457,10 @@ class HeaderControl extends RenderableContainer
 
 		foreach ($this->metaTags as $name=>$content) {
 			echo Html::el('meta')->name($name)->content($content) . "\n";
+		}
+
+		foreach ($this->tags as $tag) {
+			echo $tag;
 		}
 	}
 
