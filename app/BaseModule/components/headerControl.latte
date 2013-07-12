@@ -21,7 +21,6 @@
 
 					{if $user->isLoggedIn()}
 
-
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
 								<strong>{_o100195}</strong>
@@ -50,6 +49,13 @@
 						</li>
 						<li><a href="{plink :Front:SupportUs:default}" class="last">{_o100195}</a></li>
 					{else}
+
+						{ifset $worldLink}
+							<li class="headerIcon">
+								<a href="{$worldLink}">{_151892}</a>
+							</li>					
+						{/ifset}
+
 
 						<li class="headerIcon">
 							<img src="/images/flags/{$isoCode}.png" />

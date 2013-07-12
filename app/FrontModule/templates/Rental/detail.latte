@@ -84,7 +84,20 @@
 									<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 										{$rental->rooms}</span>
 
-										<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
+										<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}
+
+										{if $ownerAvailability}
+											{_$ownerAvailability->name}
+										{/if}
+
+										{if $rental->checkIn}
+											{_o1586} {_$rental->getCheckInFormatted()}
+										{/if}
+
+										{if $rental->checkOut}
+											{_o1588} {_$rental->getCheckOutFormatted()}
+										{/if}
+										</div>
 									</td>
 								</tr>
 							</table>
@@ -146,286 +159,46 @@
 						<div class="detailAmenities">
 							<ul class="objectDetailServicesIconList list">
 
-
-{* 								{if $ownerAvailability}
-								<li class="bell">
-									<strong>{_$ownerAvailability->name}</strong>
-								</li>
-								{/if}
-
-								{if $rental->checkIn}
-								<li class="clock">
-									<strong>{_o1586} {_$rental->getCheckInFormatted()}</strong>
-								</li>
-								{/if}
-
-								<div class="clearfix"></div>
-
-								{if $rental->checkOut}
-								<li class="clock">
-									<strong>{_o1588} {_$rental->getCheckOutFormatted()}</strong>
-								</li>
-								{/if}
-
-								<div class="clearfix"></div>
-
 								<li class="dog" n:if="$pet">
 									<strong>{_o100018}</strong>
-								</li> *}
-
-
-								<li class="other">
-									<strong>{_1400|firstUpper}</strong>
-
-									<div class="content">
-
-										{if $ownerAvailability}
-											{_$ownerAvailability->name}
-										{/if}
-
-										{if $rental->checkIn}
-											{_o1586} {_$rental->getCheckInFormatted()}
-										{/if}
-
-										{if $rental->checkOut}
-											{_o1588} {_$rental->getCheckOutFormatted()}
-										{/if}
-
-
-										{var $other = $rental->getAmenitiesByType(array('other','heating','parking'))}
-										{if $other}
-											{foreach $other  as $amenities}
-											{foreach $amenities as $amenity}
-											{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-											{/foreach}
-											{/foreach}
-										{/if}
-									</div>
 								</li>
 
 
-								{var $children = $rental->getAmenitiesByType(array('children'))}
-								{if $children}
-								<li class="children">
-									<strong>{_1384|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $children  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $activity = $rental->getAmenitiesByType(array('activity'))}
-								{if $activity}
-								<li class="activity">
-									<strong>{_1385|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $activity  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $relax = $rental->getAmenitiesByType(array('relax'))}
-								{if $relax}
-								<li class="relax">
-									<strong>{_1386|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $relax  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $board = $rental->getAmenitiesByType(array('board'))}
-								{if $board}
-								<li class="board">
-									<strong>{_o1010|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $board  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $service = $rental->getAmenitiesByType(array('service'))}
-								{if $service}
-								<li class="service">
-									<strong>{_1388|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $service  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $welness = $rental->getAmenitiesByType(array('welness'))}
-								{if $welness}
-								<li class="welness">
-									<strong>{_1389|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $welness  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $congress = $rental->getAmenitiesByType(array('congress'))}
-								{if $congress}
-								<li class="congress">
-									<strong>{_1390|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $congress  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $kitchen = $rental->getAmenitiesByType(array('kitchen'))}
-								{if $kitchen}
-								<li class="kitchen">
-									<strong>{_1391|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $kitchen  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $bathroom = $rental->getAmenitiesByType(array('bathroom'))}
-								{if $bathroom}
-								<li class="bathroom">
-									<strong>{_1392|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $bathroom  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-								{var $room = $rental->getAmenitiesByType(array('room'))}
-								{if $room}
-								<li class="room">
-									<strong>{_1393|firstUpper}</strong>
-
-									<div class="content">
-										{foreach $room  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-
-
-
-
-
-
-
-
-
-
-
-		{* 						{if count($rental->amenities) > 0}
-								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
-								{if !count($importantAmenities)}
-									{var
-										$importantAmenities = array_slice($notImportantAmenities,0, 2);
-										$notImportantAmenities = array_slice($notImportantAmenities, 2);
-									}
-								{/if}
-								<li class="monitor">
-									<strong>{_o100013}</strong>
-
+								{if count($rental->amenities) > 0}
+								
 									<div class="amenitiesStart">
-										{foreach $importantAmenities  as $amenities}
+										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability','separate-groups']) as $amenities}
+										<li class="{reset($amenities)->getType()->getSlug()}">
+										{dump $amenities}
+										
 											{var $firstAmenity = false}
 											{var $lastAmenity = false}
-											{if $iterator->first}{var $firstAmenity = true}{/if}
+											{if $iterator->first}
+											{var $firstAmenity = true}
+											{/if}
 											{if $iterator->last}{var $lastAmenity = true}{/if}
-											{foreach $amenities as $amenity}
-												{if $firstAmenity}
-													{_$amenity->name}
-												{else}
-													{_$amenity->name}
-												{/if}
-												{if !$lastAmenity}, {/if}
-											{/foreach}
-										{/foreach}
-										<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
-										for="moreAmenities" href="#">{_o100001}</a>
-									</div>
-
-									<div class="moreAmenities">
-										<table>
-										{foreach $notImportantAmenities  as $amenities}
-											<tr>
-											{var $typesIterator = $iterator}
-
+											
 											{foreach $amenities as $amenity}
 
 												{if $iterator->first}
-													<td class="typeName"><b>{_$amenity->type->name|firstUpper}: </b></td><td class="list">
+												<div class="content">
+													<strong>{_$amenity->type->name|firstUpper}</strong>
+												{else}
+													{_$amenity->name}
 												{/if}
 
-												{_$amenity->name}{if !$iterator->last}, {/if}
-												{if $typesIterator->last}
-													</td>
-												{/if}
+												{if !$lastAmenity}, {/if}
 											{/foreach}
-											</tr>
+											</div>
+										</li>
 										{/foreach}
-										</table>
+									
 									</div>
 
-								</li>
-								{/if} *}
+								{/if}
+
 
 								<div class="clearfix"></div>
-
-
-
-
 
 							</ul>
 						</div>
