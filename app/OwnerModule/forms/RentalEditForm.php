@@ -128,11 +128,11 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://');
 
-		$rentalContainer->addText('contactName', '#contactName')
-			->setOption('help', $this->translate('#contactNameHelp'));
+		$rentalContainer->addText('contactName', '151894')
+			->setOption('help', $this->translate('151895'));
 
-		$rentalContainer->addText('contactEmail', '#email')
-			->setOption('help', $this->translate('#emailHelp'));
+		$rentalContainer->addText('contactEmail', 'o1096')
+			->setOption('help', $this->translate('o3095'));
 
 		$rentalContainer->addPriceContainer('price', 'o100078');
 
