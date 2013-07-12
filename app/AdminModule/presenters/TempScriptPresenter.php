@@ -182,7 +182,7 @@ class TempScriptPresenter extends BasePresenter {
 		}
 
 		$this->em->flush();
-		
+
 		$this->payload->success = true;
 		$this->sendPayload();
 	}
