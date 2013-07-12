@@ -37,6 +37,12 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $name;
 
 	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $nameSpoken;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -189,6 +195,25 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Language
+	 */
+	public function setNameSpoken(\Entity\Phrase\Phrase $nameSpoken)
+	{
+		$this->nameSpoken = $nameSpoken;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getNameSpoken()
+	{
+		return $this->nameSpoken;
 	}
 
 	/**
