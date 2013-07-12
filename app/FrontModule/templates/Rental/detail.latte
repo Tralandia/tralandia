@@ -182,12 +182,16 @@
 
 												{if $iterator->first}
 												<div class="content">
-													<strong>{_$amenity->type->name|firstUpper}</strong>
-												{else}
-													{_$amenity->name}
+													<strong>{_$amenity->type->name|firstUpper}:</strong>		
+
+													{else}
+
+														{_$amenity->name}{if !$iterator->last}, {/if}
+
 												{/if}
 
-												{if !$lastAmenity}, {/if}
+
+												
 											{/foreach}
 											</div>
 										</li>
