@@ -8,7 +8,7 @@
 
 	{var $featured = $rentalService->isFeatured(); }
 
-	{dump $featured}
+
 
 	{capture $rentalDetailCacheOptionsKey}
 		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
@@ -30,7 +30,7 @@
 							<div class="position">TOP</div>
 						{/if}
 
-						{foreach $rental->getSortedImages(3) as $photo}						
+						{foreach $rental->getSortedImages(3) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
 							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
@@ -61,7 +61,7 @@
 						{if $teaser || $firstAnswer}
 						<table class="teaser">
 							{if $teaser}
-							<tr>								
+							<tr>
 								<td class="content">{$teaser}</td>
 							</tr>
 							{/if}
@@ -84,7 +84,20 @@
 									<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 										{$rental->rooms}</span>
 
-										<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
+										<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}
+
+										{if $ownerAvailability}
+											{_$ownerAvailability->name}
+										{/if}
+
+										{if $rental->checkIn}
+											{_o1586} {_$rental->getCheckInFormatted()}
+										{/if}
+
+										{if $rental->checkOut}
+											{_o1588} {_$rental->getCheckOutFormatted()}
+										{/if}
+										</div>
 									</td>
 								</tr>
 							</table>
@@ -97,7 +110,7 @@
 							{if count($rental->pricelistRows) > 0}
 							{var $pricesAvailable = true}
 							<ul class="detailPriceList">
-								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price|price}</strong> {_o100004}</span>
+								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
 								<ul>
 
@@ -137,7 +150,7 @@
 						{if $rental->pricesUponRequest}
 						{_o100204}
 						{else}
-						{_o100205, NULL, NULL, ['price' => $rental->price]}						
+						{_o100205, NULL, NULL, ['price' => $rental->price]}
 						{/if}
 						{/if}
 
@@ -146,105 +159,46 @@
 						<div class="detailAmenities">
 							<ul class="objectDetailServicesIconList list">
 
-								{var $board = $rental->getAmenitiesByType(array('board'))}
-								{if $board}
-								<li class="board">
-									<strong>{_o1010}</strong>
-
-									<div class="content">
-										{foreach $board  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-										{/foreach}
-										{/foreach}
-									</div>
-								</li>
-								{/if}
-
-
-								{if count($rental->amenities) > 0}
-								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
-								{if !count($importantAmenities)}
-									{var
-										$importantAmenities = array_slice($notImportantAmenities,0, 2);
-										$notImportantAmenities = array_slice($notImportantAmenities, 2);
-									}
-								{/if}
-								<li class="monitor">
-									<strong>{_o100013}</strong>
-
-									<div class="amenitiesStart">
-										{foreach $importantAmenities  as $amenities}
-											{var $firstAmenity = false}
-											{var $lastAmenity = false}
-											{if $iterator->first}{var $firstAmenity = true}{/if}
-											{if $iterator->last}{var $lastAmenity = true}{/if}
-											{foreach $amenities as $amenity}
-												{if $firstAmenity}
-													{_$amenity->name}
-												{else}
-													{_$amenity->name}
-												{/if}
-												{if !$lastAmenity}, {/if}
-											{/foreach}
-										{/foreach}
-										<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
-										for="moreAmenities" href="#">{_o100001}</a>
-									</div>
-
-									<div class="moreAmenities">
-										<table>
-										{foreach $notImportantAmenities  as $amenities}
-											<tr>
-											{var $typesIterator = $iterator}
-
-											{foreach $amenities as $amenity}
-
-												{if $iterator->first}
-													<td class="typeName"><b>{_$amenity->type->name|firstUpper}: </b></td><td class="list">
-												{/if}
-
-												{_$amenity->name}{if !$iterator->last}, {/if}
-												{if $typesIterator->last}
-													</td>
-												{/if}
-											{/foreach}
-											</tr>
-										{/foreach}
-										</table>
-									</div>
-
-								</li>
-								{/if}
-
-								<div class="clearfix"></div>
-
-								{if $ownerAvailability}
-								<li class="bell">
-									<strong>{_$ownerAvailability->name}</strong>
-								</li>
-								{/if}
-
-								{if $rental->checkIn}
-								<li class="clock">
-									<strong>{_o1586} {_$rental->getCheckInFormatted()}</strong>
-								</li>
-								{/if}
-
-								<div class="clearfix"></div>
-
-								{if $rental->checkOut}
-								<li class="clock">
-									<strong>{_o1588} {_$rental->getCheckOutFormatted()}</strong>
-								</li>
-								{/if}
-
-								<div class="clearfix"></div>
-
 								<li class="dog" n:if="$pet">
 									<strong>{_o100018}</strong>
 								</li>
+
+
+								{if count($rental->amenities) > 0}
+								
+									<div class="amenitiesStart">
+										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability','separate-groups']) as $amenities}
+										<li class="{reset($amenities)->getType()->getSlug()}">
+										{dump $amenities}
+										
+											{var $firstAmenity = false}
+											{var $lastAmenity = false}
+											{if $iterator->first}
+											{var $firstAmenity = true}
+											{/if}
+											{if $iterator->last}{var $lastAmenity = true}{/if}
+											
+											{foreach $amenities as $amenity}
+
+												{if $iterator->first}
+												<div class="content">
+													<strong>{_$amenity->type->name|firstUpper}</strong>
+												{else}
+													{_$amenity->name}
+												{/if}
+
+												{if !$lastAmenity}, {/if}
+											{/foreach}
+											</div>
+										</li>
+										{/foreach}
+									
+									</div>
+
+								{/if}
+
+
+								<div class="clearfix"></div>
 
 							</ul>
 						</div>
@@ -263,11 +217,11 @@
 								<div class="socialBtnHeader">
 
 
-									<i class="facebook icon-facebook"></i> 
-									<i class="gplus icon-google-plus"></i> 
-									<i class="twitter icon-twitter"></i> 
-									<i class="pinterest icon-pinterest"></i> 
-									
+									<i class="facebook icon-facebook"></i>
+									<i class="gplus icon-google-plus"></i>
+									<i class="twitter icon-twitter"></i>
+									<i class="pinterest icon-pinterest"></i>
+
 								</div>
 
 								<ul class="dropdown-menu" role="menu" id="socialIconsMenuDetail">
@@ -373,8 +327,8 @@
 
 									<ul class="bigGallery">
 										{foreach $rental->getSortedImages() as $photo}
-										<li n:class="$iterator->odd ? odd">										
-										
+										<li n:class="$iterator->odd ? odd">
+
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
 										</li>

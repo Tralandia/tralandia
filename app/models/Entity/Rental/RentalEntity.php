@@ -178,7 +178,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="float", nullable=true)
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $price;
 
@@ -419,7 +419,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$return = [];
 		$sort = [];
 		foreach ($this->getAmenities() as $amenity) {
-			if ($amenity->getImportant() == $important) {
+			if ($important === NULL || $amenity->getImportant() == $important) {
 				$type = $amenity->getType();
 				if(is_array($excluded) && in_array($type->getSlug(), $excluded)) continue;
 

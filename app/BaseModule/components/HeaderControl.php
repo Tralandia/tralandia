@@ -2,9 +2,11 @@
 namespace BaseModule\Components;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Location\Location;
 use Entity\User\User;
 use Environment\Environment;
 use Nette\DateTime;
+use Routers\FrontRoute;
 use Service\Seo\ISeoServiceFactory;
 use Service\Seo\SeoService;
 
@@ -73,6 +75,11 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 				NULL,
 				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
 			);
+			$world = $this->em->getRepository(LOCATION_ENTITY)->findOneBySlug('world');
+			$params = [
+				FrontRoute::PRIMARY_LOCATION => $world
+			];
+			$template->worldLink = $this->presenter->link('RootHome:default', $params);
 		}
 
 		$template->localeCode = $this->environment->getLocale()->getCode();
@@ -84,6 +91,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->domainHost = 'Tralandia';
 		$template->domainExtension = '.' . substr($domain, strpos($domain, 'tralandia') + 10);
 
+		$template->isoCode = $this->environment->getPrimaryLocation()->getIso(Location::LAST_2_CHARACTERS);
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
 

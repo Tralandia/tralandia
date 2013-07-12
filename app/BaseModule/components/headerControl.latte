@@ -8,6 +8,7 @@
 			 style="background-image: url({$basePath}{$backgroundImage});">
 
 
+
 		<div id="siteOptions">
 
 
@@ -19,6 +20,13 @@
 					*}
 
 					{if $user->isLoggedIn()}
+
+						<li class="headerIcon">
+							<a href="{plink :Front:SupportUs:default}" class="green">
+								<strong>{_o100195}</strong>
+							</a>
+						</li>
+
 						{if $loggedUser->isOwner()}
 							<li class="headerIcon">
 								<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
@@ -41,6 +49,18 @@
 						</li>
 						<li><a href="{plink :Front:SupportUs:default}" class="last">{_o100195}</a></li>
 					{else}
+
+						{ifset $worldLink}
+							<li class="headerIcon">
+								<a href="{$worldLink}">{_151892}</a>
+							</li>					
+						{/ifset}
+
+
+						<li class="headerIcon">
+							<img src="/images/flags/{$isoCode}.png" />
+						</li>
+
 						<li class="headerIcon">
 							<a href="{$homepageUrl}">{_o100042}</a>
 						</li>
@@ -76,10 +96,17 @@
 					<li>
 						<ul n:inner-foreach="$column as $language">
 							<li>
+								{if $language->getIso() == 'en'}
+									{var $class = 'en-language'}
+								{elseif $language->getId() == $environment->getPrimaryLocation()->getDefaultLanguage()->getId()}
+									{var $class = 'local-language'}
+								{else}
+									{var $class = NULL}
+								{/if}
 								{if $language->getId() == $environment->getLanguage()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
+									<a href="{plink this, language => $language}" n:attr="class => $class"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
