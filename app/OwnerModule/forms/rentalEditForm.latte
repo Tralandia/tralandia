@@ -7,16 +7,13 @@
 
 		{var $rentalContainer = $form['rental']}
 
-		{include #fieldset, text => 'o100166'}
-		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
-
-		{include #fieldset, text => 'o933'}
-		{include #rentalPriceList, control => $rentalContainer['priceList']}
-
 		{include #fieldset, text => 'o960'}
 		{* {include #text, control => $form['name']} *}
+		{include #text, control => $rentalContainer['contactName']}		
 		{include #phone, control => $rentalContainer['phone']}
+		{include #email, control => $rentalContainer['contactEmail']}
 		{include #url, control => $rentalContainer['url']}
+
 
 		{include #fieldset, text => 'o100137'}
 		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
@@ -29,7 +26,6 @@
 			{/if}
 			{include #text, control => $control , class => $control->getName().' toggleLanguage '.$hide}
 		{/foreach}
-
 		{foreach $rentalContainer['teaser']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
 				{var $hide = ''}
@@ -37,17 +33,6 @@
 				{var $hide = 'hide'}
 			{/if}
 			{include #text, control => $control, class => $control->getName().' toggleLanguage '.$hide}
-		{/foreach}
-
-		{foreach $rentalContainer['interview']->getComponents() as $container}
-			{foreach $container->getControls() as $control}
-				{if $control->getName() == $environmentLanguage->getIso()}
-					{var $hide = ''}
-				{else}
-					{var $hide = 'hide'}
-				{/if}
-				{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
-			{/foreach}
 		{/foreach}
 
 		{include #fieldset, text => 'o100085'}
@@ -61,10 +46,38 @@
 		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
 		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
 		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
+		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rentalContainer['address']}
-		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+
+		{include #fieldset, text => 'o980'}
+		{include #rentalPhotos, control => $rentalContainer['photos']}
+
+		{include #fieldset, text => 'o933'}
+		{include #rentalPriceList, control => $rentalContainer['priceList']}
+
+		{include #fieldset, text => 'o100166'}
+		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
+
+
+
+
+
+		{include #fieldset, text => '#interview'}
+		{foreach $rentalContainer['interview']->getComponents() as $container}
+			{foreach $container->getControls() as $control}
+				{if $control->getName() == $environmentLanguage->getIso()}
+					{var $hide = ''}
+				{else}
+					{var $hide = 'hide'}
+				{/if}
+				{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
+			{/foreach}
+		{/foreach}
+
+
+		
 
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
@@ -80,8 +93,6 @@
 		{include #checkboxList, control => $rentalContainer['parking'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['other'], colCount => 3}
 
-		{include #fieldset, text => 'o980'}
-		{include #rentalPhotos, control => $rentalContainer['photos']}
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok'}
 	</table>
