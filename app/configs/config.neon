@@ -171,9 +171,14 @@ services:
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+<<<<<<< HEAD
 	rentalSearchCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalOrderCache')
 
+=======
+	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
+	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
+>>>>>>> save
 
 	cacheStorage:
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
@@ -193,6 +198,7 @@ services:
 #	searchRedisStorage:
 #		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
 #		autowired: false
+<<<<<<< HEAD
 
 	dibiConnection:
 		class: \DibiConnection(%cacheDatabase%)
@@ -212,6 +218,8 @@ services:
 	searchCacheStorage:
 		class: \Tralandia\Caching\Database\DatabaseStorage(@serchCacheClient)
 		autowired: false
+=======
+>>>>>>> save
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
 	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
