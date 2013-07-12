@@ -2,8 +2,6 @@ parameters:
 	envOptions:
 		email: tralandia.david@gmail.com
 
-	storageDir: /storage
-	staticDomain: null
 
 	database:
 		debugger: false
