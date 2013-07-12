@@ -179,7 +179,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
 
 		$amenities = $this->amenityRepository->findByActivityTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities);
+		$rentalContainer->addMultiOptionList('activity', '1390', $amenities);
 
 		$amenities = $this->amenityRepository->findByRelaxTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('relax', 'o100170', $amenities);
