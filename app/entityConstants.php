@@ -24,5 +24,6 @@ define('HISTORY_LOG_ENTITY', '\Entity\Log\History');
 define('SITE_REVIEW_ENTITY', '\Entity\User\SiteReview');
 define('DOMAIN_ENTITY', '\Entity\Domain');
 define('EMAIL_TEMPLATE_ENTITY', '\Entity\Email\Template');
-define('EMAIL_TEMPLATE_LAYOUT', '\Entity\Email\Layout');
+define('EMAIL_LAYOUT_ENTITY', '\Entity\Email\Layout');
+define('ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
 
