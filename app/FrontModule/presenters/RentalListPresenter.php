@@ -72,7 +72,11 @@ class RentalListPresenter extends BasePresenter {
 		/** @var $head \HeaderControl */
 		$head = $this['head'];
 		if(!$paginator->isFirst()) {
-			$prevLink = $this->link('//this', ['p-p' => $paginator->getPage() - 1]);
+			if(($paginator->getPage() - 1) == 1) {
+				$prevLink = $this->link('//this', ['p-p' => NULL]);
+			} else {
+				$prevLink = $this->link('//this', ['p-p' => $paginator->getPage() - 1]);
+			}
 			$prevTag = Html::el('meta')->rel('prev')->href($prevLink);
 			$head->addTag($prevTag);
 		}
