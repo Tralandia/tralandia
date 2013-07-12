@@ -117,9 +117,10 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template->getLogoutLink = $this->getLogoutLink;
 
-		$backgroundImage = "/images/headerBanner/{$primaryLocation->getIso()}.jpg";
-		if(!is_file(WWW_DIR . $backgroundImage)) {
-			$backgroundImage = "/images/headerBanner/fi.jpg";
+		$backgroundImage = "http://www.tralandiastatic.com/header_banners/{$primaryLocation->getIso()}.jpg";
+
+		if(!file_get_contents($backgroundImage)) {
+			$backgroundImage = "http://www.tralandiastatic.com/header_banners/fi.jpg";
 		}
 
 		$template->backgroundImage = $backgroundImage;
