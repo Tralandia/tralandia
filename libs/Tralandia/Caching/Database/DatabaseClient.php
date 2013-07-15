@@ -48,7 +48,7 @@ class DatabaseClient {
 
 		if($row) {
 			unset($args['id']);
-			$this->connection->query("UPDATE [{$this->table}] SET ", $args, 'WHERE [id]=%i', $id);
+			$this->connection->query("UPDATE [{$this->table}] SET ", $args, 'WHERE [id]=%s', $id);
 		} else {
 			$row = $this->connection->query("SELECT * FROM [{$this->table}] WHERE [tags] = %s", $tags);
 			$this->connection->query("INSERT INTO [{$this->table}]", $args);
