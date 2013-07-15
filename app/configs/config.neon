@@ -60,6 +60,14 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
+	cacheDatabase:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: cache
+		charset: utf8
+		lazy: TRUE
+
 	smtp:
 		host: mail.tralandia.com
 		username: robot@tralandia.com
@@ -92,12 +100,12 @@ parameters:
 			expiration: 'tomorrow'
 			tags: ['[name]']
 		rentalBrick:
-			enabled: false
+			enabled: true
 			key: '[language]_[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		rentalDetail:
-			enabled: false
+			enabled: ture
 			key: '[language]_[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
@@ -186,6 +194,13 @@ services:
 		autowired: false
 
 
+	templateCacheClient:
+		class: \Tralandia\Caching\Database\DatabaseClient(\DibiConnection(%cacheDatabase%), 'template')
+		autowired: false
+
+	templateCacheStorage:
+		class: \Tralandia\Caching\Database\DatabaseStorage(@templateCacheClient)
+		autowired: false
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
 	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
