@@ -26,13 +26,10 @@
 							{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rentalId}
 						{/capture}
 
-						{var $currentTags = $rentalBrickCacheOptions['tags']}
-						{var $currentTags[] = 'rental/'.$rentalId}
-
 						{cache $rentalBrickCacheOptionsKey,
 							if => $rentalBrickCacheOptions['enabled'],
 							expire => $rentalBrickCacheOptions['expiration'],
-							tags => $currentTags}
+							tags => $rentalBrickCacheOptions['tags']}
 
 
 						{var $rentalData = $findRental($rentalId); }
