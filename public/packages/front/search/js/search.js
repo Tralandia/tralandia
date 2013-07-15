@@ -227,12 +227,14 @@ function updateCriteriaCount(){
 		return false;		
 	}
 
-
-
 	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({
 		  url: url,
+		  beforeSend: function(){		  	
+			searchLoader('start');
+		  },
 		}).done(function(d) {
+			searchLoader('stop');
 		  $('#getSearchCount').html(d.label);
 			  if(d.count == 0){
 				$('#searchControlLink').attr('href','#');
@@ -244,6 +246,17 @@ function updateCriteriaCount(){
 	}
 
 
+}
+
+function searchLoader(status){
+	switch(status){
+		case 'start':
+			$('#searchLoaderStatus').removeClass('hide');
+		break;
+		case 'stop':
+			$('#searchLoaderStatus').addClass('hide');
+		break;		
+	}
 }
 
 function updateSerachLinkUrl(){
