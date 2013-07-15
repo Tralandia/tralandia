@@ -16,52 +16,52 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	/**
 	 * @var DatabaseClient
 	 */
-	private $client;
+	private $database;
 
 
-	public function __construct(DatabaseClient $client)
+	public function __construct(DatabaseClient $database)
 	{
-		$this->client = $client;
+		$this->database = $database;
 	}
 
 
 	/**
 	 * Read from cache.
-	 * @param  string key
+	 * @param  string $key
 	 * @return mixed|NULL
 	 */
 	public function read($key)
 	{
-		return $this->client->findValue($key);
+		return $this->database->findValue($key);
 	}
 
 	/**
 	 * Prevents item reading and writing. Lock is released by write() or remove().
-	 * @param  string key
+	 * @param  string $key
 	 * @return void
 	 */
 	public function lock($key)
 	{
-
+		$r = 1;
 	}
 
 	/**
 	 * Writes item into the cache.
-	 * @param  string key
-	 * @param  mixed  data
-	 * @param  array  dependencies
+	 * @param  string $key
+	 * @param  mixed  $data
+	 * @param  array  $dependencies
 	 * @return void
 	 */
 	public function write($key, $data, array $dependencies)
 	{
 		$tags = Nette\Utils\Arrays::get($dependencies, Nette\Caching\Cache::TAGS, NULL);
 
-		$this->client->save($key, $data, $tags);
+		$this->database->save($key, $data, $tags);
 	}
 
 	/**
 	 * Removes item from the cache.
-	 * @param  string key
+	 * @param  string $key
 	 * @return void
 	 */
 	public function remove($key)
@@ -71,7 +71,7 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 
 	/**
 	 * Removes items from the cache by conditions.
-	 * @param  array  conditions
+	 * @param  array  $conditions
 	 * @return void
 	 */
 	public function clean(array $conditions)

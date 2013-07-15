@@ -50,14 +50,18 @@ class DatabaseClient {
 			unset($args['id']);
 			$this->connection->query("UPDATE [{$this->table}] SET ", $args, 'WHERE [id]=%i', $id);
 		} else {
+			$row = $this->connection->query("SELECT * FROM [{$this->table}] WHERE [tags] = %s", $tags);
 			$this->connection->query("INSERT INTO [{$this->table}]", $args);
+			if($row) {
+				Nette\Diagnostics\Debugger::log('Pridal som uz existujuci tag: '.$tags);
+			}
 		}
 	}
 
 
 	public function find($id)
 	{
-		return $this->connection->fetch("SELECT * FROM [{$this->table}] WHERE id = %s", $id);
+		return $this->connection->fetch("SELECT * FROM [{$this->table}] WHERE [id] = %s", $id);
 	}
 
 
