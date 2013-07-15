@@ -54,13 +54,9 @@ class DatabaseClient {
 
 		if($row) {
 			unset($args['id']);
-			$this->connection->query("UPDATE [{$this->table}] SET ", $args, 'WHERE [id]=%s', $id);
+			$this->connection->query("UPDATE LOW_PRIORITY [{$this->table}] SET ", $args, 'WHERE [id]=%s', $id);
 		} else {
-			$row = $this->connection->query("SELECT * FROM [{$this->table}] WHERE [tags] = %s", $tags);
-			$this->connection->query("INSERT INTO [{$this->table}]", $args);
-			if($row) {
-				Nette\Diagnostics\Debugger::log('Pridal som uz existujuci tag: '.$tags);
-			}
+			$this->connection->query("INSERT DELAYED INTO [{$this->table}]", $args);
 		}
 	}
 
