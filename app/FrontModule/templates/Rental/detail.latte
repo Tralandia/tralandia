@@ -11,13 +11,17 @@
 
 
 	{capture $rentalDetailCacheOptionsKey}
-		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
+		{$rentalDetailCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
 	{/capture}
+
+	{var $currentTags = $rentalDetailCacheOptions['tags']}
+	{var $currentTags[] = 'rental/'.$rental->getId()}
+
 
 	{cache $rentalDetailCacheOptionsKey,
 		if => $rentalDetailCacheOptions['enabled'],
 		expire => $rentalDetailCacheOptions['expiration'],
-		tags => $rentalDetailCacheOptions['tags']}
+		tags => $currentTags}
 
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
