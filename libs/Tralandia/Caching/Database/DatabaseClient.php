@@ -40,9 +40,15 @@ class DatabaseClient {
 			$tags = ',,' . implode(',,', $tags) . ',,';
 		}
 
+		if(is_array($value)) {
+			$value = Nette\Utils\Json::encode($value);
+		} else {
+			$value = trim($value);
+		}
+
 		$args = [
 			'id' => $id,
-			'value' => gzcompress(trim($value), 6),
+			'value' => gzcompress($value, 6),
 			'tags' => $tags,
 		];
 
@@ -68,7 +74,16 @@ class DatabaseClient {
 	public function findValue($id)
 	{
 		$row = $this->find($id);
-		return $row ? gzuncompress($row->value) : NULL;
+		$value = $row ? gzuncompress($row->value) : NULL;
+
+		try {
+			$temp = Nette\Utils\Json::decode($value, Nette\Utils\Json::FORCE_ARRAY);
+			$value = $temp;
+		} catch(Nette\Utils\JsonException $e) {
+
+		}
+
+		return $value;
 	}
 
 }
