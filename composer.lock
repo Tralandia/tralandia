@@ -3,8 +3,59 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4705d19cb22a4d7db0a7b48155a3861c",
+    "hash": "ffdc95617001ec85e8f4d73cc1f49a71",
     "packages": [
+        {
+            "name": "dg/dibi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/dibi.git",
+                "reference": "e87c112d713c370a16347b18c7fd46d005a295ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/e87c112d713c370a16347b18c7fd46d005a295ff",
+                "reference": "e87c112d713c370a16347b18c7fd46d005a295ff",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "dibi/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPLv2",
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "Dibi is Database Abstraction Library for PHP 5.",
+            "homepage": "http://dibiphp.com/",
+            "keywords": [
+                "access",
+                "database",
+                "dbal",
+                "mssql",
+                "mysql",
+                "odbc",
+                "oracle",
+                "pdo",
+                "postgresql",
+                "sqlite"
+            ],
+            "time": "2013-07-13 18:23:13"
+        },
         {
             "name": "hosiplan/nette-autowire-properties",
             "version": "dev-master",
@@ -160,12 +211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "c7bd08e3b066ed30ec3bb30089f08981d46b3623"
+                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/c7bd08e3b066ed30ec3bb30089f08981d46b3623",
-                "reference": "c7bd08e3b066ed30ec3bb30089f08981d46b3623",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
+                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +252,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-07-06 16:06:59"
+            "time": "2013-07-09 00:51:48"
         },
         {
             "name": "kdyby/redis",
@@ -213,7 +264,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/cfcd9b51756617e879d1c0e0f269af06256b6931",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/88fb2dc5d012127281ec205d0976d05defe6f9bb",
                 "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
                 "shasum": ""
             },
@@ -235,7 +286,7 @@
                     "src/Kdyby/Redis/exceptions.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -314,7 +365,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/1719e61ee4dc7ea7317ff4bc797c2d935eebfaa7",
+                "url": "https://api.github.com/repos/nette/nette/zipball/22ab32d0f837364463a8e13cec9c3bfe96ba6bc3",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -476,25 +527,31 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "v2.2.0"
+                "reference": "v2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/v2.2.0",
-                "reference": "v2.2.0",
+                "url": "https://api.github.com/repos/dg/texy/zipball/v2.3.0",
+                "reference": "v2.3.0",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "Texy/"
+                "files": [
+                    "src/texy.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3",
-                "GPLv2",
-                "GPLv3"
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
             ],
             "authors": [
                 {
@@ -515,7 +572,7 @@
                 "wiki",
                 "xhtml"
             ],
-            "time": "2013-04-03 11:37:41"
+            "time": "2013-07-13 23:54:49"
         }
     ],
     "packages-dev": [
@@ -545,6 +602,7 @@
         "kdyby/redis": 20,
         "hosiplan/nette-autowire-properties": 20,
         "mobiledetect/mobiledetectlib": 20,
+        "dg/dibi": 20,
         "texy/texy": 20,
         "janmarek/mockista": 20
     },
