@@ -21,8 +21,8 @@ nette:
 	security:
 		frames:
 
-extensions:
-	events: Kdyby\Events\DI\EventsExtension
+#extensions:
+#	events: Kdyby\Events\DI\EventsExtension
 
 
 parameters:
@@ -140,12 +140,12 @@ parameters:
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
 
-redis:
-	storage: on
-	journal: on
-	database: 0
-	session: {database: 1}
-
+#redis:
+#	storage: on
+#	journal: on
+#	database: 0
+#	session: {database: 1}
+#
 doctrine:
 	connections:
 		default: %database%
@@ -170,36 +170,46 @@ services:
 	templateCache: Nette\Caching\Cache(@cacheStorage, 'Nette.Templating.Cache')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
-	translatorCache: Nette\Caching\Cache(@translatorRedisStorage, 'Translator')
-	rentalSearchCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalSearchCache')
-	rentalOrderCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalOrderCache')
+	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+	rentalSearchCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalSearchCache')
+	rentalOrderCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalOrderCache')
 
-#	cacheStorage:
-#		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
+	cacheStorage:
+		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
 
-	translatorRedisClient:
-		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
-		autowired: false
+#	translatorRedisClient:
+#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
+#		autowired: false
+#
+#	translatorRedisStorage:
+#		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
+#		autowired: false
+#
+#	searchRedisClient:
+#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
+#		autowired: false
+#
+#	searchRedisStorage:
+#		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
+#		autowired: false
 
-	translatorRedisStorage:
-		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
-		autowired: false
-
-	searchRedisClient:
-		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
-		autowired: false
-
-	searchRedisStorage:
-		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
-		autowired: false
-
+	dibiConnection:
+		class: \DibiConnection(%cacheDatabase%)
 
 	templateCacheClient:
-		class: \Tralandia\Caching\Database\DatabaseClient(\DibiConnection(%cacheDatabase%), 'template')
+		class: \Tralandia\Caching\Database\DatabaseClient(@dibiConnection, 'template')
 		autowired: false
 
 	templateCacheStorage:
 		class: \Tralandia\Caching\Database\DatabaseStorage(@templateCacheClient)
+		autowired: false
+
+	serchCacheClient:
+		class: \Tralandia\Caching\Database\DatabaseClient(@dibiConnection, 'search')
+		autowired: false
+
+	searchCacheStorage:
+		class: \Tralandia\Caching\Database\DatabaseStorage(@serchCacheClient)
 		autowired: false
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
