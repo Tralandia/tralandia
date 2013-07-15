@@ -242,7 +242,6 @@ abstract class BasePresenter extends Presenter {
 
 			$options['key'] = str_replace($searchVariables, $replaceVariables, $options['key']);
 
-			$options['tags'][] = $options['key'];
 			if(is_array($options['tags'])) {
 				foreach($options['tags'] as $keyTag => $tag) {
 					$options['tags'][$keyTag] = str_replace($searchVariables, $replaceVariables, $tag);
@@ -263,8 +262,6 @@ abstract class BasePresenter extends Presenter {
 		$helpers = $this->getContext()->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
 		$template->_imagePipe = $this->rentalImagePipe;
-
-		$template->netteCacheStorage = $this->getContext()->templateCacheStorage;
 
 		return $template;
 	}
