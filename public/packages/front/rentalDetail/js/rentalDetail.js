@@ -2,65 +2,65 @@
 	
 	$.fn.traMap = function() {
 
-		// default map zoom level
-		var zoomVal = 4;
+  		// default map zoom level
+  		var zoomVal = 4;
 
-		var rentalId = parseInt($(this).data('rentalId'));
+  		var rentalId = parseInt($(this).data('rentalId'));
 
-		if(typeof $(this).attr('zoom') != 'undefined')
-		{
-			zoomVal = parseInt($(this).attr('zoom'));
-		}
+  		if(typeof $(this).attr('zoom') != 'undefined')
+  		{
+  			zoomVal = parseInt($(this).attr('zoom'));
+  		}
 
-		if(typeof $(this).attr('value') == 'undefined')
-		{
-			$(this).html('error');
-		} else {
-
-
-			if(typeof $('body').attr('data-google-map-render') == 'undefined' ){
-
-				var coordinates = $(this).attr('value').split(',');
-
-				var lat = parseFloat(coordinates[0]);
-				var lng = parseFloat(coordinates[1]);
-
-				var iconBase = '../../../../images/markers/';
-
-				var myLatlng = new google.maps.LatLng(lat,lng);
-				var mapOptions = {
-					zoom: zoomVal,
-					scrollwheel: false,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.HYBRID
-				}
-				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
-
-				var isFavorites = false;
-
-					$.each($.jStorage.get('favoritesList'),function(k,v){
-						if(rentalId == v.id){
-							isFavorites = true;
-						}
-					});
-
-				if(isFavorites){
-					var iconName  = 'map-pointer-heart.png';
-				} else {
-					var iconName  = 'map-pointer-home.png';
-				}
+  		if(typeof $(this).attr('value') == 'undefined')
+  		{
+  			$(this).html('error');
+  		} else {
 
 
-				var marker = new google.maps.Marker({
-					position: myLatlng,
-					map: map,
-					icon: iconBase + iconName
-				});
+  			if(typeof $('body').attr('data-google-map-render') == 'undefined' ){
+
+  				var coordinates = $(this).attr('value').split(',');
+
+  				var lat = parseFloat(coordinates[0]);
+  				var lng = parseFloat(coordinates[1]);
+
+  				var iconBase = '../../../../images/markers/';
+
+  				var myLatlng = new google.maps.LatLng(lat,lng);
+  				var mapOptions = {
+  					zoom: zoomVal,
+  					scrollwheel: false,
+  					center: myLatlng,
+  					mapTypeId: google.maps.MapTypeId.HYBRID
+  				}
+  				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
+
+  				var isFavorites = false;
+
+  					$.each($.jStorage.get('favoritesList'),function(k,v){
+  						if(rentalId == v.id){
+  							isFavorites = true;
+  						}
+  					});
+
+  				if(isFavorites){
+  					var iconName  = 'map-pointer-heart.png';
+  				} else {
+  					var iconName  = 'map-pointer-home.png';
+  				}
+
+
+  				var marker = new google.maps.Marker({
+  					position: myLatlng,
+  					map: map,
+  					icon: iconBase + iconName
+  				});
 
 
 
 
-			$('body').attr('data-google-map-render',true);
+	        $('body').attr('data-google-map-render',true);
 
 
 }
@@ -76,91 +76,6 @@
 
 
 
-(function($){
-	$.googleMapPlugin = function(el, options){
-
-		var base = this;
-		
-		base.$el = $(el);
-		base.el = el;
-		
-		base.$el.data("googleMapPlugin", base);
-		
-		base.init = function(){
-			
-			base.options = $.extend({},$.googleMapPlugin.defaultOptions, options);
-			base._loadMap();
-		};
-		
-		base._loadMap = function(){
-
-			if(typeof $('body').attr('data-google-map-render') == 'undefined' ){
-
-				var coordinates = base.$el.attr('value').split(',');
-
-				var lat = parseFloat(coordinates[0]);
-				var lng = parseFloat(coordinates[1]);
-
-				var iconBase = '../../../../images/markers/';
-
-		if(typeof $(this).attr('zoom') != 'undefined')
-		{
-			zoomVal = parseInt($(this).attr('zoom'));
-		}
-
-				var myLatlng = new google.maps.LatLng(lat,lng);
-				var mapOptions = {
-					zoom: zoomVal,
-					scrollwheel: false,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.HYBRID
-				}
-				var map = new google.maps.Map(document.getElementById(base.$el.attr('id')), mapOptions);
-
-				var isFavorites = false;
-
-					$.each($.jStorage.get('favoritesList'),function(k,v){
-						if(rentalId == v.id){
-							isFavorites = true;
-						}
-					});
-
-				if(isFavorites){
-					var iconName  = 'map-pointer-heart.png';
-				} else {
-					var iconName  = 'map-pointer-home.png';
-				}
-
-
-				var marker = new google.maps.Marker({
-					position: myLatlng,
-					map: map,
-					icon: iconBase + iconName
-				});
-
-
-
-
-			$('body').attr('data-google-map-render',true);
-
-
-			}			
-		}
-
-		base.init();
-	};
-	
-	$.googleMapPlugin.defaultOptions = {
-		zoom: 4
-	};
-	
-	$.fn.googleMapPlugin = function( options){
-		return this.each(function(){
-			(new $.googleMapPlugin(this, options));});
-	};
-	
-})(jQuery);
-
 
 
 
@@ -169,27 +84,27 @@
 //     $.traMap = function(el, options){
 
 //         var base = this;
-		
+        
 //         base.$el = $(el);
 //         base.el = el;
-		
+        
 //         base.$el.data("traMap", base);
-		
+        
 //         base.init = function(){
-			
-			
+            
+            
 //             base.options = $.extend({},$.traMap.defaultOptions, options);
-			
+            
 //         };
-		
+        
 
 //         base.init();
 //     };
-	
+    
 //     $.traMap.defaultOptions = {
 //     	zoom: 4
 //     };
-	
+    
 //     $.fn.traMap = function(options){return this.each(function(){(new $.traMap(this, options));});};
 // })(jQuery);
 
@@ -234,17 +149,17 @@
 				$.cookie('favoritesVisitedList' , currentId);
 			} else {
 
-				// chech if index not exist 
+	  			// chech if index not exist 
 
-				if(appObject.in_array(objectList,currentId) == false){
-					visitList = objectList;
-					visitList.push(currentId); 
-					$.cookie('favoritesVisitedList' , visitList);					
-				}
+	  			if(appObject.in_array(objectList,currentId) == false){
+	  				visitList = objectList;
+	  				visitList.push(currentId); 
+	  				$.cookie('favoritesVisitedList' , visitList);					
+	  			}
 
-			}
+	  		}
 
-		}
+	  	}
 
 	  };
 	})(jQuery);
@@ -396,33 +311,33 @@ $(function() {
 	$('#placesImage').appear();
 	$(document.body).on('appear','#placesImage' , function(e,$affected){
 
-				var coordinates = $('#objectDetailMap').attr('value').split(',');
+  				var coordinates = $('#objectDetailMap').attr('value').split(',');
 
-				var lat = parseFloat(coordinates[0]);
-				var lng = parseFloat(coordinates[1]);
+  				var lat = parseFloat(coordinates[0]);
+  				var lng = parseFloat(coordinates[1]);
 
-					var delta = 0.05;
+			        var delta = 0.05;
 
-					var MinLat = lat - delta;
-					var MaxLat = lat + delta;
+			        var MinLat = lat - delta;
+			        var MaxLat = lat + delta;
 
-					var MinLng = lng - delta;
-					var MaxLng = lng + delta;
+			        var MinLng = lng - delta;
+			        var MaxLng = lng + delta;
 
 
-					var findPanoramio = {
-						set: 'public',
-						from: 0,
-						to: 16,
-						minx: MinLng,
-						miny: MinLat,
-						maxy: MaxLat,
-						maxx: MaxLng,
-						size: 'medium',
-						mapfilter: true
-					};
+			        var findPanoramio = {
+			        	set: 'public',
+			        	from: 0,
+			        	to: 16,
+			        	minx: MinLng,
+			        	miny: MinLat,
+			        	maxy: MaxLat,
+			        	maxx: MaxLng,
+			        	size: 'medium',
+			        	mapfilter: true
+			        };
 
-				
+		        
 		   //      $.ajax({
 					//   dataType: "jsonp",
 					//   crossDomain: true,
@@ -453,9 +368,16 @@ $(function() {
 
 
 
+$(function(){
+	$('.rentalDetailMenu ul li a').tooltip({
+		placement:'left'
+	});
+});
 
 
-					//console.log(lat+' '+lng);
+
+
+			        //console.log(lat+' '+lng);
 
 			  //       var delta = 0.05;
 
@@ -477,7 +399,7 @@ $(function() {
 			  //       	size: 'medium',
 			  //       	mapfilter: true
 			  //       };
-				
+		        
    //      $.ajax({
 			//   dataType: "jsonp",
 			//   crossDomain: true,
