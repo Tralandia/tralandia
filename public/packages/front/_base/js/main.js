@@ -424,17 +424,51 @@ $(document).ready(function(){
 
 
 
+// selec2 onBlur close
+var clickSelect2 = false;
+
+$('div.select2 , div.sidebarLocation').live('click',function(){
+	clickSelect2 = true;
+});
+
+$('div.sidebarLocation').live('click',function(){
+	var opened = $('body').attr('data-open-select');
+	if(!opened){
+		$('body').attr('data-open-select',true);
+	} else {
+		$('body').attr('data-open-select',false);
+	}
+
+});
 
 
+$('body').live('click',function(){
+	setTimeout(function(){
 
+		var opened = $('body').attr('data-open-select');
 
+		if(opened){
 
-
-
+			if(clickSelect2){
+				clickSelect2 = false;
+			} else {
+				$('.select2').select2('close');
+				$('.sidebarLocation').select2('close');
+				clickSelect2 = false;
+			}
+			
+		} 
+		
+	},10);	
+});
 
 
 
 $('body').click(function(event){
+
+	// $('div:not(.select2-choice)').select2('close');
+
+
 
 	if(langmenuOpen){
 		$('#langMenuOptions').hide();
