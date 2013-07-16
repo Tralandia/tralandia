@@ -17,33 +17,64 @@
 }
 
 
-/*#headerShareMenu {
+#headerShareMenu {
 	height: 30px;
-	width: 174px;
+	width: 210px;
 	
 	float: right;
 	margin-top: -20px;
 	margin-right: 10px;
 
+	&.fixed {
+		position: fixed;
+		top: 20px;
+		z-index: 40;
+		margin-left: 742px;
+
+		.myFav , .socialIcons {
+			.border-radius(0 0 5px 5px);
+		}
+	}
+
 	.socialIcons {
 		top: 0;
 		background: rgba(0, 0, 0, 0.5);
-		.border-radius(0);
-		float: left;
+		float: right;
 		margin-right: 0;
 	}
 
 	.myFav {
 		background: #ff6600;
+		border: 1px solid  #ff6600;
 		display: block;
-		height: 33px;
-		width: 33px;
+		position: relative;
+		height: 31px;
+		.border-radius(5px);
+		width: 60px;
 		line-height: 35px;
-		float: right;
+		float: left;
 		color: #fff;
 		text-align: center;
+
+
+
+		i {
+			float: left;
+			margin-left: 10px;
+			margin-top: 10px;
+			font-size: 21px;
+		}
+
+		small {
+			color: #fff;	
+			font-size: 17px;	
+		}
+
+		&:hover {
+			border-color: #fff;
+		}
 	}
-}*/
+}
 
 	.socialIcons , .socialBtnHeader {
 		list-style: none;
