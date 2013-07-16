@@ -1,13 +1,4 @@
 <div class="span12">
-
-<div id="myFav" class="hide">
-	<a href="{plink :Front:RentalList:redirectToFavorites}">
-		<i class="animated icon-heart"></i>
-		<span></span>
-		<small class="addToFavorites hide"></small>
-	</a>
-</div>
-
 	<div class="innerPadding baseRadius baseBorder" id="header">
 {* 	<div id="socialMediaLinks">
 		<a class="facebook" href="{$facebookPage}" target="_blank"><i class="icon-facebook-sign"></i></a>
@@ -120,7 +111,7 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="#">{$domainHost}</a><i class="icon-chevron-right"></i> <a href="{$homepageUrl}"><span>#Velka britania tralala</span></a>
+					<a href="{$homepageUrl}"> {$domainHost}<span>{$domainExtension}</span>
 					</a>
 				</div>
 				<h1><a href="{$homepageUrl}">{$slogan}</a></h1>
@@ -130,6 +121,7 @@
 
 <div id="headerShareMenu">
 
+	<a class="myFav" href="#"><i class="icon-heart"></i><small>6</small></a>
 
 
 	<div class="socialIcons socialPluginsInit" id="socialIcons">
