@@ -11,13 +11,13 @@
 <!--[if gt IE 8]> <body data-locale-code="{$localeCode}" class="no-js ie"> <![endif]-->
 <!--[if !IE]><!--> <body data-locale-code="{$localeCode}" class="no-js"> <!--<![endif]-->
 
-	<div class="container baseRadius pageContainerRadius" id="container">
+	<div class="container baseRadius" id="container">
 		<div class="row">
 
 			{include testerPanel.latte}
 
 			{include header.latte}
-			{include navigationBar.latte}
+			{* {include navigationBar.latte} *}
 			{control flashes}
 
 			{if $showSearchBar}
