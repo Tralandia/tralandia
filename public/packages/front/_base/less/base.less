@@ -937,6 +937,61 @@ ul.arrows {
 	width: 100%;
 	font-size: 14px;
 
+	&.rentalDetail {
+		width: 40px;
+		height: 36px;
+		line-height: 33px;
+		background: transparent;
+		font-size: 30px;
+		text-align: center;
+		top: 0;
+		/*text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);*/
+		right: 10px;
+		color: #ddd;
+		margin-top: 0;
+		position: absolute;
+		z-index: 40;
+		border: none;
+
+		i {
+			height: 38px;
+			width: 36px;
+			position: relative;
+			line-height: 34px;
+			left: -1px;
+		}
+
+		&:hover {
+			background: transparent;
+			color: rgb(255, 102, 0);
+		
+		}
+
+
+		.icon-heart {
+			display: none;
+		}
+
+		&.selected {
+
+			.icon-heart-empty {
+				display: none;
+			}
+
+			.icon-heart {
+				display: block;
+			}
+
+			background: transparent;
+			color: rgb(255, 102, 0);
+			border:none;
+			text-shadow:none;
+			&:hover {
+				background:transparent;
+			}
+		}
+	}
+
 	&:hover {
 		background-position: 0;
 		#gradient > .vertical(#D9DFEB,#FEFEFE);

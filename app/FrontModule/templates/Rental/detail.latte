@@ -19,6 +19,16 @@
 		expire => $rentalDetailCacheOptions['expiration'],
 		tags => $rentalDetailCacheOptions['tags']}
 
+<div class="rentalDetailMenu">
+	<ul>
+		<li><a title="#tooltip text" class="top" href="#"><i class="icon-arrow-up"></i></a></li>
+		<li><a title="#tooltip text" href="#"><i class="icon-picture"></i></a></li>
+		<li><a title="#tooltip text" href="#"><i class="icon-calendar"></i></a></li>
+		<li><a title="#tooltip text" href="#"><i class="icon-comments-alt"></i></a></li>
+		<li><a title="#tooltip text" href="#"><i class="icon-map-marker"></i></a></li>
+	</ul>
+</div>
+
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 			<div id="content" class="noPadding">
@@ -26,14 +36,16 @@
 				<div class="row-fluid objectDetailContent">
 					<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
-						{if $featured}
+{* 						{if $featured}
 							<div class="position">TOP</div>
-						{/if}
+						{/if} *}
+
+
 
 						{foreach $rental->getSortedImages(3) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
 							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
-							<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
+							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 						</div>
 						{/foreach}
 
@@ -41,7 +53,7 @@
 						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
 					</div>
 
-					<div class="span5">
+					<div class="span5 relative">
 
 						<h1 class="addToViewList" id="{$rental->id}">
 							{_$rental->name}
@@ -49,6 +61,10 @@
 							&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
 							{/if}
 						</h1>
+
+						{if $mainImage = $rental->getMainImage()}
+						<button class="marginTop rentalDetail btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+						{/if}						
 
 						<p class="locality noPadding">
 							<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
@@ -213,11 +229,9 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 
-						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart"></i> {_o100140}</button>
-						{/if}
 
-							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
+
+{* 							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
 
 								<div class="socialBtnHeader">
 
@@ -241,13 +255,17 @@
 									<li class="loader"><i class="icon-spinner icon-spin"></i></li>
 								</ul>
 
-							</div>
+							</div> *}
 
 
 
 							<div class="sidebarContact">
 								<div class="sidebarTitle">{_o12275}</div>
-								<div class="sidebarInner paddingTop">
+								<div class="sidebarInner">
+
+										{snippet reservationForm}
+										{include '../../forms/Rental/reservationForm.latte'}
+										{/snippet}
 
 									<table>
 										{if $rental->contactName}
@@ -309,12 +327,10 @@
 										{/if}
 
 										</table>
-
+										<div class="clearfix"></div>
 										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
 
-										{snippet reservationForm}
-										{include '../../forms/Rental/reservationForm.latte'}
-										{/snippet}
+
 
 									</div>
 								</div>
@@ -335,7 +351,7 @@
 										<li n:class="$iterator->odd ? odd">
 
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
-											<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
+											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
 										{/foreach}
 									</ul>
@@ -363,7 +379,7 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
-							<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
 							<ul id="placesImage"></ul>
 						</div>
 

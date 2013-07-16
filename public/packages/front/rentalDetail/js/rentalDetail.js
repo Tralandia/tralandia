@@ -5,6 +5,8 @@
   		// default map zoom level
   		var zoomVal = 4;
 
+  		var rentalId = parseInt($(this).data('rentalId'));
+
   		if(typeof $(this).attr('zoom') != 'undefined')
   		{
   			zoomVal = parseInt($(this).attr('zoom'));
@@ -34,62 +36,28 @@
   				}
   				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
 
+  				var isFavorites = false;
+
+  					$.each($.jStorage.get('favoritesList'),function(k,v){
+  						if(rentalId == v.id){
+  							isFavorites = true;
+  						}
+  					});
+
+  				if(isFavorites){
+  					var iconName  = 'map-pointer-heart.png';
+  				} else {
+  					var iconName  = 'map-pointer-home.png';
+  				}
+
+
   				var marker = new google.maps.Marker({
   					position: myLatlng,
-  					map: map
-  					// icon: iconBase + 'map-pointer-heart.png'
+  					map: map,
+  					icon: iconBase + iconName
   				});
 
-			        //console.log(lat+' '+lng);
 
-			  //       var delta = 0.05;
-
-			  //       var MinLat = lat - delta;
-			  //       var MaxLat = lat + delta;
-
-			  //       var MinLng = lng - delta;
-			  //       var MaxLng = lng + delta;
-
-
-			  //       var findPanoramio = {
-			  //       	set: 'public',
-			  //       	from: 0,
-			  //       	to: 12,
-			  //       	minx: MinLng,
-			  //       	miny: MinLat,
-			  //       	maxy: MaxLat,
-			  //       	maxx: MaxLng,
-			  //       	size: 'medium',
-			  //       	mapfilter: true
-			  //       };
-		        
-   //      $.ajax({
-			//   dataType: "jsonp",
-			//   crossDomain: true,
-			//   data: findPanoramio,
-			//   url: 'http://www.panoramio.com/map/get_panoramas.php',					  
-			//   success: function(data){
-
-			//   }
-			// }).done(function(d){
-				
-			// 	var html = '';
-			// 	$.each(d.photos,function(k,v){
-			// 		console.log(v);
-					
-			// 		var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
-
-			//         var marker = new google.maps.Marker({
-			//             position: myLatlng,
-			//             map: map
-			//         });
-					
-			// 		html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
-
-			// 	});
-
-			// 	$('#placesImage').html(html);
-			// });	
 
 
 	        $('body').attr('data-google-map-render',true);
@@ -104,6 +72,59 @@
 
 };
 })(jQuery);
+
+
+
+
+
+
+
+
+// (function($){
+//     $.traMap = function(el, options){
+
+//         var base = this;
+        
+//         base.$el = $(el);
+//         base.el = el;
+        
+//         base.$el.data("traMap", base);
+        
+//         base.init = function(){
+            
+            
+//             base.options = $.extend({},$.traMap.defaultOptions, options);
+            
+//         };
+        
+
+//         base.init();
+//     };
+    
+//     $.traMap.defaultOptions = {
+//     	zoom: 4
+//     };
+    
+//     $.fn.traMap = function(options){return this.each(function(){(new $.traMap(this, options));});};
+// })(jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* afret load Rental detail add object id to visit list array */
@@ -347,3 +368,62 @@ $(function() {
 
 
 
+$(function(){
+	$('.rentalDetailMenu ul li a').tooltip({
+		placement:'left'
+	});
+});
+
+
+
+
+			        //console.log(lat+' '+lng);
+
+			  //       var delta = 0.05;
+
+			  //       var MinLat = lat - delta;
+			  //       var MaxLat = lat + delta;
+
+			  //       var MinLng = lng - delta;
+			  //       var MaxLng = lng + delta;
+
+
+			  //       var findPanoramio = {
+			  //       	set: 'public',
+			  //       	from: 0,
+			  //       	to: 12,
+			  //       	minx: MinLng,
+			  //       	miny: MinLat,
+			  //       	maxy: MaxLat,
+			  //       	maxx: MaxLng,
+			  //       	size: 'medium',
+			  //       	mapfilter: true
+			  //       };
+		        
+   //      $.ajax({
+			//   dataType: "jsonp",
+			//   crossDomain: true,
+			//   data: findPanoramio,
+			//   url: 'http://www.panoramio.com/map/get_panoramas.php',					  
+			//   success: function(data){
+
+			//   }
+			// }).done(function(d){
+				
+			// 	var html = '';
+			// 	$.each(d.photos,function(k,v){
+			// 		console.log(v);
+					
+			// 		var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
+
+			//         var marker = new google.maps.Marker({
+			//             position: myLatlng,
+			//             map: map
+			//         });
+					
+			// 		html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
+
+			// 	});
+
+			// 	$('#placesImage').html(html);
+			// });	
