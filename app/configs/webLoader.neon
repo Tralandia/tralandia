@@ -184,6 +184,8 @@ parameters:
 					# - front/_base/js/socialShitLoader.js
 					# customAlert
 					- front/_base/js/customAlerts.js
+					# temp ui testing new design
+					- front/_base/js/tempUi.js
 					# registration
 					- front/rentalRegistration/js/rentalRegistration.js
 					# favorites
