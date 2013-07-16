@@ -163,6 +163,7 @@ parameters:
 					- front/ticket/less/ticket.less
 					# ie optimalizacia
 					- front/_base/less/ie.less
+					- front/historiPlugin/main.less
 					# retina display
 					- front/_base/less/retina.less
 				js:
@@ -184,6 +185,8 @@ parameters:
 					# - front/_base/js/socialShitLoader.js
 					# customAlert
 					- front/_base/js/customAlerts.js
+					# temp ui testing new design
+					- front/_base/js/tempUi.js
 					# registration
 					- front/rentalRegistration/js/rentalRegistration.js
 					# favorites
@@ -247,7 +250,7 @@ parameters:
 					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
 			navBar:
 				js:
-					- front/navigationBar/js/navigationBar.js
+					# - front/navigationBar/js/navigationBar.js
 		sets:
 
 			'Admin:Ap':

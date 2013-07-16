@@ -1,0 +1,104 @@
+@import '../../_base/less/lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
+
+@barHeight: 30px;
+@darFontSize: 12px;
+
+#staticNavBar {
+	width: auto;
+	height: 45px;
+	margin: 0 18px -5px 20px;
+	clear: both;
+	line-height: 30px;
+	font-size: 12px;
+	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	color: #7E7E7E;
+	i {
+		font-size: 20px;
+		margin: 0 5px;
+		line-height: 17px;
+	}
+
+	small {
+		font-size: 14px;
+		color: #7A7A7A;
+		float: right;
+		margin: 2px 15px 0 0;
+	}
+
+	.paginator {
+		font-size: 14px;
+		background: #F68703;
+		color: #FFF;
+		text-shadow: none;
+		padding: 1px 4px 1px 12px;
+		border-radius: 0 5px 5px 0;
+		text-transform: uppercase;
+		float: right;
+		&:hover {
+//			#gradient > .vertical(#b7c546,#869c19);
+			color: @brown;
+		}
+		&.next {
+			margin-right: 5px;
+			font-size: 14px;
+			i {
+				margin-top: 2px;
+				font-size: 24px;
+				margin-left: 3px;
+			}
+		}
+		&.prev {
+			padding: 1px 3px 1px 3px;
+			border-right: 1px solid #FFF;
+			border-radius: 5px 0 0 5px;
+			opacity: .7;
+		}
+	}
+
+	.backToList {
+		float: left;
+		width: auto;
+
+		a {
+			font-size: 14px;
+			float: left;
+			background: #B7C546;
+			padding: 1px 10px 1px 1px;
+			border-radius: 5px 5px 5px 5px;
+			color: #FFF;
+			text-transform: uppercase;
+
+			&:hover {
+				span {
+					text-decoration: none;
+				}
+			}
+
+			i {
+				display: block;
+				height: 0px;
+				width: 21px;
+				padding: 10px 5px 21px;
+				line-height: 9px;
+				float: left;
+				text-align: center;
+				color: #FFF;
+				margin: -1px 10px 0 -1px;
+				font-size: 18px;
+				background: #869C19;
+				border-radius: 5px 0 0 5px;
+				border-right: 1px solid #FFF;
+			}
+		}
+	}
+
+	.info {
+		float: right;
+		width: 300px;
+		text-align: center;
+	}
+}
