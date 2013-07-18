@@ -54,7 +54,7 @@
 
 						{foreach $rental->getSortedImages(3) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
-							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
+							<img class="scrollTo" data-scroll-to=".bigGallery" alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 						</div>
 						{/foreach}
@@ -93,7 +93,7 @@
 							{/if}
 							{if $firstAnswer}
 							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper}</td>
+								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper} <a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">#citaj najvac</a></td>
 							</tr>
 							{/if}
 						</table>

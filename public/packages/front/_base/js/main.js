@@ -353,7 +353,7 @@ $(document).ready(function(){
 	$(".alert").alert();
 	$('.alert:not(.alert-error)').customAlert();
 
-
+	$('.scrollTo').click(elemScrollTo);
 	$('.calendarEdit').calendarEdit();
 
 	//$('.mapControl').mapControl();
@@ -672,7 +672,7 @@ function _selectSetSelectedValue(){
 
 
 function elemScrollTo(){
-	console.log($(this));
+	console.log($(this).data('scrollTo'));
 	$.scrollTo($(this).data('scrollTo'),800);
 }
 
