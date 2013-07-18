@@ -39,15 +39,7 @@
 		</div>
 	</div>
 
-<div class="rentalDetailMenu">
-	<ul>
-		<li><a title="#tooltip text" class="top" href="#"><i class="icon-arrow-up"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-picture"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-calendar"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-comments-alt"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-map-marker"></i></a></li>
-	</ul>
-</div>
+
 
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
@@ -85,7 +77,7 @@
 						{/if}						
 
 						<p class="locality noPadding">
-							<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
+							<a href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
 								{_$rental->type->name|firstUpper}
 								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 								{_$rental->address->locality->name , null , [case=>locative]}
