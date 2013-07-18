@@ -52,6 +52,10 @@ h1 .classification {
 
 form.reservationform {
 
+		.select2-container .select2-choice div b {
+			left: -3px;
+		}
+
 		padding: 10px;
 
 		.input-append, .input-prepend {
@@ -91,10 +95,13 @@ form.reservationform {
 				float: left;
 			}
 
+
+
 			&.datepicker , &.datepickerto {
 				width: 163px;
 				float: none;
 				clear: both;
+				border-right: 0;
 			}			
 		}
 
@@ -248,13 +255,13 @@ form.reservationform {
 
 		&.icon {
 			
-width: 40px;
-font-size: 58px;
-line-height: 30px;
-font-family: entypo;
-text-align: center;
-padding-right: 5px;
-color: @brown;	
+			width: 40px;
+			font-size: 58px;
+			line-height: 30px;
+			font-family: entypo;
+			text-align: center;
+			padding-right: 5px;
+			color: @brown;	
 		}
 
 		&.content {
@@ -576,7 +583,7 @@ table.detailInfoBox {
 	li {
 		width: 381px;
 		.box-size();
-		color: @brown;
+		color: #888;
 		margin-left: 27px;	
 			
 		font-size: 13px;
@@ -815,8 +822,8 @@ table.detailInfoBox {
 }
 
 .sidebarTitle {
-	
-	#gradient > .vertical(#b7c546,#869c19);
+	background: #a3b534;
+	/*#gradient > .vertical(#b7c546,#869c19);*/
 	color: @white;
 	font-weight: bold;
 	text-align: center;
@@ -837,7 +844,8 @@ table.detailInfoBox {
 	}
 
 	.input-append .add-on {
-		background: #eaf0d7;
+		background: #fff;
+		color: #888;
 		padding: 4px 8px;
 	}
 
@@ -925,17 +933,19 @@ table.detailInfoBox {
 
 		&.select2-drop-above {
 			a {
-				.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+				background: #fff;
 			}
 		}
 
 		a {			
-			#gradient > .vertical(rgb(255, 255, 255),rgb(229, 236, 199));
+			
+			background: #fff;
 			border: 1px solid #b0c13b;
 
 			div {
-				#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
-				border-left: 1px solid #b0c13b;
+				background: #fff;
+				color: #333;
+				border-left: 0;
 				.border-radius(0px);
 			}
 		}
@@ -1117,57 +1127,5 @@ table.detailInfoBox {
 
 .reservationSuccessInfo {
 	text-align: center;
-}
-
-.rentalDetailMenu {
-
-	position: fixed;
-	bottom: 63px;
-	margin-left: 1008px;
-	
-	ul {
-		margin: 0;
-		li {
-			
-			text-align: center;
-
-			a {
-
-				color: #666;
-				display: block;
-				height: 30px;
-				background: #fff;
-				width: 30px;
-				line-height: 30px;
-
-				&:hover {
-					color: @brown;
-					text-decoration: none;
-				}
-
-				&.top {
-					background: #faa820;
-					color: #fff;
-
-					&:hover {
-						background:#FA9A20;
-					}
-				}
-
-			}
-
-			&:first-child {
-				a {
-					.border-radius(4px 4px 0 0);
-				}
-			}
-
-			&:last-child {
-				a {
-					.border-radius(0 0 4px 4px);
-				}
-			}
-		}
-	}
 }
 
