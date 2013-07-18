@@ -273,20 +273,41 @@
 										{include '../../forms/Rental/reservationForm.latte'}
 										{/snippet}
 
-									<table>
-										{if $rental->contactName}
-										<tr>
-											<td class="iconCover"><i class="icon-user"></i></td>
-											<td>
-												<strong>{$rental->contactName}</strong>
-											</td>
-										</tr>
-										{/if}
 
+										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
+
+
+
+									</div>
+								</div>
+
+
+						<div class="sidebarContact">
+							<div class="sidebarTitle">
+
+								{if $rental->contactName}
+								<tr>
+									<td class="iconCover"><i class="icon-user"></i></td>
+									<td>
+										<strong>{$rental->contactName}</strong>
+									</td>
+								</tr>
+								{else}
+								<tr>
+									<td class="iconCover"><i class="icon-user"></i></td>
+									<td>
+										<strong>#contact</strong>
+									</td>
+								</tr>								
+								{/if}
+
+							</div>
+							<div class="sidebarInner">
+
+									<table>
 
 										{if $rental->phone->international}
 										<tr>
-											<td class="iconCover"><i class="icon-phone"></i></td>
 											<td>
 
 												<strong>{$rental->phone->international} </strong>
@@ -294,12 +315,20 @@
 											</td>
 										</tr>
 										{/if}
+										{if count($rental->spokenLanguages) > 0}
+											<tr>
+												<td>
+													<strong>{_o100015}</strong><br/>
+													{foreach $rental->spokenLanguages as $language}
+													<small>{_$language->name}{if !$iterator->last}, {/if}</small>
+													{/foreach}
+												</td>
+											</tr>
+										{/if}										
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
 										<tr>
-											<td class="iconCover"><i class="icon-compass"></i></td>
 											<td>
-												<strong>{_o2431} </strong><br/>
 
 
 												{$rental->address->address}
@@ -313,38 +342,24 @@
 
 										{if $rental->url}
 										<tr>
-											<td class="iconCover"><i class="icon-link"></i></td>
 											<td>
-												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
+												<a target="_blank" href="{$rental->url}">{_o1666}</a>
 												</td>
 										</tr>
 										{/if}
 
-										{if count($rental->spokenLanguages) > 0}
-											<tr>
-												<td class="iconCover"><i class="icon-globe"></i></td>
-												<td>
-													<strong>{_o100015}</strong><br/>
-													{foreach $rental->spokenLanguages as $language}
-													{_$language->name}{if !$iterator->last}, {/if}
-													{/foreach}
-												</td>
-											</tr>
-										{/if}
+
 
 										</table>
-										<div class="clearfix"></div>
-										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
-
-
-
-									</div>
-								</div>
-
+										<div class="clearfix"></div>							
+							</div>
+						</div>
 
 							</div>
 							<!-- right sidebar -->
 						</div>
+
+
 
 						<div class="row-fluid">
 							<div class="span12">
