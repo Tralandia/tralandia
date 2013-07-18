@@ -225,6 +225,8 @@ App.prototype.initMapsObjectDetail = function(){
 
 }
 
+
+
 /****************************************************************************************************
 *	CONTACT PAGE FORM CREATOR
 ****************************************************************************************************/
@@ -669,7 +671,10 @@ function _selectSetSelectedValue(){
 
 
 
-
+function elemScrollTo(){
+	console.log($(this));
+	$.scrollTo($(this).data('scrollTo'),800);
+}
 
 
 
