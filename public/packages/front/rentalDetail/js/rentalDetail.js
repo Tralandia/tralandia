@@ -368,13 +368,6 @@ $(function() {
 
 
 
-$(function(){
-	$('.rentalDetailMenu ul li a').tooltip({
-		placement:'left'
-	});
-});
-
-
 
 
 			        //console.log(lat+' '+lng);
