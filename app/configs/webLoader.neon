@@ -60,6 +60,10 @@ parameters:
 				css:
 					- select2/custom/less/select2HideInputText.less
 
+			rentalMapPlugin:
+				css: 
+					- front/rentalMapPlugin/less/rentalMapPlugin.less
+
 			jqueryCookie:
 				js:
 					- jqueryCookie/lib/jquery.cookie.js
@@ -315,6 +319,7 @@ parameters:
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.rentalMapPlugin%
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
