@@ -73,7 +73,7 @@
 						</h1>
 
 						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop rentalDetail btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+						<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
 						{/if}						
 
 						<p class="locality noPadding">
