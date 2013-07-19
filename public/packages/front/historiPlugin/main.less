@@ -1,5 +1,5 @@
-@import '../../_base/less/lessFunctions.less';
-@import '../../../bootstrap/lib/less/mixins.less';
+@import '../_base/less/lessFunctions.less';
+@import '../../bootstrap/lib/less/mixins.less';
 
 @barHeight: 30px;
 @darFontSize: 12px;
@@ -7,7 +7,7 @@
 #staticNavBar {
 	width: auto;
 	height: 45px;
-	margin: 0 18px -5px 20px;
+	margin: 0 6px -3px 10px;
 	clear: both;
 	line-height: 30px;
 	font-size: 12px;
@@ -24,7 +24,7 @@
 
 	small {
 		font-size: 14px;
-		color: #7A7A7A;
+		color: @brown;
 		float: right;
 		margin: 2px 15px 0 0;
 	}
@@ -66,7 +66,7 @@
 		a {
 			font-size: 14px;
 			float: left;
-			background: #B7C546;
+			background: #f68703;
 			padding: 1px 10px 1px 1px;
 			border-radius: 5px 5px 5px 5px;
 			color: #FFF;
@@ -76,6 +76,14 @@
 				span {
 					text-decoration: none;
 				}
+			}
+
+			&.searchName {
+				background: #FFF;
+				color: @brown;
+				text-transform: none;
+				margin-left: 10px;
+				font-size: 18px;
 			}
 
 			i {
@@ -89,9 +97,9 @@
 				color: #FFF;
 				margin: -1px 10px 0 -1px;
 				font-size: 18px;
-				background: #869C19;
+				/*background: #869C19;*/
 				border-radius: 5px 0 0 5px;
-				border-right: 1px solid #FFF;
+				/*border-right: 1px solid #FFF;*/
 			}
 		}
 	}
