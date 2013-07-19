@@ -20,7 +20,7 @@
 				base.$el.addClass(base.options.inFavoritesClass);
 			}
 
-			base._updateFavoritesStatus();
+			base._updateFavoritesStatusCount();
 		};
 
 
@@ -62,22 +62,32 @@
 				base._addToFavorites(id);
 			}
 
-			base._updateFavoritesStatus();
-
+			base._updateFavoritesStatusCount();
+			base._animate();
 			// console.log($.cookie(base.options.cookieListKey));
 		};
 		
-		base._updateFavoritesStatus = function(){
+		base._updateFavoritesStatusCount = function(){
 
 			var c = base._getFavoritesCookie();
 			
-			$(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
+			// $(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			if(c){
 				$(base.options.statusCountSelector).html(c.length);
 			} else {
 				$(base.options.statusCountSelector).html('0');
 			}
+		};
+
+		base._animate = function(){
+
+			$(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
+
+			setTimeout(function(){
+				$(base.options.statusIconSelector).removeClass(base.options.statusAnimationClass);
+			},base.options.animationTime);
+
 		};
 
 		base._addToFavorites = function(id){
@@ -122,8 +132,9 @@ $(function(){
 	$('.addToFavorites').addToFavorites({
 		cookieListKey: 'favoritesList',
 		inFavoritesClass: 'selected',
-		statusAnimationClass: 'beat',
+		statusAnimationClass: 'pulse',
 		statusIconSelector: '#myFav i.icon-heart',
-		statusCountSelector: '#myFav span'
+		statusCountSelector: '#myFav span',
+		animationTime:500
 	});
 });

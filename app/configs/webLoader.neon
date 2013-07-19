@@ -132,6 +132,9 @@ parameters:
 					#- front/rental-detail-navigation.less
 					#- front/interview-list.less
 
+					# favorites 
+					- front/favorites/less/animate-custom.css
+
 					# _base
 					- front/_base/less/fonts.less
 					- front/_base/less/base.less
