@@ -23,13 +23,14 @@
 		<div id="staticNavBar">
 
 			<div class="backToList">
-				<a href="#" class="listName"><i class="icon-search"></i><span></span></a>
+				<a href="#" class="listName"><i class="icon-search"></i>#Vyhľadávanie<span></span></a>
+				<a href="#" class="searchName">Chaty na liptove</a>
 			</div>
 
 			<div class="info">
 				<a class="paginator next">Ďalši <i class="icon-circle-arrow-right"></i></a>
 				<a class="paginator prev"><i class="icon-circle-arrow-left"></i></a>
-				<small class="counts"><span class="objectPosition"></span> / <span class="listFullCount"></span></small>
+				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
 			</div>
 
 		</div>
@@ -69,7 +70,7 @@
 						</h1>
 
 						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop rentalDetail btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+						<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
 						{/if}						
 
 						<p class="locality noPadding">
@@ -400,8 +401,33 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
-							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
-							<ul id="placesImage"></ul>
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
+							{* <ul id="placesImage"></ul> *}
+							
+							<div class="rentalInfoBox">
+								<div class="smallGallery">
+									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+								</div>
+								<div class="rentalInfo">
+									<h3><a href="#">Chalupa Detva </a></h3>
+									<a class="filter" href="#">Ubytovanie detva</a> | 
+									<span>Max 13 osob</span> | <span class="price">33 EUR/osoba/noc </span>
+									<div class="amenities">Studňa, zváračka, cukrová repa, zelovoc, cédéčka</div>
+								</div>
+								<div class="remove"><i class="icon-remove"></i></div>
+							</div>
+
+							<ul class="relatedRentals">
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/></li>
+							</ul>
 						</div>
 
 
