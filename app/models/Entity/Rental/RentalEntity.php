@@ -1487,7 +1487,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\InterviewAnswer[]
+	 * @return array|\Entity\Rental\InterviewAnswer[]
 	 */
 	public function getInterviewAnswers()
 	{

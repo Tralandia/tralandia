@@ -9,11 +9,6 @@ class RegistrationPresenter extends BasePresenter
 {
 
 	/**
-	 * @var array
-	 */
-	public $onSuccessRegistration = [];
-
-	/**
 	 * @autowire
 	 * @var \FormHandler\RegistrationHandler
 	 */
@@ -47,15 +42,15 @@ class RegistrationPresenter extends BasePresenter
 		$self = $this;
 		$form->onSuccess[] = function ($form) use ($self) {
 			$rental = $self->registrationHandler->getRental();
-			$self->onSuccessRegistration($rental);
 
-			$self->flashMessage('o100193', RegistrationPresenter::FLASH_ERROR);
-			$self->redirect('Home:default');
+//			$self->flashMessage('o100193', RegistrationPresenter::FLASH_ERROR);
+//			$self->redirect('Home:default');
 
-//			$owner = $rental->getOwner();
-//			$self->login($owner);
-//			$self->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
-//			$self->redirect(':Owner:Rental:edit', array('id' => $rental->getId()));
+			$owner = $rental->getOwner();
+			$identity = $this->authenticator->getIdentity($owner);
+			$self->login($identity);
+			$self->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
+			$self->redirect(':Owner:Rental:firstRental');
 		};
 
 

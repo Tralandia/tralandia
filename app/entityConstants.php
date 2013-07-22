@@ -6,6 +6,7 @@ define('LANGUAGE_ENTITY', '\Entity\Language');
 define('RENTAL_ENTITY', '\Entity\Rental\Rental');
 define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
 define('RENTAL_AMENITY_ENTITY', '\Entity\Rental\Amenity');
+define('RENTAL_INFORMATION_ENTITY', '\Entity\Rental\Information');
 define('RENTAL_PLACEMENT_ENTITY', '\Entity\Rental\Placement');
 define('RENTAL_PRICELIST_ROW_ENTITY', '\Entity\Rental\PricelistRow');
 define('RENTAL_PRICELIST_ENTITY', '\Entity\Rental\Pricelist');
