@@ -21,8 +21,8 @@ nette:
 	security:
 		frames:
 
-#extensions:
-#	events: Kdyby\Events\DI\EventsExtension
+extensions:
+	events: Kdyby\Events\DI\EventsExtension
 
 
 parameters:
