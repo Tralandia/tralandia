@@ -61,24 +61,32 @@ div#tabs-1 div.row-fluid.rentalList {
 			tr {
 				td {
 					padding: 0 7px;
-					line-height: 39px;
-					height: 39px;
+					line-height: 16px;
+					height: 37px;
 					border-right: 1px solid #ddd;
+					text-align: center;
 
 					&.price {
 						color: @darkGreen;
 						font-size: 16px;
 						font-weight: bold;
 						
+						small {
+							font-weight: normal;
+						}
 					}
 
 					&.food {
 						border: none;
-						max-width: 240px;
+						max-width: 220px;
 						text-overflow: ellipsis;
 						overflow: hidden;
 						white-space: nowrap;
 						font-size: 12px;
+					}
+
+					&.price , &.count {
+						padding-top: 3px;
 					}
 
 					&.count {
@@ -93,6 +101,10 @@ div#tabs-1 div.row-fluid.rentalList {
 
 					small {
 						display: block;
+						line-height: 13px;
+						position: relative;
+						font-size: 10px;
+						top: -2px;
 					}
 				}
 			}
