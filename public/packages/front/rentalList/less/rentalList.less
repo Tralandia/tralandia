@@ -65,7 +65,8 @@ div#tabs-1 div.row-fluid.rentalList {
 					height: 37px;
 					border-right: 1px solid #ddd;
 					text-align: center;
-
+					color: @brown;
+					
 					&.price {
 						color: @darkGreen;
 						font-size: 16px;
@@ -90,12 +91,25 @@ div#tabs-1 div.row-fluid.rentalList {
 					}
 
 					&.count {
-						color: #7d3300;
+						
 						font-size: 16px;
+
+						.icon-female {
+							font-size: 12px;
+							position: relative;
+							right: 5px;
+							line-height: 15px;							
+						}
+
+						.icon-male {
+							font-size: 12px;
+
+							line-height: 14px;							
+						}
 					}
 
 					i {
-						color: #888;
+						color: @brown;
 						line-height: 13px;
 					}
 
@@ -105,6 +119,7 @@ div#tabs-1 div.row-fluid.rentalList {
 						position: relative;
 						font-size: 10px;
 						top: -2px;
+						color: #999;
 					}
 				}
 			}
