@@ -345,8 +345,8 @@ class Tools {
 			$keyCallback = new Nette\Callback($key);
 		}
 
-		if(!is_scalar($value)) {
-			$valueCallbac = new Nette\Callback($value);
+		if($value !== NULL && !is_scalar($value)) {
+			$valueCallback = new Nette\Callback($value);
 		}
 
 		$return = [];
@@ -359,8 +359,10 @@ class Tools {
 				$newKey = $oldValue[$key];
 			}
 
-			if(isset($valueCallbac)) {
-				$newValue = $valueCallbac->invokeArgs([$oldValue]);
+			if($value === NULL) {
+				$newValue = $oldValue;
+			} else if(isset($valueCallback)) {
+				$newValue = $valueCallback->invokeArgs([$oldValue]);
 			} else {
 				$newValue = $oldValue[$value];
 			}
