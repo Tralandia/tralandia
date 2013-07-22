@@ -93,19 +93,25 @@
 											{/foreach}
 									</p>
 
+									<div class="infoGrid">
+										<table>
+											<tr>
+												<td class="price">{$rental->price}</td>
+									
+												<td class="count"><i class="icon-male"></i><i class="icon-female"></i>{$rental->maxCapacity}</td>
+									
+												<td class="food">
+													<i class="icon-food"></i>
+													{var $importantAmenities = $rental->getImportantAmenities(true)}
+													{foreach $importantAmenities  as $amenity}
+														{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+													{/foreach}
+												</td>
+											</tr>																						
+										</table>
+									</div>
 
-
-									<ul class="infoGrid">
-										<li class="price">{$rental->price}</li>
-										<li class="count"><i class="icon-male"></i><i class="icon-female"></i>{$rental->maxCapacity}</li>
-										<li class="food"><i class="icon-food"></i>
-											{var $importantAmenities = $rental->getImportantAmenities(true)}
-											{foreach $importantAmenities  as $amenity}
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-											{/foreach}
-										</li>
-										<li><i class="icon-github-alt"></i></li>
-									</ul>
+		
 
 								</div>
 							</div>
