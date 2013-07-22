@@ -93,19 +93,30 @@
 											{/foreach}
 									</p>
 
+									{* 				<b>{_o100041} {$rental->price}</b> {_o100004},
+													<b>{_o924}</b> {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} {if $rental->bedroomCount > 0}({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
+
+ *}
 									<div class="infoGrid">
 										<table>
 											<tr>
 												<td class="price">{$rental->price} <small>{_o100004}</small></td>
 									
-												<td class="count"><i class="icon-male"></i><i class="icon-female"></i>{$rental->maxCapacity} </td>
+												<td class="count"><i class="icon-male"></i><i class="icon-female"></i>{$rental->maxCapacity} <small>{_o924} {_o490,null,[count=>$rental->maxCapacity]}</small></td>
 									
 												<td class="food">
 													<i class="icon-food"></i>
 													{var $importantAmenities = $rental->getImportantAmenities(true)}
-													{foreach $importantAmenities  as $amenity}
-														{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-													{/foreach}
+							
+
+													{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['children', 'activity' , 'relax' , 'service' , 'wellness' , 'congress' , 'kitchen' , 'bathroom' , 'room' , 'heating' , 'parking' , 'animal' , 'other' , 'owner-availability','separate-groups']) as $amenities}
+
+														{foreach $amenities as $amenity}
+
+															{_$amenity->name}
+
+														{/foreach}
+													{/foreach}													
 												</td>
 											</tr>																						
 										</table>
