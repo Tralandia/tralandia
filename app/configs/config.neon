@@ -312,6 +312,7 @@ services:
 	rentalImagePipe: Image\RentalImagePipe(%rentalImagePath%, %staticDomain%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
 	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
+	- Tralandia\Rental\RankCalculator
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
