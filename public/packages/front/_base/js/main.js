@@ -198,17 +198,7 @@ App.prototype.openContactForm = function(){
 *	RENTAL DETAIL
 ****************************************************************************************************/
 
-App.prototype.datepickerIcon = function(){
 
-	if($(this).parent().find('input').hasClass('focus')){
-		$( ".datepicker" ).datepicker( "hide" );
-		$(this).parent().find('input').removeClass('focus');
-	} else {
-		$(this).parent().find('input').focus();
-		$(this).parent().find('input').addClass('focus');
-	}
-
-}
 
 /**
 *	initialize map in object detail
@@ -372,9 +362,7 @@ $(document).ready(function(){
 
 	$('.loadContactForm').click(A.loadContactForm);
 
-	/* UI calendar */
-	$(".datepickerIcon").click(A.datepickerIcon);
-	$(".datepickerIcon").live('click',A.datepickerIcon);
+
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 
 	/* add attachment file  */
