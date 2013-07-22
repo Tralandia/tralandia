@@ -75,8 +75,10 @@
 
 			if(c){
 				$(base.options.statusCountSelector).html(c.length);
+				$(base.options.myFavoritesContainerSelector).removeClass('hide');
 			} else {
 				$(base.options.statusCountSelector).html('0');
+				$(base.options.myFavoritesContainerSelector).addClass('hide');
 			}
 		};
 
@@ -135,6 +137,7 @@ $(function(){
 		statusAnimationClass: 'pulse',
 		statusIconSelector: '#myFav i.icon-heart',
 		statusCountSelector: '#myFav span',
+		myFavoritesContainerSelector:'#myFav',
 		animationTime:500
 	});
 });
