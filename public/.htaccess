@@ -3,6 +3,16 @@ Options -Indexes
 
 php_flag suhosin.simulation On
 
+Deny from 202.46.32.0/19
+Deny from 178.77.126.55
+Deny from 83.233.207.74
+Deny from 185.10.104
+Deny from 46.161.41.32
+#Deny from 5.226.102.18
+#Deny from 151.236.42.200
+
+
+
 # mod_rewrite
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -23,6 +33,9 @@ php_flag suhosin.simulation On
   RewriteCond %{HTTP_USER_AGENT} .*shopwiki.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*linkwalker.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*riddler.io.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*TurnitinBot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Mail.RU_Bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*archive.org_bot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} bingbot [OR]
   RewriteCond %{HTTP_USER_AGENT} AhrefsBot [OR]
   RewriteCond %{HTTP_USER_AGENT} JikeSpider [OR]
@@ -36,9 +49,6 @@ php_flag suhosin.simulation On
   RewriteCond %{HTTP_USER_AGENT} YandexImages [OR]
   RewriteCond %{HTTP_USER_AGENT} YandexBot [OR]
   RewriteCond %{HTTP_USER_AGENT} SEOkicks-Robot [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*Googlebot.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} Googlebot [OR]
-  RewriteCond %{HTTP_USER_AGENT} googlebot [OR]
   RewriteCond %{HTTP_USER_AGENT} 360Spider [OR]
   RewriteCond %{HTTP_USER_AGENT} spider [OR]
   RewriteCond %{HTTP_USER_AGENT} psbot [OR]
@@ -178,8 +188,16 @@ php_flag suhosin.simulation On
   RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
   RewriteCond %{HTTP_USER_AGENT} ^WWWCopy [OR]
   RewriteCond %{HTTP_USER_AGENT} ^WWWoffle [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*search.msn.com.* [OR]
   RewriteCond %{REMOTE_ADDR} ^46\.161\.41\.24$
   RewriteRule ^.*$ - [F,L]
+
+#  RewriteCond %{HTTP_HOST} !www.tralandia.sk
+#  RewriteCond %{HTTP_USER_AGENT} .*Googlebot.* [OR]
+#  RewriteCond %{HTTP_USER_AGENT} Googlebot [OR]
+#  RewriteCond %{HTTP_USER_AGENT} googlebot
+#  RewriteRule ^.*$ - [F,L]
+
 
   RewriteCond %{HTTP_HOST} .*tralandia.hr
   RewriteRule (.*) http://www.tralandia.com.hr/$1 [R=301,L]
