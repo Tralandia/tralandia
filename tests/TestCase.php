@@ -166,7 +166,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function findLocation($id)
 	{
-		return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
+		if(!is_numeric($id)) {
+			return $this->getEm()->getRepository(LOCATION_ENTITY)->findOneByIso($id);
+		} else {
+			return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
+		}
 	}
 
 	public function findLanguage($id)
