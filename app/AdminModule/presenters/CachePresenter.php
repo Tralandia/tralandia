@@ -63,8 +63,6 @@ class CachePresenter extends BasePresenter {
 		$searchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
 		$info = $i = $searchCaching->getRentalCacheInfo($rental);
 
-		$searchCaching->regenerate();
-
 		$info[RentalSearchService::CRITERIA_LOCATION] = $this->em->getRepository(LOCATION_ENTITY)->findById($info[RentalSearchService::CRITERIA_LOCATION]);
 		$info[RentalSearchService::CRITERIA_RENTAL_TYPE] = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findById($info[RentalSearchService::CRITERIA_RENTAL_TYPE]);
 		$info[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE] = $this->em->getRepository(LANGUAGE_ENTITY)->findById($info[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE]);

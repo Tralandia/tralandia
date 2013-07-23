@@ -2,6 +2,8 @@
 namespace Repository\Rental;
 
 use Doctrine\ORM\Query\Expr;
+use Entity\Location\Location;
+use Entity\Rental\Rental;
 
 /**
  * RentalRepository class
@@ -10,7 +12,7 @@ use Doctrine\ORM\Query\Expr;
  */
 class RentalRepository extends \Repository\BaseRepository {
 
-	public function findFeatured(\Entity\Location\Location $location) {
+	public function findFeatured(Location $location) {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('r.id')
@@ -45,27 +47,40 @@ class RentalRepository extends \Repository\BaseRepository {
 	}
 
 
-	public function findByPrimaryLocation(\Entity\Location\Location $location, $status = NULL) {
-		$qb = $this->_em->createQueryBuilder();
+	/**
+	 * @param Location $location
+	 * @param null $status
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findByPrimaryLocationQB(Location $location, $status = NULL)
+	{
+		$qb = $this->createQueryBuilder('r');
 
-		$qb->select('r')
-			->from($this->_entityName, 'r')
-			->join('r.address', 'a')
-			->where($qb->expr()->eq('a.primaryLocation', $location->id));
+		$qb->innerJoin('r.address', 'a')
+			->andWhere($qb->expr()->eq('a.primaryLocation', $location->getId()));
 
 		if ($status != NULL) {
-			$qb->andWhere($qb->expr()->eq('r.status', $status));
+			$qb->andWhere($qb->expr()->eq('r.status', $status ? Rental::STATUS_LIVE : Rental::STATUS_DRAFT));
 		}
+
+		return $qb;
+	}
+
+
+	public function findByPrimaryLocation(Location $location, $status = NULL)
+	{
+		$qb = $this->findByPrimaryLocationQB($location, $status);
 
 		return $qb->getQuery()->getResult();
 	}
 
 	/**
 	 * @param string $search
-	 * @param \Entity\Location\Location $primaryLocation
+	 * @param Location $primaryLocation
 	 * @return array
 	 */
-	public function findSuggestForSearch($search, \Entity\Location\Location $primaryLocation)
+	public function findSuggestForSearch($search, Location $primaryLocation)
 	{
 		$qb = $this->_em->createQueryBuilder();
 
@@ -98,7 +113,7 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
-	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL) {
+	public function getCounts(Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL) {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('l.id locationId', 'COUNT(r.id) as c')

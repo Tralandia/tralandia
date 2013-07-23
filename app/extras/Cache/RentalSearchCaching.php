@@ -3,6 +3,7 @@
 namespace Extras\Cache;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Entity\Location\Location;
 use Entity\Rental\Rental;
 use Nette\Caching;
@@ -18,7 +19,6 @@ class RentalSearchCaching extends \Nette\Object {
 	protected $cache;
 
 	protected $cacheContent;
-	protected $cacheLoaded = FALSE;
 
 	/**
 	 * @var \Entity\Location\Location
@@ -39,26 +39,29 @@ class RentalSearchCaching extends \Nette\Object {
 	}
 
 	protected function load() {
-		if (!$this->cacheLoaded) {
-			$this->cacheContent = $this->cache->load($this->location->id);
-			if ($this->cacheContent === NULL) {
-				$this->cacheContent = array();
-			}
-			$this->cacheLoaded = TRUE;
+		$this->cacheContent = $this->cache->load($this->location->id);
+		if ($this->cacheContent === NULL) {
+			$this->cacheContent = array();
 		}
 	}
 
 	public function save() {
-		if ($this->cacheLoaded) {
-			$this->cache->save($this->location->id, $this->cacheContent);
-		}
+		$this->cache->save($this->location->id, $this->cacheContent);
 	}
 
-	protected function removeRental(\Entity\Rental\Rental $rental) {
+
+	/**
+	 * @param Rental $rental
+	 */
+	protected function removeRental(Rental $rental) {
 		foreach ($this->cacheContent as $key => $value) {
-			foreach ($value as $key2 => $value2) {
-				if (isset($value2[$rental->id])) unset($this->cacheContent[$key][$key2][$rental->id]);
-				if (count($this->cacheContent[$key][$key2]) == 0) unset($this->cacheContent[$key][$key2]);
+			if($key == RentalSearchService::ALL) {
+				if (isset($value[$rental->getId()])) unset($this->cacheContent[$key][$rental->getId()]);
+			} else {
+				foreach ($value as $key2 => $value2) {
+					if (isset($value2[$rental->getId()])) unset($this->cacheContent[$key][$key2][$rental->getId()]);
+					if (count($this->cacheContent[$key][$key2]) == 0) unset($this->cacheContent[$key][$key2]);
+				}
 			}
 		}
 	}
@@ -77,91 +80,191 @@ class RentalSearchCaching extends \Nette\Object {
 	}
 
 
-	public function regenerate()
+	public function updateWholeCache()
 	{
-		$data = [];
-
-		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
-
-		$qb = $rentalRepository->createQueryBuilder('r');
-		$qb->select('r.id AS rentalId, l.id AS locationId')
-			->innerJoin('r.address', 'a')
-			->innerJoin('a.locations', 'l')
-			->where('a.primaryLocation = ?1')->setParameter(1, $this->location->getId());
-
-		$rentalsLocations = $qb->getQuery()->getResult();
-
-		foreach($rentalsLocations as $value) {
-			$data[RentalSearchService::CRITERIA_LOCATION][$value['locationId']][$value['rentalId']] = $value['rentalId'];
-		}
-
-		return $data;
-
-
+		$this->regenerateData();
+		$this->save();
 	}
 
 
-	public function addRental(\Entity\Rental\Rental $rental) {
+	/**
+	 * @param Rental $rental
+	 */
+	public function updateRental(Rental $rental)
+	{
+		try {
+			$this->addRental($rental);
+		} catch (RentalMustByLiveException $e) {
+
+		}
+	}
+
+
+	/**
+	 * @param Rental $rental
+	 *
+	 * @throws RentalMustByLiveException
+	 */
+	public function addRental(Rental $rental) {
 		$this->removeRental($rental);
 
-		if($rental->status != \Entity\Rental\Rental::STATUS_LIVE) {
-			$this->save();
-			throw new \Nette\InvalidArgumentException('Len live rental mozes ulozit do cache');
+		if($rental->isLive()) {
+			$this->save(); // aby sa ulozili to vyhodenie objektu
+			throw new RentalMustByLiveException('Len live rental mozes ulozit do cache');
 		}
 
-		// Set Locality
-		$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$rental->address->locality->id][$rental->id] = $rental->id;
-
-		// Set Locations
-		foreach ($rental->address->locations as $value) {
-			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value->id][$rental->id] = $rental->id;
-		}
-
-		// Set rental Type
-		if ($rental->type) {
-			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$rental->type->id][$rental->id] = $rental->id;
-		}
-
-		/*placement
-		// Set Placement
-		foreach ($rental->getPlacements() as $value) {
-			$this->cacheContent[RentalSearchService::CRITERIA_PLACEMENT][$value->getId()][$rental->getId()] = $rental->getId();
-		}
-		placement*/
-
-		// Set Max Capacity
-		if ($rental->maxCapacity) {
-			$t = $rental->maxCapacity >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $rental->maxCapacity;
-
-			for($i = 1; $i <= $t; $i++) {
-				$this->cacheContent[RentalSearchService::CRITERIA_CAPACITY][$i][$rental->id] = $rental->id;
-			}
-		}
-
-		// Set Languages Spoken
-		foreach ($rental->spokenLanguages as $value) {
-			$this->cacheContent[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE][$value->id][$rental->id] = $rental->id;
-		}
-
-		// Set Price
-		if ($rental->price) {
-			$searchInterval = $rental->primaryLocation->defaultCurrency->searchInterval;
-			$t = ceil($rental->price->getSourceAmount() / $searchInterval)*$searchInterval;
-			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$rental->id] = $rental->id;
-		}
-
-		// Set Board
-		$boards = $rental->getBoardAmenities();
-		if(is_array($boards)) {
-			foreach($boards as $board) {
-				$this->cacheContent[RentalSearchService::CRITERIA_BOARD][$board->getId()][$rental->getId()] = $rental->getId();
-			}
-		}
-
-		$this->cacheContent[RentalSearchService::ALL][$rental->getId()] = $rental->getId();
+		$this->regenerateData($rental);
 
 		$this->save();
 	}
+
+
+	/**
+	 * @param Rental $rental
+	 */
+	public function regenerateData(Rental $rental = NULL)
+	{
+		/** @var $rentalRepository \Repository\Rental\RentalRepository */
+		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
+		$baseQb = $rentalRepository->findByPrimaryLocationQB($this->location, TRUE);
+
+		if($rental) {
+			$baseQb->andWhere('r.id = :onlyForRental')->setParameter('onlyForRental', $rental->getId());
+		}
+
+		$this->regenerateLocationsData(clone $baseQb);
+		$this->regenerateRentalTypeData(clone $baseQb);
+		$this->regenerateCapacityData(clone $baseQb);
+		$this->regenerateLanguageSpokenData(clone $baseQb);
+		$this->regeneratePriceData(clone $baseQb);
+		$this->regenerateBoardData(clone $baseQb);
+		$this->regenerateAllData(clone $baseQb);
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateAllData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId');
+		$allRentals = $qb->getQuery()->getResult();
+		foreach($allRentals as $value) {
+			$this->cacheContent[RentalSearchService::ALL][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateBoardData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, amenity.id AS boardId')
+			->innerJoin('r.amenities', 'amenity')
+			->innerJoin('amenity.type', 'amenityType')
+			->andWhere('amenityType.slug = ?1')->setParameter('1', 'board');
+
+		$rentalsBoard = $qb->getQuery()->getResult();
+		foreach($rentalsBoard as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_BOARD][$value['boardId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regeneratePriceData(QueryBuilder $qb)
+	{
+		$priceSearchInterval = $this->location->getDefaultCurrency()->getSearchInterval();
+		$qb->select('r.id AS rentalId, r.price AS price');
+
+		$rentalsPrice = $qb->getQuery()->getResult();
+		foreach($rentalsPrice as $value) {
+			$t = ceil($value['price'] / $priceSearchInterval) * $priceSearchInterval;
+			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateLanguageSpokenData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, l.id AS languageId')
+			->innerJoin('r.spokenLanguages', 'l');
+
+		$spokenLanguages = $qb->getQuery()->getResult();
+		foreach($spokenLanguages as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE][$value['languageId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateCapacityData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, r.maxCapacity AS maxCapacity');
+
+		$rentalsCapacity = $qb->getQuery()->getResult();
+		foreach($rentalsCapacity as $value) {
+			$t = $value['maxCapacity'] >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $value['maxCapacity'];
+
+			for($i = 1; $i <= $t; $i++) {
+				$this->cacheContent[RentalSearchService::CRITERIA_CAPACITY][$i][$value['rentalId']] = $value['rentalId'];
+			}
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateRentalTypeData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, t.id AS typeId')
+			->innerJoin('r.type', 't');
+
+		$rentalsType = $qb->getQuery()->getResult();
+		foreach($rentalsType as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$value['typeId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $baseQb
+	 */
+	private function regenerateLocationsData(QueryBuilder $baseQb)
+	{
+		// Locality
+		$qb = clone $baseQb;
+		$qb->select('r.id AS rentalId, l.id AS localityId')
+			->innerJoin('a.locality', 'l');
+
+		$rentalsLocalities = $qb->getQuery()->getResult();
+
+		foreach($rentalsLocalities as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value['localityId']][$value['rentalId']] = $value['rentalId'];
+		}
+
+		// Location
+		$qb = clone $baseQb;
+		$qb->select('r.id AS rentalId, l.id AS locationId')
+			->innerJoin('a.locations', 'l');
+
+		$rentalsLocation = $qb->getQuery()->getResult();
+
+		foreach($rentalsLocation as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value['locationId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
 }
 
 
@@ -174,3 +277,5 @@ interface IRentalSearchCachingFactory {
 	public function create(\Entity\Location\Location $location);
 }
 
+
+class RentalMustByLiveException extends \InvalidArgumentException {}

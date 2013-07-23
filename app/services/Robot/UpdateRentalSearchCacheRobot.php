@@ -2,7 +2,11 @@
 
 namespace Robot;
 
+use Doctrine\ORM\EntityManager;
+use Entity\Location\Location;
 use Entity\Rental\Rental;
+use Extras\Cache\IRentalOrderCachingFactory;
+use Extras\Cache\IRentalSearchCachingFactory;
 use Nette\Utils\Strings;
 
 /**
@@ -12,13 +16,14 @@ use Nette\Utils\Strings;
  */
 class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 
-	protected $rentalSearchFactory;
+	protected $rentalSearchCachingFactory;
 	protected $rentalOrderFactory;
 	protected $primaryLocation;
 	protected $rentalRepository;
 
-	public function __construct(\Entity\Location\Location $primaryLocation, \Extras\Cache\IRentalSearchCachingFactory $rentalSearchFactory, \Extras\Cache\IRentalOrderCachingFactory $rentalOrderFactory, \Doctrine\ORM\EntityManager $entityManager) {
-		$this->rentalSearchFactory = $rentalSearchFactory;
+	public function __construct(Location $primaryLocation, IRentalSearchCachingFactory $rentalSearchCachingFactory,
+								IRentalOrderCachingFactory $rentalOrderFactory, EntityManager $entityManager) {
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->rentalOrderFactory = $rentalOrderFactory;
 		$this->primaryLocation = $primaryLocation;
 		$this->rentalRepository = $entityManager->getRepository('\Entity\Rental\Rental');
@@ -29,19 +34,8 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 	}
 
 	public function run() {
-		$rentals = $this->rentalRepository->findByPrimaryLocation($this->primaryLocation, \Entity\Rental\Rental::STATUS_LIVE);
-
-		//$rentals = array_slice($rentals, 0, 100);
-
-		$cache = $this->rentalSearchFactory->create($this->primaryLocation);
-		if(count($rentals)) {
-			d(Strings::upper($this->primaryLocation->getIso()).': '.count($rentals) . ' objektov');
-		}
-
-		foreach ($rentals as $rental) {
-			$cache->addRental($rental);
-		}
-		$cache->save();
+		$cache = $this->rentalSearchCachingFactory->create($this->primaryLocation);
+		$cache->updateWholeCache();
 
 		$this->updateOrderCache();
 
@@ -49,11 +43,9 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 
 	public function runForRental(Rental $rental)
 	{
-		$cache = $this->rentalSearchFactory->create($this->primaryLocation);
+		$cache = $this->rentalSearchCachingFactory->create($this->primaryLocation);
 
 		$cache->addRental($rental);
-
-		$cache->save();
 
 		$this->updateOrderCache();
 	}
@@ -70,9 +62,9 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 
 interface IUpdateRentalSearchCacheRobotFactory {
 	/**
-	 * @param \Entity\Location\Location $location
+	 * @param Location $location
 	 *
 	 * @return UpdateRentalSearchCacheRobot
 	 */
-	function create(\Entity\Location\Location $location);
+	function create(Location $location);
 }

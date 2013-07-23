@@ -269,12 +269,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 
 
-	public function getOwnerId()
-	{
-		return $this->getUser()->getId();
-	}
-
-
 	public function getMainImage()
 	{
 		$t = $this->getSortedImages(1);
@@ -395,7 +389,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
-
 	/**
 	 * @return array
 	 */
@@ -435,6 +428,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $sort;
 	}
+
 
 
 	/**
@@ -485,6 +479,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 			/** @var $e \Entity\Rental\Information */
 			return $e->getCompulsory();
 		});
+	}
+
+
+	public function isLive()
+	{
+		return $this->status != \Entity\Rental\Rental::STATUS_LIVE;
+	}
+
+
+	public function getOwnerId()
+	{
+		return $this->getUser()->getId();
 	}
 
 
