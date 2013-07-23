@@ -34,6 +34,12 @@ class RootHomePresenter extends BasePresenter {
 			$this->setLayout('layoutMobile');
 		}
 
+		$this->template->rentals = $this->getRentals;
+		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
+	}
+
+	public function getRentals()
+	{
 		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals(135);
 
 		$rentals = array();
@@ -42,9 +48,13 @@ class RootHomePresenter extends BasePresenter {
 			$rentals[$rental->id]['entity'] = $rental;
 		}
 
-		$this->template->rentals = $rentals;
+		return $rentals;
+	}
+
+	public function getLocationRentalsCount()
+	{
 		$counts = $this->rentalRepositoryAccessor->get()->getCounts(NULL, TRUE);
-		$this->template->locationRentalsCount = array_sum($counts);
+		return array_sum($counts);
 	}
 
 }
