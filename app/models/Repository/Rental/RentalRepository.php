@@ -134,7 +134,7 @@ class RentalRepository extends \Repository\BaseRepository {
 		$qb->select('r')
 			->from($this->_entityName, 'r')
 			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
-			->orderBy('r.rank', 'ASC')
+			->orderBy('r.rank', 'DESC')
 			->setMaxResults($limit);
 
 		return $qb->getQuery()->getResult();
