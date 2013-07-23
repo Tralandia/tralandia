@@ -84,10 +84,20 @@
 									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
 									<p class="answer">
-											{var $importantAmenities = $rental->getImportantAmenities(true)}
+	{* 										{var $importantAmenities = $rental->getImportantAmenities(true)}
 											{foreach $importantAmenities  as $amenity}
 												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-											{/foreach}
+											{/foreach} *}
+
+
+											{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
+
+												{foreach $amenities as $amenity}
+
+													{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+
+												{/foreach}
+											{/foreach}											
 									</p>
 
 			
