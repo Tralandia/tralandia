@@ -256,79 +256,62 @@
 
 						<div class="sidebarContact">
 							<div class="sidebarTitle">
-
+									
 								
-								<tr>
-									<td class="iconCover"><i class="icon-phone"></i></td>
-									<td>
-										<strong>
-											{if $rental->contactName}
-											{$rental->contactName}
-											{else}
-											#contact
-											{/if}
-										</strong>
-									</td>
-								</tr>
+								#contact
 								
-							
-								
+						
 
 							</div>
-							<div class="sidebarInner">
+							<div class="sidebarInner address">
 
 								{if $rental->phone->international}
 							
 
-										<strong>{$rental->phone->international} </strong>
+										<strong>
+										{if $rental->contactName}
+										{$rental->contactName}
+										{/if}
+										<span>{$rental->phone->international}</span>
+										</strong>
 
 						
 								{/if}	
 
 								{if count($rental->spokenLanguages) > 0}
 									
-											{_o100015}
-											{foreach $rental->spokenLanguages as $language}
-											<small>{_$language->name}{if !$iterator->last}, {/if}</small>
-											{/foreach}
+									<small>(
+									{foreach $rental->spokenLanguages as $language}
+									{_$language->name}{if !$iterator->last}, {/if}
+									{/foreach}
+									)</small>
 									
 								{/if}	
 
-	<img class="mapsImage"
-						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
-					
+									<div class="addressInformation">
 
-									<table>
-
-
-									
+										{if $rental->url}
+											<a target="_blank" class="websiteUrl" href="{$rental->url}">{_o1666}</a>
+										{/if}
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-										<tr>
-											<td>
-
-
+						
 												{$rental->address->address}
 												{if $rental->address->subLocality}
 												({$rental->address->subLocality})
 												{/if}
-												<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
-											</td>
-										</tr>
-										{/if}
-
-										{if $rental->url}
-										<tr>
-											<td>
-												<a target="_blank" href="{$rental->url}">{_o1666}</a>
-												</td>
-										</tr>
+												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
+					
 										{/if}
 
 
+									</div>
 
-										</table>
-										<div class="clearfix"></div>							
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+					
+									
+								<div class="clearfix"></div>
+																	
 							</div>
 						</div>
 
