@@ -7,4 +7,4 @@ parameters:
 		database: tralandia_cache
 
 	templateCache:
-		enabled: false
+		enabled: true
