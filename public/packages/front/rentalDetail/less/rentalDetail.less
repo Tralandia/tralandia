@@ -79,7 +79,7 @@ form.reservationform {
 
 		textarea , input[type=text]  {
 			border: 1px solid @lightGreen;
-			width: 195px;
+			width: 194px;
 
 		}
 		textarea {
@@ -124,7 +124,7 @@ speak: none;
 		}
 
 		.tel {
-			width: 98px;
+			width: 97px;
 			float: left;
 			margin-right: 10px;
 			margin-bottom: 10px;
@@ -144,7 +144,7 @@ speak: none;
 			float: left;
 
 			&.first {
-				width: 98px;
+				width: 97px;
 				margin-right: 10px;
 			}
 		}
@@ -835,23 +835,63 @@ table.detailInfoBox {
 .sidebarInner {
 	background: #f4f9e1;
 	.bottom-border-radius(5px);
+	border: 1px solid #88A031;
+	border-top: none;
 	padding-top: 10px;
 	a {
 		color: @darkGreen;
 	}
+
+	strong {
+		font-size: 17px;
+		line-height: 22px;
+		display: block;
+		width: 229px;
+		text-align: center;
+
+		span {
+			font-weight: normal;
+			display: block;
+			margin-top: 5px;
+		}
+	}
+
+	small {
+		color: #888888;
+		margin-top: -4px;
+		display: block;
+	}
+
+	&.address {
+		text-align: center;
+		background: #FFF;
+		.addressInformation {
+			padding: 3px 0 0 0;
+
+			.websiteUrl {
+				margin-bottom: 5px;
+				display: block;
+			}
+		}
+
+		img {
+			margin-top: 5px;
+			.border-radius(0 6px 6px 0);
+			margin-bottom: 1px;
+		}
+	}
 }
 
 .sidebarTitle {
-	background: #a3b534;
-	/*#gradient > .vertical(#b7c546,#869c19);*/
+	background: #88A031;
 	color: @white;
-	font-weight: bold;
 	text-align: center;
 	height:32px;
 	line-height:32px;
-	border-bottom: 1px solid #9daa5a;
 	.border-radius(5px 5px 0 0);
 	font-size: 14px;
+
+
 }
 
 
@@ -920,7 +960,7 @@ table.detailInfoBox {
 
 	form {
 		margin-top: 0;
-		margin-bottom: 5px;
+		margin-bottom: 0;
 		button {
 			width: 100%;
 		}

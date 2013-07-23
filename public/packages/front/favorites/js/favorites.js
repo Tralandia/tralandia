@@ -28,6 +28,8 @@
 		base._inArray = function(array,id){
 			var r = false;
 			$.each(array,function(k,v){
+				v = parseInt(v);
+				id = parseInt(id);
 				if(v == id){
 					r = true;
 				}
@@ -56,7 +58,7 @@
 
 			var id = base.$el.data('id');
 
-			if(base._inArray(base._getFavoritesCookie(),id)){
+			if(base.$el.hasClass(base.options.inFavoritesClass)){
 				base.removeFromFavorites(id);
 			} else {
 				base._addToFavorites(id);
@@ -70,6 +72,8 @@
 		base._updateFavoritesStatusCount = function(){
 
 			var c = base._getFavoritesCookie();
+
+
 			// $(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			if(c){
@@ -83,6 +87,20 @@
 
 		base._animate = function(){
 
+			var time = 170;
+
+			var fontSizeMax = 30;
+
+			$(base.options.statusIconSelector).animate({fontSize:fontSizeMax},time,function(){
+				$(base.options.statusIconSelector).animate({fontSize:20},time-50,function(){
+					$(base.options.statusIconSelector).animate({fontSize:fontSizeMax},time,function(){
+						$(base.options.statusIconSelector).animate({fontSize:20},time-50);
+					});					
+				});
+			});
+
+
+
 			$(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			setTimeout(function(){
@@ -92,6 +110,7 @@
 		};
 
 		base._addToFavorites = function(id){
+
 
 			var cookieArray = base._getFavoritesCookie() ? base._getFavoritesCookie() : [] ;
 			
@@ -104,9 +123,10 @@
 		};
 
 		base.removeFromFavorites = function(id){
+
+
 			var cookieArray = base._getFavoritesCookie();
-			// id = id.toString();
-			if(base._inArray(cookieArray,id)){
+			id = id.toString();
 				var p = cookieArray.indexOf(id);
 						cookieArray.splice(p,1);
 						cookieArray.join();
@@ -116,7 +136,6 @@
 						} else {
 							$.cookie(base.options.cookieListKey,cookieArray);
 						}
-			}
 
 			base.$el.removeClass(base.options.inFavoritesClass);
 		};
