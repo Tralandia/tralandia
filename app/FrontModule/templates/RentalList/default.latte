@@ -90,19 +90,33 @@
 											{/foreach}
 									</p>
 
+			
+									<div class="infoGrid">
+										<table>
+											<tr>
+												<td class="price">{$rental->price} <small>{_o100004}</small></td>
+									
+												<td class="count">{$rental->maxCapacity} <i class="icon-male"></i><i class="icon-female"></i><small>{_o924} {_o490,null,[count=>$rental->maxCapacity]}</small></td>
+									
+												<td class="food">
+													<i class="icon-food"></i>
+													{var $importantAmenities = $rental->getImportantAmenities(true)}
+							
 
+													{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['children', 'activity' , 'relax' , 'service' , 'wellness' , 'congress' , 'kitchen' , 'bathroom' , 'room' , 'heating' , 'parking' , 'animal' , 'other' , 'owner-availability','separate-groups']) as $amenities}
 
-									<ul class="infoGrid">
-										<li class="price">{$rental->price}</li>
-										<li class="count"><i class="icon-male"></i><i class="icon-female"></i>{$rental->maxCapacity}</li>
-										<li class="food"><i class="icon-food"></i>
-											{var $importantAmenities = $rental->getImportantAmenities(true)}
-											{foreach $importantAmenities  as $amenity}
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-											{/foreach}
-										</li>
-										<li><i class="icon-github-alt"></i></li>
-									</ul>
+														{foreach $amenities as $amenity}
+
+															{_$amenity->name}
+
+														{/foreach}
+													{/foreach}													
+												</td>
+											</tr>																						
+										</table>
+									</div>
+
+		
 
 								</div>
 							</div>

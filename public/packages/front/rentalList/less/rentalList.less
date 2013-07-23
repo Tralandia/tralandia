@@ -56,49 +56,72 @@ div#tabs-1 div.row-fluid.rentalList {
 		color: #555;
 		background: #fff;
 
+		table {
+			margin: 0;
+			tr {
+				td {
+					padding: 0 7px;
+					line-height: 16px;
+					height: 37px;
+					border-right: 1px solid #ddd;
+					text-align: center;
+					color: @brown;
+					
+					&.price {
+						color: @darkGreen;
+						font-size: 16px;
+						font-weight: bold;
+						
+						small {
+							font-weight: normal;
+						}
+					}
 
-		li {
-			display: block;
-			float: left;
-			padding:0 10px;
-			height: 39px;
-			line-height: 39px;
-			border-right: 1px solid #ddd;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+					&.food {
+						border: none;
+						max-width: 220px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						font-size: 12px;
+					}
 
-			text-align: center;
+					&.price , &.count {
+						padding-top: 3px;
+					}
 
-			i {
-				font-size: 18px;
+					&.count {
+						
+						font-size: 16px;
 
-				&.icon-female {
-					position: relative;
-					left: -1px;
+						.icon-female {
+							font-size: 12px;
+							position: relative;
+							right: 5px;
+							line-height: 15px;							
+						}
+
+						.icon-male {
+							font-size: 12px;
+
+							line-height: 14px;							
+						}
+					}
+
+					i {
+						color: @brown;
+						line-height: 13px;
+					}
+
+					small {
+						display: block;
+						line-height: 13px;
+						position: relative;
+						font-size: 10px;
+						top: -2px;
+						color: #999;
+					}
 				}
-			}
-
-
-			&.food {
-				width: 231px;
-			}
-
-			&.price {
-				width: 67px;
-				font-size: 18px;
-				color: @darkGreen;
-				font-weight: bold;
-			}
-
-			&.count {
-				width: 50px;
-				font-size: 18px;
-
-			}
-
-			&:last-child {
-				border:none;
 			}
 		}
 	}
@@ -118,7 +141,11 @@ div#tabs-1 div.row-fluid.rentalList {
 		color: #dddddd;
 
 		i {
-			font-size: 20px;
+			width: 24px;
+			height: 20px;			
+			&:before {
+				font-size: 20px;
+			}
 		}
 
 		i.icon-heart {
@@ -126,7 +153,7 @@ div#tabs-1 div.row-fluid.rentalList {
 		}
 
 		&.selected {
-			color: #ff6600;
+			color: #d32c16;
 			i.icon-heart {
 				display: block;
 			}

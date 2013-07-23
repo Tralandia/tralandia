@@ -198,17 +198,7 @@ App.prototype.openContactForm = function(){
 *	RENTAL DETAIL
 ****************************************************************************************************/
 
-App.prototype.datepickerIcon = function(){
 
-	if($(this).parent().find('input').hasClass('focus')){
-		$( ".datepicker" ).datepicker( "hide" );
-		$(this).parent().find('input').removeClass('focus');
-	} else {
-		$(this).parent().find('input').focus();
-		$(this).parent().find('input').addClass('focus');
-	}
-
-}
 
 /**
 *	initialize map in object detail
@@ -372,9 +362,7 @@ $(document).ready(function(){
 
 	$('.loadContactForm').click(A.loadContactForm);
 
-	/* UI calendar */
-	$(".datepickerIcon").click(A.datepickerIcon);
-	$(".datepickerIcon").live('click',A.datepickerIcon);
+
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 
 	/* add attachment file  */
@@ -636,9 +624,9 @@ function _selectSetSelectedValue(){
 
 		base._firstOpen = function(){
 
-			// $(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
-			// $(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
-			// $(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
+			$(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
 
 			base._openMenu();
 
@@ -673,7 +661,8 @@ function _selectSetSelectedValue(){
 
 function elemScrollTo(){
 	console.log($(this).data('scrollTo'));
-	$.scrollTo($(this).data('scrollTo'),800);
+
+	$.scrollTo($(this).data('scrollTo'),800 , {offset: { top: -10} });
 }
 
 

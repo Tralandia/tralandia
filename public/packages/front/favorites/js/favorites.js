@@ -70,13 +70,14 @@
 		base._updateFavoritesStatusCount = function(){
 
 			var c = base._getFavoritesCookie();
-			
 			// $(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			if(c){
 				$(base.options.statusCountSelector).html(c.length);
+				$(base.options.myFavoritesContainerSelector).removeClass('hide');
 			} else {
 				$(base.options.statusCountSelector).html('0');
+				$(base.options.myFavoritesContainerSelector).addClass('hide');
 			}
 		};
 
@@ -104,13 +105,17 @@
 
 		base.removeFromFavorites = function(id){
 			var cookieArray = base._getFavoritesCookie();
-			id = id.toString();
+			// id = id.toString();
 			if(base._inArray(cookieArray,id)){
 				var p = cookieArray.indexOf(id);
 						cookieArray.splice(p,1);
 						cookieArray.join();
-
-				$.cookie(base.options.cookieListKey,cookieArray);
+						// console.log(cookieArray.length);
+						if(cookieArray.length < 1){
+							$.removeCookie(base.options.cookieListKey);
+						} else {
+							$.cookie(base.options.cookieListKey,cookieArray);
+						}
 			}
 
 			base.$el.removeClass(base.options.inFavoritesClass);
@@ -132,9 +137,10 @@ $(function(){
 	$('.addToFavorites').addToFavorites({
 		cookieListKey: 'favoritesList',
 		inFavoritesClass: 'selected',
-		statusAnimationClass: 'pulse',
+		statusAnimationClass: 'pulsed',
 		statusIconSelector: '#myFav i.icon-heart',
 		statusCountSelector: '#myFav span',
+		myFavoritesContainerSelector:'#myFav',
 		animationTime:500
 	});
 });

@@ -70,25 +70,7 @@
 			{* <a class="leftArrow entypo-prev"></a> *}
 			<div class="tab-content" id="navigationBarTabContent">
 
-				{* Favorites *}
-				<div n:class="$navigationBarLastActive=='navigationBarFavorites' ? active, tab-pane" id="navigationBarFavorites">
-					<div class="content jscrollPane">
-						<ul id="scrollInnerContent">
-							<li class="template" rel="~id~" data-name="~name~" data-thumb="~thumb~" data-location="~location~" data-price="~price~" data-capacity="~capacity~">
-								<a href="#" class="removeLink"></a>
-								<a href="~link~" class="link"></a>
-							</li>
-							{foreach $favoriteRentals as $rental}
-							{var $image = $rental->getMainImage()}
-							{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-							<li rel="{$rental->getId()}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({image $rental->getMainImage()});" class="{if $isCurrent}active{/if}">
-								<a href="#" class="removeLink"></a>
-								<a n:href="Rental:detail $rental" class="link"></a>
-							</li>
-							{/foreach}
-						</ul>
-					</div>
-				</div>
+
 
 				{* Last seen objects *}
 {* 				<div n:class="$navigationBarLastActive=='navigationBarLastSeen' ? active, tab-pane" id="navigationBarLastSeen">
