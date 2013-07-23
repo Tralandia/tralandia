@@ -3,12 +3,7 @@
 	{* add class invalid to input *}
 	{foreach $form->getErrors() as $error}{$error}{/foreach}
 
-	<div n:class="$form['name']->hasErrors() ? 'control-group error' : 'control-group' ">
-	{input name ,data-validation-message => "error-msg-reservation-name"}
-	<span class="control-error" id="error-msg-reservation-name">
-		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
-	</span>
-	</div>
+
 
 	<div n:class="$form['email']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input email , data-validation-message => "error-msg-reservation-email"}

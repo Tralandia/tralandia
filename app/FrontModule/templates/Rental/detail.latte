@@ -52,15 +52,13 @@
 							<div class="position">TOP</div>
 						{/if} *}
 
-						{foreach $rental->getSortedImages(3) as $photo}
+						{foreach $rental->getSortedImages(4) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
 							<img class="scrollTo" data-scroll-to=".bigGallery" alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 						</div>
 						{/foreach}
 
-						<img class="mapsImage"
-						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
 					</div>
 
 					<div class="span5 relative">
@@ -239,36 +237,6 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 
-
-
-{* 							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
-
-								<div class="socialBtnHeader">
-
-
-									<i class="facebook icon-facebook"></i>
-									<i class="gplus icon-google-plus"></i>
-									<i class="twitter icon-twitter"></i>
-									<i class="pinterest icon-pinterest"></i>
-
-								</div>
-
-								<ul class="dropdown-menu" role="menu" id="socialIconsMenuDetail">
-									<li class="socialIconCover hide">
-										<ul class="social-buttons">
-											<li>{$twitterShareTag}</li>
-											<li>{$googlePlusShareTag}</li>
-											<li>{$facebookShareTag}</li>
-											<li>{$pinterestShareTag}</li>
-										</ul>
-									</li>
-									<li class="loader"><i class="icon-spinner icon-spin"></i></li>
-								</ul>
-
-							</div> *}
-
-
-
 							<div class="sidebarContact">
 								<div class="sidebarTitle">{_o12275}</div>
 								<div class="sidebarInner">
@@ -289,46 +257,51 @@
 						<div class="sidebarContact">
 							<div class="sidebarTitle">
 
-								{if $rental->contactName}
+								
 								<tr>
-									<td class="iconCover"><i class="icon-user"></i></td>
+									<td class="iconCover"><i class="icon-phone"></i></td>
 									<td>
-										<strong>{$rental->contactName}</strong>
+										<strong>
+											{if $rental->contactName}
+											{$rental->contactName}
+											{else}
+											#contact
+											{/if}
+										</strong>
 									</td>
 								</tr>
-								{else}
-								<tr>
-									<td class="iconCover"><i class="icon-user"></i></td>
-									<td>
-										<strong>#contact</strong>
-									</td>
-								</tr>								
-								{/if}
+								
+							
+								
 
 							</div>
 							<div class="sidebarInner">
 
+								{if $rental->phone->international}
+							
+
+										<strong>{$rental->phone->international} </strong>
+
+						
+								{/if}	
+
+								{if count($rental->spokenLanguages) > 0}
+									
+											{_o100015}
+											{foreach $rental->spokenLanguages as $language}
+											<small>{_$language->name}{if !$iterator->last}, {/if}</small>
+											{/foreach}
+									
+								{/if}	
+
+	<img class="mapsImage"
+						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+					
+
 									<table>
 
-										{if $rental->phone->international}
-										<tr>
-											<td>
 
-												<strong>{$rental->phone->international} </strong>
-
-											</td>
-										</tr>
-										{/if}
-										{if count($rental->spokenLanguages) > 0}
-											<tr>
-												<td>
-													<strong>{_o100015}</strong><br/>
-													{foreach $rental->spokenLanguages as $language}
-													<small>{_$language->name}{if !$iterator->last}, {/if}</small>
-													{/foreach}
-												</td>
-											</tr>
-										{/if}										
+									
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
 										<tr>
@@ -407,13 +380,13 @@
 							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 							
-							<div class="rentalInfoBox">
+{* 							<div class="rentalInfoBox">
 								<div class="smallGallery">
 									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
 								</div>
 								<div class="rentalInfo">
 									<h3><a href="#">Chalupa Detva </a></h3>
-									<a class="filter" href="#">Ubytovanie detva</a> | 
+									
 									<span>Max 13 osob</span> | <span class="price">33 EUR/osoba/noc </span>
 									<div class="amenities">Studňa, zváračka, cukrová repa, zelovoc, cédéčka</div>
 								</div>
@@ -449,7 +422,7 @@
 								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
 									<a class="rentalName">2.5 km</a>
 								</li>																
-							</ul>
+							</ul> *}
 						</div>
 
 
