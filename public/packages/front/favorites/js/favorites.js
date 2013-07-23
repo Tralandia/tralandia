@@ -87,6 +87,20 @@
 
 		base._animate = function(){
 
+			var time = 200;
+
+			var fontSizeMax = 30;
+
+			$(base.options.statusIconSelector).animate({fontSize:fontSizeMax},time,function(){
+				$(base.options.statusIconSelector).animate({fontSize:20},time-50,function(){
+					$(base.options.statusIconSelector).animate({fontSize:fontSizeMax},time,function(){
+						$(base.options.statusIconSelector).animate({fontSize:20},time-50);
+					});					
+				});
+			});
+
+
+
 			$(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			setTimeout(function(){
