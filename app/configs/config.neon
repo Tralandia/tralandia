@@ -132,11 +132,11 @@ parameters:
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
 
-redis:
-	storage: on
-	journal: on
-	database: 0
-	session: {database: 1}
+#redis:
+#	storage: on
+#	journal: on
+#	database: 0
+#	session: {database: 1}
 
 doctrine:
 	connections:
@@ -162,28 +162,28 @@ services:
 	templateCache: Nette\Caching\Cache(@cacheStorage, 'Nette.Templating.Cache')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
-	translatorCache: Nette\Caching\Cache(@translatorRedisStorage, 'Translator')
-	rentalSearchCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalSearchCache')
-	rentalOrderCache: Extras\Cache\Cache(@searchRedisStorage, 'RentalOrderCache')
+	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
+	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
 
-#	cacheStorage:
-#		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
+	cacheStorage:
+		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
 
-	translatorRedisClient:
-		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
-		autowired: false
-
-	translatorRedisStorage:
-		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
-		autowired: false
-
-	searchRedisClient:
-		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
-		autowired: false
-
-	searchRedisStorage:
-		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
-		autowired: false
+#	translatorRedisClient:
+#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
+#		autowired: false
+#
+#	translatorRedisStorage:
+#		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
+#		autowired: false
+#
+#	searchRedisClient:
+#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
+#		autowired: false
+#
+#	searchRedisStorage:
+#		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
+#		autowired: false
 
 
 

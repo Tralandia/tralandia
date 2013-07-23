@@ -24,14 +24,14 @@
 
 	small {
 		font-size: 14px;
-		color: @brown;
+		color: #cbcbcb;
 		float: right;
 		margin: 2px 15px 0 0;
 	}
 
 	.paginator {
 		font-size: 14px;
-		background: #F68703;
+		background: @darkBlue;
 		color: #FFF;
 		text-shadow: none;
 		padding: 1px 4px 1px 12px;
@@ -40,7 +40,8 @@
 		float: right;
 		&:hover {
 //			#gradient > .vertical(#b7c546,#869c19);
-			color: @brown;
+			background: #3E69A3;
+			text-decoration: none;
 		}
 		&.next {
 			margin-right: 5px;
@@ -66,15 +67,18 @@
 		a {
 			font-size: 14px;
 			float: left;
-			background: #f68703;
+			background: @darkBlue;
 			padding: 1px 10px 1px 1px;
 			border-radius: 5px 5px 5px 5px;
 			color: #FFF;
 			text-transform: uppercase;
 
 			&:hover {
-				span {
-					text-decoration: none;
+				text-decoration: none;
+				background: #3E69A3;
+
+				i {
+					background: #3E69A3;
 				}
 			}
 
@@ -95,7 +99,7 @@
 				float: left;
 				text-align: center;
 				color: #FFF;
-				margin: -1px 10px 0 -1px;
+				margin: -1px 0 0 -1px;
 				font-size: 18px;
 				/*background: #869C19;*/
 				border-radius: 5px 0 0 5px;
