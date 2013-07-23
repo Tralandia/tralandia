@@ -38,44 +38,48 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
-		$this->routeIn($route, 'http://it.tralandia.lu/case-vacanze', 'RentalList', array(
+		$this->routeIn($route, 'http://tralandia.hk', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(124),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(156),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+		), 'http://www.tralandia.hk/');
+
+		$this->routeIn($route, 'http://it.tralandia.lu/case-vacanze', 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(119),
 			FrontRoute::LANGUAGE => $this->findLanguage(73),
-			FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->findLocation(545),
-		));
+		), 'http://it.tralandia.lu/');
 
 		$this->routeIn($route, 'http://www.as.tralandia.com/', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(243),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(258),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		));
 
 		$this->routeIn($route, 'http://www.sk.tralandia.cz/', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(203),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(194),
 			FrontRoute::LANGUAGE => $this->findLanguage(144),
 		), 'http://sk.tralandia.cz/');
 
 		$this->routeIn($route, 'http://www.usal.tralandia.com/registration', 'Registration', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(256),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 			'page' => $this->findPage(1),
 		));
 
 		$this->routeIn($route, 'http://hu.usal.tralandia.com/', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(256),
 			FrontRoute::LANGUAGE => $this->findLanguage(62),
 		));
 
 		$this->routeOut($route, 'Registration', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(256),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		), 'http://www.usal.tralandia.com/registration', 'http://www.tralandia.com/');
-
 
 
 		$this->routeIn($route, 'http://www.sk.tra.com/kalendar-obsadenosti/1?months=8', 'CalendarIframe', array(
