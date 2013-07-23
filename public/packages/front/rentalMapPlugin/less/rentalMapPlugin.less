@@ -51,20 +51,21 @@
 .rentalInfoBox {
 	height: 80px;
 	clear: both;
-	background: rgba(255,255,255,0.9);
-	color: @brown;
+	background:#FFF;
+	color: @darkGreen;
 	width: 580px;
-	top: 390px;
+	top: 400px;
 	position: absolute;
 	right: 10px;
 	.border-radius(5px);
+	.box-shadow(0 0 20px #999);
 
 	.rentalInfo {
 		float: left;
 		width: 380px;
 		overflow: hidden;
 		h3 {
-			margin: 0;
+			margin: 0 0 2px 0;
 			padding: 10px 0 0 0;
 			color: #fff;
 			line-height: 19px;
@@ -91,14 +92,15 @@
 	}
 
 	.amenities {
-		color: @darkGreen;
+		color: #888;
+		margin-top: -2px;
 	}
 
 	.remove {
 		float: right;
 		width: 80px;
 		text-align: center;
-		background: #FFF;
+		background: #f0f0f0;
 		height: 80px;
 		line-height: 90px;
 		color: #333;
