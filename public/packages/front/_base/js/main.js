@@ -624,9 +624,9 @@ function _selectSetSelectedValue(){
 
 		base._firstOpen = function(){
 
-			// $(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
-			// $(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
-			// $(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
+			$(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
 
 			base._openMenu();
 
