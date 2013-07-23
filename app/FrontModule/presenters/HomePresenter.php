@@ -33,6 +33,14 @@ class HomePresenter extends BasePresenter {
 			$this->setLayout('layoutMobile');
 		}
 
+		$this->template->rentals = $this->getRentals;
+//		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
+		$this->template->isHome = TRUE;
+		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
+	}
+
+	public function getRentals()
+	{
 		$search = $this->rentalSearchFactory->create($this->primaryLocation);
 		$featuredIds = $search->getFeaturedRentals(99);
 
@@ -42,14 +50,15 @@ class HomePresenter extends BasePresenter {
 			$rentals[$rental->id]['entity'] = $rental;
 		}
 
-		$this->template->rentals = $rentals;
-		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
-		$this->template->isHome = TRUE;
-		$this->template->locationRentalsCount = $this->environment->getPrimaryLocation()->getRentalCount();
-
+		return $rentals;
 	}
 
-	public function createComponentCountryMap($name) {
+	public function getLocationRentalsCount()
+	{
+		return $this->environment->getPrimaryLocation()->getRentalCount();
+	}
+
+	public function createComponentCountryMap() {
 
 		return new \FrontModule\Components\CountryMap\CountryMap($this->locationRepository, $this->locationTypeRepository);
 
