@@ -28,6 +28,8 @@
 		base._inArray = function(array,id){
 			var r = false;
 			$.each(array,function(k,v){
+				v = parseInt(v);
+				id = parseInt(id);
 				if(v == id){
 					r = true;
 				}
@@ -56,7 +58,7 @@
 
 			var id = base.$el.data('id');
 
-			if(base._inArray(base._getFavoritesCookie(),id)){
+			if(base.$el.hasClass(base.options.inFavoritesClass)){
 				base.removeFromFavorites(id);
 			} else {
 				base._addToFavorites(id);
@@ -70,6 +72,9 @@
 		base._updateFavoritesStatusCount = function(){
 
 			var c = base._getFavoritesCookie();
+			console.log('update');
+			console.log(c);
+
 			// $(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
 			if(c){
@@ -93,6 +98,8 @@
 
 		base._addToFavorites = function(id){
 
+			console.log('pridavam' + id);
+
 			var cookieArray = base._getFavoritesCookie() ? base._getFavoritesCookie() : [] ;
 			
 				cookieArray.push(id);
@@ -104,9 +111,11 @@
 		};
 
 		base.removeFromFavorites = function(id){
+
+			console.log('uberam' + id);
+
 			var cookieArray = base._getFavoritesCookie();
-			// id = id.toString();
-			if(base._inArray(cookieArray,id)){
+			id = id.toString();
 				var p = cookieArray.indexOf(id);
 						cookieArray.splice(p,1);
 						cookieArray.join();
@@ -116,7 +125,6 @@
 						} else {
 							$.cookie(base.options.cookieListKey,cookieArray);
 						}
-			}
 
 			base.$el.removeClass(base.options.inFavoritesClass);
 		};
