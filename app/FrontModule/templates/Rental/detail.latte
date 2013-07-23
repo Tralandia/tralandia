@@ -9,7 +9,6 @@
 	{var $featured = $rentalService->isFeatured(); }
 
 
-
 	{capture $rentalDetailCacheOptionsKey}
 		{$rentalDetailCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
 	{/capture}

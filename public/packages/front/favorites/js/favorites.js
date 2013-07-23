@@ -72,8 +72,7 @@
 		base._updateFavoritesStatusCount = function(){
 
 			var c = base._getFavoritesCookie();
-			console.log('update');
-			console.log(c);
+
 
 			// $(base.options.statusIconSelector).addClass(base.options.statusAnimationClass);
 
@@ -98,7 +97,6 @@
 
 		base._addToFavorites = function(id){
 
-			console.log('pridavam' + id);
 
 			var cookieArray = base._getFavoritesCookie() ? base._getFavoritesCookie() : [] ;
 			
@@ -112,7 +110,6 @@
 
 		base.removeFromFavorites = function(id){
 
-			console.log('uberam' + id);
 
 			var cookieArray = base._getFavoritesCookie();
 			id = id.toString();
