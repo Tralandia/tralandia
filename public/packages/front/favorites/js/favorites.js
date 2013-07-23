@@ -87,7 +87,7 @@
 
 		base._animate = function(){
 
-			var time = 200;
+			var time = 170;
 
 			var fontSizeMax = 30;
 
