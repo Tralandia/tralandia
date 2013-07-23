@@ -835,21 +835,34 @@ table.detailInfoBox {
 .sidebarInner {
 	background: #f4f9e1;
 	.bottom-border-radius(5px);
+	border: 1px solid @darkGreen;
+	border-top: none;
 	padding-top: 10px;
 	a {
 		color: @darkGreen;
 	}
+
+	strong {
+		font-size: 22px;
+		line-height: 22px;
+		display: block;
+		width: 210px;
+		text-align: center;
+	}
+
+	small {
+		color: #888;
+	}
 }
 
 .sidebarTitle {
-	background: #a3b534;
+	background: @darkGreen;
 	/*#gradient > .vertical(#b7c546,#869c19);*/
 	color: @white;
 	font-weight: bold;
 	text-align: center;
 	height:32px;
 	line-height:32px;
-	border-bottom: 1px solid #9daa5a;
 	.border-radius(5px 5px 0 0);
 	font-size: 14px;
 }
