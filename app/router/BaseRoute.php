@@ -141,8 +141,17 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		$params[self::PRIMARY_LOCATION] = $primaryLocation;
 
 		$languageIso = $params[self::LANGUAGE];
-		$language = $languageIso == 'www' ? $params[self::PRIMARY_LOCATION]->defaultLanguage : $this->languageRepository->findOneByIso($languageIso);
-		if(!$language instanceof Language || !$language->getSupported()) $language = $params[self::PRIMARY_LOCATION]->defaultLanguage;
+
+		if($languageIso == 'www') {
+			$language = $params[self::PRIMARY_LOCATION]->defaultLanguage;
+		} else {
+			$language = $this->languageRepository->findOneByIso($languageIso);
+			if(!$language instanceof Language) $language = $params[self::PRIMARY_LOCATION]->defaultLanguage;
+		}
+
+		if(!$language->getSupported()) {
+			$language = $this->languageRepository->find(CENTRAL_LANGUAGE);
+		}
 
 		$params[self::LANGUAGE] = $language;
 
