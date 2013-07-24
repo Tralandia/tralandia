@@ -188,6 +188,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'number' => '908 123 789'
 				],
 				'name' => 'Chata Test',
+				'price' => 5,
 				'maxCapacity' => 15,
 				'type' => [
 					'type' => 3,

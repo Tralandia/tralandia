@@ -633,7 +633,7 @@
 
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
 
-	{input $container['sort']}
+	{input $container['sortInput']}
 
 </tr>
 {/define #rentalPhotos}
@@ -661,13 +661,19 @@
 					<div class="rentalPriceRow">
 						{input $component['name'] , placeholder => 'o100191'}
 						{input $component['language'] , class => 'notFulltext'}
-						{if $component['file']->disabled}
-							<span class="file-placeholder">{$component['file']->label}</span>
+						{if $component['filePath']->getValue()}
+							<span class="file-placeholder">#Subor je nahraty</span>
 						{else}
-							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>{label $component['file']}{/label}</span>{input $component['file']}</span>
+							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button">
+								<i class="entypo-upload"></i>
+								<span>{label $component['file']}{/label}</span>
+								{input $component['file']}
+							</span>
 						{/if}
 						{*{input $component['remove'] , class => 'btn btn-cancel remove ajax'}*}
 						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+						{input $component['filePath']}
+						{input $component['entity']}
 					</div>
 				{/foreach}
 			</div>

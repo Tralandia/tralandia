@@ -26,6 +26,7 @@ class RentalEditHandler extends FormHandler
 	 */
 	protected $rental;
 
+
 	public function __construct(Rental $rental, EntityManager $em)
 	{
 		$this->em = $em;
@@ -57,16 +58,13 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['photos']) {
-			 if (isset($value->sort)) {
-				 $rentalImageRepository = $this->em->getRepository(RENTAL_IMAGE_ENTITY);
-				 $i=0;
-				 foreach(explode(',', $value->sort) as $fileId) {
-					$rentalImage = $rentalImageRepository->find($fileId);
-					$rentalImage->sort = $i;
-					$rentalImage->rental = $this->rental;
-					$i++;
-				 }
-			 }
+			$i = 0;
+			/** @var $imageEntity \Entity\Rental\Image */
+			foreach ($value->images as $imageEntity) {
+				$imageEntity->setSort($i);
+				$this->rental->addImage($imageEntity);
+				$i++;
+			}
 		}
 
 		if ($value = $values['priceList']) {
@@ -100,9 +98,7 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['price']) {
-			if ($priceEntity = $values['price']->entity) {
-				$rental->setPrice($priceEntity);
-			}
+			$rental->setFloatPrice($value);
 		}
 
 		if ($value = $values['interview']) {
@@ -158,7 +154,7 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['pet']) {
 			$petAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByPetType();
 
-			foreach($petAmenity as $amenity) {
+			foreach ($petAmenity as $amenity) {
 				if ($value && $amenity->id == $value) {
 					$rental->addAmenity($amenity);
 				} else {
@@ -169,13 +165,13 @@ class RentalEditHandler extends FormHandler
 
 		if ($value = $values['separateGroups']) {
 			$groupsAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findBySeparateGroupsType();
-			if ($value===TRUE) {
+			if ($value === TRUE) {
 				$rental->addAmenity($groupsAmenity[0]);
 				$rental->removeAmenity($groupsAmenity[1]);
-			} else if ($value===FALSE) {
+			} else if ($value === FALSE) {
 				$rental->removeAmenity($groupsAmenity[0]);
 				$rental->addAmenity($groupsAmenity[1]);
-			} else if ($value===NULL) {
+			} else if ($value === NULL) {
 				$rental->removeAmenity($groupsAmenity[0]);
 				$rental->removeAmenity($groupsAmenity[1]);
 			}
@@ -183,8 +179,8 @@ class RentalEditHandler extends FormHandler
 
 		if ($value = $values['ownerAvailability']) {
 			$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
-			foreach($availibilityAmenities as $amenity) {
-				if ($value && $amenity->id==$value) {
+			foreach ($availibilityAmenities as $amenity) {
+				if ($value && $amenity->id == $value) {
 					$rental->addAmenity($amenity);
 				} else {
 					$rental->removeAmenity($amenity);
@@ -200,7 +196,7 @@ class RentalEditHandler extends FormHandler
 			$rental->bedroomCount = $value;
 		}
 
-		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity'];
+		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'contactName', 'email'];
 		foreach ($simpleValues as $valueName) {
 			if ($value = $values[$valueName]) {
 				$rental->{$valueName} = $value;
@@ -213,9 +209,7 @@ class RentalEditHandler extends FormHandler
 		$rentalRepository->flush();
 
 		return $rental;
-
 	}
-
 }
 
 

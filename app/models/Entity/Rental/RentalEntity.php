@@ -806,6 +806,20 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @return NULL|string
+	 */
+	public function getUrlWithoutProtocol()
+	{
+		$url = $this->getUrl();
+		if(Strings::startsWith($url, 'http://')) {
+			$url = substr($url, 7);
+		}
+
+		return $url;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -1481,7 +1495,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\InterviewAnswer[]
+	 * @return array|\Entity\Rental\InterviewAnswer[]
 	 */
 	public function getInterviewAnswers()
 	{

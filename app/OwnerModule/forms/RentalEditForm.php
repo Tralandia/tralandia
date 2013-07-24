@@ -129,12 +129,19 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->setOption('prepend', 'http://');
 
 		$rentalContainer->addText('contactName', '151894')
+			->setOption('prepend', '<i class="icon-user"></i>')
 			->setOption('help', $this->translate('151895'));
 
-		$rentalContainer->addText('contactEmail', 'o1096')
+		$rentalContainer->addText('email', 'o1096')
+			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setOption('help', $this->translate('o3095'));
 
-		$rentalContainer->addPriceContainer('price', 'o100078');
+
+		$rentalContainer->addText('price', 'o100078')
+			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
+			->setOption('help', $this->translate('o100073'))
+			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
+			->setRequired('151883');
 
 		$languages = array();
 

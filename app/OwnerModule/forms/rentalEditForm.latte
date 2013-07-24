@@ -9,9 +9,9 @@
 
 		{include #fieldset, text => 'o960'}
 		{* {include #text, control => $form['name']} *}
-		{include #text, control => $rentalContainer['contactName']}		
+		{include #text, control => $rentalContainer['contactName']}
 		{include #phone, control => $rentalContainer['phone']}
-		{include #email, control => $rentalContainer['contactEmail']}
+		{include #email, control => $rentalContainer['email']}
 		{include #url, control => $rentalContainer['url']}
 
 
@@ -37,7 +37,7 @@
 
 		{include #fieldset, text => 'o100085'}
 		{include #rentalType, control => $rentalContainer['type']}
-		{include #price, control => $rentalContainer['price']}
+		{include #text, control => $rentalContainer['price']}
 		{include #text, control => $rentalContainer['maxCapacity']}
 		{include #text, control => $rentalContainer['bedroomCount']}
 		{include #text, control => $rentalContainer['roomsLayout']}
@@ -77,7 +77,7 @@
 		{/foreach}
 
 
-		
+
 
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
