@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Nette;
 
-class RankCalculatorListener implements \Kdyby\Events\Subscriber {
+class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -34,8 +34,7 @@ class RankCalculatorListener implements \Kdyby\Events\Subscriber {
 	public function getSubscribedEvents()
 	{
 		return [
-			'FormHandler\RegistrationHandler::onSuccess',
-			'\FormHandler\RentalEditHandler::onSuccess',
+			'FormHandler\RentalEditHandler::onSuccess',
 		];
 	}
 

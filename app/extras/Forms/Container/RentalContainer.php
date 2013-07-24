@@ -173,9 +173,11 @@ class RentalContainer extends BaseContainer
 		$defaults = [
 			'url' => $this->rental->getUrlWithoutProtocol(),
 			'phone' => $this->rental->getPhone(),
+			'contactName' => $this->rental->getContactName(),
+			'email' => $this->rental->getEmail(),
 			'name' => $name,
 			'teaser' => $teaser,
-			'price' => $rental->getPrice(),
+			'price' => $rental->getPrice()->getAmount($this->country->getDefaultCurrency()),
 			'maxCapacity' => $rental->getMaxCapacity(),
 			'interview' => $interview,
 			'bedroomCount' => $rental->bedroomCount,
