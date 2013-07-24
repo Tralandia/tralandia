@@ -48,7 +48,8 @@ class RentalPriceUploadContainer extends BaseContainer
 	public function containerBuilder(Container $container)
 	{
 		$container->addText('name', '');
-		$container->addSelect('language', '', $this->languages);
+		$container->addSelect('language', '', $this->languages)
+			->setDefaultValue($this->rental->getPrimaryLocation()->getDefaultLanguage()->getId());
 		$container->addUpload('file', 'o100192');
 		$container->addHidden('filePath');
 		$container->addHidden('entity', 0);
