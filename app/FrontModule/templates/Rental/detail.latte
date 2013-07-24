@@ -268,7 +268,7 @@
 										{if $rental->contactName}
 										{$rental->contactName}
 										{/if}
-										<span><i class="icon-phone"></i> {$rental->phone->international}</span>
+										<span><i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}</span>
 										</strong>
 
 						
