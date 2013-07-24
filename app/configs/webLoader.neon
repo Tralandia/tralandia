@@ -198,6 +198,7 @@ parameters:
 					# search sidebar
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
+					- front/home/js/rootHome.js
 
 			jqueryAppear:
 				js:
