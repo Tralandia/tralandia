@@ -268,7 +268,7 @@
 										{if $rental->contactName}
 										{$rental->contactName}
 										{/if}
-										<span>{$rental->phone->international}</span>
+										<span><i class="icon-phone"></i> {$rental->phone->international}</span>
 										</strong>
 
 						
@@ -276,28 +276,26 @@
 
 								{if count($rental->spokenLanguages) > 0}
 									
-									<small>(
-									{foreach $rental->spokenLanguages as $language}
-									{_$language->name}{if !$iterator->last}, {/if}
-									{/foreach}
-									)</small>
+									<small>
+									({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
+									</small>
 									
 								{/if}	
 
 									<div class="addressInformation">
 
 										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}">{_o1666}</a>
+											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{_o1666}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-						
+											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
 												{$rental->address->address}
 												{if $rental->address->subLocality}
 												({$rental->address->subLocality})
 												{/if}
 												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
-					
+											</a>
 										{/if}
 
 
