@@ -43,17 +43,7 @@ $(function(){
 		return false;
 	});
 
-	$('body').click(function(){
-		var attr = $('body').attr('socialshareOpen');	
-		if (typeof attr == 'undefined' || attr == false) {
-			if($('#favoritesShareList li a').hasClass('open')){
-				$('#shareContent').hide();
-				$('#favoritesShareList li a').removeClass('open');
-			}
-		}
 
-		$('body').removeAttr('socialshareOpen');  
-	});
 });
 
 

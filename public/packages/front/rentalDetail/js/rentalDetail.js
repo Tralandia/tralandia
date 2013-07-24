@@ -176,14 +176,7 @@ $(document).ready(function(){
 
 	var socialIconsDetailHeader = '.socialBtnHeader';
 
-	$('body').click(function(event){
 
-		if(socialShitInitDetail){
-			$(socialIconsMenuDetailSelector).hide();
-			socialShitInitDetail = false;
-		}
-
-	});
 
 	// load social icons 
 	$(socialIconsDetailHeader).on('click',function(){
