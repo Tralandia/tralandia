@@ -1,5 +1,5 @@
-@import '../../_base/less/lessFunctions.less';
-@import '../../../bootstrap/lib/less/mixins.less';
+@import '../_base/less/lessFunctions.less';
+@import '../../bootstrap/lib/less/mixins.less';
 
 @barHeight: 30px;
 @darFontSize: 12px;
@@ -7,13 +7,11 @@
 #staticNavBar {
 	width: auto;
 	height: 45px;
-	margin: 0 18px -5px 20px;
+	margin: 0 16px -3px 20px;
 	clear: both;
 	line-height: 30px;
 	font-size: 12px;
-	-webkit-border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	border-radius: 5px 5px 0 0;
+
 	overflow: hidden;
 	color: #7E7E7E;
 	i {
@@ -24,14 +22,14 @@
 
 	small {
 		font-size: 14px;
-		color: #7A7A7A;
+		color: #cbcbcb;
 		float: right;
 		margin: 2px 15px 0 0;
 	}
 
 	.paginator {
 		font-size: 14px;
-		background: #F68703;
+		background: @darkBlue;
 		color: #FFF;
 		text-shadow: none;
 		padding: 1px 4px 1px 12px;
@@ -40,7 +38,8 @@
 		float: right;
 		&:hover {
 //			#gradient > .vertical(#b7c546,#869c19);
-			color: @brown;
+			background: #3E69A3;
+			text-decoration: none;
 		}
 		&.next {
 			margin-right: 5px;
@@ -48,7 +47,6 @@
 			i {
 				margin-top: 2px;
 				font-size: 24px;
-				margin-left: 3px;
 			}
 		}
 		&.prev {
@@ -66,15 +64,30 @@
 		a {
 			font-size: 14px;
 			float: left;
-			background: #B7C546;
+			background: @darkBlue;
 			padding: 1px 10px 1px 1px;
 			border-radius: 5px 5px 5px 5px;
 			color: #FFF;
 			text-transform: uppercase;
 
 			&:hover {
-				span {
-					text-decoration: none;
+				text-decoration: none;
+				background: #3E69A3;
+
+				i {
+					background: #3E69A3;
+				}
+			}
+
+			&.searchName {
+				background: #FFF;
+				color: @brown;
+				text-transform: none;
+				margin-left: 10px;
+				font-size: 18px;
+
+				&:hover {
+					text-decoration:underline;
 				}
 			}
 
@@ -87,11 +100,11 @@
 				float: left;
 				text-align: center;
 				color: #FFF;
-				margin: -1px 10px 0 -1px;
+				margin: -1px 0 0 -1px;
 				font-size: 18px;
-				background: #869C19;
+				/*background: #869C19;*/
 				border-radius: 5px 0 0 5px;
-				border-right: 1px solid #FFF;
+				/*border-right: 1px solid #FFF;*/
 			}
 		}
 	}

@@ -22,27 +22,20 @@
 		<div id="staticNavBar">
 
 			<div class="backToList">
-				<a href="#" class="listName"><i class="icon-search"></i><span></span></a>
+				<a href="#" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
+				<a href="#" class="searchName">Chaty na liptove</a>
 			</div>
 
 			<div class="info">
-				<a class="paginator next">Ďalši <i class="icon-circle-arrow-right"></i></a>
-				<a class="paginator prev"><i class="icon-circle-arrow-left"></i></a>
-				<small class="counts"><span class="objectPosition"></span> / <span class="listFullCount"></span></small>
+				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
+				<a href="#" class="paginator prev"><i class="icon-circle-arrow-left"></i></a>
+				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
 			</div>
 
 		</div>
 	</div>
 
-<div class="rentalDetailMenu">
-	<ul>
-		<li><a title="#tooltip text" class="top" href="#"><i class="icon-arrow-up"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-picture"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-calendar"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-comments-alt"></i></a></li>
-		<li><a title="#tooltip text" href="#"><i class="icon-map-marker"></i></a></li>
-	</ul>
-</div>
+
 
 	<div class="span12" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
@@ -55,17 +48,13 @@
 							<div class="position">TOP</div>
 						{/if} *}
 
-
-
-						{foreach $rental->getSortedImages(3) as $photo}
+						{foreach $rental->getSortedImages(4) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
-							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
+							<img class="scrollTo" data-scroll-to=".bigGallery" alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 						</div>
 						{/foreach}
 
-						<img class="mapsImage"
-						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
 					</div>
 
 					<div class="span5 relative">
@@ -78,11 +67,11 @@
 						</h1>
 
 						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop rentalDetail btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+						<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
 						{/if}						
 
 						<p class="locality noPadding">
-							<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
+							<a href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
 								{_$rental->type->name|firstUpper}
 								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 								{_$rental->address->locality->name , null , [case=>locative]}
@@ -98,7 +87,7 @@
 							{/if}
 							{if $firstAnswer}
 							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper}</td>
+								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper} <a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">#citaj najvac</a></td>
 							</tr>
 							{/if}
 						</table>
@@ -244,36 +233,6 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 
-
-
-{* 							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
-
-								<div class="socialBtnHeader">
-
-
-									<i class="facebook icon-facebook"></i>
-									<i class="gplus icon-google-plus"></i>
-									<i class="twitter icon-twitter"></i>
-									<i class="pinterest icon-pinterest"></i>
-
-								</div>
-
-								<ul class="dropdown-menu" role="menu" id="socialIconsMenuDetail">
-									<li class="socialIconCover hide">
-										<ul class="social-buttons">
-											<li>{$twitterShareTag}</li>
-											<li>{$googlePlusShareTag}</li>
-											<li>{$facebookShareTag}</li>
-											<li>{$pinterestShareTag}</li>
-										</ul>
-									</li>
-									<li class="loader"><i class="icon-spinner icon-spin"></i></li>
-								</ul>
-
-							</div> *}
-
-
-
 							<div class="sidebarContact">
 								<div class="sidebarTitle">{_o12275}</div>
 								<div class="sidebarInner">
@@ -282,67 +241,7 @@
 										{include '../../forms/Rental/reservationForm.latte'}
 										{/snippet}
 
-									<table>
-										{if $rental->contactName}
-										<tr>
-											<td class="iconCover"><i class="icon-user"></i></td>
-											<td>
-												<strong>{$rental->contactName}</strong>
-											</td>
-										</tr>
-										{/if}
 
-
-										{if $rental->phone->international}
-										<tr>
-											<td class="iconCover"><i class="icon-phone"></i></td>
-											<td>
-
-												<strong>{$rental->phone->international} </strong>
-
-											</td>
-										</tr>
-										{/if}
-
-										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-										<tr>
-											<td class="iconCover"><i class="icon-compass"></i></td>
-											<td>
-												<strong>{_o2431} </strong><br/>
-
-
-												{$rental->address->address}
-												{if $rental->address->subLocality}
-												({$rental->address->subLocality})
-												{/if}
-												<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
-											</td>
-										</tr>
-										{/if}
-
-										{if $rental->url}
-										<tr>
-											<td class="iconCover"><i class="icon-link"></i></td>
-											<td>
-												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
-												</td>
-										</tr>
-										{/if}
-
-										{if count($rental->spokenLanguages) > 0}
-											<tr>
-												<td class="iconCover"><i class="icon-globe"></i></td>
-												<td>
-													<strong>{_o100015}</strong><br/>
-													{foreach $rental->spokenLanguages as $language}
-													{_$language->name}{if !$iterator->last}, {/if}
-													{/foreach}
-												</td>
-											</tr>
-										{/if}
-
-										</table>
-										<div class="clearfix"></div>
 										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
 
 
@@ -351,9 +250,72 @@
 								</div>
 
 
+						<div class="sidebarContact">
+							<div class="sidebarTitle">
+									
+								
+								#contact
+								
+						
+
+							</div>
+							<div class="sidebarInner address">
+
+								{if $rental->phone->international}
+							
+
+										<strong>
+										{if $rental->contactName}
+										{$rental->contactName}
+										{/if}
+										<span>{$rental->phone->international}</span>
+										</strong>
+
+						
+								{/if}	
+
+								{if count($rental->spokenLanguages) > 0}
+									
+									<small>(
+									{foreach $rental->spokenLanguages as $language}
+									{_$language->name}{if !$iterator->last}, {/if}
+									{/foreach}
+									)</small>
+									
+								{/if}	
+
+									<div class="addressInformation">
+
+										{if $rental->url}
+											<a target="_blank" class="websiteUrl" href="{$rental->url}">{_o1666}</a>
+										{/if}
+
+										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
+						
+												{$rental->address->address}
+												{if $rental->address->subLocality}
+												({$rental->address->subLocality})
+												{/if}
+												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
+					
+										{/if}
+
+
+									</div>
+
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+					
+									
+								<div class="clearfix"></div>
+																	
+							</div>
+						</div>
+
 							</div>
 							<!-- right sidebar -->
 						</div>
+
+
 
 						<div class="row-fluid">
 							<div class="span12">
@@ -394,8 +356,52 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
-							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
-							<ul id="placesImage"></ul>
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
+							{* <ul id="placesImage"></ul> *}
+							
+{* 							<div class="rentalInfoBox">
+								<div class="smallGallery">
+									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+								</div>
+								<div class="rentalInfo">
+									<h3><a href="#">Chalupa Detva </a></h3>
+									
+									<span>Max 13 osob</span> | <span class="price">33 EUR/osoba/noc </span>
+									<div class="amenities">Studňa, zváračka, cukrová repa, zelovoc, cédéčka</div>
+								</div>
+								<div class="remove"><i class="icon-remove"></i></div>
+							</div>
+
+							<ul class="relatedRentals">
+
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>																
+							</ul> *}
 						</div>
 
 
