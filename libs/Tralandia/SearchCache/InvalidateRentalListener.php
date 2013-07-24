@@ -5,44 +5,40 @@
  * Created at: 7/22/13 3:35 PM
  */
 
-namespace Tralandia\Rental;
+namespace Tralandia\SearchCache;
 
 
 use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
+use Extras\Cache\IRentalSearchCachingFactory;
 use Nette;
 
 class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 
-	/**
-	 * @var \Doctrine\ORM\EntityManager
-	 */
-	private $em;
 
 	/**
-	 * @var RankCalculator
+	 * @var \Extras\Cache\IRentalSearchCachingFactory
 	 */
-	private $rankCalculator;
+	private $rentalSearchCachingFactory;
 
 
-	public function __construct(RankCalculator $rankCalculator, EntityManager $em) {
-
-		$this->rankCalculator = $rankCalculator;
-		$this->em = $em;
+	public function __construct(IRentalSearchCachingFactory $rentalSearchCachingFactory)
+	{
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 	}
 
 	public function getSubscribedEvents()
 	{
 		return [
-			'FormHandler\RentalEditHandler::onSuccess',
+			'\FormHandler\RentalEditHandler::onSuccess',
 		];
 	}
 
 
 	public function onSuccess(Rental $rental)
 	{
-		$this->rankCalculator->updateRank($rental);
-		$this->em->flush($rental);
+		$rentalSearchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
+		$rentalSearchCaching->updateRental($rental);
 	}
 
 
