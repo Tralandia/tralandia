@@ -424,6 +424,37 @@ ul.arrows {
 	}
 
 
+.btn.btn-reservation.btn-orange {
+	padding: 0;
+	height: 30px;
+	line-height: 30px;
+	border:none;
+	.iconPlaceholder {
+		float: right;
+		display: block;
+		height: 30px;
+		width:30px;
+		line-height: 30px;
+		background: #F8BD76;
+		background: #f66403;
+		top: 0;
+		margin: 0;
+		.border-radius(0 4px 4px 0);
+	}
+
+	&.active {
+		.icon-envelope {
+			display: none;
+		}
+
+		.icon-spinner {
+			display: block;
+			left: 4px;
+			margin-top: 4px;
+		}
+	}
+}
+
 .bold {
 	font-weight: bold;
 }
