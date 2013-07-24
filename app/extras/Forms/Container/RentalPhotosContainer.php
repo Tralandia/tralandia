@@ -45,7 +45,7 @@ class RentalPhotosContainer extends BaseContainer
 			}
 		}
 
-		$this->addHidden('sort')->setDefaultValue(implode(',', $sort));
+		$this->addHidden('sortInput')->setDefaultValue(implode(',', $sort));
 	}
 
 	public function getMainControl()
@@ -108,7 +108,7 @@ class RentalPhotosContainer extends BaseContainer
 	public function getFormattedValues($asArray = FALSE)
 	{
 		$values = $asArray ? array() : new \Nette\ArrayHash;
-		$sort = $this['sort']->getValue();
+		$sort = $this['sortInput']->getValue();
 		$values['sort'] = array_filter(explode(',', $sort));
 
 		$imagesTemp = [];
