@@ -1,5 +1,6 @@
 <?php
 
+use Entity\Rental\Pricelist;
 use Nette\Http\FileUpload;
 
 class RentalPriceListManager {
@@ -26,7 +27,7 @@ class RentalPriceListManager {
 	/**
 	 * @param $url
 	 *
-	 * @return \Entity\Rental\PriceList
+	 * @return PriceList
 	 */
 	public function save($url)
 	{
@@ -34,7 +35,7 @@ class RentalPriceListManager {
 
 		$pricelistRepository = $this->pricelistRepository;
 
-		/** @var $pricelist \Entity\Rental\PriceList */
+		/** @var $pricelist PriceList */
 		$pricelist = $pricelistRepository->createNew();
 
 		$pricelist->setName($url);
@@ -50,7 +51,7 @@ class RentalPriceListManager {
 	/**
 	 * @param FileUpload $file
 	 *
-	 * @return \Entity\Rental\PriceList
+	 * @return PriceList
 	 */
 	public function upload(FileUpload $file)
 	{
@@ -58,7 +59,7 @@ class RentalPriceListManager {
 
 		$pricelistRepository = $this->pricelistRepository;
 
-		/** @var $pricelist \Entity\Rental\PriceList */
+		/** @var $pricelist PriceList */
 		$pricelist = $pricelistRepository->createNew();
 
 		$pricelist->setName($file->getName());
@@ -69,4 +70,11 @@ class RentalPriceListManager {
 		return $pricelist;
 	}
 
+	public function delete(Pricelist $pricelist)
+	{
+		$this->storage->delete($pricelist->getFilePath());
+
+		$pricelistRepository = $this->pricelistRepository;
+		return $pricelistRepository->delete($pricelist);
+	}
 }

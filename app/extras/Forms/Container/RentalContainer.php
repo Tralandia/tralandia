@@ -95,7 +95,7 @@ class RentalContainer extends BaseContainer
 
 		$this->addSelect('checkOut', 'o1588', $check)
 						->setOption('help', $this->translate('151890'))
-						->setPrompt('o854');		
+						->setPrompt('o854');
 
 
 		$this->addText('maxCapacity', 'o100072')
@@ -171,7 +171,7 @@ class RentalContainer extends BaseContainer
 		}
 
 		$defaults = [
-			'url' => $this->rental->getUrl(),
+			'url' => $this->rental->getUrlWithoutProtocol(),
 			'phone' => $this->rental->getPhone(),
 			'name' => $name,
 			'teaser' => $teaser,
