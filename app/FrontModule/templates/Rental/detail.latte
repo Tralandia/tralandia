@@ -10,28 +10,24 @@
 
 
 	{capture $rentalDetailCacheOptionsKey}
-		{$rentalDetailCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
+		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
 	{/capture}
-
-	{var $currentTags = $rentalDetailCacheOptions['tags']}
-	{var $currentTags[] = 'rental/'.$rental->getId()}
-
 
 	{cache $rentalDetailCacheOptionsKey,
 		if => $rentalDetailCacheOptions['enabled'],
 		expire => $rentalDetailCacheOptions['expiration'],
-		tags => $currentTags}
+		tags => $rentalDetailCacheOptions['tags']}
 
 <div class="span12">
 		<div id="staticNavBar">
 
 			<div class="backToList">
-				<a href="#" class="listName"><i class="icon-search"></i>#Vyhľadávanie<span></span></a>
+				<a href="#" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
 				<a href="#" class="searchName">Chaty na liptove</a>
 			</div>
 
 			<div class="info">
-				<a href="#" class="paginator next">Ďalši <i class="icon-circle-arrow-right"></i></a>
+				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
 				<a href="#" class="paginator prev"><i class="icon-circle-arrow-left"></i></a>
 				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
 			</div>
@@ -272,7 +268,7 @@
 										{if $rental->contactName}
 										{$rental->contactName}
 										{/if}
-										<span>{$rental->phone->international}</span>
+										<span><i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}</span>
 										</strong>
 
 						
@@ -280,28 +276,26 @@
 
 								{if count($rental->spokenLanguages) > 0}
 									
-									<small>(
-									{foreach $rental->spokenLanguages as $language}
-									{_$language->name}{if !$iterator->last}, {/if}
-									{/foreach}
-									)</small>
+									<small>
+									({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
+									</small>
 									
 								{/if}	
 
 									<div class="addressInformation">
 
 										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}">{_o1666}</a>
+											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{_o1666}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-						
+											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
 												{$rental->address->address}
 												{if $rental->address->subLocality}
 												({$rental->address->subLocality})
 												{/if}
 												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
-					
+											</a>
 										{/if}
 
 

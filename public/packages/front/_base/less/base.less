@@ -424,6 +424,39 @@ ul.arrows {
 	}
 
 
+.btn.btn-reservation.btn-orange {
+	padding: 0;
+	height: 30px;
+	line-height: 30px;
+	border:none;
+	font-weight: normal;
+		background: #FD9903;
+		.border-radius(4px);
+	.iconPlaceholder {
+		border-left: 1px solid #FFF;
+		float: right;
+		display: block;
+		height: 30px;
+		width:30px;
+		line-height: 30px;
+		top: 0;
+		margin: 0;
+		.border-radius(0 4px 4px 0);
+	}
+
+	&.active {
+		.icon-envelope {
+			display: none;
+		}
+
+		.icon-spinner {
+			display: block;
+			left: 4px;
+			margin-top: 4px;
+		}
+	}
+}
+
 .bold {
 	font-weight: bold;
 }
@@ -835,11 +868,11 @@ ul.arrows {
 @contentH4size : 18px;
 @contentH5size : 18px;
 
-@contentH1color : #A0B325;
-@contentH2color : #A0B325;
-@contentH3color : #174a90;
-@contentH4color : #A0B325;
-@contentH5color : #A0B325;
+@contentH1color : @brown;
+@contentH2color : @brown;
+@contentH3color : @brown;
+@contentH4color : @brown;
+@contentH5color : @brown;
 
 #content {
 	
@@ -1114,7 +1147,7 @@ img.flag {
 	right: -47px;
 	background: #ffffff;
 	top: -11px;
-	height: 50px;
+	height: 53px;
 	width: 23px;
 	padding: 10px 13px 17px 0;
 	-webkit-border-radius: 0 8px 8px 0;

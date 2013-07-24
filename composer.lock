@@ -61,12 +61,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
                 "reference": "v0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -159,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "4b28b5729e5a1b075bf2b7002a054c878ccedcef"
+                "reference": "d4212ba93be01e5b61c69c66f54eb31fc9422e20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/4b28b5729e5a1b075bf2b7002a054c878ccedcef",
-                "reference": "4b28b5729e5a1b075bf2b7002a054c878ccedcef",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/d4212ba93be01e5b61c69c66f54eb31fc9422e20",
+                "reference": "d4212ba93be01e5b61c69c66f54eb31fc9422e20",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,7 @@
                     "src/Doctrine/compatibility.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -203,7 +203,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-07-09 00:51:48"
+            "time": "2013-07-16 08:52:48"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -231,7 +231,7 @@
                     "Kdyby\\Replicator\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -264,7 +264,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/88fb2dc5d012127281ec205d0976d05defe6f9bb",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/e1fbf8d067061f8cd85224a9a344d5642733b850",
                 "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
                 "shasum": ""
             },
@@ -286,7 +286,7 @@
                     "src/Kdyby/Redis/exceptions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -365,7 +365,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/22ab32d0f837364463a8e13cec9c3bfe96ba6bc3",
+                "url": "https://api.github.com/repos/nette/nette/zipball/0a62a46e7a99fc66ffc5de9a520bbe136629fe1c",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -395,7 +395,7 @@
                     "Nette/loader.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -527,19 +527,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "v2.3.0"
+                "reference": "v2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/dg/texy/zipball/v2.3",
+                "reference": "v2.3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0.0"
             },
             "require-dev": {
-                "nette/tester": "@dev"
+                "nette/tester": "0.9.*"
             },
             "type": "library",
             "autoload": {
@@ -547,7 +547,7 @@
                     "src/texy.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -572,7 +572,7 @@
                 "wiki",
                 "xhtml"
             ],
-            "time": "2013-07-13 23:54:49"
+            "time": "2013-07-19 22:05:37"
         }
     ],
     "packages-dev": [

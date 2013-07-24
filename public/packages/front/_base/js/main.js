@@ -590,6 +590,11 @@ function _selectSetSelectedValue(){
 
 		base.bind = function(){
 			base.$el.click(base._toggleOpenMenu);
+			
+			// $('body').click(function(){
+
+			// 	// base._toggleOpenMenu();
+			// });
 		};
 
 		base.urlInit = function(){
