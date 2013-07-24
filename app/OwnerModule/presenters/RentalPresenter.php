@@ -52,6 +52,7 @@ class RentalPresenter extends BasePresenter
 		$rentalEditForm = $this->getComponent('rentalEditForm');
 		if(!$rentalEditForm->isSubmitted()){
 			$rentalEditForm['rental']['priceList']->setDefaultsValues();
+			$rentalEditForm['rental']['priceUpload']->setDefaultsValues();
 		}
 
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
