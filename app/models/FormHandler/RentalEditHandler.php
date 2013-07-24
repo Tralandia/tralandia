@@ -98,9 +98,7 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['price']) {
-			if ($priceEntity = $values['price']->entity) {
-				$rental->setPrice($priceEntity);
-			}
+			$rental->setFloatPrice($value);
 		}
 
 		if ($value = $values['interview']) {
@@ -198,7 +196,7 @@ class RentalEditHandler extends FormHandler
 			$rental->bedroomCount = $value;
 		}
 
-		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity'];
+		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'contactName', 'email'];
 		foreach ($simpleValues as $valueName) {
 			if ($value = $values[$valueName]) {
 				$rental->{$valueName} = $value;

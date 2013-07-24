@@ -15,10 +15,12 @@ class PriceContainer extends BaseContainer
 	 */
 	protected $currencyRepository;
 
+
 	/**
 	 * @param string|null $label
 	 * @param EntityManager $em
 	 * @param ITranslator $translator
+	 * @param \Environment\Collator $collator
 	 */
 	public function __construct($label = NULL, EntityManager $em, ITranslator $translator, Collator $collator)
 	{
