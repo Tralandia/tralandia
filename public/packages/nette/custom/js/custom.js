@@ -98,6 +98,14 @@ var c = $.nette.ext('snippets');
 			this.applySnippet($el, html, back);
 		}
 
+		$('form[method="post"]').submitButtonPlugin({
+			buttonActiveClass: 'active',
+			cacheFormSelector: 'cache',
+			select2Selector: 'select2',
+			cacheIndexName: 'formDataCache',
+			buttonSelector: 'button[type=submit]'
+		});
+		
 		rentalDetailDatepickerInit();
 		$("select.select2").select2();
 	}	
