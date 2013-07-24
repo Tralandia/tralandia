@@ -93,38 +93,21 @@ form.reservationform {
 		input {
 
 			&.telnum {
-				width: 87px;
+				width: 85px;
 				float: left;
 			}
 
-
-
 			&.datepicker , &.datepickerto {
-/*  display: inline;
-  width: auto;
-  height: auto;
-  line-height: normal;
-  vertical-align: baseline;
-  background-image: none;
-  background-position: 0% 0%;
-  background-repeat: repeat;
-  margin-top: 0;				
-				&:before {
-					content:'K';
-					position: absolute;
-					color: red;
-					display: block;
-					right: -30px;
-text-decoration: inherit;
-display: inline-block;
-cursor: default;
-speak: none;					
-				}*/
-			}			
+				width: 85px;
+			}
+
+			&.datepickerto {
+				margin-right: 10px;
+			}	
 		}
 
 		.tel {
-			width: 97px;
+			width: 99px;
 			float: left;
 			margin-right: 10px;
 			margin-bottom: 10px;
@@ -140,11 +123,11 @@ speak: none;
 		}
 
 		.counter {
-			width: 101px;
+			width: 99px;
 			float: left;
 
 			&.first {
-				width: 97px;
+				width: 99px;
 				margin-right: 10px;
 			}
 		}
@@ -189,15 +172,7 @@ speak: none;
 			border-top-right-radius: 3px;			
 		}
 
-		input[type=text].datepicker , input[type=text].datepickerto {
-			border-radius: 0;
-			-webkit-border-top-left-radius: 3px;
-			-webkit-border-top-right-radius: 0;
-			-moz-border-radius-topleft: 3px;
-			-moz-border-radius-topright: 0;
-			border-top-left-radius: 3px;
-			border-top-right-radius: 0;				
-		}
+
 
 
 		.input-append .add-on:last-child {
@@ -213,7 +188,7 @@ speak: none;
 			color: #fff;
 			padding: 10px;
 
-			width: 189px;
+			width: 188px;
 
 			-webkit-border-bottom-right-radius: 5px;
 			-webkit-border-bottom-left-radius: 5px;
@@ -784,15 +759,6 @@ table.detailInfoBox {
 	position: relative;
 	font-size: 12px;
 
-	.btn {
-		font-size: 14px;	
-
-		i {
-			position: relative;
-			top: 1px;
-		}	
-	}
-
 
 
 	a.toggle {
@@ -853,6 +819,11 @@ table.detailInfoBox {
 			font-weight: normal;
 			display: block;
 			margin-top: 5px;
+
+			i {
+				font-size: 15px;
+				padding-top: 3px;
+			}
 		}
 	}
 
@@ -871,12 +842,19 @@ table.detailInfoBox {
 			.websiteUrl {
 				margin-bottom: 5px;
 				display: block;
+
+				&:hover {
+					text-decoration:none;
+					span {
+						text-decoration: underline;
+					}
+				}
 			}
 		}
 
 		img {
 			margin-top: 5px;
-			.border-radius(0 6px 6px 0);
+			.border-radius(0 0 6px 6px);
 			margin-bottom: 1px;
 		}
 	}

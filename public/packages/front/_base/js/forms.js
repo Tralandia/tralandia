@@ -974,8 +974,7 @@ $(function() {
 	});
 
 
-	$('form[method="post"]').submit(showButtonLoader)
-							.live('submit',showButtonLoader);
+
 
 
 
@@ -987,17 +986,6 @@ $(function() {
 });
 
 
-function showButtonLoader(){
-		var $button = $(this).find('button[type=submit]');
-
-		$button.addClass('active').attr('disabled',1);
-
-		var attr = $button.attr('data-loading-text');
-
-		if (typeof attr !== 'undefined' && attr !== false) {
-		    $button.find('small').html($button.data('loadingText'));
-		}
-}
 
 
 //

@@ -1,3 +1,5 @@
+@import '../../fontAwesome/lib/less/font-awesome.less';
+
 .ui-datepicker {
 	width: 201px;
 }
@@ -14,4 +16,32 @@
 
 .ui-datepicker .ui-datepicker-title {
 	color: #7d3300;
+}
+
+
+.ui-datepicker-prev , .ui-datepicker-next {
+	.icon-FontAwesome();
+}
+
+.ui-datepicker-prev:before { 
+	.icon("\f0d9"); 
+}
+
+.ui-datepicker-prev , .ui-datepicker-next {
+
+	&:before {
+		position: relative;
+		left: 10px;
+		top: 2px;		
+	}
+
+	&:hover {
+		text-decoration: none;
+		cursor: pointer;
+
+	}
+}
+
+.ui-datepicker-next:before {
+	.icon("\f0da"); 
 }
