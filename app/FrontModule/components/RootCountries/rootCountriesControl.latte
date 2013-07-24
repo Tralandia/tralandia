@@ -3,19 +3,19 @@
 	<aside class="noSearchBar innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 	{if isset($countries) && count($countries)}
 		<h4 class="rootCountries">{_o100164}</h4>
-		<ul n:inner-foreach="$countries as $country">
+		<ul class="rootCountriesSidebar" n:inner-foreach="$countries as $country">
 			<li>
 
 			{ifset $country['children']}
 
-				<span><img src="/images/flags/{$country['entity']->getIso()}.png" /> 
+				<span class="parent" data-for="{$country['entity']->getIso()}"><img src="/images/flags/{$country['entity']->getIso()}.png" /> 
 
 					{var $rentalCount = isset($rentalCounts[$country['entity']->getId()]) ? $rentalCounts[$country['entity']->getId()] : 0}
 					{$country['name']}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 					
 				</span>
 
-				<ul n:inner-foreach="$country['children'] as $children">
+				<ul n:inner-foreach="$country['children'] as $children" class="children {$country['entity']->getIso()} hide">
 
 					{var $rentalCount = isset($rentalCounts[$children['entity']->getId()]) ? $rentalCounts[$children['entity']->getId()] : 0}
 
