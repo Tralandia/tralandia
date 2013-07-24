@@ -29,7 +29,10 @@ class PolygonCalculatorListener implements \Kdyby\Events\Subscriber
 	 */
 	public function getSubscribedEvents()
 	{
-		return ['FormHandler\RegistrationHandler::onSuccess'];
+		return [
+			'FormHandler\RegistrationHandler::onSuccess',
+			'FormHandler\RentalEditHandler::onGpsChange' => 'onSuccess',
+		];
 	}
 
 

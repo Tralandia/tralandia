@@ -14,6 +14,7 @@ class RentalEditHandler extends FormHandler
 	 * @var array
 	 */
 	public $onSuccess = [];
+	public $onGpsChange = [];
 
 
 	/**
@@ -42,7 +43,14 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['address']) {
 			$address = $value;
 			if ($address['addressEntity']) {
+				/** @var $newGps \Extras\Types\Latlong */
+				$newGps = $address['addressEntity']->getGps();
+				$oldGps = $rental->getAddress()->getGps();
+
 				$rental->address = $address['addressEntity'];
+				if($oldGps->getLatitude() != $newGps->getLatitude() || $oldGps->getLongitude() != $newGps->getLongitude()) {
+					$gpsIsChanged = TRUE;
+				}
 			}
 		}
 
@@ -207,6 +215,11 @@ class RentalEditHandler extends FormHandler
 
 		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
 		$rentalRepository->flush();
+
+		if(isset($gpsIsChanged)) {
+			$this->onGpsChange($rental);
+		}
+		$this->onSuccess($rental);
 
 		return $rental;
 	}
