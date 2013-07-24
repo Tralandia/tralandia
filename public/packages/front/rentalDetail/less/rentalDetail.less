@@ -836,6 +836,11 @@ table.detailInfoBox {
 			font-weight: normal;
 			display: block;
 			margin-top: 5px;
+
+			i {
+				font-size: 15px;
+				padding-top: 3px;
+			}
 		}
 	}
 
@@ -854,6 +859,13 @@ table.detailInfoBox {
 			.websiteUrl {
 				margin-bottom: 5px;
 				display: block;
+
+				&:hover {
+					text-decoration:none;
+					span {
+						text-decoration: underline;
+					}
+				}
 			}
 		}
 
