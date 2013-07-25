@@ -74,7 +74,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Information", cascade={"persist"})
 	 * @ORM\JoinTable(name="information_rental",
-	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id")}
 	 *      )
 	 */
@@ -83,6 +83,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $address;
 
@@ -90,7 +91,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Placement")
 	 * @ORM\JoinTable(name="placement_rental",
-	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id")}
 	 *      )
 	 */
@@ -142,7 +143,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Language")
 	 * @ORM\JoinTable(name="language_rental",
-	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id")}
 	 *      )
 	 */
@@ -152,7 +153,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity")
 	 * @ORM\JoinTable(name="amenity_rental",
-	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")},
+	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id")}
 	 *      )
 	 */
@@ -278,6 +279,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @param null $limit
+	 * @param int $offset
+	 *
+	 * @return array|Image[]
+	 */
 	public function getImages($limit = NULL, $offset = 0)
 	{
 		$return = [];
