@@ -138,9 +138,18 @@ class RentalListPresenter extends BasePresenter {
 			}
 		}
 
+		$nameIsTranslated = TRUE;
+		$name = $rental->getName()->getTranslation($this->language);
+		if(!$name || !$name->getTranslation()) {
+			$nameIsTranslated = FALSE;
+		}
+
+
+
 		return [
 			'service' => $this->rentalDecoratorFactory->create($rental),
 			'firstInterviewAnswerText' => $firstInterviewAnswerText,
+			'nameIsTranslated' => $nameIsTranslated,
 		];
 	}
 
