@@ -2,7 +2,7 @@
 
 namespace AdminModule;
 
-use Nette, Extras, Service, Entity, TwiGrid;
+use Nette, Extras, Service, Entity;
 
 /**
  * Vsemohuci automaticky prezenter

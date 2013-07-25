@@ -53,7 +53,7 @@ class RentalSearchCaching extends \Nette\Object {
 	/**
 	 * @param Rental $rental
 	 */
-	protected function removeRental(Rental $rental) {
+	public function removeRental(Rental $rental) {
 		foreach ($this->cacheContent as $key => $value) {
 			if($key == RentalSearchService::ALL) {
 				if (isset($value[$rental->getId()])) unset($this->cacheContent[$key][$rental->getId()]);

@@ -27,6 +27,7 @@ class Image extends \Entity\BaseEntity
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Rental", inversedBy="images")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
@@ -45,12 +46,12 @@ class Image extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Image
@@ -61,7 +62,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Image
 	 */
@@ -71,7 +72,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -79,7 +80,7 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Image
@@ -90,7 +91,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -98,7 +99,7 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->filePath;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Image
@@ -109,7 +110,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Image
 	 */
@@ -119,7 +120,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
