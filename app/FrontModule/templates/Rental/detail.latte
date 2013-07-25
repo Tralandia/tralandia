@@ -345,6 +345,7 @@
 						{if count($interviewAnswers) > 0}
 						<div class="metaObjectInfo" id="interviewAnswers">
 							<h3>{_o25231}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<ul class="interviewList">
 								{foreach $interviewAnswers as $interviewAnswer}
 								<li>
@@ -360,6 +361,8 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
+
 							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
@@ -412,7 +415,7 @@
 						{if count($rental->calendar) > 0}
 						<div class="metaObjectInfo" id="calendar">
 							<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
-
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<div class="objectDetailsOccupancyTab">
 								{control calendar, 12, $rental->calendar}
 								<div class="cleaner"></div>
