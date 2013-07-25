@@ -23,7 +23,13 @@
 
 			<div class="backToList">
 				<a href="#" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
-				<a href="#" class="searchName">Chaty na liptove</a>
+				<div class="breadcrumb">
+					<a href="#" class="nav"><span>Slovensko</span></a>
+					<a href="#" class="nav"><i class="icon-chevron-right"></i><span>Liptov</span></a>
+					<a href="#"><i class="icon-chevron-right"></i>Chaty</a>
+					<a class="filter"><i class="icon-chevron-right"></i>3 osoby</a>
+					<a class="filter"><i class="icon-chevron-right"></i>20 - 50 EUR</a>
+				</div>
 			</div>
 
 			<div class="info">
@@ -243,24 +249,22 @@
 										{include '../../forms/Rental/reservationForm.latte'}
 										{/snippet}
 
-
 										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
 
-
-
 									</div>
-								</div>
 
 
-						<div class="sidebarContact">
-							<div class="sidebarTitle">
 
+
+
+{* 							<div class="sidebarTitle">
+									
 
 								#contact
 
 
 
-							</div>
+							</div> *}
 							<div class="sidebarInner address">
 
 								{if $rental->phone->international}
