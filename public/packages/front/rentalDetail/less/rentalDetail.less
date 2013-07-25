@@ -97,7 +97,7 @@ form.reservationform {
 
 			&.telnum {
 				width: 85px;
-				float: left;
+				float: right;
 			}
 
 			&.datepicker , &.datepickerto {
@@ -135,8 +135,14 @@ form.reservationform {
 			}
 		}
 
-	.control-group {
+	.control-group , .marginBottom {
 		margin-bottom: 0;
+		height: 40px;
+		display: block;
+
+		&.message {
+			height: 120px;
+		}
 	}
 
 	input[type=text], textarea {
@@ -146,7 +152,7 @@ form.reservationform {
 
 	.control-group.error {
 		margin-bottom: 10px;
-		
+		height: 51px;
 		input[type=text] {
 			border: 1px solid #ff0000;
 			background: #fef7f1;
@@ -256,7 +262,6 @@ form.reservationform {
 		}
 
 		&.content {
-			font-weight: bold;
 			line-height: 15px;
 		}
 		&.firstAnswer {
@@ -557,6 +562,15 @@ table.detailInfoBox {
 	list-style: none;
 	margin: 0;
 
+	cursor: pointer;
+
+	&:hover {
+		li:not(.open) .content {
+			text-decoration:underline;
+		}
+		
+	}
+
 
 	table {
 		margin-top: 10px;
@@ -580,6 +594,8 @@ table.detailInfoBox {
 		font-size: 13px;
 		line-height: 15px;
 
+
+
 		clear: both;
 		padding-top: 5px;
 
@@ -596,11 +612,22 @@ table.detailInfoBox {
 
 		.content , .amenitiesStart {
 			width: 345px;
+			height: 16px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 			float: right;
-			
 			padding-right: 25px;
+			overflow: hidden;
+
+		}
+
+		&.open {
+			.content , .amenitiesStart {
+				height: auto;
+				white-space: normal;
 
 
+			}			
 		}
 
 		.moreAmenities {
@@ -835,7 +862,7 @@ table.detailInfoBox {
 		text-align: center;
 		background: #FFF;
 		.addressInformation {
-			padding: 3px 0 0 0;
+			padding: 3px 10px 0 10px;
 
 			.websiteUrl {
 				margin: 10px 0;
