@@ -32,7 +32,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $senderName;
 
