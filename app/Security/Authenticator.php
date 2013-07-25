@@ -116,7 +116,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 
-		return $this->authenticate([$user, NULL]);
+		return $this->getIdentity($user);
 	}
 }
 
