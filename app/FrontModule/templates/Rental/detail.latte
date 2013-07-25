@@ -23,12 +23,18 @@
 
 			<div class="backToList">
 				<a href="#" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
-				<a href="#" class="searchName">Chaty na liptove</a>
+				<div class="breadcrumb">
+					<a href="#" class="nav"><span>Slovensko</span></a>
+					<a href="#" class="nav"><i class="icon-chevron-right"></i><span>Liptov</span></a>
+					<a href="#"><i class="icon-chevron-right"></i>Chaty</a>
+					<a class="filter"><i class="icon-chevron-right"></i>3 osoby</a>
+					<a class="filter"><i class="icon-chevron-right"></i>20 - 50 EUR</a>
+				</div>
 			</div>
 
 			<div class="info">
 				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
-				<a href="#" class="paginator prev"><i class="icon-circle-arrow-left"></i></a>
+				<a href="#" class="paginator tooltipElem prev" data-placement="bottom" title="{_775}"><i class="icon-circle-arrow-left"></i></a>
 				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
 			</div>
 
@@ -84,18 +90,18 @@
 						<table class="teaser">
 							{if $teaser}
 							<tr>
-								<td class="content">{$teaser}</td>
+								<td class="content">{$teaser} 
+								{if $firstAnswer}
+									<a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">{_152271}</a></td>
+								{/if}
+								</td>
 							</tr>
 							{/if}
-							{if $firstAnswer}
-							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper} <a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">#citaj najvac</a></td>
-							</tr>
-							{/if}
+
 						</table>
 						{/if}
 
-
+{* 
 						<table class="detailInfoBox">
 							<tr>
 								<td class="entypoIconUsers">
@@ -123,7 +129,7 @@
 										</div>
 									</td>
 								</tr>
-							</table>
+							</table> *}
 
 
 							<div class="clearfix"></div>
@@ -133,7 +139,7 @@
 							{if count($rental->pricelistRows) > 0}
 							{var $pricesAvailable = true}
 							<ul class="detailPriceList">
-								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								<li><h3>{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
 								<ul>
 
@@ -243,24 +249,22 @@
 										{include '../../forms/Rental/reservationForm.latte'}
 										{/snippet}
 
-
 										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
 
-
-
 									</div>
-								</div>
 
 
-						<div class="sidebarContact">
-							<div class="sidebarTitle">
 
+
+
+{* 							<div class="sidebarTitle">
+									
 
 								#contact
 
 
 
-							</div>
+							</div> *}
 							<div class="sidebarInner address">
 
 								{if $rental->phone->international}
@@ -341,6 +345,7 @@
 						{if count($interviewAnswers) > 0}
 						<div class="metaObjectInfo" id="interviewAnswers">
 							<h3>{_o25231}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<ul class="interviewList">
 								{foreach $interviewAnswers as $interviewAnswer}
 								<li>
@@ -356,6 +361,8 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
+
 							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
@@ -408,7 +415,7 @@
 						{if count($rental->calendar) > 0}
 						<div class="metaObjectInfo" id="calendar">
 							<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
-
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<div class="objectDetailsOccupancyTab">
 								{control calendar, 12, $rental->calendar}
 								<div class="cleaner"></div>
