@@ -24,7 +24,8 @@ class RentalPresenter extends AdminPresenter {
 		$this->checkPermission($rental, 'discard');
 
 		$this->discarder->discard($rental);
-
+		$this->flashMessage("Rental $id deleted!", self::FLASH_SUCCESS);
+		$this->redirect(':Admin:Language:list');
 	}
 
 }
