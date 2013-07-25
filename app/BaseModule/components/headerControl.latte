@@ -55,7 +55,7 @@
 						<li class="headerIcon last">
 							<a href="{$getLogoutLink()}" >{_o1594}</a>
 						</li>
-						
+
 					{else}
 
 
@@ -73,7 +73,7 @@
 						{ifset $worldLink}
 							<li class="headerIcon">
 								<a href="{$worldLink}">{_151892}</a>
-							</li>					
+							</li>
 						{/ifset}
 
 {*
@@ -133,7 +133,7 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="#">{$domainHost}</a><i class="icon-chevron-right"></i> <a href="{$homepageUrl}"><span>#Velka britania tralala</span></a>
+					<a href="#">{$domainHost}</a><i class="icon-chevron-right"></i> <a href="{$homepageUrl}"><span>{_$environment->getPrimaryLocation()->getName()}</span></a>
 					</a>
 				</div>
 				<div class="slogan">{$slogan}</div>
