@@ -321,7 +321,6 @@ services:
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation())
 
 	reservationProtector: ReservationProtector(@userBlackListRepositoryAccessor::get())
-	lastReservation: LastReservation
 
 	html2texy: Html2texy
 	translationTexy: TranslationTexy
