@@ -271,6 +271,8 @@ $(document).ready(function(){
 	jsVariablesReplace();
 
 
+
+
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
 		return false;
@@ -334,10 +336,10 @@ $(document).ready(function(){
 		$(this).tooltip('hide');
 	})
 
-
-
 	// click map tooltip
 	$('.point').tooltip();
+	$('.tooltipElem').tooltip();
+
 
 	// alerts
 	$(".alert").alert();
@@ -458,20 +460,14 @@ $('body').click(function(event){
 
 	// $('div:not(.select2-choice)').select2('close');
 
-
-
 	if(langmenuOpen){
 		$('#langMenuOptions').hide();
 		$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 		langmenuOpen = false;
 	}
-	if(socialIconsMenu){
-		$('#socialIcons').find('span').html('&#59228;');
-		$('#socialIconsMenu').hide();
-		socialIconsMenu = false;
-	}
 
-	});
+
+});
 
 
 
@@ -591,10 +587,13 @@ function _selectSetSelectedValue(){
 		base.bind = function(){
 			base.$el.click(base._toggleOpenMenu);
 			
-			// $('body').click(function(){
+			$('body').click(function(){
 
-			// 	// base._toggleOpenMenu();
-			// });
+				base._closeMenu();
+				base.openMenu = false;				
+
+			});
+
 		};
 
 		base.urlInit = function(){
@@ -620,7 +619,7 @@ function _selectSetSelectedValue(){
 				base.openMenu = true;
 			} else {
 				base._closeMenu();
-				base.openMenu = false
+				base.openMenu = false;
 			}
 
 			return false;
