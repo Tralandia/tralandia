@@ -271,6 +271,8 @@ $(document).ready(function(){
 	jsVariablesReplace();
 
 
+
+
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
 		return false;
@@ -334,10 +336,10 @@ $(document).ready(function(){
 		$(this).tooltip('hide');
 	})
 
-
-
 	// click map tooltip
 	$('.point').tooltip();
+	$('.tooltipElem').tooltip();
+
 
 	// alerts
 	$(".alert").alert();
