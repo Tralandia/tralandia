@@ -90,18 +90,18 @@
 						<table class="teaser">
 							{if $teaser}
 							<tr>
-								<td class="content">{$teaser}</td>
+								<td class="content">{$teaser} 
+								{if $firstAnswer}
+									<a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">{_152271}</a></td>
+								{/if}
+								</td>
 							</tr>
 							{/if}
-							{if $firstAnswer}
-							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper} <a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">#citaj najvac</a></td>
-							</tr>
-							{/if}
+
 						</table>
 						{/if}
 
-
+{* 
 						<table class="detailInfoBox">
 							<tr>
 								<td class="entypoIconUsers">
@@ -129,7 +129,7 @@
 										</div>
 									</td>
 								</tr>
-							</table>
+							</table> *}
 
 
 							<div class="clearfix"></div>
@@ -139,7 +139,7 @@
 							{if count($rental->pricelistRows) > 0}
 							{var $pricesAvailable = true}
 							<ul class="detailPriceList">
-								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								<li><h3>{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
 								<ul>
 
