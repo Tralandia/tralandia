@@ -25,8 +25,11 @@
 							{if $mainImage = $rental['entity']->getMainImage()}
 								<img alt="{_$rental['entity']->name}" n:image="$mainImage"/>
 							{/if}
-							<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
-
+							{ifset $isRootHome}
+								<div class="label">{_$rental['entity']->address->locality->name}, {_$rental['entity']->address->primaryLocation->name}</div>
+							{else}
+								<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
+							{/ifset}
 						</a>
 					</li>
 				</ul>
