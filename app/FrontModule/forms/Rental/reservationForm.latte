@@ -50,7 +50,7 @@
 	</span>
 	</div>
 
-	<div n:class="$form['message']->hasErrors() ? 'control-group error' : 'control-group' ">
+	<div n:class="$form['message']->hasErrors() ? 'control-group message error' : 'control-group message' ">
 	{input message , data-validation-message => "error-msg-reservation"}
 	<span class="control-error" id="error-msg-reservation-to">
 		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
