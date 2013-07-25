@@ -1144,9 +1144,27 @@ table.detailInfoBox {
 
 #content {
 	.metaObjectInfo {
+
+		.backToTop {
+			float: right;
+			padding-top: 20px;
+			color: #888;
+
+			&:hover {
+				text-decoration:none;
+
+				span {
+					text-decoration: underline;
+				}
+			}
+		}
+
 		h3 {
+
 			clear: both;
 			font-size: 22px;
+			width: 800px;
+			float: left;
 			font-weight: normal;
 			margin-bottom: 10px;
 
@@ -1155,6 +1173,7 @@ table.detailInfoBox {
 				font-size: 14px;
 				color: #999;
 			}
+
 		}
 
 		margin: 0 10px;
