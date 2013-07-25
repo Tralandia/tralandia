@@ -66,11 +66,11 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->environment->getLocale()->getCollator());
 
 
-		$nameControl = $this->addText('name')
-			//->setRequired('o100158')
-			->getControlPrototype()
-				->setPlaceholder('o1031');
-
+//		$nameControl = $this->addText('name')
+//			//->setRequired('o100158')
+//			->getControlPrototype()
+//				->setPlaceholder('o1031');
+//
 		$this->addText('email')
 			->addRule(self::EMAIL, 'o100144')
 			->getControlPrototype()
@@ -196,7 +196,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setLanguage($this->environment->getLanguage());
 		$reservation->setRental($this->rental);
 		$reservation->setSenderEmail($values->email);
-		$reservation->setSenderName($values->name);
+		//$reservation->setSenderName($values->name);
 		if($values->phone->phone) $reservation->setSenderPhone($values->phone->phone);
 		if($values->date->from) $reservation->setArrivalDate($values->date->from);
 		if($values->date->to) $reservation->setDepartureDate($values->date->to);
