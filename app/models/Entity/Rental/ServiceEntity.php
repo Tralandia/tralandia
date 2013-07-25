@@ -19,6 +19,7 @@ class Service extends \Entity\BaseEntity
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="services")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
@@ -49,12 +50,12 @@ class Service extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Service
@@ -65,7 +66,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Service
 	 */
@@ -75,7 +76,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -83,7 +84,7 @@ class Service extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Service
@@ -94,7 +95,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -102,7 +103,7 @@ class Service extends \Entity\BaseEntity
 	{
 		return $this->givenFor;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Service
@@ -113,7 +114,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -121,7 +122,7 @@ class Service extends \Entity\BaseEntity
 	{
 		return $this->serviceType;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Rental\Service
@@ -132,7 +133,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -140,7 +141,7 @@ class Service extends \Entity\BaseEntity
 	{
 		return $this->dateFrom;
 	}
-		
+
 	/**
 	 * @param \DateTime
 	 * @return \Entity\Rental\Service
@@ -151,7 +152,7 @@ class Service extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */

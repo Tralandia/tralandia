@@ -22,6 +22,7 @@ class PricelistRow extends \Entity\BaseEntity
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Rental")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
