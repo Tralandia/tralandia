@@ -174,6 +174,11 @@ var socialShitFirstInitDetail = false;
 
 $(document).ready(function(){
 
+	// tmp
+	$('.objectDetailServicesIconList').click(function(){
+		$(this).find('.amenitiesStart li').toggleClass('open');
+	});
+
 	var socialIconsDetailHeader = '.socialBtnHeader';
 
 
