@@ -206,6 +206,9 @@ parameters:
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
 					- front/_base/js/reservationForm.js
+					# root home
+					- front/home/js/rootHome.js
+
 
 			historyPlugin:
 				css:

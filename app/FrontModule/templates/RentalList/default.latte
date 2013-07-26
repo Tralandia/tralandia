@@ -132,7 +132,7 @@
 
 														{foreach $amenities as $amenity}
 
-															{_$amenity->name}
+															{_$amenity->name}{if !$iterator->last}, {/if}
 
 														{/foreach}
 													{/foreach}
