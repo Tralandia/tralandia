@@ -827,26 +827,60 @@ margin-bottom: 10px;
 }
 
 .sidebarInner {
-	background: #f4f9e1;
-	.bottom-border-radius(5px);
+	background: #fcfff2;
+	
 	border: 1px solid #88A031;
+	border-bottom: none;
 	border-top: none;
-	padding-top: 10px;
 	a {
 		color: @darkGreen;
+	}
+
+	.headerInformation {
+		text-align: center;
+		padding: 10px;	
+		border-bottom: 1px solid #D5E2A7;
+		padding-bottom: 0;
+		margin-bottom: 10px;		
+		strong {
+			i {
+				top: 3px;
+				position: relative;
+			}
+		}
+
+		.websiteUrl {
+			display: block;
+			padding: 10px 0;
+
+			&:hover {
+				text-decoration:none;
+				span {
+					text-decoration: underline;
+				}
+			}
+
+			i {
+				font-size: 10px;
+				color: @brown;
+				position: relative;
+			}
+		}
+
+		.addressInformation {
+			margin-top: 10px;
+		}	
 	}
 
 	strong {
 		font-size: 17px;
 		line-height: 22px;
 		display: block;
-		width: 229px;
 		text-align: center;
 
 		span {
 			font-weight: normal;
 			display: block;
-			margin-top: 5px;
 
 			i {
 				font-size: 15px;
@@ -857,37 +891,21 @@ margin-bottom: 10px;
 
 	small {
 		color: #888888;
-		margin-top: -4px;
+		margin-top: -2px;
 		display: block;
 	}
 
 	&.address {
 		text-align: center;
 		background: #FFF;
-		.addressInformation {
-			padding: 3px 10px 0 10px;
+		.border-radius(0 0 5px 5px);
+		border-bottom: 1px solid #88A031;
 
-			.websiteUrl {
-				margin: 10px 0;
-				display: block;
-
-				&:hover {
-					text-decoration:none;
-					span {
-						text-decoration: underline;
-					}
-				}
-			}
-
-			.scrollTo {
-				color: #888;
-				font-style:italic;
-			}
-		}
 
 		img {
 			.border-radius(0 0 6px 6px);
 			margin-bottom: 1px;
+			border-top: 1px solid #D5E2A7;
 		}
 	}
 }
