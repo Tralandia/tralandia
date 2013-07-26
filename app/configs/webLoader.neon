@@ -300,12 +300,13 @@ parameters:
 				-  %webloader.packages.Front%
 
 				#-  %webloader.packages.texyla%
+				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
-				-  %webloader.packages.historyPlugin%
+				
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -323,11 +324,12 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.Front%
+				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
 				-  %webloader.packages.rentalMapPlugin%
-				-  %webloader.packages.historyPlugin%
+				
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -342,12 +344,12 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.texyla%
+				-  %webloader.packages.historyPlugin%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.navigationBarScroll%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
-				-  %webloader.packages.historyPlugin%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
