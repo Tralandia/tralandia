@@ -28,7 +28,8 @@ class RentalVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableLink(EnvironmentVariables $environment) {
-		return $environment->link('//Rental:detail', ['rental' => $this->rental]);
+		$r = $environment->link('//:Front:Rental:detail', ['rental' => $this->rental]);
+		return $r;
 	}
 
 	public function getVariableEmail() {

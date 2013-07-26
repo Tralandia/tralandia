@@ -3,6 +3,7 @@
 namespace AdminModule;
 
 
+use Doctrine\ORM\QueryBuilder;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 
@@ -207,6 +208,31 @@ class TempScriptPresenter extends BasePresenter {
 
 		$this->payload->success = true;
 		$this->sendPayload();
+	}
+
+
+	public function actionSendOldReservations()
+	{
+		/** @var $reservationOwnerEmailListener \Listener\ReservationOwnerEmailListener */
+		$reservationOwnerEmailListener = $this->getContext()->getByType('Listener\ReservationOwnerEmailListener');
+		/** @var $reservationSenderEmailListener \Listener\ReservationSenderEmailListener */
+		$reservationSenderEmailListener = $this->getContext()->getByType('Listener\ReservationSenderEmailListener');
+
+		/** @var $qb QueryBuilder */
+		$qb = $this->em->getRepository(RESERVATION_ENTITY)->createQueryBuilder('r');
+
+		$qb->andWhere($qb->expr()->gte('r.created', ':from'))->setParameter('from', '2013-07-15');
+		$qb->andWhere($qb->expr()->lt('r.created', ':to'))->setParameter('to', '2013-07-22');
+		$qb->andWhere($qb->expr()->orX(
+				$qb->expr()->gt('r.arrivalDate', ':arrival'),
+				$qb->expr()->isNull('r.arrivalDate')
+			))->setParameter('arrival', '2013-07-26');
+
+		$reservations = $qb->getQuery()->getResult();
+		foreach($reservations as $reservation) {
+			$reservationOwnerEmailListener->onReservationSent($reservation);
+			$reservationSenderEmailListener->onReservationSent($reservation);
+		}
 	}
 
 }
