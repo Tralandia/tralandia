@@ -44,6 +44,7 @@
 		*/
 
 		base._setListHistory = function(){
+			console.log(base._getListData());
 			base._setHistory(base._getListData());
 		};
 
@@ -121,7 +122,8 @@
 
 			var r = false;
 
-			console.log(base._getHistory());
+			// console.log(base.rentalDetailVariables);
+			// console.log(base._getHistory());
 
 			$.each(base._getHistory().listData,function(k,v){				
 
