@@ -37,7 +37,7 @@ class AmenityType extends \Entity\BaseEntity
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $sorting;
+	protected $sorting = 0;
 
 
 	/**
@@ -55,14 +55,14 @@ class AmenityType extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
@@ -76,7 +76,7 @@ class AmenityType extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
@@ -88,7 +88,7 @@ class AmenityType extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
@@ -96,7 +96,7 @@ class AmenityType extends \Entity\BaseEntity
 	{
 		return $this->amenities;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\AmenityType
@@ -107,7 +107,7 @@ class AmenityType extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -115,7 +115,7 @@ class AmenityType extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -123,7 +123,7 @@ class AmenityType extends \Entity\BaseEntity
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\AmenityType
@@ -134,7 +134,7 @@ class AmenityType extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
