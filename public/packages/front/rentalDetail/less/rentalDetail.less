@@ -141,7 +141,7 @@ form.reservationform {
 		display: block;
 
 		&.message {
-			height: 120px;
+			height: 150px;
 		}
 	}
 
@@ -566,9 +566,7 @@ table.detailInfoBox {
 	cursor: pointer;
 
 	&:hover {
-		li:not(.open) .content {
-			text-decoration:underline;
-		}
+
 		
 	}
 
@@ -613,14 +611,15 @@ table.detailInfoBox {
 
 		.content , .amenitiesStart {
 			width: 345px;
-			height: 16px;
+/*			height: 16px;
 			white-space: nowrap;
-			text-overflow: ellipsis;
+			text-overflow: ellipsis;*/
 			float: right;
 			padding-right: 25px;
 			overflow: hidden;
 
 		}
+
 
 		&.open {
 			.content , .amenitiesStart {
@@ -893,14 +892,13 @@ table.detailInfoBox {
 
 	&.address {
 		text-align: center;
-		background: #FFF;
 		.border-radius(0 0 5px 5px);
 		border-bottom: 1px solid #88A031;
 
 
 		img {
 			.border-radius(0 0 6px 6px);
-			margin-bottom: 1px;
+			margin-top: 10px;
 			border-top: 1px solid #D5E2A7;
 		}
 	}
@@ -979,7 +977,7 @@ table.detailInfoBox {
 	}
 
 	textarea {
-		height: 100px;
+		height: 130px;
 	}
 
 	form {
