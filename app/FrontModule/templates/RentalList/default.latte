@@ -89,6 +89,8 @@
 										{var $rentalSubTitle = $rentalName}
 									{/if}
 
+									<variables n:syntax="asp" data-info='{"name":"<%_$rental->name%>","url":"<%link Rental:detail $rental%>","id":"<%$rental->id%>"}'></variables>
+
 									<h2>
 										<a href="{link Rental:detail $rental}" title="{$rentalTitle}">{$rentalTitle}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}
 									</h2>
