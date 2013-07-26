@@ -89,6 +89,7 @@
 
 		base._initDetail = function(){
 
+
 			if(base._getHistory() != null){
 
 				base._setRentalDetailVariables();
@@ -120,7 +121,10 @@
 
 			var r = false;
 
+			console.log(base._getHistory());
+
 			$.each(base._getHistory().listData,function(k,v){				
+
 
 				if(parseInt(base.rentalDetailVariables.id) == parseInt(v.id)){
 					r = true;
