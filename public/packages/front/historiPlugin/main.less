@@ -58,6 +58,34 @@
 		}
 	}
 
+	&.listType {
+		margin: -15px 5px -3px 0px;
+		height: 35px;
+		.backToList {
+
+			a.listName {
+				display: none;
+			}
+		}
+
+		.info {
+			display: none;
+		}
+
+		.backToList {
+			.breadcrumb a {
+				font-size: 14px;
+				color: @darkGreen;
+
+				i {
+					color: @darkGreen;
+				}
+			}
+		}
+
+
+	}
+
 	.backToList {
 		float: left;
 		width: auto;
@@ -65,9 +93,11 @@
 			.breadcrumb {
 				float: left;
 				padding: 0;
-				background: #ffffff;
+				background: transparent;
 				padding-top: 1px;
-				width: 520px;	
+				width: 520px;
+				height: 30px;
+				overflow: hidden;
 				a {
 					background: #FFF;
 					color: @darkBlue;
@@ -93,7 +123,7 @@
 						height: 16px;
 						font-size: 11px;
 						position: relative;
-						top: 3px;
+						top: 2px;
 					}
 
 					&:first-child {
