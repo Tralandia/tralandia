@@ -4,11 +4,34 @@
 
 {block content}
 
+<variables n:syntax="asp" name="listInfo" data-info='{"rentalCount":"<%$totalResultsCount%>","listTitle":"<%$pageH1%>"}'></variables>
+
 <h1>{$pageH1}
 	<span class="counter">
 		({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
 	</span>
 </h1>
+
+		<div id="staticNavBar" class="listType">
+
+			<div class="backToList">
+				<a href="#" class="listName"><i class="icon-search"></i>Vyhľadávanie<span></span></a>
+				<div class="breadcrumb">
+					<a href="#" class="nav"><span>Slovensko</span></a>
+					<a href="#" class="nav"><i class="icon-double-angle-right"></i><span>Liptov</span></a>
+					<a href="#"><i class="icon-double-angle-right"></i>Chaty</a>
+					<a class="filter"><i class="icon-double-angle-right"></i>3 osoby</a>
+					<a class="filter"><i class="icon-double-angle-right"></i>20 - 50 EUR</a>
+				</div>
+			</div>
+
+			<div class="info">
+				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
+				<a href="#" class="paginator tooltipElem prev" data-placement="bottom" data-original-title="Predošlý"><i class="icon-circle-arrow-left"></i></a>
+				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
+			</div>
+
+		</div>	
 
 <div class="row-fluid">
 	<div class="span12">
@@ -65,6 +88,8 @@
 										{var $rentalTitle = $rentalLocation}
 										{var $rentalSubTitle = $rentalName}
 									{/if}
+
+									<variables n:syntax="asp" data-info='{"name":"<%_$rental->name%>","url":"<%link Rental:detail $rental%>","id":"<%$rental->id%>"}'></variables>
 
 									<h2>
 										<a href="{link Rental:detail $rental}" title="{$rentalTitle}">{$rentalTitle}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}

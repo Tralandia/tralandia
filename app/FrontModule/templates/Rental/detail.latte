@@ -18,24 +18,21 @@
 		expire => $rentalDetailCacheOptions['expiration'],
 		tags => $rentalDetailCacheOptions['tags']}
 
+<variables n:syntax="asp" name="rentalDetailInfo" data-info='{"id":"<%$rental->id%>","name":"<%_$rental->name%>","rentalText":"#ubytko z"}'></variables>
+
 <div class="span12">
 		<div id="staticNavBar">
 
 			<div class="backToList">
-				<a href="#" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
+				<a href="" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
 				<div class="breadcrumb">
-					<a href="#" class="nav"><span>Slovensko</span></a>
-					<a href="#" class="nav"><i class="icon-chevron-right"></i><span>Liptov</span></a>
-					<a href="#"><i class="icon-chevron-right"></i>Chaty</a>
-					<a class="filter"><i class="icon-chevron-right"></i>3 osoby</a>
-					<a class="filter"><i class="icon-chevron-right"></i>20 - 50 EUR</a>
 				</div>
 			</div>
 
 			<div class="info">
-				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
-				<a href="#" class="paginator tooltipElem prev" data-placement="bottom" title="{_775}"><i class="icon-circle-arrow-left"></i></a>
-				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
+				<a href="" class="paginator next">{_774}<i class="icon-circle-arrow-right"></i></a>
+				<a href="" class="paginator tooltipElem prev" data-placement="bottom" title="{_775}"><i class="icon-circle-arrow-left"></i></a>
+				<small class="counts"><span class="objectPosition"></span> / <span class="listFullCount"></span></small>
 			</div>
 
 		</div>
@@ -43,7 +40,7 @@
 
 
 
-	<div class="span12" data-cache="{$rand}">
+	<div class="span12 rentalDetailPage" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 			<div id="content" class="noPadding">
 
@@ -96,6 +93,39 @@
 								{/if}
 								</td>
 							</tr>
+								{if $firstAnswer}
+								<tr>
+									<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">
+
+										{if count($rental->amenities) > 0}
+										{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+										{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
+										{if !count($importantAmenities)}
+											{var
+												$importantAmenities = array_slice($notImportantAmenities,0, 2);
+												$notImportantAmenities = array_slice($notImportantAmenities, 2);
+											}
+										{/if}
+
+											{foreach $importantAmenities  as $amenities}
+												{var $firstAmenity = false}
+												{var $lastAmenity = false}
+												{if $iterator->first}{var $firstAmenity = true}{/if}
+												{if $iterator->last}{var $lastAmenity = true}{/if}
+												{foreach $amenities as $amenity}
+													{if $firstAmenity}
+														{_$amenity->name|firstUpper}{if !$lastAmenity}, {else}.{/if}
+													{else}
+														{_$amenity->name}{if !$lastAmenity}, {else}.{/if}
+													{/if}
+												{/foreach}
+											{/foreach}
+
+										{/if}
+
+									</td>
+								</tr>
+								{/if}							
 							{/if}
 
 						</table>
@@ -185,6 +215,7 @@
 
 						<div class="clearfix"></div>
 
+
 						<div class="detailAmenities">
 							<ul class="objectDetailServicesIconList list">
 
@@ -223,6 +254,7 @@
 
 											{/foreach}
 											</div>
+											{* <div class="more">...</div> *}
 										</li>
 										{/foreach}
 
@@ -242,16 +274,62 @@
 					<div class="span3 sidebarRightDetail">
 
 							<div class="sidebarContact">
-								<div class="sidebarTitle">{_o12275}</div>
+								<div class="sidebarTitle">
+										{if $rental->contactName}
+											{$rental->contactName} 
+											{else}
+											{_o12275}
+										{/if}
+								</div>
 								<div class="sidebarInner">
 
-										{snippet reservationForm}
-										{include '../../forms/Rental/reservationForm.latte'}
-										{/snippet}
 
-										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
+								<div class="headerInformation">
+									{if $rental->phone->international}
 
-									</div>
+
+											<strong>
+											<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
+											</strong>
+
+
+									{/if}
+
+									{if count($rental->spokenLanguages) > 0}
+
+										<small>
+										({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
+										</small>
+
+									{/if}
+
+									<div class="addressInformation">
+
+										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
+											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
+												{$rental->address->address}
+												{if $rental->address->subLocality}
+												({$rental->address->subLocality})
+												{/if}
+												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
+											</a>
+										{/if}
+
+										{if $rental->url}
+											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->url}</span> <i class="icon-external-link-sign"></i></a>
+										{/if}
+
+
+
+									</div>								
+								</div>
+									{snippet reservationForm}
+									{include '../../forms/Rental/reservationForm.latte'}
+									{/snippet}
+
+									{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
+
+							</div>
 
 
 
@@ -267,47 +345,11 @@
 							</div> *}
 							<div class="sidebarInner address">
 
-								{if $rental->phone->international}
 
 
-										<strong>
-										{if $rental->contactName}
-										{$rental->contactName}
-										{/if}
-										<span><i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}</span>
-										</strong>
 
 
-								{/if}
-
-								{if count($rental->spokenLanguages) > 0}
-
-									<small>
-									({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
-									</small>
-
-								{/if}
-
-									<div class="addressInformation">
-
-										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{_o1666}</span> <i class="icon-external-link-sign"></i></a>
-										{/if}
-
-										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
-												{$rental->address->address}
-												{if $rental->address->subLocality}
-												({$rental->address->subLocality})
-												{/if}
-												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
-											</a>
-										{/if}
-
-
-									</div>
-
-								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x161&sensor=false"/>
 
 
 								<div class="clearfix"></div>
