@@ -182,6 +182,11 @@
 
 						<div class="clearfix"></div>
 
+						<div class="importantAmenities">
+							internet, bezdrôtový prístup - wifi, izby s manželskou posteľou, manželská posteľ, izby s možnosťou prístelky, izby pre nefajčiarov, rádio, izby pre rodiny, satelit, televízor
+
+						</div>
+
 						<div class="detailAmenities">
 							<ul class="objectDetailServicesIconList list">
 
@@ -220,6 +225,7 @@
 
 											{/foreach}
 											</div>
+											{* <div class="more">...</div> *}
 										</li>
 										{/foreach}
 
@@ -242,48 +248,28 @@
 								<div class="sidebarTitle">{_o12275}</div>
 								<div class="sidebarInner">
 
-										{snippet reservationForm}
-										{include '../../forms/Rental/reservationForm.latte'}
-										{/snippet}
 
-										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
-
-									</div>
+								<div class="headerInformation">
+									{if $rental->phone->international}
 
 
+											<strong>
+											{if $rental->contactName}
+											{$rental->contactName}
+											{/if}
+											<span><i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}</span>
+											</strong>
 
 
+									{/if}
 
-{* 							<div class="sidebarTitle">
-									
+									{if count($rental->spokenLanguages) > 0}
 
-								#contact
+										<small>
+										({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
+										</small>
 
-
-
-							</div> *}
-							<div class="sidebarInner address">
-
-								{if $rental->phone->international}
-
-
-										<strong>
-										{if $rental->contactName}
-										{$rental->contactName}
-										{/if}
-										<span><i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}</span>
-										</strong>
-
-
-								{/if}
-
-								{if count($rental->spokenLanguages) > 0}
-
-									<small>
-									({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
-									</small>
-
-								{/if}
+									{/if}
 
 									<div class="addressInformation">
 
@@ -301,8 +287,33 @@
 											</a>
 										{/if}
 
+									</div>								
+								</div>
+									{snippet reservationForm}
+									{include '../../forms/Rental/reservationForm.latte'}
+									{/snippet}
 
-									</div>
+									{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
+
+							</div>
+
+
+
+
+
+{* 							<div class="sidebarTitle">
+									
+
+								#contact
+
+
+
+							</div> *}
+							<div class="sidebarInner address">
+
+
+
+
 
 								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
 
