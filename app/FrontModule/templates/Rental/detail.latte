@@ -96,7 +96,32 @@
 								{if $firstAnswer}
 								<tr>
 									<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">
-							internet, bezdrôtový prístup - wifi, izby s manželskou posteľou, manželská posteľ, izby s možnosťou prístelky, izby pre nefajčiarov, rádio, izby pre rodiny, satelit, televízor
+
+										{if count($rental->amenities) > 0}
+										{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+										{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
+										{if !count($importantAmenities)}
+											{var
+												$importantAmenities = array_slice($notImportantAmenities,0, 2);
+												$notImportantAmenities = array_slice($notImportantAmenities, 2);
+											}
+										{/if}
+
+											{foreach $importantAmenities  as $amenities}
+												{var $firstAmenity = false}
+												{var $lastAmenity = false}
+												{if $iterator->first}{var $firstAmenity = true}{/if}
+												{if $iterator->last}{var $lastAmenity = true}{/if}
+												{foreach $amenities as $amenity}
+													{if $firstAmenity}
+														{_$amenity->name|firstUpper}{if !$lastAmenity}, {else}.{/if}
+													{else}
+														{_$amenity->name}{if !$lastAmenity}, {else}.{/if}
+													{/if}
+												{/foreach}
+											{/foreach}
+
+										{/if}
 
 									</td>
 								</tr>
@@ -324,7 +349,7 @@
 
 
 
-								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x161&sensor=false"/>
 
 
 								<div class="clearfix"></div>
