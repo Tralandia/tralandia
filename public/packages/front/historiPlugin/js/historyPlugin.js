@@ -152,10 +152,12 @@
 				base.$nextLink.attr('href',data.nextLink.url)
 							  .attr('title',data.nextLink.name);
 
-				base.$listName.attr('href',dataHistory.listUrl).find('span').html(dataHistory.listTitle);							  						  
+				base.$listName.attr('href',dataHistory.listUrl);							  						  
 				base.$listFullCount.html(dataHistory.rentalCount);	
 				base.$objectText.html(base.rentalDetailVariables.rentalText);
-				base.$rentalListPosition.html(data.currentObjectPosition);							  						  
+				base.$rentalListPosition.html(data.currentObjectPosition);
+
+				$(base.options.selectorListBreadcrumb).html(dataHistory.listBreadcrumb);							  						  
 
 		};		
 
@@ -274,6 +276,7 @@
 				rentalCount: base._getListInfo().rentalCount,
 				listTitle: base._getListInfo().listTitle,					
 				listUrl: document.URL,
+				listBreadcrumb: $(base.options.selectorListBreadcrumb).html(),
 				listData: base._getListRentals(),
 				paginator: base._getPaginator(),		
 			};
@@ -302,6 +305,7 @@ $(function(){
 		selectorPaginator: '.pagination',
 		selectorListInfo: 'variables[name=listInfo]',
 		localSotrageKeyName: 'historyPlugin',
+		selectorListBreadcrumb: '.breadcrumb',
 		// rental detail selectors
 		selectorRentalinfo: 'variables[name=rentalDetailInfo]',
 		selectorNavBarPrevLink: '#staticNavBar a.prev',

@@ -177,6 +177,11 @@ $(document).ready(function(){
 	// tmp
 	$('.objectDetailServicesIconList').click(function(){
 		$(this).find('.amenitiesStart li').toggleClass('open');
+
+		// $(this).find('.amenitiesStart li').animate({
+		// 	whiteSpace: 'normal',
+		// 	height: 'auto'
+		// })
 	});
 
 	var socialIconsDetailHeader = '.socialBtnHeader';
