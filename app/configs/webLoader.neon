@@ -170,7 +170,6 @@ parameters:
 					- front/ticket/less/ticket.less
 					# ie optimalizacia
 					- front/_base/less/ie.less
-					- front/historiPlugin/main.less
 					# retina display
 					- front/_base/less/retina.less
 				js:
@@ -207,6 +206,12 @@ parameters:
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
 					- front/_base/js/reservationForm.js
+
+			historyPlugin:
+				css:
+					- front/historiPlugin/less/main.less
+				js:
+					- front/historiPlugin/js/historyPlugin.js
 
 			jqueryAppear:
 				js:
@@ -300,6 +305,7 @@ parameters:
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -321,6 +327,7 @@ parameters:
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
 				-  %webloader.packages.rentalMapPlugin%
+				-  %webloader.packages.historyPlugin%
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -340,6 +347,7 @@ parameters:
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.historyPlugin%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
