@@ -137,14 +137,41 @@
 			return r;
 		};
 
+		base._loadFullHistory = function(){
+			
+		};
 
 		base._renderNavigationBar = function(){
 
 			var data = base._getInformationFromHistory();
 
-				// console.log(base.rentalDetailVariables);
 
-				dataHistory = base._getHistory();
+				if(typeof data.nextLink == 'undefined'){
+
+						// tmp nahradi ajax
+						dataHistory = base._getHistory();
+
+
+						var loadData = [];
+						$.each(dataHistory.listData,function(k,v){
+							loadData.push(v);
+							loadData.push(v);
+							loadData.push(v);
+						});
+
+						dataHistory.listData = loadData;
+						// --- tmp
+
+						base._setHistory(dataHistory);
+
+						data = base._getInformationFromHistory();
+
+
+				} else {
+
+					dataHistory = base._getHistory();
+
+				}
 
 				base.$prevlink.attr('href',data.prevLink.url)
 							  .attr('title',data.prevLink.name);
