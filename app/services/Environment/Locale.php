@@ -154,11 +154,11 @@ class Locale {
 	}
 
 	/**
-	 * @param \Nette\DateTime $date
+	 * @param \DateTime $date
 	 *
 	 * @return string
 	 */
-	public function formatDate(DateTime $date)
+	public function formatDate(\DateTime $date)
 	{
 		return $date->format($this->getDateFormat());
 	}
