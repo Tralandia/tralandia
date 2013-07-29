@@ -44,7 +44,6 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 
 	public function actionStep($id)
 	{
-
 		if($id == 1) {
 
 			$this->addNewType('near-by', 'near by', 'v blízkosti');
@@ -58,6 +57,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 			$this->addNewAmenity($typeChildren, 'high-chair', 'high chair', 'detská stolička');
 			$this->addNewAmenity($typeChildren, 'trampoline', 'trampoline', 'trampolína');
 			$this->addNewAmenity($this->findAmenityType('kitchen', TRUE, 'slug'), 'dishwasher', 'dishwasher', 'umývačka riadu');
+			$this->addNewAmenity($this->findAmenityType('service', TRUE, 'slug'), 'congress-services', 'congress services', 'kongresové služby');
 
 		} else if($id == 2) {
 
@@ -142,6 +142,9 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 				169, 174, 181, 177, 226, 99, 78, 94, 104, 103, 110, 77, 61, 63, 65, 66, 54, 55, 67, 44, 62, 72, 70, 49,
 				50, 59, 71, 73, 76, 74, 69, 68, 57, 64, 56, 47, 60, 48, 75, 46, 51, 10, 7, 20, 5, 32, 13, 203, 236, 202,
 				188, 23, 6, 294, 290, 291, 292, 293, 117, 116, 113, 114, 115, 112, 297, 296, 282, 283, 284]);
+		} else if($id == 45) {
+			$this->addCongressServicesToRentals();
+			$this->terminate();
 		} else if($id == 5) {
 //			$this->changeAmenityType($this->findAmenity(104), $this->findAmenityType('bathroom', TRUE, 'slug'));
 //			$this->changeAmenityType($this->findAmenity(103), $this->findAmenityType('bathroom', TRUE, 'slug'));
@@ -338,13 +341,13 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 			$this->changeAmenityType($this->findAmenity('restaurant', TRUE, 'slug'), $this->findAmenityType('on-facility', TRUE, 'slug'));
 		} else if($id == 6) {
 
-//			$this->deleteAmenityType($this->findAmenityType('congress', TRUE, 'slug')); neslo vymazat su tam amenity
 			$this->deleteAmenityType($this->findAmenityType('parking', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('room', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('other', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('relax', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('heating', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('separate-groups', TRUE, 'slug'));
+			$this->deleteAmenityType($this->findAmenityType('congress', TRUE, 'slug'), TRUE);
 
 		} else if($id == 7) {
 
@@ -361,6 +364,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 //			$this->setImportant($this->findAmenity(293));
 //			$this->setImportant($this->findAmenity(236));
 //			$this->setImportant($this->findAmenity(202));
+			$this->setImportant($this->findAmenity('congress-services', TRUE, 'slug'));
 			$this->setImportant($this->findAmenity(141));
 			$this->setImportant($this->findAmenity(287));
 			$this->setImportant($this->findAmenity(289));
@@ -391,7 +395,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 		$this->em->flush();
 
 		$this->payload->success = TRUE;
-		$this->sendPayload();
+		//$this->sendPayload();
 
 	}
 
@@ -454,9 +458,9 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 		$this->em->flush();
 	}
 
-	public function deleteAmenityType(AmenityType $type)
+	public function deleteAmenityType(AmenityType $type, $force = FALSE)
 	{
-		if($type->getAmenities()->count()) {
+		if(!$force && $type->getAmenities()->count()) {
 			throw new \Exception("Type {$type->getSlug()} isn't empty");
 		}
 		$this->amenityTypeRepository->delete($type);
@@ -467,6 +471,27 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 		$amenity->setImportant($important);
 
 		$this->em->flush();
+	}
+
+
+	public function addCongressServicesToRentals()
+	{
+		$amenity = $this->findAmenity('congress-services', TRUE, 'slug');
+		$qb = $this->rentalRepository->createQueryBuilder('r')
+			->select('r.id, COUNT(r.id) as c')
+			->innerJoin('r.amenities', 'a')
+			->innerJoin('a.type', 'at')
+			->andWhere('at.slug = ?1')->setParameter('1', 'congress')
+			->groupBy('r.id')
+			->having('c > 2');
+
+		$rentals = $qb->getQuery()->getResult();
+
+		$rentalsIds = \Tools::arrayMap($rentals, 'id', 'id');
+
+		if(!count($rentalsIds)) return;
+
+		$this->addAmenitiesToRentals($rentalsIds ,[$amenity]);
 	}
 
 
@@ -481,18 +506,25 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 
 		$rentalsIds = \Tools::arrayMap($rentals, 'id', 'id');
 
-		$query = 'INSERT INTO _amenity_rental (rental_id, amenity_id) VALUES ';
-		$rows = [];
 		if(!count($rentalsIds)) return;
 
+		$this->addAmenitiesToRentals($rentalsIds ,$newAmenities);
+	}
+
+
+	public function addAmenitiesToRentals($rentalsIds, array $newAmenities)
+	{
+		$query = 'INSERT INTO _amenity_rental (rental_id, amenity_id) VALUES ';
+		$rows = [];
+
 		foreach($newAmenities as $amenity) {
-			$qb = $this->rentalRepository->createQueryBuilder('r')
-				->select('r.id')
+			$qb = $this->rentalRepository->createQueryBuilder('r');
+
+			$qb->select('r.id')
 				->innerJoin('r.amenities', 'a')
 				->andWhere('a.id = ?1')->setParameter('1', $amenity->getId())
 				->andWhere($qb->expr()->in('r.id', $rentalsIds));
 
-			$q = $qb->getQuery();
 			$skipRentals = $qb->getQuery()->getArrayResult();
 			$skipRentalsIds = \Tools::arrayMap($skipRentals, 'id', 'id');
 			$diff = array_diff($rentalsIds, $skipRentalsIds);
@@ -505,5 +537,6 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 		}
 
 		echo "\n\n\n<br><br><br>";
+
 	}
 }
