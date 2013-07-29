@@ -26,13 +26,21 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $rentalRepository;
 
-	public function __construct(\Extras\Translator $translator, Environment $environment, EntityManager $em)
+	/**
+	 * @var \ResultSorter
+	 */
+	private $resultSorter;
+
+
+	public function __construct(\Extras\Translator $translator, Environment $environment,
+								EntityManager $em, \ResultSorter $resultSorter)
 	{
 		parent::__construct();
 		$this->environment = $environment;
 		$this->translator = $translator;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
+		$this->resultSorter = $resultSorter;
 	}
 
 	public function render()
@@ -73,6 +81,8 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 				unset($countries[$key]);
 			}
 		}
+
+		$countries = $this->resultSorter->translateAndSort($countries, function($v){return $v['name'];});
 
 		return $countries;
 	}
