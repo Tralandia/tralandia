@@ -59,14 +59,14 @@
 
 					{else}
 
-						{ifset $worldLink}
+						{ifset $showFlag}
 						<li class="headerIcon">
 							<img src="/images/flags/{$isoCode}.png" />
 						</li>
 						{/ifset}
 
 
-						{ifset $worldLink}
+						{ifset $showFlag}
 							<li class="headerIcon">
 								<a href="{$worldLink}">{_151892}</a>
 							</li>
@@ -128,7 +128,14 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="#">{$domainHost}</a><i class="icon-chevron-right"></i> <a href="{$homepageUrl}"><span>{_$environment->getPrimaryLocation()->getName()}</span></a>
+					<a href="{$worldLink}">{$domainHost}</a>
+						{ifset $isRootHome}
+						{else}
+							<i class="icon-chevron-right"></i>
+							<a href="{$homepageUrl}">
+								<span>{_$environment->getPrimaryLocation()->getName()}</span>
+							</a>
+						{/ifset}
 					</a>
 				</div>
 				<div class="slogan">{$slogan}</div>
