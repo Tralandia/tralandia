@@ -75,7 +75,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Information", cascade={"persist"})
 	 * @ORM\JoinTable(name="information_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id")}
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )
 	 */
 	protected $missingInformation;
@@ -92,7 +92,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Placement")
 	 * @ORM\JoinTable(name="placement_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id")}
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )
 	 */
 	protected $placements;
@@ -154,7 +154,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity")
 	 * @ORM\JoinTable(name="amenity_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id")}
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )
 	 */
 	protected $amenities;
