@@ -21,21 +21,7 @@
 <variables n:syntax="asp" name="rentalDetailInfo" data-info='{"id":"<%$rental->id%>","name":"<%_$rental->name%>","rentalText":"#ubytko z"}'></variables>
 
 <div class="span12">
-		<div id="staticNavBar">
-
-			<div class="backToList">
-				<a href="" class="listName"><i class="icon-search"></i>{_o100003}<span></span></a>
-				<div class="breadcrumb">
-				</div>
-			</div>
-
-			<div class="info">
-				<a href="" class="paginator next">{_774}<i class="icon-circle-arrow-right"></i></a>
-				<a href="" class="paginator tooltipElem prev" data-placement="bottom" title="{_775}"><i class="icon-circle-arrow-left"></i></a>
-				<small class="counts"><span class="objectPosition"></span> / <span class="listFullCount"></span></small>
-			</div>
-
-		</div>
+	{control searchBar:breadcrumb}
 	</div>
 
 

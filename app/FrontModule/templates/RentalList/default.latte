@@ -12,26 +12,7 @@
 	</span>
 </h1>
 
-		<div id="staticNavBar" class="listType">
-
-			<div class="backToList">
-				<a href="#" class="listName"><i class="icon-search"></i>Vyhľadávanie<span></span></a>
-				<div class="breadcrumb">
-					<a href="#" class="nav"><span>Slovensko</span></a>
-					<a href="#" class="nav"><i class="icon-double-angle-right"></i><span>Liptov</span></a>
-					<a href="#"><i class="icon-double-angle-right"></i>Chaty</a>
-					<a class="filter"><i class="icon-double-angle-right"></i>3 osoby</a>
-					<a class="filter"><i class="icon-double-angle-right"></i>20 - 50 EUR</a>
-				</div>
-			</div>
-
-			<div class="info">
-				<a href="#" class="paginator next">Ďalši<i class="icon-circle-arrow-right"></i></a>
-				<a href="#" class="paginator tooltipElem prev" data-placement="bottom" data-original-title="Predošlý"><i class="icon-circle-arrow-left"></i></a>
-				<small class="counts"><span class="objectPosition"></span> 1 / 18 <span class="listFullCount"></span></small>
-			</div>
-
-		</div>	
+{control searchBar:breadcrumb}
 
 <div class="row-fluid">
 	<div class="span12">
@@ -66,7 +47,7 @@
 						{var $featured = $rentalService->isFeatured(); }
 
 
-							<div class="row-fluid rentalList" data-cache="{$rand}">
+							<div class="row-fluid rentalList" data-cache="{$rand}" data-rental-rank="{$rental->getRank()}">
 								<div class="span4">
 									<a href="{link Rental:detail $rental}" n:class="$featured ? top : classic">
 										{* <div class="price">{$rental->price} <span>EUR</span></div> *}
