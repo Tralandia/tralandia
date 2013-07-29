@@ -90,8 +90,10 @@
 
 		base._initDetail = function(){
 
+			console.log(base._getHistory());
 
 			if(base._getHistory() != null){
+				console.log('mam');
 
 				base._setRentalDetailVariables();
 
@@ -102,6 +104,8 @@
 					console.log('nepatri do mojej historie');
 					// @todo ajax function
 				}				
+			} else {
+				$(base.options.selectorPaginatorContainer).removeClass('fromList');				
 			}
 
 		};
@@ -334,6 +338,7 @@ $(function(){
 		localSotrageKeyName: 'historyPlugin',
 		selectorListBreadcrumb: '.breadcrumb',
 		// rental detail selectors
+		selectorPaginatorContainer: '#staticNavBar .info',
 		selectorRentalinfo: 'variables[name=rentalDetailInfo]',
 		selectorNavBarPrevLink: '#staticNavBar a.prev',
 		selectorNavBarNextLink: '#staticNavBar a.next',
