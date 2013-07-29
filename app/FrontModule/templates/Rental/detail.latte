@@ -87,7 +87,7 @@
 						<table class="teaser">
 							{if $teaser}
 							<tr>
-								<td class="content">{$teaser} 
+								<td class="content">{$teaser}
 								{if $firstAnswer}
 									<a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">{_152271}</a></td>
 								{/if}
@@ -125,13 +125,13 @@
 
 									</td>
 								</tr>
-								{/if}							
+								{/if}
 							{/if}
 
 						</table>
 						{/if}
 
-{* 
+{*
 						<table class="detailInfoBox">
 							<tr>
 								<td class="entypoIconUsers">
@@ -276,7 +276,7 @@
 							<div class="sidebarContact">
 								<div class="sidebarTitle">
 										{if $rental->contactName}
-											{$rental->contactName} 
+											{$rental->contactName}
 											{else}
 											{_o12275}
 										{/if}
@@ -316,12 +316,12 @@
 										{/if}
 
 										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->url}</span> <i class="icon-external-link-sign"></i></a>
+											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
 
 
-									</div>								
+									</div>
 								</div>
 									{snippet reservationForm}
 									{include '../../forms/Rental/reservationForm.latte'}
@@ -336,7 +336,7 @@
 
 
 {* 							<div class="sidebarTitle">
-									
+
 
 								#contact
 
