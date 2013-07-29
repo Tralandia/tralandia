@@ -69,18 +69,20 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		if ($primaryLocation->slug == 'world') {
 			$template->slogan = $template->translate('o100163');
+			$template->isRootHome = TRUE;
 		} else {
 			$template->slogan = $template->translate('o21083').' '.$template->translate(
 				$primaryLocation->getName(),
 				NULL,
 				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
 			);
-			$world = $this->em->getRepository(LOCATION_ENTITY)->findOneBySlug('world');
-			$params = [
-				FrontRoute::PRIMARY_LOCATION => $world
-			];
-			$template->worldLink = $this->presenter->link('RootHome:default', $params);
+			$template->showFlag = TRUE;
 		}
+		$world = $this->em->getRepository(LOCATION_ENTITY)->findOneBySlug('world');
+		$params = [
+			FrontRoute::PRIMARY_LOCATION => $world
+		];
+		$template->worldLink = $this->presenter->link('RootHome:default', $params);
 
 		$template->localeCode = $this->environment->getLocale()->getCode();
 		$template->localeGoogleCode = $this->environment->getLocale()->getGooglePlusLangCode();
