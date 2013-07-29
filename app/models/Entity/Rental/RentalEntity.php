@@ -717,6 +717,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	public function getUrlObject()
+	{
+		return new Url($this->url);
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
