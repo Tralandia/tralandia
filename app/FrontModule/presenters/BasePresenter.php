@@ -264,12 +264,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->sendJson($json);
 	}
 
-
-	public function createComponentBreadcrumb($name) {
-
-//		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
-	}
-
 	public function createComponentFooter($name) {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
 	}
