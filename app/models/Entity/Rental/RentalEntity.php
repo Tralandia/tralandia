@@ -630,24 +630,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return Bool
 	 */
-	public function getSeparateGroups()
-	{
-		$separateGroups = $this->getAmenitiesByType('separate-groups');
-		if (count($separateGroups)) {
-			$group = current($separateGroups);
-			if ($group->slug=='separate-groups-no') {
-				return FALSE;
-			} elseif ($group->slug=='separate-groups-yes') {
-				return TRUE;
-			}
-		}
-		return NULL;
-	}
-
-
-	/**
-	 * @return Bool
-	 */
 	public function getAnimalsAllowed()
 	{
 		$animals = $this->getAmenitiesByType(array('animal'));

@@ -110,10 +110,6 @@ class RentalContainer extends BaseContainer
 //			//->setOption('help', $this->translate('o5956'))
 //			;
 
-		$this->addCheckbox('separateGroups', 'o100076')
-			->setOption('help', $this->translate('o100077'));
-
-
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('pet', 'o100079', $amenityPets)
 			->setPrompt('o854')
@@ -182,7 +178,6 @@ class RentalContainer extends BaseContainer
 			'interview' => $interview,
 			'bedroomCount' => $rental->bedroomCount,
 			'roomsLayout' => $rental->rooms,
-			'separateGroups' => $rental->getSeparateGroups(),
 			'checkIn' => $rental->getCheckIn(),
 			'checkOut' => $rental->getCheckOut(),
 			'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
@@ -243,6 +238,11 @@ class RentalContainer extends BaseContainer
 	public function validation() {
 		$this['address']->validate();
 		$this['phone']->validate();
+
+		$photos = $this['photos']->getFormattedValues();
+		if(count($photos->images) < 3) {
+			$this['photos']['upload']->addError($this->translate('1294'));
+		}
 	}
 
 
