@@ -40,18 +40,20 @@ class InForm extends \BaseModule\Forms\BaseForm {
 
 	public function onSuccess(InForm $form) {
 		$values = $form->getValues();
+
+		/** @var $presenter \BasePresenter */
+		$presenter = $this->getPresenter();
+
 		try {
-			/** @var $presenter \BasePresenter */
-			$presenter = $this->getPresenter();
 
 			$identity = $presenter->redirectToCorrectDomain($values->login, $values->password);
 			$presenter->login($identity);
 
-			$presenter->actionAfterLogin();
-
 		} catch(\Nette\Security\AuthenticationException $e) {
 			$form->presenter->flashMessage($this->translate('o1119'), BasePresenter::FLASH_ERROR);
 		}
+
+		$presenter->actionAfterLogin();
 	}
 
 }

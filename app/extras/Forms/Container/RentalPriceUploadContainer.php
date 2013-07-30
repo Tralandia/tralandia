@@ -66,6 +66,8 @@ class RentalPriceUploadContainer extends BaseContainer
 
 
 		$oldIds = $this->getComponent('oldIds')->getValue();
+		if(!$oldIds) return NULL;
+
 		$oldIds = array_flip(explode(',', $oldIds));
 		$list = $this->getComponent('list')->getValues();
 
