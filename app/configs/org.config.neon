@@ -1,0 +1,15 @@
+parameters:
+
+	database:
+		#debugger: true
+
+	cacheDatabase:
+		database: tralandia_cache
+
+	templateCache:
+		enabled: true
+
+	staticDomain: NULL
+	storageDir: /storage
+	storagePath: /storage
+
