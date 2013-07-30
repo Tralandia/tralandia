@@ -75,6 +75,9 @@ class LocationRepository extends \Repository\BaseRepository {
 			$namePhrase = $localityEntity->getName();
 			$namePhrase->setSourceLanguage($primaryLocation->getDefaultLanguage());
 			$translation = $namePhrase->getTranslation($primaryLocation->getDefaultLanguage());
+			if(!$translation) {
+				$translation = $namePhrase->createTranslation($primaryLocation->getDefaultLanguage());
+			}
 			$translation->setTranslation($locality);
 
 			$localityEntity->parent = $primaryLocation;
