@@ -145,11 +145,26 @@
 		};
 
 		base._renderPaginator = function(data,dataHistory){
-				base.$prevlink.attr('href',data.prevLink.url)
-							  .attr('title',data.prevLink.name);
 
-				base.$nextLink.attr('href',data.nextLink.url)
-							  .attr('title',data.nextLink.name);
+				// console.log(data);
+
+				if(data.prevLink) {
+					base.$prevlink.attr('href',data.prevLink.url).removeClass('disabled');
+				} else {
+					base.$prevlink.attr('href','#').addClass('disabled');
+				}
+
+				if(data.nextLink) {
+					base.$nextLink.attr('href',data.nextLink.url)
+								  .attr('title',data.nextLink.name)
+								  .removeClass('disabled');
+				} else {
+					base.$nextLink.attr('href','#')
+								  .attr('title','')
+								  .addClass('disabled');					
+				}
+
+
 
 				base.$listName.attr('href',dataHistory.listUrl);							  						  
 				base.$listFullCount.html(dataHistory.rentalCount);	
@@ -167,14 +182,14 @@
 
 				if(typeof data.nextLink == 'undefined'){
 
-						jQuery.getJSON( dataHistory.listUrl+'?getDataForBreadcrumb=1' , function(d){
+						jQuery.getJSON( base._createUrlForAjax(dataHistory) , function(d){
 
-							console.log('ajax');
+							// console.log('ajax');
 							// console.log(d);
 
 							dataHistory.listData = d.listData;
 							base._setHistory(dataHistory);
-							console.log('----');
+							// console.log('----');
 							data = base._getInformationFromHistory();
 							base._renderPaginator(data,dataHistory);
 
@@ -186,16 +201,23 @@
 
 				$(base.options.selectorListBreadcrumb).html(dataHistory.listBreadcrumb);							  						  
 
-		};		
+		};
+
+		base._createUrlForAjax = function(dataHistory){
+			var u = dataHistory.listUrl.split('?');
+
+				if(u.length > 1){
+					return u[0]+'?getDataForBreadcrumb=1';
+				} else {
+					return dataHistory.listUrl+'?getDataForBreadcrumb=1';
+				}
+		}
 
 		base._getInformationFromHistory = function(){
 
 			var dataHistory = base._getHistory();
 			var data = dataHistory.listData;
 			
-							console.log(dataHistory);
-
-
 			var r = {
 				lengthHistory: data.length
 			};
@@ -211,7 +233,9 @@
 				
 			});
 
-			if(dataHistory.pageCountPosition > 1){
+
+
+			if((dataHistory.pageCountPosition > 1) && (arrayCurrentPosition < dataHistory.rentalCount)){
 				r.currentObjectPosition = r.currentObjectPosition + ( (dataHistory.pageCountPosition - 1)*dataHistory.pagging );
 			}
 
@@ -222,14 +246,16 @@
 			}
 
 
+			// console.log(arrayCurrentPosition);
+			// console.log(dataHistory.rentalCount);
+
 			if(arrayCurrentPosition < dataHistory.rentalCount){
-				console.log('tusom');
 				r.nextLink = data[arrayCurrentPosition];
 			} else {
 				r.nextLink = false;
 			} 
 
-			console.log(r);
+			// console.log(r);
 
 			return r;
 
@@ -275,7 +301,7 @@
 		// fetch rentals to array 
 		base._getListRentals = function(){
 
-			console.log(base._getListInfo());
+			// console.log(base._getListInfo());
 
 			var r = [];
 			$(base.options.selectorRentalPostRow).each(function(k,v){
