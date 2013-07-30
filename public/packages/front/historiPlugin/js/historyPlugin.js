@@ -200,36 +200,39 @@
 				lengthHistory: data.length
 			};
 
-			var ii = 1;
-			var current = 0;
-
+			var arrayCurrentPosition = 0;
 
 			$.each(data,function(k,v){				
 
 				if(parseInt(base.rentalDetailVariables.id) == parseInt(v.id)){
 					r.currentObjectPosition = k+1;
-					console.log(k+' = '+v.id);
-					current = ii;
+					arrayCurrentPosition = k+1;
 				}
-
-				++ii;
 				
 			});
 
+			if(dataHistory.pageCountPosition > 1){
+				r.currentObjectPosition = r.currentObjectPosition + ( (dataHistory.pageCountPosition - 1)*dataHistory.pagging );
+			}
 
-			if(r.currentObjectPosition > 1){
-				r.prevLink = data[r.currentObjectPosition-2];
+			
+
+
+			if(arrayCurrentPosition > 1){
+				r.prevLink = data[arrayCurrentPosition-2];
 			} else {
 				r.prevLink = false;
 			}
 
 
-
-			if(r.currentObjectPosition < dataHistory.rentalCount){
-				r.nextLink = data[r.currentObjectPosition];
+			if(arrayCurrentPosition < dataHistory.rentalCount){
+				console.log('tusom');
+				r.nextLink = data[arrayCurrentPosition];
 			} else {
 				r.nextLink = false;
 			} 
+
+			console.log(r);
 
 			return r;
 
