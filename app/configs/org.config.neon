@@ -1,6 +1,6 @@
 parameters:
 
-	 memcachePrefix: org_
+	memcachePrefix: org_
 
 	database:
 		user: tralandia
