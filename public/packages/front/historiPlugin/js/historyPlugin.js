@@ -125,8 +125,8 @@
 
 			// console.log(base.rentalDetailVariables);
 			// console.log(base._getHistory());
-			console.log(base._getHistory().listData);
-			console.log(base.rentalDetailVariables.id);
+			// console.log(base._getHistory().listData);
+			// console.log(base.rentalDetailVariables.id);
 
 			$.each(base._getHistory().listData,function(k,v){				
 
@@ -163,12 +163,14 @@
 
 			dataHistory = base._getHistory();
 
+				// console.log(data);
+
 				if(typeof data.nextLink == 'undefined'){
 
 						jQuery.getJSON( dataHistory.listUrl+'?getDataForBreadcrumb=1' , function(d){
 
 							console.log('ajax');
-							console.log(d);
+							// console.log(d);
 
 							dataHistory.listData = d.listData;
 							base._setHistory(dataHistory);
@@ -191,7 +193,7 @@
 			var dataHistory = base._getHistory();
 			var data = dataHistory.listData;
 			
-							console.log(data);
+							console.log(dataHistory);
 
 
 			var r = {
@@ -272,6 +274,9 @@
 
 		// fetch rentals to array 
 		base._getListRentals = function(){
+
+			console.log(base._getListInfo());
+
 			var r = [];
 			$(base.options.selectorRentalPostRow).each(function(k,v){
 				r.push($(this).find('variables').data('info'));
@@ -311,7 +316,9 @@
 
 			return {
 				rentalCount: base._getListInfo().rentalCount,
-				listTitle: base._getListInfo().listTitle,					
+				listTitle: base._getListInfo().listTitle,				
+				pageCountPosition: base._getListInfo().paginatorPage,				
+				pagging: base._getListInfo().pagging,				
 				listUrl: document.URL,
 				listBreadcrumb: $(base.options.selectorListBreadcrumb).html(),
 				listData: base._getListRentals(),
