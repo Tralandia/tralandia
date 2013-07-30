@@ -1,7 +1,22 @@
 parameters:
 
 	database:
-		#debugger: true
+		user: tralandia
+		password: 986269962525
+		host: 127.0.0.1
+		dbname: tralandia
+		charset: utf8
+		driver: pdo_mysql
+		debugger: false
+
+	cacheDatabase:
+		user: tralandia
+		password: 986269962525
+		host: 127.0.0.1
+		database: cache
+
+	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
+
 
 	cacheDatabase:
 		database: tralandia_cache
