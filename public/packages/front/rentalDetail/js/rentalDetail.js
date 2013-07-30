@@ -37,14 +37,17 @@
 				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
 
 				var isFavorites = false;
-				var myFavorites = $.jStorage.get('favoritesList');
-				console.log(myFavorites);
+				var myFavorites = $.cookie('favoritesList');
+
+				
 
 
 				if(typeof myFavorites != 'undefined' && myFavorites != null)
 				{
-					$.each($.jStorage.get('favoritesList'),function(k,v){
-						if(rentalId == v.id){
+					myFavorites = myFavorites.split(',');
+
+					$.each(myFavorites,function(k,v){
+						if(rentalId == v){
 							isFavorites = true;
 						}
 					});					
