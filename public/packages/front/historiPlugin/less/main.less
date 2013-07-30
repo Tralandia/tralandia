@@ -24,11 +24,13 @@
 		font-size: 14px;
 		color: #888;
 		float: right;
+		display: none;
 		margin: 2px 15px 0 0;
 	}
 
-	.paginator {
+	.paginator , .btn-search {
 		font-size: 14px;
+		display: none;
 		background: @darkBlue;
 		color: #FFF;
 		text-shadow: none;
@@ -56,6 +58,13 @@
 			border-radius: 5px 0 0 5px;
 			opacity: .7;
 		}
+	}
+
+	.btn-search {
+		float: right;
+		border-radius: 5px;
+		display: block;
+		padding: 1px 12px;		
 	}
 
 	&.listType {
@@ -176,5 +185,19 @@
 	.info {
 		float: right;
 		text-align: center;
+
+		&.fromList {
+			.btn-search {
+				display: none;
+
+			}
+			.paginator {
+				display: block;
+			}
+
+			small {
+				display: block;
+			}
+		}
 	}
 }

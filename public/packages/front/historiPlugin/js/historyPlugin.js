@@ -44,7 +44,6 @@
 		*/
 
 		base._setListHistory = function(){
-			console.log(base._getListData());
 			base._setHistory(base._getListData());
 		};
 
@@ -102,6 +101,8 @@
 					console.log('nepatri do mojej historie');
 					// @todo ajax function
 				}				
+			} else {
+				$(base.options.selectorPaginatorContainer).removeClass('fromList');				
 			}
 
 		};
@@ -124,6 +125,8 @@
 
 			// console.log(base.rentalDetailVariables);
 			// console.log(base._getHistory());
+			console.log(base._getHistory().listData);
+			console.log(base.rentalDetailVariables.id);
 
 			$.each(base._getHistory().listData,function(k,v){				
 
@@ -141,38 +144,7 @@
 			
 		};
 
-		base._renderNavigationBar = function(){
-
-			var data = base._getInformationFromHistory();
-
-
-				if(typeof data.nextLink == 'undefined'){
-
-						// tmp nahradi ajax
-						dataHistory = base._getHistory();
-
-
-						var loadData = [];
-						$.each(dataHistory.listData,function(k,v){
-							loadData.push(v);
-							loadData.push(v);
-							loadData.push(v);
-						});
-
-						dataHistory.listData = loadData;
-						// --- tmp
-
-						base._setHistory(dataHistory);
-
-						data = base._getInformationFromHistory();
-
-
-				} else {
-
-					dataHistory = base._getHistory();
-
-				}
-
+		base._renderPaginator = function(data,dataHistory){
 				base.$prevlink.attr('href',data.prevLink.url)
 							  .attr('title',data.prevLink.name);
 
@@ -183,6 +155,32 @@
 				base.$listFullCount.html(dataHistory.rentalCount);	
 				base.$objectText.html(base.rentalDetailVariables.rentalText);
 				base.$rentalListPosition.html(data.currentObjectPosition);
+		};
+
+		base._renderNavigationBar = function(){
+
+			var data = base._getInformationFromHistory();
+
+			dataHistory = base._getHistory();
+
+				if(typeof data.nextLink == 'undefined'){
+
+						jQuery.getJSON( dataHistory.listUrl+'?getDataForBreadcrumb=1' , function(d){
+
+							console.log('ajax');
+							console.log(d);
+
+							dataHistory.listData = d.listData;
+							base._setHistory(dataHistory);
+							console.log('----');
+							data = base._getInformationFromHistory();
+							base._renderPaginator(data,dataHistory);
+
+						});
+
+				} else {
+					base._renderPaginator(data,dataHistory);
+				}
 
 				$(base.options.selectorListBreadcrumb).html(dataHistory.listBreadcrumb);							  						  
 
@@ -193,17 +191,29 @@
 			var dataHistory = base._getHistory();
 			var data = dataHistory.listData;
 			
+							console.log(data);
+
+
 			var r = {
 				lengthHistory: data.length
 			};
+
+			var ii = 1;
+			var current = 0;
+
 
 			$.each(data,function(k,v){				
 
 				if(parseInt(base.rentalDetailVariables.id) == parseInt(v.id)){
 					r.currentObjectPosition = k+1;
+					console.log(k+' = '+v.id);
+					current = ii;
 				}
+
+				++ii;
 				
 			});
+
 
 			if(r.currentObjectPosition > 1){
 				r.prevLink = data[r.currentObjectPosition-2];
@@ -334,6 +344,7 @@ $(function(){
 		localSotrageKeyName: 'historyPlugin',
 		selectorListBreadcrumb: '.breadcrumb',
 		// rental detail selectors
+		selectorPaginatorContainer: '#staticNavBar .info',
 		selectorRentalinfo: 'variables[name=rentalDetailInfo]',
 		selectorNavBarPrevLink: '#staticNavBar a.prev',
 		selectorNavBarNextLink: '#staticNavBar a.next',
