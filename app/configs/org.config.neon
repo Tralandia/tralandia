@@ -1,5 +1,7 @@
 parameters:
 
+	 memcachePrefix: org_
+
 	database:
 		user: tralandia
 		password: 986269962525
