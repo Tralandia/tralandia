@@ -88,18 +88,6 @@ class AmenityRepository extends \Repository\BaseRepository
 	}
 
 
-	public function findByActivityTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('activity', $translator);
-	}
-
-
-	public function findByRelaxTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('relax', $translator);
-	}
-
-
 	public function findByServiceTypeForSelect(ITranslator $translator)
 	{
 		return $this->findByTypeForSortBySortingSelect('service', $translator);
@@ -109,12 +97,6 @@ class AmenityRepository extends \Repository\BaseRepository
 	public function findByWellnessTypeForSelect(ITranslator $translator)
 	{
 		return $this->findByTypeForSortBySortingSelect('wellness', $translator);
-	}
-
-
-	public function findByCongressTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('congress', $translator);
 	}
 
 
@@ -130,39 +112,9 @@ class AmenityRepository extends \Repository\BaseRepository
 	}
 
 
-	public function findByRoomTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('room', $translator);
-	}
-
-
-	public function findByHeatingTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('heating', $translator);
-	}
-
-
-	public function findByParkingTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('parking', $translator);
-	}
-
-
-	public function findByRoomTypeTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('room-type', $translator);
-	}
-
-
 	public function findBySeparateGroupsTypeForSelect(ITranslator $translator)
 	{
 		return $this->findByTypeForSortBySortingSelect('separate-groups', $translator);
-	}
-
-
-	public function findByOtherTypeForSelect(ITranslator $translator)
-	{
-		return $this->findByTypeForSortBySortingSelect('other', $translator);
 	}
 
 
@@ -175,6 +127,30 @@ class AmenityRepository extends \Repository\BaseRepository
 	public function findByAvailabilityTypeForSelect(ITranslator $translator, Collator $collator)
 	{
 		return $this->findByTypeForSelect('owner-availability', $translator, $collator);
+	}
+
+
+	public function findByNearByTypeForSelect(ITranslator $translator, Collator $collator)
+	{
+		return $this->findByTypeForSelect('near-by', $translator, $collator);
+	}
+
+
+	public function findByRentalServicesTypeForSelect(ITranslator $translator, Collator $collator)
+	{
+		return $this->findByTypeForSelect('rental-services', $translator, $collator);
+	}
+
+
+	public function findByOnFacilityTypeForSelect(ITranslator $translator, Collator $collator)
+	{
+		return $this->findByTypeForSelect('on-facility', $translator, $collator);
+	}
+
+
+	public function findBySportsFunTypeForSelect(ITranslator $translator, Collator $collator)
+	{
+		return $this->findByTypeForSelect('sports-fun', $translator, $collator);
 	}
 
 

@@ -344,22 +344,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \Entity\Rental\Amenity[]
 	 */
-	public function getActivityAmenities()
-	{
-		return $this->getAmenitiesByType('activity');
-	}
-
-	/**
-	 * @return \Entity\Rental\Amenity[]
-	 */
-	public function getRelaxAmenities()
-	{
-		return $this->getAmenitiesByType('relax');
-	}
-
-	/**
-	 * @return \Entity\Rental\Amenity[]
-	 */
 	public function getServiceAmenities()
 	{
 		return $this->getAmenitiesByType('service');
@@ -371,14 +355,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getWellnessAmenities()
 	{
 		return $this->getAmenitiesByType('wellness');
-	}
-
-	/**
-	 * @return \Entity\Rental\Amenity[]
-	 */
-	public function getCongressAmenities()
-	{
-		return $this->getAmenitiesByType('congress');
 	}
 
 	/**
@@ -400,33 +376,33 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \Entity\Rental\Amenity[]
 	 */
-	public function getHeatingAmenities()
+	public function getNearByAmenities()
 	{
-		return $this->getAmenitiesByType('heating');
+		return $this->getAmenitiesByType('near-by');
 	}
 
 	/**
 	 * @return \Entity\Rental\Amenity[]
 	 */
-	public function getParkingAmenities()
+	public function getRentalServicesAmenities()
 	{
-		return $this->getAmenitiesByType('parking');
+		return $this->getAmenitiesByType('rental-services');
 	}
 
 	/**
 	 * @return \Entity\Rental\Amenity[]
 	 */
-	public function getRoomAmenities()
+	public function getOnFacilityAmenities()
 	{
-		return $this->getAmenitiesByType('room');
+		return $this->getAmenitiesByType('on-facility');
 	}
 
 	/**
 	 * @return \Entity\Rental\Amenity[]
 	 */
-	public function getOtherAmenities()
+	public function getSportsFunAmenities()
 	{
-		return $this->getAmenitiesByType('other');
+		return $this->getAmenitiesByType('sports-fun');
 	}
 
 	public function getCheckInFormatted()
