@@ -12,12 +12,12 @@ use Routers\BaseRoute;
 class BaseRepository extends EntityRepository {
 
 	/**
-	 * @param bool $createPhrases tento param je to len docasne koly importu
+	 * @param bool $save
 	 *
-	 * @return \Entity\BaseEntity
 	 * @throws \Nette\InvalidArgumentException
+	 * @return \Entity\BaseEntity
 	 */
-	public function createNew($createPhrases = TRUE) {
+	public function createNew($save = FALSE) {
 		$class = $this->getEntityName();
 		if($class == 'Entity\Phrase\Translation') {
 			throw new \Nette\InvalidArgumentException('Nemozes vytvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phrase->createTranslation()');
@@ -25,18 +25,19 @@ class BaseRepository extends EntityRepository {
 
 		$newEntity = new $class;
 
-		if($createPhrases) {
-			$associationMappings = $this->getClassMetadata()->getAssociationMappings();
-			foreach($associationMappings as $mapping) {
-				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
-					$fieldName = $mapping['fieldName'];
-					# @todo hack, porusenie DI
-					$phraseCreator = new \Service\Phrase\PhraseCreator($this->getEntityManager());
-					$phraseTypeName = '\\'.$class.':'.$fieldName;
-					$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
-				}
+		$associationMappings = $this->getClassMetadata()->getAssociationMappings();
+		foreach($associationMappings as $mapping) {
+			if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
+				$fieldName = $mapping['fieldName'];
+				# @todo hack, porusenie DI
+				$phraseCreator = new \Service\Phrase\PhraseCreator($this->getEntityManager());
+				$phraseTypeName = '\\'.$class.':'.$fieldName;
+				$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
 			}
 		}
+
+		if($save) $this->save($newEntity);
+
 		return $newEntity;
 	}
 

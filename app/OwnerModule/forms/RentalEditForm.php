@@ -42,7 +42,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	protected $collator;
 
 	/**
-	 * @var IRentalContainerFactory
+	 * @var \Extras\Forms\Container\IRentalContainerFactory;
 	 */
 	protected $rentalContainerFactory;
 
@@ -61,8 +61,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $userRepository;
 
+	/**
+	 * @var \Repository\InterviewQuestionRepository
+	 */
 	protected $interviewQuestionRepository;
-
 
 	/**
 	 * @var \Repository\Rental\AmenityRepository
@@ -100,8 +102,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function buildForm()
 	{
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
-		d($this->translator, $this->collator);
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
 		$supportedLanguages = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
@@ -111,32 +112,36 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 //			->setOption('help', $this->translate('o100071'))
 //	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
 //			;
-//
+
 		$rental = $this->rental;
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
-		$rentalContainer->addRentalPriceListContainer('priceList', $currency);
-		$rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
+		$rentalContainer->addRentalPriceListContainer('priceList', $currency, $rental);
+		$pricelistUpload = $rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
 
+
 		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
-			->setOption('prepend', 'http://')
-			->addRule(self::URL, $this->translate('o100102'))
-			->addRule(function() {
-				
-			}, $this->translate('o100102'));
-		;
+			->setOption('prepend', 'http://');
 
+		$rentalContainer->addText('contactName', '151894')
+			->setOption('prepend', '<i class="icon-user"></i>')
+			->setOption('help', $this->translate('151895'));
+
+		$rentalContainer->addText('email', 'o1096')
+			->setOption('prepend', '<i class="icon-envelope"></i>')
+			->setOption('help', $this->translate('o3095'));
 
 
 		$rentalContainer->addText('price', 'o100078')
 			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
-			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
+			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
+			->setRequired('151883');
 
 		$languages = array();
 
@@ -147,7 +152,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addSelect('translationLanguage', '##', $languages)
 						->setDefaultValue($this->environment->getLanguage()->getIso());
 
-
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
 		$interviewContainer = $rentalContainer->addContainer('interview');
@@ -156,26 +160,23 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$interviewContainer->addContainer($question->getId());
 		}
 
-		$namePhrase = $this->phraseRepository->findOneByOldId('886');
-		$teaserPhrase = $this->phraseRepository->findOneByOldId('890');
 		foreach($supportedLanguages as $language) {
 			$iso = $language->getIso();
-			$nameContainer->addText($iso, $namePhrase->getTranslationText($language))
-							->setOption('prepend', $iso)
-							->setOption('help', $this->translate('o100071'))
-							->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
-			$teaserContainer->addText($iso, $teaserPhrase->getTranslationText($language))
-							->setOption('prepend', $iso)
-							->setOption('help', '');
+			$nameContainer->addText($iso, $this->translate('o886', null, null, null, $language))
+				->setOption('prepend', $iso)
+				->setOption('help', $this->translate('o100071'));
+				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+
+			$teaserContainer->addText($iso, $this->translate('o890', null, null, null, $language))
+				->setOption('prepend', $iso)
+				->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {
 				$interviewContainer[$question->getId()]->addTextArea($iso, $i.'. '.$question->getQuestion()->getTranslationText($language));
 				++$i;
 			}
 		}
-
-		
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
 
@@ -185,7 +186,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
 
 		$amenities = $this->amenityRepository->findByActivityTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities);
+		$rentalContainer->addMultiOptionList('activity', '1390', $amenities);
 
 		$amenities = $this->amenityRepository->findByRelaxTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('relax', 'o100170', $amenities);
@@ -220,68 +221,21 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->addSubmit('submit', 'o100083');
 
 		$this->onValidate[] = callback($this, 'validation');
-		$this->onValidate[] = $rentalContainer->validation;
+		$this->onValidate[] = callback($rentalContainer, 'validation');
+		$this->onValidate[] = callback($pricelistUpload, 'validate');
 	}
-
 
 	public function setDefaultsValues()
 	{
-		$rental = $this->rental;
-		$places = [];
-		foreach ($rental->getPlacements() as $place) {
-			$places[] = $place->getId();
-		}
-		$pet = $rental->getPetAmenity();
-		$rentalName = $this->translate($rental->name);
-		$defaults = [
-			//'referrer' => 'luzbo',
-			'email' => $rental->getEmail(),
-			'url' => $rental->getUrl(),
-
-			'phone' => $rental->getPhone(),
-			'rental' => [
-				// 'name' => $rentalName,
-				'price' => $rental->getPrice()->getSourceAmount(),
-				'maxCapacity' => $rental->getMaxCapacity(),
-				'type' => [
-					'type' => $rental->getType()->getId(),
-					'classification' => $rental->getClassification(),
-				],
-				'board' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getBoardAmenities()),
-				'important' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getImportantAmenities()),
-				'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
-				'pet' => $pet ? $pet->getId() : NULL,
-				'placement' => $places,
-
-				'address' => $rental->getAddress(),
-			],
-		];
-
-		$this->setDefaults($defaults);
+		return $this['rental']->setDefaultsValues();
 	}
 
 
 	public function validation(RentalEditForm $form)
 	{
-		$values = $form->getValues()->rental;
-		d($values);
-		
-		// Rental Name validation
-		if ($name = $values->name->{$this->country->defaultLanguage->iso}) {
-			if ($name !== $this->translate($this->rental->name)) {
+		$values = $form->getValues();
 
-			}
-		}
-
-		// Phone
-		if ($values->phone->number && !$values->phone->phone) {
-			$errors[] = 'Wrong phone number';
-		}
-
+		$r = 1;
 	}
 
 }

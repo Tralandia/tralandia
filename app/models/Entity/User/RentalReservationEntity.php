@@ -21,6 +21,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 

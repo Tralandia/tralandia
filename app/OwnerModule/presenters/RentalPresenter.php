@@ -4,11 +4,10 @@ namespace OwnerModule;
 
 
 use Nette\Application\BadRequestException;
+use Nette\Environment;
 
 class RentalPresenter extends BasePresenter
 {
-
-	public $rentalRepositoryAccessor;
 
 	/**
 	 * @var \Entity\Rental\Rental
@@ -21,11 +20,11 @@ class RentalPresenter extends BasePresenter
 	 */
 	protected $rentalEditFormFactory;
 
-
-	public function injectDic(\Nette\DI\Container $dic)
-	{
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
+	/**
+	 * @autowire
+	 * @var \FormHandler\IRentalEditHandlerFactory
+	 */
+	protected $rentalEditHandlerFactory;
 
 
 	public function actionFirstRental()
@@ -50,6 +49,12 @@ class RentalPresenter extends BasePresenter
 
 		$this->checkPermission($this->rental, 'edit');
 
+		$rentalEditForm = $this->getComponent('rentalEditForm');
+		if(!$rentalEditForm->isSubmitted()){
+			$rentalEditForm['rental']['priceList']->setDefaultsValues();
+			$rentalEditForm['rental']['priceUpload']->setDefaultsValues();
+		}
+
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
 		$this->template->rental = $this->rental;
@@ -61,9 +66,13 @@ class RentalPresenter extends BasePresenter
 	protected function createComponentRentalEditForm()
 	{
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
-		$form->onSuccess[] = function ($form) {
-			d($form->getValues());
+		$rentalEditHandler = $this->rentalEditHandlerFactory->create($this->rental);
+		$rentalEditHandler->attach($form);
+
+		$form->onSuccess[] = function($form) {
+			$form->getPresenter()->redirect('this');
 		};
+
 		return $form;
 	}
 

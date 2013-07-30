@@ -67,13 +67,17 @@ class FileStorage extends Nette\Object
 		file_put_contents($path, $content);
 		return $this->getRelativePath($path);
 	}
-	
+
+
 	/**
-	 * @return TRUE|FALSE
+	 * @param $filePath
+	 *
+	 * @return bool
+	 * @throws \Nette\FileNotFoundException
 	 */
 	public function delete($filePath)
 	{
-		$filePath = $this->filesDir . DIRECTORY_SEPARATOR . $filePath;
+		$filePath = $this->filesDir . $filePath;
 		if (!file_exists($filePath)) {
 			throw new Nette\FileNotFoundException("$filePath");
 		}

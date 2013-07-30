@@ -34,6 +34,12 @@ class Address extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
+	protected $formattedAddress;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
 	protected $postalCode;
 
 	/**
@@ -102,7 +108,7 @@ class Address extends \Entity\BaseEntity {
 	 */
 	public function clearLocations()
 	{
-		foreach ($this->locations as $key => $value) {
+		foreach ($this->locations as $value) {
 			$value->removeAddress($this);
 		}
 		$this->locations->clear();
@@ -117,7 +123,7 @@ class Address extends \Entity\BaseEntity {
 	public function setLocations(array $locations)
 	{
 		$this->clearLocations();
-		foreach ($locations as $key => $value) {
+		foreach ($locations as $value) {
 			if ($value instanceof \Entity\Location\Location) {
 				$this->addLocation($value);
 			}
@@ -147,7 +153,7 @@ class Address extends \Entity\BaseEntity {
 		}
 
 		if($returnJustOneType) {
-			
+
 			$return = Arrays::get($return,$returnJustOneType,array());
 		}
 
@@ -156,14 +162,16 @@ class Address extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
+
+
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Address
@@ -174,7 +182,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -182,7 +190,7 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->status;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Address
@@ -193,7 +201,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address
 	 */
@@ -203,7 +211,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -211,7 +219,36 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->address;
 	}
-		
+
+	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
+	public function setFormattedAddress($formattedAddress)
+	{
+		$this->formattedAddress = $formattedAddress;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetFormattedAddress()
+	{
+		$this->formattedAddress = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getFormattedAddress()
+	{
+		return $this->formattedAddress;
+	}
+
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Address
@@ -222,7 +259,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address
 	 */
@@ -232,7 +269,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -240,7 +277,7 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->postalCode;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
@@ -251,7 +288,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address
 	 */
@@ -261,7 +298,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -269,7 +306,7 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->primaryLocation;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
@@ -280,7 +317,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address
 	 */
@@ -290,7 +327,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -298,7 +335,7 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->locality;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Address
@@ -309,7 +346,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Contact\Address
 	 */
@@ -319,7 +356,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -327,7 +364,7 @@ class Address extends \Entity\BaseEntity {
 	{
 		return $this->subLocality;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
@@ -340,7 +377,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
@@ -351,7 +388,7 @@ class Address extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]
 	 */

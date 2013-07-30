@@ -106,22 +106,6 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	}
 
 
-	/**
-	 * @param $id
-	 *
-	 * @return \Entity\Language
-	 * @throws \Nette\Application\BadRequestException
-	 */
-	protected function findLanguage($id)
-	{
-		$language = $this->languageRepositoryAccessor->get()->find($id);
-		if(!$language) {
-			throw new BadRequestException;
-		}
-
-		return $language;
-	}
-
 	protected function createComponentSupportNewLanguage()
 	{
 		$form = $this->simpleFormFactory->create();

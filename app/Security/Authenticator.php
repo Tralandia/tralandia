@@ -43,21 +43,28 @@ class Authenticator extends Object implements NS\IAuthenticator
 	{
 		list($email, $password) = $credentials;
 
-		if ($email instanceof \Entity\User\User) {
-			$user = $email;
-		} else {
-			$user = $this->userRepository->findOneByLogin($email);
+		$user = $this->userRepository->findOneByLogin($email);
 
-			if (!$user) {
-				throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
-			}
+		if (!$user) {
+			throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
+		}
 
-			if ($user->getPassword() !== self::calculatePasswordHash($password)) {
-				throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
-			}
+		if ($user->getPassword() !== self::calculatePasswordHash($password)) {
+			throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
 		}
 
 
+		return $this->getIdentity($user);
+	}
+
+
+	/**
+	 * @param User $user
+	 *
+	 * @return Identity
+	 */
+	public function getIdentity(User $user)
+	{
 		return Identity::createIdentity($user);
 	}
 
@@ -109,7 +116,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 
-		return $this->authenticate([$user, NULL]);
+		return $this->getIdentity($user);
 	}
 }
 

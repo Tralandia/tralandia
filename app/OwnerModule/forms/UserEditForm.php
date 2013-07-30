@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace OwnerModule\Forms;
 
@@ -38,7 +38,7 @@ class UserEditForm extends BaseForm {
 			->addConditionOn($this["password"], self::FILLED)
 				->addRule(self::EQUAL, 'o100149', $this["password"]);
 
-		$this->addCheckbox('newsletter', 'o100150');
+//		$this->addCheckbox('newsletter', 'o100150');
 
 		$this->addSubmit('submit', 'o100151');
 
@@ -63,7 +63,7 @@ class UserEditForm extends BaseForm {
 		if($values->password) {
 			$user->setPassword($values->password);
 		}
-		$user->setNewsletter($values->newsletter);
+//		$user->setNewsletter($values->newsletter);
 
 		$this->userRepositoryAccessor->get()->update($user);
 	}
