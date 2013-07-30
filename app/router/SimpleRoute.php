@@ -83,6 +83,10 @@ class SimpleRoute extends BaseRoute
 	protected function skipLink($presenter, $action)
 	{
 		$destination = ':'.$presenter.':'.$action;
+		if(in_array($destination, [':Front:RentalList:redirectToFavorites'])) {
+			return TRUE;
+		}
+
 		$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
 
 		return $page != NULL;

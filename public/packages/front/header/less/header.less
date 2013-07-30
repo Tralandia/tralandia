@@ -16,6 +16,66 @@
 	display: block;
 }
 
+
+#headerShareMenu {
+	height: 30px;
+	width: 210px;
+	
+	float: right;
+	margin-top: -20px;
+	margin-right: 10px;
+
+	&.fixed {
+		position: fixed;
+		top: 20px;
+		z-index: 40;
+		margin-left: 742px;
+
+		.myFav , .socialIcons {
+			.border-radius(0 0 5px 5px);
+		}
+	}
+
+	.socialIcons {
+		top: 0;
+		background: rgba(0, 0, 0, 0.5);
+		float: right;
+		margin-right: 0;
+	}
+
+	.myFav {
+		background: #ff6600;
+		border: 1px solid  #ff6600;
+		display: block;
+		position: relative;
+		height: 31px;
+		.border-radius(5px);
+		width: 60px;
+		line-height: 35px;
+		float: left;
+		color: #fff;
+		text-align: center;
+
+
+
+		i {
+			float: left;
+			margin-left: 10px;
+			margin-top: 10px;
+			font-size: 21px;
+		}
+
+		small {
+			color: #fff;	
+			font-size: 17px;	
+		}
+
+		&:hover {
+			border-color: #fff;
+		}
+	}
+}
+
 	.socialIcons , .socialBtnHeader {
 		list-style: none;
 		width: 125px;
@@ -25,6 +85,7 @@
 		margin-right: 10px;
 		position: relative;
 		top: -20px;
+		z-index: 50;
 		background-color: rgba(0, 0, 0, 0.5);
 		height: 27px;
 		line-height: 29px;
@@ -98,11 +159,25 @@
 		float: left;
 		margin-left: 10px;
 		margin-bottom: 3px;
-		width: 430px;
+		width: 820px;
+
+		a {
+			float: left;
+		}
+
 		span {
+			font-size: 31px;
 			font-family: 'neosansregular';
 		}
 
+		i {
+			color: #ffffff;
+			padding: 3px 8px 0 8px;
+			font-size: 22px;
+			height: 0;
+			display: block;
+			float: left;			
+		}
 
 	}
 
@@ -146,10 +221,10 @@
 	#pageTitle {
 
 		// background: url('../packages/front/_base/img/page_title_bg.png') repeat;
-		width: 550px;
+		width: 940px;
 		text-shadow: 0px 0px 8px #000;
 
-		h1 {
+		div.slogan {
 			font-size: 16px;
 			line-height: 23px;
 			margin: 0;

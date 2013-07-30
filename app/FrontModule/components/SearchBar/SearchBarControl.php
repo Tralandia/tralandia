@@ -2,7 +2,9 @@
 namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
+use Entity\BaseEntity;
 use Environment\Environment;
+use Extras\FormMask\Items\Base;
 use FrontModule\Forms\ISearchFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
@@ -185,6 +187,55 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	}
 
 
+	public function renderBreadcrumb()
+	{
+		$this->template->setFile(APP_DIR.'/FrontModule/components/SearchBar/breadcrumb.latte');
+		$template = $this->template;
+
+		$currency = $this->environment->getPrimaryLocation()->getDefaultCurrency()->getIso();
+		$price = $this->priceFrom . ' - ' . $this->priceTo . strtolower($currency);
+
+		$filter = [
+			FrontRoute::SPOKEN_LANGUAGE => $this->spokenLanguage,
+			FrontRoute::BOARD => $this->board,
+			FrontRoute::CAPACITY => $this->capacity,
+			'price' => $this->priceFrom || $this->priceTo ? $price : NULL,
+			FrontRoute::RENTAL_TYPE => $this->rentalType,
+			FrontRoute::LOCATION => $this->location,
+			FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
+		];
+		$first = TRUE;
+
+		$breadcrumbLinks = [];
+
+		foreach($filter as $key => $value) {
+			if($value) {
+				$link = [];
+				if($first) {
+					$first = FALSE;
+				} else {
+					$link['href'] = $this->link('this', $filter);
+				}
+				$link['text'] = $value instanceof BaseEntity ? $this->getPresenter()->translate($value->getName()) : $value;
+
+				$breadcrumbLinks[$key] = $link;
+				$filter[$key] = NULL;
+			}
+		}
+
+		$breadcrumbLinks = array_reverse($breadcrumbLinks, TRUE);
+
+		$breadcrumbLinks = ArrayHash::from($breadcrumbLinks);
+
+		$template->searchLink = $this->link('this');
+		$template->breadcrumbLinks = $breadcrumbLinks;
+		$template->isList = $this->getPresenter()->isLinkCurrent(':Front:RentalList:*');
+
+
+		$template->render();
+	}
+
+
 	public function isHomepage()
 	{
 		return $this->presenter->getName() == 'Front:Home';
@@ -254,30 +305,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public function handleGetSearchCount()
 	{
-//		$em = $this->em;
-//		$presenter = $this->getPresenter();
-//
-//		$location = $presenter->getParameter('location');
-//		if($location) {
-//			$this->location = $em->getRepository(LOCATION_ENTITY)->find($location);
-//		}
-//
-//		$rentalType = $presenter->getParameter('rentalType');
-//		if($rentalType) {
-//			$this->rentalType = $em->getRepository(RENTAL_TYPE_ENTITY)->find($rentalType);
-//		}
-//
-//		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
-//
-//		$this->priceTo = $presenter->getParameter('priceTo', NULL);
-//
-//		$this->capacity = $presenter->getParameter('capacity', NULL);
-//
-//		$spokenLanguage = $presenter->getParameter('spokenLanguage');
-//		if($spokenLanguage) {
-//			$this->spokenLanguage = $em->getRepository(LANGUAGE_ENTITY)->find($spokenLanguage);
-//		}
-
 		$search = $this->getSearch();
 
 		$count = $search->getRentalsCount();
@@ -353,7 +380,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected function createComponentSearchForm()
 	{
 		$form = $this->searchFormFactory->create($this->getSearchCriteria(), $this->getSearch(), $this->presenter);
-		//$form->buildForm();
 
 		$form->onSuccess[] = function ($form) {
 			$values = $form->getValues();

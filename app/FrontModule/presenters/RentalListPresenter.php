@@ -35,7 +35,7 @@ class RentalListPresenter extends BasePresenter {
 	 */
 	protected $findOrCreateUser;
 
-	public function actionDefault($favoriteList, $email)
+	public function actionDefault($favoriteList, $email, $getDataForBreadcrumb)
 	{
 		if($this->device->isMobile()) {
 			$this->setLayout("layoutMobile");
@@ -50,6 +50,8 @@ class RentalListPresenter extends BasePresenter {
 			}
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
+		} else if ($getDataForBreadcrumb) {
+			$this->getDataForBreadcrumb();
 		} else {
 			/** @var $search \Service\Rental\RentalSearchService */
 			$search = $this['searchBar']->getSearch();
@@ -110,6 +112,27 @@ class RentalListPresenter extends BasePresenter {
 	}
 
 
+	public function getDataForBreadcrumb()
+	{
+		/** @var $search \Service\Rental\RentalSearchService */
+		$search = $this['searchBar']->getSearch();
+		$rentals = $search->getRentals();
+
+		$json = [];
+
+		foreach($rentals as $rental) {
+			$row = [];
+			$row['id'] = $rental->getId();
+			$row['name'] = $this->translate($rental->getName());
+			$row['url'] = $this->link('Rental:detail', ['rental' => $rental]);
+			$json[] = $row;
+		}
+
+		$this->payload->listData = $json;
+		$this->sendPayload();
+	}
+
+
 	public function actionRedirectToFavorites()
 	{
 		$link = $this->generateFavoriteLink();
@@ -138,9 +161,18 @@ class RentalListPresenter extends BasePresenter {
 			}
 		}
 
+		$nameIsTranslated = TRUE;
+		$name = $rental->getName()->getTranslation($this->language);
+		if(!$name || !$name->getTranslation()) {
+			$nameIsTranslated = FALSE;
+		}
+
+
+
 		return [
 			'service' => $this->rentalDecoratorFactory->create($rental),
 			'firstInterviewAnswerText' => $firstInterviewAnswerText,
+			'nameIsTranslated' => $nameIsTranslated,
 		];
 	}
 

@@ -198,17 +198,7 @@ App.prototype.openContactForm = function(){
 *	RENTAL DETAIL
 ****************************************************************************************************/
 
-App.prototype.datepickerIcon = function(){
 
-	if($(this).parent().find('input').hasClass('focus')){
-		$( ".datepicker" ).datepicker( "hide" );
-		$(this).parent().find('input').removeClass('focus');
-	} else {
-		$(this).parent().find('input').focus();
-		$(this).parent().find('input').addClass('focus');
-	}
-
-}
 
 /**
 *	initialize map in object detail
@@ -224,6 +214,8 @@ App.prototype.initMapsObjectDetail = function(){
 	},800);
 
 }
+
+
 
 /****************************************************************************************************
 *	CONTACT PAGE FORM CREATOR
@@ -277,6 +269,8 @@ App.prototype.autoselect = function(){
 $(document).ready(function(){
 
 	jsVariablesReplace();
+
+
 
 
 	// Prevent "empty" links to "click"
@@ -342,16 +336,16 @@ $(document).ready(function(){
 		$(this).tooltip('hide');
 	})
 
-
-
 	// click map tooltip
 	$('.point').tooltip();
+	$('.tooltipElem').tooltip();
+
 
 	// alerts
 	$(".alert").alert();
 	$('.alert:not(.alert-error)').customAlert();
 
-
+	$('.scrollTo').click(elemScrollTo);
 	$('.calendarEdit').calendarEdit();
 
 	//$('.mapControl').mapControl();
@@ -370,9 +364,7 @@ $(document).ready(function(){
 
 	$('.loadContactForm').click(A.loadContactForm);
 
-	/* UI calendar */
-	$(".datepickerIcon").click(A.datepickerIcon);
-	$(".datepickerIcon").live('click',A.datepickerIcon);
+
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 
 	/* add attachment file  */
@@ -424,30 +416,58 @@ $(document).ready(function(){
 
 
 
+// selec2 onBlur close
+var clickSelect2 = false;
+
+$('div.select2 , div.sidebarLocation').live('click',function(){
+	clickSelect2 = true;
+});
+
+$('div.sidebarLocation').live('click',function(){
+	var opened = $('body').attr('data-open-select');
+	if(!opened){
+		$('body').attr('data-open-select',true);
+	} else {
+		$('body').attr('data-open-select',false);
+	}
+
+});
 
 
+$('body').live('click',function(){
+	setTimeout(function(){
 
+		var opened = $('body').attr('data-open-select');
 
+		if(opened){
 
-
-
+			if(clickSelect2){
+				clickSelect2 = false;
+			} else {
+				$('.select2').select2('close');
+				$('.sidebarLocation').select2('close');
+				clickSelect2 = false;
+			}
+			
+		} 
+		
+	},10);	
+});
 
 
 
 $('body').click(function(event){
+
+	// $('div:not(.select2-choice)').select2('close');
 
 	if(langmenuOpen){
 		$('#langMenuOptions').hide();
 		$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 		langmenuOpen = false;
 	}
-	if(socialIconsMenu){
-		$('#socialIcons').find('span').html('&#59228;');
-		$('#socialIconsMenu').hide();
-		socialIconsMenu = false;
-	}
 
-	});
+
+});
 
 
 
@@ -566,6 +586,14 @@ function _selectSetSelectedValue(){
 
 		base.bind = function(){
 			base.$el.click(base._toggleOpenMenu);
+			
+			$('body').click(function(){
+
+				base._closeMenu();
+				base.openMenu = false;				
+
+			});
+
 		};
 
 		base.urlInit = function(){
@@ -591,7 +619,7 @@ function _selectSetSelectedValue(){
 				base.openMenu = true;
 			} else {
 				base._closeMenu();
-				base.openMenu = false
+				base.openMenu = false;
 			}
 
 			return false;
@@ -600,9 +628,9 @@ function _selectSetSelectedValue(){
 
 		base._firstOpen = function(){
 
-			// $(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
-			// $(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
-			// $(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.twitter-share').attr('data-url',document.URL);
+			$(base.socialShitCover).find('a.facebook-like').attr('data-href',document.URL);
+			$(base.socialShitCover).find('a.googleplus-one').attr('href','https://plus.google.com/share?url='+document.URL).attr('data-href',document.URL);
 
 			base._openMenu();
 
@@ -635,7 +663,11 @@ function _selectSetSelectedValue(){
 
 
 
+function elemScrollTo(){
+	console.log($(this).data('scrollTo'));
 
+	$.scrollTo($(this).data('scrollTo'),800 , {offset: { top: -10} });
+}
 
 
 

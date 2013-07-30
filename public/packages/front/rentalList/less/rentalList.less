@@ -46,36 +46,78 @@ div#tabs-1 div.row-fluid.rentalList {
 
 
 
-	.price {
-		position: relative;
-		top: 104px;
-		float: right;
-		font-size: 23px;
-		color: #ffffff;
-		height: 32px;
-		background-image: linear-gradient(bottom,#ef4a08 0%,#ef6605 100%);
-		background-image: -o-linear-gradient(bottom,#ef4a08 0%,#ef6605 100%);
-		background-image: -moz-linear-gradient(bottom,#ef4a08 0%,#ef6605 100%);
-		background-image: -webkit-linear-gradient(bottom,#ef4a08 0%,#ef6605 100%);
-		background-image: -ms-linear-gradient(bottom,#ef4a08 0%,#ef6605 100%);
-		background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#ef4a08),color-stop(1,#ef6605));
-		
-		line-height: 32px;
-		z-index: 300;
-		padding: 0 10px;
-		width: auto;
-		-webkit-border-top-left-radius: 5px;
-		-webkit-border-bottom-left-radius: 5px;
-		-moz-border-radius-topleft: 5px;
-		-moz-border-radius-bottomleft: 5px;
-		border-top-left-radius: 5px;
-		border-bottom-left-radius: 5px;
-		text-shadow: 1px 1px 0 rgb(124, 51, 21);
+	.infoGrid {
+		list-style: none;
+		height: 30px;
+		border: 1px solid #ddd;
+		.border-radius(5px);
+		margin: 0;
+		padding: 0;
+		color: #555;
+		background: #fff;
 
-		span {
-			font-size: 11px;
-			position: relative;
-			top: -4px;		
+		table {
+			margin: 0;
+			tr {
+				td {
+					padding: 7px;
+					line-height: 16px;
+					border-right: 1px solid #ddd;
+					text-align: center;
+					color: @brown;
+					
+					&.price {
+						color: @darkGreen;
+
+						small {
+							font-weight: normal;
+						}
+					}
+
+					&.food {
+						border: none;
+						max-width: 220px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						font-size: 12px;
+					}
+
+
+
+					&.count {
+						
+
+						.icon-female {
+							font-size: 12px;
+							position: relative;
+							right: 5px;
+							line-height: 15px;							
+						}
+
+						.icon-male {
+							font-size: 12px;
+
+							line-height: 14px;							
+						}
+					}
+
+					i {
+						color: @brown;
+						line-height: 13px;
+					}
+
+					small {
+						display: block;
+						line-height: 13px;
+						position: relative;
+						font-size: 10px;
+						top: -2px;
+						white-space: nowrap;
+						color: #999;
+					}
+				}
+			}
 		}
 	}
 
@@ -88,59 +130,42 @@ div#tabs-1 div.row-fluid.rentalList {
 
 	.listCompareBtn {
 
-		color: #7b3300;
-		font-size: 11px;
-		border: 1px solid #cbd2a0;
-		height:22px;
-		padding: 0 6px;
-		line-height:15px;
-		font-weight: normal;
-
-		position: relative;
-		top: 0px;
-
-		
-		#gradient > .vertical(#FEFEFE,#D9DFEB);
-
-		span:before {
-			font-size: 22px;
-		}
+		background: transparent;
+		border: none;
+		padding: 0;
+		color: #dddddd;
+		height: 21px;
+		overflow: hidden;
 
 		i {
-			margin-top: -1px;
+			width: 24px;
+			height: 20px;			
 			&:before {
-				font-size: 10px;
+				font-size: 20px;
 			}
 		}
 
-		&:hover {			
-			#gradient > .vertical(#FEFEFE,#D9DFEB);
-			background-position: 0;
+		i.icon-heart {
+			display: none;
+			margin-top: 2px;
 		}
 
-		&.active {
-			color: #444;
-			border: 1px solid rgb(147, 172, 218);
-
-			&:hover  {					
-				#gradient > .vertical(#D9DFEB,#FEFEFE);
+		&.selected {
+			color: #d32c16;
+			i.icon-heart {
+				display: block;
 			}
+			i.icon-heart-empty {
+				display: none;
 
-			&.selected {
+			}			
+		}
 
-				color: #fff;
-				border: 1px solid #27407e;				
-				#gradient > .vertical(#5b78af,#27407e);
+	}
 
-				span.entypo-heart:before {					
-					color: #f68905;
-				}
-
-				&:hover {					
-					#gradient > .vertical(#27407e,#5b78af);
-				}
-
-			}
+	&:hover {
+		.listCompareBtn {
+			color: #d32c16;
 		}
 	}
 
@@ -203,8 +228,9 @@ div#tabs-1 div.row-fluid.rentalList {
 		font-weight: bold;
 		margin: 0;
 		float: left;
-		max-width: 370px;
+		max-width: 424px;
 		padding-top: 2px;
+		color: @darkGreen;
 
 		white-space: nowrap;
 		
@@ -260,10 +286,10 @@ div#tabs-1 div.row-fluid.rentalList {
 		&.answer {
 			font-size: 12px;
 			line-height: 17px;
-			height: 31px;
+			height: 29px;
 			overflow: hidden;
-			margin-bottom: 10px;
-			color: #999;
+			margin: 11px 0 14px 0;
+			color: #999999;
 			
 		}
 

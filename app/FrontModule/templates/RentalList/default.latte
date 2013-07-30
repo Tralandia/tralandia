@@ -4,11 +4,15 @@
 
 {block content}
 
+<variables n:syntax="asp" name="listInfo" data-info='{"rentalCount":"<%$totalResultsCount%>","listTitle":"<%$pageH1%>","paginatorPage":"<%$paginatorPage%>","pagging":"50"}'></variables>
+
 <h1>{$pageH1}
 	<span class="counter">
 		({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
 	</span>
 </h1>
+
+{control searchBar:breadcrumb}
 
 <div class="row-fluid">
 	<div class="span12">
@@ -38,11 +42,12 @@
 						{var $rentalData = $findRental($rentalId); }
 						{var $rentalService = $rentalData['service']; }
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
+						{var $nameIsTranslated = $rentalData['nameIsTranslated']; }
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
 
 
-							<div class="row-fluid rentalList" data-cache="{$rand}">
+							<div class="row-fluid rentalList" data-cache="{$rand}" data-rental-rank="{$rental->getRank()}">
 								<div class="span4">
 									<a href="{link Rental:detail $rental}" n:class="$featured ? top : classic">
 										{* <div class="price">{$rental->price} <span>EUR</span></div> *}
@@ -55,68 +60,69 @@
 									</a>
 								</div>
 								<div class="span8">
-									<h2>
-										<a href="{link Rental:detail $rental}" title="{_$rental->name}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}
-										<i class="entypo-star"></i>{/for}</span>{/if}</h2>
+									{capture $rentalName}{_$rental->name}{/capture}
+									{capture $rentalLocation}{_$rental->type->name|firstUpper} {if $rental->hasPlacement()}{_$rental->getPlacement()->name}, {/if}{_$rental->address->locality->name}{/capture}
+									{if $nameIsTranslated}
+										{var $rentalTitle = $rentalName}
+										{var $rentalSubTitle = $rentalLocation}
+									{else}
+										{var $rentalTitle = $rentalLocation}
+										{var $rentalSubTitle = $rentalName}
+									{/if}
 
-										{* {if $mainImage = $rental->getMainImage()} *}
-										{if 1}
-											<button rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" class="addToFavorites btn btn-mini listCompareBtn active"><i class="icon-heart"></i> {_o100140} </button>
-										{/if}
+									<variables n:syntax="asp" data-info='{"name":"<%_$rental->name%>","url":"<%link Rental:detail $rental%>","id":"<%$rental->id%>"}'></variables>
+
+									<h2>
+										<a href="{link Rental:detail $rental}" title="{$rentalTitle}">{$rentalTitle}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}
+									</h2>
+
+									<button data-id="{$rental->id}" data-name="{$rentalTitle}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" class="addToFavorites btn btn-mini listCompareBtn active"><i class="icon-heart"></i><i class="icon-heart-empty"></i></button>
 
 									<div class="clearfix"></div>
 
-									<p class="locations">
-										{*<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>*}
-										{_$rental->type->name|firstUpper}
-										{if $rental->hasPlacement()}{_$rental->getPlacement()->name}, {/if}
-										{_$rental->address->locality->name}
-
-										{*
-										{if count($rental->address->getLocations()) > 0}
-										(
-										{foreach $rental->address->getLocations() as $location}
-											<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
-										{/foreach}
-										)
-										{/if}
-										*}
-
-									</p>
+									<p class="locations">{$rentalSubTitle}</p>
 
 									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
 									<p class="answer">
-										{if $firstInterviewAnswerText}
-											{$firstInterviewAnswerText}
-										{/if}
+										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
+
+											{foreach $amenities as $amenity}
+
+												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+
+											{/foreach}
+										{/foreach}
 									</p>
 
 
-									<div class="panel baseBorder">
-										<table class="holder">
-											<tbody>
+									<div class="infoGrid">
+										<table>
 											<tr>
-												<td class="rentalShortInfo">
-													<b>{_o100041} {$rental->price}</b> {_o100004},
-													<b>{_o924}</b> {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} {if $rental->bedroomCount > 0}({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 
+												<td class="price tooltipElem" data-placement="bottom" title="{_152274}">{$rental->price}</td>
+
+												<td class="count">{_o100005} {$rental->maxCapacity} <i class="icon-male"></i><i class="icon-female"></i></td>
+
+												<td class="food">
+													<i class="icon-food"></i>
+													{var $importantAmenities = $rental->getImportantAmenities(true)}
+
+
+													{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['children', 'activity' , 'relax' , 'service' , 'wellness' , 'congress' , 'kitchen' , 'bathroom' , 'room' , 'heating' , 'parking' , 'animal' , 'other' , 'owner-availability','separate-groups']) as $amenities}
+
+														{foreach $amenities as $amenity}
+
+															{_$amenity->name}{if !$iterator->last}, {/if}
+
+														{/foreach}
+													{/foreach}
 												</td>
-
-												{*
-												{if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
-												*}
-
 											</tr>
-											</tbody>
 										</table>
-										<p class="accessories">
-											{var $importantAmenities = $rental->getImportantAmenities(true)}
-											{foreach $importantAmenities  as $amenity}
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-											{/foreach}
-										</p>
 									</div>
+
+
 
 								</div>
 							</div>

@@ -1,9 +1,18 @@
 <div class="span12">
+
+<div id="myFav" class="hide">
+	<a href="#">
+		<i class="animated icon-heart"></i>
+		<span></span>
+		<div class="addToFavorites hide"></div>
+	</a>
+</div>
+
 	<div class="innerPadding baseRadius baseBorder" id="header">
-	<div id="socialMediaLinks">
+{* 	<div id="socialMediaLinks">
 		<a class="facebook" href="{$facebookPage}" target="_blank"><i class="icon-facebook-sign"></i></a>
 		<a class="googlePlus" href="{$googlePlusProfile}" target="_blank"><i class="icon-google-plus-sign"></i></a>
-	</div>
+	</div> *}
 	<div class="inner" id="topWidget"
 			 style="background-image: url({$backgroundImage});">
 
@@ -50,7 +59,14 @@
 
 					{else}
 
-						{ifset $worldLink}
+						{ifset $showFlag}
+						<li class="headerIcon">
+							<img src="/images/flags/{$isoCode}.png" />
+						</li>
+						{/ifset}
+
+
+						{ifset $showFlag}
 							<li class="headerIcon">
 								<a href="{$worldLink}">{_151892}</a>
 							</li>
@@ -62,6 +78,7 @@
 								<strong>{_o100044}</strong>
 							</a>
 						</li>
+
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
 								<strong>{_o100195}</strong>
@@ -111,32 +128,45 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="{$homepageUrl}"> {$domainHost}<span>{$domainExtension}</span>
+					<a href="{$worldLink}">{$domainHost}</a>
+						{ifset $isRootHome}
+						{else}
+							<i class="icon-chevron-right"></i>
+							<a href="{$homepageUrl}">
+								<span>{_$environment->getPrimaryLocation()->getName()}</span>
+							</a>
+						{/ifset}
 					</a>
 				</div>
-				<h1><a href="{$homepageUrl}">{$slogan}</a></h1>
+				<div class="slogan">{$slogan}</div>
 			</div>
 
 			<div class="clearfix"></div>
 
-			<div class="socialIcons socialPluginsInit" id="socialIcons">
-				<i class="icon-facebook"></i>
-				<i class="icon-google-plus"></i>
-				<i class="icon-twitter"></i>
-				<i class="icon-pinterest"></i>
+<div id="headerShareMenu">
 
-				<ul class="dropdown-menu" id="socialIconsMenu">
-					<li class="socialIconCover">
-						<ul class="social-buttons">
-							<li>{$twitterShareTag}</li>
-							<li>{$googlePlusShareTag}</li>
-							<li>{$facebookShareTag}</li>
-							<li>{$pinterestShareTag}</li>
-						</ul>
-					</li>
-					{* <li class="loader"><i class="icon-spinner icon-spin"></i></li> *}
+
+
+	<div class="socialIcons socialPluginsInit" id="socialIcons">
+		<i class="icon-facebook"></i>
+		<i class="icon-google-plus"></i>
+		<i class="icon-twitter"></i>
+		<i class="icon-pinterest"></i>
+
+		<ul class="dropdown-menu" id="socialIconsMenu">
+			<li class="socialIconCover">
+				<ul class="social-buttons">
+					<li>{$twitterShareTag}</li>
+					<li>{$googlePlusShareTag}</li>
+					<li>{$facebookShareTag}</li>
+					<li>{$pinterestShareTag}</li>
 				</ul>
-			</div>
+			</li>
+			{* <li class="loader"><i class="icon-spinner icon-spin"></i></li> *}
+		</ul>
+	</div>
+</div>
+
 
 
 		</div>

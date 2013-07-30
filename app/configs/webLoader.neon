@@ -60,6 +60,10 @@ parameters:
 				css:
 					- select2/custom/less/select2HideInputText.less
 
+			rentalMapPlugin:
+				css: 
+					- front/rentalMapPlugin/less/rentalMapPlugin.less
+
 			jqueryCookie:
 				js:
 					- jqueryCookie/lib/jquery.cookie.js
@@ -132,6 +136,9 @@ parameters:
 					#- front/rental-detail-navigation.less
 					#- front/interview-list.less
 
+					# favorites 
+					- front/favorites/less/animate-custom.css
+
 					# _base
 					- front/_base/less/fonts.less
 					- front/_base/less/base.less
@@ -198,7 +205,16 @@ parameters:
 					# search sidebar
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
+					- front/_base/js/reservationForm.js
+					# root home
 					- front/home/js/rootHome.js
+
+
+			historyPlugin:
+				css:
+					- front/historiPlugin/less/main.less
+				js:
+					- front/historiPlugin/js/historyPlugin.js
 
 			jqueryAppear:
 				js:
@@ -248,7 +264,7 @@ parameters:
 					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
 			navBar:
 				js:
-					- front/navigationBar/js/navigationBar.js
+					# - front/navigationBar/js/navigationBar.js
 		sets:
 
 			'Admin:Ap':
@@ -287,11 +303,13 @@ parameters:
 				-  %webloader.packages.Front%
 
 				#-  %webloader.packages.texyla%
+				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
 				-  %webloader.packages.icoMoon%
 				-  %webloader.packages.jqueryPlacehoder%
+				
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -309,9 +327,12 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.Front%
+				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
+				-  %webloader.packages.rentalMapPlugin%
+				
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -326,6 +347,7 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.texyla%
+				-  %webloader.packages.historyPlugin%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.navigationBarScroll%
 				-  %webloader.packages.socialite%
