@@ -1,3 +1,13 @@
+php:
+	memory_limit: 1024M
+
+
+nette:
+	session:
+		cookie_path: '/'
+		cookie_domain: NULL
+
+
 parameters:
 
 	memcachePrefix: org_
