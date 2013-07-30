@@ -163,12 +163,12 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		foreach($supportedLanguages as $language) {
 			$iso = $language->getIso();
 
-			$nameContainer->addText($iso, $this->translate('o886', null, null, null, $language))
+			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
 				->setOption('prepend', $iso)
 				->setOption('help', $this->translate('o100071'));
 				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
-			$teaserContainer->addText($iso, $this->translate('o890', null, null, null, $language))
+			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
 				->setOption('prepend', $iso)
 				->setOption('help', '');
 			$i = 1;

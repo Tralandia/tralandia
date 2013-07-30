@@ -141,7 +141,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			$phoneContainer->getPrefixControl()
 				->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
 
-			$rentalContainer->addText('name', 'o886')
+			$rentalContainer->addText('name', '152275')
 				->setOption('help', $this->translate('o100071'))
 				->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
@@ -208,7 +208,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 
 		];
-		$this->setDefaults($defaults);
+		//$this->setDefaults($defaults);
 	}
 
 
