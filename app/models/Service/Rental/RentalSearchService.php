@@ -178,7 +178,9 @@ class RentalSearchService extends Nette\Object
 	{
 		$results = $this->getRentalsIds($page);
 
-		return $this->rentalRepositoryAccessor->get()->findById($results);
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findById($results);
+
+		return \Tools::sortArrayByArray($rentalsEntities, $results, function($v) {return $v->getId();});
 	}
 
 	public function getRentalsCount()

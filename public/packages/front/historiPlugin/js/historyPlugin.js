@@ -145,11 +145,26 @@
 		};
 
 		base._renderPaginator = function(data,dataHistory){
-				base.$prevlink.attr('href',data.prevLink.url)
-							  .attr('title',data.prevLink.name);
 
-				base.$nextLink.attr('href',data.nextLink.url)
-							  .attr('title',data.nextLink.name);
+				// console.log(data);
+
+				if(data.prevLink) {
+					base.$prevlink.attr('href',data.prevLink.url).removeClass('disabled');
+				} else {
+					base.$prevlink.attr('href','#').addClass('disabled');
+				}
+
+				if(data.nextLink) {
+					base.$nextLink.attr('href',data.nextLink.url)
+								  .attr('title',data.nextLink.name)
+								  .removeClass('disabled');
+				} else {
+					base.$nextLink.attr('href','#')
+								  .attr('title','')
+								  .addClass('disabled');					
+				}
+
+
 
 				base.$listName.attr('href',dataHistory.listUrl);							  						  
 				base.$listFullCount.html(dataHistory.rentalCount);	
@@ -167,14 +182,14 @@
 
 				if(typeof data.nextLink == 'undefined'){
 
-						jQuery.getJSON( dataHistory.listUrl+'?getDataForBreadcrumb=1' , function(d){
+						jQuery.getJSON( base._createUrlForAjax(dataHistory) , function(d){
 
-							console.log('ajax');
+							// console.log('ajax');
 							// console.log(d);
 
 							dataHistory.listData = d.listData;
 							base._setHistory(dataHistory);
-							console.log('----');
+							// console.log('----');
 							data = base._getInformationFromHistory();
 							base._renderPaginator(data,dataHistory);
 
@@ -186,50 +201,61 @@
 
 				$(base.options.selectorListBreadcrumb).html(dataHistory.listBreadcrumb);							  						  
 
-		};		
+		};
+
+		base._createUrlForAjax = function(dataHistory){
+			var u = dataHistory.listUrl.split('?');
+
+				if(u.length > 1){
+					return u[0]+'?getDataForBreadcrumb=1';
+				} else {
+					return dataHistory.listUrl+'?getDataForBreadcrumb=1';
+				}
+		}
 
 		base._getInformationFromHistory = function(){
 
 			var dataHistory = base._getHistory();
 			var data = dataHistory.listData;
 			
-							console.log(dataHistory);
-
-
 			var r = {
 				lengthHistory: data.length
 			};
 
-			var ii = 1;
-			var current = 0;
-
+			var arrayCurrentPosition = 0;
 
 			$.each(data,function(k,v){				
 
 				if(parseInt(base.rentalDetailVariables.id) == parseInt(v.id)){
 					r.currentObjectPosition = k+1;
-					console.log(k+' = '+v.id);
-					current = ii;
+					arrayCurrentPosition = k+1;
 				}
-
-				++ii;
 				
 			});
 
 
-			if(r.currentObjectPosition > 1){
-				r.prevLink = data[r.currentObjectPosition-2];
+
+			if((dataHistory.pageCountPosition > 1) && (arrayCurrentPosition < dataHistory.rentalCount)){
+				r.currentObjectPosition = r.currentObjectPosition + ( (dataHistory.pageCountPosition - 1)*dataHistory.pagging );
+			}
+
+			if(arrayCurrentPosition > 1){
+				r.prevLink = data[arrayCurrentPosition-2];
 			} else {
 				r.prevLink = false;
 			}
 
 
+			// console.log(arrayCurrentPosition);
+			// console.log(dataHistory.rentalCount);
 
-			if(r.currentObjectPosition < dataHistory.rentalCount){
-				r.nextLink = data[r.currentObjectPosition];
+			if(arrayCurrentPosition < dataHistory.rentalCount){
+				r.nextLink = data[arrayCurrentPosition];
 			} else {
 				r.nextLink = false;
 			} 
+
+			// console.log(r);
 
 			return r;
 
@@ -275,7 +301,7 @@
 		// fetch rentals to array 
 		base._getListRentals = function(){
 
-			console.log(base._getListInfo());
+			// console.log(base._getListInfo());
 
 			var r = [];
 			$(base.options.selectorRentalPostRow).each(function(k,v){
