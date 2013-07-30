@@ -44,7 +44,7 @@ class RentalTypeContainer extends BaseContainer
 			$typesOptions[$typeId] = $el;
 		}
 
-		$this->addSelect('type', 'o883', $typesOptions)
+		$this->addSelect('type', '151884', $typesOptions)
 			//->setOption('help', $this->translate('o5956'))
 			->setPrompt('o854')
 		;

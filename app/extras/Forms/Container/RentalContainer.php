@@ -81,7 +81,7 @@ class RentalContainer extends BaseContainer
 
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 		$this->addSelect('placement', 'o100143', $placement)
-			->setOption('help', '')
+			->setOption('help', '152270')
 			->setPrompt('o854');
 
 		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
