@@ -18,9 +18,6 @@ parameters:
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
 
-	cacheDatabase:
-		database: tralandia_cache
-
 	templateCache:
 		enabled: true
 
