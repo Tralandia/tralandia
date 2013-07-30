@@ -35,6 +35,7 @@ class RootHomePresenter extends BasePresenter {
 		}
 
 		$this->template->rentals = $this->getRentals;
+		$this->template->isRootHome = TRUE;
 		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
 	}
 

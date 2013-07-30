@@ -9,79 +9,118 @@
 	{var $featured = $rentalService->isFeatured(); }
 
 
-
 	{capture $rentalDetailCacheOptionsKey}
-		{$rentalDetailCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
+		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
 	{/capture}
-
-	{var $currentTags = $rentalDetailCacheOptions['tags']}
-	{var $currentTags[] = 'rental/'.$rental->getId()}
-
 
 	{cache $rentalDetailCacheOptionsKey,
 		if => $rentalDetailCacheOptions['enabled'],
 		expire => $rentalDetailCacheOptions['expiration'],
-		tags => $currentTags}
+		tags => $rentalDetailCacheOptions['tags']}
 
-	<div class="span12" data-cache="{$rand}">
+<variables n:syntax="asp" name="rentalDetailInfo" data-info='{"id":"<%$rental->id%>","name":"<%_$rental->name%>","rentalText":"#ubytko z"}'></variables>
+
+<div class="span12">
+
+	{control searchBar:breadcrumb}
+
+	<div class="span12 rentalDetailPage" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 			<div id="content" class="noPadding">
 
 				<div class="row-fluid objectDetailContent">
 					<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
-						{if $featured}
+{* 						{if $featured}
 							<div class="position">TOP</div>
-						{/if}
+						{/if} *}
 
-						{foreach $rental->getSortedImages(3) as $photo}
+						{foreach $rental->getSortedImages(4) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
-							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
-							<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
+							<img class="scrollTo" data-scroll-to=".bigGallery" alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
+							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 						</div>
 						{/foreach}
 
-						<img class="mapsImage"
-						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
 					</div>
 
-					<div class="span5">
+					<div class="span5 relative">
 
 						<h1 class="addToViewList" id="{$rental->id}">
 							{_$rental->name}
 							{if $rental->classification > 0 }
-							&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
+								&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
 							{/if}
 						</h1>
 
+						{if $mainImage = $rental->getMainImage()}
+							<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+						{/if}
+
 						<p class="locality noPadding">
-							<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
+							<a href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
 								{_$rental->type->name|firstUpper}
 								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 								{_$rental->address->locality->name , null , [case=>locative]}
 							</a>
 						</p>
 
+
+
 						{if $teaser || $firstAnswer}
 						<table class="teaser">
 							{if $teaser}
 							<tr>
-								<td class="content">{$teaser}</td>
+								<td class="content">{$teaser}
+								{if $firstAnswer}
+									<a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">{_152271}</a></td>
+								{/if}
+								</td>
 							</tr>
+								{if $firstAnswer}
+								<tr>
+									<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">
+
+										{if count($rental->amenities) > 0}
+										{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+										{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
+										{if !count($importantAmenities)}
+											{var
+												$importantAmenities = array_slice($notImportantAmenities,0, 2);
+												$notImportantAmenities = array_slice($notImportantAmenities, 2);
+											}
+										{/if}
+
+											{foreach $importantAmenities  as $amenities}
+												{var $firstAmenity = false}
+												{var $lastAmenity = false}
+												{if $iterator->first}{var $firstAmenity = true}{/if}
+												{if $iterator->last}{var $lastAmenity = true}{/if}
+												{foreach $amenities as $amenity}
+													{if $firstAmenity}
+														{_$amenity->name|firstUpper}{if !$lastAmenity}, {else}.{/if}
+													{else}
+														{_$amenity->name}{if !$lastAmenity}, {else}.{/if}
+													{/if}
+												{/foreach}
+											{/foreach}
+
+										{/if}
+
+									</td>
+								</tr>
+								{/if}
 							{/if}
-							{if $firstAnswer}
-							<tr>
-								<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">{$firstAnswer|firstUpper}</td>
-							</tr>
-							{/if}
+
 						</table>
 						{/if}
 
-
+{*
 						<table class="detailInfoBox">
 							<tr>
 								<td class="entypoIconUsers">
-									<i class="icon-group"></i>
+									<i class="icon-male"></i>
+									<i class="icon-female"></i>
 								</td>
 								<td>
 									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
@@ -104,7 +143,7 @@
 										</div>
 									</td>
 								</tr>
-							</table>
+							</table> *}
 
 
 							<div class="clearfix"></div>
@@ -114,7 +153,7 @@
 							{if count($rental->pricelistRows) > 0}
 							{var $pricesAvailable = true}
 							<ul class="detailPriceList">
-								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								<li><h3>{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
 								<ul>
 
@@ -160,6 +199,7 @@
 
 						<div class="clearfix"></div>
 
+
 						<div class="detailAmenities">
 							<ul class="objectDetailServicesIconList list">
 
@@ -198,6 +238,7 @@
 
 											{/foreach}
 											</div>
+											{* <div class="more">...</div> *}
 										</li>
 										{/foreach}
 
@@ -216,116 +257,95 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 
-						{if $mainImage = $rental->getMainImage()}
-						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart"></i> {_o100140}</button>
-						{/if}
-
-							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
-
-								<div class="socialBtnHeader">
-
-
-									<i class="facebook icon-facebook"></i>
-									<i class="gplus icon-google-plus"></i>
-									<i class="twitter icon-twitter"></i>
-									<i class="pinterest icon-pinterest"></i>
-
-								</div>
-
-								<ul class="dropdown-menu" role="menu" id="socialIconsMenuDetail">
-									<li class="socialIconCover hide">
-										<ul class="social-buttons">
-											<li>{$twitterShareTag}</li>
-											<li>{$googlePlusShareTag}</li>
-											<li>{$facebookShareTag}</li>
-											<li>{$pinterestShareTag}</li>
-										</ul>
-									</li>
-									<li class="loader"><i class="icon-spinner icon-spin"></i></li>
-								</ul>
-
-							</div>
-
-
-
 							<div class="sidebarContact">
-								<div class="sidebarTitle">{_o12275}</div>
-								<div class="sidebarInner paddingTop">
-
-									<table>
+								<div class="sidebarTitle">
 										{if $rental->contactName}
-										<tr>
-											<td class="iconCover"><i class="icon-user"></i></td>
-											<td>
-												<strong>{$rental->contactName}</strong>
-											</td>
-										</tr>
+											{$rental->contactName}
+											{else}
+											{_o12275}
 										{/if}
+								</div>
+								<div class="sidebarInner">
 
 
-										{if $rental->phone->international}
-										<tr>
-											<td class="iconCover"><i class="icon-phone"></i></td>
-											<td>
+								<div class="headerInformation">
+									{if $rental->phone->international}
 
-												<strong>{$rental->phone->international} </strong>
 
-											</td>
-										</tr>
-										{/if}
+											<strong>
+											<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
+											</strong>
+
+
+									{/if}
+
+									{if count($rental->spokenLanguages) > 0}
+
+										<small>
+										({foreach $rental->spokenLanguages as $language}{_$language->name}{if !$iterator->last}, {/if}{/foreach})
+										</small>
+
+									{/if}
+
+									<div class="addressInformation">
 
 										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-										<tr>
-											<td class="iconCover"><i class="icon-compass"></i></td>
-											<td>
-												<strong>{_o2431} </strong><br/>
-
-
+											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
 												{$rental->address->address}
 												{if $rental->address->subLocality}
 												({$rental->address->subLocality})
 												{/if}
-												<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
-											</td>
-										</tr>
+												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
+											</a>
 										{/if}
 
 										{if $rental->url}
-										<tr>
-											<td class="iconCover"><i class="icon-link"></i></td>
-											<td>
-												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
-												</td>
-										</tr>
+											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
-										{if count($rental->spokenLanguages) > 0}
-											<tr>
-												<td class="iconCover"><i class="icon-globe"></i></td>
-												<td>
-													<strong>{_o100015}</strong><br/>
-													{foreach $rental->spokenLanguages as $language}
-													{_$language->name}{if !$iterator->last}, {/if}
-													{/foreach}
-												</td>
-											</tr>
-										{/if}
 
-										</table>
-
-										{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
-
-										{snippet reservationForm}
-										{include '../../forms/Rental/reservationForm.latte'}
-										{/snippet}
 
 									</div>
 								</div>
+									{snippet reservationForm}
+									{include '../../forms/Rental/reservationForm.latte'}
+									{/snippet}
 
+									{* <img src="http://api.qrserver.com/v1/create-qr-code/?data=BEGIN%3AVCARD%0AVERSION%3A2.1%0AFN%3AfirstName%20lastName%0AN%3AlastName%3BfirstName%0ATITLE%3Atitul%0ATEL%3BCELL%3AphoneCellHome%0ATEL%3BWORK%3BVOICE%3AphoneWork%0ATEL%3BHOME%3BVOICE%3AphoneHome%0AEMAIL%3BHOME%3BINTERNET%3Aemail%0AEMAIL%3BWORK%3BINTERNET%3AemailWork%0AURL%3AwebUrl%0AADR%3A%3B%3Baddress%3Bcity%3B%3BpostalCode%3Bcountry%0AORG%3Acompany%0AEND%3AVCARD%0A&size=230x230&margin=10&color=728B0E&bgcolor=F4F9E1" /> *}
+
+							</div>
+
+
+
+
+
+{* 							<div class="sidebarTitle">
+
+
+								#contact
+
+
+
+							</div> *}
+							<div class="sidebarInner address">
+
+
+
+
+
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x161&sensor=false"/>
+
+
+								<div class="clearfix"></div>
+
+							</div>
+						</div>
 
 							</div>
 							<!-- right sidebar -->
 						</div>
+
+
 
 						<div class="row-fluid">
 							<div class="span12">
@@ -338,7 +358,7 @@
 										<li n:class="$iterator->odd ? odd">
 
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
-											<div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div>
+											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
 										{/foreach}
 									</ul>
@@ -351,6 +371,7 @@
 						{if count($interviewAnswers) > 0}
 						<div class="metaObjectInfo" id="interviewAnswers">
 							<h3>{_o25231}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<ul class="interviewList">
 								{foreach $interviewAnswers as $interviewAnswer}
 								<li>
@@ -366,15 +387,61 @@
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
-							<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
-							<ul id="placesImage"></ul>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
+
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
+							{* <ul id="placesImage"></ul> *}
+
+{* 							<div class="rentalInfoBox">
+								<div class="smallGallery">
+									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+								</div>
+								<div class="rentalInfo">
+									<h3><a href="#">Chalupa Detva </a></h3>
+
+									<span>Max 13 osob</span> | <span class="price">33 EUR/osoba/noc </span>
+									<div class="amenities">Studňa, zváračka, cukrová repa, zelovoc, cédéčka</div>
+								</div>
+								<div class="remove"><i class="icon-remove"></i></div>
+							</div>
+
+							<ul class="relatedRentals">
+
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
+									<a class="rentalName">2.5 km</a>
+								</li>
+							</ul> *}
 						</div>
 
 
 						{if count($rental->calendar) > 0}
 						<div class="metaObjectInfo" id="calendar">
 							<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
-
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 							<div class="objectDetailsOccupancyTab">
 								{control calendar, 12, $rental->calendar}
 								<div class="cleaner"></div>

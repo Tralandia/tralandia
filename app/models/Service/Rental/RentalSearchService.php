@@ -168,6 +168,12 @@ class RentalSearchService extends Nette\Object
 		}
 	}
 
+
+	/**
+	 * @param null $page
+	 *
+	 * @return \Entity\Rental\Rental[]
+	 */
 	public function getRentals($page = NULL)
 	{
 		$results = $this->getRentalsIds($page);

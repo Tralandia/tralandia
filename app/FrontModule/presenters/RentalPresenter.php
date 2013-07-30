@@ -89,6 +89,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
+
 		$this->template->dateUpdated = $rental->updated;
 
 		$shareLinks = $this->shareLinks;

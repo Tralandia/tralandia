@@ -268,11 +268,11 @@ ul.arrows {
 }
 
 .btn.btn-orange {
-	#gradient > .vertical(#fdbe33,#f68703);
+	background: @orangeBtn;
 	border: 1px solid #f68703;
-	color: @brown;
+	color: @white;
 	&:hover , &.active {
-		#gradient > .vertical(#f68703,#fdbe33);
+		background: @orangeBtnHover;
 		background-position: 0;
 	}
 }
@@ -423,6 +423,39 @@ ul.arrows {
 		.inner-shadow(20px,#f68703);
 	}
 
+
+.btn.btn-reservation.btn-orange , .reservationSuccessInfo {
+	padding: 0;
+	height: 30px;
+	line-height: 30px;
+	border:none;
+	font-weight: normal;
+		background: #FD9903;
+		.border-radius(4px);
+	.iconPlaceholder {
+		border-left: 1px solid #FFF;
+		float: right;
+		display: block;
+		height: 30px;
+		width:30px;
+		line-height: 30px;
+		top: 0;
+		margin: 0;
+		.border-radius(0 4px 4px 0);
+	}
+
+	&.active {
+		.icon-envelope {
+			display: none;
+		}
+
+		.icon-spinner {
+			display: block;
+			left: 4px;
+			margin-top: 4px;
+		}
+	}
+}
 
 .bold {
 	font-weight: bold;
@@ -638,7 +671,7 @@ ul.arrows {
 				padding: 0;
 
 
-				width: 100%;
+				width: 358px;
 				overflow: hidden;
 				font-weight: normal;
 				font-size: 26px;
@@ -835,11 +868,11 @@ ul.arrows {
 @contentH4size : 18px;
 @contentH5size : 18px;
 
-@contentH1color : #A0B325;
-@contentH2color : #A0B325;
-@contentH3color : #174a90;
-@contentH4color : #A0B325;
-@contentH5color : #A0B325;
+@contentH1color : @brown;
+@contentH2color : @brown;
+@contentH3color : @brown;
+@contentH4color : @brown;
+@contentH5color : @brown;
 
 #content {
 	
@@ -871,7 +904,7 @@ ul.arrows {
 	h1 {
 		font-size: 24px;
 		line-height: 24px;
-		color: @darkBlue;
+		color: @brown;
 		font-weight: normal;
 		margin: 0 0px 10px 10px;
 		padding-top: 20px;
@@ -936,6 +969,61 @@ ul.arrows {
 	border: 1px solid rgb(147, 172, 218);
 	width: 100%;
 	font-size: 14px;
+
+	&.rentalDetail {
+		width: 40px;
+		height: 36px;
+		line-height: 33px;
+		background: transparent;
+		font-size: 30px;
+		text-align: center;
+		top: 0;
+		/*text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);*/
+		right: 10px;
+		color: #ddd;
+		margin-top: 0;
+		position: absolute;
+		z-index: 40;
+		border: none;
+
+		i {
+			height: 38px;
+			width: 36px;
+			position: relative;
+			line-height: 34px;
+			left: -1px;
+		}
+
+		&:hover {
+			background: transparent;
+			color: #d32c16;
+		
+		}
+
+
+		.icon-heart {
+			display: none;
+		}
+
+		&.selected {
+
+			.icon-heart-empty {
+				display: none;
+			}
+
+			.icon-heart {
+				display: block;
+			}
+
+			background: transparent;
+			color: #d32c16;
+			border:none;
+			text-shadow:none;
+			&:hover {
+				background:transparent;
+			}
+		}
+	}
 
 	&:hover {
 		background-position: 0;
@@ -1050,6 +1138,7 @@ img.flag {
 
 #header {
 	position: relative;
+	margin-bottom: 10px;
 }
 
 /* social media links */
@@ -1058,7 +1147,7 @@ img.flag {
 	right: -47px;
 	background: #ffffff;
 	top: -11px;
-	height: 50px;
+	height: 53px;
 	width: 23px;
 	padding: 10px 13px 17px 0;
 	-webkit-border-radius: 0 8px 8px 0;
@@ -1070,12 +1159,11 @@ img.flag {
 	display: block;
 	font-size: 30px;
 	margin-top: 5px;
-
-height: 25px;
-line-height: 26px;
-display: block;
-width: 25px;
-padding: 0;
+	height: 25px;
+	line-height: 26px;
+	display: block;
+	width: 25px;
+	padding: 0;
 
 	&:hover {
 		text-decoration:none;
@@ -1084,11 +1172,11 @@ padding: 0;
 	}
 
 	i {
-height: 25px;
-line-height: 26px;
-display: block;
-width: 25px;
-padding: 0;	
+		height: 25px;
+		line-height: 26px;
+		display: block;
+		width: 25px;
+		padding: 0;	
 	}	
 
 	&.googlePlus {
@@ -1112,4 +1200,39 @@ padding: 0;
 
 form.donateForm {
 	padding: 10px;
+}
+
+#myFav {
+	position: fixed;
+	background: #fff;
+	margin-left: 997px;
+	width: 30px;
+	text-align: center;
+	top: 10px;
+	
+	.border-radius(8px);
+
+	i {
+		display: block;
+		color: #d32c16;
+		width: 30px;
+		line-height: 20px;
+		font-size: 18px;
+		height: 20px;
+		text-align: center;
+	}
+
+	span {
+		display: block;
+		color: #888;
+	}
+	a {
+		display: block;
+		height: 50px;
+		padding: 5px 0 0;
+		width: 30px;
+		&:hover {
+			text-decoration:none;
+		}
+	}
 }

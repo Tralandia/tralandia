@@ -41,21 +41,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	protected $reservationProtector;
 
-	/**
-	 * @var \LastReservation
-	 */
-	protected $lastReservation;
-
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \ReservationProtector $reservationProtector
-	 * @param \LastReservation $lastReservation
 	 * @param \Environment\Environment $environment
 	 */
 	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em,
-								\ReservationProtector $reservationProtector, \LastReservation $lastReservation,
+								\ReservationProtector $reservationProtector,
 								Environment $environment)
 	{
 		$this->rental = $rental;
@@ -63,7 +57,6 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->reservationRepository = $em->getRepository(RESERVATION_ENTITY);
 		$this->reservationProtector = $reservationProtector;
-		$this->lastReservation = $lastReservation;
 
 		parent::__construct($environment->getTranslator());
 	}
@@ -73,11 +66,11 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->environment->getLocale()->getCollator());
 
 
-		$nameControl = $this->addText('name')
-			//->setRequired('o100158')
-			->getControlPrototype()
-				->setPlaceholder('o1031');
-
+//		$nameControl = $this->addText('name')
+//			//->setRequired('o100158')
+//			->getControlPrototype()
+//				->setPlaceholder('o1031');
+//
 		$this->addText('email')
 			->addRule(self::EMAIL, 'o100144')
 			->getControlPrototype()
@@ -190,17 +183,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function setDefaultsValues()
 	{
-//		$defaultData = $this->lastReservation->getData();
-//		if($defaultData) {
-//			$this->setDefaults($defaultData);
-//		}
+
 	}
 
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
-
-		$this->lastReservation->setData($form->getValues(TRUE));
 
 		/** @var $reservation \Entity\User\RentalReservation */
 		$reservation = $this->reservationRepository->createNew();
@@ -208,7 +196,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setLanguage($this->environment->getLanguage());
 		$reservation->setRental($this->rental);
 		$reservation->setSenderEmail($values->email);
-		$reservation->setSenderName($values->name);
+		//$reservation->setSenderName($values->name);
 		if($values->phone->phone) $reservation->setSenderPhone($values->phone->phone);
 		if($values->date->from) $reservation->setArrivalDate($values->date->from);
 		if($values->date->to) $reservation->setDepartureDate($values->date->to);

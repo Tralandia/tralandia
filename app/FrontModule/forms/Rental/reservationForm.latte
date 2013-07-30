@@ -1,14 +1,9 @@
-{form reservationForm , class => 'reservationform ajax' }
+{form reservationForm , class => 'reservationform cache ajax' }
 
 	{* add class invalid to input *}
 	{foreach $form->getErrors() as $error}{$error}{/foreach}
 
-	<div n:class="$form['name']->hasErrors() ? 'control-group error' : 'control-group' ">
-	{input name ,data-validation-message => "error-msg-reservation-name"}
-	<span class="control-error" id="error-msg-reservation-name">
-		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
-	</span>
-	</div>
+
 
 	<div n:class="$form['email']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input email , data-validation-message => "error-msg-reservation-email"}
@@ -34,27 +29,28 @@
 	</div>
 
 	{var $dateContainer = $form['date']}
-	<div n:class="$dateContainer['from']->hasErrors() ? 'control-group error' : 'control-group' ">
-	<div class="input-append">
+{* 	<div n:class="$dateContainer['from']->hasErrors() ? 'control-group error' : 'control-group' ">
+	
 		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
-	  	<span class="add-on datepickerIcon"><i class="icon-calendar"></i></span>
-	</div>
+	
 	<span class="control-error" id="error-msg-reservation-from">
+		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div> *}
+
+	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
+	
+		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
+		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
+		
+
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
 		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div>
 
-	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
-	<div class="input-append">
-		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
-		<span class="add-on datepickerIcon"><i class="icon-calendar"></i></span>
-	</div>
-	<span class="control-error" id="error-msg-reservation-to">
-		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
-	</span>
-	</div>
-
-	<div n:class="$form['message']->hasErrors() ? 'control-group error' : 'control-group' ">
+	<div n:class="$form['message']->hasErrors() ? 'control-group message error' : 'control-group message' ">
 	{input message , data-validation-message => "error-msg-reservation"}
 	<span class="control-error" id="error-msg-reservation-to">
 		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
@@ -65,14 +61,16 @@
 		<div>{_"o100136"}</div>
 	{/if}
 	{ifset $fromSuccessMessage}
-		<div class="reservationSuccessInfo">{_$fromSuccessMessage}</div>
+		<div class="reservationSuccessInfo">{_$fromSuccessMessage}
+		<span class="iconPlaceholder"><i class="icon-ok"></i></span>
+		</div>
 
 
 	{/ifset}
 
 	{if !isset($fromSuccessMessage)}
-		<button type="submit" class="btn btn-orange">
-			<i class="icon-ok"></i> <i class="icon-spinner icon-spin"></i> {_o100017}
+		<button type="submit" class="btn btn-orange btn-reservation">
+			{_o100017}<span class="iconPlaceholder"><i class="icon-envelope"></i><i class="icon-spinner icon-spin"></i></span>
 		</button>
 	{/if}
 
