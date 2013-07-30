@@ -102,7 +102,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	{
 		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator, $this->uiPresenter);
 		$languages = $this->languageRepository->getForSelectWithLinks($this->translator, $this->collator, $this->uiPresenter);
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
 
 		$countrySelect = $this->addSelect('country', 'o1094', $countries);
 		//1347
@@ -173,7 +173,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	public function setDefaultsValues()
 	{
-		/*$defaults = [
+		$defaults = [
 			'country' => $this->environment->getPrimaryLocation()->getId(),
 			'language' => $this->environment->getLanguage()->getId(),
 
@@ -188,24 +188,27 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'number' => '908 123 789'
 				],
 				'name' => 'Chata Test',
+				'price' => 5,
 				'maxCapacity' => 15,
 				'type' => [
 					'type' => 3,
 					'classification' => 2,
 				],
 				'board' => [287],
-				'ownerAvailability' => 275,
-				'pet' => 296,
-				'placement' => [1],
+				'ownerAvailability' => 277,
+				'pet' => 299,
+				'placement' => 1,
 				'important' => [50, 188],
 
 				'address' => [
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
 				],
+				'checkIn' => 8,
+				'checkOut' => 9,
 			],
 
 		];
-		$this->setDefaults($defaults);*/
+		$this->setDefaults($defaults);
 	}
 
 

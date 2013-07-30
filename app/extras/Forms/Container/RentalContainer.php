@@ -73,26 +73,30 @@ class RentalContainer extends BaseContainer
 
 	public function buildContainer()
 	{
+		if($this->rental) {
+			$this->addAddressContainer('address', $this->rental->address);
+		} else {
+			$this->addAddressContainer('address', $this->country);
+		}
 
-		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
-
-
-		$this->addAddressContainer('address', $this->country);
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
-
 		$this->addSelect('placement', 'o100143', $placement)
 			->setOption('help', '')
 			->setPrompt('o854');
 
-
-		$this->addRentalTypeContainer('type', $rentalTypes);
+		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
+		$this->addRentalTypeContainer('type', $this->rental, $rentalTypes);
 
 		$check = \Tools::$checkInOutOption;
+
 		$this->addSelect('checkIn', 'o1586', $check)
+						->setOption('help', $this->translate('151889'))
 						->setPrompt('o854');
 
 		$this->addSelect('checkOut', 'o1588', $check)
+						->setOption('help', $this->translate('151890'))
 						->setPrompt('o854');
+
 
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
@@ -113,7 +117,8 @@ class RentalContainer extends BaseContainer
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('pet', 'o100079', $amenityPets)
 			->setPrompt('o854')
-			->setRequired($this->translate('o100108'))//->setOption('help', $this->translate('o5956'))
+			->setRequired($this->translate('o100108'))
+			//->setOption('help', $this->translate('o5956'))
 		;
 
 		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
@@ -125,11 +130,124 @@ class RentalContainer extends BaseContainer
 		$this->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			->setPrompt('o854')
 			->setRequired($this->translate('o100107'));
-		//->setOption('help', $this->translate('o5956'))
+			//->setOption('help', $this->translate('o5956'))
 		;
 
 		$this->addRentalPhotosContainer('photos', $this->rental);
 
+	}
+
+	public function setDefaultsValues()
+	{
+		$rental = $this->rental;
+
+		$placement = 0;
+		foreach ($rental->getPlacements() as $place) {
+			$placement = $place->getId();
+			break;
+		}
+		$pet = $rental->getPetAmenity();
+
+		$name = [];
+		foreach ($rental->name->getTranslations() as $translation) {
+			$language = $translation->getLanguage();
+			$name[$language->iso] = $translation->translation;
+		}
+
+		$teaser = [];
+		foreach ($rental->teaser->getTranslations() as $translation) {
+			$language = $translation->getLanguage();
+			$teaser[$language->iso] = $translation->translation;
+		}
+
+		$interview = [];
+		foreach ($rental->interviewAnswers as $answer) {
+			$question = $answer->getQuestion();
+			$interview[$question->id] = [];
+			foreach ($answer->answer->getTranslations() as $translation) {
+				$language = $translation->language;
+				$interview[$question->id][$language->iso] = $translation->translation;
+			}
+		}
+
+		$defaults = [
+			'url' => $this->rental->getUrlWithoutProtocol(),
+			'phone' => $this->rental->getPhone(),
+			'contactName' => $this->rental->getContactName(),
+			'email' => $this->rental->getEmail(),
+			'name' => $name,
+			'teaser' => $teaser,
+			'price' => $rental->getPrice()->getAmount($this->country->getDefaultCurrency()),
+			'maxCapacity' => $rental->getMaxCapacity(),
+			'interview' => $interview,
+			'bedroomCount' => $rental->bedroomCount,
+			'roomsLayout' => $rental->rooms,
+			'separateGroups' => $rental->getSeparateGroups(),
+			'checkIn' => $rental->getCheckIn(),
+			'checkOut' => $rental->getCheckOut(),
+			'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
+			'pet' => ($pet ? $pet->getId() : NULL),
+			'placement' => $placement,
+
+			'important' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getImportantAmenities()
+			),
+			'board' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getBoardAmenities()
+			),
+			'children' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getChildrenAmenities()
+			),
+			'activity' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getActivityAmenities()
+			),
+			'relax' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getRelaxAmenities()
+			),
+			'service' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getServiceAmenities()
+			),
+			'wellness' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getWellnessAmenities()
+			),
+			'congress' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getCongressAmenities()
+			),
+			'kitchen' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getKitchenAmenities()
+			),
+			'bathroom' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getBathroomAmenities()
+			),
+			'heating' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getHeatingAmenities()
+			),
+			'parking' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getParkingAmenities()
+			),
+			'room' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getRoomAmenities()
+			),
+			'other' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getOtherAmenities()
+			)
+		];
+
+		$this->setDefaults($defaults);
 	}
 
 
@@ -138,41 +256,12 @@ class RentalContainer extends BaseContainer
 		return $this['type'];
 	}
 
-
-	/**
-	 * @param \Nette\Forms\Form $form
-	 */
-	public function validation(\Nette\Forms\Form $form)
-	{
-		$values = $form->getValues();
-
-		$rentalValues = $values->rental;
-		$photosSort = $rentalValues->photos->sort;
-		if (count($photosSort) < 3) {
-			$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
-		}
-
-		$address = $rentalValues->address;
-		if(!$address->addressEntity instanceof Address) {
-			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
-		}
-
-		// $url = $rentalValues->url;
-		// if ($url) {
-		// 	if ($url && !strpos('http://', $url)) {
-		// 		$url = 'http://'.$url;
-		// 	}
-		// 	if (!\Nette\Utils\Validators::isUrl($url)) {
-		// 		$form['rental']['url']->getMainControl()->addError('#invalid url');
-		// 	}
-		// }
-
-		$phone = $rentalValues->phone;
-		if ($phone->number && !$phone->phone instanceof Phone) {
-			$form['rental']['phone']->getMainControl()->addError('#invalid phone number');
-		}
-
+	public function validation() {
+		$this['address']->validate();
+		$this['phone']->validate();
 	}
+
+
 
 
 	/**

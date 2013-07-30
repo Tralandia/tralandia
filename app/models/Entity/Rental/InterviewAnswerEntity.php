@@ -17,6 +17,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="interviewAnswers")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
@@ -35,12 +36,12 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\InterviewAnswer
@@ -51,7 +52,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
@@ -61,7 +62,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -69,7 +70,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\InterviewQuestion
 	 * @return \Entity\Rental\InterviewAnswer
@@ -80,7 +81,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
@@ -90,7 +91,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\InterviewQuestion|NULL
 	 */
@@ -98,7 +99,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 	{
 		return $this->question;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\InterviewAnswer
@@ -109,7 +110,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */

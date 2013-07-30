@@ -538,10 +538,10 @@ abstract class BasePresenter extends Presenter {
 
 	public function login(\Security\Identity $identity)
 	{
-		if($identity->isInRole(\Entity\User\Role::OWNER)) {
-			$this->flashMessage('o100194', self::FLASH_SUCCESS);
-			$this->redirect(':Front:Sign:in');
-		}
+//		if($identity->isInRole(\Entity\User\Role::OWNER)) {
+//			$this->flashMessage('o100194', self::FLASH_SUCCESS);
+//			$this->redirect(':Front:Sign:in');
+//		}
 		$user = $this->getUser();
 		$user->setExpiration('+ 30 days', FALSE);
 		$user->login($identity);
@@ -564,36 +564,79 @@ abstract class BasePresenter extends Presenter {
 	/**
 	 * @param $id
 	 * @param bool $need
+	 * @param string $by
 	 *
 	 * @return \Entity\Rental\Rental|null
 	 */
-	public function findRental($id, $need = TRUE)
+	public function findRental($id, $need = TRUE, $by = 'id')
 	{
-		return $this->findHelper(RENTAL_ENTITY, $id, $need);
+		return $this->findHelper(RENTAL_ENTITY, $id, $need, $by);
 	}
 
 
 	/**
 	 * @param $id
 	 * @param bool $need
+	 * @param string $by
+	 *
+	 * @return \Entity\Rental\Amenity|null
+	 */
+	public function findAmenity($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(RENTAL_AMENITY_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
+	 * @return \Entity\Language|null
+	 */
+	public function findLanguage($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(LANGUAGE_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
+	 * @return \Entity\Rental\AmenityType|null
+	 */
+	public function findAmenityType($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(AMENITY_TYPE_ENTITY, $id, $need, $by);
+
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
 	 *
 	 * @return \Entity\Phrase\Phrase|null
 	 */
-	public function findPhrase($id, $need = TRUE)
+	public function findPhrase($id, $need = TRUE, $by = 'id')
 	{
-		return $this->findHelper(PHRASE_ENTITY, $id, $need);
+		return $this->findHelper(PHRASE_ENTITY, $id, $need, $by);
 	}
 
 
 	/**
 	 * @param $id
 	 * @param bool $need
+	 * @param string $by
 	 *
 	 * @return \Entity\Phrase\Translation|null
 	 */
-	public function findTranslation($id, $need = TRUE)
+	public function findTranslation($id, $need = TRUE, $by = 'id')
 	{
-		return $this->findHelper(TRANSLATION_ENTITY, $id, $need);
+		return $this->findHelper(TRANSLATION_ENTITY, $id, $need, $by);
 	}
 
 
@@ -601,15 +644,16 @@ abstract class BasePresenter extends Presenter {
 	 * @param $entityName
 	 * @param $id
 	 * @param bool $need
+	 * @param $by
 	 *
-	 * @return object
 	 * @throws Exception
+	 * @return object
 	 */
-	private function findHelper($entityName, $id, $need = TRUE)
+	private function findHelper($entityName, $id, $need, $by)
 	{
-		$entity = $this->em->getRepository($entityName)->find($id);
+		$entity = $this->em->getRepository($entityName)->findOneBy([$by => $id]);
 		if(!$entity && $need) {
-			throw new Exception("{$entityName}::{$id} not exists.");
+			throw new Exception("{$entityName}::{$by} == {$id} not exists.");
 		}
 		return $entity;
 	}

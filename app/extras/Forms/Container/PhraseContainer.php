@@ -207,7 +207,7 @@ class PhraseContainer extends BaseContainer
 	}
 
 
-	public function getFormattedValues()
+	public function getFormattedValues($asArray = false)
 	{
 		$values = $this->getValues(TRUE);
 		$phrase = $this->phrase;

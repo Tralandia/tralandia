@@ -48,6 +48,8 @@ class SimpleAcl extends Permission
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
 		$resources[] = 'Owner:Rental';
+		$resources[] = 'Owner:User';
+
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';
 		$resources[] = 'Admin:EntityGenerator';
@@ -64,6 +66,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Admin:Cache';
 		$resources[] = 'Admin:TempScript';
 		$resources[] = 'Admin:Translation';
+		$resources[] = 'Admin:AmenitiesMigration';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 
@@ -82,6 +85,8 @@ class SimpleAcl extends Permission
 		$this->allow(RoleEntity::LOGGED, self::ALL, 'restoreOriginalIdentity');
 
 		$this->allow(RoleEntity::OWNER, $ownerModule);
+		$this->allow(RoleEntity::OWNER, 'Owner:Rental', self::ALL);
+		$this->allow(RoleEntity::OWNER, 'Owner:User', self::ALL);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
 
 		$this->allow(RoleEntity::TRANSLATOR, $adminModule);

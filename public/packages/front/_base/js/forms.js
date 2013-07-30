@@ -674,17 +674,19 @@ $(function(){
 			};
 
 			var $uploadButton = $self.find('button');
-			var $uploadButtonReal = $self.find('input[type=file]');
-
-			var $sortInput = $self.find('#frm-registrationForm-rental-photos-sort');
-
+			var $sortInput = $self.find('input[type=hidden]');
 			var $listGallery = $self.find('#sortable');
+            var $removeLinkElement = $listGallery.find('li a');
+//			var $uploadButtonReal = $self.find('input[type=file]');
+//			var sortableUrl = $listGallery.attr('data-url');
+//			var removeUrl = $listGallery.attr('data-remove-url');
 
 			var sortableUrl = $listGallery.attr('data-url');
 
 			var removeUrl = $listGallery.attr('data-remove-url');
 
 			var $removeLinkElement = $listGallery.find('li a');
+
 
 			// default sort photos
 			$.galleryControl.saveSortableValues($sortInput,$listGallery);
@@ -774,7 +776,6 @@ $(function(){
 								}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
 
 							}
-
 						} else {
 							return false;
 						}
@@ -979,6 +980,14 @@ $(function() {
 
 
 
+
+$('button[type=submit]').click(function(){
+	$(this).addClass('active');
+});
+$('button[type=submit]').live('click',function(){
+	$(this).addClass('active');
+});
+
 	$('.priceList .remove').on('click',removePriceLine);
 	$('.priceList .remove').live('click',removePriceLine);
 
@@ -995,10 +1004,12 @@ function showButtonLoader(){
 		var attr = $button.attr('data-loading-text');
 
 		if (typeof attr !== 'undefined' && attr !== false) {
-		    $button.find('small').html($button.data('loadingText'));
-		}
-}
+		    // $button.find('small').html($button.data('loadingText'));
+		    $(this).parent().find('small.sublitLoadingText').html($button.data('loadingText'));
+		}	
 
+
+}
 
 //
 

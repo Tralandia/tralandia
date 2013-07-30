@@ -47,35 +47,21 @@
 						<li class="headerIcon last">
 							<a href="{$getLogoutLink()}" >{_o1594}</a>
 						</li>
-						
+
 					{else}
-
-
-
-						{ifset $worldLink}
-						<li class="headerIcon">
-							<img src="/images/flags/{$isoCode}.png" />
-						</li>
-						{/ifset}
-
-						<li class="headerIcon">
-							<a href="{$homepageUrl}">{_o100042}</a>
-						</li>
 
 						{ifset $worldLink}
 							<li class="headerIcon">
 								<a href="{$worldLink}">{_151892}</a>
-							</li>					
+							</li>
 						{/ifset}
 
-{*
+
 						<li class="headerIcon">
 							<a href="{plink Registration:}" class="red">
 								<strong>{_o100044}</strong>
 							</a>
 						</li>
-*}
-
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
 								<strong>{_o100195}</strong>

@@ -45,8 +45,7 @@ class LanguageRepository extends \Repository\BaseRepository {
 			$return[$translator->translate($language->name)] = $language;
 		}
 
-		// TODO: Zoradit pomocou \Collator
-		// $collator->asort($return);
+		 $collator->ksort($return);
 
 		return $return;
 

@@ -36,19 +36,16 @@ class AddressCreator
 	 */
 	public function create($address)
 	{
-		$info = $this->addressNormalizer->getInfoUsingAddress($address);
-
-		if (!$info) return NULL;
+		if (!$info = $this->validate($address)) return NULL;
 
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
-		/** @var $locationRepository \Repository\Location\LocationRepository */
-		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
 
 		/** @var $addressEntity \Entity\Contact\Address */
 		$addressEntity = $addressRepository->createNew();
 		$addressEntity->setPrimaryLocation($info[AddressNormalizer::PRIMARY_LOCATION]);
 		$addressEntity->setAddress($info[AddressNormalizer::ADDRESS]);
 		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
+		$addressEntity->setFormattedAddress($address);
 
 		$addressEntity->setLocality($info[AddressNormalizer::LOCALITY]);
 		$addressEntity->setSubLocality($info[AddressNormalizer::SUBLOCALITY]);
@@ -57,6 +54,11 @@ class AddressCreator
 		$addressEntity->setGps($gps);
 
 		return $addressEntity;
+	}
+
+	public function validate($address) {
+		$info = $this->addressNormalizer->getInfoUsingAddress($address);
+		return $info;
 	}
 
 }

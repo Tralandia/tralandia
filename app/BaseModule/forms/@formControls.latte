@@ -545,7 +545,7 @@
 <table class="phraseTable table">
 	<tr>
 		{if $phrase->type->pluralVariationsRequired}
-		
+
 		{/if}
 		{if $phrase->type->genderVariationsRequired}
 		{foreach $language->genders as $genderName}
@@ -564,7 +564,7 @@
 				{$gender->getName()|firstUpper}
 				{if $phrase->type->pluralVariationsRequired}
 				{$language->getPluralName($plural->getName())}
-				{/if}				
+				{/if}
 			</span>
 
 			{$gender->getControl()}
@@ -602,10 +602,9 @@
 				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
-					{dump $image}
 					<li data-id="{$image->getId()}" class="ui-state-default">
 						<img n:image="$image">
-						<a href="#" class="remove">{_o100088}</a>
+						<a href="#" class="remove" title="{_o100088}"></a>
 					</li>
 				</ul>
 			</div>
@@ -634,7 +633,7 @@
 
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
 
-	{input $container['sort']}
+	{input $container['sortInput']}
 
 </tr>
 {/define #rentalPhotos}
@@ -662,8 +661,19 @@
 					<div class="rentalPriceRow">
 						{input $component['name'] , placeholder => 'o100191'}
 						{input $component['language'] , class => 'notFulltext'}
-						<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>{_o100192}</span>{input $component['file']}</span>
+						{if $component['filePath']->getValue()}
+							<span class="file-placeholder">#Subor je nahraty</span>
+						{else}
+							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button">
+								<i class="entypo-upload"></i>
+								<span>{label $component['file']}{/label}</span>
+								{input $component['file']}
+							</span>
+						{/if}
+						{*{input $component['remove'] , class => 'btn btn-cancel remove ajax'}*}
 						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+						{input $component['filePath']}
+						{input $component['entity']}
 					</div>
 				{/foreach}
 			</div>
@@ -748,6 +758,7 @@
 			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-greenDark" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 				<i class="icon-ok"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
 			</button>
+			<small class="sublitLoadingText"></small>
 		</td>
 	</tr>
 	{/define #submit}
