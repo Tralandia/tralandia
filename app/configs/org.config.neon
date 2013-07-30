@@ -15,8 +15,6 @@ parameters:
 		host: 127.0.0.1
 		database: cache
 
-	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
-
 
 	templateCache:
 		enabled: true

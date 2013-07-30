@@ -189,10 +189,6 @@ class RentalContainer extends BaseContainer
 			'pet' => ($pet ? $pet->getId() : NULL),
 			'placement' => $placement,
 
-			'important' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getImportantAmenities()
-			),
 			'board' => array_map(function ($a) {
 					return $a->getId();
 				}, $rental->getBoardAmenities()
@@ -200,14 +196,6 @@ class RentalContainer extends BaseContainer
 			'children' => array_map(function ($a) {
 					return $a->getId();
 				}, $rental->getChildrenAmenities()
-			),
-			'activity' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getActivityAmenities()
-			),
-			'relax' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getRelaxAmenities()
 			),
 			'service' => array_map(function ($a) {
 					return $a->getId();
@@ -217,10 +205,6 @@ class RentalContainer extends BaseContainer
 					return $a->getId();
 				}, $rental->getWellnessAmenities()
 			),
-			'congress' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getCongressAmenities()
-			),
 			'kitchen' => array_map(function ($a) {
 					return $a->getId();
 				}, $rental->getKitchenAmenities()
@@ -229,22 +213,22 @@ class RentalContainer extends BaseContainer
 					return $a->getId();
 				}, $rental->getBathroomAmenities()
 			),
-			'heating' => array_map(function ($a) {
+			'nearBy' => array_map(function ($a) {
 					return $a->getId();
-				}, $rental->getHeatingAmenities()
+				}, $rental->getNearByAmenities()
 			),
-			'parking' => array_map(function ($a) {
+			'rentalServices' => array_map(function ($a) {
 					return $a->getId();
-				}, $rental->getParkingAmenities()
+				}, $rental->getRentalServicesAmenities()
 			),
-			'room' => array_map(function ($a) {
+			'onFacility' => array_map(function ($a) {
 					return $a->getId();
-				}, $rental->getRoomAmenities()
+				}, $rental->getOnFacilityAmenities()
 			),
-			'other' => array_map(function ($a) {
+			'sportsFun' => array_map(function ($a) {
 					return $a->getId();
-				}, $rental->getOtherAmenities()
-			)
+				}, $rental->getSportsFunAmenities()
+			),
 		];
 
 		$this->setDefaults($defaults);
