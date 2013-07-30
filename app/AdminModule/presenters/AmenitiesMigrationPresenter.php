@@ -91,6 +91,11 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 				[$this->findAmenity(30)]
 			);
 
+			$this->addAmenityToRental(
+				$this->findAmenity(249),
+				[$this->findAmenity(52)]
+			);
+
 			$this->terminate();
 		} else if($id == 3) {
 
@@ -142,10 +147,10 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 				169, 174, 181, 177, 226, 99, 78, 94, 104, 103, 110, 77, 61, 63, 65, 66, 54, 55, 67, 44, 62, 72, 70, 49,
 				50, 59, 71, 73, 76, 74, 69, 68, 57, 64, 56, 47, 60, 48, 75, 46, 51, 10, 7, 20, 5, 32, 13, 203, 236, 202,
 				188, 23, 6, 294, 290, 291, 292, 293, 117, 116, 113, 114, 115, 112, 297, 296, 282, 283, 284]);
-		} else if($id == 45) {
+		} else if($id == 5) {
 			$this->addCongressServicesToRentals();
 			$this->terminate();
-		} else if($id == 5) {
+		} else if($id == 6) {
 //			$this->changeAmenityType($this->findAmenity(104), $this->findAmenityType('bathroom', TRUE, 'slug'));
 //			$this->changeAmenityType($this->findAmenity(103), $this->findAmenityType('bathroom', TRUE, 'slug'));
 //			$this->changeAmenityType($this->findAmenity(110), $this->findAmenityType('bathroom', TRUE, 'slug'));
@@ -339,7 +344,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 			$this->changeAmenityType($this->findAmenity(238), $this->findAmenityType('wellness', TRUE, 'slug'));
 			$this->changeAmenityType($this->findAmenity(198), $this->findAmenityType('wellness', TRUE, 'slug'));
 			$this->changeAmenityType($this->findAmenity('restaurant', TRUE, 'slug'), $this->findAmenityType('on-facility', TRUE, 'slug'));
-		} else if($id == 6) {
+		} else if($id == 7) {
 
 			$this->deleteAmenityType($this->findAmenityType('parking', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('room', TRUE, 'slug'));
@@ -348,8 +353,9 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 			$this->deleteAmenityType($this->findAmenityType('heating', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('separate-groups', TRUE, 'slug'));
 			$this->deleteAmenityType($this->findAmenityType('congress', TRUE, 'slug'), TRUE);
+			$this->deleteAmenityType($this->findAmenityType('activity', TRUE, 'slug'), TRUE);
 
-		} else if($id == 7) {
+		} else if($id == 8) {
 
 			$this->em->createQueryBuilder()
 				->update(RENTAL_AMENITY_ENTITY . ' a')
@@ -377,7 +383,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 			$this->setImportant($this->findAmenity(241));
 			$this->setImportant($this->findAmenity(240));
 			$this->setImportant($this->findAmenity(227));
-			$this->setImportant($this->findAmenity(249));
+//			$this->setImportant($this->findAmenity(249));
 			$this->setImportant($this->findAmenity(58));
 			$this->setImportant($this->findAmenity(52));
 			$this->setImportant($this->findAmenity(53));
@@ -395,7 +401,7 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 		$this->em->flush();
 
 		$this->payload->success = TRUE;
-		//$this->sendPayload();
+		$this->sendPayload();
 
 	}
 

@@ -48,13 +48,13 @@
 			{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
 			{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
+			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
+			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
+
 
 			{include #fieldset, text => 'o100086'}
 			{include #address, control => $rentalContainer['address']}
-			
 
-			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
-			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
 
 			{include #fieldset, text => 'o980'}
 			{include #rentalPhotos, control => $rentalContainer['photos']}
