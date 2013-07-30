@@ -268,6 +268,7 @@ function rentalDetailDatepickerInit(){
 	$( ".datepicker" ).datepicker({ 
 		minDate: 0, 
 		maxDate: "+12M +10D" , 
+		firstDay: 1,
 		dateFormat: "yy-mm-dd",
 		beforeShow: function(textbox, instance){
             instance.dpDiv.css({
@@ -281,6 +282,7 @@ function rentalDetailDatepickerInit(){
 		minDate: new Date(2013, 1, 28), 
 		maxDate: "+12M +10D" ,
 		dateFormat: "yy-mm-dd" ,
+		firstDay: 1,
 		beforeShow: function(textbox, instance){
 
 			console.log(textbox.offsetHeight);
