@@ -215,9 +215,6 @@
 				r.currentObjectPosition = r.currentObjectPosition + ( (dataHistory.pageCountPosition - 1)*dataHistory.pagging );
 			}
 
-			
-
-
 			if(arrayCurrentPosition > 1){
 				r.prevLink = data[arrayCurrentPosition-2];
 			} else {
