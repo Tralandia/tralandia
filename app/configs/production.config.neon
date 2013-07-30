@@ -7,8 +7,6 @@ nette:
 		cookie_domain: NULL
 
 
-
-
 parameters:
 	database:
 		user: tralandia
