@@ -39,8 +39,9 @@ table.formTable {
 			float: right;
 			margin: 0;
 			i {
+				position: relative;
 				color: rgb(216, 64, 64);
-				top: 4px;
+				top: 2px;
 				left: 0px;
 			}
 		}
@@ -52,6 +53,12 @@ small.sublitLoadingText {
 	padding-top: 5px;
 }
 
+form.dashboard {
+	margin: 0 0 6px;
+	.btn.btn-greenDark {
+		float: right;
+	}
+}
 
 table.formTable {
 	// border: 1px solid black;
@@ -114,6 +121,7 @@ table.formTable {
 		}
 
 		.add-on {
+			position: absolute;
 			width: 100px;
 			overflow: hidden;
 			white-space: nowrap;
@@ -597,13 +605,13 @@ table.formTable {
 				float: none;
 				margin: 0;
 				width: 128px;
-
+				height: 20px;
 				span {
 					white-space: nowrap;
 					overflow: hidden;
 					width: 91px;
 					text-overflow: ellipsis;
-					top: 1px;
+					top: 0px;
 					padding-right: 12px;
 				}
 			}

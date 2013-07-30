@@ -1,4 +1,6 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+<h1>{_$rental->name}</h1>
+
 {form rentalEditForm, class => "traform dashboard"}
 	<table class="formTable innerPadding">
 		<tr class="formHeading	">
@@ -61,10 +63,7 @@
 		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
 
 
-
-
-
-		{include #fieldset, text => '#interview'}
+		{include #fieldset, text => '1125'}
 		{foreach $rentalContainer['interview']->getComponents() as $container}
 			{foreach $container->getControls() as $control}
 				{if $control->getName() == $environmentLanguage->getIso()}
@@ -77,10 +76,12 @@
 		{/foreach}
 
 
-
-
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
+
+		{* {include #checkboxList, control => $rentalContainer['activity'], colCount => 3} *}
+		{include #checkboxList, control => $rentalContainer['relax'], colCount => 3}
+
 		{include #checkboxList, control => $rentalContainer['service'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['wellness'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['kitchen'], colCount => 3}
