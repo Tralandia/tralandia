@@ -51,6 +51,8 @@ parameters:
 	webTempDir: /webtemp
 	webTempPath: /webtemp
 
+	memcachePrefix: tralandia_
+
 	database:
 		user: root
 		password: root
@@ -176,7 +178,7 @@ services:
 
 
 	cacheStorage:
-		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
+		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', %memcachePrefix%)
 
 #	translatorRedisClient:
 #		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
