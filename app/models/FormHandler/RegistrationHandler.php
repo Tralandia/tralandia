@@ -110,13 +110,14 @@ class RegistrationHandler extends FormHandler
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
 			->setEmail($values->email)
-			->setUrl($values->url)
 			->setPhone($rentalValues->phone->entity)
 			->setClassification($rentalValues->type->classification)
 			->setMaxCapacity($rentalValues->maxCapacity)
 			->setCheckIn($rentalValues->checkIn)
 			->setCheckOut($rentalValues->checkOut)
 			->setFloatPrice($rentalValues->price);
+
+		if($values->url) $rental->setUrl($values->url);
 
 		$board = is_object($rentalValues->board) ? ((array)$rentalValues->board->getIterator()) : $rentalValues->board;
 		$important = is_object($rentalValues->important) ? ((array)$rentalValues->important->getIterator()) : $rentalValues->important;
