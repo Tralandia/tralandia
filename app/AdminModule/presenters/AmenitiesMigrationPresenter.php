@@ -372,10 +372,10 @@ class AmenitiesMigrationPresenter extends BasePresenter {
 //			$this->setImportant($this->findAmenity(202));
 			$this->setImportant($this->findAmenity('congress-services', TRUE, 'slug'));
 			$this->setImportant($this->findAmenity(141));
-			$this->setImportant($this->findAmenity(287));
-			$this->setImportant($this->findAmenity(289));
-			$this->setImportant($this->findAmenity(288));
-			$this->setImportant($this->findAmenity(295));
+//			$this->setImportant($this->findAmenity(287));
+//			$this->setImportant($this->findAmenity(289));
+//			$this->setImportant($this->findAmenity(288));
+//			$this->setImportant($this->findAmenity(295));
 			$this->setImportant($this->findAmenity(33));
 			$this->setImportant($this->findAmenity(191));
 			$this->setImportant($this->findAmenity(197));
