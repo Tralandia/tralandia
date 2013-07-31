@@ -1,3 +1,5 @@
+@import '../../../bootstrap/lib/less/mixins.less';
+
 .select2-container {
 	.select2-choice {
 		filter: none;
@@ -116,4 +118,20 @@ input[type=text].select2-input {
 
 .select2-drop.hideSearch {
     .select2-search { display: none }
+}
+
+
+
+.selectLanguage.select2-container {
+	.select2-choice {
+		background: #fd9903;
+		color: #fff;
+		border: 1px solid #FD3503;
+		#gradient > .vertical(#fd9903,#FD7B03);
+
+		div {
+			#gradient > .vertical(#FD7B03,#FD3503);
+			border-left: 1px solid #FD3503;
+		}
+	}
 }

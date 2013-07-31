@@ -24,12 +24,14 @@
 				<table>
 					<tr>
 						<td>
-							<span class="help top">weiufg</span>
+							<span class="help top">{_1321}</span>
 						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
+
+
 
 		<tr><td td colspan="3">
 		{if count($rentalContainer['name']->getAllErrors())}
@@ -81,7 +83,19 @@
 
 		<tr>
 			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
-		</tr>		
+		</tr>
+		<tr class="topArrowBox">
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>
+							<span class="help top">{_1321}</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
 		{foreach $rentalContainer['interview']->getComponents() as $container}
 			{foreach $container->getControls() as $control}
 				{if $control->getName() == $environmentLanguage->getIso()}
