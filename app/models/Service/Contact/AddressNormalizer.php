@@ -3,6 +3,7 @@
 namespace Service\Contact;
 
 use Entity\Contact\Address;
+use Environment\Environment;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
@@ -26,6 +27,12 @@ class AddressNormalizer extends \Nette\Object {
 	protected $phraseRepositoryAccessor;
 	protected $phraseTypeRepositoryAccessor;
 
+	/**
+	 * @var \Environment\Environment
+	 */
+	private $environment;
+
+
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
@@ -37,11 +44,18 @@ class AddressNormalizer extends \Nette\Object {
 		$this->locationDecoratorFactory = $factory;
 	}
 
+
 	/**
 	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
+	 * @param \Environment\Environment $environment
 	 */
-	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService) {
+	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment) {
 		$this->geocodeService = $googleGeocodeService;
+		$this->environment = $environment;
+		$this->geocodeService->setRequestDefaults(array(
+			'region' => $environment->getPrimaryLocation()->getIso(),
+			'language' => $environment->getPrimaryLocation()->getDefaultLanguage()->getIso(),
+		));
 	}
 
 	/**
@@ -57,8 +71,8 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		$this->geocodeService->setRequestDefaults(array(
-			'region' => $address->primaryLocation->iso,
-			'language' => $address->primaryLocation->defaultLanguage->iso,
+			'region' => $address->getPrimaryLocation()->getIso(),
+			'language' => $address->getPrimaryLocation()->getDefaultLanguage()->getIso(),
 		));
 
 		$latLong = $address->getGps();
