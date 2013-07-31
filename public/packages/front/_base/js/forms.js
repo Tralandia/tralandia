@@ -421,7 +421,6 @@ $(function(){
 
 				  v = $.mapControl.validateInputs($self);
 
-
 					// send data
 
 					$.mapControl.ajax(requestUrl,v.data , function(data){
@@ -968,6 +967,7 @@ $(function() {
 		if(typeof $('body').attr('data-google-map-init') == 'undefined' ){
 			var lang = $('html').attr('lang');
 			var script = document.createElement("script");
+
 			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang;
 			document.body.appendChild(script);
 			$('body').attr('data-google-map-init',true);
