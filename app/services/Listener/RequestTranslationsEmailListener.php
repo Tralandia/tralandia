@@ -21,8 +21,8 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 
 		$emailCompiler = $this->prepareCompiler($language, $wordsCountToPay);
 		$body = $emailCompiler->compileBody();
-
 		$user = $language->getTranslator();
+
 
 		$message->setSubject($emailCompiler->compileSubject());
 		$message->setHtmlBody($body);

@@ -44,7 +44,7 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 	{
 		$values = $form->getValues();
 		if(!$this['email']->hasErrors() && !$user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email)) {
-			$this['email']->addError('#zly email');
+			$this['email']->addError($this->translate('152282'));
 		}
 	}
 
