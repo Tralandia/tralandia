@@ -62,7 +62,7 @@ class RentalPriceListContainer extends BaseContainer
 			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
 		}
 
-		$this->addDynamic('list', $this->containerBuilder, 0);
+		$this->addDynamic('list', $this->containerBuilder, 1);
 	}
 
 

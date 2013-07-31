@@ -432,7 +432,7 @@ table.formTable {
 		margin: 0px;
 	}
 
-	tr.mapControl {
+	tr.mapControl , tr.topArrowBox {
 
 
 		&.invalid {
@@ -569,15 +569,24 @@ table.formTable {
 					border-width: 10px;
 					left: 10%;
 					margin-left: -10px;
-									}
+				}
 
-									.help:before {
+				.help:before {
 					border-color: rgba(194,225,245,0);
 					border-top-color: rgb(115, 158, 185);
 					border-width: 11px;
 					left: 10%;
 					margin-left: -11px;
 				}
+
+				.help.top {
+
+				}
+
+				.help.top:after, .help.top:before {
+				display: none;
+				}
+
 
 
 			}
@@ -1067,3 +1076,4 @@ form {
 	font-size: 11px;
 	padding: 4px 5px 4px;
 }
+
