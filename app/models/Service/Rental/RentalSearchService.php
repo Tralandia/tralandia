@@ -131,14 +131,19 @@ class RentalSearchService extends Nette\Object
 		$from == NULL && $from = 0;
 
 		if($to == NULL) {
-			$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
-			$to = max($priceOptions);
+			$to = $this->getMaxPriceCriterionOption();
 		}
 
 		if($from <= $to) {
 			$this->criteria[self::CRITERIA_PRICE] = ['from' => $from, 'to' => $to];
 			$this->resetResults();
 		}
+	}
+
+	public function getMaxPriceCriterionOption()
+	{
+		$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
+		return max($priceOptions);
 	}
 
 	public function setSpokenLanguageCriterion(Entity\Language $spokenLanguage = NULL)
