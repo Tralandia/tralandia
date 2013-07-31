@@ -7,9 +7,9 @@
 			{foreach $breadcrumbLinks as $key => $link}
 
 				{ifset $link->href}
-					<a href="{$link->href}" class="filter"><i class="icon-double-angle-right"></i>{$link->text}</a>
+					<a href="{$link->href}" class="filter"><i class="icon-double-angle-right"></i><span>{$link->text}</span></a>
 				{else}
-					<span><i class="icon-double-angle-right"></i>{$link->text}</span>
+					<span class="filter"><i class="icon-double-angle-right"></i>{$link->text}</span>
 				{/ifset}
 
 			{/foreach}

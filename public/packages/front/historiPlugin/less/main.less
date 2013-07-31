@@ -7,7 +7,7 @@
 #staticNavBar {
 	width: auto;
 	height: 45px;
-	margin: 0 16px -3px 20px;
+	margin: 0 16px -3px 30px;
 	clear: both;
 	line-height: 30px;
 	font-size: 12px;
@@ -77,7 +77,7 @@
 		}
 
 		.backToList {
-			.breadcrumb a , .breadcrumb span {
+			.breadcrumb a , .breadcrumb span.filter {
 				font-size: 13px;
 				color: @darkGreen;
 
@@ -91,6 +91,16 @@
 						display: none;
 					}
 				}
+
+				&:hover {
+					/*text-decoration: underline;*/
+				}
+			}
+
+			.breadcrumb span.filter {
+					i {
+						top: -1px;
+					}	
 			}
 		}
 
@@ -109,7 +119,7 @@
 				width: 520px;
 				height: 30px;
 				overflow: hidden;
-				a , span {
+				a , span.filter {
 					background: #FFF;
 					color: @darkBlue;
 					text-transform: none;
@@ -147,9 +157,18 @@
 				
 
 				}
+
+				span.filter {
+					display: block;
+					padding-top: 1px;
+
+					i {
+						top: 1px;
+					}					
+				}
 			}
 
-		a ,span {
+		a  {
 			font-size: 14px;
 			float: left;
 			background: @darkBlue;
