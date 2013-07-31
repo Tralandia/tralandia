@@ -101,7 +101,7 @@ class RentalContainer extends BaseContainer
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
-			->setOption('prepend', $this->translate('o490', 2) . ':')
+			->setOption('append', $this->translate('o490', 2))
 			->addRule(Form::INTEGER, $this->translate('o100106'))
 			->addRule(Form::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
