@@ -9,7 +9,6 @@ parameters:
 	templateCache:
 		enabled: false
 
-	staticDomain: NULL
-	storageDir: /storage
-	storagePath: /storage
-
+#	staticDomain: NULL
+#	storageDir: /storage
+#	storagePath: /storage

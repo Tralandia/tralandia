@@ -3,11 +3,13 @@ namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
 use Entity\BaseEntity;
+use Entity\Rental\Type;
 use Environment\Environment;
 use Extras\FormMask\Items\Base;
 use FrontModule\Forms\ISearchFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
+use Nette\Utils\Strings;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
@@ -195,28 +197,39 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$currency = $this->environment->getPrimaryLocation()->getDefaultCurrency()->getIso();
 		$price = $this->priceFrom . ' - ' . $this->priceTo . strtolower($currency);
 
-		$filter = [
-			FrontRoute::SPOKEN_LANGUAGE => $this->spokenLanguage,
-			FrontRoute::BOARD => $this->board,
-			FrontRoute::CAPACITY => $this->capacity,
-			'price' => $this->priceFrom || $this->priceTo ? $price : NULL,
-			FrontRoute::RENTAL_TYPE => $this->rentalType,
-			FrontRoute::LOCATION => $this->location,
-			FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
-		];
-		$first = TRUE;
+		if($this->presenter->getName() == 'Front:Rental') {
+			/** @var $rental \Entity\Rental\Rental */
+			$rental = $this->presenter->getParameter('rental');
+			$filter = [
+				FrontRoute::RENTAL_TYPE => $rental->getType(),
+				FrontRoute::LOCATION => $rental->getAddress()->getLocality(),
+				FrontRoute::PRIMARY_LOCATION => $rental->getPrimaryLocation(),
+			];
+		} else {
+			$filter = [
+				FrontRoute::SPOKEN_LANGUAGE => $this->spokenLanguage,
+				FrontRoute::BOARD => $this->board,
+				FrontRoute::CAPACITY => $this->capacity,
+				'price' => $this->priceFrom || $this->priceTo ? $price : NULL,
+				FrontRoute::RENTAL_TYPE => $this->rentalType,
+				FrontRoute::LOCATION => $this->location,
+				FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
+			];
+		}
 
 		$breadcrumbLinks = [];
 
 		foreach($filter as $key => $value) {
 			if($value) {
 				$link = [];
-				if($first) {
-					$first = FALSE;
+				$link['href'] = $this->link('this', $filter);
+				if($value instanceof Type) {
+					$link['text'] = Strings::firstUpper($this->getPresenter()->translate($value->getName(), 2));
+				} else if($value instanceof BaseEntity) {
+					$link['text'] = $this->getPresenter()->translate($value->getName());
 				} else {
-					$link['href'] = $this->link('this', $filter);
+					$link['text'] = $value;
 				}
-				$link['text'] = $value instanceof BaseEntity ? $this->getPresenter()->translate($value->getName()) : $value;
 
 				$breadcrumbLinks[$key] = $link;
 				$filter[$key] = NULL;
