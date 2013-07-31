@@ -14,6 +14,7 @@
 			{/foreach}
 
 			{ifset $firstRental}
+			{* <li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100153}</a></li> *}
 			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100184} <span class="counter">{$reservationsCount}</span></a></li>
 			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_o100154}</a></li>
 			{/ifset}
