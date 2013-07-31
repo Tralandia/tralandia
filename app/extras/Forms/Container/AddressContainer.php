@@ -59,8 +59,10 @@ class AddressContainer extends BaseContainer
 			->setPlaceholder('o100091');
 
 		$this->addHidden('location');
-		$this->addHidden('latitude');
-		$this->addHidden('longitude');
+		$this->addHidden('latitude')
+					->setAttribute('class','rentalAddressLatitude');
+		$this->addHidden('longitude')
+					->setAttribute('class','rentalAddressLongitude');
 
 		$this->setDefaultValues();
 

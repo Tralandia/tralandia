@@ -421,7 +421,6 @@ $(function(){
 
 				  v = $.mapControl.validateInputs($self);
 
-
 					// send data
 
 					$.mapControl.ajax(requestUrl,v.data , function(data){
@@ -845,6 +844,10 @@ $(function(){
 		document.getElementsByTagName("head")[0].appendChild(script);
 	}
 
+	$.fn.updateFormGeo = function(lat,lng){
+		$('.rentalAddressLatitude').val(lat);
+		$('.rentalAddressLongitude').val(lng);
+	};
 
 	$.fn.formMapControl = function( options){
 		return this.each(function(){
@@ -905,6 +908,7 @@ $(function(){
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
+					$.fn.updateFormGeo(event.latLng.jb,event.latLng.kb);
 					$(currentId).val(r[0].formatted_address);
 				} else {
 					alert('address error');
@@ -929,6 +933,9 @@ $(function(){
 			map.setCenter(place.geometry.location);
 			map.setZoom(17);
 		  }
+
+		  $.fn.updateFormGeo(place.geometry.location.jb,place.geometry.location.kb);
+		  // console.log(place.geometry.location.jb);
 
 		  if(marker){
 			marker.setPosition(place.geometry.location);
@@ -968,6 +975,7 @@ $(function() {
 		if(typeof $('body').attr('data-google-map-init') == 'undefined' ){
 			var lang = $('html').attr('lang');
 			var script = document.createElement("script");
+
 			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang;
 			document.body.appendChild(script);
 			$('body').attr('data-google-map-init',true);
