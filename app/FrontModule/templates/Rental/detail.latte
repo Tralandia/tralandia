@@ -80,14 +80,12 @@
 									<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">
 
 										{if count($rental->amenities) > 0}
-										{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-										{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType(['owner-availability'])}
-										{if !count($importantAmenities)}
-											{var
-												$importantAmenities = array_slice($notImportantAmenities,0, 2);
-												$notImportantAmenities = array_slice($notImportantAmenities, 2);
-											}
-										{/if}
+											{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+											{if !count($importantAmenities)}
+												{var
+													$importantAmenities = array_slice($notImportantAmenities,0, 2);
+												}
+											{/if}
 
 											{foreach $importantAmenities  as $amenities}
 												{var $firstAmenity = false}
@@ -225,11 +223,9 @@
 												{if $iterator->first}
 												<div class="content">
 													<strong>{_$amenity->type->name|firstUpper}:</strong>
-
-													{else}
-
 														{_$amenity->name}{if !$iterator->last}, {/if}
-
+													{else}
+														{_$amenity->name}{if !$iterator->last}, {/if}
 												{/if}
 
 
