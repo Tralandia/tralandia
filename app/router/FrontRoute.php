@@ -18,6 +18,7 @@ class FrontRoute extends BaseRoute
 	const HASH = 'hash';
 	const RENTAL = 'rental';
 	const FAVORITE_LIST = 'favoriteList';
+	const REDIRECT_TO_FAVORITE = 'redirectToFavorites';
 
 	const SPOKEN_LANGUAGE = 'spokenLanguage';
 	const CAPACITY = 'capacity';
@@ -322,7 +323,7 @@ class FrontRoute extends BaseRoute
 
 		switch (TRUE) {
 			case $presenter == 'RentalList' && $action == 'redirectToFavorites':
-				$params[self::HASH][] = 'f';
+				$params[self::REDIRECT_TO_FAVORITE] = self::REDIRECT_TO_FAVORITE;
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'RootHome' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
@@ -352,7 +353,10 @@ class FrontRoute extends BaseRoute
 			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
 		}
 
-		if(!count($params[self::HASH])) {
+		if(array_key_exists(self::REDIRECT_TO_FAVORITE, $params)) {
+			$params[self::HASH] = 'f';
+			unset($params[self::REDIRECT_TO_FAVORITE]);
+		} else if(!count($params[self::HASH])) {
 			$params[self::HASH] = '';
 		} else {
 			if($presenter == 'CalendarIframe') {
