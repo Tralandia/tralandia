@@ -55,9 +55,6 @@ small.sublitLoadingText {
 
 form.dashboard {
 	margin: 0 0 6px;
-	.btn.btn-greenDark {
-		float: right;
-	}
 }
 
 table.formTable {
@@ -69,11 +66,10 @@ table.formTable {
 	width: 705px;
 
 	td.fieldset {
-		font-size: 15px;
+		font-size: 20px;
 		padding-top: 20px;
 		padding-bottom: 10px;
-		color: @darkBlue;
-		font-weight: bold;
+		color: @darkGreen;
 	}
 
 
@@ -334,11 +330,10 @@ table.formTable {
 		width: 100%;
 		.box-size();
 		tr:nth-child(1) {
-			font-weight: bold;
 			font-size: 15px;
 			line-height: 15px;
 			height: 46px;
-			color: @darkBlue;
+			color: @brown;
 			td {
 				padding-top: 20px;
 				padding-bottom: 10px;
@@ -421,6 +416,10 @@ table.formTable {
 			border-color: @inputErrorBorderColor;
 			background-color: @inputErrorBackgroundColor;
 			color: @inputErrorBorderColor;
+		}
+
+		.select2-container .select2-choice div b {
+			left: 0;
 		}
 	}
 

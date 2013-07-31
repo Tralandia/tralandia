@@ -199,16 +199,16 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('bathroom', 'o100175', $amenities);
 
 		$amenities = $this->amenityRepository->findByNearByTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('nearBy', '#nearBy', $amenities);
+		$rentalContainer->addMultiOptionList('nearBy', '152277', $amenities);
 
 		$amenities = $this->amenityRepository->findByRentalServicesTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('rentalServices', '#rentalServices', $amenities);
+		$rentalContainer->addMultiOptionList('rentalServices', '152278', $amenities);
 
 		$amenities = $this->amenityRepository->findByOnFacilityTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('onFacility', '#onFacility', $amenities);
+		$rentalContainer->addMultiOptionList('onFacility', '152279', $amenities);
 
 		$amenities = $this->amenityRepository->findBySportsFunTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('sportsFun', '#sportsFun', $amenities);
+		$rentalContainer->addMultiOptionList('sportsFun', '152280', $amenities);
 
 		$this->addSubmit('submit', 'o100083');
 

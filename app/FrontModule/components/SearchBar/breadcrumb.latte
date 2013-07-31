@@ -1,15 +1,15 @@
 <div id="staticNavBar" n:class="$isList ? listType">
 
 	<div class="backToList">
-		<a href="{$searchLink}" class="listName"><i class="icon-search"></i>#Vyhľadávanie<span></span></a>
+		<a href="{$searchLink}" class="listName"><i class="icon-search"></i>{_o100003}</a>
 		<div class="breadcrumb">
 
 			{foreach $breadcrumbLinks as $key => $link}
 
 				{ifset $link->href}
-					<a href="{$link->href}" class="filter"><i class="icon-double-angle-right"></i>{$link->text}</a>
+					<a href="{$link->href}" class="filter"><i class="icon-double-angle-right"></i><span>{$link->text}</span></a>
 				{else}
-					<span><i class="icon-double-angle-right"></i>{$link->text}</span>
+					<span class="filter"><i class="icon-double-angle-right"></i>{$link->text}</span>
 				{/ifset}
 
 			{/foreach}
@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="info fromList">
-		<a href="#" class="btn-search">#vyhladavanie</a>
+		
 		<a href="" class="paginator next">{_774}<i class="icon-circle-arrow-right"></i></a>
 		<a href="" class="paginator tooltipElem prev" data-placement="bottom" title="{_775}"><i class="icon-circle-arrow-left"></i></a>
 		<small class="counts"><span class="objectPosition"></span> / <span class="listFullCount"></span></small>

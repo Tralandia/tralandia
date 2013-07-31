@@ -1097,7 +1097,7 @@ function createNewLineInPriceList(){
 
 					break;
 				case 'SELECT' :
-					$input.find('option').attr('selected',false);
+					// $input.find('option').attr('selected',false);
 					break;
 			}
 		}

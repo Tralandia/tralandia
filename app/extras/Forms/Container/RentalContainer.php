@@ -81,7 +81,7 @@ class RentalContainer extends BaseContainer
 
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 		$this->addSelect('placement', 'o100143', $placement)
-			->setOption('help', '152270')
+			->setOption('help', $this->translate('152270'))
 			->setPrompt('o854');
 
 		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
@@ -101,7 +101,7 @@ class RentalContainer extends BaseContainer
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
-			->setOption('prepend', $this->translate('o490', 2) . ':')
+			->setOption('append', $this->translate('o490', 2))
 			->addRule(Form::INTEGER, $this->translate('o100106'))
 			->addRule(Form::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
