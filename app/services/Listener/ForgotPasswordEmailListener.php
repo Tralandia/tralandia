@@ -14,12 +14,17 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 
 	public function onAfterProcess(\Entity\User\User $user)
 	{
+		if($user->isSuperAdmin()) return false;
+
 		$message = new \Nette\Mail\Message();
 
 		$emailCompiler = $this->prepareCompiler($user);
-		$body = $emailCompiler->compileBody();
 
+		$message->setSubject($emailCompiler->compileSubject());
+
+		$body = $emailCompiler->compileBody();
 		$message->setHtmlBody($body);
+
 		$message->addTo($user->getLogin());
 
 		$this->mailer->send($message);
@@ -31,6 +36,8 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('forgotten-password'));
 		$emailCompiler->setLayout($this->getLayout());
+
+		$emailCompiler->addOwner('owner', $user);
 
 		return $emailCompiler;
 	}

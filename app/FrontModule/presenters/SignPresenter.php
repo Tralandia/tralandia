@@ -55,6 +55,7 @@ class SignPresenter extends BasePresenter
 	{
 		$comp = $this->forgotPasswordFormFactory->create();
 		$comp->onSuccess[] = function ($form) {
+			$form->presenter->flashMessage(['152281'], SignPresenter::FLASH_SUCCESS);
 			$form->presenter->redirect('this');
 		};
 
