@@ -5,6 +5,7 @@ namespace Extras\Forms\Container;
 use Entity\Rental\Rental;
 use Entity\Contact\Address;
 use Entity\Location\Location;
+use Extras\Types\Latlong;
 use Nette\InvalidArgumentException;
 use Service\Contact\AddressCreator;
 use Nette\Localization\ITranslator;
@@ -153,8 +154,10 @@ class AddressContainer extends BaseContainer
 		$return = $asArray ? array() : new \Nette\ArrayHash;
 
 		$address = $this['address']->getValue();
+		$latitude = $this['latitude']->getValue();
+		$longitude = $this['longitude']->getValue();
 		if($address) {
-			$address = $this->addressCreator->create($address);
+			$address = $this->addressCreator->create($address, new Latlong($latitude, $longitude));
 			$return['addressEntity'] = $address;
 		} else {
 			$return['addressEntity'] = NULL;
