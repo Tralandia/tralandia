@@ -130,11 +130,13 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer->addText('contactName', '151894')
 			->setOption('prepend', '<i class="icon-user"></i>')
-			->setOption('help', $this->translate('151895'));
+			->setOption('help', $this->translate('151895'))
+			->addRule(self::MIN_LENGTH, $this->translate('151895'), 2);
 
 		$rentalContainer->addText('email', 'o1096')
 			->setOption('prepend', '<i class="icon-envelope"></i>')
-			->setOption('help', $this->translate('o3095'));
+			->setOption('help', $this->translate('o3095'))
+			->addRule(self::EMAIL, $this->translate('o3095'));
 
 
 		$rentalContainer->addText('price', 'o100078')
@@ -178,7 +180,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
+		$rentalContainer->addText('bedroomCount', $this->translate('o100075'))
+			->setRequired($this->translate('1257'));
 
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'))
 						->setOption('help', $this->translate('152269'));
@@ -212,13 +215,32 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$this->addSubmit('submit', 'o100083');
 
+		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = callback($rentalContainer, 'validation');
-		$this->onValidate[] = callback($pricelistUpload, 'validate');
 	}
 
 	public function setDefaultsValues()
 	{
 		return $this['rental']->setDefaultsValues();
+	}
+
+
+	public function validation(Nette\Application\UI\Form $form)
+	{
+
+		$name = $this['rental']['name']->getValues();
+		$nameIsFilled = FALSE;
+		foreach($name as $key => $value) {
+			if(strlen($value)) {
+				$nameIsFilled = TRUE;
+				break;
+			}
+		}
+
+		if(!$nameIsFilled) {
+			$this['rental']['name']['en']->addError($this->translate('o100071'));
+		}
+
 	}
 
 }

@@ -82,6 +82,7 @@ class RentalContainer extends BaseContainer
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 		$this->addSelect('placement', 'o100143', $placement)
 			->setOption('help', $this->translate('152270'))
+			->setRequired($this->translate('152270'))
 			->setPrompt('o854');
 
 		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
@@ -91,10 +92,12 @@ class RentalContainer extends BaseContainer
 
 		$this->addSelect('checkIn', 'o1586', $check)
 						->setOption('help', $this->translate('151889'))
+						->setRequired($this->translate('151889'))
 						->setPrompt('o854');
 
 		$this->addSelect('checkOut', 'o1588', $check)
 						->setOption('help', $this->translate('151890'))
+						->setRequired($this->translate('151889'))
 						->setPrompt('o854');
 
 
@@ -105,10 +108,6 @@ class RentalContainer extends BaseContainer
 			->addRule(Form::INTEGER, $this->translate('o100106'))
 			->addRule(Form::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
-//		$rentalContainer->addText('bedroomCount', 'o100075')
-//			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
-//			//->setOption('help', $this->translate('o5956'))
-//			;
 
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('pet', 'o100079', $amenityPets)

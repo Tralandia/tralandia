@@ -173,8 +173,8 @@ class AddressContainer extends BaseContainer
 	}
 
 	public function validate() {
-		$values = $this->getValues();
-		if (!$this->addressCreator->validate($values['address'])) {
+		$values = $this->getFormattedValues();
+		if (!$values['addressEntity']) {
 			$this->getMainControl()->addError($this->translator->translate('o100134'));
 		}
 	}

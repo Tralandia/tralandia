@@ -20,6 +20,10 @@
 		{include #fieldset, text => 'o100137'}
 		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
 
+		{if count($rentalContainer['name']->getAllErrors())}
+			{_o100071}
+		{/if}
+
 		{foreach $rentalContainer['name']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
 				{var $hide = ''}

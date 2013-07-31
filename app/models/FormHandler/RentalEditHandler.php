@@ -144,7 +144,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom'];
+		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom', 'nearBy', 'rentalServices', 'onFacility', 'sportsFun'];
 		foreach ($amenities as $amenityName) {
 			$value = $values[$amenityName];
 			$amenities = $rental->getAmenitiesByType($amenityName);
