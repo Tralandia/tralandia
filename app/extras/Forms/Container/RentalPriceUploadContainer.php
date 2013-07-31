@@ -72,9 +72,8 @@ class RentalPriceUploadContainer extends BaseContainer
 
 
 		$oldIds = $this->getComponent('oldIds')->getValue();
-		if(!$oldIds) return NULL;
 
-		$oldIds = array_flip(explode(',', $oldIds));
+		$oldIds = array_flip(array_filter(explode(',', $oldIds)));
 		$list = $this->getComponent('list')->getValues();
 
 		foreach($list as $key => $row) {
@@ -122,10 +121,6 @@ class RentalPriceUploadContainer extends BaseContainer
 	public function getMainControl()
 	{
 		return NULL;
-	}
-
-	public function validate() {
-		//d('test');
 	}
 
 }

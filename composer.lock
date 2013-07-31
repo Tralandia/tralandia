@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ffdc95617001ec85e8f4d73cc1f49a71",
+    "hash": "6e775cfb547548ec40b93c38e50154bc",
     "packages": [
         {
             "name": "dg/dibi",
@@ -480,12 +480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextras/forms.git",
-                "reference": "cbba902160d5a7a63b5ae7aa7fd221c9ecf06720"
+                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/nextras/forms/zipball/cbba902160d5a7a63b5ae7aa7fd221c9ecf06720",
-                "reference": "cbba902160d5a7a63b5ae7aa7fd221c9ecf06720",
+                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
                 "shasum": ""
             },
             "require": {
@@ -519,7 +519,7 @@
                 "form",
                 "nette"
             ],
-            "time": "2013-07-29 01:18:44"
+            "time": "2013-04-09 14:26:20"
         },
         {
             "name": "texy/texy",
@@ -584,6 +584,12 @@
             "alias_normalized": "dev-@",
             "version": "9999999-dev",
             "package": "nette/nette"
+        },
+        {
+            "alias": "@dev",
+            "alias_normalized": "dev-@",
+            "version": "9999999-dev",
+            "package": "nextras/forms"
         },
         {
             "alias": "@dev",
