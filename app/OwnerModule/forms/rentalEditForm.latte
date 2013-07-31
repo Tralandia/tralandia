@@ -35,8 +35,9 @@
 
 		<tr><td td colspan="3">
 		{if count($rentalContainer['name']->getAllErrors())}
-			{_o100071}
-		{/if}</td></tr>
+			{_152283}
+		{/if}
+		</td></tr>
 
 		{foreach $rentalContainer['name']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
