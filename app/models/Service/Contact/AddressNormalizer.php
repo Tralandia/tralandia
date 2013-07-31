@@ -126,6 +126,7 @@ class AddressNormalizer extends \Nette\Object {
 		return $this->parseResponse($response);
 	}
 
+
 	/**
 	 * @param \Entity\Contact\Address $address
 	 *
@@ -212,7 +213,9 @@ class AddressNormalizer extends \Nette\Object {
 
 		$locationRepository = $this->locationRepositoryAccessor->get();
 		$info[self::PRIMARY_LOCATION] = $locationRepository->findOneByIso($info[self::PRIMARY_LOCATION]);
-		$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
+		if(isset($info[self::LOCALITY])) {
+			$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
+		}
 
 		$l = $response->getLocation();
 		if (isset($l->lat) && isset($l->lng)) {
@@ -232,7 +235,7 @@ class AddressNormalizer extends \Nette\Object {
 		$info[self::SUBLOCALITY] = Arrays::get($info, AddressNormalizer::SUBLOCALITY, NULL);
 
 		if(!$this->isInfoValid($info)) {
-			throw new WrongAddressInfoException;
+			return NULL;
 		}
 
 		return $info;

@@ -3,6 +3,7 @@ namespace Service\Contact;
 
 
 use Doctrine\ORM\EntityManager;
+use Extras\Types\Latlong;
 use Nette\Utils\Arrays;
 
 class AddressCreator
@@ -31,12 +32,13 @@ class AddressCreator
 
 	/**
 	 * @param string $address
+	 * @param \Extras\Types\Latlong $gps
 	 *
 	 * @return \Entity\Contact\Address
 	 */
-	public function create($address)
+	public function create($address, Latlong $gps)
 	{
-		if (!$info = $this->validate($address)) return NULL;
+		if (!$info = $this->validate($address, $gps)) return NULL;
 
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
 
@@ -56,9 +58,15 @@ class AddressCreator
 		return $addressEntity;
 	}
 
-	public function validate($address) {
+
+	public function validate($address, Latlong $gps) {
+
 		$info = $this->addressNormalizer->getInfoUsingAddress($address);
+
+		if(!$info) {
+			$info = $this->addressNormalizer->getInfoUsingGps($gps);
+		}
+
 		return $info;
 	}
-
 }
