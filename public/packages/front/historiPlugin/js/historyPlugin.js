@@ -96,15 +96,17 @@
 
 				if(base._isRentalInHistory()){
 					base._renderNavigationBar();
+					$(base.options.selectorPaginatorContainer).addClass('show');
 				} else {
+
 					base._deleteHistory();
 					console.log('nepatri do mojej historie');
 					// @todo ajax function
-				}				
-			} else {
-				$(base.options.selectorPaginatorContainer).removeClass('fromList');				
-			}
+				}
 
+				
+
+			}
 		};
 
 		base._setRentalDetailVariables = function(){

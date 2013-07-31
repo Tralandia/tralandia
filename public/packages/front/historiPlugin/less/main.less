@@ -28,7 +28,7 @@
 		margin: 2px 15px 0 0;
 	}
 
-	.paginator , .btn-search {
+	.paginator  {
 		font-size: 14px;
 		display: none;
 		background: @darkBlue;
@@ -60,12 +60,7 @@
 		}
 	}
 
-	.btn-search {
-		float: right;
-		border-radius: 5px;
-		display: block;
-		padding: 1px 12px;		
-	}
+
 
 	&.listType {
 		margin: -15px 5px -3px 0px;
@@ -196,12 +191,9 @@
 	.info {
 		float: right;
 		text-align: center;
-
+		display: none;
 		&.fromList {
-			.btn-search {
-				display: none;
 
-			}
 			.paginator {
 				display: block;
 			}
@@ -209,6 +201,10 @@
 			small {
 				display: block;
 			}
+		}
+
+		&.show {
+			display: block;
 		}
 	}
 }
