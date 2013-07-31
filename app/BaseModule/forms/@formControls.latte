@@ -659,7 +659,7 @@
 			<div class="priceListRowsContainer">
 				{foreach $replicator->getComponents() as $component}
 					<div class="rentalPriceRow">
-						{input $component['name'] , placeholder => 'o100191'}
+						{input $component['name']}
 						{input $component['language'] , class => 'notFulltext'}
 						{if $component['filePath']->getValue()}
 							<span class="file-placeholder">#Subor je nahraty</span>

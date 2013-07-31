@@ -29,6 +29,11 @@ class RentalPriceUploadContainer extends BaseContainer
 
 	protected $languages = [];
 
+	/**
+	 * @var \Extras\Translator
+	 */
+	private $translator;
+
 
 	public function __construct(\Entity\Rental\Rental $rental = NULL, \RentalPriceListManager $manager,
 								\AllLanguages $allLanguages, Translator $translator, EntityManager $em)
@@ -43,11 +48,12 @@ class RentalPriceUploadContainer extends BaseContainer
 
 		$this->addDynamic('list', $this->containerBuilder, $this->pricelists->count() + 1);
 		$this->addHidden('oldIds');
+		$this->translator = $translator;
 	}
 
 	public function containerBuilder(Container $container)
 	{
-		$container->addText('name', '');
+		$container->addText('name', '')->setAttribute('placeholder', $this->translator->translate('o100191'));
 		$container->addSelect('language', '', $this->languages)
 			->setDefaultValue($this->rental->getPrimaryLocation()->getDefaultLanguage()->getId());
 		$container->addUpload('file', 'o100192');
