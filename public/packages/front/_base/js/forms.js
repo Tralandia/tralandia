@@ -844,6 +844,10 @@ $(function(){
 		document.getElementsByTagName("head")[0].appendChild(script);
 	}
 
+	$.fn.updateFormGeo = function(lat,lng){
+		$('.rentalAddressLatitude').val(lat);
+		$('.rentalAddressLongitude').val(lng);
+	};
 
 	$.fn.formMapControl = function( options){
 		return this.each(function(){
@@ -904,6 +908,7 @@ $(function(){
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
+					$.fn.updateFormGeo(event.latLng.jb,event.latLng.kb);
 					$(currentId).val(r[0].formatted_address);
 				} else {
 					alert('address error');
@@ -928,6 +933,9 @@ $(function(){
 			map.setCenter(place.geometry.location);
 			map.setZoom(17);
 		  }
+
+		  $.fn.updateFormGeo(place.geometry.location.jb,place.geometry.location.kb);
+		  // console.log(place.geometry.location.jb);
 
 		  if(marker){
 			marker.setPosition(place.geometry.location);
