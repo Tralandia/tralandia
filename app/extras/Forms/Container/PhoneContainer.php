@@ -55,7 +55,7 @@ class PhoneContainer extends BaseContainer
 		if ($values instanceof \Entity\Contact\Phone) {
 			$valuesTemp = [];
 			$valuesTemp['prefix'] = $values->getPrimaryLocation()->getPhonePrefix();
-			$valuesTemp['number'] = str_replace('+' . $valuesTemp['prefix'], '', $values->getInternational());
+			$valuesTemp['number'] = trim(str_replace('+' . $valuesTemp['prefix'], '', $values->getInternational()));
 			$values = $valuesTemp;
 		}
 		parent::setValues($values, $erase);
@@ -89,8 +89,8 @@ class PhoneContainer extends BaseContainer
 	}
 
 	public function validate() {
-		$number = $this['prefix']->getValue() . $this['number']->getValue();
-		if (!$this->phoneBook->isValid($number)) {
+		$values = $this->getFormattedValues();
+		if (!$values->entity) {
 			$this->getMainControl()->addError('#invalid phone number');
 		}
 	}

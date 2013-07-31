@@ -171,20 +171,6 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['separateGroups']) {
-			$groupsAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findBySeparateGroupsType();
-			if ($value === TRUE) {
-				$rental->addAmenity($groupsAmenity[0]);
-				$rental->removeAmenity($groupsAmenity[1]);
-			} else if ($value === FALSE) {
-				$rental->removeAmenity($groupsAmenity[0]);
-				$rental->addAmenity($groupsAmenity[1]);
-			} else if ($value === NULL) {
-				$rental->removeAmenity($groupsAmenity[0]);
-				$rental->removeAmenity($groupsAmenity[1]);
-			}
-		}
-
 		if ($value = $values['ownerAvailability']) {
 			$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
 			foreach ($availibilityAmenities as $amenity) {

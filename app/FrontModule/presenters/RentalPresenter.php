@@ -85,7 +85,6 @@ class RentalPresenter extends BasePresenter {
 			$this->template->firstAnswer = NULL;
 		}
 
-		$this->template->separateGroups = $rental->getSeparateGroups();
 		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 

@@ -84,7 +84,7 @@ class Phone extends Nette\Object {
 	 * @return int
 	 */
 	private function prepareNumber($number) {
-		return (int)str_replace(array(' ', '+'), array(null, null), $number);
+		return preg_replace('~[^0-9]~', '', $number);
 	}
 
 	/**
@@ -94,7 +94,7 @@ class Phone extends Nette\Object {
 	 */
 	private function serviceRequest($number,Entity\Location\Location $defaultCountry = NULL) {
 		$query = [];
-		$query['phoneNumber'] = $this->prepareNumber($number);
+		$query['phoneNumber'] = $number;
 		if($defaultCountry) $query['defaultCountry'] = substr($defaultCountry->getIso(), 0, 2);
 		$query = http_build_query($query);
 		$response = file_get_contents($this->serviceUrl . $query);

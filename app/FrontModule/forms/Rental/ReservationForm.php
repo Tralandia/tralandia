@@ -143,7 +143,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function validation(ReservationForm $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getFormattedValues();
 
 		$from = $values->date->from;
 		$to = $values->date->to;
@@ -156,8 +156,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			$form->addError($this->translate('o100161'));
 		}
 
-		$phone = $values->phone->phone;
-		if($phone === FALSE) {
+		$phone = $values->phone->entity;
+		if(!$phone) {
 			$form['phone']['number']->addError($form->translate('o100159'));
 		}
 
@@ -188,7 +188,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function process(ReservationForm $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getFormattedValues();
 
 		/** @var $reservation \Entity\User\RentalReservation */
 		$reservation = $this->reservationRepository->createNew();
@@ -197,7 +197,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setRental($this->rental);
 		$reservation->setSenderEmail($values->email);
 		//$reservation->setSenderName($values->name);
-		if($values->phone->phone) $reservation->setSenderPhone($values->phone->phone);
+		if($values->phone->entity) $reservation->setSenderPhone($values->phone->entity);
 		if($values->date->from) $reservation->setArrivalDate($values->date->from);
 		if($values->date->to) $reservation->setDepartureDate($values->date->to);
 		$reservation->setAdultsCount($values->parents);

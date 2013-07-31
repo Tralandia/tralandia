@@ -22,6 +22,7 @@ class UserPresenter extends BasePresenter {
 		$form = $this->userEditFormFactory->create($this->loggedUser);
 
 		$form->onSuccess[] = function ($form) {
+			$form->presenter->flashMessage($form->presenter->translate('542'),UserPresenter::FLASH_INFO);
 			$form->presenter->redirect('this');
 		};
 
