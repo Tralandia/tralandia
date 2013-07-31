@@ -1,6 +1,6 @@
 services:
 
-#	forgotPasswordEmailListener: [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
+	- [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
 #	registrationEmailListener: [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\Rental\RankCalculatorListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\SearchCache\InvalidateRentalListener, tags: [kdyby.subscriber]]
