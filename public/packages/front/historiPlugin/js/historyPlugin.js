@@ -21,10 +21,10 @@
 
 			switch(base._getPageType()){
 				case 'rootHome':
-						base._setRootHomeHistory();
+						// base._setRootHomeHistory();
 					break;
 				case 'home':
-						base._setHomeHistory();
+						// base._setHomeHistory();
 					break;
 				case 'list':
 						base._setListHistory();
@@ -96,15 +96,17 @@
 
 				if(base._isRentalInHistory()){
 					base._renderNavigationBar();
+					$(base.options.selectorPaginatorContainer).addClass('show');
 				} else {
+
 					base._deleteHistory();
 					console.log('nepatri do mojej historie');
 					// @todo ajax function
-				}				
-			} else {
-				$(base.options.selectorPaginatorContainer).removeClass('fromList');				
-			}
+				}
 
+				
+
+			}
 		};
 
 		base._setRentalDetailVariables = function(){
@@ -127,6 +129,7 @@
 			// console.log(base._getHistory());
 			// console.log(base._getHistory().listData);
 			// console.log(base.rentalDetailVariables.id);
+			// console.log(base._getHistory().listData);
 
 			$.each(base._getHistory().listData,function(k,v){				
 

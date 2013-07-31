@@ -7,7 +7,7 @@
 #staticNavBar {
 	width: auto;
 	height: 45px;
-	margin: 0 16px -3px 20px;
+	margin: 0 16px -3px 30px;
 	clear: both;
 	line-height: 30px;
 	font-size: 12px;
@@ -28,7 +28,7 @@
 		margin: 2px 15px 0 0;
 	}
 
-	.paginator , .btn-search {
+	.paginator  {
 		font-size: 14px;
 		display: none;
 		background: @darkBlue;
@@ -60,12 +60,7 @@
 		}
 	}
 
-	.btn-search {
-		float: right;
-		border-radius: 5px;
-		display: block;
-		padding: 1px 12px;		
-	}
+
 
 	&.listType {
 		margin: -15px 5px -3px 0px;
@@ -82,7 +77,7 @@
 		}
 
 		.backToList {
-			.breadcrumb a , .breadcrumb span {
+			.breadcrumb a , .breadcrumb span.filter {
 				font-size: 13px;
 				color: @darkGreen;
 
@@ -90,6 +85,22 @@
 					color: #999;
 					top: 1px;
 				}
+
+				&:first-child {
+					i {
+						display: none;
+					}
+				}
+
+				&:hover {
+					/*text-decoration: underline;*/
+				}
+			}
+
+			.breadcrumb span.filter {
+					i {
+						top: -1px;
+					}	
 			}
 		}
 
@@ -108,7 +119,7 @@
 				width: 520px;
 				height: 30px;
 				overflow: hidden;
-				a , span {
+				a , span.filter {
 					background: #FFF;
 					color: @darkBlue;
 					text-transform: none;
@@ -138,12 +149,26 @@
 
 					&:first-child {
 						margin-left: 10px;
+
+						i {
+							display: none;
+						}
 					}
 				
+
+				}
+
+				span.filter {
+					display: block;
+					padding-top: 1px;
+
+					i {
+						top: 1px;
+					}					
 				}
 			}
 
-		a ,span {
+		a  {
 			font-size: 14px;
 			float: left;
 			background: @darkBlue;
@@ -185,12 +210,9 @@
 	.info {
 		float: right;
 		text-align: center;
-
+		display: none;
 		&.fromList {
-			.btn-search {
-				display: none;
 
-			}
 			.paginator {
 				display: block;
 			}
@@ -198,6 +220,10 @@
 			small {
 				display: block;
 			}
+		}
+
+		&.show {
+			display: block;
 		}
 	}
 }

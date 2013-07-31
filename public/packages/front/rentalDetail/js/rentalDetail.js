@@ -37,14 +37,17 @@
 				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
 
 				var isFavorites = false;
-				var myFavorites = $.jStorage.get('favoritesList');
-				console.log(myFavorites);
+				var myFavorites = $.cookie('favoritesList');
+
+				
 
 
 				if(typeof myFavorites != 'undefined' && myFavorites != null)
 				{
-					$.each($.jStorage.get('favoritesList'),function(k,v){
-						if(rentalId == v.id){
+					myFavorites = myFavorites.split(',');
+
+					$.each(myFavorites,function(k,v){
+						if(rentalId == v){
 							isFavorites = true;
 						}
 					});					
@@ -265,6 +268,7 @@ function rentalDetailDatepickerInit(){
 	$( ".datepicker" ).datepicker({ 
 		minDate: 0, 
 		maxDate: "+12M +10D" , 
+		firstDay: 1,
 		dateFormat: "yy-mm-dd",
 		beforeShow: function(textbox, instance){
             instance.dpDiv.css({
@@ -278,6 +282,7 @@ function rentalDetailDatepickerInit(){
 		minDate: new Date(2013, 1, 28), 
 		maxDate: "+12M +10D" ,
 		dateFormat: "yy-mm-dd" ,
+		firstDay: 1,
 		beforeShow: function(textbox, instance){
 
 			console.log(textbox.offsetHeight);

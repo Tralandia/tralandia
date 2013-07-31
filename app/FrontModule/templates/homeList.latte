@@ -13,31 +13,27 @@
 
 
 	<div class="span12">
-		<div class=" mytabUi ui-tabs">
 
-			<div id="tabs-1" class="ui-tabs-panel">
-				<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
+		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 
-				{var $rentalService = $rental['service']; }
-				{var $featured = $rentalService->isFeatured(); }
+		{var $rentalService = $rental['service']; }
+		{var $featured = $rentalService->isFeatured(); }
 
-					<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
-						<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
-							<div class="position">TOP</div>
-							{if $mainImage = $rental['entity']->getMainImage()}
-								<img alt="{_$rental['entity']->name}" n:image="$mainImage"/>
-							{/if}
-							{ifset $isRootHome}
-								<div class="label">{_$rental['entity']->address->locality->name}, {_$rental['entity']->address->primaryLocation->name}</div>
-							{else}
-								<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
-							{/ifset}
-						</a>
-					</li>
-				</ul>
+			<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
+				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
+					<div class="position">TOP</div>
+					{if $mainImage = $rental['entity']->getMainImage()}
+						<img alt="{_$rental['entity']->name}" n:image="$mainImage"/>
+					{/if}
+					{ifset $isRootHome}
+						<div class="label">{_$rental['entity']->address->locality->name}, {_$rental['entity']->address->primaryLocation->name}</div>
+					{else}
+						<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
+					{/ifset}
+				</a>
+			</li>
+		</ul>
 
-			</div>
 
-		</div>
 	</div>
 </div>

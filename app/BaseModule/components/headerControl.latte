@@ -1,7 +1,7 @@
 <div class="span12">
 
 <div id="myFav" class="hide">
-	<a href="#">
+	<a href="{plink :Front:RentalList:redirectToFavorites}">
 		<i class="animated icon-heart"></i>
 		<span></span>
 		<div class="addToFavorites hide"></div>
@@ -13,8 +13,7 @@
 		<a class="facebook" href="{$facebookPage}" target="_blank"><i class="icon-facebook-sign"></i></a>
 		<a class="googlePlus" href="{$googlePlusProfile}" target="_blank"><i class="icon-google-plus-sign"></i></a>
 	</div> *}
-	<div class="inner" id="topWidget"
-			 style="background-image: url({$backgroundImage});">
+	<div class="inner" id="topWidget" style="background-image: url({$backgroundImage});">
 
 
 
@@ -65,6 +64,11 @@
 						</li>
 						{/ifset}
 
+						<li class="headerIcon">
+							<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}">
+								{_1226}
+							</a>
+						</li>
 
 						{ifset $showFlag}
 							<li class="headerIcon">
@@ -73,17 +77,20 @@
 						{/ifset}
 
 
-						<li class="headerIcon">
-							<a href="{plink Registration:}" class="red">
-								<strong>{_o100044}</strong>
-							</a>
-						</li>
+
 
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
 								<strong>{_o100195}</strong>
 							</a>
 						</li>
+
+						<li class="headerIcon">
+							<a href="{plink Registration:}" class="red">
+								<strong>{_o100044}</strong>
+							</a>
+						</li>
+
 						<li class="headerIcon">
 							<a href="{plink :Front:Sign:in}">{_o100043}</a>
 						</li>

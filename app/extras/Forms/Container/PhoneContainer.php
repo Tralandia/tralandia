@@ -11,7 +11,12 @@ class PhoneContainer extends BaseContainer
 	/**
 	 * @var \Extras\Books\Phone
 	 */
-	protected $phoneBook;
+	protected $phoneBook;	
+
+	/**
+	 * @var \Nette\Localization\ITranslator $translator
+	 */
+	protected $translator;
 
 
 	/**
@@ -23,6 +28,7 @@ class PhoneContainer extends BaseContainer
 	public function __construct($label, $phonePrefixes, Phone $phoneBook, ITranslator $translator)
 	{
 		$this->phoneBook = $phoneBook;
+		$this->translator = $translator;
 		parent::__construct();
 
 		$this->addSelect('prefix', NULL, $phonePrefixes);
@@ -91,7 +97,7 @@ class PhoneContainer extends BaseContainer
 	public function validate() {
 		$values = $this->getFormattedValues();
 		if (!$values->entity) {
-			$this->getMainControl()->addError('#invalid phone number');
+			$this->getMainControl()->addError($this->translator->translate('151882'));
 		}
 	}
 
