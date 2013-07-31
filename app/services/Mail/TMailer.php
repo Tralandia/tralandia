@@ -42,7 +42,6 @@ trait TMailer {
 			$message->setHeader('To', [$testerEmail => $testerEmail]);
 		}
 
-
 		$from = $message->getFrom();
 		if($from) {
 			$fromKeys = array_keys($from);
