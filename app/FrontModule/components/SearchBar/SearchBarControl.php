@@ -194,36 +194,56 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->template->setFile(APP_DIR.'/FrontModule/components/SearchBar/breadcrumb.latte');
 		$template = $this->template;
 
-		$currency = $this->environment->getPrimaryLocation()->getDefaultCurrency()->getIso();
-		$price = $this->priceFrom . ' - ' . $this->priceTo . strtolower($currency);
-
 		if($this->presenter->getName() == 'Front:Rental') {
 			/** @var $rental \Entity\Rental\Rental */
 			$rental = $this->presenter->getParameter('rental');
 			$filter = [
-				FrontRoute::RENTAL_TYPE => $rental->getType(),
-				FrontRoute::LOCATION => $rental->getAddress()->getLocality(),
+				FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $rental->getType(),
+				FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $rental->getAddress()->getLocality(),
 				FrontRoute::PRIMARY_LOCATION => $rental->getPrimaryLocation(),
 			];
 		} else {
+
 			$filter = [
-				FrontRoute::SPOKEN_LANGUAGE => $this->spokenLanguage,
-				FrontRoute::BOARD => $this->board,
-				FrontRoute::CAPACITY => $this->capacity,
-				'price' => $this->priceFrom || $this->priceTo ? $price : NULL,
-				FrontRoute::RENTAL_TYPE => $this->rentalType,
-				FrontRoute::LOCATION => $this->location,
+				FrontRoute::$pathParametersMapper[FrontRoute::SPOKEN_LANGUAGE] => $this->spokenLanguage,
+				FrontRoute::$pathParametersMapper[FrontRoute::BOARD] => $this->board,
+				FrontRoute::$pathParametersMapper[FrontRoute::CAPACITY] => $this->capacity,
+				FrontRoute::$pathParametersMapper[FrontRoute::PRICE_FROM] => $this->priceFrom,
+				FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO] => $this->priceTo,
+				FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->rentalType,
+				FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->location,
 				FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
 			];
+			$filter = array_filter($filter);
 		}
 
-		$breadcrumbLinks = [];
+		$searchLink = $this->presenter->link(':Front:RentalList:', $filter);
 
+		$breadcrumbLinks = [];
 		foreach($filter as $key => $value) {
+
+			if(($key == FrontRoute::$pathParametersMapper[FrontRoute::PRICE_FROM] || $key == FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO])
+				&& ($this->priceFrom || $this->priceTo))
+			{
+				$currency = $this->environment->getPrimaryLocation()->getDefaultCurrency()->getIso();
+
+
+				if($this->priceTo) {
+					$to = $this->priceTo;
+				} else {
+					$to = $this->getSearch()->getMaxPriceCriterionOption();
+				}
+
+				$value = (int)$this->priceFrom . ' - ' . $to . ' ' . strtolower($currency);
+				$key = 'price';
+			}
+
 			if($value) {
 				$link = [];
-				$link['href'] = $this->link('this', $filter);
-				if($value instanceof Type) {
+				$link['href'] = $this->presenter->link(':Front:RentalList:', $filter);
+				if($key == FrontRoute::$pathParametersMapper[FrontRoute::CAPACITY]) {
+					$link['text'] = $value . ' ' . $this->presenter->translate('o490', $value);
+				} else if ($value instanceof Type) {
 					$link['text'] = Strings::firstUpper($this->getPresenter()->translate($value->getName(), 2));
 				} else if($value instanceof BaseEntity) {
 					$link['text'] = $this->getPresenter()->translate($value->getName());
@@ -232,6 +252,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				}
 
 				$breadcrumbLinks[$key] = $link;
+			}
+
+			if($key == 'price') {
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_FROM]] = NULL;
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO]] = NULL;
+			} else {
 				$filter[$key] = NULL;
 			}
 		}
@@ -240,7 +266,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$breadcrumbLinks = ArrayHash::from($breadcrumbLinks);
 
-		$template->searchLink = $this->link('this');
+		$template->searchLink = $searchLink;
 		$template->breadcrumbLinks = $breadcrumbLinks;
 		$template->isList = $this->getPresenter()->isLinkCurrent(':Front:RentalList:*');
 
