@@ -213,7 +213,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->addSubmit('submit', 'o100083');
 
 		$this->onValidate[] = callback($rentalContainer, 'validation');
-		$this->onValidate[] = callback($pricelistUpload, 'validate');
 	}
 
 	public function setDefaultsValues()
