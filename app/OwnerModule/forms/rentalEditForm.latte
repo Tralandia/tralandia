@@ -16,13 +16,25 @@
 		{include #email, control => $rentalContainer['email']}
 		{include #url, control => $rentalContainer['url']}
 
+		<tr>
+			<td colspan="2" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
+		</tr>
+		<tr class="topArrowBox">
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>
+							<span class="help top">weiufg</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 
-		{include #fieldset, text => 'o100137'}
-		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
-
+		<tr><td td colspan="3">
 		{if count($rentalContainer['name']->getAllErrors())}
 			{_o100071}
-		{/if}
+		{/if}</td></tr>
 
 		{foreach $rentalContainer['name']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
@@ -67,7 +79,9 @@
 		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
 
 
-		{include #fieldset, text => '1125'}
+		<tr>
+			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
+		</tr>		
 		{foreach $rentalContainer['interview']->getComponents() as $container}
 			{foreach $container->getControls() as $control}
 				{if $control->getName() == $environmentLanguage->getIso()}
