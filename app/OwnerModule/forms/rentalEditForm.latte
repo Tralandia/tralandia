@@ -17,27 +17,42 @@
 		{include #url, control => $rentalContainer['url']}
 
 		<tr>
-			<td colspan="2" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
-		</tr>
-		<tr class="topArrowBox">
-			<td colspan="3">
-				<table>
-					<tr>
-						<td>
-							<span class="help top">{_1321}</span>
-						</td>
-					</tr>
-				</table>
-			</td>
+			<td colspan="2" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 selectLanguageBasicInformation pull-right selectLanguage notFulltext'}</td>
 		</tr>
 
 
 
-		<tr><td td colspan="3">
+
+
+		
 		{if count($rentalContainer['name']->getAllErrors())}
-			{_152283}
+
+				<tr class="topArrowBox invalid">
+					<td colspan="3">
+						<table>
+							<tr>
+								<td>
+									<span class="invalidAlert lang">{_152283}</span>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+			{else}
+				<tr class="topArrowBox">
+					<td colspan="3">
+						<table>
+							<tr>
+								<td>
+									<span class="help top">{_152284}</span>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 		{/if}
-		</td></tr>
+		
 
 		{foreach $rentalContainer['name']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
@@ -45,7 +60,7 @@
 			{else}
 				{var $hide = 'hide'}
 			{/if}
-			{include #text, control => $control , class => $control->getName().' toggleLanguage '.$hide}
+			{include #text, control => $control , class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
 		{/foreach}
 		{foreach $rentalContainer['teaser']->getControls() as $control}
 			{if $control->getName() == $environmentLanguage->getIso()}
@@ -53,7 +68,7 @@
 			{else}
 				{var $hide = 'hide'}
 			{/if}
-			{include #text, control => $control, class => $control->getName().' toggleLanguage '.$hide}
+			{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
 		{/foreach}
 
 		{include #fieldset, text => 'o100085'}
@@ -97,14 +112,15 @@
 		{include #checkboxList, control => $rentalContainer['sportsFun'], colCount => 3}
 
 		<tr>
-			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
+			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguageInterview selectLanguage notFulltext'}</td>
 		</tr>
+
 		<tr class="topArrowBox">
 			<td colspan="3">
 				<table>
 					<tr>
 						<td>
-							<span class="help top">{_1321}</span>
+							<span class="help top">{_152284}</span>
 						</td>
 					</tr>
 				</table>
