@@ -2,6 +2,7 @@
 
 namespace Service\Rental;
 
+use Doctrine\ORM\EntityManager;
 use Nette;
 use Entity\User\User;
 use Entity\Location\Location;
@@ -22,17 +23,29 @@ class RentalCreator
 	protected $rentalRepository;
 
 	/**
+	 * @var \Repository\BaseRepository
+	 */
+	protected $interviewQuestionRepository;
+	/**
+	 * @var \Repository\BaseRepository
+	 */
+	protected $interviewAnswerRepository;
+
+	/**
 	 * @var \Service\Contact\AddressNormalizer
 	 */
 	protected $addressNormalizer;
 
+
 	/**
-	 * @param \Repository\Rental\RentalRepository $rentalRepository
+	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Service\Contact\AddressNormalizer $addressNormalizer
 	 */
-	public function __construct(RentalRepository $rentalRepository, AddressNormalizer $addressNormalizer)
+	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer)
 	{
-		$this->rentalRepository = $rentalRepository;
+		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
+		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
+		$this->interviewAnswerRepository = $em->getRepository(INTERVIEW_ANSWER_ENTITY);
 		$this->addressNormalizer = $addressNormalizer;
 	}
 
@@ -48,9 +61,14 @@ class RentalCreator
 		$rental->getName()->setSourceLanguage($language);
 		$rental->getTeaser()->setSourceLanguage($language);
 
-		$answers = $rental->getInterviewAnswers();
-		foreach($answers as $answer) {
+		$questions = $this->interviewQuestionRepository->findAll();
+		/** @var $question \Entity\Rental\InterviewQuestion */
+		foreach($questions as $question) {
+			/** @var $answer \Entity\Rental\InterviewAnswer */
+			$answer = $this->interviewAnswerRepository->createNew();
 			$answer->getAnswer()->setSourceLanguage($language);
+			$answer->setQuestion($question);
+			$rental->addInterviewAnswer($answer);
 		}
 
 		$this->addressNormalizer->update($address, TRUE);

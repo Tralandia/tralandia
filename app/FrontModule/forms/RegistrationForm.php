@@ -208,7 +208,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 
 		];
-		//$this->setDefaults($defaults);
+//		$this->setDefaults($defaults);
 	}
 
 
