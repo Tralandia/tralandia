@@ -172,9 +172,9 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['ownerAvailability']) {
-			$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
-			foreach ($availibilityAmenities as $amenity) {
-				if ($value && $amenity->id == $value) {
+			$availabilityAmenities = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByOwnerAvailabilityType();
+			foreach ($availabilityAmenities as $amenity) {
+				if ($amenity->getId() == $value) {
 					$rental->addAmenity($amenity);
 				} else {
 					$rental->removeAmenity($amenity);
