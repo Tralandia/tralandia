@@ -109,7 +109,7 @@
 													{var $importantAmenities = $rental->getImportantAmenities(true)}
 
 
-													{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['children', 'activity' , 'relax' , 'service' , 'wellness' , 'congress' , 'kitchen' , 'bathroom' , 'room' , 'heating' , 'parking' , 'animal' , 'other' , 'owner-availability','separate-groups']) as $amenities}
+													{foreach $rental->getAmenitiesByType(['board']) as $amenities}
 
 														{foreach $amenities as $amenity}
 
