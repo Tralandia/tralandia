@@ -81,6 +81,20 @@
 		{include #fieldset, text => 'o100166'}
 		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
 
+		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
+
+		{* {include #checkboxList, control => $rentalContainer['activity'], colCount => 3} *}
+		{* {include #checkboxList, control => $rentalContainer['relax'], colCount => 3} *}
+
+		{include #checkboxList, control => $rentalContainer['service'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['wellness'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['kitchen'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['bathroom'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['nearBy'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['rentalServices'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['onFacility'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['sportsFun'], colCount => 3}
 
 		<tr>
 			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguage notFulltext'}</td>
@@ -108,25 +122,8 @@
 			{/foreach}
 		{/foreach}
 
-
-		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
-
-		{* {include #checkboxList, control => $rentalContainer['activity'], colCount => 3} *}
-		{* {include #checkboxList, control => $rentalContainer['relax'], colCount => 3} *}
-
-		{include #checkboxList, control => $rentalContainer['service'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['wellness'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['kitchen'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['bathroom'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['nearBy'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['rentalServices'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['onFacility'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['sportsFun'], colCount => 3}
-
-
 		{include #submit, control => $form['submit'], icon => 'entypo-ok'}
 	</table>
-{dump $form->getAllErrors()}
+{*{dump $form->getAllErrors()}*}
 
 {/form}

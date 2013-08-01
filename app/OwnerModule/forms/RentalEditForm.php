@@ -167,12 +167,12 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$iso = $language->getIso();
 
 			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getNameSpoken()) . ':')
+				->setOption('prepend', $this->translate($language->getName()) . ':')
 				->setOption('help', $this->translate('o100071'));
 				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getNameSpoken()) . ':')
+				->setOption('prepend', $this->translate($language->getName()) . ':')
 				->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {
