@@ -76,6 +76,12 @@ class AmenityRepository extends \Repository\BaseRepository
 	}
 
 
+	public function findByOwnerAvailabilityType()
+	{
+		return $this->findByType('owner-availability');
+	}
+
+
 	public function findByBoardTypeForSelect(ITranslator $translator)
 	{
 		return $this->findByTypeForSortBySortingSelect('board', $translator);

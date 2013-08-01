@@ -165,6 +165,8 @@ class RentalContainer extends BaseContainer
 			}
 		}
 
+		$ownerAvailability = $rental->getOwnerAvailability();
+
 		$defaults = [
 			'url' => $this->rental->getUrlWithoutProtocol(),
 			'phone' => $this->rental->getPhone(),
@@ -179,7 +181,7 @@ class RentalContainer extends BaseContainer
 			'roomsLayout' => $rental->rooms,
 			'checkIn' => $rental->getCheckIn(),
 			'checkOut' => $rental->getCheckOut(),
-			'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
+			'ownerAvailability' => $ownerAvailability ? $ownerAvailability->getId() : NULL,
 			'pet' => ($pet ? $pet->getId() : NULL),
 			'placement' => $placement,
 
