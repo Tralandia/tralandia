@@ -475,7 +475,7 @@ table.formTable {
 								border-color: #ff0000;
 								color: #ff0000;
 				}
-				.invalidAlert:after, .invalidAlert:before {
+				.invalidAlert:not(.lang):after, .invalidAlert:not(.lang):before {
 					top: 100%;
 					border: solid transparent;
 					content: " ";
@@ -485,7 +485,7 @@ table.formTable {
 					pointer-events: none;
 				}
 
-				.invalidAlert:after {
+				.invalidAlert:not(.lang):after {
 					border-color: rgba(253, 221, 215, 0);
 					border-top-color: #fdddd7;
 					border-width: 10px;
@@ -493,7 +493,7 @@ table.formTable {
 					margin-left: -10px;
 
 				}
-				.invalidAlert:before {
+				.invalidAlert:not(.lang):before {
 					border-color: rgba(255, 0, 0, 0);
 					border-top-color: #ff0000;
 					border-width: 11px;
