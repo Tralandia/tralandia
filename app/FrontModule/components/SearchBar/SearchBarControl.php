@@ -227,14 +227,19 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			{
 				$currency = $this->environment->getPrimaryLocation()->getDefaultCurrency()->getIso();
 
-
-				if($this->priceTo) {
-					$to = $this->priceTo;
+				if($this->priceFrom) {
+					$from = $this->getPresenter()->translate('o100093') . ' ' . $this->priceFrom . ' ';
 				} else {
-					$to = $this->getSearch()->getMaxPriceCriterionOption();
+					$from = NULL;
 				}
 
-				$value = (int)$this->priceFrom . ' - ' . $to . ' ' . strtolower($currency);
+				if($this->priceTo) {
+					$to = $this->getPresenter()->translate('o100094') . ' ' . $this->priceTo . ' ';
+				} else {
+					$to = NULL;
+				}
+
+				$value = $from . $to . strtoupper($currency);
 				$key = 'price';
 			}
 

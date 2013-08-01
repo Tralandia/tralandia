@@ -2,7 +2,7 @@
 {foreach $flashes as $flash}
 <div class="alert alert-{$flash->type}">
 	<button class="close" data-dismiss="alert">×</button>
-	{$flash->message}
+	{!$flash->message}
 </div>
 {/foreach}
 {/snippet}

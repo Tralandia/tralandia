@@ -92,6 +92,12 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
+	 * @var \TranslationTexy
+	 */
+	protected $texy;
+
+	/**
+	 * @autowire
 	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
@@ -178,7 +184,7 @@ abstract class BasePresenter extends Presenter {
 		$class[] = is_scalar($privilege) ? $privilege : NULL;
 		$class = implode(':', array_filter($class));
 
-		$this->flashMessage('Hey dude! You don\'t have permissions to view that page. ' . $class, 'warning');
+		$this->flashMessage('Hey dude! You don\'t have permissions to view that page. ' . $class, self::FLASH_WARNING);
 		$this->redirect(':Front:Home:default');
 	}
 
@@ -280,6 +286,7 @@ abstract class BasePresenter extends Presenter {
 		} else if(is_array($message)) {
 			$message = call_user_func_array([$this, 'translate'], $message);
 		}
+		$message = $this->texy->processLine($message);
 		parent::flashMessage($message, $type);
 		$this->invalidateFlashMessage();
 	}
