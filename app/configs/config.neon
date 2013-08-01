@@ -303,7 +303,7 @@ services:
 
 	polygonService: Service\PolygonService
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
-	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
+	rentalCreator: Service\Rental\RentalCreator
 	addressCreator: Service\Contact\AddressCreator
 	userCreator: User\UserCreator
 	findOrCreateUser: User\FindOrCreateUser(@userRepositoryAccessor::get())
