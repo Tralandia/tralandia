@@ -116,7 +116,7 @@ class RentalEditHandler extends FormHandler
 				if (isset($value->{$answer->question->id})) {
 					$phrase = $answer->answer;
 					foreach ($value[$answer->question->id] as $languageIso => $val) {
-						$language = $languageRepository->findByIso($languageIso);
+						$language = $languageRepository->findOneByIso($languageIso);
 						$translation = $phrase->getTranslation($language[0]);
 						if ($translation) {
 							$translation->translation = $val;
