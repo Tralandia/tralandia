@@ -145,14 +145,16 @@
 							<div class="clearfix"></div>
 
 							{var $pricesAvailable = false}
-
-							{if count($rental->pricelistRows) > 0}
-							{var $pricesAvailable = true}
+								{if count($rental->pricelistRows) > 0}
+								{var $pricesAvailable = true}
+								{/if}
+							
+							
 							<ul class="detailPriceList">
-								<li><h3>{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								<li><h3 n:class="$pricesAvailable ? full : small">{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 								</h3>
+								{if count($rental->pricelistRows) > 0}
 								<ul>
-
 									{foreach $rental->pricelistRows as $pricelistRow}
 									<li tooltip="true" title="{_$pricelistRow->roomType->textPriceFor}">
 										{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
@@ -179,15 +181,23 @@
 									{/if}
 
 								</ul>
-
+								{/if}
 
 							</li>
 						</ul>
-						{/if}
+						
 
-						{if !$pricesAvailable}
+
+
+{* 						{if !$pricesAvailable}
+						{if $rental->pricesUponRequest}
+						{_o100204}
+						{else}
 						{_o100205, NULL, NULL, ['price' => $rental->price]}
 						{/if}
+						{/if} *}
+
+
 
 						<div class="clearfix"></div>
 
