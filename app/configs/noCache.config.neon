@@ -1,0 +1,8 @@
+parameters:
+	templateCache:
+		enabled: false
+
+
+services:
+	templateCache: Nette\Caching\Cache(@nullStorage, 'Nette.Templating.Cache')
+	translatorCache: Nette\Caching\Cache(@nullStorage, 'Translator')

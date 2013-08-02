@@ -4,9 +4,12 @@ namespace Extras;
 use Nette\Latte\Compiler;
 use Nette\Latte\MacroNode;
 use Nette\Latte\PhpWriter;
+use Tralandia\Security\User;
 
 
 class Macros extends \Nette\Latte\Macros\MacroSet {
+
+
 
 	public static function install(Compiler $compiler) {
 		$me = parent::install($compiler);

@@ -44,6 +44,12 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $senderPhone;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $senderRemoteAddress;
+
+	/**
 	 * @var datetime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -206,6 +212,26 @@ class RentalReservation extends \Entity\BaseEntity {
 	{
 		return $this->senderPhone;
 	}
+
+	/**
+	 * @param string
+	 * @return \Entity\User\RentalReservation
+	 */
+	public function setSenderRemoteAddress($remoteAddress)
+	{
+		$this->senderRemoteAddress = $remoteAddress;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getSenderRemoteAddress()
+	{
+		return $this->senderRemoteAddress;
+	}
+
 
 	/**
 	 * @param \DateTime

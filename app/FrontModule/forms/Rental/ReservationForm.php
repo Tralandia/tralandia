@@ -41,6 +41,11 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	protected $reservationProtector;
 
+	/**
+	 * @var \Nette\Http\Request
+	 */
+	private $request;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
@@ -50,13 +55,14 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em,
 								\ReservationProtector $reservationProtector,
-								Environment $environment)
+								Environment $environment, \Nette\Http\Request $request)
 	{
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->reservationRepository = $em->getRepository(RESERVATION_ENTITY);
 		$this->reservationProtector = $reservationProtector;
+		$this->request = $request;
 
 		parent::__construct($environment->getTranslator());
 	}
@@ -166,11 +172,13 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		}
 
 		try {
-			$this->reservationProtector->canSendReservation($values->email);
+			$this->reservationProtector->canSendReservation($values->email, $this->request->getRemoteAddress(), $phone);
 		} catch (\TooManyReservationForEmailException $e) {
 			$form->addError($this->translate('o100112'));
 		} catch (\InfringeMinIntervalReservationException $e) {
 			$form->addError($this->translate('o100135'));
+		} catch (\ReservationProtectorException $e) {
+			$form->addError($this->translate('152336'));
 		}
 		//$form->addError('yle');
 		//$form['name']->addError('bar');
@@ -203,6 +211,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setAdultsCount($values->parents);
 		$reservation->setChildrenCount($values->children);
 		$reservation->setMessage($values->message);
+		$reservation->setSenderRemoteAddress($this->request->getRemoteAddress());
 
 		$this->reservationRepository->save($reservation);
 
