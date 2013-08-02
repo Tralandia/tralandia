@@ -150,6 +150,9 @@ class RentalListPresenter extends BasePresenter {
 			$rental = $id;
 		} else {
 			$rental = $this->rentalRepositoryAccessor->get()->find($id);
+			if(!$rental) {
+				throw new \Exception('ID: ' . $id);
+			}
 		}
 
 		$firstInterviewAnswerText = NULL;
