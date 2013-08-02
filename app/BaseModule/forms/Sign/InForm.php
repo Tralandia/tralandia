@@ -48,12 +48,12 @@ class InForm extends \BaseModule\Forms\BaseForm {
 
 			$identity = $presenter->redirectToCorrectDomain($values->login, $values->password);
 			$presenter->login($identity);
+			$presenter->actionAfterLogin();
 
 		} catch(\Nette\Security\AuthenticationException $e) {
 			$form->presenter->flashMessage($this->translate('o1119'), BasePresenter::FLASH_ERROR);
 		}
 
-		$presenter->actionAfterLogin();
 	}
 
 }
