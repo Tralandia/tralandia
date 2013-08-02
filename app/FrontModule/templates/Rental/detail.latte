@@ -248,17 +248,18 @@
 					<div class="span3 sidebarRightDetail">
 
 							<div class="sidebarContact">
-								<div class="sidebarTitle">
+
+								<div class="sidebarInner first">
+
+
+								<div class="headerInformation">
+									<span class="name">
 										{if $rental->contactName}
 											{$rental->contactName}
 											{else}
 											{_o12275}
 										{/if}
-								</div>
-								<div class="sidebarInner">
-
-
-								<div class="headerInformation">
+									</span>
 									{if $rental->phone->international}
 
 
@@ -323,7 +324,7 @@
 
 
 
-								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x161&sensor=false"/>
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x120&sensor=false"/>
 
 
 								<div class="clearfix"></div>
