@@ -140,7 +140,7 @@ form.reservationform {
 		display: block;
 
 		&.message {
-			height: 150px;
+			height: 190px;
 		}
 	}
 
@@ -829,6 +829,11 @@ table.detailInfoBox {
 		color: @darkGreen;
 	}
 
+	&.first {
+		border-top: 1px solid #88A031;
+		.border-radius(5px 5px 0 0);
+	}
+
 	.headerInformation {
 		text-align: center;
 		padding: 10px;	
@@ -840,6 +845,11 @@ table.detailInfoBox {
 				top: 3px;
 				position: relative;
 			}
+		}
+
+		.name {
+			font-size: 15px;
+			line-height: 16px;			
 		}
 
 		.websiteUrl {
@@ -973,7 +983,7 @@ table.detailInfoBox {
 	}
 
 	textarea {
-		height: 130px;
+		height: 170px;
 	}
 
 	form {
