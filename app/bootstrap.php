@@ -7,10 +7,22 @@ use Nette\Diagnostics\Debugger,
 use Nette\Forms\Container as FormContainer;
 
 
+
+if(array_key_exists('useCache', $_GET)) {
+	setcookie("useCache", (int)$_GET['useCache']);
+	header("Location: /");
+	die();
+}
+
+
+
+
+
 // Load Nette Framework
 require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
+
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
@@ -22,7 +34,7 @@ $configurator->addParameters([
 ]);
 
 
-// $configurator->setDebugMode(false);
+//$configurator->setDebugMode(false);
 
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
@@ -56,6 +68,10 @@ $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$configurator->addConfig(APP_DIR . '/configs/import.config.neon', FALSE);
+}
+
+if(array_key_exists('useCache', $_COOKIE) && !$_COOKIE['useCache']) {
+	$configurator->addConfig(APP_DIR . '/configs/noCache.config.neon', FALSE);
 }
 
 $dic = $container = $configurator->createContainer();

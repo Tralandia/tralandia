@@ -30,10 +30,11 @@ class ReservationProtectorTest extends TestCase
 	public function testBase()
 	{
 		$email = 'foo@bar.com';
+		$remoteAddress = '120.4.0.1';
 		$reservationProtector = $this->reservationProtector;
 		$reservationProtector->reset();
 
-		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email));
+		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email,$remoteAddress));
 	}
 
 

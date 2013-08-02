@@ -180,6 +180,10 @@ services:
 	cacheStorage:
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', %memcachePrefix%)
 
+	nullStorage:
+		class: \Nette\Caching\Storages\DevNullStorage
+		autowired: false
+
 #	translatorRedisClient:
 #		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
 #		autowired: false
@@ -248,6 +252,7 @@ services:
 
 
 	user:
+		class: \Tralandia\Security\User
 		setup:
 			- "?->getAuthorizator()->buildAssertions(?);"(@self, @self)
 
@@ -322,7 +327,7 @@ services:
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation())
 
-	reservationProtector: ReservationProtector(@userBlackListRepositoryAccessor::get())
+	reservationProtector: ReservationProtector
 
 	html2texy: Html2texy
 	translationTexy: TranslationTexy

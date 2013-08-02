@@ -8,11 +8,11 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 
 	public function getSubscribedEvents()
 	{
-		return ['FrontModule\RegistrationPresenter::onSuccessRegistration'];
+		return ['FormHandler\RegistrationHandler::onSuccess'];
 	}
 
 
-	public function onSuccessRegistration(\Entity\Rental\Rental $rental)
+	public function onSuccess(\Entity\Rental\Rental $rental)
 	{
 		$message = new \Nette\Mail\Message();
 
@@ -38,7 +38,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 		$receiver = $rental->getOwner();
 
 		$emailCompiler = $this->getCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
-		$emailCompiler->setTemplate($this->getTemplate(7));
+		$emailCompiler->setTemplate($this->getTemplate('registration-email'));
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addOwner('owner', $receiver);

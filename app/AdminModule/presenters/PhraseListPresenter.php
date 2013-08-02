@@ -365,7 +365,7 @@ class PhraseListPresenter extends BasePresenter {
 
 		$phraseRepository->flush();
 
-		//$this->invalidatePhrasesCache($phrasesIds); @todo docasne vypnute, aby to nespomalovalo
+		$this->invalidatePhrasesCache($phrasesIds);
 
 		$this->redirect('this');
 	}

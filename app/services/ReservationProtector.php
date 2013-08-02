@@ -1,6 +1,8 @@
 <?php
 
 
+use Doctrine\ORM\Query\ResultSetMapping;
+
 class ReservationProtector {
 
 	/**
@@ -13,6 +15,12 @@ class ReservationProtector {
 	 */
 	protected $minInterval = 5;
 
+
+	/**
+	 * @var int
+	 */
+	protected $reservationCountPerDay = 10;
+
 	/**
 	 * @var Nette\Http\SessionSection
 	 */
@@ -20,17 +28,25 @@ class ReservationProtector {
 
 	private $userBlackListRepository;
 
+	/**
+	 * @var Doctrine\ORM\EntityManager
+	 */
+	private $em;
+
 
 	/**
-	 * @param $userBlackListRepository
+	 * @param Doctrine\ORM\EntityManager $em
 	 * @param \Nette\Http\Session $session
+	 *
+	 * @internal param $userBlackListRepository
 	 */
-	public function __construct($userBlackListRepository, \Nette\Http\Session $session)
+	public function __construct(\Doctrine\ORM\EntityManager $em, \Nette\Http\Session $session)
 	{
 		$section = $session->getSection('reservationProtector');
 
 		$this->section = $section;
-		$this->userBlackListRepository = $userBlackListRepository;
+		$this->em = $em;
+		$this->userBlackListRepository = $em->getRepository(BLACK_LIST_ENTITY);
 	}
 
 
@@ -47,31 +63,52 @@ class ReservationProtector {
 
 	/**
 	 * @param $email
+	 * @param $senderRemoteAddress
+	 * @param Entity\Contact\Phone $phone
 	 *
-	 * @throws InfringeMinIntervalReservationException
+	 * @throws ReservationProtectorException
 	 * @throws EmailIsOnBlackListException
-	 * @throws TooManyReservationForEmailException
 	 * @return bool
 	 */
-	public function canSendReservation($email)
+	public function canSendReservation($email, $senderRemoteAddress, \Entity\Contact\Phone $phone = NULL)
 	{
 		if($this->userBlackListRepository->findOneByEmail($email)) {
 			throw new EmailIsOnBlackListException;
 		}
 
-		$lastReservationTimeForEmail = $this->getLastSentReservationForEmail($email);
-		$oneMonthAgo = (new DateTime)->modify("-1 month");
-		$sentReservationCountForEmail = count($this->getSentReservationForEmail($email));
+		$statement = $this->em->getConnection()->prepare("
+SELECT IF (count(*) <= :reservationCountPerDay OR (count(*) > :reservationCountPerDay AND min(timediff(now(), created)) > '00:05:00'), 1, 0) as canSend
+FROM user_rentalreservation
+WHERE (senderEmail = :email OR senderPhone_id = :senderPhone OR senderRemoteAddress = :senderRemoteAddress)
+AND timediff(now(), created) < :minDelta");
 
-		if($sentReservationCountForEmail >= $this->maxCount && $lastReservationTimeForEmail && $lastReservationTimeForEmail >= $oneMonthAgo) {
-			throw new TooManyReservationForEmailException;
+		$statement->bindValue(':reservationCountPerDay', $this->reservationCountPerDay);
+		$statement->bindValue(':minDelta', '24:00:00');
+		$statement->bindValue(':email', $email);
+		$statement->bindValue(':senderPhone', $phone ? $phone->getId() : NULL);
+		$statement->bindValue(':senderRemoteAddress', $senderRemoteAddress);
+
+		$statement->execute();
+
+		$canSend = $statement->fetchColumn();
+
+		if(!$canSend) {
+			throw new ReservationProtectorException();
 		}
 
-		$lastReservationTime = $this->getLastReservationTime();
-		$fiveSecondAgo = (new DateTime)->modify("-{$this->minInterval} sec");
-		if($lastReservationTime && $lastReservationTime > $fiveSecondAgo) {
-			throw new InfringeMinIntervalReservationException;
-		}
+//		$lastReservationTimeForEmail = $this->getLastSentReservationForEmail($email);
+//		$oneMonthAgo = (new DateTime)->modify("-1 month");
+//		$sentReservationCountForEmail = count($this->getSentReservationForEmail($email));
+//
+//		if($sentReservationCountForEmail >= $this->maxCount && $lastReservationTimeForEmail && $lastReservationTimeForEmail >= $oneMonthAgo) {
+//			throw new TooManyReservationForEmailException;
+//		}
+//
+//		$lastReservationTime = $this->getLastReservationTime();
+//		$fiveSecondAgo = (new DateTime)->modify("-{$this->minInterval} sec");
+//		if($lastReservationTime && $lastReservationTime > $fiveSecondAgo) {
+//			throw new InfringeMinIntervalReservationException;
+//		}
 
 		return TRUE;
 	}
@@ -183,6 +220,7 @@ class ReservationProtector {
 	}
 }
 
-class EmailIsOnBlackListException extends \Exception { }
-class TooManyReservationForEmailException extends \Exception { }
-class InfringeMinIntervalReservationException extends \Exception { }
+class ReservationProtectorException extends \Exception { }
+class EmailIsOnBlackListException extends ReservationProtectorException { }
+class TooManyReservationForEmailException extends ReservationProtectorException { }
+class InfringeMinIntervalReservationException extends ReservationProtectorException { }
