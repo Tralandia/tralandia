@@ -121,7 +121,8 @@ class RentalEditHandler extends FormHandler
 						if ($translation) {
 							$translation->translation = $val;
 						} else {
-							$phrase->createTranslation($language, $val);
+							$translation = $phrase->createTranslation($language, $val);
+							$translation->translation = $val;
 						}
 					}
 				}
@@ -139,7 +140,8 @@ class RentalEditHandler extends FormHandler
 				if ($translation) {
 					$translation->translation = $name;
 				} else if ($name) {
-					$phrase->createTranslation($language, $name);
+					$translation = $phrase->createTranslation($language, $name);
+					$translation->translation = $name;
 				}
 			}
 		}
