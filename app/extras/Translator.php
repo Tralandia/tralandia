@@ -124,10 +124,11 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			if(!$phrase) $translation = FALSE;
 
-			if($phrase instanceof Phrase && !$phrase->getUsed()) {
-				$phrase->setUsed(TRUE);
-				$this->phraseRepositoryAccessor->get()->update($phrase);
-			}
+//			# Mark as Used
+//			if($phrase instanceof Phrase && !$phrase->getUsed()) {
+//				$phrase->setUsed(TRUE);
+//				$this->phraseRepositoryAccessor->get()->update($phrase);
+//			}
 
 			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
 				$firstIteration = TRUE;
