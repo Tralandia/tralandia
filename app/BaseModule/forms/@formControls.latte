@@ -284,8 +284,8 @@
 		<td colspan="3">
 			<table class="checkboxes" style="width: 100%;">
 				<tr>
-					<td class="fieldset">{_$control->caption}</td>
-					<td colspan="{$colCount-1}">
+					<td colspan="{$colCount-1}" class="fieldset">{_$control->caption}</td>
+					<td>
 						<span class="help">{$control->getOption('help')}</span>
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 					</td>
