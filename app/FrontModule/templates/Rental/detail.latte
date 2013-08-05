@@ -219,7 +219,7 @@
 								{if count($rental->amenities) > 0}
 
 									<div class="amenitiesStart">
-										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability']) as $amenities}
+										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability','animal']) as $amenities}
 										<li class="{reset($amenities)->getType()->getSlug()}">
 										{dump $amenities}
 
