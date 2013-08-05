@@ -270,6 +270,7 @@ class PhraseListPresenter extends BasePresenter {
 
 	protected function createComponentPhraseEditForm()
 	{
+		$form = $this->simpleFormFactory->create();
 
 		$phraseContainerSettings = [];
 
@@ -292,13 +293,13 @@ class PhraseListPresenter extends BasePresenter {
 			);
 			$showOptions = TRUE;
 			$phraseContainerSettings['isAdmin'] = TRUE;
+			$form->addCheckbox('smallCorrection', 'Small correction');
 		}
 
 		if(is_array($this->editableLanguages)) {
 			$phraseContainerSettings['editableLanguages'] = $this->editableLanguages;
 		}
 
-		$form = $this->simpleFormFactory->create();
 
 		$form->addSelect('toLanguages', '', $toLanguages);
 		$form->addCheckbox('showOptions', '')->setDefaultValue($showOptions);
@@ -326,10 +327,10 @@ class PhraseListPresenter extends BasePresenter {
 	public function processPhraseEditForm($form)
 	{
 		$phraseRepository = $this->phraseRepository;
-		$values = $form->getValues(TRUE);
+		$formValues = $form->getValues(TRUE);
 
 		$phrasesIds = [];
-		foreach($values['list'] as $phraseId => $values) {
+		foreach($formValues['list'] as $phraseId => $values) {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
@@ -351,6 +352,8 @@ class PhraseListPresenter extends BasePresenter {
 				$this->updateTranslationStatus->setPhraseReady($phrase, $this->loggedUser);
 			} else if($specialOptionType == 'readyForCorrection' && $specialOptionValue) {
 				$this->updateTranslationStatus->setPhraseReadyForCorrection($phrase, $this->loggedUser);
+			} else if((isset($formValues['smallCorrection']) && $formValues['smallCorrection']) || $this->user->isInRole(Role::TRANSLATOR)) {
+				// v tomto pripade sa nemeni status
 			} else {
 				foreach($phraseValues['changedTranslations'] as $translation) {
 					try {
