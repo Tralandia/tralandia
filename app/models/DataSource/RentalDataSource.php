@@ -6,9 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Extras\Books\Email;
 use Extras\Books\Phone;
+use Nette\Application\Application;
+use Nette\ArrayHash;
 use Nette\Utils\Arrays;
 use Nette\Utils\Paginator;
 use Nette\Utils\Validators;
+use Routers\FrontRoute;
+use Security\Authenticator;
 
 class RentalDataSource extends BaseDataSource {
 
@@ -27,17 +31,31 @@ class RentalDataSource extends BaseDataSource {
 	 */
 	private $emailBook;
 
+	/**
+	 * @var \Security\Authenticator
+	 */
+	private $authenticator;
+
+	/**
+	 * @var \Nette\Application\Application
+	 */
+	private $application;
+
 
 	/**
 	 * @param EntityManager $em
 	 * @param \Extras\Books\Phone $phoneBook
 	 * @param \Extras\Books\Email $emailBook
+	 * @param \Security\Authenticator $authenticator
+	 * @param \Nette\Application\Application $application
 	 */
-	public function __construct(EntityManager $em, Phone $phoneBook, Email $emailBook)
+	public function __construct(EntityManager $em, Phone $phoneBook, Email $emailBook, Authenticator $authenticator, Application $application)
 	{
 		$this->em = $em;
 		$this->phoneBook = $phoneBook;
 		$this->emailBook = $emailBook;
+		$this->authenticator = $authenticator;
+		$this->application = $application;
 	}
 
 
@@ -60,7 +78,23 @@ class RentalDataSource extends BaseDataSource {
 			$result = $this->em->getRepository(RENTAL_ENTITY)->findByStatus(Rental::STATUS_LIVE, NULL, 30);
 		}
 
-		return $result;
+
+		$presenter = $this->application->getPresenter();
+		$hash = $this->authenticator->calculateAutoLoginHash($presenter->getUser()->getEntity());
+		$return = new ArrayHash();
+		foreach($result as $key => $row) {
+			$newRow['id'] = $row->getId();
+			$newRow['entity'] = $row;
+			$newRow['editLink'] = $presenter->link(':Owner:Rental:edit', [
+				'id' => $row->getId(),
+				FrontRoute::PRIMARY_LOCATION => $row->getPrimaryLocation(),
+				FrontRoute::AUTOLOGIN => $hash]
+			);
+			$return[$key] = ArrayHash::from($newRow);
+		}
+
+
+		return $return;
 	}
 
 }

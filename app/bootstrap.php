@@ -9,7 +9,7 @@ use Nette\Forms\Container as FormContainer;
 
 
 if(array_key_exists('useCache', $_GET)) {
-	setcookie("useCache", (int)$_GET['useCache']);
+	setcookie("useCache", (int)$_GET['useCache'], time()+60*60*24*30);
 	header("Location: /");
 	die();
 }

@@ -6,36 +6,34 @@
 
 {define #col-name}
 	<td>
-		{_$cell}
+		{_$row['entity']->getName()}
 	</td>
 {/define}
 
 {define #col-phone}
 	<td>
-		{$cell->getInternational()}
+		{$row['entity']->getPhone()->getInternational()}
 	</td>
 {/define}
 
 {define #col-email}
 	<td>
-		{$cell}
-		<small>{$row->getUser()->getLogin()}<small>
+		{$row['entity']->getEmail()}
+		<small>{$row['entity']->getUser()->getLogin()}<small>
 	</td>
 {/define}
 
 {define #row-actions}
-	<a href="{plink :Owner:Rental:edit $primary}" class="btn btn-small btn-primary">edit</a>
+	<a href="{$row['editLink']}" class="btn btn-small btn-primary">edit</a>
 	<div class="btn-group">
 		<button class="btn btn-mini dropdown-toggle btn-inverse" data-toggle="dropdown">Actions <span class="caret"></span></button>
 		<ul class="dropdown-menu">
-			<li><a href="{plink :Front:Rental:detail $row}" target="_blank" >View on FE</a></li>
-			<li><a href="{plink fakeLogin $row->getOwner()->getId()}" >Login as User</a></li>
+			<li><a href="{plink :Front:Rental:detail $row['entity']}" target="_blank" >View on FE</a></li>
+			<li><a href="{plink fakeLogin $row['entity']->getOwner()->getId()}" >Login as User</a></li>
 			<li class="divider"></li>
-			<li><a href="{plink :Admin:Cache:viewRentalSearchCache $row->getId()}" target="_blank">View Search Cache</a></li>
-			<li><a href="{plink :Admin:Cache:invalidateRentalSearchCache $row->getId()}" class="ajax">Invalidate Search Cache</a></li>
-			<li><a href="{plink :Admin:Rental:discard $row->getId()}" class="ajax">DELETE Rental</a></li>
+			<li><a href="{plink :Admin:Cache:viewRentalSearchCache $row['entity']->getId()}" target="_blank">View Search Cache</a></li>
+			<li><a href="{plink :Admin:Cache:invalidateRentalSearchCache $row['entity']->getId()}" class="ajax">Invalidate Search Cache</a></li>
+			<li><a href="{plink :Admin:Rental:discard $row['entity']->getId()}" class="ajax">DELETE Rental</a></li>
 		</ul>
 	</div>
-
-
 {/define}
