@@ -5,8 +5,10 @@
 	{foreach $categories as $category}
 	<div class="category">
 		<h2><a href="#" class="toggleHide" data-toggle-hide-for=".questionContent{$category->id}"><i class="entypo-arrow-right2"></i> <span>{_$category->name}</span></a></h2>
-		{dump $category}
-		<div class="questionContent{$category->id} hide">
+
+		{var $catClass = 'questionContent'.$category->id}
+
+		<div n:class="!$iterator->first ? hide , $catClass">
 			{foreach $category->questions as $question}
 			<h3>{_$question->question}</h3>
 				<p>{_$question->answer} </p>
