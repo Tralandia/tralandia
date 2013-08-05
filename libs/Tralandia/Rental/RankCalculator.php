@@ -29,8 +29,8 @@ class RankCalculator {
 
 	public function updateRank(Rental $rental){
 
-		$conditionalCompulsoryInformation = array('price');
-		$pricesCompulsory = !$rental->pricesUponRequest;
+//		$conditionalCompulsoryInformation = array('price');
+//		$pricesCompulsory = !$rental->pricesUponRequest;
 
 		$rank = array(
 			'points' => 0,
@@ -195,18 +195,6 @@ class RankCalculator {
 			$rank['missing'][] = 'maxCapacity';
 		}
 
-		// Prices
-		if ($rental->getPrice()->getSourceAmount() > 0) {
-			$rank['points'] += 3;
-			$rank['complete'][] = 'price';
-		} else {
-			if ($pricesCompulsory) {
-				$rank['missing'][] = 'price';
-			} else {
-				$rank['missing'][] = 'price';
-			}
-		}
-
 		// Classification
 		if ($rental->classification !== NULL) {
 			$rank['points'] += 1;
@@ -215,17 +203,21 @@ class RankCalculator {
 			$rank['missing'][] = 'classification';
 		}
 
+		// Prices
+		if ($rental->getPrice()->getSourceAmount() > 0) {
+			$rank['points'] += 3;
+			$rank['complete'][] = 'price';
+		} else {
+			$rank['missing'][] = 'price';
+		}
+
 		//Prices - //@todo
 		$t = count($rental->pricelists);
 		if ($t > 0) {
 			$rank['points'] += ($t > 5 ? 5 : $t)*5;
 			$rank['complete'][] = 'pricelists';
 		} else {
-			if ($pricesCompulsory) {
-				$rank['missing'][] = 'pricelists';
-			} else {
-				$rank['missing'][] = 'pricelists';
-			}
+			$rank['missing'][] = 'pricelists';
 		}
 
 		//PricelistRows
@@ -234,11 +226,7 @@ class RankCalculator {
 			$rank['points'] += ($t > 5 ? 5 : $t)*5;
 			$rank['complete'][] = 'pricelistRows';
 		} else {
-			if ($pricesCompulsory) {
-				$rank['missing'][] = 'pricelistRows';
-			} else {
-				$rank['missing'][] = 'pricelistRows';
-			}
+			$rank['missing'][] = 'pricelistRows';
 		}
 
 
@@ -284,7 +272,7 @@ class RankCalculator {
 					throw new \Exception("Rental::CalculateRank - MissingInformation type does not exist: ".$value, 1);
 				}
 				$rental->addMissingInformation($information);
-				if ((in_array($value, $conditionalCompulsoryInformation) && $pricesCompulsory) || $information->compulsory) {
+				if ($information->compulsory) {
 					$rank['status'] = \Entity\Rental\Rental::STATUS_DRAFT;
 				}
 			}
