@@ -130,10 +130,11 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
+				$firstIteration = TRUE;
 				foreach($translations as $translationEntity) {
 					/** @var $translationEntity \Entity\Phrase\Translation */
 					$translationText = NULL;
-					if ($variation === NULL) {
+					if ($variation === NULL || !$firstIteration) {
 						$translationText = $translationEntity->getDefaultVariation();
 					} else {
 						$plural = $variation[self::VARIATION_PLURAL];
