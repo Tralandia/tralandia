@@ -37,24 +37,49 @@ class Discarder {
 	 */
 	private $rentalSearchCachingFactory;
 
+	/**
+	 * @var BanListManager
+	 */
+	private $banListManager;
 
+
+	/**
+	 * @param EntityManager $em
+	 * @param RentalImageManager $imageManager
+	 * @param \RentalPriceListManager $pricelistManager
+	 * @param BanListManager $banListManager
+	 * @param IRentalSearchCachingFactory $rentalSearchCachingFactory
+	 */
 	public function __construct(EntityManager $em, RentalImageManager $imageManager,
-								\RentalPriceListManager $pricelistManager, IRentalSearchCachingFactory $rentalSearchCachingFactory)
+								\RentalPriceListManager $pricelistManager, BanListManager $banListManager,
+								IRentalSearchCachingFactory $rentalSearchCachingFactory)
 	{
 		$this->em = $em;
 		$this->imageManager = $imageManager;
 		$this->pricelistManager = $pricelistManager;
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+		$this->banListManager = $banListManager;
 	}
 
+
+	/**
+	 * @param Rental $rental
+	 */
 	public function discard(Rental $rental)
 	{
+
+		$this->banListManager->banRental($rental);
+
 		foreach($rental->getImages() as $image) {
-			$this->imageManager->delete($image);
+			try {
+				$this->imageManager->delete($image);
+			} catch (Nette\FileNotFoundException $e) {}
 		}
 
 		foreach($rental->getPricelists() as $pricelist) {
-			$this->pricelistManager->delete($pricelist);
+			try {
+				$this->pricelistManager->delete($pricelist);
+			} catch (Nette\FileNotFoundException $e) {}
 		}
 
 		$rentalSearchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
