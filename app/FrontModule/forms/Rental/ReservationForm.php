@@ -3,6 +3,7 @@
 namespace FrontModule\Forms\Rental;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Contact\Phone;
 use Environment\Environment;
 use Nette;
 use Nette\DateTime;
@@ -172,6 +173,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		}
 
 		try {
+			$phone = $phone instanceof Phone ? $phone : NULL;
 			$this->reservationProtector->canSendReservation($values->email, $this->request->getRemoteAddress(), $phone);
 		} catch (\TooManyReservationForEmailException $e) {
 			$form->addError($this->translate('o100112'));

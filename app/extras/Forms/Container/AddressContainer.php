@@ -82,8 +82,12 @@ class AddressContainer extends BaseContainer
 	{
 		$address = $this->getAddressEntity();
 		if($address) {
-			$zoom = $address->getLocality()->getDefaultZoom();
-			return $zoom ? : 14;
+			$zoom = 14;
+			$locality = $address->getLocality();
+			if($locality) {
+				$zoom = $locality->getDefaultZoom();
+			}
+			return $zoom;
 		} else {
 			return $this->location->getDefaultZoom();
 		}
