@@ -317,6 +317,7 @@ services:
 	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
 	- Tralandia\Rental\RankCalculator
 	- Tralandia\Rental\Discarder
+	- Tralandia\Rental\BanListManager
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
