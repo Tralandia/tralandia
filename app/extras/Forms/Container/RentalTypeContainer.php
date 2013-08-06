@@ -63,8 +63,9 @@ class RentalTypeContainer extends BaseContainer
 	{
 		$defaults = [];
 		if($this->rental) {
+			$type = $this->rental->getType();
 			$defaults = [
-				'type' => $this->rental->getType()->getId(),
+				'type' => $type ? $type->getId() : NULL,
 				'classification' => $this->rental->getClassification()
 			];
 		}
