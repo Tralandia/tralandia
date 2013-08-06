@@ -172,6 +172,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $checkOut;
 
 	/**
+	 * #notUsed 6/8/2013
 	 * @var Boolean
 	 * @ORM\Column(type="boolean")
 	 */
