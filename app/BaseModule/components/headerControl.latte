@@ -135,7 +135,7 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="{$worldLink}">{$domainHost}</a>
+					<a href="{$worldLink}">{$domainHost}{ifset $isRootHome}.com{/ifset}</a>
 						{ifset $isRootHome}
 						{else}
 							<i class="icon-chevron-right"></i>

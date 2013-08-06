@@ -47,6 +47,7 @@ parameters:
 	rentalImageDir: %storageDir%/rental_images
 	rentalImagePath: %storagePath%/rental_images
 	rentalPricelistDir: %storageDir%/rental_pricelists
+	rentalPricelistPath: %storagePath%/rental_pricelists
 
 	webTempDir: /webtemp
 	webTempPath: /webtemp
@@ -315,6 +316,7 @@ services:
 	rentalImagePipe: Image\RentalImagePipe(%rentalImagePath%, %staticDomain%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
 	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
+	rentalPriceListPipe: Image\RentalPriceListPipe(%rentalPricelistPath%, %staticDomain%)
 	- Tralandia\Rental\RankCalculator
 	- Tralandia\Rental\Discarder
 	- Tralandia\Rental\BanListManager
