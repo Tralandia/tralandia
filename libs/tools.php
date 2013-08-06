@@ -373,4 +373,26 @@ class Tools {
 		return $return;
 	}
 
+
+	public static function getPeriods() {
+		$beginOfTime = new \Nette\DateTime('1970-01-01 01:00:00');
+		$now = new \Nette\DateTime();
+		$today = $now->modifyClone('today');
+		$yesterday = $today->modifyClone('yesterday');
+		$thisWeek = $today->modifyClone('this week');
+		$lastWeek = $thisWeek->modifyClone('-7 days');
+		$thisMonth = $today->modifyClone('first day of this month');
+		$lastMonth = $thisMonth->modifyClone('previous month');
+
+		$periods["today"]=array('from' => $today, 'to' => $now);
+		$periods["yesterday"]=array('from' => $yesterday, 'to' => $today);
+		$periods["this_week"]=array('from' => $thisWeek, 'to' => $now);
+		$periods["last_week"]=array('from' => $lastWeek, 'to' => $thisWeek);
+		$periods["this_month"]=array('from' => $thisMonth, 'to' => $now);
+		$periods["last_month"]=array('from' => $lastMonth, 'to' => $thisMonth);
+		$periods["total"]=array('from' => $beginOfTime, 'to' => $now);
+
+		return $periods;
+	}
+
 }
