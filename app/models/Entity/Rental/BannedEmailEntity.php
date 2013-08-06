@@ -1,33 +1,29 @@
 <?php
 
-namespace Entity\User;
+namespace Entity\Rental;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Maju zakaz posielat rezervacie
+ * Maju zakaz registracie
  * @ORM\Entity
- * @ORM\Table(name="user_blacklist", indexes={@ORM\index(name="email", columns={"email"})})
-*/
-class Blacklist extends \Entity\BaseEntity {
+ * @ORM\Table(name="rental_bannedemail", indexes={@ORM\index(name="email", columns={"email"})})
+ */
+class BannedEmail extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", unique=true)
 	 */
 	protected $email;
 
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 	/**
 	 * @param string
-	 * @return \Entity\User\Blacklist
+	 * @return \Entity\Rental\BannedEmail
 	 */
 	public function setEmail($email)
 	{

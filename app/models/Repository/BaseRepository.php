@@ -64,6 +64,11 @@ class BaseRepository extends EntityRepository {
 		$this->_em->remove($entity);
 	}
 
+
+	/**
+	 * remove + flush
+	 * @param $entity
+	 */
 	public function delete($entity) {
 		$this->remove($entity);
 		$this->flush();
