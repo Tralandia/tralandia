@@ -67,6 +67,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Admin:TempScript';
 		$resources[] = 'Admin:Translation';
 		$resources[] = 'Admin:AmenitiesMigration';
+		$resources[] = 'Admin:StatisticsRegistrations';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 
