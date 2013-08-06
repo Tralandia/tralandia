@@ -64,6 +64,7 @@ class RentalPriceListManager {
 
 		$pricelist->setName($file->getName());
 		$pricelist->setFilePath($path);
+		$pricelist->setFileSize($file->getSize());
 
 		$pricelistRepository->save($pricelist);
 
