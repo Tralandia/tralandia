@@ -58,6 +58,7 @@ class RentalPriceUploadContainer extends BaseContainer
 			->setDefaultValue($this->rental->getPrimaryLocation()->getDefaultLanguage()->getId());
 		$container->addUpload('file', 'o100192');
 		$container->addHidden('filePath');
+		$container->addHidden('fileSize');
 		$container->addHidden('entity', 0);
 	}
 
@@ -110,6 +111,7 @@ class RentalPriceUploadContainer extends BaseContainer
 				'name' => $pricelist->name,
 				'language' => $pricelist->language->getId(),
 				'filePath' => $pricelist->filePath,
+				'fileSize' => $pricelist->getFileSize(),
 				'entity' => $pricelist->id
 			];
 			$oldIds[] = $pricelist->getId();

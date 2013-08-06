@@ -121,9 +121,14 @@ class FileStorage extends Nette\Object
 		throw new FileNotFoundException("File $param not found.");
 	}
 
-	protected function getRelativePath($path)
+	public function getRelativePath($path)
 	{
 		return str_replace($this->filesDir, '', $path);
+	}
+
+	public function getAbsolutePath($path)
+	{
+		return $this->filesDir . $this->getRelativePath($path);
 	}
 
 	protected function generateFilePath($filename)
