@@ -1,0 +1,11 @@
+entity: Entity\Rental\Rental
+
+parameters:
+	title: Reservations statistics
+	h1: 'Reservation -> %name%'
+	hideAddNewButton: true
+
+gridFactory: @statisticsReservationsGridFactory
+
+form:
+	fields:

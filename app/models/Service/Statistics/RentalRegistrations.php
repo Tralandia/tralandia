@@ -10,6 +10,10 @@ use Doctrine, Entity;
 class RentalRegistrations {
 
 	protected $rentalRepository;
+
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
 	protected $locationRepository;
 
 	public function __construct(\Repository\Rental\RentalRepository $rentalRepository,
@@ -20,16 +24,17 @@ class RentalRegistrations {
 	}
 
 	public function getData() {
+		$countries = $this->locationRepository->findCountries();
+		$countries = \Tools::arrayMap($countries, function($key, $value) {return $value->getId();}, NULL);
+
 		$results = array();
 		//$results['total']['total'] = $this->rentalRepository->getCounts();
 		//$results['total']['live'] = $this->rentalRepository->getCounts(NULL, TRUE);
 
-		$periods = $this->getPeriods();
+		$periods = \Tools::getPeriods();
 		foreach ($periods as $key => $value) {
-			$from = new \DateTime();
-			$from->setTimestamp($value[0]);
-			$to = new \DateTime();
-			$to->setTimestamp($value[1]);
+			$from = $value['from'];
+			$to = $value['to'];
 
 			$total = $this->rentalRepository->getCounts(NULL, NULL, $from, $to);
 			$live = $this->rentalRepository->getCounts(NULL, TRUE, $from, $to);
@@ -40,47 +45,31 @@ class RentalRegistrations {
 
 		$finalResults = array();
 		foreach ($periods as $period => $value) {
-			$finalResults['total']['key'] = $key;
+			$finalResults['total']['key'] = $period;
 			$finalResults['total'][$period]['total'] = 0;
 			$finalResults['total'][$period]['live'] = 0;
 		}
 		foreach ($results as $period => $value) {
 			foreach ($value['total'] as $country => $countInCountry) {
-				$finalResults[$country]['key'] = $country;
-				$finalResults[$country][$period]['total'] = $countInCountry;
+				$iso = $countries[$country]->getIso();
+				$finalResults[$iso]['key'] = $iso;
+				$finalResults[$iso][$period]['total'] = $countInCountry;
 				$finalResults['total'][$period]['total'] += $countInCountry;
 			}
 			foreach ($value['live'] as $country => $countInCountry) {
-				$finalResults[$country]['key'] = $country;
-				$finalResults[$country][$period]['live'] = $countInCountry;
+				$iso = $countries[$country]->getIso();
+				$finalResults[$iso]['key'] = $iso;
+				$finalResults[$iso][$period]['live'] = $countInCountry;
 				$finalResults['total'][$period]['live'] += $countInCountry;
 			}
 		}
+
+		$total = $finalResults['total'];
+		unset($finalResults['total']);
+		ksort($finalResults);
+		$finalResults = array('total' => $total) + $finalResults;
+
 		return $finalResults;
 	}
 
-	protected function getPeriods() {
-		$d=getdate(time());
-		$periods = array();
-		$periods["today"]=array(mktime(0, 0, 0, $d["mon"], $d["mday"], $d["year"]), time());
-
-		$thisMonthStart=mktime(0, 0, 0, $d["mon"], 1, $d["year"]);
-		$lastMonthStart=mktime(0, 0, 0, (($d["mon"]==1)?(12):($d["mon"]-1)), 1, (($d["mon"]==1)?($d["year"]-1):($d["year"])));
-
-		if (strtotime('monday')==$periods["today"][0]) {
-			$thisWeekStart=$periods["today"][0];
-		} else {
-			$thisWeekStart=strtotime('monday')-(7*24*60*60);
-		}
-
-		$d=getdate(time()-(24*60*60));
-		$periods["yesterday"]=array(mktime(0, 0, 0, $d["mon"], $d["mday"], $d["year"]), $periods["today"][0]);
-		$periods["this_week"]=array($thisWeekStart, time());
-		$periods["last_week"]=array($thisWeekStart-(7*24*60*60), $thisWeekStart);
-		$periods["this_month"]=array($thisMonthStart, time());
-		$periods["last_month"]=array($lastMonthStart, $thisMonthStart);
-		$periods["total"]=array(0, time());
-
-		return $periods;
-	}
 }
