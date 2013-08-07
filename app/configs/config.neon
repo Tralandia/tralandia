@@ -344,6 +344,8 @@ services:
 		class: Statistics\Dictionary
 	statistics.registrations:
 		class: Statistics\Registrations
+	statistics.reservations:
+		class: Statistics\Reservations
 
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
 	dictionary.updateTranslationVariations: Dictionary\UpdateTranslationVariations
@@ -647,6 +649,10 @@ factories:
 	statisticsRegistrationsGridFactory:
 		class: AdminModule\Grids\Statistics\RegistrationsGrid
 		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
+
+	statisticsReservationsGridFactory:
+		class: AdminModule\Grids\Statistics\ReservationsGrid
+		implement: AdminModule\Grids\Statistics\IReservationsGridFactory
 
 	dictionaryManagerGridFactory:
 		class: AdminModule\Grids\Dictionary\ManagerGrid
