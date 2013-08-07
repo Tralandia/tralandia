@@ -10,6 +10,10 @@ use Doctrine, Entity;
 class RentalRegistrations {
 
 	protected $rentalRepository;
+
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
 	protected $locationRepository;
 
 	public function __construct(\Repository\Rental\RentalRepository $rentalRepository,
@@ -20,6 +24,9 @@ class RentalRegistrations {
 	}
 
 	public function getData() {
+		$countries = $this->locationRepository->findCountries();
+		$countries = \Tools::arrayMap($countries, function($key, $value) {return $value->getId();}, NULL);
+
 		$results = array();
 		//$results['total']['total'] = $this->rentalRepository->getCounts();
 		//$results['total']['live'] = $this->rentalRepository->getCounts(NULL, TRUE);
@@ -44,16 +51,24 @@ class RentalRegistrations {
 		}
 		foreach ($results as $period => $value) {
 			foreach ($value['total'] as $country => $countInCountry) {
-				$finalResults[$country]['key'] = $country;
-				$finalResults[$country][$period]['total'] = $countInCountry;
+				$iso = $countries[$country]->getIso();
+				$finalResults[$iso]['key'] = $iso;
+				$finalResults[$iso][$period]['total'] = $countInCountry;
 				$finalResults['total'][$period]['total'] += $countInCountry;
 			}
 			foreach ($value['live'] as $country => $countInCountry) {
-				$finalResults[$country]['key'] = $country;
-				$finalResults[$country][$period]['live'] = $countInCountry;
+				$iso = $countries[$country]->getIso();
+				$finalResults[$iso]['key'] = $iso;
+				$finalResults[$iso][$period]['live'] = $countInCountry;
 				$finalResults['total'][$period]['live'] += $countInCountry;
 			}
 		}
+
+		$total = $finalResults['total'];
+		unset($finalResults['total']);
+		ksort($finalResults);
+		$finalResults = array('total' => $total) + $finalResults;
+
 		return $finalResults;
 	}
 

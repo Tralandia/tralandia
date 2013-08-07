@@ -3,33 +3,31 @@
 namespace AdminModule\Grids\Statistics;
 
 use AdminModule\Components\AdminGridControl;
-use Nette\ArrayHash;
 use Nette\Utils\Paginator;
 
-class RegistrationsGrid extends AdminGridControl {
+class ReservationsGrid extends AdminGridControl {
 
 	/**
-	 * @var \Statistics\Registrations
+	 * @var \Statistics\Reservations
 	 */
 	protected $dataSource;
 
-	public function __construct(\Statistics\Registrations $dataSource) {
+	public function __construct(\Statistics\Reservations $dataSource) {
 		$this->dataSource = $dataSource;
 	}
 
 	public function render() {
-		$this->template->hideActions = false;
 		$this->template->render();
 	}
 
 	public function createComponentGrid()
 	{
-		$this->showActions = false;
+		$this->showActions = FALSE;
 
 		$grid = $this->getGrid();
-		$grid->setRowPrimaryKey('key');
+		$grid->setRowPrimaryKey('iso');
 
-		$grid->addColumn('key', 'Country');
+		$grid->addColumn('iso', 'Country');
 		$grid->addColumn('today', 'Today');
 		$grid->addColumn('yesterday', 'Yesterday');
 		$grid->addColumn('thisWeek', 'This week');
@@ -50,10 +48,10 @@ class RegistrationsGrid extends AdminGridControl {
 
 }
 
-interface IRegistrationsGridFactory {
+interface IReservationsGridFactory {
 
 	/**
-	 * @return IPhraseTypeGridFactory
+	 * @return ReservationsGrid
 	 */
 	public function create();
 }
