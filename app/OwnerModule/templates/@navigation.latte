@@ -10,7 +10,18 @@
 
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
-				<li><a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a></li>
+				<li><a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+					<ul n:ifset="$rental">
+						<li><a class="scrollTo" data-scroll-to="#rentalContactInformation" href="#"><i class="icon icon-angle-right"></i>#kontakt</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalNameSlogan" href="#"><i class="icon icon-angle-right"></i>#name slogan</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalBasicInformation" href="#"><i class="icon icon-angle-right"></i>#basic Information</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalAddress" href="#"><i class="icon icon-angle-right"></i>#rental Address</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalPhotoGalllery" href="#"><i class="icon icon-angle-right"></i>#Gallery</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalPriceList" href="#"><i class="icon icon-angle-right"></i>#rental price List</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" href="#"><i class="icon icon-angle-right"></i>#rental price upload</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalInterview" href="#"><i class="icon icon-angle-right"></i>#Interview</a></li>
+					</ul>
+				</li>
 			{/foreach}
 
 			{ifset $firstRental}

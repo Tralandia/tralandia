@@ -17,7 +17,6 @@
 			$(document).scroll(function(){
 
 				if(parseInt($(this).scrollTop()) > base.elTopOffset) {
-					console.log($(this).scrollTop());
 					base.$el.addClass('fix');
 				} else {
 					// base.$el.css({
@@ -44,6 +43,5 @@
 })(jQuery);
 
 $(function(){
-	console.log('tusome');
 	$('.fixTop').fixTop();
 });

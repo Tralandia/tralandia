@@ -9,7 +9,7 @@
 
 		{var $rentalContainer = $form['rental']}
 
-		{include #fieldset, text => 'o960'}
+		{include #fieldset, text => 'o960' , id => 'rentalContactInformation'}
 		{* {include #text, control => $form['name']} *}
 		{include #text, control => $rentalContainer['contactName']}
 		{include #phone, control => $rentalContainer['phone']}
@@ -17,7 +17,7 @@
 		{include #url, control => $rentalContainer['url']}
 
 		<tr>
-			<td colspan="2" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 selectLanguageBasicInformation pull-right selectLanguage notFulltext'}</td>
+			<td colspan="2" id="rentalNameSlogan" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 selectLanguageBasicInformation pull-right selectLanguage notFulltext'}</td>
 		</tr>
 
 
@@ -71,7 +71,7 @@
 			{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
 		{/foreach}
 
-		{include #fieldset, text => 'o100085'}
+		{include #fieldset, text => 'o100085' , id => 'rentalBasicInformation'}
 		{include #rentalType, control => $rentalContainer['type']}
 		{include #text, control => $rentalContainer['price']}
 		{include #text, control => $rentalContainer['maxCapacity']}
@@ -84,16 +84,16 @@
 		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
 		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
-		{include #fieldset, text => 'o100086'}
+		{include #fieldset, text => 'o100086' , id => 'rentalAddress'}
 		{include #address, control => $rentalContainer['address']}
 
-		{include #fieldset, text => 'o980'}
+		{include #fieldset, text => 'o980' , id => 'rentalPhotoGalllery'}
 		{include #rentalPhotos, control => $rentalContainer['photos']}
 
-		{include #fieldset, text => 'o933'}
+		{include #fieldset, text => 'o933' , id => 'rentalPriceList'}
 		{include #rentalPriceList, control => $rentalContainer['priceList']}
 
-		{include #fieldset, text => 'o100166'}
+		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload'}
 		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
 
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
@@ -112,7 +112,7 @@
 		{include #checkboxList, control => $rentalContainer['sportsFun'], colCount => 3}
 
 		<tr>
-			<td colspan="2" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguageInterview selectLanguage notFulltext'}</td>
+			<td colspan="2" id="rentalInterview" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => 'select2 pull-right selectLanguageInterview selectLanguage notFulltext'}</td>
 		</tr>
 
 		<tr class="topArrowBox">

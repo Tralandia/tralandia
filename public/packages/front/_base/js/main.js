@@ -664,7 +664,7 @@ function _selectSetSelectedValue(){
 
 
 function elemScrollTo(){
-	console.log($(this).data('scrollTo'));
+	// console.log($(this).data('scrollTo'));
 
 	$.scrollTo($(this).data('scrollTo'),800 , {offset: { top: -10} });
 }
