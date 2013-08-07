@@ -3,6 +3,7 @@ namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
 use Entity\BaseEntity;
+use Entity\FavoriteList;
 use Entity\Rental\Type;
 use Environment\Environment;
 use Extras\FormMask\Items\Base;
@@ -202,6 +203,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $rental->getAddress()->getLocality(),
 				FrontRoute::PRIMARY_LOCATION => $rental->getPrimaryLocation(),
 			];
+		} else if($favoriteList = $this->presenter->getParameter('favoriteList')) {
+			// 1219
+			$filter = [
+				FrontRoute::FAVORITE_LIST => $favoriteList,
+				FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
+			];
 		} else {
 
 			$filter = [
@@ -216,8 +223,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			];
 			$filter = array_filter($filter);
 		}
-
 		$searchLink = $this->presenter->link(':Front:RentalList:', $filter);
+
 
 		$breadcrumbLinks = [];
 		foreach($filter as $key => $value) {
@@ -248,6 +255,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$link['href'] = $this->presenter->link(':Front:RentalList:', $filter);
 				if($key == FrontRoute::$pathParametersMapper[FrontRoute::CAPACITY]) {
 					$link['text'] = $value . ' ' . $this->presenter->translate('o490', $value);
+				} else if ($value instanceof FavoriteList) {
+					$link['text'] = $this->getPresenter()->translate(1219);
 				} else if ($value instanceof Type) {
 					$link['text'] = Strings::firstUpper($this->getPresenter()->translate($value->getName(), 2));
 				} else if($value instanceof BaseEntity) {
