@@ -25,6 +25,9 @@ parameters:
 
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
+	googleAnalytics:
+		code: 'UA-1541490-17'
+
 	webTempDir: /webtemp
 	webTempPath: /webtemp
 

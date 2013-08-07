@@ -439,6 +439,8 @@ $('body').live('click',function(){
 
 		var opened = $('body').attr('data-open-select');
 
+		console.log('out ');
+
 		if(opened){
 
 			if(clickSelect2){

@@ -225,7 +225,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		$parentIso = $this->getParent()->getIso();
 		$name = $parentIso ? : $this->getIso();
-		return $name . '.gif';
+		return $name . '.png';
 	}
 
 
