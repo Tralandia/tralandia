@@ -121,7 +121,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$image = $this->template->rental->getMainImage();
 			$this->template->og['image'] = $this->rentalImagePipe->request($image);
 		} else {
-			$this->template->og['image'] = 'http://www.sk.tra.com/images/logo.png'; //@todo
+			$this->template->og['image'] = 'http://www.tralandiastatic.com/images/logo.png'; //@todo
 		}
 		$this->template->og['site_name'] = 'Tralandia';
 
