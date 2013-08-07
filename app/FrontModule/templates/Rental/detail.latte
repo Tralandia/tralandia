@@ -362,13 +362,15 @@
 
 									<ul class="bigGallery">
 										{foreach $rental->getSortedImages() as $photo}
-										<li n:class="$iterator->odd ? odd">
+										<li n:class="$iterator->odd ? odd , $iterator->getCounter() > 10 ? 'hide toggleHide'">
 
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
 										{/foreach}
 									</ul>
+
+									<a href="#" data-open-text="open text " data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="close text" class="showMorePhotos toggleHide"><span>#show more photos</span> </a>
 								<div class="clearfix"></div>
 							</div>
 
