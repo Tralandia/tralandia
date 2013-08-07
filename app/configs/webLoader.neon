@@ -55,6 +55,9 @@ parameters:
 				js:
 					- select2/lib/js/select2.js
 					# - select2/custom/js/initSelect2.js
+			fixTop:
+				js:
+					- front/fixTop/js/fixTop.js
 
 			select2HideInputText:
 				css:
@@ -371,5 +374,6 @@ parameters:
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.socialite%
+				-  %webloader.packages.fixTop%
 				-  %webloader.packages.jqueryPlacehoder%
 
