@@ -700,6 +700,8 @@ $(function(){
 			// remove image function
 			$removeLinkElement.live('click',function(){
 
+				console.log('remove');
+
 				var $el = $(this);
 
 				$el.parent().css({
