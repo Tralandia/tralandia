@@ -18,8 +18,9 @@
 	*}
 	{define #fieldset}
 	{default $text = ''}
+	{default $id = ''}
 	<tr>
-		<td colspan="3" class="fieldset">{_$text}</td>
+		<td colspan="3" id="{$id}" class="fieldset">{_$text}</td>
 	</tr>
 	{/define #fieldset}
 
