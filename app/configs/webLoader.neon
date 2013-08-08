@@ -140,7 +140,6 @@ parameters:
 					#- front/interview-list.less
 
 					# favorites 
-					- front/favorites/less/animate-custom.css
 
 					# _base
 					- front/_base/less/fonts.less
