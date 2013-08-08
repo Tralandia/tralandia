@@ -14,13 +14,8 @@
 					{input phrase, class => 'adminSearch adminSearchDictionary', placeholder => 'Search dictionary'}
 				</div>
 
-				{ifset $form['allTypes']}
-					{label allTypes}{input allTypes} Show entity phrases{/label}
-				{/ifset}
+				{label searchInUserContent}{input searchInUserContent} Search also in user content{/label}
 
-				{ifset $form['notUsed']}
-					{label notUsed}{input notUsed} Not used{/label}
-				{/ifset}
 			{/form}
 
 

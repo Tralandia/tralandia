@@ -200,9 +200,9 @@ class PhraseListPresenter extends BasePresenter {
 	}
 
 
-	public function actionSearch($search, $languageId, $allTypes, $notUsed)
+	public function actionSearch($search, $languageId, $searchInUserContent)
 	{
-		$allTypes = (bool) $allTypes;
+		$searchInUserContent = (bool) $searchInUserContent;
 		$language = $this->languageRepositoryAccessor->get()->find($languageId);
 		if(!$language) {
 			throw new BadRequestException;
@@ -210,9 +210,9 @@ class PhraseListPresenter extends BasePresenter {
 
 
 		$paginator = $this->getPaginator();
-		$paginator->setItemCount($this->fulltextSearch->getResultCount($search, $language, $allTypes, $notUsed));
+		$paginator->setItemCount($this->fulltextSearch->getResultCount($search, $language, $searchInUserContent));
 
-		$translations = $this->fulltextSearch->getResult($search, $language, $allTypes, $notUsed, $this->itemsPerPage, $paginator->offset);
+		$translations = $this->fulltextSearch->getResult($search, $language, $searchInUserContent, $this->itemsPerPage, $paginator->offset);
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
 		$editForm = $this['phraseEditForm'];

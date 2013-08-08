@@ -77,8 +77,7 @@ $(function(){
 			var patterns = {
 					patternQ: '__query__',
 					patternIso: '__languageId__',
-					patternType: '__allTypes__',
-					patternUsed: '__notUsed__'
+					patternSearchInUserContent: '__searchInUserContent__'
 				};
 
 			var url = '-- ';
@@ -87,8 +86,7 @@ $(function(){
 				url = $(this).attr('data-redirect')
 					.replace(patterns.patternQ,encodeURIComponent($(this).val()))
 					.replace(patterns.patternIso,encodeURIComponent($('select.dictionaryLanguage').val()))
-					.replace(patterns.patternType,Number($('input[name=allTypes]').is(":checked")))
-					.replace(patterns.patternUsed,Number($('input[name=notUsed]').is(":checked")));
+					.replace(patterns.patternSearchInUserContent,Number($('input[name=searchInUserContent]').is(":checked")))
 			} else {
 				url = $(this).attr('data-redirect').replace(patterns.patternQ,encodeURIComponent($(this).val()));
 			}

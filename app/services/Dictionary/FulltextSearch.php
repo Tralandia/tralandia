@@ -21,9 +21,9 @@ class FulltextSearch {
 	}
 
 
-	public function getResult($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE, $limit = NULL, $offset = NULL)
+	public function getResult($string, Language $language = NULL, $searchInUserContent = FALSE, $limit = NULL, $offset = NULL)
 	{
-		$qb = $this->createQb($string, $language, $allTypes, $notUsed)
+		$qb = $this->createQb($string, $language, $searchInUserContent)
 			->setMaxResults($limit)
 			->setFirstResult($offset);
 
@@ -31,9 +31,9 @@ class FulltextSearch {
 	}
 
 
-	public function getResultCount($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE)
+	public function getResultCount($string, Language $language = NULL, $searchInUserContent = FALSE)
 	{
-		$qb = $this->createQb($string, $language, $allTypes, $notUsed);
+		$qb = $this->createQb($string, $language, $searchInUserContent);
 		return $this->translationRepository->getCount($qb);
 	}
 
@@ -41,12 +41,11 @@ class FulltextSearch {
 	/**
 	 * @param $string
 	 * @param \Entity\Language $language
-	 * @param bool $allTypes
-	 * @param bool $notUsed
+	 * @param bool $searchInUserContent
 	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function createQb($string, Language $language = NULL, $allTypes = FALSE, $notUsed = FALSE)
+	protected function createQb($string, Language $language = NULL, $searchInUserContent = FALSE)
 	{
 		$qb = $this->translationRepository->createQueryBuilder();
 
@@ -54,7 +53,7 @@ class FulltextSearch {
 
 		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 		if(is_numeric($string)) {
-			$allTypes = true;
+			$searchInUserContent = TRUE; // lebo hlada podla ID-cka
 			$qb->leftJoin('e.phrase', 'p');
 			$phraseIsJoined = true;
 			$qb->andWhere($qb->expr()->eq('p.id', ':string'))->setParameter('string', $string);
@@ -62,21 +61,13 @@ class FulltextSearch {
 			$qb->andWhere($qb->expr()->like('e.variations', ':string'))->setParameter('string', "%$string%");
 		}
 
-		if(!$allTypes) {
+		if(!$searchInUserContent) {
 			if(!$phraseIsJoined) {
 				$qb->leftJoin('e.phrase', 'p');
 				$phraseIsJoined = true;
 			}
 			$qb->innerJoin('p.type', 't');
-			$qb->andWhere($qb->expr()->like('t.entityName', ':entityName'))->setParameter('entityName', "Latte%");
-		}
-
-		if($notUsed) {
-			if(!$phraseIsJoined) {
-				$qb->leftJoin('e.phrase', 'p');
-				$phraseIsJoined = true;
-			}
-			$qb->andWhere($qb->expr()->eq('p.used', ':used'))->setParameter('used', FALSE);
+			$qb->andWhere($qb->expr()->notIn('t.entityName', ['\Entity\Rental\Rental', '\Entity\Rental\InterviewAnswer']));
 		}
 
 		return $qb;
