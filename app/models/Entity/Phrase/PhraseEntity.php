@@ -82,7 +82,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$translation->setVariations($this->getTranslationVariationsMatrix($language));
 		if($translationText !== NULL) {
 			$translation->setTranslation($translationText);
-			$translation->setTimeTranslated(new \DateTime);
 		}
 
 		return $translation;
