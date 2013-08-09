@@ -64,7 +64,8 @@ $dic = $container = $configurator->createContainer();
 FormContainer::extensionMethod('addPhraseContainer',
 	function (FormContainer $container, $name, $phrase) use ($dic) {
 		$em = $dic->getService('model');
-		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $em);
+		$phraseManager = $dic->getByType('Tralandia\Dictionary\PhraseManager');
+		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $phraseManager, $em);
 	});
 
 FormContainer::extensionMethod('addPhoneContainer',

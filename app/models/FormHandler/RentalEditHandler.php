@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Entity\Rental\Pricelist;
 use \Nette\DI\Container;
+use Tralandia\Dictionary\PhraseManager;
 
 class RentalEditHandler extends FormHandler
 {
@@ -27,11 +28,17 @@ class RentalEditHandler extends FormHandler
 	 */
 	protected $rental;
 
+	/**
+	 * @var \Tralandia\Dictionary\PhraseManager
+	 */
+	private $phraseManager;
 
-	public function __construct(Rental $rental, EntityManager $em)
+
+	public function __construct(Rental $rental, PhraseManager $phraseManager, EntityManager $em)
 	{
 		$this->em = $em;
 		$this->rental = $rental;
+		$this->phraseManager = $phraseManager;
 	}
 
 
@@ -110,21 +117,15 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['interview']) {
-			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 			$answers = $rental->interviewAnswers;
 			foreach ($answers as $answer) {
 				if (isset($value->{$answer->question->id})) {
 					$phrase = $answer->answer;
+					$translationsVariations = [];
 					foreach ($value[$answer->question->id] as $languageIso => $val) {
-						$language = $languageRepository->findOneByIso($languageIso);
-						$translation = $phrase->getTranslation($language);
-						if ($translation) {
-							$translation->translation = $val;
-						} else {
-							$translation = $phrase->createTranslation($language, $val);
-							$translation->translation = $val;
-						}
+						$translationsVariations[$languageIso] = $val;
 					}
+					$this->phraseManager->updateTranslations($phrase, $translationsVariations);
 				}
 			}
 		}
@@ -132,18 +133,12 @@ class RentalEditHandler extends FormHandler
 		$rentalInfo = ['name', 'teaser'];
 		foreach ($rentalInfo as $infoName) {
 			$value = $values[$infoName];
-			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 			$phrase = $rental->{$infoName};
-			foreach ($value as $languageIso => $name) {
-				$language = $languageRepository->findOneByIso($languageIso);
-				$translation = $phrase->getTranslation($language);
-				if ($translation) {
-					$translation->translation = $name;
-				} else if ($name) {
-					$translation = $phrase->createTranslation($language, $name);
-					$translation->translation = $name;
-				}
+			$translationsVariations = [];
+			foreach ($value as $languageIso => $val) {
+				$translationsVariations[$languageIso] = $val;
 			}
+			$this->phraseManager->updateTranslations($phrase, $translationsVariations);
 		}
 
 		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom', 'nearBy', 'rentalServices', 'onFacility', 'sportsFun'];
