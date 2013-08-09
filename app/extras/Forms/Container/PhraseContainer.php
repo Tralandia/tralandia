@@ -10,6 +10,7 @@ use Environment\Environment;
 use Nette\NotImplementedException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
+use Tralandia\Dictionary\PhraseManager;
 
 class PhraseContainer extends BaseContainer
 {
@@ -35,14 +36,20 @@ class PhraseContainer extends BaseContainer
 	 */
 	private $em;
 
+	/**
+	 * @var \Tralandia\Dictionary\PhraseManager
+	 */
+	private $phraseManager;
 
-	public function __construct(Phrase $phrase, EntityManager $em)
+
+	public function __construct(Phrase $phrase, PhraseManager $phraseManager, EntityManager $em)
 	{
 		$this->phrase = $phrase;
 
 		$this->fromLanguage = $phrase->getSourceLanguage();
 		parent::__construct();
 		$this->em = $em;
+		$this->phraseManager = $phraseManager;
 	}
 
 
@@ -134,9 +141,15 @@ class PhraseContainer extends BaseContainer
 			$translations = $phrase->getTranslations();
 		}
 
-		foreach($translations as $translation) {
-			if(!$translation instanceof Translation) continue;
-			$language = $translation->getLanguage();
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
+
+		/** @var $language \Entity\Language */
+		foreach($languages as $language) {
+			$translation = $phrase->getTranslation($language);
+			if(!$translation) {
+				$translation = $phrase->createTranslation($language);
+			}
+
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
 			$languageContainer['variations']->setDefaults($translation->getVariations());
@@ -211,26 +224,19 @@ class PhraseContainer extends BaseContainer
 	{
 		$values = $this->getValues(TRUE);
 		$phrase = $this->phrase;
-		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 
-		$values['changedTranslations'] = [];
-		$values['displayedTranslations'] = [];
+		$translationsVariations = [];
 		foreach($values['to'] as $languageIso => $variations) {
-			$language = $languageRepository->findOneByIso($languageIso);
-			$variations = $variations['variations'];
-			$translation = $phrase->getTranslation($language);
-
-			$oldVariations = $translation->getVariations();
-
-			if($oldVariations != $variations) {
-				$values['changedTranslations'][] = $translation;
-			}
-			$values['displayedTranslations'][] = $translation;
-
-			$translation->updateVariations($variations);
+			$translationsVariations[$languageIso] = $variations['variations'];
 		}
 
+		$result = $this->phraseManager->updateTranslations($phrase, $translationsVariations);
+
+		$values['changedTranslations'] = $result['changedTranslations'];
+		$values['displayedTranslations'] = $result['changedTranslations'];
+
 		$values['phrase'] = $phrase;
+
 		return $values;
 	}
 
