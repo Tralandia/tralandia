@@ -308,6 +308,10 @@ $(document).ready(function(){
 		dropdownCssClass: 'searchSelect'
 	});
 
+	$('.selectLanguage').select2({
+		dropdownCssClass: 'orangeSelect'
+	});
+
 	var A = new App();
 
 	$('.autoselect').click(A.autoselect);
