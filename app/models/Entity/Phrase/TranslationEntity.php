@@ -10,7 +10,6 @@ use Nette\Utils\Arrays;
  * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
  * @ORM\Table(name="phrase_translation",
  * 				indexes={
- * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}),
  * 					@ORM\index(name="translation", columns={"translation"}),
  * 					@ORM\index(name="status", columns={"status"})
  * 				}
@@ -67,12 +66,6 @@ class Translation extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $position = self::BEFORE;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $timeTranslated;
 
 	/**
 	 * @var integer
@@ -362,35 +355,6 @@ class Translation extends \Entity\BaseEntity {
 	public function getPosition()
 	{
 		return $this->position;
-	}
-
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setTimeTranslated(\DateTime $timeTranslated)
-	{
-		$this->timeTranslated = $timeTranslated;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function unsetTimeTranslated()
-	{
-		$this->timeTranslated = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getTimeTranslated()
-	{
-		return $this->timeTranslated;
 	}
 
 	/**
