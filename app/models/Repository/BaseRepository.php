@@ -120,6 +120,17 @@ class BaseRepository extends EntityRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+	public function findPairsByIso(array $iso)
+	{
+		$qb = $this->createQueryBuilder();
+		$qb->where($qb->expr()->in('e.iso', $iso));
+
+		$result = $qb->getQuery()->getResult();
+		$result = \Tools::arrayMap($result, function($key, $value) {return $value->getIso();}, NULL);
+
+		return $result;
+	}
+
 	public function fetchPairs($key, $value = NULL) {
 		$collection = array();
 		//debug($this->findAll());

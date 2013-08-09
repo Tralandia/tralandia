@@ -352,6 +352,7 @@ services:
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 	dictionary.fulltextSearch: Dictionary\FulltextSearch
 	dictionary.markAsPaid: Dictionary\MarkAsPaid
+	dictionary.phraseManager: Tralandia\Dictionary\PhraseManager
 
 
 	phraseCreator: Service\Phrase\PhraseCreator
