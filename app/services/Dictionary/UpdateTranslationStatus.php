@@ -5,6 +5,7 @@ namespace Dictionary;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\User\User;
+use Nette\NotImplementedException;
 
 class UpdateTranslationStatus {
 
@@ -12,10 +13,14 @@ class UpdateTranslationStatus {
 	/**
 	 * @param Phrase $phrase
 	 *
+	 * @throws \Nette\NotImplementedException
 	 * @return Phrase
 	 */
 	public function resolvePhrase(Phrase $phrase)
 	{
+		throw new NotImplementedException('Toto sa uz nepouziva');
+
+
 		$sourceTranslation = $phrase->getSourceTranslation();
 		$centralTranslation = $phrase->getCentralTranslation();
 
