@@ -153,7 +153,7 @@
 							<ul class="detailPriceList">
 								<li><h3 n:class="$pricesAvailable ? full : small">
 
-								{if count($rental->maxCapacity) > 0}
+								{if $rental->maxCapacity > 0}
 									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
 								{/if}
 
