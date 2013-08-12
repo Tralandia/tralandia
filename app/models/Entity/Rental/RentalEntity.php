@@ -691,7 +691,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 
 	/**
-	 * @return array
+	 * @return array|\DateTime[]
 	 */
 	public function getCalendar()
 	{
