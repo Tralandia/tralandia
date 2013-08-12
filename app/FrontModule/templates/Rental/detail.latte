@@ -155,6 +155,8 @@
 
 								{if $rental->maxCapacity > 0}
 									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+									{else}
+									{_571}
 								{/if}
 
 								<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
