@@ -40,8 +40,8 @@
 
 	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
 	
-		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
-		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
+		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" , data-reservations => '9-8-2013,10-8-2013,12-8-2013,13-8-2013,14-8-2013' }
+		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to" , data-reservations => '9-8-2013,10-8-2013,12-8-2013,13-8-2013,14-8-2013'}
 		
 
 	<span class="control-error" id="error-msg-reservation-to">
