@@ -4,7 +4,7 @@
 
 <variables n:syntax="asp" name="homeInfo" data-info='{"rentalCount":"<%$locationRentalsCount%>","listTitle":"<%$pageH1%>"}'></variables>
 
-<h1>
+<h1 class="home">
 	{$pageH1}
 	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
 {if  !isset($isRootHome)}

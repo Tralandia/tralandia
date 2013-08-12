@@ -153,8 +153,10 @@
 							<ul class="detailPriceList">
 								<li><h3 n:class="$pricesAvailable ? full : small">
 
-								{if count($rental->maxCapacity) > 0}
+								{if $rental->maxCapacity > 0}
 									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+									{else}
+									{_571}
 								{/if}
 
 								<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
@@ -370,7 +372,10 @@
 										{/foreach}
 									</ul>
 
-									<a href="#" data-open-text="open text " data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="close text" class="showMorePhotos toggleHide"><span>#show more photos</span> </a>
+									{if count($rental->getSortedImages()) > 10}
+										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos toggleHide"><span>{_152659}</span> </a>									
+									{/if}
+
 								<div class="clearfix"></div>
 							</div>
 
