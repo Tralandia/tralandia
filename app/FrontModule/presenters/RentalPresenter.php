@@ -88,6 +88,13 @@ class RentalPresenter extends BasePresenter {
 		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
+		$formattedCalendar = [];
+		foreach($rental->getCalendar() as $day) {
+			$formattedCalendar[] = $day->format('d-m-Y');
+		}
+
+		$this->template->formatedCalendar = implode(',', $formattedCalendar);
+
 
 		$this->template->dateUpdated = $rental->updated;
 
@@ -116,7 +123,9 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->lastSearchResults = $lastSearchResults;
 		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
+
 		$this->lastSeen->visit($rental);
+
 
 		$this->setLayout('detailLayout');
 	}
