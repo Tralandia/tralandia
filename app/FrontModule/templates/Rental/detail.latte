@@ -145,14 +145,22 @@
 							<div class="clearfix"></div>
 
 							{var $pricesAvailable = false}
-
-							{if count($rental->pricelistRows) > 0}
-							{var $pricesAvailable = true}
+								{if count($rental->pricelistRows) > 0}
+								{var $pricesAvailable = true}
+								{/if}
+							
+							
 							<ul class="detailPriceList">
-								<li><h3>{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
-								</h3>
-								<ul>
+								<li><h3 n:class="$pricesAvailable ? full : small">
 
+								{if count($rental->maxCapacity) > 0}
+									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+								{/if}
+
+								<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								</h3>
+								{if count($rental->pricelistRows) > 0}
+								<ul>
 									{foreach $rental->pricelistRows as $pricelistRow}
 									<li tooltip="true" title="{_$pricelistRow->roomType->textPriceFor}">
 										{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
@@ -179,15 +187,23 @@
 									{/if}
 
 								</ul>
-
+								{/if}
 
 							</li>
 						</ul>
-						{/if}
+						
 
-						{if !$pricesAvailable}
+
+
+{* 						{if !$pricesAvailable}
+						{if $rental->pricesUponRequest}
+						{_o100204}
+						{else}
 						{_o100205, NULL, NULL, ['price' => $rental->price]}
 						{/if}
+						{/if} *}
+
+
 
 						<div class="clearfix"></div>
 
@@ -203,7 +219,7 @@
 								{if count($rental->amenities) > 0}
 
 									<div class="amenitiesStart">
-										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability']) as $amenities}
+										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['owner-availability','animal']) as $amenities}
 										<li class="{reset($amenities)->getType()->getSlug()}">
 										{dump $amenities}
 
@@ -248,17 +264,18 @@
 					<div class="span3 sidebarRightDetail">
 
 							<div class="sidebarContact">
-								<div class="sidebarTitle">
+
+								<div class="sidebarInner first">
+
+
+								<div class="headerInformation">
+									<span class="name">
 										{if $rental->contactName}
 											{$rental->contactName}
 											{else}
 											{_o12275}
 										{/if}
-								</div>
-								<div class="sidebarInner">
-
-
-								<div class="headerInformation">
+									</span>
 									{if $rental->phone->international}
 
 
@@ -323,7 +340,7 @@
 
 
 
-								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x161&sensor=false"/>
+								<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=228x120&sensor=false"/>
 
 
 								<div class="clearfix"></div>
@@ -345,13 +362,15 @@
 
 									<ul class="bigGallery">
 										{foreach $rental->getSortedImages() as $photo}
-										<li n:class="$iterator->odd ? odd">
+										<li n:class="$iterator->odd ? odd , $iterator->getCounter() > 10 ? 'hide toggleHide'">
 
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
 										{/foreach}
 									</ul>
+
+									<a href="#" data-open-text="open text " data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="close text" class="showMorePhotos toggleHide"><span>#show more photos</span> </a>
 								<div class="clearfix"></div>
 							</div>
 

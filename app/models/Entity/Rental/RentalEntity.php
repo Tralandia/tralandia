@@ -331,7 +331,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 			return $pet[0];
 		}
 
-		return NULL;
+		return FALSE;
 	}
 
 	/**

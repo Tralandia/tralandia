@@ -308,6 +308,10 @@ $(document).ready(function(){
 		dropdownCssClass: 'searchSelect'
 	});
 
+	$('.selectLanguage').select2({
+		dropdownCssClass: 'orangeSelect'
+	});
+
 	var A = new App();
 
 	$('.autoselect').click(A.autoselect);
@@ -438,6 +442,7 @@ $('body').live('click',function(){
 	setTimeout(function(){
 
 		var opened = $('body').attr('data-open-select');
+
 
 		if(opened){
 
@@ -664,7 +669,7 @@ function _selectSetSelectedValue(){
 
 
 function elemScrollTo(){
-	console.log($(this).data('scrollTo'));
+	// console.log($(this).data('scrollTo'));
 
 	$.scrollTo($(this).data('scrollTo'),800 , {offset: { top: -10} });
 }
