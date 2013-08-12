@@ -245,6 +245,83 @@ $(document).ready(function(){
 });
 
 
+
+function onChangeCalendar(self){
+
+	var reservations = $(self).data('reservations');
+		reservations = reservations.split(',');
+		
+
+	setTimeout(function(){
+
+		var my = $('.ui-datepicker-calendar td:not(.ui-state-disabled):first');
+
+		var m = my.data('month')+1; 
+		var y = my.data('year');
+
+		var statusClass = {
+			start: 'stat0',
+			middle: 'stat1',
+			stop: 'stat2'
+		};
+
+			my = '-'+m+'-'+y;
+
+			var status = 0;
+
+			$('.ui-datepicker-calendar td:not(.ui-datepicker-other-month)').each(function(index){
+				var realDate = (index+1)+my;
+				var nextDate = (index+2)+my;
+
+					// console.log(realDate);
+
+					// console.log(jQuery.inArray(realDate, reservations));
+
+					if(jQuery.inArray(realDate, reservations) != -1){
+						
+
+						// console.log(status);
+
+						switch(status){
+							case 0 :
+								datepickerSetClass(this,statusClass.start);
+								status = 1;
+								break;
+							case 1 :
+								
+								if(jQuery.inArray(nextDate, reservations) != -1){
+									datepickerSetClass(this,statusClass.middle);
+									status = 1;
+								} else {
+									datepickerSetClass(this,statusClass.stop);
+									status = 0;
+								}
+									
+						}
+					}
+				
+			});
+
+	},100);
+
+}
+
+
+function datepickerSetClass(elem,cssClass){
+	var $el = $(elem);
+
+	var point = $el.find('a');
+
+		if(point.length > 0){
+			point.addClass(cssClass);
+		} else {
+			$el.find('span').addClass(cssClass);
+		}
+
+}
+
+
+
 function rentalDetailDatepickerInit(){
 
 	var fromDateOrigin = {
@@ -265,16 +342,26 @@ function rentalDetailDatepickerInit(){
 
 	$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
 
+
+
+
 	$( ".datepicker" ).datepicker({ 
 		minDate: 0, 
 		maxDate: "+12M +10D" , 
 		firstDay: 1,
+
 		dateFormat: "yy-mm-dd",
 		beforeShow: function(textbox, instance){
             instance.dpDiv.css({
                     marginLeft: '0px'
-            });			
-		}
+            });	
+
+            onChangeCalendar(this);
+            	
+		},
+		onChangeMonthYear: function(){
+			onChangeCalendar(this);
+		}	
 	});	
 
 
@@ -285,7 +372,6 @@ function rentalDetailDatepickerInit(){
 		firstDay: 1,
 		beforeShow: function(textbox, instance){
 
-			console.log(textbox.offsetHeight);
 
             instance.dpDiv.css({
                     
@@ -312,9 +398,12 @@ function rentalDetailDatepickerInit(){
 				$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
 			}
 
+			onChangeCalendar(this);
 
-
-		}
+		},
+		onChangeMonthYear: function(){
+			onChangeCalendar(this);
+		}		
 	});		
 }
 
