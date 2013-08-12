@@ -1,7 +1,7 @@
 parameters:
 
 	database:
-		debugger: false
+		debugger: true
 
 	cacheDatabase:
 		database: tralandia_cache
