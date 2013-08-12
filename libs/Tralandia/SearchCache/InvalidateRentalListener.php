@@ -30,6 +30,7 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	public function getSubscribedEvents()
 	{
 		return [
+			'\FormHandler\RegistrationHandler::onSuccess',
 			'\FormHandler\RentalEditHandler::onSuccess',
 		];
 	}
