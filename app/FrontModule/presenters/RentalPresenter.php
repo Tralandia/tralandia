@@ -61,7 +61,7 @@ class RentalPresenter extends BasePresenter {
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
-			$answerText = $this->translate($answer->getAnswer());
+			$answerText = $answer->getAnswer()->getTranslation($this->language);
 			if($answerText && strlen(trim($answerText))) {
 				$interviewAnswers[] = $answer;
 			}
@@ -76,11 +76,11 @@ class RentalPresenter extends BasePresenter {
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
 
-		$this->template->teaser = $this->translate($rental->teaser);
+		$this->template->teaser = $rental->getTeaser()->getTranslation($this->language);
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer) {
-			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswer->getAnswer()->getTranslation($this->language), 200);
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
