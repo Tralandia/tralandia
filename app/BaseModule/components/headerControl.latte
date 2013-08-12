@@ -58,23 +58,13 @@
 
 					{else}
 
-						{ifset $showFlag}
-						<li class="headerIcon">
-							<img src="/images/flags/{$isoCode}.png" />
-						</li>
-						{/ifset}
-
 						<li class="headerIcon">
 							<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}">
 								{_1226}
 							</a>
 						</li>
 
-						{ifset $showFlag}
-							<li class="headerIcon">
-								<a href="{$worldLink}">{_151892}</a>
-							</li>
-						{/ifset}
+
 
 
 

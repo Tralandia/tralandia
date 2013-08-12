@@ -7,10 +7,17 @@
 <h1>
 	{$pageH1}
 	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
+{if  !isset($isRootHome)}
+	<img src="/images/flags/{$environmentPrimaryLocation->getFlagName()}" />
+{/if}	
 </h1>
 
-<div class="row-fluid">
 
+
+
+
+
+<div class="row-fluid">
 
 	<div class="span12">
 

@@ -55,6 +55,9 @@ parameters:
 				js:
 					- select2/lib/js/select2.js
 					# - select2/custom/js/initSelect2.js
+			fixTop:
+				js:
+					- front/fixTop/js/fixTop.js
 
 			select2HideInputText:
 				css:
@@ -137,7 +140,6 @@ parameters:
 					#- front/interview-list.less
 
 					# favorites 
-					- front/favorites/less/animate-custom.css
 
 					# _base
 					- front/_base/less/fonts.less
@@ -363,6 +365,7 @@ parameters:
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
+				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.gMap%
@@ -371,5 +374,6 @@ parameters:
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.socialite%
+				-  %webloader.packages.fixTop%
 				-  %webloader.packages.jqueryPlacehoder%
 
