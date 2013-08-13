@@ -423,11 +423,11 @@ $(document).ready(function(){
 // selec2 onBlur close
 var clickSelect2 = false;
 
-$('div.select2 , div.sidebarLocation').live('click',function(){
+$('div.select2 , div.sidebarLocation , div.selectLanguage').live('click',function(){
 	clickSelect2 = true;
 });
 
-$('div.sidebarLocation').live('click',function(){
+$('div.sidebarLocation , div.selectLanguage').live('click',function(){
 	var opened = $('body').attr('data-open-select');
 	if(!opened){
 		$('body').attr('data-open-select',true);
@@ -451,6 +451,7 @@ $('body').live('click',function(){
 			} else {
 				$('.select2').select2('close');
 				$('.sidebarLocation').select2('close');
+				$('.selectLanguage').select2('close');
 				clickSelect2 = false;
 			}
 			
