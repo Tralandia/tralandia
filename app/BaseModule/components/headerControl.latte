@@ -52,10 +52,16 @@
 								<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
 							</li>
 						{/if}
-						<li class="headerIcon last">
+						<li class="headerIcon">
 							<a href="{$getLogoutLink()}" >{_o1594}</a>
 						</li>
-
+						<li>
+							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
+									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
+								</a>
+							</div>
+						</li>
 					{else}
 
 						<li class="headerIcon">
@@ -63,11 +69,6 @@
 								{_1226}
 							</a>
 						</li>
-
-
-
-
-
 
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
