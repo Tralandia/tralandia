@@ -29,13 +29,14 @@ class RegistrationsGrid extends AdminGridControl {
 		$grid = $this->getGrid();
 		$grid->setRowPrimaryKey('key');
 
-		$grid->addColumn('total', 'Total');
+		$grid->addColumn('key', 'Country');
 		$grid->addColumn('today', 'Today');
 		$grid->addColumn('yesterday', 'Yesterday');
-		$grid->addColumn('this_week', 'This week');
-		$grid->addColumn('last_week', 'Last week');
-		$grid->addColumn('this_month', 'This month');
-		$grid->addColumn('last_month', 'Last month');
+		$grid->addColumn('thisWeek', 'This week');
+		$grid->addColumn('lastWeek', 'Last week');
+		$grid->addColumn('thisMonth', 'This month');
+		$grid->addColumn('lastMonth', 'Last month');
+		$grid->addColumn('total', 'Total');
 
 		return $grid;
 	}

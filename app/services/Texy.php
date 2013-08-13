@@ -20,5 +20,6 @@ class TranslationTexy extends \Texy
 		$this->typographyModule->locale = 'en';
 		$this->headingModule->top = 1;
 		$this->headingModule->balancing = \TexyHeadingModule::FIXED;
+		$this->linkModule->shorten = FALSE;
 	}
 }

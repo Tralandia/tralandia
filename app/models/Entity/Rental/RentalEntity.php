@@ -172,6 +172,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $checkOut;
 
 	/**
+	 * #notUsed 6/8/2013
 	 * @var Boolean
 	 * @ORM\Column(type="boolean")
 	 */
@@ -330,7 +331,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 			return $pet[0];
 		}
 
-		return NULL;
+		return FALSE;
 	}
 
 	/**
@@ -690,7 +691,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 
 	/**
-	 * @return array
+	 * @return array|\DateTime[]
 	 */
 	public function getCalendar()
 	{

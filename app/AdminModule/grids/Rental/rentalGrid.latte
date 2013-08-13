@@ -24,12 +24,12 @@
 {/define}
 
 {define #row-actions}
-	<a href="{$row['editLink']}" class="btn btn-small btn-primary">edit</a>
 	<div class="btn-group">
 		<button class="btn btn-mini dropdown-toggle btn-inverse" data-toggle="dropdown">Actions <span class="caret"></span></button>
 		<ul class="dropdown-menu">
-			<li><a href="{plink :Front:Rental:detail $row['entity']}" target="_blank" >View on FE</a></li>
-			<li><a href="{plink fakeLogin $row['entity']->getOwner()->getId()}" >Login as User</a></li>
+			<li><a href="{plink :Owner:Rental:edit $primary}" target="_blank">Edit</a></li>
+			<li><a href="{plink :Front:Rental:detail $row}" target="_blank" >View on FE</a></li>
+			{*<li><a href="{plink fakeLogin $row->getOwner()->getId()}" >Login as User</a></li>*}
 			<li class="divider"></li>
 			<li><a href="{plink :Admin:Cache:viewRentalSearchCache $row['entity']->getId()}" target="_blank">View Search Cache</a></li>
 			<li><a href="{plink :Admin:Cache:invalidateRentalSearchCache $row['entity']->getId()}" class="ajax">Invalidate Search Cache</a></li>

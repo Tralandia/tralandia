@@ -61,8 +61,8 @@ class RentalPresenter extends BasePresenter {
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
-			$answerText = $this->translate($answer->getAnswer());
-			if($answerText && strlen(trim($answerText))) {
+			$answerText = $answer->getAnswer()->getTranslation($this->language);
+			if($answerText && strlen(trim($answerText->getTranslation()))) {
 				$interviewAnswers[] = $answer;
 			}
 		}
@@ -76,17 +76,24 @@ class RentalPresenter extends BasePresenter {
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
 
-		$this->template->teaser = $this->translate($rental->teaser);
+		$this->template->teaser = $rental->getTeaser()->getTranslation($this->language);
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer) {
-			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswer->getAnswer()->getTranslation($this->language)->getTranslation(), 200);
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
 
 		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
+
+		$formattedCalendar = [];
+		foreach($rental->getCalendar() as $day) {
+			$formattedCalendar[] = $day->format('d-m-Y');
+		}
+
+		$this->template->formatedCalendar = implode(',', $formattedCalendar);
 
 
 		$this->template->dateUpdated = $rental->updated;
@@ -116,7 +123,9 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->lastSearchResults = $lastSearchResults;
 		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
+
 		$this->lastSeen->visit($rental);
+
 
 		$this->setLayout('detailLayout');
 	}

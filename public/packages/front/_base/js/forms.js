@@ -700,6 +700,8 @@ $(function(){
 			// remove image function
 			$removeLinkElement.live('click',function(){
 
+				console.log('remove');
+
 				var $el = $(this);
 
 				$el.parent().css({
@@ -738,6 +740,8 @@ $(function(){
 				dataType: 'json',
 				add: function (e, data) {
 
+					$self.find('span.fileinput-button').addClass('disabled').find('input[type=file]').attr('disabled',true);
+
 					$ajaxErrors.html('');
 
 					if(!firstStart){
@@ -756,6 +760,8 @@ $(function(){
 					data.submit();
 				},
 				done: function (e, data) {
+
+					$self.find('span.fileinput-button').removeClass('disabled').find('input[type=file]').attr('disabled',false);
 
 					$listGallery.find('li.loading').each(function(index){
 

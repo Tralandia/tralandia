@@ -102,7 +102,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 		if($this->createMissingTranslationsRobot->needToRunFor($language)) {
 			$this->redirect('this');
 		}
-		$this->redirect('list');
+		$this->sendPayload();
 	}
 
 

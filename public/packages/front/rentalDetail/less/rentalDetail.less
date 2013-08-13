@@ -140,7 +140,7 @@ form.reservationform {
 		display: block;
 
 		&.message {
-			height: 150px;
+			height: 190px;
 		}
 	}
 
@@ -451,6 +451,7 @@ table.detailInfoBox {
 		padding: 0;
 
 		li h3 {
+			height: 30px;
 			margin: 0;
 			padding: 5px 10px;
 			background: #fff;
@@ -460,6 +461,10 @@ table.detailInfoBox {
 			line-height: 27px;
 			color: @darkGreen;
 			.top-border-radius(5px);
+
+			&.small {
+				.border-radius(5px);
+			}
 
 			span {
 				float: right;
@@ -687,61 +692,9 @@ table.detailInfoBox {
 
 		}
 
-		&.tag {
-			&:before {
-				content:'\E70C';
-			}
-		}
-
-		&.owner-availability {
-			&:before {
-				content:'\1F514';
-			}			
-		}
-
-		&.separate-groups {
-			&:before {
-				content:'\1F465';
-			}			
-		}
-
-		&.rooms {
-			&:before {
-				content:'\F601';
-			}			
+		&:before {
+			content: "\f054";
 		}		
-
-		
-
-		&.clock {					
-			&:before {
-				content: "\f017";
-			}			
-		}	
-
-		&.board {			
-			&:before {
-				content:'\f0f4';
-			}			
-		}
-		&.dog {			
-			padding-top: 10px;
-			&:before {
-				content: "\f113";
-			}			
-		}
-
-		&.monitor {			
-			&:before {
-				content: "\f108";
-			}			
-		}		
-
-		&.bell {			
-			&:before {
-				content: "\f0F3";			
-			}			
-		}
 
 		&.other ,
 		&.wellness ,
@@ -829,6 +782,11 @@ table.detailInfoBox {
 		color: @darkGreen;
 	}
 
+	&.first {
+		border-top: 1px solid #88A031;
+		.border-radius(5px 5px 0 0);
+	}
+
 	.headerInformation {
 		text-align: center;
 		padding: 10px;	
@@ -842,9 +800,19 @@ table.detailInfoBox {
 			}
 		}
 
+		a.scrollTo {
+			display: block;
+			padding: 0 0 10px 0;
+		}
+
+		.name {
+			font-size: 15px;
+			line-height: 16px;			
+		}
+
 		.websiteUrl {
 			display: block;
-			padding: 10px 0;
+			padding: 0 0 10px 0;
 
 			&:hover {
 				text-decoration:none;
@@ -973,7 +941,7 @@ table.detailInfoBox {
 	}
 
 	textarea {
-		height: 130px;
+		height: 170px;
 	}
 
 	form {
@@ -1116,6 +1084,10 @@ table.detailInfoBox {
 			margin-right: 10px;
 		}
 
+		&.hide {
+			display: none;	
+		}
+
 		img {
 			width: 467px;
 			height: 276px;
@@ -1174,6 +1146,18 @@ table.detailInfoBox {
 					text-decoration: underline;
 				}
 			}
+		}
+
+		a.showMorePhotos {
+			display: block;
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			border:1px solid #ddd;
+			background: #fefefe;
+			clear: both;
+			text-align: center;
+			color: #333;
 		}
 
 		h3 {

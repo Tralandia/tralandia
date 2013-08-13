@@ -33,4 +33,6 @@ define('DOMAIN_ENTITY', '\Entity\Domain');
 define('EMAIL_TEMPLATE_ENTITY', '\Entity\Email\Template');
 define('EMAIL_LAYOUT_ENTITY', '\Entity\Email\Layout');
 define('ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
+define('BANNED_EMAIL_ENTITY', '\Entity\Rental\BannedEmail');
+define('BANNED_PHONE_ENTITY', '\Entity\Rental\BannedPhone');
 

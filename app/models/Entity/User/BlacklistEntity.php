@@ -5,6 +5,7 @@ namespace Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Maju zakaz posielat rezervacie
  * @ORM\Entity
  * @ORM\Table(name="user_blacklist", indexes={@ORM\index(name="email", columns={"email"})})
 */
@@ -18,12 +19,12 @@ class Blacklist extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\Blacklist
@@ -34,7 +35,7 @@ class Blacklist extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

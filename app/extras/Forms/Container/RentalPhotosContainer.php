@@ -120,6 +120,16 @@ class RentalPhotosContainer extends BaseContainer
 				$imagesTemp[$image->getId()] = $image;
 			}
 		}
+
+		if($this->rental) {
+			$images = $this->rental->getImages();
+			foreach($images as $image) {
+				if(isset($imagesTemp[$image->getId()])) continue;
+				$this->rental->removeImage($image);
+				$this->imageManager->delete($image);
+			}
+		}
+
 		$values['images'] = $imagesTemp;
 
 		return $values;

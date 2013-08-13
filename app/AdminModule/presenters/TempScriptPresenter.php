@@ -235,4 +235,20 @@ class TempScriptPresenter extends BasePresenter {
 		}
 	}
 
+	public function actionUpdatePricelistFileSize()
+	{
+		$repository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
+		$all = $repository->findAll();
+		/** @var $priceLisManager \RentalPriceListManager */
+		$priceLisManager = $this->context->rentalPriceListManager;
+
+		/** @var $row \Entity\Rental\Pricelist */
+		foreach($all as $row) {
+			$absolutePath = $priceLisManager->getAbsolutePath($row);
+			$row->setFileSize(filesize($absolutePath));
+
+			$this->em->flush($row);
+		}
+	}
+
 }

@@ -2,6 +2,7 @@ services:
 
 	- [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
+	- [class: Tralandia\Rental\UnbanRentalListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\Rental\RankCalculatorListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\SearchCache\InvalidateRentalListener, tags: [kdyby.subscriber]]
 	- [class: Listener\ReservationOwnerEmailListener, tags: [kdyby.subscriber]]

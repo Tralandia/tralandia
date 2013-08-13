@@ -20,26 +20,26 @@
 	</td>
 {/define}
 
-{define #col-this_week}
+{define #col-thisWeek}
 	<td>
 		{ifset $cell->total}{$cell->total}{else}-{/ifset}
 		{ifset $cell->live} / {$cell->live}{/ifset}
 	</td>
 {/define}
 
-{define #col-last_week}
+{define #col-lastWeek}
 	<td>
 		{ifset $cell->total}{$cell->total}{else}-{/ifset}
 		{ifset $cell->live} / {$cell->live}{/ifset}
 	</td>
 {/define}
-{define #col-this_month}
+{define #col-thisMonth}
 	<td>
 		{ifset $cell->total}{$cell->total}{else}-{/ifset}
 		{ifset $cell->live} / {$cell->live}{/ifset}
 	</td>
 {/define}
-{define #col-last_month}
+{define #col-lastMonth}
 	<td>
 		{ifset $cell->total}{$cell->total}{else}-{/ifset}
 		{ifset $cell->live} / {$cell->live}{/ifset}
