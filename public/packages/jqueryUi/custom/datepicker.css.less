@@ -45,3 +45,42 @@
 .ui-datepicker-next:before {
 	.icon("\f0da"); 
 }
+
+
+.ui-widget-content .ui-state-highlight , .ui-widget-content .ui-state-default {
+	&.stat0 {
+		background-image: linear-gradient(37 32, #F07412 66%, rgb(239,242,215) 66%);
+		background-image: -o-linear-gradient(37 32, #F07412 66%, rgb(239,242,215) 66%);
+		background-image: -moz-linear-gradient(37 32, #F07412 66%, rgb(239,242,215) 66%);
+		background-image: -webkit-linear-gradient(37 32, #F07412 66%, rgb(239,242,215) 66%);
+		background-image: -ms-linear-gradient(37 32, #F07412 66%, rgb(239,242,215) 66%);
+
+		background-image: -webkit-gradient(
+			linear,
+			37 32,
+			left top,
+			color-stop(0.66, #F07412),
+			color-stop(0.66, rgb(239,242,215))
+		);
+	}
+
+	&.stat1 {
+		background: #F07412;
+	}
+
+	&.stat2 {
+		background-image: linear-gradient(37 32, rgb(239,242,215)  66%, #F07412  66%);
+		background-image: -o-linear-gradient(37 32, rgb(239,242,215)  66%, #F07412  66%);
+		background-image: -moz-linear-gradient(37 32, rgb(239,242,215)  66%, #F07412  66%);
+		background-image: -webkit-linear-gradient(37 32, rgb(239,242,215)  66%, #F07412  66%);
+		background-image: -ms-linear-gradient(37 32, rgb(239,242,215)  66%, #F07412  66%);
+
+		background-image: -webkit-gradient(
+			linear,
+			37 32,
+			left top,
+			color-stop(0.66, rgb(239,242,215)),
+			color-stop(0.66, #F07412)			
+		);
+	}
+}

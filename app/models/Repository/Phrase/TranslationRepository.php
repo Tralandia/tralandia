@@ -73,19 +73,6 @@ class TranslationRepository extends \Repository\BaseRepository {
 		return $paginator->count();
 	}
 
-	public function findLastTranslationDate(Language $language)
-	{
-		$qb = $this->_em->createQueryBuilder();
-
-		$qb->select('MAX(e.timeTranslated)')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
-
-		$qb = $this->filterTranslatedTypes($qb);
-
-		return $qb->getQuery()->getSingleScalarResult();
-	}
-
-
 	/**
 	 * @param QueryBuilder $qb
 	 *

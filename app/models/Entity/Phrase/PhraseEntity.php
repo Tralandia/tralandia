@@ -71,6 +71,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function createTranslation(\Entity\Language $language, $translationText = NULL) {
+		if($this->getTranslation($language)) {
+			throw new InvalidArgumentException('Tato fraza uz ma translation pre jazyk: ' . $language->getIso());
+		}
+
 		$type = $this->getType();
 		if(!$type instanceof \Entity\Phrase\Type) {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
@@ -82,11 +86,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$translation->setVariations($this->getTranslationVariationsMatrix($language));
 		if($translationText !== NULL) {
 			$translation->setTranslation($translationText);
-			$translation->setTimeTranslated(new \DateTime);
 		}
 
 		return $translation;
 	}
+
 
 	/**
 	 * @param \Entity\Language $language

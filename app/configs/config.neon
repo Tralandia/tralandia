@@ -37,6 +37,9 @@ parameters:
 	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%%domain%%"
 #	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
+	googleAnalytics: 
+		code: false
+
 	projectEmail: 'info@tralandia.com'
 
 	staticDomain: "http://tralandiastatic.com"
@@ -47,6 +50,7 @@ parameters:
 	rentalImageDir: %storageDir%/rental_images
 	rentalImagePath: %storagePath%/rental_images
 	rentalPricelistDir: %storageDir%/rental_pricelists
+	rentalPricelistPath: %storagePath%/rental_pricelists
 
 	webTempDir: /webtemp
 	webTempPath: /webtemp
@@ -320,8 +324,10 @@ services:
 	rentalImagePipe: Image\RentalImagePipe(%rentalImagePath%, %staticDomain%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
 	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
+	rentalPriceListPipe: Image\RentalPriceListPipe(%rentalPricelistPath%, %staticDomain%)
 	- Tralandia\Rental\RankCalculator
 	- Tralandia\Rental\Discarder
+	- Tralandia\Rental\BanListManager
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
@@ -341,12 +347,15 @@ services:
 		class: Statistics\Dictionary
 	statistics.registrations:
 		class: Statistics\Registrations
+	statistics.reservations:
+		class: Statistics\Reservations
 
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
 	dictionary.updateTranslationVariations: Dictionary\UpdateTranslationVariations
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 	dictionary.fulltextSearch: Dictionary\FulltextSearch
 	dictionary.markAsPaid: Dictionary\MarkAsPaid
+	dictionary.phraseManager: Tralandia\Dictionary\PhraseManager
 
 
 	phraseCreator: Service\Phrase\PhraseCreator
@@ -644,6 +653,10 @@ factories:
 	statisticsRegistrationsGridFactory:
 		class: AdminModule\Grids\Statistics\RegistrationsGrid
 		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
+
+	statisticsReservationsGridFactory:
+		class: AdminModule\Grids\Statistics\ReservationsGrid
+		implement: AdminModule\Grids\Statistics\IReservationsGridFactory
 
 	dictionaryManagerGridFactory:
 		class: AdminModule\Grids\Dictionary\ManagerGrid

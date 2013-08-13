@@ -201,6 +201,10 @@ abstract class BasePresenter extends Presenter {
 		$this->template->rand = rand(1, 1000);
 		$this->template->isWorld = $this->primaryLocation->isWorld();
 
+		$this->template->gaCode = $parameters['googleAnalytics']['code'];
+
+		$this->template->environmentPrimaryLocation = $this->primaryLocation;
+
 		if($this->tester instanceof \Tester\Options) {
 			$this->template->tester = $this->tester;
 		}
@@ -210,8 +214,6 @@ abstract class BasePresenter extends Presenter {
 
 	public function fillTemplateWithCacheOptions($template)
 	{
-
-
 		$parameters = $this->getContext()->getParameters();
 
 		$language = 'language/' . $this->environment->getLanguage()->getIso();

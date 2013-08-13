@@ -64,6 +64,7 @@ class RentalPriceListManager {
 
 		$pricelist->setName($file->getName());
 		$pricelist->setFilePath($path);
+		$pricelist->setFileSize($file->getSize());
 
 		$pricelistRepository->save($pricelist);
 
@@ -76,5 +77,11 @@ class RentalPriceListManager {
 
 		$pricelistRepository = $this->pricelistRepository;
 		return $pricelistRepository->delete($pricelist);
+	}
+
+
+	public function getAbsolutePath(Pricelist $pricelist)
+	{
+		return $this->storage->getAbsolutePath($pricelist->getFilePath());
 	}
 }

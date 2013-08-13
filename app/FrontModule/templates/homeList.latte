@@ -4,13 +4,20 @@
 
 <variables n:syntax="asp" name="homeInfo" data-info='{"rentalCount":"<%$locationRentalsCount%>","listTitle":"<%$pageH1%>"}'></variables>
 
-<h1>
+<h1 class="home">
 	{$pageH1}
 	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
+{if  !isset($isRootHome)}
+	<img src="/images/flags/{$environmentPrimaryLocation->getFlagName()}" />
+{/if}	
 </h1>
 
-<div class="row-fluid">
 
+
+
+
+
+<div class="row-fluid">
 
 	<div class="span12">
 

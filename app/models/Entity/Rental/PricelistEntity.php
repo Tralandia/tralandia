@@ -46,6 +46,12 @@ class Pricelist extends \Entity\BaseEntity
 
 	/**
 	 * @var text
+	 * @ORM\Column(type="string")
+	 */
+	protected $fileSize;
+
+	/**
+	 * @var text
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $oldUrl;
@@ -153,6 +159,25 @@ class Pricelist extends \Entity\BaseEntity
 	public function getFilePath()
 	{
 		return $this->filePath;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Pricelist
+	 */
+	public function setFileSize($fileSize)
+	{
+		$this->fileSize = $fileSize;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getFileSize()
+	{
+		return $this->fileSize;
 	}
 
 	/**

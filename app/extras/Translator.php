@@ -124,16 +124,18 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			if(!$phrase) $translation = FALSE;
 
-			if($phrase instanceof Phrase && !$phrase->getUsed()) {
-				$phrase->setUsed(TRUE);
-				$this->phraseRepositoryAccessor->get()->update($phrase);
-			}
+//			# Mark as Used
+//			if($phrase instanceof Phrase && !$phrase->getUsed()) {
+//				$phrase->setUsed(TRUE);
+//				$this->phraseRepositoryAccessor->get()->update($phrase);
+//			}
 
 			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
+				$firstIteration = TRUE;
 				foreach($translations as $translationEntity) {
 					/** @var $translationEntity \Entity\Phrase\Translation */
 					$translationText = NULL;
-					if ($variation === NULL) {
+					if ($variation === NULL || !$firstIteration) {
 						$translationText = $translationEntity->getDefaultVariation();
 					} else {
 						$plural = $variation[self::VARIATION_PLURAL];

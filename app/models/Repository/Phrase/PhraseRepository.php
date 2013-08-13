@@ -148,7 +148,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 			->innerJoin('p.type', 'ttt')
 			->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
 			->andWhere('ttt.translateTo = :supported')
-			->setParameter('language', $language->id)
+			->setParameter('language', $language->getId())
 			->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED);
 
 		return $qb;

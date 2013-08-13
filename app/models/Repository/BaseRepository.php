@@ -64,6 +64,11 @@ class BaseRepository extends EntityRepository {
 		$this->_em->remove($entity);
 	}
 
+
+	/**
+	 * remove + flush
+	 * @param $entity
+	 */
 	public function delete($entity) {
 		$this->remove($entity);
 		$this->flush();
@@ -113,6 +118,17 @@ class BaseRepository extends EntityRepository {
 		$qb->where($qb->expr()->in('e.id', $ids));
 
 		return $qb->getQuery()->getResult();
+	}
+
+	public function findPairsByIso(array $iso)
+	{
+		$qb = $this->createQueryBuilder();
+		$qb->where($qb->expr()->in('e.iso', $iso));
+
+		$result = $qb->getQuery()->getResult();
+		$result = \Tools::arrayMap($result, function($key, $value) {return $value->getIso();}, NULL);
+
+		return $result;
 	}
 
 	public function fetchPairs($key, $value = NULL) {

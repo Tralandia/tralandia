@@ -93,7 +93,10 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
 
-		$this->template->pageH1 = $this->pageSeo->getH1();
+		if(!isset($this->template->pageH1)) {
+			$this->template->pageH1 = $this->pageSeo->getH1();
+		}
+
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
@@ -121,7 +124,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$image = $this->template->rental->getMainImage();
 			$this->template->og['image'] = $this->rentalImagePipe->request($image);
 		} else {
-			$this->template->og['image'] = 'http://www.sk.tra.com/images/logo.png'; //@todo
+			$this->template->og['image'] = 'http://www.tralandiastatic.com/images/logo.png'; //@todo
 		}
 		$this->template->og['site_name'] = 'Tralandia';
 
