@@ -89,7 +89,7 @@
 
 											{foreach $amenities as $amenity}
 
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+												{_$amenity->name|firstUpper}{if !$iterator->last}, {/if}
 
 											{/foreach}
 										{/foreach}
