@@ -14,11 +14,13 @@
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
 				<li><a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+
+
 					<ul n:ifset="$rental">
 
 						<li class="info"><i class="icon icon-angle-right"></i>Status: LIVE</li>
 						<li class="info"><i class="icon icon-angle-right"></i>Rank: 82%</li>
-											
+
 						<li><a class="scrollTo" data-scroll-to="#rentalContactInformation" href="#"><i class="icon icon-angle-right"></i>{_o960}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalNameSlogan" href="#"><i class="icon icon-angle-right"></i>{_o100137}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalBasicInformation" href="#"><i class="icon icon-angle-right"></i>{_o100085}</a></li>
@@ -28,7 +30,7 @@
 						<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" href="#"><i class="icon icon-angle-right"></i>{_o100166}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalAmenities" href="#"><i class="icon icon-angle-right"></i>{_573}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalInterview" href="#"><i class="icon icon-angle-right"></i>{_1125}</a></li>
-						
+
 
 					</ul>
 				</li>
