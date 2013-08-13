@@ -90,7 +90,9 @@ class BanListManager
 	{
 		$bannedEmail = $this->findBannedEmail($email);
 
-		$this->bannedEmailRepository->delete($bannedEmail);
+		if($bannedEmail) {
+			$this->bannedEmailRepository->delete($bannedEmail);
+		}
 	}
 
 
@@ -135,7 +137,9 @@ class BanListManager
 	{
 		$bannedPhone = $this->findBannedPhone($phone);
 
-		$this->bannedPhoneRepository->delete($bannedPhone);
+		if($bannedPhone) {
+			$this->bannedPhoneRepository->delete($bannedPhone);
+		}
 	}
 
 
