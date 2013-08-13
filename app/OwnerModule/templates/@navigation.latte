@@ -14,6 +14,8 @@
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
 				<li><a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+
+										
 					<ul n:ifset="$rental">
 
 						<li class="info"><i class="icon icon-angle-right"></i>Status: LIVE</li>
@@ -37,6 +39,7 @@
 			{ifset $firstRental}
 			{* <li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100153}</a></li> *}
 			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100184} <span class="counter">{$reservationsCount}</span></a></li>
+			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_151834}</a></li>
 			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_o100154}</a></li>
 			{/ifset}
 		</ul>
