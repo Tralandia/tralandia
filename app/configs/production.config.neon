@@ -25,7 +25,6 @@ parameters:
 
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
-
 	webTempDir: /webtemp
 	webTempPath: /webtemp
 
