@@ -1165,11 +1165,21 @@ function createNewLineInPriceList(){
 
 $(function(){
 
-
-
 	$('.rentalPriceUpload').rentalPriceUpload();
 	$('form').invalidScroll();
 
+	$('.rentalRemoveLink').click(function(){
+		var alertText = {
+			first: $(this).data('alertFirst'),
+			last: $(this).data('alertLast'),
+		};
 
+		if(confirm(alertText.first)){
+			if(confirm(alertText.last)) {
+				return true;
+			}
+		}
 
+		return false;
+	});
 });
