@@ -7,9 +7,13 @@
 			<td colspan="3">{_o100189}</td>
 		</tr> *}
 
+		<tr>
+			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> <a data-alert-first="#First alert text" data-alert-last="#last alert text" href="google" class="btn btn-mini btn-danger pull-right rentalRemoveLink">#Remove link</a></td>
+		</tr>
+
 		{var $rentalContainer = $form['rental']}
 
-		{include #fieldset, text => 'o960' , id => 'rentalContactInformation'}
+		{* {include #fieldset, text => 'o960' , id => 'rentalContactInformation'} *}
 		{* {include #text, control => $form['name']} *}
 		{include #text, control => $rentalContainer['contactName']}
 		{include #phone, control => $rentalContainer['phone']}
@@ -18,7 +22,9 @@
 
 		<tr>
 			<td colspan="2" id="rentalNameSlogan" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-right selectLanguage notFulltext'}</td>
-		</tr>
+		</tr>		
+
+
 
 
 
