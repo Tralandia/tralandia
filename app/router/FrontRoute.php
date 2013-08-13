@@ -5,6 +5,7 @@ namespace Routers;
 use Doctrine\ORM\EntityManager;
 use Entity\BaseEntity;
 use Entity\Page;
+use Extras\Models\Service\Exception;
 use Nette;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
@@ -272,6 +273,9 @@ class FrontRoute extends BaseRoute
 		if(!$url) {
 			return NULL;
 		} else {
+			if($url == 'http://sk.tralandia.com/.hr/') {
+				\Nette\Diagnostics\Debugger::log(new Exception('tu'));
+			}
 			return $url;
 		}
 	}
