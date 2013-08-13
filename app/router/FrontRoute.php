@@ -273,7 +273,7 @@ class FrontRoute extends BaseRoute
 		if(!$url) {
 			return NULL;
 		} else {
-			if('http://sk.tralandia.com/.hr/') {
+			if($url == 'http://sk.tralandia.com/.hr/') {
 				\Nette\Diagnostics\Debugger::log(new Exception('tu'));
 			}
 			return $url;
