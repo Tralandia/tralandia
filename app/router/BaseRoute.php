@@ -190,6 +190,12 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		return $params;
 	}
 
+
+	/**
+	 * @param $host
+	 *
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]|null
+	 */
 	private function getPrimaryLocationFromHost($host)
 	{
 		/** @var $domain \Entity\Domain */
