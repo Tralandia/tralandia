@@ -62,7 +62,7 @@ class RentalPresenter extends BasePresenter {
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
 			$answerText = $answer->getAnswer()->getTranslation($this->language);
-			if($answerText && strlen(trim($answerText))) {
+			if($answerText && strlen(trim($answerText->getTranslation()))) {
 				$interviewAnswers[] = $answer;
 			}
 		}
@@ -80,7 +80,7 @@ class RentalPresenter extends BasePresenter {
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer) {
-			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswer->getAnswer()->getTranslation($this->language), 200);
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswer->getAnswer()->getTranslation($this->language)->getTranslation(), 200);
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
