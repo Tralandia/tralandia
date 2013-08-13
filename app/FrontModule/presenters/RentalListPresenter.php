@@ -109,6 +109,7 @@ class RentalListPresenter extends BasePresenter {
 		$this->template->rentals = $rentals;
 		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();
+		$this->template->pageH1 = $this->translate('1219');
 	}
 
 
