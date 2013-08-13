@@ -93,10 +93,10 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
 
-		if(!$this->template->pageH1) {
+		if(!isset($this->template->pageH1)) {
 			$this->template->pageH1 = $this->pageSeo->getH1();
 		}
-		
+
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
