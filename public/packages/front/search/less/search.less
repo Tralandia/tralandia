@@ -466,6 +466,8 @@
 					left: 30px;
 				}
 
+				font-size: 11px;
+
 				a {
 					padding: 2.5px 10px 2.5px 25px;
 				}
@@ -520,6 +522,10 @@
 					}					
 				}
 
+				&.current {
+					font-weight: bold;
+				}
+
 
 
 				i {
@@ -554,11 +560,18 @@
 			}
 
 			&.info {
-				color: #888;
+				color: #555;
 				padding-left: 24px;
 				i {
 					width: 9px;
 					color: @brown;
+				}
+
+				strong {
+					color: #555;
+					display: inline;
+					font-size: 11px;
+					font-weight: bold;
 				}
 			}
 			
