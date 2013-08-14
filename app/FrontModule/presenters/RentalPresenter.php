@@ -79,8 +79,8 @@ class RentalPresenter extends BasePresenter {
 		$this->template->teaser = $rental->getTeaser()->getTranslation($this->language);
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
-		if ($firstAnswer) {
-			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswer->getAnswer()->getTranslation($this->language)->getTranslation(), 200);
+		if ($firstAnswer && $firstAnswerTranslation = $firstAnswer->getAnswer()->getTranslation($this->language)) {
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($firstAnswerTranslation->getTranslation(), 200);
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
