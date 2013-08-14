@@ -132,19 +132,15 @@ class PhraseContainer extends BaseContainer
 		if($editableLanguages instanceof Language) {
 			$editableLanguages = [$editableLanguages];
 		}
-		if(is_array($editableLanguages)) {
-			$translations = [];
-			foreach($editableLanguages as $language) {
-				$translations[] = $phrase->getTranslation($language);
-			}
- 		} else {
-			$translations = $phrase->getTranslations();
-		}
 
 		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
 
 		/** @var $language \Entity\Language */
 		foreach($languages as $language) {
+			if(is_array($editableLanguages) && !in_array($language, $editableLanguages)) {
+				continue;
+			}
+
 			$translation = $phrase->getTranslation($language);
 			if(!$translation) {
 				$translation = $phrase->createTranslation($language);
@@ -233,7 +229,7 @@ class PhraseContainer extends BaseContainer
 		$result = $this->phraseManager->updateTranslations($phrase, $translationsVariations);
 
 		$values['changedTranslations'] = $result['changedTranslations'];
-		$values['displayedTranslations'] = $result['changedTranslations'];
+		$values['displayedTranslations'] = $result['displayedTranslations'];
 
 		$values['phrase'] = $phrase;
 
