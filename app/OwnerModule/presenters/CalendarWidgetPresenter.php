@@ -25,7 +25,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 		$this->template->environment = $this->environment;
 		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
 		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
-			$this->translator, 
+			$this->translator,
 			$this->collator
 		);
 
@@ -39,6 +39,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 	public function actionGenerateCode($id, $wLanguage, $columns, $rows)
 	{
 		$language = $this->languageRepositoryAccessor->get()->find($wLanguage);
+		$rental = $this->findRental($id);
 		if(!$language) {
 			throw new BadRequestException;
 		}
@@ -53,7 +54,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
-			['language' => $language, 'id' => $id, 'months' => $months]
+			['language' => $language, 'rental' => $rental, 'months' => $months]
 		);
 
 		$code = Html::el('iframe')
