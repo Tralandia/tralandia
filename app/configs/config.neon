@@ -37,7 +37,7 @@ parameters:
 	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%%domain%%"
 #	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
-	googleAnalytics: 
+	googleAnalytics:
 		code: false
 
 	projectEmail: 'info@tralandia.com'

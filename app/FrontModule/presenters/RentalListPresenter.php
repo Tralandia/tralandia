@@ -50,6 +50,7 @@ class RentalListPresenter extends BasePresenter {
 			}
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
+			$this->template->pageH1 = $this->translate('1219');
 		} else if ($getDataForBreadcrumb) {
 			$this->getDataForBreadcrumb();
 		} else {
@@ -109,7 +110,6 @@ class RentalListPresenter extends BasePresenter {
 		$this->template->rentals = $rentals;
 		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();
-		$this->template->pageH1 = $this->translate('1219');
 	}
 
 
