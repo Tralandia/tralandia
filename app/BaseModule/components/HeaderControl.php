@@ -116,6 +116,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template->facebookPage = $shareLinks->facebookPage;
 		$template->googlePlusProfile = $shareLinks->googlePlusProfile;
+		$template->twitterProfile = $shareLinks->twitterProfile;
 
 		$template->getLogoutLink = $this->getLogoutLink;
 
