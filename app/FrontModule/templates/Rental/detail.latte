@@ -373,7 +373,7 @@
 									</ul>
 
 									{if count($rental->getSortedImages()) > 10}
-										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos toggleHide"><span>{_152659}</span> </a>									
+										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos onClickThisHide toggleHide"><span>{_152659}</span> </a>									
 									{/if}
 
 								<div class="clearfix"></div>
@@ -406,7 +406,7 @@
 							<div id="objectDetailMap" data-rental-id="{$rental->id}" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
-{* 							<div class="rentalInfoBox">
+							<div class="rentalInfoBox">
 								<div class="smallGallery">
 									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
 								</div>
@@ -448,7 +448,7 @@
 								<li><img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
 									<a class="rentalName">2.5 km</a>
 								</li>
-							</ul> *}
+							</ul>
 						</div>
 
 
