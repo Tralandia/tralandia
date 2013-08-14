@@ -38,7 +38,10 @@ class PhraseManager {
 
 	public function updateTranslations(Phrase $phrase, array $translationsVariations)
 	{
-		$return = [];
+		$return = [
+			'changedTranslations' => [],
+			'displayedTranslations' => []
+		];
 		$languages = $this->languageRepository->findPairsByIso(array_keys($translationsVariations));
 		foreach($translationsVariations as $languageIso => $variations) {
 
