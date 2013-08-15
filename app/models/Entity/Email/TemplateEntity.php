@@ -40,24 +40,31 @@ class Template extends \Entity\BaseEntity {
 	protected $body;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Layout")
+	 */
+	protected $layout;
+
+
+	/**
 	 * @param string
-	 * @return \Entity\Rental\Rental
+	 * @return \Entity\Email\Template
 	 */
 	public function setSlug($slug)
 	{
 		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
 		return $this;
-	}		
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @return \Entity\Email\Template
 	 */
@@ -67,7 +74,7 @@ class Template extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -75,7 +82,7 @@ class Template extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Email\Template
@@ -86,7 +93,7 @@ class Template extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Email\Template
 	 */
@@ -96,7 +103,7 @@ class Template extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -104,7 +111,7 @@ class Template extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Email\Template
@@ -115,7 +122,7 @@ class Template extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -123,7 +130,7 @@ class Template extends \Entity\BaseEntity {
 	{
 		return $this->subject;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Email\Template
@@ -134,7 +141,7 @@ class Template extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -142,4 +149,26 @@ class Template extends \Entity\BaseEntity {
 	{
 		return $this->body;
 	}
+
+
+	/**
+	 * @param \Entity\Email\Layout
+	 * @return \Entity\Email\Template
+	 */
+	public function setLayout(\Entity\Email\Layout $layout)
+	{
+		$this->layout = $layout;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Email\Layout|NULL
+	 */
+	public function getLayout()
+	{
+		return $this->type;
+	}
+
+
 }
