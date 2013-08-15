@@ -71,7 +71,11 @@ class BaseTest extends \Tests\TestCase
 
 		$body = $emailCompiler->compileBody();
 
-		$expected = '';
+		$expected = "
+<p>layout Ahoj<br />
+Toto je preklad</p>
+
+<!-- by Texy2! -->";
 		$this->assertEquals($expected, $body);
 	}
 
