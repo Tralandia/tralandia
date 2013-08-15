@@ -24,8 +24,9 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	 * @var \Entity\Language
 	 */
 	protected $languageRepository;
+
 	/**
-	 * @var \Entity\Location\Location
+	 * @var \Repository\Location\LocationRepository
 	 */
 	protected $locationRepository;
 
