@@ -1,6 +1,8 @@
-{if $rental}
+
+{var $currentRental = null}
+{ifset $rental}
 	{var $currentRental = $rental}
-{/if}
+{/ifset}
 <div class="span3" id="sidebar">
 	<aside class="noSearchBar fixTop innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 		{* <div class="loggedUser">
@@ -16,7 +18,7 @@
 				<li><a class="current" n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
 
 										
-					<ul n:ifset="$rental">
+					<ul n:if="$currentRental">
 						<li class="info"><i class="icon icon-angle-right"></i>{_152732} <strong>{if $rental->isLive()}{_152730}{else}{_152731}{/if}</strong></li>
 						<li class="info"><i class="icon icon-angle-right"></i>{_152733} <strong>{$rental->getRank()}%</strong></li>
 											
