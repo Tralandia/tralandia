@@ -210,6 +210,8 @@ parameters:
 					- front/_base/js/reservationForm.js
 					# root home
 					- front/home/js/rootHome.js
+					# 
+					- front/_base/js/formChangeNotifi.js
 
 
 			historyPlugin:
