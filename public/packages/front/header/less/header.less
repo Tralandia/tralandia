@@ -401,8 +401,25 @@
 			&.socialSite {
 				border-top: 1px solid #C7C7C7;
 				padding-top: 4px;
+				height: 26px;
+				overflow: hidden;
+				
+				span.text {
+					display: block;
+					clear: none;
+					font-size: 12px;
+					float: left;
+					font-weight: normal;
+					color: #888;
+					width: 100px;
+					padding: 4px 10px 0 10px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;		
+				}
+
 				a {
-					padding: 3px 28px;
+					padding: 3px 10px;
 					float: left;
 					clear: none;
 					font-size: 12px;
@@ -430,6 +447,13 @@
 						i {
 							color: #d95232;
 						}
+					}
+
+					span {
+						display: inline;
+						clear: none;
+						color: inherit;
+						font-weight: normal;
 					}
 				}
 			}
