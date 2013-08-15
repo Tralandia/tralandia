@@ -52,10 +52,16 @@
 								<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
 							</li>
 						{/if}
-						<li class="headerIcon last">
+						<li class="headerIcon">
 							<a href="{$getLogoutLink()}" >{_o1594}</a>
 						</li>
-
+						<li>
+							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
+									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
+								</a>
+							</div>
+						</li>
 					{else}
 
 						<li class="headerIcon">
@@ -63,11 +69,6 @@
 								{_1226}
 							</a>
 						</li>
-
-
-
-
-
 
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
@@ -146,18 +147,24 @@
 
 	<div class="socialIcons socialPluginsInit" id="socialIcons">
 		<i class="icon-facebook"></i>
-		<i class="icon-google-plus"></i>
 		<i class="icon-twitter"></i>
+		<i class="icon-google-plus"></i>		
 		<i class="icon-pinterest"></i>
 
 		<ul class="dropdown-menu" id="socialIconsMenu">
 			<li class="socialIconCover">
 				<ul class="social-buttons">
-					<li>{$twitterShareTag}</li>
-					<li>{$googlePlusShareTag}</li>
 					<li>{$facebookShareTag}</li>
+					<li>{$twitterShareTag}</li>
+					<li>{$googlePlusShareTag}</li>					
 					<li>{$pinterestShareTag}</li>
 				</ul>
+			</li>
+			<li class="socialSite">
+				<span class="text">{_152825}</span>
+				<a class="facebook linkToSocialSite" tagret="_blank" href="{$facebookPage}"><i class="icon-facebook"></i><span>Facebook</span></a>
+				<a class="twitter linkToSocialSite" tagret="_blank" href="{$twitterProfile}"><i class="icon-twitter"></i><span>Twitter</span></a>
+				<a class="googlePlus linkToSocialSite" tagret="_blank" href="{$googlePlusProfile}"><i class="icon-google-plus"></i><span>Google Plus</span></a>
 			</li>
 			{* <li class="loader"><i class="icon-spinner icon-spin"></i></li> *}
 		</ul>
