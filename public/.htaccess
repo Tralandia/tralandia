@@ -8,7 +8,7 @@ Deny from 178.77.126.55
 Deny from 83.233.207.74
 Deny from 185.10.104
 Deny from 46.161.41.32
-#Deny from 5.226.102.18
+Deny from 125.77.135.1
 #Deny from 151.236.42.200
 
 
@@ -197,6 +197,10 @@ Deny from 46.161.41.32
 #  RewriteCond %{HTTP_USER_AGENT} Googlebot [OR]
 #  RewriteCond %{HTTP_USER_AGENT} googlebot
 #  RewriteRule ^.*$ - [F,L]
+
+
+  RewriteCond %{QUERY_STRING} switchSearchCountry
+  RewriteRule .* /? [R=301,L]
 
 
   RewriteCond %{HTTP_HOST} .*tralandia.hr
