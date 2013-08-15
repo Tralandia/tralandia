@@ -31,7 +31,7 @@ class FavoriteListEmailListener extends BaseEmailListener
 	public function prepareCompiler($favoriteList, $receiver)
 	{
 
-		$emailCompiler = $this->getCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
+		$emailCompiler = $this->createCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('reservation-form'));
 
 		return $emailCompiler;
