@@ -122,7 +122,7 @@ class LocationRepository extends \Repository\BaseRepository {
 	{
 		$qb = $this->createQueryBuilder();
 
-		$qb->join('e.type', 't')
+		$qb->innerJoin('e.type', 't')
 			->where($qb->expr()->eq('t.slug', ':type'))
 			->setParameter('type', $type);
 
