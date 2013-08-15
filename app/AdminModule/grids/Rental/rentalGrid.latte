@@ -27,7 +27,7 @@
 	<div class="btn-group">
 		<button class="btn btn-mini dropdown-toggle btn-inverse" data-toggle="dropdown">Actions <span class="caret"></span></button>
 		<ul class="dropdown-menu">
-			<li><a href="{plink :Owner:Rental:edit $primary}" target="_blank">Edit</a></li>
+			<li><a href="{$row['editLink']}" target="_blank">Edit</a></li>
 			<li><a href="{plink :Front:Rental:detail $row['entity']}" target="_blank" >View on FE</a></li>
 			{*<li><a href="{plink fakeLogin $row->getOwner()->getId()}" >Login as User</a></li>*}
 			<li class="divider"></li>
