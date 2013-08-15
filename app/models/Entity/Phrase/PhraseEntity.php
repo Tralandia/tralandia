@@ -88,6 +88,12 @@ class Phrase extends \Entity\BaseEntityDetails {
 			$translation->setTranslation($translationText);
 		}
 
+		if($centralTranslation = $this->getCentralTranslation()) {
+			if($centralTranslation->getStatus() >= Translation::WAITING_FOR_PAYMENT) {
+				$translation->setStatus(Translation::WAITING_FOR_TRANSLATION);
+			}
+		}
+
 		return $translation;
 	}
 
