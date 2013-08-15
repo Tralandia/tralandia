@@ -652,7 +652,7 @@ $(function(){
 
 	// save sortable values
 	$.galleryControl.saveSortableValues = function($input,$elem){
-		$input.val($.galleryControl.sortableArray($elem));
+		$input.val($.galleryControl.sortableArray($elem)).trigger('change');
 	}
 
 
@@ -700,7 +700,6 @@ $(function(){
 			// remove image function
 			$removeLinkElement.live('click',function(){
 
-				console.log('remove');
 
 				var $el = $(this);
 
