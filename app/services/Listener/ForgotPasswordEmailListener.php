@@ -33,9 +33,8 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 
 	private function prepareCompiler(\Entity\User\User $user)
 	{
-		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
+		$emailCompiler = $this->createCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('forgotten-password'));
-		$emailCompiler->setLayout($this->getLayout());
 
 		$emailCompiler->addOwner('owner', $user);
 

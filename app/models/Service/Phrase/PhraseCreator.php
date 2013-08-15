@@ -38,12 +38,15 @@ class PhraseCreator extends Nette\Object
 		$this->languageRepository = $languageRepository;
 	}
 
+
 	/**
-	 * @param $phraseType
+	 * $phraseType example \Entity\Rental\Amenity:name
+	 * @param $phraseType \Entity\Phrase\Type|string
+	 * @param null $sourceTranslation
 	 *
 	 * @return \Entity\Phrase\Phrase
 	 */
-	public function create($phraseType)
+	public function create($phraseType, $sourceTranslation = NULL)
 	{
 		$phraseType = $this->findPhraseType($phraseType);
 
@@ -51,12 +54,15 @@ class PhraseCreator extends Nette\Object
 		$phrase = $this->phraseRepository->createNew();
 		$phrase->setType($phraseType);
 
+
 		$en = $this->languageRepository->find(CENTRAL_LANGUAGE);
 		$phrase->setSourceLanguage($en);
+		$phrase->createTranslation($en, $sourceTranslation);
 
 		if($phraseType->getTranslateTo() == \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED) {
 			$supportedLanguages = $this->languageRepository->findSupported();
 			foreach($supportedLanguages as $language) {
+				if($language->getId() == $en->getId()) continue;
 				$phrase->createTranslation($language);
 			}
 		}

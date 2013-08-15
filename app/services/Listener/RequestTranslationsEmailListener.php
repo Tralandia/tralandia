@@ -36,9 +36,8 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 	private function prepareCompiler(Language $language, $wordsCount)
 	{
 		$user = $language->getTranslator();
-		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
+		$emailCompiler = $this->createCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('dictionary-request-translations'));
-		$emailCompiler->setLayout($this->getLayout());
 
 		$deadline = (new Nette\DateTime())->modify('+2 days')->format('Y-m-d');
 		$emailCompiler->addTranslator('translator', $user);
