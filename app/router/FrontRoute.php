@@ -148,6 +148,17 @@ class FrontRoute extends BaseRoute
 				$params['action'] = 'default';
 			}
 
+			if(count($pathSegments) && $params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
+				$countrySlug = $pathSegments[0];
+				$qb = $this->locationRepository->findByTypeQb('country');
+				$qb->andWhere($qb->expr()->eq('e.slug', ':slug'))->setParameter('slug', $countrySlug);
+				$country = $qb->getQuery()->getOneOrNullResult();
+				if($country) {
+					array_shift($pathSegments);
+					$params[self::PRIMARY_LOCATION] = $country;
+				}
+			}
+
 			unset($params[self::USE_ROOT_DOMAIN]);
 
 			if(count($pathSegments) == 1) {
