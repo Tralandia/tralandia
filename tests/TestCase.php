@@ -23,6 +23,8 @@ use Nette\Application\UI;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
+	use \TFindEntityHelper;
+
 	/**
 	 * @var \SystemContainer|\Nette\DI\Container
 	 */
@@ -46,6 +48,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 		$this->context = Nette\Environment::getContext();
 		$this->em = $this->context->getByType('\Doctrine\ORM\EntityManager');
 		$this->mockista = new \Mockista\Registry();
+		$this->initializeFindEntityHelper($this->getEm());
 
 		parent::__construct($name, $data, $dataName);
 	}
@@ -164,35 +167,22 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function findLocation($id)
-	{
-		if(!is_numeric($id)) {
-			return $this->getEm()->getRepository(LOCATION_ENTITY)->findOneByIso($id);
-		} else {
-			return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
-		}
-	}
+	/* ------------- HELPERS ---------------- */
 
-	public function findLanguage($id)
+	/**
+	 * @param $type
+	 * @param null $sourceTranslation
+	 *
+	 * @return \Entity\Phrase\Phrase
+	 */
+	public function createPhrase($type, $sourceTranslation = NULL)
 	{
-		return $this->getEm()->getRepository(LANGUAGE_ENTITY)->find($id);
-	}
+		/** @var $phraseCreator \Service\Phrase\PhraseCreator */
+		$phraseCreator = $this->getContext()->getByType('\Service\Phrase\PhraseCreator');
+		$phrase = $phraseCreator->create($type, $sourceTranslation);
 
-	public function findPage($id)
-	{
-		return $this->getEm()->getRepository(PAGE_ENTITY)->find($id);
+		return $phrase;
 	}
-
-	public function findRental($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_ENTITY)->find($id);
-	}
-
-	public function findRentalType($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_TYPE_ENTITY)->find($id);
-	}
-
 
 
 }
