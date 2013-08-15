@@ -326,9 +326,13 @@ function _updatePriceTo(){
 	}
 
 	$priceTo.find('option').each(function(k,v){
+
 		$(this).attr('disabled',false);
-		if($(this).val() <= priceFromValue){
+
+		if(parseInt($(this).val()) <= parseInt(priceFromValue)){
 			$(this).attr('disabled',true);
+			
+			// console.log('pricefrom'+priceFromValue);
 		}
 	});
 	
