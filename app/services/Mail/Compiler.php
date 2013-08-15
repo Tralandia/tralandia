@@ -41,11 +41,6 @@ class Compiler {
 	protected $template;
 
 	/**
-	 * @var \Entity\Email\Layout
-	 */
-	protected $layout;
-
-	/**
 	 * @var array
 	 */
 	protected $variablesFactories = array();
@@ -99,27 +94,6 @@ class Compiler {
 		}
 
 		return $this->template;
-	}
-
-	/**
-	 * @param \Entity\Email\Layout $layout
-	 */
-	public function setLayout(Email\Layout $layout)
-	{
-		$this->layout = $layout;
-	}
-
-	/**
-	 * @return \Entity\Email\Layout
-	 * @throws \Nette\InvalidArgumentException
-	 */
-	public function getLayout()
-	{
-		if(!$this->layout) {
-			throw new \Nette\InvalidArgumentException('Layout este nebol nastaveny');
-		}
-
-		return $this->layout;
 	}
 
 	/**
@@ -321,18 +295,17 @@ class Compiler {
 	public function compileBody()
 	{
 		$template = $this->getTemplate();
-		$layout = $this->getLayout();
+		$layout = $template->getLayout();
 
-		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
-		$environmentVariables = $this->getEnvironment();
-		$html = $template->getBody()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
+		$bodyHtml = $this->environment->getTranslator()->translate($template->getBody());
+
+		$html = str_replace('{include #content}', $bodyHtml, $layout->getHtml());
 
 		$variables = $this->findAllVariables($html);
 		$html = $this->replaceVariables($html, $variables);
 
 		$html = $this->texy->process($html);
 
-		$html = str_replace('{include #content}', $html, $layout->getHtml());
 
 		return $html;
 	}
@@ -340,11 +313,11 @@ class Compiler {
 	public function compileSubject()
 	{
 		$template = $this->getTemplate();
-		/** @var $environmentVariables \Mail\Variables\EnvironmentVariables */
-		$environmentVariables = $this->getEnvironment();
-		$subjectHtml = $template->getSubject()->getTranslationText($environmentVariables->getLanguageEntity(), TRUE);
-		$variables = $this->findAllVariables($subjectHtml);
-		$html = $this->replaceVariables($subjectHtml, $variables);
+
+		$html = $this->environment->getTranslator()->translate($template->getSubject());
+
+		$variables = $this->findAllVariables($html);
+		$html = $this->replaceVariables($html, $variables);
 
 		return $html;
 	}
@@ -356,7 +329,7 @@ class Compiler {
 	 */
 	protected function findAllVariables($html)
 	{
-		$match = Strings::matchAll($html, '~(?P<originalname>\[(?P<fullname>((?P<prefix>[a-zA-Z]+)_)?(?P<name>[a-zA-Z]+))\])~');
+		$match = Strings::matchAll($html, '~(?P<originalname>\[(?P<fullname>((?P<prefix>[a-zA-Z]+)_)?(?P<name>[a-zA-Z0-9]+))\])~');
 		$match = array_map('array_filter', $match);
 		return $match;
 	}
@@ -374,7 +347,9 @@ class Compiler {
 		foreach ($variables as $variable) {
 			if(array_key_exists($variable['fullname'], $replace)) continue;
 
-			if(array_key_exists('prefix', $variable)) {
+			if(is_numeric($variable['fullname'])) {
+				$val = $this->environment->getTranslator()->translate($variable['fullname']);
+			} else if (array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
 				if(Strings::contains($methodName, 'Link')) {
 					$val = $this->getVariable($variable['prefix'])->{$methodName}($environment);
