@@ -114,6 +114,9 @@
 					case 'other-small':
 						iconName  = base.options.iconSet.small.home;
 						break;
+					case 'other-mini':
+						iconName  = base.options.iconSet.mini.home;
+						break;						
 				}
 			}
 
@@ -127,33 +130,92 @@
 
 			$.each(base._returnRentalsTmp(lat,lng),function(k,v){
 
-				html += '<li data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
+				html += '<li data-id="'+v.id+'" data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
 
-				base._makeMarker(v.lat,v.lng,v.name);
+				var markerSize = 'other-mini';
+
+					if(v.isImportant){
+						markerSize = 'other-small';
+					}
+
+				base._makeMarker(v.lat,v.lng,v.name,markerSize,v.id);
 
 			});
 
 			$(base.options.otherRentaliListSelector).html(html);
 
-			$(base.options.otherRentaliListSelector+' li').live('click',function(){
-				console.log($(this).data('meta'));
+			$(base.options.otherRentaliListSelector+' li').live('click',base._listOtherClickListener);
+
+		};
+
+		base._listOtherClickListener = function(){
+			// console.log($(this).data('meta'));
+
+			var setting = $(this).data('meta');
+
+			// base.googleMap.panTo(new google.maps.LatLng(setting.lat,setting.lng));
+			// base._makeMarker(setting.lat,setting.lng,setting.name);
+
+			var $infobox = $('.rentalInfoBox');
+				$infobox.removeClass('hide');
+
+			var $infoboxMeta = {
+				thumb: $infobox.find('.smallGallery'),
+				title: $infobox.find('.rentalInfo h3 a'),
+				info1: $infobox.find('.rentalInfo span'),
+				info2: $infobox.find('.rentalInfo .amenities'),
+				close: $infobox.find('.remove'),
+			};
+
+			// close box function 
+			$infoboxMeta.close.click(function(){
+				$infobox.addClass('hide');
+			});
+
+			$infoboxMeta.thumb.html('<img src="'+setting.thumbnail+'">');
+			$infoboxMeta.title.html(setting.name).attr('href',setting.url);
+			$infoboxMeta.info1.html(setting.info1);
+			$infoboxMeta.info2.html(setting.info2);
+
+			base.markers[setting.id].setIcon(base._getMarkerIcon());
+
+			// set surrent class 
+			$(base.options.otherRentaliListSelector+' li').each(function(){
+				if($(this).data('id') != setting.id){
+					$(this).removeClass('current');
+				} else {
+					$(this).addClass('current');
+				}
 			});
 
 		};
 
-		base._makeMarker = function(lat,lng,title){
+		base._setCurrentList = function(){
+
+		};
+
+		// base._setCurrentMarker = function(){
+		// 	$.each(base.markers,function(){
+
+		// 	});
+		// };
+
+		base._makeMarker = function(lat,lng,title,size,markerId){
 
 			var markerOptions = {
 					map: base.googleMap, 
 					position: new google.maps.LatLng(lat, lng),
 					title: title,
+					icon: base._getMarkerIcon(size),
 				};
 			
 			var nm = new google.maps.Marker(markerOptions);
-			base.markers.push(nm);
+			// base.markers.push(nm);
+			base.markers[markerId]=nm;
 
-			console.log(lat);
-			console.log(lng);
+			google.maps.event.addListener(nm, 'click', function() { 
+				alert("I am marker " + nm.title);
+			});
 
 		};
 
@@ -161,7 +223,7 @@
 
 			var data = [];
 
-			var delta = 10000;
+			var delta = 100000000;
 			var dimensions = {
 				helpLat : lat.toString().split('.'),
 				helpLng : lng.toString().split('.'),
@@ -193,6 +255,7 @@
 					thumbnail: thubnails[i],
 					lat: dimensions.helpLat[0]+'.'+dimensions.helpLat[1],
 					lng: dimensions.helpLng[0]+'.'+dimensions.helpLng[1],
+					isImportant: Math.floor(Math.random() * (1 - 0 + 1) + 0)
 
 				};
 				
@@ -219,7 +282,10 @@
 			},
 			small: {
 				home: 'other-rental-small.png',
-			}
+			},
+			mini: {
+				home: 'other-rental-mini.png',
+			}			
 		},
 		otherRentaliListSelector: 'ul.relatedRentals',
 	};
