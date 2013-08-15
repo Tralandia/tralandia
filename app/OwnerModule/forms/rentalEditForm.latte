@@ -1,7 +1,7 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 <h1>{_$rental->name}</h1>
 <p>{_1371}</p>
-{form rentalEditForm, class => "traform dashboard"}
+{form rentalEditForm, class => "traform dashboard leaveChangeControl" , data-leave-confirm-message => "#toto ej zloba v js"}
 	<table class="formTable innerPadding">
 {* 		<tr class="formHeading	">
 			<td colspan="3">{_o100189}</td>
