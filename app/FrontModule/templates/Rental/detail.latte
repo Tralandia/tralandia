@@ -237,12 +237,10 @@
 												{if $iterator->first}
 												<div class="content">
 													<strong>{_$amenity->type->name|firstUpper}:</strong>
-														{_$amenity->name}{if !$iterator->last}, {/if}
+														{_$amenity->name|lower}{if !$iterator->last}, {/if}
 													{else}
-														{_$amenity->name}{if !$iterator->last}, {/if}
+														{_$amenity->name|lower}{if !$iterator->last}, {/if}
 												{/if}
-
-
 
 											{/foreach}
 											</div>
