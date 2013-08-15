@@ -20,6 +20,11 @@ class ReservationVariables extends Nette\Object {
 		$this->reservation = $reservation;
 	}
 
+	public function getVariableDetails()
+	{
+		return '#DETAIL#';
+	}
+
 	public function getVariableSenderName() {
 		return $this->reservation->getSenderName();
 	}
