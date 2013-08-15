@@ -1,4 +1,3 @@
-
 {var $currentRental = null}
 {ifset $rental}
 	{var $currentRental = $rental}
@@ -15,8 +14,14 @@
 
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
-				<li><a class="current" n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
 
+				<li>
+
+					 {if $currentRental}
+					 	<a class="current" href="#"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+					 {else}
+					 	<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+					 {/if}
 										
 					<ul n:if="$currentRental">
 						<li class="info"><i class="icon icon-angle-right"></i>{_152732} <strong>{if $rental->isLive()}{_152730}{else}{_152731}{/if}</strong></li>
