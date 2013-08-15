@@ -298,13 +298,13 @@ class Compiler {
 		$layout = $template->getLayout();
 
 		$bodyHtml = $this->environment->getTranslator()->translate($template->getBody());
+		$bodyHtml = $this->texy->process($bodyHtml);
 
 		$html = str_replace('{include #content}', $bodyHtml, $layout->getHtml());
 
 		$variables = $this->findAllVariables($html);
 		$html = $this->replaceVariables($html, $variables);
 
-		$html = $this->texy->process($html);
 
 
 		return $html;
