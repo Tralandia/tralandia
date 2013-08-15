@@ -16,6 +16,12 @@ class TempScriptPresenter extends BasePresenter {
 	protected $variationUpdater;
 
 
+	/**
+	 * @autowire
+	 * @var \Robot\CreateMissingTranslationsRobot
+	 */
+	protected $createMissingTranslationsRobot;
+
 	public function actionCreateMissingTranslationsForLocations()
 	{
 
@@ -227,6 +233,16 @@ class TempScriptPresenter extends BasePresenter {
 
 			$this->em->flush($row);
 		}
+	}
+
+
+	public function actionCreateMissingTranslations()
+	{
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
+		foreach($languages as $language) {
+			$this->createMissingTranslationsRobot->runFor($language);
+		}
+		$this->sendPayload();
 	}
 
 }
