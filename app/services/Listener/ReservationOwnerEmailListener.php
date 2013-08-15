@@ -38,7 +38,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 		$primaryLocation = $reservation->getRental()->getAddress()->getPrimaryLocation();
 
 		$emailCompiler = $this->createCompiler($primaryLocation, $receiver->getLanguage());
-		$emailCompiler->setTemplate($this->getTemplate('reservation-form'));
+		$emailCompiler->setTemplate($this->getTemplate('v2-reservation-form'));
 		$emailCompiler->addRental('rental', $reservation->getRental());
 		$emailCompiler->addReservation('reservation', $reservation);
 

@@ -167,7 +167,7 @@ class Template extends \Entity\BaseEntity {
 	 */
 	public function getLayout()
 	{
-		return $this->type;
+		return $this->layout;
 	}
 
 
