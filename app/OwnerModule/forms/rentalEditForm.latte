@@ -1,11 +1,11 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 <h1>{_$rental->name}</h1>
 <p>{_1371}</p>
-{form rentalEditForm, class => "traform dashboard leaveChangeControl" , data-leave-confirm-message => "#toto ej zloba v js"}
+{form rentalEditForm, class => "traform dashboard leaveChangeControl" , data-leave-confirm-message => $onChangeConfirm}
 	<table class="formTable innerPadding">
 {* 		<tr class="formHeading	">
 			<td colspan="3">{_o100189}</td>
-		</tr> *}
+		</tr> *}				
 
 		<tr>
 			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> <a data-alert-first="#First alert text" data-alert-last="#last alert text" href="google" class="btn btn-mini btn-danger pull-right rentalRemoveLink">#Remove link</a></td>
