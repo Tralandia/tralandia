@@ -159,6 +159,7 @@ doctrine:
 	entityManagers:
 		default:
 			connection: default
+			proxyAutogenerate: FALSE
 
 	console:
 		entityManager: default
