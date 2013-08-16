@@ -50,15 +50,20 @@ class FulltextSearch {
 		$qb = $this->translationRepository->createQueryBuilder();
 
 		$phraseIsJoined = false;
+		$joinLanguages = false;
 
-		$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 		if(is_numeric($string)) {
 			$searchInUserContent = TRUE; // lebo hlada podla ID-cka
 			$qb->leftJoin('e.phrase', 'p');
 			$phraseIsJoined = true;
 			$qb->andWhere($qb->expr()->eq('p.id', ':string'))->setParameter('string', $string);
+			$joinLanguages = FALSE;
 		} else {
 			$qb->andWhere($qb->expr()->like('e.variations', ':string'))->setParameter('string', "%$string%");
+		}
+
+		if($joinLanguages) {
+			$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
 		}
 
 		if(!$searchInUserContent) {
