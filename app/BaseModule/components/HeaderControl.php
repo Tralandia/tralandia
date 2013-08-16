@@ -121,7 +121,14 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$backgroundImage = "http://www.tralandiastatic.com/header_banners/{$primaryLocation->getIso()}.jpg";
 
-		if(!file_get_contents($backgroundImage)) {
+		$ch = curl_init($backgroundImage);
+
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_exec($ch);
+		$returnedCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		// $returnedCode > 400 -> not found, $returnedCode = 200, found.
+		curl_close($ch);
+		if($returnedCode != 200) {
 			$backgroundImage = "http://www.tralandiastatic.com/header_banners/fi.jpg";
 		}
 
