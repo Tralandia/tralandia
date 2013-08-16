@@ -24,6 +24,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
@@ -48,12 +49,12 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 			//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\User\RentalToFriend
@@ -64,7 +65,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalToFriend
 	 */
@@ -74,7 +75,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -82,7 +83,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalToFriend
@@ -93,7 +94,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\RentalToFriend
 	 */
@@ -103,7 +104,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -111,7 +112,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalToFriend
@@ -122,7 +123,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -130,7 +131,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	{
 		return $this->senderEmail;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalToFriend
@@ -141,7 +142,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -149,7 +150,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	{
 		return $this->receiverEmail;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\RentalToFriend
@@ -160,7 +161,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
