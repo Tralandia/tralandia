@@ -9,18 +9,12 @@
 		base.$el.data("traxDetailMap", base);
 		
 		base.init = function(){
-			
-			
+						
 			base.options = $.extend({},$.traxDetailMap.defaultOptions, options);
-			
-
 
 			base.options.mapZoom = base.$el.data('zoom');
 
 			base._loadMap();
-
-
-			
 
 		};
 		
@@ -65,24 +59,24 @@
 
 		base._bindMapListener = function(){
 
-		  google.maps.event.addListener(base.googleMap, 'dragend', base._afterMapListener);
-		  google.maps.event.addListener(base.googleMap, 'zoom_changed', base._afterMapListener);
+			google.maps.event.addListener(base.googleMap, 'dragend', base._afterMapListener);
+			google.maps.event.addListener(base.googleMap, 'zoom_changed', base._afterMapListener);
 
 		};
 
 		base._afterMapListener = function(){
-		    var zoomLevel = base.googleMap.getZoom();
-		    var bounds = base.googleMap.getBounds();
-		    // @tmp
-		    var center = base.googleMap.getCenter();
+			var zoomLevel = base.googleMap.getZoom();
+			var bounds = base.googleMap.getBounds();
+			// @tmp
+			var center = base.googleMap.getCenter();
 		   
-		    // console.log(base.googleMap.getCenter());
+			// console.log(base.googleMap.getCenter());
 
-		    // console.log(zoomLevel);
-		    // console.log(bounds.getNorthEast());
-		    // console.log(bounds.getSouthWest());
+			// console.log(zoomLevel);
+			// console.log(bounds.getNorthEast());
+			// console.log(bounds.getSouthWest());
 
-		    // base._renderOtherRentals(center.mb,center.nb);
+			// base._renderOtherRentals(center.mb,center.nb);
 		};
 
 		base._getMarkerIcon = function(type){
@@ -149,7 +143,7 @@
 		};
 
 		base._listOtherClickListener = function(){
-			// console.log($(this).data('meta'));
+			console.log($(this).data('meta'));
 
 			var setting = $(this).data('meta');
 
@@ -190,16 +184,6 @@
 
 		};
 
-		base._setCurrentList = function(){
-
-		};
-
-		// base._setCurrentMarker = function(){
-		// 	$.each(base.markers,function(){
-
-		// 	});
-		// };
-
 		base._makeMarker = function(lat,lng,title,size,markerId){
 
 			var markerOptions = {
@@ -207,6 +191,7 @@
 					position: new google.maps.LatLng(lat, lng),
 					title: title,
 					icon: base._getMarkerIcon(size),
+					id:markerId,
 				};
 			
 			var nm = new google.maps.Marker(markerOptions);
@@ -214,7 +199,12 @@
 			base.markers[markerId]=nm;
 
 			google.maps.event.addListener(nm, 'click', function() { 
-				alert("I am marker " + nm.title);
+				console.log(nm.id);
+				if(base.googleMap.getZoom() < 12){
+					console.log('nic nerobim');
+				} else {
+					console.log('settujem');
+				}
 			});
 
 		};
@@ -248,7 +238,7 @@
 
 				var forPush = {
 					name: 'tralala '+i,
-					id: i,
+					id: i+Math.floor(Math.random() * (30000 - 0 + 1) + 0),
 					info1: 'Max '+Math.floor(Math.random() * (50 - 1 + 1) + 1)+' osob | '+Math.floor(Math.random() * (100 - 17 + 1) + 17)+' Eur osoba/noc',
 					info2: 'Studňa, zváračka, cukrová repa, zelovoc, cédéčka',
 					url: 'http://www.sk.tra.com/utulny-privat-kosar-v-tichom-prostredi-r21501',
