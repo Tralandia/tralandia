@@ -129,7 +129,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		// $returnedCode > 400 -> not found, $returnedCode = 200, found.
 		curl_close($ch);
 		if($returnedCode != 200) {
-			$backgroundImage = "http://www.tralandiastatic.com/header_banners/fi.jpg";
+			$backgroundImage = "http://www.tralandiastatic.com/header_banners/al.jpg";
 		}
 
 		$template->backgroundImage = $backgroundImage;
