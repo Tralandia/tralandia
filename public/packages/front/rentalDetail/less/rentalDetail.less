@@ -806,8 +806,9 @@ table.detailInfoBox {
 		}
 
 		.name {
-			font-size: 15px;
-			line-height: 16px;			
+			font-size: 16px;
+			margin-bottom: 6px;
+			display: block;
 		}
 
 		.websiteUrl {
@@ -1150,14 +1151,28 @@ table.detailInfoBox {
 
 		a.showMorePhotos {
 			display: block;
-			width: 100%;
-			height: 30px;
-			line-height: 30px;
-			border:1px solid #ddd;
-			background: #fefefe;
+			width: 300px;
+			margin: 0 auto;
+			padding: 6px;
+			background: #749108;
 			clear: both;
 			text-align: center;
-			color: #333;
+			color: #fff;
+			.border-radius(5px);
+
+			&:hover {
+				text-decoration:none;
+				span {
+					text-decoration: underline;
+				}
+			}
+
+			i {
+				top: 1px;
+				position: relative;
+				margin-right: 3px;			
+			}
+
 		}
 
 		h3 {
