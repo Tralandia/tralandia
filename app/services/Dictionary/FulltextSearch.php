@@ -64,6 +64,8 @@ class FulltextSearch {
 
 		if($joinLanguages) {
 			$qb->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+		} else {
+			$qb->groupBy('p.id');
 		}
 
 		if(!$searchInUserContent) {
