@@ -206,7 +206,6 @@ function generateRedirectUrl(count){
 			url+='&do=searchBar-getSearchCount';
 		}
 	}
-	
 
 	return url;
 	// 
@@ -252,10 +251,14 @@ function updateCriteriaCount(){
 function searchLoader(status){
 	switch(status){
 		case 'start':
-			$('#searchLoaderStatus').removeClass('hide');
+			$('form.searchForm #searchLoaderStatus').css({
+				'visibility':'visible'
+			});
 		break;
 		case 'stop':
-			$('#searchLoaderStatus').addClass('hide');
+			$('form.searchForm #searchLoaderStatus').css({
+				'visibility':'hidden'
+			});
 		break;		
 	}
 }
