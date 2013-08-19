@@ -18,7 +18,7 @@
 		expire => $rentalDetailCacheOptions['expiration'],
 		tags => $rentalDetailCacheOptions['tags']}
 
-<variables n:syntax="asp" name="rentalDetailInfo" data-info='{"id":"<%$rental->id%>","name":"<%_$rental->name%>","rentalText":"#ubytko z"}'></variables>
+<variables name="rentalDetailInfo" data-info-name="{_$rental->name}" data-info-id="{$rental->id}"></variables>
 
 	{control searchBar:breadcrumb}
 
