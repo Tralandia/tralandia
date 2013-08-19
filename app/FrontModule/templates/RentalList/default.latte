@@ -4,7 +4,7 @@
 
 {block content}
 
-<variables n:syntax="asp" name="listInfo" data-info='{"rentalCount":"<%$totalResultsCount%>","listTitle":"<%$pageH1%>","paginatorPage":"<%$paginatorPage%>","pagging":"50"}'></variables>
+<variables name="listInfo" data-info-rental-count="{$totalResultsCount}" data-info-list-title="{$pageH1}" data-info-paginator-page="{$paginatorPage}" data-pagging="50"></variables>
 
 <h1>{$pageH1}
 	<span class="counter">
@@ -70,7 +70,7 @@
 										{var $rentalSubTitle = $rentalName}
 									{/if}
 
-									<variables n:syntax="asp" data-info='{"name":"<%_$rental->name%>","url":"<%link Rental:detail $rental%>","id":"<%$rental->id%>"}'></variables>
+									<variables data-info-name="{_$rental->name}" data-info-url="{link Rental:detail $rental}" data-info-id="{$rental->id}"></variables>
 
 									<h2>
 										<a href="{link Rental:detail $rental}" title="{$rentalTitle}">{$rentalTitle}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}
