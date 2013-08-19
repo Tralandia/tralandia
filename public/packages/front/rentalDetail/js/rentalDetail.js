@@ -307,7 +307,7 @@
 
 			base.responSedata = data;
 
-			// console.log(data);
+			console.log(data);
 
 			return data;
 			
