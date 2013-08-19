@@ -110,9 +110,18 @@
 						break;
 					case 'other-mini':
 						iconName  = base.options.iconSet.mini.inactive;
-						break;						
+						break;
+					case 'other-small-active':
+						iconName  = base.options.iconSet.small.active;
+					console.log(iconName);
+
+						break;
+					case 'other-mini-active':
+						iconName  = base.options.iconSet.mini.active;
+						break;												
 				}
 			}
+
 
 			return base.options.iconPath + iconName;    		
 		};
@@ -121,8 +130,6 @@
 		base._renderOtherRentals = function(lat,lng){
 
 			var html = '';
-
-
 
 			$.each(base._returnRentalsTmp(lat,lng),function(k,v){
 
@@ -209,7 +216,8 @@
 				// console.log(v);
 				if(typeof v != 'undefined'){
 					if(k!=currentId){
-						v.setIcon(base._getMarkerIcon('other-mini'));
+						var IconType = (base.responSedata[k].isImportant) ? "other-small" : "other-mini";
+						v.setIcon(base._getMarkerIcon(IconType));
 					}					
 				}
 
@@ -226,15 +234,15 @@
 				};
 			
 			var nm = new google.maps.Marker(markerOptions);
-			// base.markers.push(nm);
 				nm.set('id',markerId);
-			base.markers[markerId]=nm;
+				base.markers[markerId]=nm;
 
 			google.maps.event.addListener(nm, 'click', function() { 
 				if(base.googleMap.getZoom() > 11){
-					nm.setIcon(base._getMarkerIcon());
+					var IconType = (base.responSedata[nm.id].isImportant) ? "other-small-active" : "other-mini-active";
 					base._setCurrentRentalInList(nm.id);
 					base._showInfoBox(base.responSedata[nm.id]);
+					nm.setIcon(base._getMarkerIcon(IconType));
 				}
 			});
 
