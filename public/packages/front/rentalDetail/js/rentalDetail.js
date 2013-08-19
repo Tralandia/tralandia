@@ -106,10 +106,10 @@
 			if(typeof type != 'undefined'){
 				switch(type){
 					case 'other-small':
-						iconName  = base.options.iconSet.small.home;
+						iconName  = base.options.iconSet.small.inactive;
 						break;
 					case 'other-mini':
-						iconName  = base.options.iconSet.mini.home;
+						iconName  = base.options.iconSet.mini.inactive;
 						break;						
 				}
 			}
@@ -122,9 +122,10 @@
 
 			var html = '';
 
+
+
 			$.each(base._returnRentalsTmp(lat,lng),function(k,v){
 
-				html += '<li data-id="'+v.id+'" data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
 
 				var markerSize = 'other-mini';
 
@@ -132,7 +133,11 @@
 						markerSize = 'other-small';
 					}
 
-				base._makeMarker(v.lat,v.lng,v.name,markerSize,v.id);
+				base._makeMarker(v.lat,v.lng,v.name,markerSize,k);
+
+				if(k < 9){
+					html += '<li data-id="'+v.id+'" data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
+				}
 
 			});
 
@@ -143,45 +148,72 @@
 		};
 
 		base._listOtherClickListener = function(){
-			console.log($(this).data('meta'));
+			
+			base._showInfoBox($(this).data('meta'));
 
-			var setting = $(this).data('meta');
+		};
 
-			// base.googleMap.panTo(new google.maps.LatLng(setting.lat,setting.lng));
-			// base._makeMarker(setting.lat,setting.lng,setting.name);
+		base._showInfoBox = function(data){
 
-			var $infobox = $('.rentalInfoBox');
-				$infobox.removeClass('hide');
+			if(typeof base.$infoBox == 'undefined'){
+				base.$infoBox = $('.rentalMapMetaBox');
+				base.$infoBox.removeClass('hide');
+			}
 
-			var $infoboxMeta = {
-				thumb: $infobox.find('.smallGallery'),
-				title: $infobox.find('.rentalInfo h3 a'),
-				info1: $infobox.find('.rentalInfo span'),
-				info2: $infobox.find('.rentalInfo .amenities'),
-				close: $infobox.find('.remove'),
-			};
+			if(typeof base.$metaInfoBox == 'undefined'){
+				base.$metaInfoBox = {
+					thumb: base.$infoBox.find('.thumb'),
+					title: base.$infoBox.find('.content h3 a'),
+					info1: base.$infoBox.find('.content .teaser'),
+					info2: base.$infoBox.find('.content .amenities'),
+					close: base.$infoBox.find('.remove'),
+					capacity: base.$infoBox.find('.capacity strong'),
+					capacityText: base.$infoBox.find('.capacity small'),
+
+					price: base.$infoBox.find('.price strong'),
+					priceText: base.$infoBox.find('.price small'),				
+				};
+			}
 
 			// close box function 
-			$infoboxMeta.close.click(function(){
+			base.$metaInfoBox.close.click(function(){
 				$infobox.addClass('hide');
-			});
+			});			
 
-			$infoboxMeta.thumb.html('<img src="'+setting.thumbnail+'">');
-			$infoboxMeta.title.html(setting.name).attr('href',setting.url);
-			$infoboxMeta.info1.html(setting.info1);
-			$infoboxMeta.info2.html(setting.info2);
+			// update box information 
+			base.$metaInfoBox.thumb.html('<img src="'+data.thumbnail+'">');
+			base.$metaInfoBox.title.html(data.name).attr('href',data.url);
+			base.$metaInfoBox.info1.html(data.info1);
+			base.$metaInfoBox.info2.html(data.info2);
+			base.$metaInfoBox.capacity.html(data.box.capacity);
+			base.$metaInfoBox.capacityText.html(data.box.capacityText);
+			base.$metaInfoBox.price.html(data.box.price);
+			base.$metaInfoBox.priceText.html(data.box.priceText);
 
-			base.markers[setting.id].setIcon(base._getMarkerIcon());
+			// set current list 
+			base._setCurrentRentalInList(data.id);
 
+		};
+
+		base._setCurrentRentalInList = function(currentId){
 			// set surrent class 
 			$(base.options.otherRentaliListSelector+' li').each(function(){
-				if($(this).data('id') != setting.id){
+				if($(this).data('id') != currentId){
 					$(this).removeClass('current');
 				} else {
 					$(this).addClass('current');
 				}
 			});
 
+			$.each(base.markers,function(k,v){
+				// console.log(v);
+				if(typeof v != 'undefined'){
+					if(k!=currentId){
+						v.setIcon(base._getMarkerIcon('other-mini'));
+					}					
+				}
+
+			});
 		};
 
 		base._makeMarker = function(lat,lng,title,size,markerId){
@@ -191,19 +223,18 @@
 					position: new google.maps.LatLng(lat, lng),
 					title: title,
 					icon: base._getMarkerIcon(size),
-					id:markerId,
 				};
 			
 			var nm = new google.maps.Marker(markerOptions);
 			// base.markers.push(nm);
+				nm.set('id',markerId);
 			base.markers[markerId]=nm;
 
 			google.maps.event.addListener(nm, 'click', function() { 
-				console.log(nm.id);
-				if(base.googleMap.getZoom() < 12){
-					console.log('nic nerobim');
-				} else {
-					console.log('settujem');
+				if(base.googleMap.getZoom() > 11){
+					nm.setIcon(base._getMarkerIcon());
+					base._setCurrentRentalInList(nm.id);
+					base._showInfoBox(base.responSedata[nm.id]);
 				}
 			});
 
@@ -213,7 +244,7 @@
 
 			var data = [];
 
-			var delta = 100000000;
+			var delta = 900000000;
 			var dimensions = {
 				helpLat : lat.toString().split('.'),
 				helpLng : lng.toString().split('.'),
@@ -230,16 +261,30 @@
 				thubnails[7] = 'http://tralandiastatic.com/rental_images/2013_06/03/of/6j/medium.jpeg';
 				thubnails[8] = 'http://tralandiastatic.com/rental_images/2013_06/05/gv/23/medium.jpeg';
 				thubnails[9] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[10] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[11] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[12] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[13] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[14] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[15] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
+				thubnails[16] = 'http://tralandiastatic.com/rental_images/2013_06/05/2m/cj/medium.jpeg';
 
-			for(var i = 0 ; i < 9 ; ++i){
+			for(var i = 0 ; i < 15 ; ++i){
 
 				dimensions.helpLat[1] = dimensions.helpLat[1] - Math.floor(Math.random() * (delta) + 1);
 				dimensions.helpLng[1] = dimensions.helpLng[1] - Math.floor(Math.random() * (delta) + 1);
 
 				var forPush = {
+
 					name: 'tralala '+i,
 					id: i+Math.floor(Math.random() * (30000 - 0 + 1) + 0),
-					info1: 'Max '+Math.floor(Math.random() * (50 - 1 + 1) + 1)+' osob | '+Math.floor(Math.random() * (100 - 17 + 1) + 17)+' Eur osoba/noc',
+					info1: 'teaser slogan neskutocny',
+					box: {
+						capacity: 'Max '+Math.floor(Math.random() * (50 - 1 + 1) + 1),
+						capacityText: 'osob',
+						price: Math.floor(Math.random() * (100 - 17 + 1) + 17),
+						priceText: ' Eur osoba/noc',
+					},
 					info2: 'Studňa, zváračka, cukrová repa, zelovoc, cédéčka',
 					url: 'http://www.sk.tra.com/utulny-privat-kosar-v-tichom-prostredi-r21501',
 					thumbnail: thubnails[i],
@@ -251,6 +296,8 @@
 				
 				data.push(forPush);
 			}
+
+			base.responSedata = data;
 
 			// console.log(data);
 
@@ -271,10 +318,12 @@
 				home: 'map-pointer-home.png'
 			},
 			small: {
-				home: 'other-rental-small.png',
+				inactive: 'other-small-inactive.png',
+				active: 'other-small-active.png',
 			},
 			mini: {
-				home: 'other-rental-mini.png',
+				inactive: 'other-mini-inactive.png',
+				active: 'other-mini-active.png',
 			}			
 		},
 		otherRentaliListSelector: 'ul.relatedRentals',
@@ -284,125 +333,6 @@
 		return this.each(function(){(new $.traxDetailMap(this, options));});};
 	
 })(jQuery);
-
-
-
-// (function($) {
-	
-// 	$.fn.traMap = function() {
-
-// 		// default map zoom level
-// 		var zoomVal = 4;
-
-// 		var rentalId = parseInt($(this).data('rentalId'));
-
-// 		if(typeof $(this).attr('zoom') != 'undefined')
-// 		{
-// 			zoomVal = parseInt($(this).attr('zoom'));
-// 		}
-
-// 		if(typeof $(this).attr('value') == 'undefined')
-// 		{
-// 			$(this).html('error');
-// 		} else {
-
-
-// 			if(typeof $('body').attr('data-google-map-render') == 'undefined' ){
-
-// 				var coordinates = $(this).attr('value').split(',');
-
-// 				var lat = parseFloat(coordinates[0]);
-// 				var lng = parseFloat(coordinates[1]);
-
-// 				var iconBase = '../../../../images/markers/';
-
-// 				var myLatlng = new google.maps.LatLng(lat,lng);
-// 				var mapOptions = {
-// 					zoom: zoomVal,
-// 					scrollwheel: false,
-// 					center: myLatlng,
-// 					mapTypeId: google.maps.MapTypeId.HYBRID
-// 				}
-// 				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
-
-// 				var isFavorites = false;
-// 				var myFavorites = $.cookie('favoritesList');
-
-// 				if(tndefinypeof myFavorites != 'ued' && myFavorites != null)
-// 				{
-// 					myFavorites = myFavorites.split(',');
-
-// 					$.each(myFavorites,function(k,v){
-// 						if(rentalId == v){
-// 							isFavorites = true;
-// 						}
-// 					});					
-// 				}
-
-
-// 				if(isFavorites){
-// 					var iconName  = 'map-pointer-heart.png';
-// 				} else {
-// 					var iconName  = 'map-pointer-home.png';
-// 				}
-
-
-// 				var marker = new google.maps.Marker({
-// 					position: myLatlng,
-// 					map: map,
-// 					icon: iconBase + iconName
-// 				});
-
-
-
-
-// 			$('body').attr('data-google-map-render',true);
-
-
-// }
-
-
-
-
-// }
-
-// };
-// })(jQuery);
-
-
-
-
-
-
-
-
-// (function($){
-//     $.traMap = function(el, options){
-
-//         var base = this;
-		
-//         base.$el = $(el);
-//         base.el = el;
-		
-//         base.$el.data("traMap", base);
-		
-//         base.init = function(){
-			
-			
-//             base.options = $.extend({},$.traMap.defaultOptions, options);
-			
-//         };
-		
-
-//         base.init();
-//     };
-	
-//     $.traMap.defaultOptions = {
-//     	zoom: 4
-//     };
-	
-//     $.fn.traMap = function(options){return this.each(function(){(new $.traMap(this, options));});};
-// })(jQuery);
 
 
 
