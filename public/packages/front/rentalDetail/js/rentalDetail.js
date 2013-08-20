@@ -167,24 +167,31 @@
 				base.$infoBox.removeClass('hide');
 			}
 
+			base.$infoBox.slideDown({
+				duration: 200
+			});
+
 			if(typeof base.$metaInfoBox == 'undefined'){
 				base.$metaInfoBox = {
 					thumb: base.$infoBox.find('.thumb'),
 					title: base.$infoBox.find('.content h3 a'),
 					info1: base.$infoBox.find('.content .teaser'),
-					info2: base.$infoBox.find('.content .amenities'),
+					info2: base.$infoBox.find('.amenities'),
+					info3: base.$infoBox.find('.food span'),
 					close: base.$infoBox.find('.remove'),
-					capacity: base.$infoBox.find('.capacity strong'),
+					capacity: base.$infoBox.find('.count span'),
 					capacityText: base.$infoBox.find('.capacity small'),
 
-					price: base.$infoBox.find('.price strong'),
+					price: base.$infoBox.find('.price'),
 					priceText: base.$infoBox.find('.price small'),				
 				};
 			}
 
 			// close box function 
 			base.$metaInfoBox.close.click(function(){
-				$infobox.addClass('hide');
+				base.$infoBox.slideUp({
+					duration: 200
+				});
 			});			
 
 			// update box information 
@@ -192,6 +199,7 @@
 			base.$metaInfoBox.title.html(data.name).attr('href',data.url);
 			base.$metaInfoBox.info1.html(data.info1);
 			base.$metaInfoBox.info2.html(data.info2);
+			base.$metaInfoBox.info3.html(data.info3);
 			base.$metaInfoBox.capacity.html(data.box.capacity);
 			base.$metaInfoBox.capacityText.html(data.box.capacityText);
 			base.$metaInfoBox.price.html(data.box.price);
@@ -288,12 +296,13 @@
 					id: i+Math.floor(Math.random() * (30000 - 0 + 1) + 0),
 					info1: 'teaser slogan neskutocny',
 					box: {
-						capacity: 'Max '+Math.floor(Math.random() * (50 - 1 + 1) + 1),
-						capacityText: 'osob',
-						price: Math.floor(Math.random() * (100 - 17 + 1) + 17),
-						priceText: ' Eur osoba/noc',
+						capacity: Math.floor(Math.random() * (50 - 1 + 1) + 1)+' osob',
+						capacityText: '',
+						price: Math.floor(Math.random() * (100 - 17 + 1) + 17)+' EUR',
+						priceText: 'osoba/noc',
 					},
-					info2: 'Studňa, zváračka, cukrová repa, zelovoc, cédéčka',
+					info2: 'Studňa, zváračka, cukrová repa, zelovoc, cédéčka, Studňa, zváračka, cukrová repa, zelovoc, cédéčka',
+					info3: 'strava bude',
 					url: 'http://www.sk.tra.com/utulny-privat-kosar-v-tichom-prostredi-r21501',
 					thumbnail: thubnails[i],
 					lat: dimensions.helpLat[0]+'.'+dimensions.helpLat[1],
