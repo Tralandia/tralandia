@@ -520,10 +520,10 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<div class="moreOption">
-							<span> {_o100037} #{$rental->id} </span> <span class="separator">&nbsp;|&nbsp;</span>
 							<span> {_o100038} {$dateUpdated|dateTime} </span> <span class="separator">&nbsp;|&nbsp;</span>
-							{* <a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span> *}
-							<a rel="nofollow" href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a>
+							<a rel="nofollow" href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a><span class="separator">&nbsp;|&nbsp;</span>
+							<a data-modal-description="#modal data description" data-alert-success="#success" data-modal-title="#modal title preklad" class="red reportBugButton" role="button">#Report bug</a> 
+
 						</div>
 					</div>
 				</div>
@@ -531,5 +531,9 @@
 			</div>
 		</div>
 	</div>
+
+	{include '../modalBox.latte'}
+
+
 	{/cache}
 

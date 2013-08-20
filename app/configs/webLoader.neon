@@ -212,6 +212,8 @@ parameters:
 					- front/home/js/rootHome.js
 					# 
 					- front/_base/js/formChangeNotifi.js
+					# report bug plugin
+					- front/_base/js/reportBug.js
 
 
 			historyPlugin:
