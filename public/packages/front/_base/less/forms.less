@@ -1080,11 +1080,21 @@ form {
 .dashboard {
 	.btn.btn-greenDark {
 		float: left;
+		padding: 7px 30px;
+
 		margin-left: 100px;	
 		margin-bottom: 4px;
+		border: none;
+		background: #fd8d03;
+		color: #FFF;
+
+		small {
+			font-weight: normal;
+			font-size: 15px;
+		}
 	}
 
-	.btn-green {
+	.btn-green , .control-photo .fileinput-button  {
 		padding: 1px 10px;
 		font-weight: normal;
 		border: none;
@@ -1095,6 +1105,16 @@ form {
 
 		i {
 			font-size: 11px;
+			float: left;
+			top: 4px;
+			margin: 0;
+			&.icon-upload-alt {
+
+			}
+
+			&.icon-plus {
+				left: -2px;
+			}
 		}
 	}
 }
