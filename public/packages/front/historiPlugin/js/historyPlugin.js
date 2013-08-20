@@ -44,10 +44,6 @@
 		*/
 
 		base._setListHistory = function(){
-			// console.log(base._getListData().listData);
-			
-
-
 			base._setHistory(base._getListData());
 		};
 
@@ -93,16 +89,18 @@
 
 		base._initDetail = function(){
 
+			// console.log(base._getHistory());
 
 			if(base._getHistory() != null){
 
 				base._setRentalDetailVariables();
 
 				if(base._isRentalInHistory()){
-					base._renderNavigationBar();
-					$(base.options.selectorPaginatorContainer).addClass('show');
+					if(base._getHistory().rentalCount > 1){
+						base._renderNavigationBar();
+						$(base.options.selectorPaginatorContainer).addClass('show');
+					}
 				} else {
-
 					base._deleteHistory();
 					console.log('nepatri do mojej historie');
 					// @todo ajax function
@@ -182,9 +180,6 @@
 				if(typeof data.nextLink == 'undefined'){
 
 						jQuery.getJSON( base._createUrlForAjax(dataHistory) , function(d){
-
-							// console.log('ajax');
-							// console.log(d);
 
 							dataHistory.listData = d.listData;
 							base._setHistory(dataHistory);
