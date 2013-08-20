@@ -1,6 +1,15 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-<h1>{_$rental->name}</h1>
-<p>{_1371}</p>
+<h1 class="rentalEditHeader">{_$rental->name}</h1>
+{* <a data-alert-first="#First alert text" data-alert-last="#last alert text" href="google" class="btn btn-mini btn-danger pull-right rentalRemoveLink">#Remove link</a> *}
+<div class="clearfix"></div>
+<div class="formHelpText info">
+	<table>
+		<tr>
+			<td class="infoIcon"><i class="icon-info-sign"></i></td>
+			<td>{_1371}</td>
+		</tr>
+	</table>
+</div>
 {form rentalEditForm, class => "traform dashboard leaveChangeControl" , data-leave-confirm-message => $onChangeConfirm}
 	<table class="formTable innerPadding">
 {* 		<tr class="formHeading	">
@@ -8,7 +17,7 @@
 		</tr> *}				
 
 		<tr>
-			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> <a data-alert-first="#First alert text" data-alert-last="#last alert text" href="google" class="btn btn-mini btn-danger pull-right rentalRemoveLink">#Remove link</a></td>
+			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> </td>
 		</tr>
 
 		{var $rentalContainer = $form['rental']}
