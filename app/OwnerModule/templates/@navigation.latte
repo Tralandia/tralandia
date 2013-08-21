@@ -25,7 +25,7 @@
 
 					<ul n:if="$currentRental">
 						<li class="info"><i class="icon icon-angle-right"></i>{_152732} <strong>{if $rental->isLive()}{_152730}{else}{_152731}{/if}</strong></li>
-						<li class="info"><i class="icon icon-angle-right"></i>{_152733} <strong>{$rental->getRank()}%</strong></li>
+						<li class="info tooltipElem" title="{_153019}"><i class="icon icon-angle-right"></i>{_152733} <strong>{$rental->getRank()}%</strong></li>
 
 
 						<li><a href="{link :Owner:CalendarWidget:default $rental->id}"><i class="icon icon-angle-right"></i> {_151834}</a></li>
