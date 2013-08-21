@@ -20,7 +20,7 @@
 	{default $text = ''}
 	{default $id = ''}
 	<tr>
-		<td colspan="3" id="{$id}" class="fieldset">{_$text}</td>
+		<td colspan="3" id="{$id}" class="fieldset"><div class="separator"></div>{_$text}</td>
 	</tr>
 	{/define #fieldset}
 
@@ -205,6 +205,9 @@
 	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td>
 			{_$control->caption}
+			{if $control->isRequired()}
+				<i class="icon-asterisk"></i>
+			{/if}
 		</td>
 		<td>
 			{capture $input}
@@ -356,6 +359,9 @@
 {include #opentag , class => 'simpleInput ' , control => $container}
 	<td>
 		{_$mainControl->caption}
+		{if $mainControl->isRequired()}
+			<i class="icon-asterisk"></i>
+		{/if}		
 	</td>
 	<td>
 		<table>
@@ -666,7 +672,7 @@
 							<span class="file-placeholder">{$component['fileSize']->getValue()|bytes}</span>
 						{else}
 							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button">
-								<i class="entypo-upload"></i>
+								<i class="icon-upload-alt"></i>
 								<span>{label $component['file']}{/label}</span>
 								{input $component['file']}
 							</span>

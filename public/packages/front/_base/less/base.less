@@ -862,10 +862,7 @@ ul.arrows {
 	i {
 		position: relative;
 
-		&.icon-plus {
-			top: 2px;
-			left: -2px;
-		}
+
 	}
 
 	
@@ -930,12 +927,23 @@ ul.arrows {
 
 		&.home {
 			padding-top: 19px;
+			margin-bottom: 20px;
+			
+			&.rootHome {
+
+			}
 		}
 
 		img {
-			float: right;
-			margin-right: 7px;
 			margin-top: -6px;
+		}
+
+		&.rentalEditHeader {
+			width: 580px;
+			float: left;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow:ellipsis;
 		}
 	}
 
@@ -1262,5 +1270,12 @@ form.donateForm {
 		&:hover {
 			text-decoration:none;
 		}
+	}
+}
+
+.modal-body {
+	textarea {
+		width: 514px;
+		height: 180px;		
 	}
 }
