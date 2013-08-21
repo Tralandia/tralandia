@@ -3,9 +3,11 @@
 $(function(){
 
     $('.selectLanguageBasicInformation').on('change',function(){
-        var iso = $(this).val();
-        $(this).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation:not(.'+iso+')').addClass('hide');
-        $(this).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation.'+iso).removeClass('hide');
+        languageSelect(this,$(this).val());
+    });
+
+    $('a.tabPane').click(function(){
+        languageSelect(this,$(this).data('iso'));
     });
 
     $('.selectLanguageInterview').on('change',function(){
@@ -16,3 +18,12 @@ $(function(){
 
 });
 
+
+function languageSelect(el,iso){
+    $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation:not(.'+iso+')').addClass('hide');
+    $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation.'+iso).removeClass('hide');
+
+
+    $(el).parents('form').find('a.tabPane').removeClass('current');
+    $(el).parents('form').find('a.tabPane.'+iso).removeClass('hide').addClass('current');    
+}

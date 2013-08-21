@@ -14,12 +14,17 @@
 position: relative;
 overflow: hidden;
 float: left;
-width: 110px;
+width: auto;
 margin-right: 4px;
 margin-bottom: 10px;
 }
 .btn.btn-green.fileinput-button span {
   top: 1px;
+text-align: left;
+white-space: nowrap;
+display: block;
+padding: 0 17px 0 10px;
+left: 5px;  
 }
 
 .fileinput-button input {

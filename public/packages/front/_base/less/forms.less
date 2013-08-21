@@ -70,9 +70,21 @@ table.formTable {
 		padding-top: 20px;
 		padding-bottom: 10px;
 		color: @darkGreen;
+
+		i.icon-asterisk {
+			font-size: 11px;
+			color: #fd3503;
+			padding-left: 1px;
+		}
 	}
 
-
+	.separator {
+		height: 1px;
+		border-top: 1px solid #cbd2a0;
+		margin-left: -11px;
+		margin-bottom: 10px;
+		margin-right: -11px;		
+	}
 
 	.btn.btn-cancel {
 		margin-left: 10px;
@@ -128,6 +140,55 @@ table.formTable {
 
 	tr.simpleInput {
 		height: 46px;
+
+		i.icon-asterisk {
+			font-size: 8px;
+			color: #fd3503;
+			position: relative;
+			top: -4px;
+			left: -2px;
+		}
+
+		.langTabs {
+
+			.content {
+				background: #eef2d1;
+				.border-radius(0 0 4px 4px);
+				border: 1px solid #b0c13b;
+			}
+
+			.header {
+				height: 30px;
+			}
+
+			a.tabPane  {
+				
+				padding: 5px 10px;
+				position: relative;
+				top: 10px;
+				.border-radius(4px 4px 0 0);
+				border: 1px solid #b0c13b;
+				border-bottom: none;
+				&.current {
+					background: #eef2d1;
+					border-color: #b0c13b;
+					padding-bottom: 6px;
+				}
+			}
+
+			td:nth-child(1), td:nth-child(3) {
+				padding-left: 10px;
+
+			}
+
+			td:nth-child(1){
+				width: 180px;
+				font-size: 13px;
+				line-height: 15px;
+			}
+	
+		}
+
 		td:nth-child(1) {
 			width: 180px;
 			font-size: 13px;
@@ -150,7 +211,7 @@ table.formTable {
 			}
 
 			textarea {
-				height: 70px;
+				height: 50px;
 				margin: 0;
 			}
 		}
@@ -267,10 +328,11 @@ table.formTable {
 				}
 				div {
 					width: 24px;
-					#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
+					background: #eaf0d7;
 					.basic-border-radius(0px);
 					b:before {
-						left: 6px;
+						left: 5px;
+						top: 1px;
 						position: relative;
 					}
 				}
@@ -329,6 +391,18 @@ table.formTable {
 	table.checkboxes , .simpleInput {
 		width: 100%;
 		.box-size();
+
+		&.interview {
+			tr:nth-child(1) {
+				height:21px;
+				td {
+					padding-bottom: 4px;
+					padding-top: 7px;
+					margin: 0;
+				}
+			}
+		}
+
 		tr:nth-child(1) {
 			font-size: 15px;
 			line-height: 15px;
@@ -1080,7 +1154,84 @@ form {
 .dashboard {
 	.btn.btn-greenDark {
 		float: left;
+		padding: 7px 30px;
+
 		margin-left: 100px;	
 		margin-bottom: 4px;
+		border: none;
+		background: #fd8d03;
+		color: #FFF;
+
+		small {
+			font-weight: normal;
+			font-size: 15px;
+		}
+	}
+
+	.btn-green , .control-photo .fileinput-button  {
+		padding: 1px 10px;
+		font-weight: normal;
+		border: none;
+		background: #708711;
+		&:hover {
+			background: #a7ba24;
+		}
+
+		i {
+			font-size: 11px;
+			float: left;
+			top: 4px;
+			margin: 0;
+			&.icon-upload-alt {
+
+			}
+
+			&.icon-plus {
+				left: -2px;
+			}
+		}
 	}
 }
+
+.rentalRemoveLink  {
+	margin: 15px 10px 0 10px;
+}
+
+#content.noPadding {
+	.formHelpText , p.formHelpText {
+		color: rgb(74, 110, 133);
+		padding: 10px;
+		margin-bottom: 10px;
+		display: block;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		position: relative;
+
+		#gradient > .horizontal(#C2E1F5,#D2E8F5);
+
+		border: 1px solid rgb(115, 158, 185);
+
+		&.info {
+			margin: 0 10px;
+			padding: 10px;
+			padding-left: 0;
+		}
+
+		i {
+			font-size: 40px;
+			width: 28px;
+			position: relative;
+			top: -7px;
+		}
+
+		.infoIcon {
+			width: 70px;
+			text-align: center;
+		}
+	}
+}
+
+
+
+
