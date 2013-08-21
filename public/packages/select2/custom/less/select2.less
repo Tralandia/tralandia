@@ -130,10 +130,18 @@ input[type=text].select2-input {
 		border: 1px solid #FD7B03;
 
 		div {
-			#gradient > .vertical(#fd9903,#FD7B03);
+			background: #fd8d03;
 			border-left: 1px solid #FD7B03;
 			color: #FFF;
+			width: 20px;
 			.border-radius(0);
+
+			b {
+				&:before {
+					position:relative;
+					left: 3px;
+				}
+			}
 		}
 	}
 }
