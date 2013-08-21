@@ -252,7 +252,7 @@ parameters:
 					- bootstrap/lib/js/bootstrap-alert.js
 					- bootstrap/lib/js/bootstrap-tooltip.js
 					- bootstrap/lib/js/bootstrap-popover.js
-					#- bootstrap/lib/js/bootstrap-scrollspy.js
+					- bootstrap/lib/js/bootstrap-scrollspy.js
 					- bootstrap/lib/js/bootstrap-tab.js
 					#- bootstrap/lib/js/bootstrap-transition.js
 					#- bootstrap/lib/js/bootstrap-typeahead.js

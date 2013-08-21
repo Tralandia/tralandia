@@ -16,7 +16,7 @@
 		base._bind = function(){
 			$(document).scroll(function(){
 
-				if(parseInt($(this).scrollTop()) > base.elTopOffset) {
+				if((parseInt($(this).scrollTop())+10) > base.elTopOffset) {
 					base.$el.addClass('fix');
 				} else {
 					// base.$el.css({
@@ -44,4 +44,5 @@
 
 $(function(){
 	$('.fixTop').fixTop();
+	$('#navbar').scrollspy();
 });
