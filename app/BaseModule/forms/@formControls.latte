@@ -205,6 +205,9 @@
 	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td>
 			{_$control->caption}
+			{if $control->isRequired()}
+				<i class="icon-asterisk"></i>
+			{/if}
 		</td>
 		<td>
 			{capture $input}
@@ -356,6 +359,9 @@
 {include #opentag , class => 'simpleInput ' , control => $container}
 	<td>
 		{_$mainControl->caption}
+		{if $mainControl->isRequired()}
+			<i class="icon-asterisk"></i>
+		{/if}		
 	</td>
 	<td>
 		<table>
