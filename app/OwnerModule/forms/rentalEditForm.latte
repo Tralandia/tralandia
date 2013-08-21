@@ -30,7 +30,7 @@
 		{include #url, control => $rentalContainer['url']}
 
 		<tr>
-			<td colspan="2" id="rentalNameSlogan" class="fieldset">{_o100137} </td><td> {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-right selectLanguage notFulltext'}</td>
+			<td colspan="2" id="rentalNameSlogan" class="fieldset">{_o100137} </td><td> </td>
 		</tr>		
 
 
@@ -68,23 +68,44 @@
 				</tr>
 		{/if}
 		
+		<tr class="simpleInput">
+			<td colspan="3">
+				<div class="langTabs">
+					<div class="header">
+						{foreach $rentalContainer['name']->getControls() as $control}
+							{if $control->getName() == $environmentLanguage->getIso()}
+								{var $hide = 'current'}
+							{else}
+								{var $hide = 'hide'}
+							{/if}
+							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+						{/foreach}
+						{input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-right selectLanguage notFulltext'}
+					</div>
+					<div class="content">		
+						<table>
+							{foreach $rentalContainer['name']->getControls() as $control}
+								{if $control->getName() == $environmentLanguage->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #text, control => $control , class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
+							{foreach $rentalContainer['teaser']->getControls() as $control}
+								{if $control->getName() == $environmentLanguage->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
 
-		{foreach $rentalContainer['name']->getControls() as $control}
-			{if $control->getName() == $environmentLanguage->getIso()}
-				{var $hide = ''}
-			{else}
-				{var $hide = 'hide'}
-			{/if}
-			{include #text, control => $control , class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
-		{/foreach}
-		{foreach $rentalContainer['teaser']->getControls() as $control}
-			{if $control->getName() == $environmentLanguage->getIso()}
-				{var $hide = ''}
-			{else}
-				{var $hide = 'hide'}
-			{/if}
-			{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
-		{/foreach}
 
 		{include #fieldset, text => 'o100085' , id => 'rentalBasicInformation'}
 		{include #rentalType, control => $rentalContainer['type']}
