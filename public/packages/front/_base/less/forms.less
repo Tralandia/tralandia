@@ -46,14 +46,6 @@ table.formTable {
 			}
 		}
 	}
-
-	.separator {
-/*height: 1px;
-border-top: 1px solid #cbd2a0;
-margin-left: -11px;
-width: 725px;
-margin-bottom: 20px;*/		
-	}
 }
 
 small.sublitLoadingText {
@@ -158,7 +150,7 @@ table.formTable {
 			}
 
 			textarea {
-				height: 70px;
+				height: 50px;
 				margin: 0;
 			}
 		}
@@ -338,6 +330,18 @@ table.formTable {
 	table.checkboxes , .simpleInput {
 		width: 100%;
 		.box-size();
+
+		&.interview {
+			tr:nth-child(1) {
+				height:21px;
+				td {
+					padding-bottom: 4px;
+					padding-top: 7px;
+					margin: 0;
+				}
+			}
+		}
+
 		tr:nth-child(1) {
 			font-size: 15px;
 			line-height: 15px;
