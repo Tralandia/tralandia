@@ -73,7 +73,7 @@
 							{/if}
 							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
 						{/foreach}
-						{input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext'}
+						{input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'}
 					</div>
 					<div class="content">		
 						<table>

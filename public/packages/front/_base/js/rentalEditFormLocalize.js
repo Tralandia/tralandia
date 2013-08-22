@@ -14,7 +14,12 @@ $(function(){
         var iso = $(this).val();
         $(this).parents('form').find('tr.toggleLanguage.interview:not(.'+iso+')').addClass('hide');
         $(this).parents('form').find('tr.toggleLanguage.interview.'+iso).removeClass('hide');
-    });   
+    }); 
+
+
+    $('.simpleInput.toggleLanguage').each(function(){
+        $(this).find('input[type=text]').css('background','red');
+    });
 
 });
 

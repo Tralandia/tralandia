@@ -309,7 +309,7 @@ $(document).ready(function(){
 	});
 
 	$('.selectLanguage').select2({
-		dropdownCssClass: 'orangeSelect'
+		dropdownCssClass: 'orangeSelect',
 	});
 
 	var A = new App();
