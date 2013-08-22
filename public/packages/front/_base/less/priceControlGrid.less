@@ -12,12 +12,20 @@ table.formTable {
 			display: block;
 			cursor: pointer;
 			line-height: 10px;
-			
+
 			input {
 				position: relative;
 				top: -1px;
 				width: 2px;
-				margin-right: 9px;
+				margin-right: 10px;
+			}
+
+			&.medium {
+				font-size: 12px;
+				margin-top: 6px;
+				input {
+					top: -3px;
+				}
 			}
 		}
 
@@ -28,7 +36,7 @@ table.formTable {
 			border: 1px solid #739eb9;
 			.border-radius(4px);
 			font-size: 12px;
-			width: 233px;
+			width: 153px;
 		}
 
 		tr {
@@ -37,11 +45,11 @@ table.formTable {
 				&.entity {
 
 					.selectGroup {
-						width: 161px;
+						width: 86px;
 
 						select {
 							height: 20px;
-							width: 155px;
+							width: 85px;
 							float: left;
 							line-height: 20px;
 							font-size: 11px;
@@ -55,7 +63,7 @@ table.formTable {
 							}
 
 							&.amenities {
-								width: 75px;
+								width: 85px;
 							}
 						}
 
@@ -72,18 +80,22 @@ table.formTable {
 
 				&.price {
 					vertical-align: middle;
-
+					span {
+						display: block;
+						font-size: 11px;
+						color: #888;
+					}
 				}
 
 				&.periodBox {
-					min-width: 70px;
+					min-width: 90px;
 				}
 
 
 				input[type=text].period , input[type=text].priceInput {
 					height: 17px;
 					padding: 1px;
-					width: 65px;
+					width: 85px;
 					font-size: 11px;
 				}
 
