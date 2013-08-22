@@ -18,7 +18,13 @@ $(function(){
 
 
     $('.simpleInput.toggleLanguage').each(function(){
-        $(this).find('input[type=text]').css('background','red');
+        var input = $(this).find('input[type=text]');
+
+        if(input.val().length > 0){
+            var id = input.attr('id');
+            var iso = id.split('-').pop();
+            $('.langTabs .header a.tabPane.'+iso).removeClass('hide');
+        }
     });
 
 });
