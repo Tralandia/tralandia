@@ -144,7 +144,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
 
-		$languages = array();
+		$languages = array('#Add LAnguage');
 
 		foreach($supportedLanguagesForSelect as $language){
 			$languages[$language->getIso()] = $this->translate($language->getName());
