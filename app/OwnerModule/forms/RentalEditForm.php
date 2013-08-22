@@ -150,8 +150,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$languages[$language->getIso()] = $this->translate($language->getName());
 		}
 
-		$rentalContainer->addSelect('translationLanguage', '##', $languages)
-						->setDefaultValue($this->environment->getLanguage()->getIso());
+		$rentalContainer->addSelect('translationLanguage', '##', $languages);
+						// ->setDefaultValue($this->environment->getLanguage()->getIso());
 
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
