@@ -286,9 +286,10 @@
 	{var $countPerCol = ceil(count($control->items)/$colCount)}
 	<tr>
 		<td colspan="3">
-			<table class="checkboxes" style="width: 100%;">
+			<table class="checkboxes">
 				<tr>
-					<td colspan="{$colCount-1}" class="fieldset">{_$control->caption|firstUpper}</td>
+					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
+					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td>
 					<td>
 						<span class="help">{$control->getOption('help')}</span>
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
