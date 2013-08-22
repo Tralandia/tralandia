@@ -1,0 +1,85 @@
+@import './lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
+
+table.formTable {
+	table.priceControlGrid {
+		margin-bottom: 300px;
+
+		label {
+			margin-bottom: 0;
+			font-size: 11px;
+			height: 13px;
+			display: block;
+			cursor: pointer;
+
+			input {
+				position: relative;
+				top: -3px;
+				margin-right: 2px;
+			}
+		}
+
+		.infoBox {
+			color: #4a6e85;
+			text-align: center;
+			background: #c2e1f5;
+			border: 1px solid #739eb9;
+			.border-radius(4px);
+			font-size: 12px;
+			height: 45px;
+		}
+
+		tr {
+			td {
+
+				&.entity {
+
+					.selectGroup {
+						width: 230px;
+
+						select {
+							height: 20px;
+							width: 110px;
+							float: left;
+							line-height: 20px;
+							font-size: 12px;
+							margin-right: 5px;
+							&.counter {
+								/*width: 30px;*/
+							}
+						}						
+					}
+					.labelText {
+						text-align: center;
+						clear: both;
+						position: relative;
+						top: -5px;
+					}
+
+				}
+
+				&.price {
+					vertical-align: middle;
+
+				}
+
+				&.periodBox {
+					min-width: 74px;
+				}
+
+
+				input[type=text].period , input[type=text].priceInput {
+					height: 17px;
+					padding: 1px;
+					width: 70px;
+					font-size: 11px;
+				}
+
+				input[type=text].priceInput {
+					width: 70px;
+					height: 20px;
+				}
+			}
+		}
+	}
+}
