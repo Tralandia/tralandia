@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "e87c112d713c370a16347b18c7fd46d005a295ff"
+                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/e87c112d713c370a16347b18c7fd46d005a295ff",
-                "reference": "e87c112d713c370a16347b18c7fd46d005a295ff",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/1728437f5d3c6c274a60835f3abe577250cd801d",
+                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d",
                 "shasum": ""
             },
             "require-dev": {
@@ -28,7 +28,7 @@
                     "dibi/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3",
                 "GPLv2",
@@ -54,19 +54,19 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2013-07-13 18:23:13"
+            "time": "2013-08-11 18:59:28"
         },
         {
             "name": "hosiplan/nette-autowire-properties",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
                 "reference": "v0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -159,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "f63f7f183536e7fe66ce72b581ca2c0493aef01f"
+                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/f63f7f183536e7fe66ce72b581ca2c0493aef01f",
-                "reference": "f63f7f183536e7fe66ce72b581ca2c0493aef01f",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
+                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,7 @@
                     "src/Doctrine/compatibility.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -203,7 +203,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-07-31 01:06:59"
+            "time": "2013-08-22 22:10:12"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -211,12 +211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c"
+                "reference": "3e7ee05008c14c5f259bb5827a6b617595e23621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
-                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/3e7ee05008c14c5f259bb5827a6b617595e23621",
+                "reference": "3e7ee05008c14c5f259bb5827a6b617595e23621",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +231,7 @@
                     "Kdyby\\Replicator\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -252,7 +252,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-07-09 00:51:48"
+            "time": "2013-08-22 22:10:12"
         },
         {
             "name": "kdyby/redis",
@@ -264,7 +264,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/1df4d84a599e883255e76e53e6e1468ade127e25",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/0089727d3579f4f34daa1d356b9015f579be2243",
                 "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
                 "shasum": ""
             },
@@ -286,7 +286,7 @@
                     "src/Kdyby/Redis/exceptions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -315,24 +315,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "2.6.4"
+                "reference": "b760f1cea0973a866b51ca391eded7b7c77a387c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/2.6.4",
-                "reference": "2.6.4",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b760f1cea0973a866b51ca391eded7b7c77a387c",
+                "reference": "b760f1cea0973a866b51ca391eded7b7c77a387c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0.0"
             },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "Mobile_Detect.php"
-                ]
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -353,7 +359,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-07-28 13:14:05"
+            "time": "2013-08-21 14:05:51"
         },
         {
             "name": "nette/nette",
@@ -365,7 +371,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/2faed5def656eb6b2197611afb95c4d8c811cd2f",
+                "url": "https://api.github.com/repos/nette/nette/zipball/f36f5daab168925ccd1b4f7f35faa434be076dc6",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -395,7 +401,7 @@
                     "Nette/loader.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -498,7 +504,7 @@
                     "Nextras\\Forms": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -547,7 +553,7 @@
                     "src/texy.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
