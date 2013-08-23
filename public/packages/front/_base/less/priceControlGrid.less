@@ -39,33 +39,78 @@ table.formTable {
 			width: 153px;
 		}
 
+		a.multi {
+
+			display: block;
+			padding: 0px 5px;
+			font-size: 12px;
+			color: @darkBlue;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			background: #fff;
+			margin-top: 3px;
+			text-align: center;
+
+			i {
+				margin-left: 2px;
+			}
+
+			&:hover {
+				text-decoration: none;
+
+				span {
+					text-decoration: underline;
+				}
+			}
+
+		}
+
 		tr {
 			td {
+
+				select {
+					height: 25px;
+					width: 85px;
+					float: left;
+					line-height: 20px;
+					font-size: 11px;
+					margin-right: 5px;
+					margin-bottom: 0;
+
+					&.counter {
+						width: 49px;
+					}
+
+					&:nth-child(2){
+						margin-right: 0;
+					}
+
+					&.amenities {
+						width: 85px;
+					}
+				}
+
+				input[type=text] , input[type=text].period , input[type=text].priceInput {
+					height: 20px;
+					padding: 1px 5px;
+					width: 83px;
+					font-size: 11px;
+				}
+
+				input[type=text].entityName {
+					width: 300px;
+					margin-left: 5px;
+				}
+
+				input[type=text].priceInput {
+					height: 20px;
+				}				
 
 				&.entity {
 
 					.selectGroup {
-						width: 86px;
 
-						select {
-							height: 20px;
-							width: 85px;
-							float: left;
-							line-height: 20px;
-							font-size: 11px;
-							margin-right: 5px;
-							&.counter {
-								width: 49px;
-							}
 
-							&:nth-child(2){
-								margin-right: 0;
-							}
-
-							&.amenities {
-								width: 85px;
-							}
-						}
 
 						&.first {
 							width: 50px;
@@ -80,28 +125,17 @@ table.formTable {
 
 				&.price {
 					vertical-align: middle;
-					span {
-						display: block;
-						font-size: 11px;
-						color: #888;
-					}
+
 				}
 
 				&.periodBox {
 					min-width: 90px;
 				}
 
-
-				input[type=text].period , input[type=text].priceInput {
-					height: 17px;
-					padding: 1px;
-					width: 85px;
-					font-size: 11px;
+				&.infoboxCover {
+					min-width: 130px;
 				}
 
-				input[type=text].priceInput {
-					height: 20px;
-				}
 			}
 		}
 	}
