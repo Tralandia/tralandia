@@ -45,7 +45,7 @@
 					<div class="span5 relative">
 
 						<h1 class="addToViewList" id="{$rental->id}">
-							{_$rental->name}
+							{_$rental->name} {if $rental->hasPlacement()}({_$rental->getPlacement()->name}){/if}
 							{if $rental->classification > 0 }
 								&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
 							{/if}
@@ -57,8 +57,7 @@
 
 						<p class="locality noPadding">
 							<a href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
-								{_$rental->type->name|firstUpper}
-								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
+								{_$rental->type->name|firstUpper}								
 								{_$rental->address->locality->name , null , [case=>locative]}
 							</a>
 						</p>
