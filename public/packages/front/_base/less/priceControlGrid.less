@@ -247,7 +247,7 @@ table.formTable {
 				width: 105px;
 
 				input[type=text] {
-					width: 90px;
+					width: 86px;
 				}
 
 				.input-append {
@@ -293,6 +293,45 @@ table.formTable {
 			margin-bottom: -1px;
 			border-width: 1px 1px 0;
 			.border-radius(4px 4px 0 0)
+		}
+	}
+
+	&.pattern {
+		.content {
+			height: 85px;
+			overflow: hidden;
+
+			ul {
+				li {
+
+					display: block;
+					float: left;
+					padding: 10px 5px;
+					margin-left: 5px;
+					border-right: 1px solid #ddd;
+					width: 100px;
+
+					.dateRange {
+						input[type=text] {
+							width: 35px;
+							float: left;
+							height: 10px;
+							margin-bottom: 2px;
+							&.to {
+								float: right;
+							}
+						}						
+					}
+
+					&:last-child {
+						border: none;
+					}
+
+					&.disabled {
+						opacity: .5;
+					}
+				}
+			}
 		}
 	}
 
