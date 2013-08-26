@@ -183,6 +183,7 @@ table.formTable {
 
 		i {
 			margin-left: 3px;
+			color: @darkBlue;
 		}
 
 		&:hover {
@@ -190,7 +191,13 @@ table.formTable {
 
 			span {
 				text-decoration: underline;
+
 			}
+		}
+
+		b {
+			color: #888;
+			font-weight: normal;
 		}
 
 	}
@@ -231,23 +238,29 @@ table.formTable {
 	.content {
 		clear: both;
 		background: #fff;
-		height: 86px;
+		height: 83px;
 		.border-radius(0 0 4px 4px);
 		border: 1px solid #b0c13b;
 		border-width: 0 1px 1px;
+
+		overflow: hidden;
+
 		ul {
 			list-style: none;
 			margin:0;
 			padding: 0;
 
 			li {
-				display: block;
-				float: left;
-				margin-left: 10px;
-				width: 105px;
+					display: block;
+					float: left;
+					padding: 10px 10px;
+					margin-left: 0;
+					border-right: 1px solid #dddddd;
+					width: 96px;
+					text-align: center;
 
 				input[type=text] {
-					width: 86px;
+					width: 81px;
 				}
 
 				.input-append {
@@ -258,12 +271,22 @@ table.formTable {
 					}
 				}
 
+				&.disabled {
+					display: none;
+				}
+
+				&:last-child , &.last {
+					border: none;
+					padding-right: 0;
+				}
+
 				.timerange {
 					color: #888;
 					text-align: center;
 					font-size: 12px;
-					padding-top: 5px;
 				}
+
+
 			}
 		}
 	}
@@ -298,22 +321,21 @@ table.formTable {
 
 	&.pattern {
 		.content {
-			height: 85px;
+			height: 97px;
 			overflow: hidden;
 
 			ul {
 				li {
 
-					display: block;
-					float: left;
-					padding: 10px 5px;
-					margin-left: 5px;
-					border-right: 1px solid #ddd;
-					width: 100px;
+					padding: 0 10px 10px;
+					margin-left: 0;
+					border-right: 1px solid #dddddd;
+					width: 96px;
+					text-align: center;
 
 					.dateRange {
 						input[type=text] {
-							width: 35px;
+							width: 31px;
 							float: left;
 							height: 10px;
 							margin-bottom: 2px;
@@ -323,13 +345,41 @@ table.formTable {
 						}						
 					}
 
-					&:last-child {
-						border: none;
+					a.remove {
+						font-size: 11px;
 					}
 
-					&.disabled {
-						opacity: .5;
+					a.btn-mini {
+						font-size: 11px;
+						margin-bottom: 2px;
+						width: 80px;
+
+						i {
+							top: 1px;
+							position: relative;
+						}
 					}
+
+					div.btnMiniPlaceholder {
+						height: 21px;
+					}
+
+					&.addColumn {
+						padding: 0;
+						margin: 0;
+						border: none;
+
+						a.btn {
+							border: none;
+							/*.border-radius(0);*/
+							margin: 28px 0 0 10px;
+							i {
+								float: none;
+								top: 2px;								
+							}						
+						}
+					}
+
 				}
 			}
 		}
@@ -345,11 +395,23 @@ table.formTable {
 	background: #fd9903;
 	color: #ffffff;
 	padding: 10px;
+	width: 500px;
+	float: right;
+	height: 20px;
 	font-size: 15px;
 	text-align: center;
 }
 
+a.btn.addEntity {
+height: 38px;
+line-height: 38px;
+width: 152px;
 
+	i {
+		float: none;
+		top: 2px;
+	}
+}
 
 
 
