@@ -18,7 +18,7 @@ $(function(){
 
 
     $('.simpleInput.toggleLanguage').each(function(){
-        var input = $(this).find('input[type=text]');
+        var input = $(this).find('input[type=text] , textarea');
 
         if(input.val().length > 0){
             var id = input.attr('id');
@@ -34,8 +34,8 @@ function languageSelect(el,iso){
 
     if(iso != 0){
 
-        $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation:not(.'+iso+')').addClass('hide');
-        $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation.'+iso).removeClass('hide');
+        $(el).parents('form').find('tr.toggleLanguage:not(.'+iso+')').addClass('hide');
+        $(el).parents('form').find('tr.toggleLanguage.'+iso).removeClass('hide');
 
 
         $(el).parents('form').find('a.tabPane').removeClass('current');
