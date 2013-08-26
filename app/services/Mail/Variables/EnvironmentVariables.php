@@ -101,6 +101,15 @@ class EnvironmentVariables extends Nette\Object {
 		return $this->link('//:Front:Sign:in');
 	}
 
+
+	/**
+	 * @return string
+	 */
+	public function getVariableSupportLink()
+	{
+		return $this->link('//:Front:SupportUs:default');
+	}
+
 	/**
 	 * @param string $destination
 	 * @param array $arguments
