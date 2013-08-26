@@ -175,7 +175,7 @@ parameters:
 					# retina display
 					- front/_base/less/retina.less
 					# price control grid for owner edit form
-					- front/_base/less/priceControlGrid.less
+					# - front/_base/less/priceControlGrid.less
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
