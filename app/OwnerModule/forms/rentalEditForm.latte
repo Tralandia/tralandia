@@ -73,7 +73,7 @@
 							{/if}
 							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
 						{/foreach}
-						{input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'}
+						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
 					</div>
 					<div class="content">		
 						<table>
@@ -134,49 +134,9 @@
 	</tr>
 
 
-
+{* 
 		<tr class="">
 			<td colspan="3">
-
-{* 				<div class="entityBox header">
-					<div class="header">
-
-						<div class="baseInformation">
-							Seasons
-						</div>
-
-
-					</div>
-
-					<div class="content">
-						<ul>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-							<li>
-							<input type="text" placeholder="Od" class="period from" />
-							<input type="text" placeholder="Do" class="period to" />
-							</li>
-						</ul>
-					</div>
-				</div> *}
 
 				<div class="entityBox pattern">
 					<div class="header">
@@ -379,7 +339,7 @@
 
 
 			<td>
-		</tr>
+		</tr> *}
 
 
 
@@ -406,7 +366,7 @@
 
 		<tr><td colspan="3"><div class="separator"></div></td></tr>
 		<tr>
-			<td colspan="2" id="rentalInterview" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => ' pull-right selectLanguageInterview selectLanguage notFulltext'}</td>
+			<td colspan="2" id="rentalInterview" class="fieldset">{_1125} </td><td> {* {input $rentalContainer['translationLanguage'] , class => ' pull-right selectLanguageInterview selectLanguage notFulltext'} *}</td>
 		</tr>
 
 		<tr class="topArrowBox">
@@ -421,16 +381,43 @@
 			</td>
 		</tr>
 
-		{foreach $rentalContainer['interview']->getComponents() as $container}
-			{foreach $container->getControls() as $control}
-				{if $control->getName() == $environmentLanguage->getIso()}
-					{var $hide = ''}
-				{else}
-					{var $hide = 'hide'}
-				{/if}
-				{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
-			{/foreach}
-		{/foreach}
+
+
+		<tr class="simpleInput">
+			<td colspan="3">
+				<div class="langTabs">
+					<div class="header">
+						{foreach $rentalContainer['name']->getControls() as $control}
+							{if $control->getName() == $environmentLanguage->getIso()}
+								{var $hide = 'current'}
+							{else}
+								{var $hide = 'hide'}
+							{/if}
+							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+						{/foreach}
+						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
+					</div>
+					<div class="content">		
+						<table>
+
+							{foreach $rentalContainer['interview']->getComponents() as $container}
+								{foreach $container->getControls() as $control}
+									{if $control->getName() == $environmentLanguage->getIso()}
+										{var $hide = ''}
+									{else}
+										{var $hide = 'hide'}
+									{/if}
+									{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
+								{/foreach}
+							{/foreach}
+							
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'pull-right'}
 	</table>
