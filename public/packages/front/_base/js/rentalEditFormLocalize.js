@@ -2,9 +2,7 @@
 
 $(function(){
 
-    $('.selectLanguageBasicInformation').on('change',function(){
-        languageSelect(this,$(this).val());
-    });
+
 
     $('a.tabPane').click(function(){
         languageSelect(this,$(this).data('iso'));
@@ -17,15 +15,6 @@ $(function(){
     }); 
 
 
-    $('.simpleInput.toggleLanguage').each(function(){
-        var input = $(this).find('input[type=text] , textarea');
-
-        if(input.val().length > 0){
-            var id = input.attr('id');
-            var iso = id.split('-').pop();
-            $('.langTabs .header a.tabPane.'+iso).removeClass('hide');
-        }
-    });
 
 });
 
