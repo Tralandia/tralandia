@@ -3,11 +3,22 @@
 	<div class="panelGreen">
 		<div class="top"></div>
 		<div class="content">
+
 			<h1>{$pageH1}</h1>
-			<p>{!_151888|texy}</p>
+
+			<div class="formHelpText info">
+				<table>
+					<tbody><tr>
+						<td class="infoIcon"><i class="icon-info-sign"></i></td>
+						<td>{!_151888|texy}</td>
+					</tr>
+				</tbody></table>
+			</div>	
+
 			{$jsRegistrationVariables->for('form.registrationForm')}
 			{include '../../forms/registrationForm.latte'}
 		</div>
 		<div class="bottom"></div>
 	</div>
 </div>
+
