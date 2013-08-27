@@ -27,6 +27,10 @@
 @inputFontSize : 16px;
 
 
+/* info box  */
+@infoboxBackground : #d2e8f5;
+@infoboxBorder: rgb(115, 158, 185);
+
 input[type=text] , textarea {
 	box-shadow: none;
 }
@@ -56,6 +60,8 @@ small.sublitLoadingText {
 form.dashboard {
 	margin: 0 0 6px;
 }
+
+#content.noPadding {
 
 table.formTable {
 	// border: 1px solid black;
@@ -147,6 +153,12 @@ table.formTable {
 			position: relative;
 			top: -4px;
 			left: -2px;
+		}
+
+		div.formHelpText.info {
+			margin: 0 0 10px 0;
+			padding: 10px;
+			font-size: 14px;
 		}
 
 		.langTabs {
@@ -549,7 +561,9 @@ table.formTable {
 						color-stop(1, #D2E8F5)
 					);
 
-					border: 1px solid rgb(115, 158, 185);
+
+
+					border: 1px solid @infoboxBorder;
 					position: relative;
 					background: #fdddd7;
 					border: 1px solid #ff0000;
@@ -618,23 +632,10 @@ table.formTable {
 					-moz-border-radius: 3px;
 					border-radius: 3px;
 					position: relative;
-					background: #c2e1f5;
 
-					background-image: linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -o-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -moz-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -webkit-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -ms-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background: @infoboxBackground;
 
-					background-image: -webkit-gradient(
-						linear,
-						left bottom,
-						left top,
-						color-stop(0, #C2E1F5),
-						color-stop(1, #D2E8F5)
-					);
-
-					border: 1px solid rgb(115, 158, 185);
+					border: 1px solid @infoboxBorder;
 				}
 				.help:after, .help:before {
 					top: 100%;
@@ -648,7 +649,7 @@ table.formTable {
 
 				.help:after {
 					border-color: rgba(136,183,213,0);
-					border-top-color: #c2e1f5;
+					border-top-color: @infoboxBackground;
 					border-width: 10px;
 					left: 10%;
 					margin-left: -10px;
@@ -656,7 +657,7 @@ table.formTable {
 
 				.help:before {
 					border-color: rgba(194,225,245,0);
-					border-top-color: rgb(115, 158, 185);
+					border-top-color: @infoboxBorder;
 					border-width: 11px;
 					left: 10%;
 					margin-left: -11px;
@@ -732,6 +733,10 @@ table.formTable {
 	}
 
 }
+
+}
+
+
 .mainForm.select2-drop {
 	border: 1px solid #b0c13b;
 	border-top-width: 0px;
@@ -824,7 +829,7 @@ table.formTable {
 			color-stop(1, #D2E8F5)
 		);
 
-		border: 1px solid rgb(115, 158, 185);
+		border: 1px solid @infoboxBorder;
 		position: relative;
 		background: #fdddd7;
 		border: 1px solid #ff0000;
@@ -1211,14 +1216,12 @@ form {
 		padding: 10px;
 		margin-bottom: 10px;
 		display: block;
-		-webkit-border-radius: 3px;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
+		.border-radius(3px);
 		position: relative;
+		line-height: 20px;
+		background: rgb(210, 232, 245);
 
-		#gradient > .horizontal(#C2E1F5,#D2E8F5);
-
-		border: 1px solid rgb(115, 158, 185);
+		border: 1px solid @infoboxBorder;
 
 		&.info {
 			margin: 0 10px;
@@ -1238,6 +1241,34 @@ form {
 			text-align: center;
 		}
 	}
+}
+
+.control-photo .ui-sortable li.addPhotoButton {
+	background: transparent;
+	border: 1px solid @lightGreen;
+
+	&:hover {
+		border: 1px solid @darkGreen;
+	}
+
+		.btn.btn-green.fileinput-button {
+
+			.border-radius(0);
+			height: 60px;
+			line-height: 60px;
+			width: 85px;
+			text-align: center;
+			background: transparent;
+
+			i.icon-plus {
+				font-size: 30px;
+				float: none;
+				top: 21px;
+				left: 30px;
+				color: @darkGreen;
+				text-shadow:none;	
+			}
+		}	
 }
 
 
