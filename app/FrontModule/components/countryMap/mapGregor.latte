@@ -3,6 +3,10 @@
 
 	<a href="#" class="clickMapBox rid{$box->id}" n:foreach="$mapBox as $box"><div>{_$box->name}</div></a>
 
+<div class="rootHomeForm">
+  <div class="inner"><input type="text" placeholder="Zadaj lokalitu alebo daco" id="tags"><button class="btn btn-orange" type="submit"><i class="icon-search"></i> hladaj</button></div>
+</div>
+
 	<div class="clickMapCountry">
 		<div n:foreach="$regions as $region" class="clickMapRegion rid{$region->id} tempShow"></div>
 		<img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="548" height="275" alt="" />
@@ -14,27 +18,62 @@
 
 	<div class="clickMapNavigator">
 		<div class="holder">
-			<a n:foreach="$navigatorData['top'] as $location" class="top" href="{$location->slug}">{_$location->name}</a>
-			<div n:foreach="$navigatorData['otherCountries'] as $location" class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="{$location->slug}">{_$location->name->id}</a></div>
+			<a class="top">Maps title</a>
+			<div class="iconHolder"><div class="icon"><img src="temp/maps/africa.png" /></div><a href="#">Africa</a></div>			
+
+			<div class="iconHolder"><div class="icon"><img src="temp/maps/europe.png" /></div><a href="#">Europe</a></div>
+
+
 		</div>
 		<a class="more" href="#">dalsie<span>&nbsp;</span></a>
 	</div>
 
 	<div class="clickMapTabs">
 		<div class="tabBar">
-			<table class="holder">
+{* 			<table class="holder">
 				<tr>
 					<td><a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a></td>
 					<td><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a></td>
 					<td><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a></td>
 				</tr>
-			</table>
+			</table> *}
 		</div>
 		<!--<div class="tabBar">
 			&nbsp;<br />
 			<a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a>
 		</div>-->
 		<div class="tabContent">
+			<ul>
+				<li><a href="#">Branovo :P</a></li>
+				<li><a href="#">Detva</a></li>
+				<li><a href="#">Komarno</a></li>
+			</ul>
+
+			<ul>
+				<li><a href="#">Sahy</a></li>
+				<li><a href="#">Terchova</a></li>
+				<li><a href="#">Trnovec</a></li>
+			</ul>			
+
+			<ul>
+				<li><a href="#">Branovo :P</a></li>
+				<li><a href="#">Detva</a></li>
+				<li><a href="#">Komarno</a></li>
+			</ul>
+
+			<ul>
+				<li><a href="#">Sahy</a></li>
+				<li><a href="#">Terchova</a></li>
+				<li><a href="#">Trnovec</a></li>
+			</ul>
+			<ul>
+				<li><a href="#">Sahy</a></li>
+				<li><a href="#">Terchova</a></li>
+				<li><a href="#">Trnovec</a></li>
+			</ul>
+		
+
+
 			{*@TODO: Zalozky budu platene sekcie, v kazdej zalozke budu tie locations ktore obsahuju najviac platenych objektov*}
 			{*$regions|ulList , 5, '<li><span>&nbsp;</span><a href="%slug%" rid="%id%">%_name%</a></li>', 3*}
 		</div>

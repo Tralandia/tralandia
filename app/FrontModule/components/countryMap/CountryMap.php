@@ -19,7 +19,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 
 	public function render() {
 
-		$country = $this->locationRepositoryAccessor->findOneBySlug('slovakia');
+		$country = $this->locationRepositoryAccessor->get()->findOneBySlug('slovakia');
 
 		$clickMapData = $this->getClickMapData($country);
 
@@ -28,7 +28,8 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$this->template->navigatorData = $this->getNavigatorData($country, $clickMapData);
 
 	    $template = $this->template;
-	    $template->setFile(dirname(__FILE__) . '/map.latte');
+	    // $template->setFile(dirname(__FILE__) . '/map.latte');
+	    $template->setFile(dirname(__FILE__) . '/mapGregor.latte');
 	    $template->setTranslator($this->presenter->getService('translator'));
 	    $template->render();
 
@@ -39,14 +40,14 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$navigatorData = array();
 
 		$navigatorData['top'] = array(
-			$this->locationRepositoryAccessor->find(1),
+			$this->locationRepositoryAccessor->get()->find(1),
 			$country
 		);
 
 		$navigatorData['otherCountries'] = array();
 		if ($country->clickMapData) {
 			foreach ($country->clickMapData['otherCountries'] as $countryId) {
-				$navigatorData['otherCountries'][] = $this->locationRepositoryAccessor->find($countryId);
+				$navigatorData['otherCountries'][] = $this->locationRepositoryAccessor->get()->find($countryId);
 			}
 		}
 
@@ -61,9 +62,9 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 			'mapBox' => array()
 		));
 
-		$type = $this->locationTypeRepositoryAccessor->findBySlug('region');
+		$type = $this->locationTypeRepositoryAccessor->get()->findBySlug('region');
 
-		foreach ($this->locationRepositoryAccessor->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
+		foreach ($this->locationRepositoryAccessor->get()->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}
