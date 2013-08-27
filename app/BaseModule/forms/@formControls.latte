@@ -609,28 +609,23 @@
 
 				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
-				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
-					<li data-id="{$image->getId()}" class="ui-state-default">
-						<img n:image="$image">
-						<a href="" class="remove" title="{_o100088}"></a>
+				<ul id="sortable" class="ui-sortable">
+
+					{foreach  $container->getImages() as $image } 
+						<li data-id="{$image->getId()}" class="ui-state-default">
+							<img n:image="$image">
+							<a href="" class="remove" title="{_o100088}"></a>
+						</li>				
+					{/foreach}
+
+					<li class="addPhotoButton">
+						<span title="{_o100087}" data-placement="bottom" class="btn btn-green tooltipElem fileinput-button">
+							<i class="icon-plus"></i>
+							{input $container['upload']}
+						</span>
 					</li>
+
 				</ul>
-			</div>
-
-		</div>
-		<div class="row-fluid text">
-			<div class="span3">
-
-				<span class="btn btn-green fileinput-button">
-					<i class="icon-upload-alt"></i>
-					<span>{_o100087}</span>
-					{input $container['upload']}
-				</span>
-
-			</div>
-
-			<div class="span9">
-			<p>{_o100097}</p>
 			</div>
 
 		</div>
