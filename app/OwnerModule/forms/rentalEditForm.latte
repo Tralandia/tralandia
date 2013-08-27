@@ -125,7 +125,12 @@
 
 		<tr>
 			<td colspan="3" id="rentalPhotoGalllery" class="fieldset"><div class="separator"></div>{_o980}<i class="icon-asterisk"></i></td>
-		</tr>		
+		</tr>
+		<tr class="simpleInput">
+			<td colspan=3>
+				<div class="formHelpText info">{_o100097}</div>
+			</td>
+		</tr>
 		{include #rentalPhotos, control => $rentalContainer['photos']}
 
 		{* {include #fieldset, text => 'o933' , id => 'rentalPriceList'} *}
@@ -410,7 +415,7 @@
 									{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
 								{/foreach}
 							{/foreach}
-							
+
 						</table>
 					</div>
 				</div>
