@@ -1,6 +1,129 @@
 @import './lessFunctions.less';
 @import '../../../bootstrap/lib/less/mixins.less';
 
+
+/* dropdownlarge setting */
+
+#content {
+
+	.dropDownLagre {
+
+		position: absolute;
+		
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.41);
+
+		position: absolute;
+		.border-radius(4px);
+		top: 35px;
+		height: 302px;
+		z-index: 3;
+		width: 693px;
+		padding: 0 10px;
+		right: -7px;
+		background: #ffffff;
+		border: 1px solid #dddddd;
+
+		ul {
+			margin: 0;
+			padding:0;
+			list-style: none;
+
+			li {
+
+				height: 282px;
+				display: block;
+				padding: 10px 0;
+				float: left;
+				margin-right: 10px;
+
+				&.first {
+					border-right: 1px solid #ddd;
+					width: 235px;
+				}
+
+				ul li {
+					padding: 0;
+					width: 205px;
+
+					label {
+						cursor: pointer;
+						input[type=checkbox] {
+							top: -2px;
+							margin-right: 5px;
+							position: relative;
+						}
+
+						&:hover {
+							color: @darkGreen;
+							text-decoration: underline;
+						}				
+					}
+
+				}
+			}
+		}
+
+		h3 {
+			margin: 0 0 10px 0;
+			font-size: 15px;
+			padding: 0;
+			color: @darkBlue;
+			line-height: 16px;
+		}
+
+		.input-append {
+			input {
+				width: 21px;
+			}
+
+			.add-on {
+				height: 16px;
+				line-height: 16px;
+				font-size: 11px;
+				margin-bottom: 5px;
+				width: 180px;
+				text-align: left;			
+			}		
+		}
+
+	}
+
+
+}
+
+
+
+.dropDownLagre {
+	background: #fff;
+	border: 1px solid #ddd;
+}
+.dropDownLagre:after, .dropDownLagre:before {
+	bottom: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.dropDownLagre:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #fff;
+	border-width: 10px;
+	left: 687px;
+	margin-left: -10px;
+}
+.dropDownLagre:before {
+	border-color: rgba(221, 221, 221, 0);
+	border-bottom-color: #ddd;
+	border-width: 11px;
+	left: 687px;
+	margin-left: -11px;
+}
+
+
+
 table.formTable {
 	table.priceControlGrid {
 		margin-bottom: 0;
@@ -28,6 +151,8 @@ table.formTable {
 				}
 			}
 		}
+
+
 
 		.infoBox {
 			color: #4a6e85;
@@ -221,6 +346,7 @@ table.formTable {
 		.otherInformation {
 			width: 204px;
 			float: right;
+			position: relative;
 			border: 1px solid #b0c13b;
 			border-width: 1px 1px 0 0;
 			height: 30px;
