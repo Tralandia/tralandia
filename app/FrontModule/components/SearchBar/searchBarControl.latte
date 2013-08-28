@@ -27,27 +27,27 @@
 				data-format-input-too-short => $formatInputTooShort }
 		</div>
 		<div class="inputFilterSearch price">
-			<i class="icon-dollar"></i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected'}
+			<i class="icon-dollar"></i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 		<div class="inputFilterSearch price pull-right">
-			<i class="icon-dollar"></i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
+			<i class="icon-dollar"></i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-home"></i>
-			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
+			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-user"></i>
-			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
+			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-food"></i>
-			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected'}
+			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-globe"></i>
-			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
+			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 
 		{if $isHomepage()}

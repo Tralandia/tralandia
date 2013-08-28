@@ -350,11 +350,25 @@ $(function(){
 	$('[data-autocomplete-url]').searchFormSuggest();
 
 	$('.searchForm .select2.disabledFulltext').select2({
-		dropdownCssClass: 'searchSelect',
+		dropdownCssClass: 'searchSelect disableFulltext',
 		allowClear: true,
-		minimumResultsForSearch: 'X',
-	});	
-	
+		minimumResultsForSearch: 99,
+		placeholder:true,
+	});
+
+
+	$(".select2").on("select2-opening",function(e){
+
+		var cssClass = $(this).data('cssClass');
+		console.log('kojot');
+			if(typeof cssClass != 'undefined'){
+				setTimeout(function(){
+					$('body').find('#select2-drop').addClass(cssClass);
+				},1);
+			}
+
+	});
+
 	$('.searchForm .select2:not(.disabledFulltext)').select2({
 		dropdownCssClass: 'searchSelect'
 	   // matcher: function(term, text, opt) {

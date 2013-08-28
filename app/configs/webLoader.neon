@@ -305,11 +305,11 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
-				-  %webloader.packages.select2%
+				
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
-
+				-  %webloader.packages.select2%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
