@@ -226,7 +226,6 @@ Version: 3.4.2 Timestamp: Mon Aug 12 15:04:12 PDT 2013
 
 .select2-search input {
     width: 100%;
-    height: auto !important;
     min-height: 26px;
     padding: 4px 20px 4px 5px;
     margin: 0;
