@@ -357,10 +357,9 @@ $(function(){
 	});
 
 
-	$(".select2").on("select2-opening",function(e){
+	$(".select2 , .sidebarLocation").on("select2-opening",function(e){
 
 		var cssClass = $(this).data('cssClass');
-		console.log('kojot');
 			if(typeof cssClass != 'undefined'){
 				setTimeout(function(){
 					$('body').find('#select2-drop').addClass(cssClass);

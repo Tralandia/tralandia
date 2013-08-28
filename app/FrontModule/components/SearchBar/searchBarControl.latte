@@ -14,7 +14,7 @@
 		<strong>{_o100003}</strong>
 		<div class="inputFilterSearch selected">
 			<i class="icon-flag"></i>
-			{input country , class => 'select2 selectRedirect disabledFulltext path sidebarCountry', data-js-country => 'selected'}
+			{input country , class => 'select2 selectRedirect disabledFulltext path sidebarCountry', data-js-country => 'selected' , data-css-class => 'filterSelect'}
 		</div>
 		<div class="inputFilterSearch">
 			<i class="icon-map-marker"></i>
@@ -24,7 +24,8 @@
 				data-js-location-slug => 'location-slug',
 				data-no-results-text => $noResultsText,
 				data-autocomplete-url => $autocompleteUrl,
-				data-format-input-too-short => $formatInputTooShort }
+				data-format-input-too-short => $formatInputTooShort, 
+				data-css-class => 'filterSelect' }
 		</div>
 		<div class="inputFilterSearch price">
 			<i class="icon-dollar"></i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
