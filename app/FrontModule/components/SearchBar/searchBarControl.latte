@@ -28,14 +28,14 @@
 				data-css-class => 'filterSelect' }
 		</div>
 
-		<div class="priceControlRow">
 			<div class="inputFilterSearch price">
 				<i class="icon-dollar"></i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 			</div>
 			<div class="inputFilterSearch price pull-right">
-				{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
+				<i class="icon-dollar"></i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 			</div>
-		</div>
+
+
 		<div class="helpText">Cena za osobu na noc.</div>
 
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
