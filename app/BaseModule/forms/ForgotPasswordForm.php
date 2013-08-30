@@ -6,7 +6,10 @@ use Nette;
 
 class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 
-	public $onAfterProcess = array();
+	/**
+	 * @var array
+	 */
+	public $onAfterProcess = [];
 
 	/**
 	 * @var \Extras\Models\Repository\RepositoryAccessor

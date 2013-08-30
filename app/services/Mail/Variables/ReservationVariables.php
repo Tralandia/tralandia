@@ -20,6 +20,20 @@ class ReservationVariables extends Nette\Object {
 		$this->reservation = $reservation;
 	}
 
+	public function getVariableDetails()
+	{
+		$format = "[599]: %s&nbsp;&middot;&nbsp;[600]: %s&nbsp;&middot;&nbsp;[972]: [reservation_adultsCount]%s";
+		$arguments = ['[reservation_arrivalDate]', '[reservation_departureDate]'];
+		if($this->getVariableChildrenCount() > 0) {
+			$arguments[] = '; [1245]: [reservation_childrenCount]';
+		} else {
+			$arguments[] = '';
+		}
+
+		array_unshift($arguments, $format);
+		return call_user_func_array('sprintf', $arguments);
+	}
+
 	public function getVariableSenderName() {
 		return $this->reservation->getSenderName();
 	}

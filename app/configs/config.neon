@@ -42,6 +42,8 @@ parameters:
 
 	projectEmail: 'info@tralandia.com'
 
+	maxReservationCountPerDay: 10
+
 	staticDomain: "http://tralandiastatic.com"
 	storageDir: /../../static
 	storagePath: ''
@@ -225,8 +227,8 @@ services:
 		autowired: false
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
-	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
-#	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
+#	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
+	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
 
 	tester: Tester\Options
 #	tester: Tester\NoTester
@@ -334,7 +336,10 @@ services:
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation())
 
-	reservationProtector: ReservationProtector
+	reservationProtector:
+		class: ReservationProtector
+		setup:
+			- setReservationCountPerDay(%maxReservationCountPerDay%)
 
 	html2texy: Html2texy
 	translationTexy: TranslationTexy

@@ -31,11 +31,6 @@ parameters:
 	webTempDir: /webtemp
 	webTempPath: /webtemp
 
-	smtp:
-		host: mail.tralandia.com
-		username: robot@tralandia.com
-		password: R03OT
-
 	templateCache:
 		enabled: TRUE
 

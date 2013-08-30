@@ -50,6 +50,12 @@ class ReservationProtector {
 	}
 
 
+	public function setReservationCountPerDay($count)
+	{
+		$this->reservationCountPerDay = $count;
+	}
+
+
 	/**
 	 * @param $email
 	 */

@@ -60,7 +60,7 @@ abstract class BaseUserVariables extends Nette\Object {
 	public function getVariableLoginLink(EnvironmentVariables $environment)
 	{
 		$hash = $this->authenticator->calculateAutoLoginHash($this->getUser());
-		return $environment->link('//:Admin:PhraseList:toTranslate', [BaseRoute::AUTOLOGIN => $hash]);
+		return $environment->link('//:Front:Sign:afterLogin', [BaseRoute::AUTOLOGIN => $hash]);
 	}
 
 }
