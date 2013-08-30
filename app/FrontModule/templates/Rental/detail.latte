@@ -180,9 +180,9 @@
 									{var $pricesAvailable = true}
 									{foreach $rental->pricelists as $pricelist}
 									<li>
-										{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i
-										class="entypo-save"></i> <a href="{$pricelist->filePath}"
-										class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
+										{if $pricelist->name} {$pricelist->name} {/if} <span class="language">{_$pricelist->language->name}</span>
+										<i class="icon-save"></i> <a href="{$pricelist->filePath}"
+										class="btn-pricelist">{_o955}</a>
 									</li>
 									{/foreach}
 									{/if}
@@ -193,6 +193,8 @@
 							</li>
 						</ul>
 						
+
+					
 
 						<ul class="newPricelist">
 							<li>
