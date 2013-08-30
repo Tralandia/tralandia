@@ -13,6 +13,7 @@ use Routers\OwnerRouteList;
 abstract class BasePresenter extends Presenter {
 
 	use \Kdyby\AutowireProperties;
+	use \TFindEntityHelper;
 
 	const FLASH_INFO = 'info';
 	const FLASH_WARNING = 'warning';
@@ -122,6 +123,7 @@ abstract class BasePresenter extends Presenter {
 
 	protected function startup() {
 		parent::startup();
+		$this->initializeFindEntityHelper($this->em);
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
@@ -564,107 +566,6 @@ abstract class BasePresenter extends Presenter {
 			$this->flashMessage('Tester set to: ' . $id);
 		}
 		$this->redirect(':Front:Home:');
-	}
-
-
-	/* -------------------------- EM helpers ---------------------- */
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Rental\Rental|null
-	 */
-	public function findRental($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(RENTAL_ENTITY, $id, $need, $by);
-	}
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Rental\Amenity|null
-	 */
-	public function findAmenity($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(RENTAL_AMENITY_ENTITY, $id, $need, $by);
-	}
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Language|null
-	 */
-	public function findLanguage($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(LANGUAGE_ENTITY, $id, $need, $by);
-	}
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Rental\AmenityType|null
-	 */
-	public function findAmenityType($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(AMENITY_TYPE_ENTITY, $id, $need, $by);
-
-	}
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Phrase\Phrase|null
-	 */
-	public function findPhrase($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(PHRASE_ENTITY, $id, $need, $by);
-	}
-
-
-	/**
-	 * @param $id
-	 * @param bool $need
-	 * @param string $by
-	 *
-	 * @return \Entity\Phrase\Translation|null
-	 */
-	public function findTranslation($id, $need = TRUE, $by = 'id')
-	{
-		return $this->findHelper(TRANSLATION_ENTITY, $id, $need, $by);
-	}
-
-
-	/**
-	 * @param $entityName
-	 * @param $id
-	 * @param bool $need
-	 * @param $by
-	 *
-	 * @throws Exception
-	 * @return object
-	 */
-	private function findHelper($entityName, $id, $need, $by)
-	{
-		$entity = $this->em->getRepository($entityName)->findOneBy([$by => $id]);
-		if(!$entity && $need) {
-			throw new Exception("{$entityName}::{$by} == {$id} not exists.");
-		}
-		return $entity;
 	}
 
 }

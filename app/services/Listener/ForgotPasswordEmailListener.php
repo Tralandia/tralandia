@@ -1,7 +1,7 @@
 <?php
 namespace Listener;
 
-use Environment\Environment;
+use Entity\User\User;
 use Nette;
 
 class ForgotPasswordEmailListener extends BaseEmailListener
@@ -12,7 +12,7 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 		return ['BaseModule\Forms\ForgotPasswordForm::onAfterProcess'];
 	}
 
-	public function onAfterProcess(\Entity\User\User $user)
+	public function onAfterProcess(User $user)
 	{
 		if($user->isSuperAdmin()) return false;
 
@@ -31,11 +31,10 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 	}
 
 
-	private function prepareCompiler(\Entity\User\User $user)
+	private function prepareCompiler(User $user)
 	{
-		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
-		$emailCompiler->setTemplate($this->getTemplate('forgotten-password'));
-		$emailCompiler->setLayout($this->getLayout());
+		$emailCompiler = $this->createCompiler($user->getPrimaryLocation(), $user->getLanguage());
+		$emailCompiler->setTemplate($this->getTemplate('v2-forgotten-password'));
 
 		$emailCompiler->addOwner('owner', $user);
 

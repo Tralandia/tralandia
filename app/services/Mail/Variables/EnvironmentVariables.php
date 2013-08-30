@@ -27,14 +27,23 @@ class EnvironmentVariables extends Nette\Object {
 	private $application;
 
 	/**
+	 * @var \ShareLinks
+	 */
+	private $shareLinks;
+
+
+	/**
 	 * @param LocationVariables $locationVariables
 	 * @param LanguageVariables $languageVariables
 	 * @param Application $application
+	 * @param \ShareLinks $shareLinks
 	 */
-	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables, Application $application) {
+	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables,
+								Application $application, \ShareLinks $shareLinks) {
 		$this->locationVariables = $locationVariables;
 		$this->languageVariables = $languageVariables;
 		$this->application = $application;
+		$this->shareLinks = $shareLinks;
 	}
 
 	/**
@@ -65,11 +74,40 @@ class EnvironmentVariables extends Nette\Object {
 		return ucfirst($this->getLocationEntity()->getFirstDomain()->getDomain());
 	}
 
+
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getVariableCountryName()
+	{
+		$location = $this->getLocationEntity();
+		return $location->isWorld() ? '' : $location->getName();
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getVariableFacebookPage()
+	{
+		return $this->shareLinks->facebookPage;
+	}
+
+
 	/**
 	 * @return string
 	 */
 	public function getVariableLoginLink() {
 		return $this->link('//:Front:Sign:in');
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getVariableSupportLink()
+	{
+		return $this->link('//:Front:SupportUs:default');
 	}
 
 	/**

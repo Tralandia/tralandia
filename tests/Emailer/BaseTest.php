@@ -2,54 +2,81 @@
 
 namespace Tests\Emailer;
 
+use Entity\Language;
+use Entity\Location\Location;
 use Environment\Environment;
-use  Nette, Extras;
+use Mail\ICompilerFactory;
+use Nette, Extras;
 
 /**
  * @backupGlobals disabled
  */
 class BaseTest extends \Tests\TestCase
 {
+	/**
+	 * @var \Entity\Email\Template
+	 */
+	protected $template;
 
-	public function testCompiler() {
+	/**
+	 * @var ICompilerFactory
+	 */
+	protected $emailCompilerFactory;
 
-		$template = $this->getContext()->emailTemplateRepositoryAccessor->get()->find(1);
-		$layout = $this->getContext()->emailLayoutRepositoryAccessor->get()->find(1);
+	/**
+	 * @var \Environment\IEnvironmentFactory
+	 */
+	protected $environmentFactory;
 
-		/** @var $sender \Entity\User\User */
-		$sender = $this->getContext()->userRepositoryAccessor->get()->findOneByLogin('privat66@szm.sk');
-
-		/** @var $receiver \Entity\User\User */
-		$receiver = $this->getContext()->userRepositoryAccessor->get()->findOneByLogin('privatpodvrskom@gmail.com');
-
-		/** @var $rental \Entity\Rental\Rental */
-		$rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
-
-		$presenter = $this->mockista->create('Nette\Application\UI\Presenter', [
-			'link' => function($destination, $arguments) {
-				return $destination;
-			}
+	protected function setUp()
+	{
+		$layoutHtml = 'layout {include #content}';
+		$layout = $this->mockista->create('\Entity\Email\Layout', [
+			'getHtml' => $layoutHtml,
 		]);
 
-		$application = $this->mockista->create('Nette\Application\Application', [
-			'getPresenter' => $presenter,
+		$templateSubject = $this->createPhrase('\Entity\Email\Template:subject', "Ahoj\nToto je preklad");
+		$templateBody = $this->createPhrase('\Entity\Email\Template:body', "Ahoj\nToto je preklad");
+
+		$template = $this->mockista->create('\Entity\Email\Template', [
+			'getLayout' => $layout,
+			'getBody' => $templateBody,
+			'getSubject' => $templateSubject,
 		]);
 
-		$reflectionProperty = Nette\Reflection\ClassType::from('Nette\Application\Application')->getProperty('presenter');
-		$reflectionProperty->setAccessible(TRUE);
-		$reflectionProperty->setValue($application, $presenter);
+		$this->template = $template;
 
-		$environment = new Environment($receiver->getPrimaryLocation(), $receiver->getLanguage(), $this->getContext()->translatorFactory);
-		$emailCompiler = new \Mail\Compiler($environment, $application);
-		$emailCompiler->setTemplate($template);
-		$emailCompiler->setLayout($layout);
-		$emailCompiler->addRental('rental', $rental);
-		$emailCompiler->addVisitor('sender', $sender);
-		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
-		$html = $emailCompiler->compileBody();
+		$this->emailCompilerFactory = $this->getContext()->getByType('\Mail\ICompilerFactory');
+		$this->environmentFactory = $this->getContext()->getByType('\Environment\IEnvironmentFactory');
+	}
 
 
-		$this->assertGreaterThan(100, strlen($html));
+	/**
+	 * @param Location $location
+	 * @param Language $language
+	 *
+	 * @return \Mail\Compiler
+	 */
+	protected function createCompiler(Location $location, Language $language)
+	{
+		$environment = $this->environmentFactory->create($location, $language);
+		$emailCompiler = $this->emailCompilerFactory->create($environment);
+		return $emailCompiler;
+	}
+
+	public function testBase()
+	{
+		$emailCompiler = $this->createCompiler($this->findLocation('sk', TRUE, 'iso'), $this->findLanguage('sk', TRUE, 'iso'));
+		$emailCompiler->setTemplate($this->template);
+
+		$body = $emailCompiler->compileBody();
+
+		$expected = "
+<p>layout Ahoj<br />
+Toto je preklad</p>
+
+<!-- by Texy2! -->";
+		$this->assertEquals($expected, $body);
 	}
 
 }
