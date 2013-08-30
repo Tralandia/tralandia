@@ -179,7 +179,7 @@
 									{if count($rental->pricelists) > 0}
 									{var $pricesAvailable = true}
 									{foreach $rental->pricelists as $pricelist}
-									<li>
+									<li n:class="$iterator->fisrt ? separator">
 										{if $pricelist->name} {$pricelist->name} {/if} <span class="language">{_$pricelist->language->name}</span>
 										<i class="icon-save"></i> <a href="{$pricelist->filePath}"
 										class="btn-pricelist">{_o955}</a>
@@ -193,6 +193,7 @@
 							</li>
 						</ul>
 						
+
 
 					
 
@@ -208,10 +209,10 @@
 								</div>
 								<div class="content">
 									<ul>
-										<li><span class="dateRange"><i class="icon-calendar"></i> 1.Jan - 31.Maj</span>  <span class="price">14EUR/noc</span>
+										<li><span class="dateRange"><i class="icon-calendar"></i> 1.Jan - 31.Maj</span>  <span class="price">14EUR<span>/noc</span></span>
 											<p>Breakfast: incl., Dinner: 8 EUR/person</p>
 										</li>
-										<li><span class="dateRange"><i class="icon-calendar"></i> 1.Jun - 31.Dec</span>  <span class="price">33EUR/noc</span>
+										<li><span class="dateRange"><i class="icon-calendar"></i> 1.Jun - 31.Dec</span>  <span class="price">33EUR<span>/noc</span></span>
 											<p>Breakfast: incl., Dinner: 8 EUR/person</p>
 										</li>
 
