@@ -277,11 +277,9 @@
 									</span>
 									{if $rental->phone->international}
 
-
-											<strong>
-											<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
-											</strong>
-
+										<strong>
+										<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
+										</strong>
 
 									{/if}
 
@@ -306,7 +304,7 @@
 										{/if}
 
 										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
+											<a target="_blank" class="websiteUrl" rel="nofollow" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
 
