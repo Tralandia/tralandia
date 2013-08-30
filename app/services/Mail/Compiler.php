@@ -315,10 +315,7 @@ class Compiler {
 
 		$html = str_replace('{include #content}', $bodyHtml, $layout->getHtml());
 
-		$variables = $this->findAllVariables($html);
-		$html = $this->replaceVariables($html, $variables);
-
-
+		$html = $this->findAndReplaceVariables($html);
 
 		return $html;
 	}
@@ -341,6 +338,21 @@ class Compiler {
 		}
 
 		return $this->subject;
+	}
+
+
+	/**
+	 * @param string $html
+	 * @return string
+	 */
+	protected function findAndReplaceVariables($html)
+	{
+		for($i = 0; $i < 2; $i++) {
+			$variables = $this->findAllVariables($html);
+			$html = $this->replaceVariables($html, $variables);
+		}
+
+		return $html;
 	}
 
 	/**
@@ -370,8 +382,19 @@ class Compiler {
 
 			if($variable['fullname'] == 'subject') {
 				$val = $this->compileSubject();
+			} else if($variable['fullname'] == 'supportLink') {
+				$val = $this->getVariable('environment')->getVariableSupportLink();
 			} else if(is_numeric($variable['fullname'])) {
-				$val = $this->environment->getTranslator()->translate($variable['fullname']);
+				if(in_array($variable['fullname'], [972, 1245])) {
+					$val = $this->environment->getTranslator()->translate($variable['fullname'], 2);
+					$val = Strings::firstUpper($val);
+				} else {
+					$val = $this->environment->getTranslator()->translate($variable['fullname']);
+				}
+				$val = $this->findAndReplaceVariables($val);
+				$val = str_replace("\n", '$$$', $val);
+				$val = $this->texy->processLine($val);
+				$val = str_replace('$$$', '<br>', $val);
 			} else if (array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
 				if(Strings::contains($methodName, 'Link')) {
