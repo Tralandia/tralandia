@@ -58,9 +58,11 @@ class HomePresenter extends BasePresenter {
 		return $this->environment->getPrimaryLocation()->getRentalCount();
 	}
 
-	public function createComponentCountryMap() {
-
-		return new \FrontModule\Components\CountryMap\CountryMap($this->locationRepository, $this->locationTypeRepository);
+	public function createComponentCountryMap()
+	{
+		$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
+		$locationTypeRepository = $this->em->getRepository(LOCATION_TYPE_ENTITY);
+		return new \FrontModule\Components\CountryMap\CountryMap($locationRepository, $locationTypeRepository);
 
 	}
 
