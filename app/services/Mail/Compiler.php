@@ -62,17 +62,30 @@ class Compiler {
 
 
 	/**
+	 * @var string
+	 */
+	private $subject;
+
+	/**
+	 * @var \ShareLinks
+	 */
+	private $shareLinks;
+
+
+	/**
 	 * @param \Environment\Environment $environment
 	 * @param \Nette\Application\Application $application
+	 * @param \ShareLinks $shareLinks
 	 * @param \Security\Authenticator $authenticator
 	 * @param \TranslationTexy $texy
 	 */
-	public function __construct(Environment $environment, Application $application, Authenticator $authenticator, \TranslationTexy $texy)
+	public function __construct(Environment $environment, Application $application, \ShareLinks $shareLinks, Authenticator $authenticator, \TranslationTexy $texy)
 	{
 		$this->application = $application;
 		$this->authenticator = $authenticator;
-		$this->setEnvironment($environment);
+		$this->shareLinks = $shareLinks;
 		$this->texy = $texy;
+		$this->setEnvironment($environment);
 	}
 
 	/**
@@ -108,7 +121,7 @@ class Compiler {
 
 		$this->environment = $environment;
 
-		$this->variables['environment'] = new Variables\EnvironmentVariables($location, $language, $this->application);
+		$this->variables['environment'] = new Variables\EnvironmentVariables($location, $language, $this->application, $this->shareLinks);
 		return $this;
 	}
 
@@ -310,16 +323,24 @@ class Compiler {
 		return $html;
 	}
 
+
+	/**
+	 * @return string
+	 */
 	public function compileSubject()
 	{
-		$template = $this->getTemplate();
+		if(!$this->subject) {
+			$template = $this->getTemplate();
 
-		$html = $this->environment->getTranslator()->translate($template->getSubject());
+			$html = $this->environment->getTranslator()->translate($template->getSubject());
 
-		$variables = $this->findAllVariables($html);
-		$html = $this->replaceVariables($html, $variables);
+			$variables = $this->findAllVariables($html);
+			$html = $this->replaceVariables($html, $variables);
 
-		return $html;
+			$this->subject = $html;
+		}
+
+		return $this->subject;
 	}
 
 	/**
@@ -347,7 +368,9 @@ class Compiler {
 		foreach ($variables as $variable) {
 			if(array_key_exists($variable['fullname'], $replace)) continue;
 
-			if(is_numeric($variable['fullname'])) {
+			if($variable['fullname'] == 'subject') {
+				$val = $this->compileSubject();
+			} else if(is_numeric($variable['fullname'])) {
 				$val = $this->environment->getTranslator()->translate($variable['fullname']);
 			} else if (array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
