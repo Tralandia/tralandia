@@ -45,7 +45,7 @@
 					<div class="span5 relative">
 
 						<h1 class="addToViewList" id="{$rental->id}">
-							{_$rental->name}
+							{_$rental->name} {if $rental->hasPlacement()}({_$rental->getPlacement()->name}){/if}
 							{if $rental->classification > 0 }
 								&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
 							{/if}
@@ -57,8 +57,7 @@
 
 						<p class="locality noPadding">
 							<a href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
-								{_$rental->type->name|firstUpper}
-								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
+								{_$rental->type->name|firstUpper}								
 								{_$rental->address->locality->name , null , [case=>locative]}
 							</a>
 						</p>
@@ -180,10 +179,10 @@
 									{if count($rental->pricelists) > 0}
 									{var $pricesAvailable = true}
 									{foreach $rental->pricelists as $pricelist}
-									<li>
-										{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i
-										class="entypo-save"></i> <a href="{$pricelist->filePath}"
-										class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
+									<li n:class="$iterator->fisrt ? separator">
+										{if $pricelist->name} {$pricelist->name} {/if} <span class="language">{_$pricelist->language->name}</span>
+										<i class="icon-save"></i> <a href="{$pricelist->filePath}"
+										class="btn-pricelist">{_o955}</a>
 									</li>
 									{/foreach}
 									{/if}
@@ -194,6 +193,9 @@
 							</li>
 						</ul>
 						
+
+
+
 
 
 
@@ -278,11 +280,9 @@
 									</span>
 									{if $rental->phone->international}
 
-
-											<strong>
-											<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
-											</strong>
-
+										<strong>
+										<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
+										</strong>
 
 									{/if}
 
@@ -307,7 +307,7 @@
 										{/if}
 
 										{if $rental->url}
-											<a target="_blank" class="websiteUrl" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
+											<a target="_blank" class="websiteUrl" rel="nofollow" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
 
 

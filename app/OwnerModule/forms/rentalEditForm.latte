@@ -73,7 +73,7 @@
 							{/if}
 							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
 						{/foreach}
-						{input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-right selectLanguage notFulltext'}
+						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
 					</div>
 					<div class="content">		
 						<table>
@@ -125,10 +125,22 @@
 
 		<tr>
 			<td colspan="3" id="rentalPhotoGalllery" class="fieldset"><div class="separator"></div>{_o980}<i class="icon-asterisk"></i></td>
-		</tr>		
+		</tr>
+		<tr class="simpleInput">
+			<td colspan=3>
+				<div class="formHelpText info">{_o100097}</div>
+			</td>
+		</tr>
 		{include #rentalPhotos, control => $rentalContainer['photos']}
 
-		{include #fieldset, text => 'o933' , id => 'rentalPriceList'}
+		{* {include #fieldset, text => 'o933' , id => 'rentalPriceList'} *}
+	<tr>
+		<td colspan="3" id="rentalPriceList" class="fieldset"><div class="separator"></div>{_o933}<i class="icon-asterisk"></i></td>
+	</tr>
+
+
+
+
 		{include #rentalPriceList, control => $rentalContainer['priceList']}
 
 		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload'}
@@ -151,7 +163,7 @@
 
 		<tr><td colspan="3"><div class="separator"></div></td></tr>
 		<tr>
-			<td colspan="2" id="rentalInterview" class="fieldset">{_1125} </td><td> {input $rentalContainer['translationLanguage'] , class => ' pull-right selectLanguageInterview selectLanguage notFulltext'}</td>
+			<td colspan="2" id="rentalInterview" class="fieldset">{_1125} </td><td> {* {input $rentalContainer['translationLanguage'] , class => ' pull-right selectLanguageInterview selectLanguage notFulltext'} *}</td>
 		</tr>
 
 		<tr class="topArrowBox">
@@ -166,16 +178,43 @@
 			</td>
 		</tr>
 
-		{foreach $rentalContainer['interview']->getComponents() as $container}
-			{foreach $container->getControls() as $control}
-				{if $control->getName() == $environmentLanguage->getIso()}
-					{var $hide = ''}
-				{else}
-					{var $hide = 'hide'}
-				{/if}
-				{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
-			{/foreach}
-		{/foreach}
+
+
+		<tr class="simpleInput">
+			<td colspan="3">
+				<div class="langTabs">
+					<div class="header">
+						{foreach $rentalContainer['name']->getControls() as $control}
+							{if $control->getName() == $environmentLanguage->getIso()}
+								{var $hide = 'current'}
+							{else}
+								{var $hide = 'hide'}
+							{/if}
+							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+						{/foreach}
+						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
+					</div>
+					<div class="content">		
+						<table>
+
+							{foreach $rentalContainer['interview']->getComponents() as $container}
+								{foreach $container->getControls() as $control}
+									{if $control->getName() == $environmentLanguage->getIso()}
+										{var $hide = ''}
+									{else}
+										{var $hide = 'hide'}
+									{/if}
+									{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
+								{/foreach}
+							{/foreach}
+
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'pull-right'}
 	</table>
