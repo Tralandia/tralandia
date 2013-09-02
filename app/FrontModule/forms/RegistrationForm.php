@@ -143,7 +143,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 			$rentalContainer->addText('name', '152275')
 				->setOption('help', $this->translate('o100071'))
-				->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+				->addRule(self::MAX_LENGTH, $this->translate('o100101'), 70);
 
 			$currency = $this->country->getDefaultCurrency();
 			if($currency) {
