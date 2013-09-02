@@ -12,7 +12,7 @@ use Routers\OwnerRouteList;
 
 abstract class BasePresenter extends Presenter {
 
-	use \Kdyby\AutowireProperties;
+	use \Kdyby\Autowired\AutowireProperties;
 	use \TFindEntityHelper;
 
 	const FLASH_INFO = 'info';

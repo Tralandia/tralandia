@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6e775cfb547548ec40b93c38e50154bc",
+    "hash": "e62b8d7f27bc6e477a37d0290283b0da",
     "packages": [
         {
             "name": "dg/dibi",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d"
+                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/1728437f5d3c6c274a60835f3abe577250cd801d",
-                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
+                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
                 "shasum": ""
             },
             "require-dev": {
@@ -28,7 +28,7 @@
                     "dibi/"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3",
                 "GPLv2",
@@ -54,48 +54,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2013-08-11 18:59:28"
-        },
-        {
-            "name": "hosiplan/nette-autowire-properties",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
-                "reference": "v0.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
-                "reference": "v0.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com"
-                }
-            ],
-            "description": "Lazy-Autowire of properties for Nette PresenterComponents.",
-            "keywords": [
-                "nette"
-            ],
-            "time": "2012-12-21 13:52:10"
+            "time": "2013-08-29 08:28:25"
         },
         {
             "name": "janmarek/mockista",
@@ -154,6 +113,57 @@
             "time": "2013-06-24 12:24:03"
         },
         {
+            "name": "kdyby/autowired",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/Autowired.git",
+                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/Autowired/zipball/00734d2c01e0262af93a428cb9758ad1d6c11a4c",
+                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "@dev"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby\\Autowired": "src/"
+                },
+                "classmap": [
+                    "src/Kdyby/Autowired/exceptions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Syntax sugar for working with services in Nette Framework",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "autowire",
+                "di",
+                "kdyby",
+                "nette"
+            ],
+            "time": "2013-08-22 22:10:12"
+        },
+        {
             "name": "kdyby/events",
             "version": "dev-master",
             "source": {
@@ -185,7 +195,7 @@
                     "src/Doctrine/compatibility.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -231,7 +241,7 @@
                     "Kdyby\\Replicator\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -264,7 +274,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/0089727d3579f4f34daa1d356b9015f579be2243",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/71cbcc59a15f1b9ee7c08839b26434ab2a67caab",
                 "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
                 "shasum": ""
             },
@@ -286,7 +296,7 @@
                     "src/Kdyby/Redis/exceptions.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -315,12 +325,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "b760f1cea0973a866b51ca391eded7b7c77a387c"
+                "reference": "084d8cdb745067c68b0fc256b7ab7403b10689be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b760f1cea0973a866b51ca391eded7b7c77a387c",
-                "reference": "b760f1cea0973a866b51ca391eded7b7c77a387c",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/084d8cdb745067c68b0fc256b7ab7403b10689be",
+                "reference": "084d8cdb745067c68b0fc256b7ab7403b10689be",
                 "shasum": ""
             },
             "require": {
@@ -338,7 +348,7 @@
                     "Detection": "namespaced/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -359,7 +369,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-08-21 14:05:51"
+            "time": "2013-08-29 11:09:48"
         },
         {
             "name": "nette/nette",
@@ -371,7 +381,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/f36f5daab168925ccd1b4f7f35faa434be076dc6",
+                "url": "https://api.github.com/repos/nette/nette/zipball/0f69335b64c69defcf558940d504d6e262ca49f7",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -401,7 +411,7 @@
                     "Nette/loader.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -504,7 +514,7 @@
                     "Nextras\\Forms": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -533,12 +543,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "v2.3"
+                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/v2.3",
-                "reference": "v2.3",
+                "url": "https://api.github.com/repos/dg/texy/zipball/11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
+                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
                 "shasum": ""
             },
             "require": {
@@ -553,7 +563,7 @@
                     "src/texy.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -612,7 +622,7 @@
         "kdyby/events": 20,
         "kdyby/forms-replicator": 20,
         "kdyby/redis": 20,
-        "hosiplan/nette-autowire-properties": 20,
+        "kdyby/autowired": 20,
         "mobiledetect/mobiledetectlib": 20,
         "dg/dibi": 20,
         "texy/texy": 20,
