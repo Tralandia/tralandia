@@ -12,6 +12,14 @@
 		color: @white;
 	}
 
+	.helpText {
+		color: #fff;
+		font-size: 12px;
+		text-align: center;
+		position: relative;
+		top: -10px;
+	}
+
 	.select2-container {
 		.select2-choice {
 			div {
@@ -20,6 +28,58 @@
 				}
 			}
 		}
+	}
+
+	.brandBanner {
+		background: #fdfdf8;
+		margin-left: 10px;
+		border: 1px solid #f25900;
+		padding: 10px;
+		.border-radius(4px);
+		margin-top: 10px;
+	
+		.icon {
+			float: left;
+			border: 5px solid #f25900;
+			width: 30px;
+			border-radius: 21px;
+			height: 30px;
+			margin-right: 10px;
+			line-height: 30px;
+			text-align: center;
+
+			i {
+				font-size: 22px;
+				position: relative;
+				top: 1px;
+				left: -2px;
+				color: #f25900;		
+			}	
+		}
+
+		strong {
+			font-weight: bold;
+			height: auto;
+			text-align: left;
+			line-height: 21px;
+			color: #f25900;	
+		}
+
+		a.btn {
+			display: block;
+			#gradient > .vertical(#8eaf12,#749108);
+			color: #fff;
+			text-shadow:none;
+			border: none;
+			padding: 7px;
+			font-weight: normal;
+			font-size: 15px;			
+		}
+
+		p {
+			color: @brown;
+		}
+
 	}
 
 	&.rootHomeSidebar {
@@ -685,4 +745,18 @@ border-top-right-radius: 4px;
 .select2-container .select2-choice div , 
 .select2-container.select2-dropdown-open .select2-choice {
 	filter:none;
+}
+
+
+.smallBrandBanner {
+	position: relative;
+	a {
+		position: absolute;
+		float: right;
+		right: 10px;
+		font-size: 12px;
+		padding: 1px 10px;
+		background: #f25900;
+		color: #ffffff;
+	}
 }

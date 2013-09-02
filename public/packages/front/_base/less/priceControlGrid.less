@@ -1,0 +1,686 @@
+@import './lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
+
+
+/* dropdownlarge setting */
+
+#content {
+
+	.dropDownLagre {
+
+		position: absolute;
+		
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.41);
+
+		position: absolute;
+		.border-radius(4px);
+		top: 35px;
+		height: 302px;
+		z-index: 3;
+		width: 693px;
+		padding: 0 10px;
+		right: -7px;
+		background: #ffffff;
+		border: 1px solid #dddddd;
+
+		strong {
+			font-weight: normal;
+			font-size: 13px;
+			display: block;
+			margin-right: 10px;
+			margin-top: 10px;
+			padding-top: 5px;
+		}
+
+		ul {
+			margin: 0;
+			padding:0;
+			list-style: none;
+
+			li {
+
+				height: 282px;
+				display: block;
+				padding: 10px 0;
+				float: left;
+				margin-right: 10px;
+
+				&.first {
+					border-right: 1px solid #ddd;
+					width: 235px;
+				}
+
+				ul li {
+					padding: 0;
+					width: 205px;
+
+					label {
+						cursor: pointer;
+						input[type=checkbox] {
+							top: -2px;
+							margin-right: 5px;
+							position: relative;
+						}
+
+						&:hover {
+							color: @darkGreen;
+							text-decoration: underline;
+						}				
+					}
+
+				}
+			}
+		}
+
+		h3 {
+			margin: 0 0 10px 0;
+			font-size: 15px;
+			padding: 0;
+			color: @darkBlue;
+			line-height: 16px;
+		}
+
+		.input-append {
+			input {
+				width: 21px;
+			}
+
+			.add-on {
+				height: 16px;
+				line-height: 16px;
+				font-size: 11px;
+				margin-bottom: 5px;
+				width: 180px;
+				text-align: left;			
+			}		
+		}
+
+	}
+
+
+}
+
+
+
+.dropDownLagre {
+	background: #fff;
+	border: 1px solid #ddd;
+}
+.dropDownLagre:after, .dropDownLagre:before {
+	bottom: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.dropDownLagre:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #fff;
+	border-width: 10px;
+	left: 687px;
+	margin-left: -10px;
+}
+.dropDownLagre:before {
+	border-color: rgba(221, 221, 221, 0);
+	border-bottom-color: #ddd;
+	border-width: 11px;
+	left: 687px;
+	margin-left: -11px;
+}
+
+
+
+table.formTable {
+	table.priceControlGrid {
+		margin-bottom: 0;
+
+		label {
+			margin-bottom: 0;
+			font-size: 10px;
+			height: 13px;
+			display: block;
+			cursor: pointer;
+			line-height: 10px;
+
+			input {
+				position: relative;
+				top: -1px;
+				width: 2px;
+				margin-right: 10px;
+			}
+
+			&.medium {
+				font-size: 12px;
+				margin-top: 6px;
+				input {
+					top: -3px;
+				}
+			}
+		}
+
+
+
+		.infoBox {
+			color: #4a6e85;
+			text-align: center;
+			background: #c2e1f5;
+			border: 1px solid #739eb9;
+			.border-radius(4px);
+			font-size: 12px;
+			width: 153px;
+		}
+
+		a.multi {
+
+			display: block;
+			padding: 0px 5px;
+			font-size: 12px;
+			color: @darkBlue;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			background: #fff;
+			margin-top: 3px;
+			text-align: center;
+
+			i {
+				margin-left: 2px;
+			}
+
+			&:hover {
+				text-decoration: none;
+
+				span {
+					text-decoration: underline;
+				}
+			}
+
+		}
+
+		tr {
+			td {
+
+				select {
+					height: 25px;
+					width: 85px;
+					float: left;
+					line-height: 20px;
+					font-size: 11px;
+					margin-right: 5px;
+					margin-bottom: 0;
+
+					&.counter {
+						width: 49px;
+					}
+
+					&:nth-child(2){
+						margin-right: 0;
+					}
+
+					&.amenities {
+						width: 85px;
+					}
+				}
+
+				input[type=text] , input[type=text].period , input[type=text].priceInput {
+					height: 20px;
+					padding: 1px 5px;
+					width: 83px;
+					font-size: 11px;
+				}
+
+				input[type=text].entityName {
+					width: 300px;
+					margin-left: 5px;
+				}
+
+				input[type=text].priceInput {
+					height: 20px;
+				}				
+
+				&.entity {
+
+					.selectGroup {
+
+
+
+						&.first {
+							width: 50px;
+						}					
+					}
+
+					&.counter {
+						vertical-align: middle;
+					}
+
+				}
+
+				&.price {
+					vertical-align: middle;
+
+				}
+
+				&.periodBox {
+					min-width: 90px;
+				}
+
+				&.infoboxCover {
+					min-width: 130px;
+				}
+
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+.entityBox {
+
+	margin-bottom: 20px;
+	width: 703px;
+	clear: both;
+
+	select {
+		height: 25px;
+		font-size: 12px;
+		width: 120px;
+		margin: 0;
+
+		&.counter {
+			width: 60px;
+		}
+	}
+
+	input[type=text] {
+		height: 16px;
+	}
+
+	a.multi {
+
+		display: block;
+		padding: 0px 5px;
+		font-size: 12px;
+		color: @darkBlue;
+		/*border: 1px solid #ddd;*/
+		border-radius: 3px;
+		margin-top: 3px;
+		text-align: center;
+
+		i {
+			margin-left: 3px;
+			color: @darkBlue;
+		}
+
+		&:hover {
+			text-decoration: none;
+
+			span {
+				text-decoration: underline;
+
+			}
+		}
+
+		b {
+			color: #888;
+			font-weight: normal;
+		}
+
+	}
+
+	.header {
+
+		background: #f8fae9;
+		height: 36px;
+		border-bottom: 1px solid #b0c13b;
+
+		.baseInformation {
+			width: 478px;
+			float: left;
+			border: 1px solid #b0c13b;
+			border-width: 1px 0 0 1px;
+			padding: 5px;
+			padding-left: 8px;
+			.border-radius(4px 0 0 0);
+		}
+
+		.otherInformation {
+			width: 204px;
+			float: right;
+			position: relative;
+			border: 1px solid #b0c13b;
+			border-width: 1px 1px 0 0;
+			height: 30px;
+			padding: 3px 0;
+			padding-right: 6px;
+			.border-radius(0 4px 0 0);
+
+			a {
+				float: right;
+				margin:4px 3px;
+			}
+		}
+	}
+
+	.content {
+		clear: both;
+		background: #fff;
+		height: 83px;
+		.border-radius(0 0 4px 4px);
+		border: 1px solid #b0c13b;
+		border-width: 0 1px 1px;
+
+		overflow: hidden;
+
+		ul {
+			list-style: none;
+			margin:0;
+			padding: 0;
+
+			li {
+					display: block;
+					float: left;
+					padding: 10px 10px;
+					margin-left: 0;
+					border-right: 1px solid #dddddd;
+					width: 96px;
+					text-align: center;
+
+				input[type=text] {
+					width: 81px;
+				}
+
+				.input-append {
+					span {
+						height: 16px;
+						line-height: 16px;
+						font-size: 11px;
+					}
+				}
+
+				&.disabled {
+					display: none;
+				}
+
+				&:last-child , &.last {
+					border: none;
+					padding-right: 0;
+				}
+
+				.timerange {
+					color: #888;
+					text-align: center;
+					font-size: 12px;
+				}
+
+
+			}
+		}
+	}
+
+	&.header {
+
+		
+
+		.content {
+			height: 64px;
+			padding: 10px 0 0 0;
+			border-width: 1px;
+
+			.border-radius(0 4px 4px 4px);
+			ul {
+				li {
+					input[type=text] {
+						width: 90px;
+					}
+				}
+			}
+		}
+
+		.header .baseInformation {
+			width: 200px;
+			font-weight: bold;
+			margin-bottom: -1px;
+			border-width: 1px 1px 0;
+			.border-radius(4px 4px 0 0)
+		}
+	}
+
+	&.pattern {
+		.content {
+			height: 97px;
+			overflow: hidden;
+
+			ul {
+				li {
+
+					padding: 0 10px 10px;
+					margin-left: 0;
+					border-right: 1px solid #dddddd;
+					width: 96px;
+					text-align: center;
+
+					.dateRange {
+						input[type=text] {
+							width: 31px;
+							float: left;
+							height: 10px;
+							margin-bottom: 2px;
+							&.to {
+								float: right;
+							}
+						}						
+					}
+
+					a.remove {
+						font-size: 11px;
+					}
+
+					a.btn-mini {
+						font-size: 11px;
+						margin-bottom: 2px;
+						width: 80px;
+
+						i {
+							top: 1px;
+							position: relative;
+						}
+					}
+
+					div.btnMiniPlaceholder {
+						height: 21px;
+					}
+
+					&.addColumn {
+						padding: 0;
+						margin: 0;
+						border: none;
+
+						a.btn {
+							border: none;
+							line-height: 14px;
+							padding: 4px;
+							margin: 28px 0 0 10px;
+							i {
+								float: none;
+								top: 2px;								
+							}						
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+}
+
+
+
+.summaryBox {
+	margin-bottom: 300px;
+	.border-radius(4px);
+	background: #fd9903;
+	color: #ffffff;
+	padding: 10px;
+	width: 500px;
+	float: right;
+	height: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+
+a.btn.addEntity {
+height: 38px;
+line-height: 38px;
+width: 152px;
+
+	i {
+		float: none;
+		top: 2px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#content {
+	ul.newPricelist {
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+
+		.head {
+			height: 30px;
+			line-height: 30px;
+			color: @darkGreen;
+			padding: 0 10px;
+			border-bottom: 1px solid #dddddd;
+			background: #fcfff2;
+			i {
+				float: right;
+				margin-top: 7px;
+			}
+
+			.priceRange , .area {
+				color: #888;
+				font-size: 11px;
+			}
+		}
+
+		li {
+			border: 1px solid #dddddd;
+			.border-radius(4px);
+			margin-bottom: 5px;	
+			overflow: hidden;
+			&.closes {
+				.head {
+					border: none;
+				}
+			}
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			li {
+				border: none;
+				.border-radius(0);
+				margin: 0 5px ;
+				border-bottom: 1px solid #dddddd;
+				padding: 0;
+				font-size: 13px;
+
+				i {
+					font-size: 11px;
+				}
+
+				&:last-child {
+					border:none;
+					height: 32px;
+				}
+
+				.price {
+					float: right;
+					color: @darkGreen;
+					span {
+						color: #888;
+					}
+				}
+
+				.reservation {
+					float: right;
+					background: #708711;
+					margin: 2px 0;
+					font-weight: normal;
+
+					i {
+						top:1px;
+					}
+				}
+
+				&.amenities {
+					color: #888;
+					padding: 5px;
+					font-size: 11px;
+					line-height: 13px;
+					border: none;			
+				}
+
+				p {
+					text-align: right;
+					padding: 0;
+					color: #888;
+					font-size: 11px;
+					margin: 0 0 2px 0;
+				}
+
+				&.gallery {
+					padding-left: 5px;
+					border: none;
+					img {
+						width: 60px;
+						float: left;
+						margin-right: 3px;
+						margin-top: 3px;
+						margin-bottom: 3px;
+
+						&:last-child {
+							margin-right:0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+

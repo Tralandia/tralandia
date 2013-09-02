@@ -2,9 +2,7 @@
 
 $(function(){
 
-    $('.selectLanguageBasicInformation').on('change',function(){
-        languageSelect(this,$(this).val());
-    });
+
 
     $('a.tabPane').click(function(){
         languageSelect(this,$(this).data('iso'));
@@ -14,16 +12,25 @@ $(function(){
         var iso = $(this).val();
         $(this).parents('form').find('tr.toggleLanguage.interview:not(.'+iso+')').addClass('hide');
         $(this).parents('form').find('tr.toggleLanguage.interview.'+iso).removeClass('hide');
-    });   
+    }); 
+
+
 
 });
 
 
 function languageSelect(el,iso){
-    $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation:not(.'+iso+')').addClass('hide');
-    $(el).parents('form').find('tr.toggleLanguage.selectLanguageBasicInformation.'+iso).removeClass('hide');
+
+    if(iso != 0){
+
+        $(el).parents('form').find('tr.toggleLanguage:not(.'+iso+')').addClass('hide');
+        $(el).parents('form').find('tr.toggleLanguage.'+iso).removeClass('hide');
 
 
-    $(el).parents('form').find('a.tabPane').removeClass('current');
-    $(el).parents('form').find('a.tabPane.'+iso).removeClass('hide').addClass('current');    
+        $(el).parents('form').find('a.tabPane').removeClass('current');
+        $(el).parents('form').find('a.tabPane.'+iso).removeClass('hide').addClass('current');
+
+        $(el).select2('val',0);
+    }
+   
 }

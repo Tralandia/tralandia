@@ -200,7 +200,9 @@ ul.arrows {
 
 
 
-
+.blue , a.blue {
+	color: @darkBlue;
+}
 
 
 .red {
@@ -306,6 +308,16 @@ ul.arrows {
 		.btn-success.dropdown-toggle {
 			background: #ccc;
 		}
+	}
+}
+
+.btn.btn-blue {
+	background: #4a6e85;
+	color: #fff;
+	font-weight: normal;
+
+	&:hover {
+		background: #5D8FAF;
 	}
 }
 
@@ -895,6 +907,7 @@ ul.arrows {
 	color: @brown;
 	padding: 0 10px;
 
+
 	&.noPadding {
 		padding: 0;
 
@@ -997,6 +1010,12 @@ ul.arrows {
 		padding-top: 15px;
 	}
 
+}
+
+.btn {
+	&:hover {
+		background-position: 0;
+	}	
 }
 
 .btn.btn-compare{

@@ -144,14 +144,14 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
 
-		$languages = array();
+		$languages = array($this->translate('153133'));
 
 		foreach($supportedLanguagesForSelect as $language){
 			$languages[$language->getIso()] = $this->translate($language->getName());
 		}
 
-		$rentalContainer->addSelect('translationLanguage', '##', $languages)
-						->setDefaultValue($this->environment->getLanguage()->getIso());
+		$rentalContainer->addSelect('translationLanguage', '##', $languages);
+						// ->setDefaultValue($this->environment->getLanguage()->getIso());
 
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
@@ -166,12 +166,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$iso = $language->getIso();
 
 			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getName()) . ':')
 				->setOption('help', $this->translate('o100071'));
 				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getName()) . ':')
 				->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {

@@ -1,45 +1,60 @@
 @import '../../../bootstrap/lib/less/mixins.less';
 
 .select2-container {
+
+
 	.select2-choice {
-		filter: none;
-		div {
+
+		.select2-arrow  {
 			filter: none;
-			b {
-				background-image: none;
-				background: none;
-				font-weight: normal;
-				padding-top: 2px;
-				position: relative;
-				left: 1px;
-				&:before  { 
-					font-family: FontAwesome;
-					font-weight: normal;
-					font-style: normal;
-					text-decoration: inherit;
-					-webkit-font-smoothing: antialiased;
-					font-size: 18px;
-					/* sprites.less reset */
-					display: inline;
-					width: auto;
-					height: auto;
-					line-height: normal;
-					vertical-align: baseline;
+			width: 25px;
+			background: #eaf0d7;
+			border-radius: 0 4px 0 0;
+			height: 30px;
+			border-left: 1px solid #b0c13b;
+
+				filter: none;
+				b {
 					background-image: none;
-					background-position: 0% 0%;
-					background-repeat: repeat;
-					margin-top: 0;
-					content: "\f107"; 
+					background: none;
+					font-weight: normal;
+					padding-top: 2px;
+					position: relative;
+					left: 7px;
+					&:before  { 
+						font-family: FontAwesome;
+						font-weight: normal;
+						font-style: normal;
+						text-decoration: inherit;
+						-webkit-font-smoothing: antialiased;
+						font-size: 18px;
+						/* sprites.less reset */
+						display: inline;
+						width: auto;
+						height: auto;
+						line-height: normal;
+						vertical-align: baseline;
+						background-image: none;
+						background-position: 0% 0%;
+						background-repeat: repeat;
+						margin-top: 0;
+						content: "\f107"; 
+					}
 				}
-			}
+			
 		}
+
 	}
+
+
 
 	&.select2-dropdown-open {
 		.select2-choice {
 			filter: none;
-			div {
+			.select2-arrow {
 				filter: none;
+				background: transparent;
+				border-color: #fff;
 				b {
 					background-image: none;
 					&:before {
@@ -68,7 +83,7 @@
 		float: right;
 		position: relative;
 		right: 10px;
-		top: -2px;
+		top: -1px;
 		z-index: 9000;	
 		color: #999;
 	}	
@@ -101,6 +116,7 @@ input[type=text].select2-input {
 		background-image: none;
 	}
 }
+
 .select2-results {
 	max-height: 300px;
 }
@@ -120,33 +136,6 @@ input[type=text].select2-input {
     .select2-search { display: none }
 }
 
-
-
-.selectLanguage.select2-container {
-	.select2-choice {
-		background: #FFF;
-		width: 140px;
-		color: #333;
-		border: 1px solid #FD7B03;
-
-		div {
-			background: #fd8d03;
-			border-left: 1px solid #FD7B03;
-			color: #FFF;
-			width: 20px;
-			.border-radius(0);
-
-			b {
-				&:before {
-					position:relative;
-					left: 3px;
-				}
-			}
-		}
-	}
-}
-
-
 .select2-drop.orangeSelect {
 	border-color: #fd7b03;
 	.select2-search {
@@ -157,4 +146,38 @@ input[type=text].select2-input {
 		content:'';
 	}	
 
+}
+
+
+/* po update */
+.searchForm {
+	.select2-container .select2-choice .select2-arrow {
+			background: transparent;
+			border: none;		
+	}
+}
+
+.select2-results {
+	li.select2-no-results {
+		font-size: 11px;
+		text-align: center;
+	}
+}
+
+.select2-drop.select2-drop-active {
+	border: 1px solid #b0c13b;
+	border-top:0;
+
+	&.disableFulltext , &.filterSelect {
+		border-color: #fff;
+	}
+}
+.select2-drop.select2-drop-above.select2-drop-active {
+	border: none;
+	border: 1px solid #b0c13b;
+	border-bottom: 0;
+
+	&.disableFulltext , &.filterSelect {
+		border-color: #fff;
+	}	
 }
