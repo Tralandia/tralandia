@@ -3,6 +3,7 @@
 namespace OwnerModule\Forms;
 
 use Doctrine\ORM\EntityManager;
+use Entity\ImportantLanguageForLocation;
 use Entity\Rental\Rental;
 use Environment\Collator;
 use Environment\Environment;
@@ -161,8 +162,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$interviewContainer->addContainer($question->getId());
 		}
 
-		/** @var $language \Entity\Language */
-		foreach($supportedLanguages as $language) {
+		$centralLanguage = $this->languageRepository->findCentral();
+		$importantLanguages = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
+		foreach($importantLanguages as $language) {
 			$iso = $language->getIso();
 
 			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
