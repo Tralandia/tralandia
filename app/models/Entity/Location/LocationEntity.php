@@ -3,6 +3,7 @@
 namespace Entity\Location;
 
 use Entity\Domain;
+use Entity\Language;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -88,12 +89,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $domain;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="\Entity\ImportantLanguageForLocation", mappedBy="phrase", cascade={"persist", "remove"})
-	 */
-	protected $importantLanguagesForLocation;
-
 	/* ----------------------------- attributes from country ----------------------------- */
 
 	/**
@@ -131,6 +126,13 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $rentalCount;
+
+	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection|\Entity\ImportantLanguageForLocation[]
+	 * @ORM\OneToMany(targetEntity="\Entity\ImportantLanguageForLocation", mappedBy="location", cascade={"persist", "remove"})
+	 * @ORM\OrderBy({"dailyPhraseSearches" = "DESC"})
+	 */
+	protected $importantLanguagesForLocation;
 
 	/**
 	 * @return bool
@@ -665,9 +667,29 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\ImportantLanguageForLocation[]
 	 */
-	public function getTranslations()
+	public function getImportantLanguagesForLocation()
 	{
 		return $this->importantLanguagesForLocation;
+	}
+
+
+	/**
+	 * @param \Entity\Language $centralLanguage
+	 *
+	 * @return array|\Entity\Language[]
+	 */
+	public function getImportantLanguages(Language $centralLanguage)
+	{
+		$return = [];
+		foreach($this->importantLanguagesForLocation as $value) {
+			$language = $value->getLanguage();
+			$return[$language->getId()] = $language;
+		}
+
+		unset($return[$centralLanguage->getId()], $return[$this->getDefaultLanguage()->getId()]);
+		$return = [$this->getDefaultLanguage()->getId() => $this->getDefaultLanguage(), $centralLanguage->getId() => $centralLanguage] + $return;
+
+		return $return;
 	}
 
 

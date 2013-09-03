@@ -17,6 +17,14 @@ use Routers\BaseRoute;
  */
 class LanguageRepository extends \Repository\BaseRepository {
 
+	/**
+	 * @return \Entity\Language
+	 */
+	public function findCentral()
+	{
+		return $this->find(CENTRAL_LANGUAGE);
+	}
+
 	public function findSupported($order = NULL) {
 		$entityName = $this->_entityName;
 		return $this->findBySupported($entityName::SUPPORTED, $order);

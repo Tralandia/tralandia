@@ -96,6 +96,8 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->isoCode = $this->environment->getPrimaryLocation()->getIso(Location::LAST_2_CHARACTERS);
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
+		$centralLanguage = $languageRepository->findCentral();
+		$template->importantLanguages = $importantLanguagesIsos = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 
 		$template->environment = $this->environment;
 		$template->pageSeo = $this->pageSeo;
