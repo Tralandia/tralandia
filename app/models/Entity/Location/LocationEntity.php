@@ -88,6 +88,12 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $domain;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="\Entity\ImportantLanguageForLocation", mappedBy="phrase", cascade={"persist", "remove"})
+	 */
+	protected $importantLanguagesForLocation;
+
 	/* ----------------------------- attributes from country ----------------------------- */
 
 	/**
@@ -253,6 +259,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
+		$this->importantLanguagesForLocation = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
 	/**
@@ -653,4 +660,15 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->rentalCount;
 	}
+
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\ImportantLanguageForLocation[]
+	 */
+	public function getTranslations()
+	{
+		return $this->importantLanguagesForLocation;
+	}
+
+
 }
