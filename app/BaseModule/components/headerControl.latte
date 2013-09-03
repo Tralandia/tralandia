@@ -108,10 +108,15 @@
 								{else}
 									{var $class = NULL}
 								{/if}
+								{if array_key_exists($language->getId(), $importantLanguages)}
+									{var $rel = NULL}
+								{else}
+									{var $rel = 'nofollow'}
+								{/if}
 								{if $language->getId() == $environment->getLanguage()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}" n:attr="class => $class"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
+									<a href="{plink this, language => $language}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
@@ -148,7 +153,7 @@
 	<div class="socialIcons socialPluginsInit" id="socialIcons">
 		<i class="icon-facebook"></i>
 		<i class="icon-twitter"></i>
-		<i class="icon-google-plus"></i>		
+		<i class="icon-google-plus"></i>
 		<i class="icon-pinterest"></i>
 
 		<ul class="dropdown-menu" id="socialIconsMenu">
@@ -156,7 +161,7 @@
 				<ul class="social-buttons">
 					<li>{$facebookShareTag}</li>
 					<li>{$twitterShareTag}</li>
-					<li>{$googlePlusShareTag}</li>					
+					<li>{$googlePlusShareTag}</li>
 					<li>{$pinterestShareTag}</li>
 				</ul>
 			</li>
