@@ -374,7 +374,24 @@ class Tools {
 	}
 
 
-	public static function getPeriods() {
+	public static function entitiesMap(array $array, $keyOrValue, $value = NULL)
+	{
+		if(is_string($keyOrValue)) {
+			$keyOrValue = function($key, $val) use ($keyOrValue) {
+				return $val->{$keyOrValue};
+			};
+		}
+		if(is_string($value)) {
+			$value = function($val) use ($value) {
+				return $val->{$value};
+			};
+		}
+		return self::arrayMap($array, $keyOrValue, $value);
+	}
+
+
+	public static function getPeriods()
+	{
 		$beginOfTime = new \Nette\DateTime('1970-01-01 01:00:00');
 		$now = new \Nette\DateTime();
 		$today = $now->modifyClone('today');

@@ -167,6 +167,9 @@ class RentalContainer extends BaseContainer
 
 		$ownerAvailability = $rental->getOwnerAvailability();
 
+		$spokenLanguages = $rental->getSpokenLanguages()->toArray();
+		$spokenLanguages = \Tools::entitiesMap($spokenLanguages, 'id', 'id');
+
 		$defaults = [
 			'url' => $this->rental->getUrlWithoutProtocol(),
 			'phone' => $this->rental->getPhone(),
@@ -184,6 +187,7 @@ class RentalContainer extends BaseContainer
 			'ownerAvailability' => $ownerAvailability ? $ownerAvailability->getId() : NULL,
 			'pet' => ($pet ? $pet->getId() : NULL),
 			'placement' => $placement,
+			'spokenLanguages' => $spokenLanguages,
 
 			'board' => array_map(function ($a) {
 					return $a->getId();

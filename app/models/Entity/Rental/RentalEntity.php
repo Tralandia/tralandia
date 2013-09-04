@@ -1227,6 +1227,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->email;
 	}
 
+	public function setSpokenLanguages(array $spokenLanguages)
+	{
+		$this->spokenLanguages->clear();
+		foreach($spokenLanguages as $language) {
+			$this->addSpokenLanguage($language);
+		}
+
+		return $this;
+	}
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
