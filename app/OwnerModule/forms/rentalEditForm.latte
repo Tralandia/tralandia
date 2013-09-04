@@ -112,6 +112,7 @@
 		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
 		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
 		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+		{include #checkboxList, control => $rentalContainer['spokenLanguages'], colCount => 3}
 
 		{* {include #fieldset, text => 'o100086' , id => 'rentalAddress'} *}
 
@@ -218,6 +219,6 @@
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'pull-right'}
 	</table>
-{*{dump $form->getAllErrors()}*}
+{dump $form->getAllErrors()}
 
 {/form}

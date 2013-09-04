@@ -7,8 +7,8 @@ parameters:
 		database: tralandia_cache
 
 	templateCache:
-		enabled: true
+		enabled: false
 
-#	staticDomain: NULL
-#	storageDir: /storage
-#	storagePath: /storage
+	staticDomain: NULL
+	storageDir: /storage
+	storagePath: /storage
