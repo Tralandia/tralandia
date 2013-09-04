@@ -217,6 +217,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OrderBy({"sort" = "ASC"})
 	 */
 	protected $images;
 
