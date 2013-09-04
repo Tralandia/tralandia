@@ -6,6 +6,7 @@
 
 			{foreach $breadcrumbLinks as $key => $link}
 				<a href="{$link->href}" class="filter"><i class="icon-double-angle-right"></i><span>{$link->text}</span></a>
+				<span n:ifset="$link->description">({$link->description})</span>
 			{/foreach}
 
 		</div>

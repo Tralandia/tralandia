@@ -120,7 +120,7 @@ class RentalPriceListContainer extends BaseContainer
 		foreach($this->pricelistRows as $pricelistRow) {
 			$priceLists[] = [
 				'roomCount' => $pricelistRow->getRoomCount(),
-				'roomType' => $pricelistRow->getRoomType(),
+				'roomType' => $pricelistRow->getRoomType()->getId(),
 				'bedCount' => $pricelistRow->getBedCount(),
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
 				'price' => $pricelistRow->getPrice()->getSourceAmount()

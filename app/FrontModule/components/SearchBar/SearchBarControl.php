@@ -4,6 +4,7 @@ namespace FrontModule\Components\SearchBar;
 use Doctrine\ORM\EntityManager;
 use Entity\BaseEntity;
 use Entity\FavoriteList;
+use Entity\Location\Location;
 use Entity\Rental\Type;
 use Environment\Environment;
 use Extras\FormMask\Items\Base;
@@ -257,6 +258,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 					$link['text'] = $value . ' ' . $this->presenter->translate('o490', $value);
 				} else if ($value instanceof FavoriteList) {
 					$link['text'] = $this->getPresenter()->translate(1219);
+				} else if ($value instanceof Location) {
+					$name = $this->getPresenter()->getLocationName($value);
+					$link['text'] = $name['name'];
+					if(!$value->isPrimary()) {
+						$link['description'] = $name['nameSource'];
+					}
 				} else if ($value instanceof Type) {
 					$link['text'] = Strings::firstUpper($this->getPresenter()->translate($value->getName(), 2));
 				} else if($value instanceof BaseEntity) {
