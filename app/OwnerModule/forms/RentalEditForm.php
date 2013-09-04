@@ -104,7 +104,11 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
-		$supportedLanguages = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
+		$allLanguages = $this->languageRepository->getAllSortedByName($this->translator, $this->collator);
+		$allLanguagesForSelect = [];
+		foreach($allLanguages as $language) {
+			$allLanguagesForSelect[$language->getId()] = $this->translate($language->getName());
+		}
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
 		$currency = $this->country->getDefaultCurrency();
@@ -151,9 +155,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$languages[$language->getIso()] = $this->translate($language->getName());
 		}
 
-		$rentalContainer->addSelect('translationLanguage', '##', $languages);
-						// ->setDefaultValue($this->environment->getLanguage()->getIso());
-
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
 		$interviewContainer = $rentalContainer->addContainer('interview');
@@ -179,6 +180,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 				++$i;
 			}
 		}
+
+		$rentalContainer->addMultiOptionList('spokenLanguages', '#Spoken languages', $allLanguagesForSelect);
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'))
 			->setRequired($this->translate('1257'));

@@ -60,6 +60,21 @@ class LanguageRepository extends \Repository\BaseRepository {
 	}
 
 
+	public function getAllSortedByName(ITranslator $translator, Collator $collator) {
+		$all = $this->findAll();
+
+		$return = array();
+		foreach ($all as $key => $language) {
+			$return[$translator->translate($language->name)] = $language;
+		}
+
+		 $collator->ksort($return);
+
+		return $return;
+
+	}
+
+
 	public function getLiveSortedByName(ITranslator $translator, Collator $collator) {
 		$supported = $this->findLive();
 
