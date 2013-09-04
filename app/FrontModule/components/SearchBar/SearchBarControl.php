@@ -261,7 +261,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				} else if ($value instanceof Location) {
 					$name = $this->getPresenter()->getLocationName($value);
 					$link['text'] = $name['name'];
-					if(!$value->isPrimary()) {
+					if(!$value->isPrimary() && isset($name['nameSource'])) {
 						$link['description'] = $name['nameSource'];
 					}
 				} else if ($value instanceof Type) {
