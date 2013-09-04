@@ -14,7 +14,7 @@
 	<table class="formTable innerPadding">
 {* 		<tr class="formHeading	">
 			<td colspan="3">{_o100189}</td>
-		</tr> *}				
+		</tr> *}
 
 		<tr>
 			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> </td>
@@ -32,7 +32,7 @@
 		<tr>
 			<td colspan="3" id="rentalNameSlogan" class="fieldset"><div class="separator"></div>{_o100137}</td>
 		</tr>
-		
+
 		{if count($rentalContainer['name']->getAllErrors())}
 
 				<tr class="topArrowBox invalid">
@@ -60,22 +60,22 @@
 					</td>
 				</tr>
 		{/if}
-		
+
 		<tr class="simpleInput">
 			<td colspan="3">
 				<div class="langTabs">
 					<div class="header">
 						{foreach $rentalContainer['name']->getControls() as $control}
 							{if $control->getName() == $environmentLanguage->getIso()}
-								{var $hide = 'current'}
+								{var $current = 'current'}
 							{else}
-								{var $hide = 'hide'}
+								{var $current = ''}
 							{/if}
-							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+							<a  class="tabPane {$current} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
 						{/foreach}
 						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
 					</div>
-					<div class="content">		
+					<div class="content">
 						<table>
 							{foreach $rentalContainer['name']->getControls() as $control}
 								{if $control->getName() == $environmentLanguage->getIso()}
@@ -112,6 +112,7 @@
 		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
 		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
 		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+		{include #checkboxList, control => $rentalContainer['spokenLanguages'], colCount => 3}
 
 		{* {include #fieldset, text => 'o100086' , id => 'rentalAddress'} *}
 
@@ -186,15 +187,15 @@
 					<div class="header">
 						{foreach $rentalContainer['name']->getControls() as $control}
 							{if $control->getName() == $environmentLanguage->getIso()}
-								{var $hide = 'current'}
+								{var $current = 'current'}
 							{else}
-								{var $hide = 'hide'}
+								{var $current = ''}
 							{/if}
-							<a  class="tabPane {$hide} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+							<a  class="tabPane {$current} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
 						{/foreach}
 						{* {input $rentalContainer['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
 					</div>
-					<div class="content">		
+					<div class="content">
 						<table>
 
 							{foreach $rentalContainer['interview']->getComponents() as $container}
@@ -218,6 +219,6 @@
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'pull-right'}
 	</table>
-{*{dump $form->getAllErrors()}*}
+{dump $form->getAllErrors()}
 
 {/form}

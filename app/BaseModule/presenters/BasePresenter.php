@@ -393,6 +393,13 @@ abstract class BasePresenter extends Presenter {
 			$header->setRobots('noindex,follow');
 		}
 
+		$centralLanguage = $this->findLanguage(CENTRAL_LANGUAGE);
+		$importantLanguages = $this->primaryLocation->getImportantLanguages($centralLanguage);
+
+		if(!array_key_exists($this->language->getId(), $importantLanguages)) {
+			$header->setRobots('noindex,nofollow');
+		}
+
 
 		return $header;
 	}

@@ -47,6 +47,14 @@ class RentalEditHandler extends FormHandler
 		$values = $values->rental;
 		$rental = $this->rental;
 
+
+		if($value = $values['spokenLanguages']) {
+			/** @var $languageRepository \Repository\LanguageRepository */
+			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+			$spokenLanguages = $languageRepository->findByIds($value);
+			$rental->setSpokenLanguages($spokenLanguages);
+		}
+
 		if ($value = $values['address']) {
 			$address = $value;
 			if ($address['addressEntity']) {
