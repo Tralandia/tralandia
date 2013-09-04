@@ -23,12 +23,6 @@ class PhraseListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \BaseModule\Forms\ISimpleFormFactory
-	 */
-	protected $simpleFormFactory;
-
-	/**
-	 * @autowire
 	 * @var \ResultSorter
 	 */
 	protected $resultSorter;
@@ -77,6 +71,12 @@ class PhraseListPresenter extends BasePresenter {
 	 * @var array
 	 */
 	protected $editableLanguages;
+
+
+	/**
+	 * @var bool
+	 */
+	protected $preFillTranslations = TRUE;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepository = $dic->phraseRepositoryAccessor->get();
@@ -189,6 +189,10 @@ class PhraseListPresenter extends BasePresenter {
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
 
+		if($this->user->isInRole(Role::TRANSLATOR)) {
+			$this->preFillTranslations = FALSE;
+		}
+
 		$this->specialOption = [
 			'label' => 'Complete',
 			'type' => 'translated',
@@ -299,6 +303,8 @@ class PhraseListPresenter extends BasePresenter {
 		if(is_array($this->editableLanguages)) {
 			$phraseContainerSettings['editableLanguages'] = $this->editableLanguages;
 		}
+
+		$phraseContainerSettings['preFillTranslations'] = $this->preFillTranslations;
 
 
 		$form->addSelect('toLanguages', '', $toLanguages);
