@@ -160,7 +160,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 	public function getTranslationPriceForWords($wordsCount)
 	{
-		return ceil($wordsCount * $this->getTranslationPrice());
+		return round($wordsCount * $this->getTranslationPrice(), 2);
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
