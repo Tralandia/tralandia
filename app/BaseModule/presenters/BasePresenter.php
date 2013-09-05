@@ -546,11 +546,17 @@ abstract class BasePresenter extends Presenter {
 
 	public function actionAfterLogin()
 	{
+		$this->actionRedirectToDefaultPage();
+		$this->redirect('this');
+	}
+
+
+	public function actionRedirectToDefaultPage()
+	{
 		$user = $this->getUser();
 		if ($homepage = $user->getIdentity()->homepage){
 			$this->redirect($homepage);
 		}
-		$this->redirect('this');
 	}
 
 

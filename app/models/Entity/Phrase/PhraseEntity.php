@@ -192,6 +192,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 
 
+	/**
+	 * @param Language $language
+	 *
+	 * @return int|float
+	 */
 	public function getWordsCount(Language $language)
 	{
 		if ($language->getId() == CENTRAL_LANGUAGE) {

@@ -17,6 +17,12 @@ use Nette\Utils\Strings;
 class PhraseListPresenter extends BasePresenter {
 
 	/**
+	 * @autowire
+	 * @var \Listener\AcceptedTranslationsEmailListener
+	 */
+	protected $acceptedTranslationsEmailListener;
+
+	/**
 	 * @var int
 	 */
 	protected $itemsPerPage = 30;
@@ -336,6 +342,7 @@ class PhraseListPresenter extends BasePresenter {
 		$formValues = $form->getValues(TRUE);
 
 		$phrasesIds = [];
+		$wordsCount = 0;
 		foreach($formValues['list'] as $phraseId => $values) {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
@@ -352,7 +359,10 @@ class PhraseListPresenter extends BasePresenter {
 				}
 			} else if($specialOptionType == 'checked' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
+					/** @var $translation \Entity\Phrase\Translation */
 					$translation->setStatus(Translation::WAITING_FOR_PAYMENT);
+					$wordsCount += $translation->getWordsCount();
+					$checkedLanguage = $translation->getLanguage();
 				}
 			} else if($specialOptionType == 'ready' && $specialOptionValue) {
 				$this->updateTranslationStatus->setPhraseReady($phrase, $this->loggedUser);
@@ -370,6 +380,10 @@ class PhraseListPresenter extends BasePresenter {
 				}
 			}
 			$phrasesIds[] = $phraseId;
+		}
+
+		if(isset($checkedLanguage) && $wordsCount > 0 && $this->loggedUser->isSuperAdmin()) {
+			$this->acceptedTranslationsEmailListener->onAcceptedTranslations($checkedLanguage, $wordsCount);
 		}
 
 		$phraseRepository->flush();
