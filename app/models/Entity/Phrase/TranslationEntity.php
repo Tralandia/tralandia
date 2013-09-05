@@ -375,4 +375,13 @@ class Translation extends \Entity\BaseEntity {
 	{
 		return $this->status;
 	}
+
+
+	/**
+	 * @return float|int
+	 */
+	public function getWordsCount()
+	{
+		return $this->getPhrase()->getWordsCount($this->language);
+	}
 }

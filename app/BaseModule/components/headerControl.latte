@@ -41,7 +41,7 @@
 							</li>
 						{else}
 							<li class="headerIcon">
-								<a href="{plink $loggedUser->getRole()->getHomePage()}">{$loggedUser->getLogin()}</a>
+								<a href="{plink redirectToDefaultPage}">{$loggedUser->getLogin()}</a>
 							</li>
 						{/if}
 						<li n:if="$user->identity->isFake()" class="headerIcon">

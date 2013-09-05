@@ -78,7 +78,7 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	public function findByOwnerAvailabilityType()
 	{
-		return $this->findByType('owner-availability');
+		return $this->findByType('contact-person-availability');
 	}
 
 
@@ -132,7 +132,7 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	public function findByAvailabilityTypeForSelect(ITranslator $translator, Collator $collator)
 	{
-		return $this->findByTypeForSelect('owner-availability', $translator, $collator);
+		return $this->findByTypeForSelect('contact-person-availability', $translator, $collator);
 	}
 
 
@@ -150,7 +150,7 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	public function findByOnFacilityTypeForSelect(ITranslator $translator, Collator $collator)
 	{
-		return $this->findByTypeForSelect('on-facility', $translator, $collator);
+		return $this->findByTypeForSelect('on-premises', $translator, $collator);
 	}
 
 

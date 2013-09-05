@@ -217,6 +217,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OrderBy({"sort" = "ASC"})
 	 */
 	protected $images;
 
@@ -395,7 +396,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getOnFacilityAmenities()
 	{
-		return $this->getAmenitiesByType('on-facility');
+		return $this->getAmenitiesByType('on-premises');
 	}
 
 	/**
@@ -645,7 +646,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getOwnerAvailability()
 	{
-		$t = $this->getAmenitiesByType('owner-availability');
+		$t = $this->getAmenitiesByType('contact-person-availability');
 		if (count($t) > 0) {
 			return $t[0];
 		} else {
@@ -766,12 +767,19 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function setUrl($url)
 	{
+		if(!$url) {
+			$this->url = NULL;
+			return $this;
+		}
+
 		if(!Strings::startsWith($url, 'http://') && !Strings::startsWith($url, 'https://')) {
 			$url = 'http://' . $url;
 		}
+
 		if(!$url instanceof Url) {
 			$url = new Url($url);
 		}
+
 		$this->url = "$url";
 
 		return $this;

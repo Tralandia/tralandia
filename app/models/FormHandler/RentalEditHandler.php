@@ -187,9 +187,8 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['url']) {
-			$rental->setUrl($value);
-		}
+		$value = $values['url'];
+		$rental->setUrl($value);
 
 		if ($value = $values['bedroomCount']) {
 			$rental->bedroomCount = $value;
