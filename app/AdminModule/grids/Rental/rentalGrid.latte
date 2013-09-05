@@ -12,7 +12,7 @@
 
 {define #col-phone}
 	<td>
-		{$row['entity']->getPhone()->getInternational()}
+		{if $row['entity']->getPhone()}{$row['entity']->getPhone()->getInternational()}{/if}
 	</td>
 {/define}
 
