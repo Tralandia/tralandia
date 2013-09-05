@@ -396,7 +396,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getOnFacilityAmenities()
 	{
-		return $this->getAmenitiesByType('on-facility');
+		return $this->getAmenitiesByType('on-premises');
 	}
 
 	/**
@@ -646,7 +646,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getOwnerAvailability()
 	{
-		$t = $this->getAmenitiesByType('owner-availability');
+		$t = $this->getAmenitiesByType('contact-person-availability');
 		if (count($t) > 0) {
 			return $t[0];
 		} else {
