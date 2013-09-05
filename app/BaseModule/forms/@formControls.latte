@@ -18,12 +18,26 @@
 	*}
 	{define #fieldset}
 	{default $text = ''}
+	{default $required = false}
 	{default $id = ''}
 	<tr>
-		<td colspan="3" id="{$id}" class="fieldset"><div class="separator"></div>{_$text}</td>
+		<td colspan="3" id="{$id}" class="fieldset"><div class="separator"></div>{_$text}<i n:if="$required" class="icon-asterisk"></i></td>
 	</tr>
 	{/define #fieldset}
 
+
+	{*
+	infobox -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	*}
+	{define #infobox}
+	{default $text = ''}
+	<tr class="simpleInput">
+		<td colspan=3>
+			<div class="formHelpText info">{_$text}</div>
+		</td>
+	</tr>
+	{/define #infobox}
 
 	{*
 	Text Control -------------------------------------------
