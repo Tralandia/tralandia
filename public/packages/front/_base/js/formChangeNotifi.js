@@ -18,19 +18,24 @@
 			base._bind();
 
 			window.onbeforeunload = function() {
+				console.log(window.event);
 			  if ( base.changed_flag ) {
 				return base.confirmMessage
 			  }
-			};            
+			}; 
+
+			console.log(base.confirmMessage);          
 		};
 		
 		base._bind = function(){
-			base.$el.find('input,input[type=hidden],textarea,select:not(.selectLanguage)').change(base.changeListener);			
+			base.$el.find('input,input[type=hidden],textarea,select:not(.selectLanguage)').change(base.changeListener);		
+			base.$el.on('submit',function(){
+				base.changed_flag = 0;
+			});
 		};
 
 		base.changeListener = function(){
 			base.changed_flag = 1;
-			console.log('change form');
 		};
 
 		base.init();
