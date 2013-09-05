@@ -18,13 +18,11 @@
 			base._bind();
 
 			window.onbeforeunload = function() {
-				console.log(window.event);
 			  if ( base.changed_flag ) {
 				return base.confirmMessage
 			  }
 			}; 
 
-			console.log(base.confirmMessage);          
 		};
 		
 		base._bind = function(){
