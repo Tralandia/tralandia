@@ -114,33 +114,17 @@
 		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 		{include #checkboxList, control => $rentalContainer['spokenLanguages'], colCount => 3}
 
-		{* {include #fieldset, text => 'o100086' , id => 'rentalAddress'} *}
-
-		<tr>
-			<td colspan="3" id="rentalAddress" class="fieldset"><div class="separator"></div>{_o100086}<i class="icon-asterisk"></i></td>
-		</tr>
+		{include #fieldset, text => 'o100086' , id => 'rentalAddress' , required => true}
 
 		{include #address, control => $rentalContainer['address']}
 
-		{* {include #fieldset, text => 'o980' , id => 'rentalPhotoGalllery'} *}
+		{include #fieldset, text => 'o980' , id => 'rentalPhotoGalllery', required => true}
 
-		<tr>
-			<td colspan="3" id="rentalPhotoGalllery" class="fieldset"><div class="separator"></div>{_o980}<i class="icon-asterisk"></i></td>
-		</tr>
-		<tr class="simpleInput">
-			<td colspan=3>
-				<div class="formHelpText info">{_o100097}</div>
-			</td>
-		</tr>
+		{include #infobox, text => 'o100097' }
+
 		{include #rentalPhotos, control => $rentalContainer['photos']}
 
-		{* {include #fieldset, text => 'o933' , id => 'rentalPriceList'} *}
-	<tr>
-		<td colspan="3" id="rentalPriceList" class="fieldset"><div class="separator"></div>{_o933}<i class="icon-asterisk"></i></td>
-	</tr>
-
-
-
+		{include #fieldset, text => 'o933' , id => 'rentalPriceList' , required => true}
 
 		{include #rentalPriceList, control => $rentalContainer['priceList']}
 
