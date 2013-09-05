@@ -27,6 +27,7 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		$message->setSubject($emailCompiler->compileSubject());
 		$message->setHtmlBody($body);
 
+		$message->setFrom('paradeiser@tralandia.com');
 		$message->addTo($user->getLogin());
 
 		$this->mailer->send($message);
