@@ -102,6 +102,8 @@ parameters:
 					#- fileUpload/lib/js/main.js
 				css:
 					- fileUpload/lib/css/jquery.fileupload-ui.css
+					- fileUpload/custom/less/fileImputUi.less
+
 			fontEntypo:
 				css:
 					- fontEntypo/custom/less/entypoIcon.less
