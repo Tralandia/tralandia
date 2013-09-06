@@ -399,3 +399,8 @@ INSERT INTO `important_language_for_location` (`id`, `language_id`, `location_id
 ,(NULL,'136', '198', 'отель', 'отель Куба','10', NULL, '', '')
 ,(NULL,'154', '56', 'hotell', 'hotell Singapore','10', NULL, '', '')
 ,(NULL,'154', '193', 'hotell', 'hotell Tyskland','10', NULL, '', '');
+
+
+
+UPDATE `rental_amenitytype` SET `slug` = 'contact-person-availability' WHERE `id` = '15';
+UPDATE `rental_amenitytype` SET `slug` = 'on-premises' WHERE `id` = '21';
