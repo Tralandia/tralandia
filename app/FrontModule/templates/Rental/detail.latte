@@ -353,6 +353,22 @@
 						</div>
 
 
+						{if count($interviewAnswers) > 0}
+						<div class="metaObjectInfo" id="interviewAnswers">
+							<h3>{_o25231}</h3>
+							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
+							<ul class="interviewList">
+								{foreach $interviewAnswers as $interviewAnswer}
+								<li>
+									<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
+
+									<p>{_$interviewAnswer->answer|firstUpper}</p>
+								</li>
+								{/foreach}
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						{/if}
 
 						<div class="row-fluid">
 							<div class="span12">
@@ -380,22 +396,7 @@
 							<div class="metaObjectInfo" id="priceTable">
 						</div>
 
-						{if count($interviewAnswers) > 0}
-						<div class="metaObjectInfo" id="interviewAnswers">
-							<h3>{_o25231}</h3>
-							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
-							<ul class="interviewList">
-								{foreach $interviewAnswers as $interviewAnswer}
-								<li>
-									<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
 
-									<p>{_$interviewAnswer->answer|firstUpper}</p>
-								</li>
-								{/foreach}
-							</ul>
-							<div class="clearfix"></div>
-						</div>
-						{/if}
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
@@ -404,7 +405,7 @@
 							<div id="objectDetailMap" data-rental-id="{$rental->id}" data-zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
-							<div class="rentalInfoBox hide">
+{* 							<div class="rentalInfoBox hide">
 								<div class="smallGallery">
 									<img src="http://tralandiastatic.com/rental_images/2013_06/03/91/qd/medium.jpeg"/>
 								</div>
@@ -417,26 +418,7 @@
 								<div class="remove"><i class="icon-remove"></i></div>
 							</div>
 
-{* 							<div class="rentalMapMetaBox">
-								<div class="thumb"><img src="http://tralandiastatic.com/rental_images/2013_06/05/xa/u6/medium.jpeg" /></div>
-								<div class="content">
-									<h3><a></a></h3>
-									<p class="teaser"></p>
-									<p class="amenities"></p>
-								</div>
-								<a class="remove box"><i class="icon-remove"></i></a>
-								<a data-id="" data-name="" data-thumb="" data-location="" data-price="" data-capacity="" data-link="" class="like box addToFavorites listCompareBtn"><i class="icon-heart"></i><i class="icon-heart-empty"></i></a>
 
-								<div class="box price white double">
-									<strong>26 Euro</strong>
-									<small>Osoba/noc</small>
-								</div>
-								<div class="box capacity white double">
-									<strong>Max 56</strong>
-									<small>Osob</small>
-								</div>
-
-							</div> *}
 
 							<div class="rentalMapMetaBox">
 								<div class="thumb"><img src="http://tralandiastatic.com/rental_images/2013_06/05/xa/u6/medium.jpeg" /></div>
@@ -497,7 +479,7 @@
 							</div>
 
 							<ul class="relatedRentals">
-							</ul>
+							</ul> *}
 						</div>
 
 
@@ -521,8 +503,8 @@
 					<div class="span12">
 						<div class="moreOption">
 							<span> {_o100038} {$dateUpdated|dateTime} </span> <span class="separator">&nbsp;|&nbsp;</span>
-							<a rel="nofollow" href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a><span class="separator">&nbsp;|&nbsp;</span>
-							<a data-modal-description="#modal data description" data-alert-success="#success" data-modal-title="#modal title preklad" class="red reportBugButton" role="button">#Report bug</a>
+							<a rel="nofollow" href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a>{* <span class="separator">&nbsp;|&nbsp;</span> *}
+							{* <a data-modal-description="#modal data description" data-alert-success="#success" data-modal-title="#modal title preklad" class="red reportBugButton" role="button">#Report bug</a> *}
 
 						</div>
 					</div>

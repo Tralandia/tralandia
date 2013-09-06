@@ -102,7 +102,6 @@
 					}
 				} else {
 					base._deleteHistory();
-					console.log('nepatri do mojej historie');
 					// @todo ajax function
 				}
 

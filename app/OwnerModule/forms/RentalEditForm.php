@@ -181,7 +181,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		$rentalContainer->addMultiOptionList('spokenLanguages', '#Spoken languages', $allLanguagesForSelect);
+		$rentalContainer->addMultiOptionList('spokenLanguages', $this->translate('13137'), $allLanguagesForSelect);
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'))
 			->setRequired($this->translate('1257'));
