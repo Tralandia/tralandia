@@ -203,7 +203,18 @@ class NavigationControl extends BaseControl
 				->data('redirect', $phraseLink);
 
 
-		$languages = $this->languageRepository->getForAdminSearch($this->collator);
+		$languages = [];
+		if($this->loggedUser->isTranslator()) {
+			$rows = $this->languageRepository->findByTranslator($this->loggedUser);
+		} else {
+			$rows = $this->languageRepository->findSupported();
+		}
+		/** @var $row \Entity\Language */
+		foreach($rows as $row) {
+			$languages[$row->getId()] = Strings::upper($row->getIso());
+		}
+		$this->collator->asort($languages);
+
 		$defaultLanguage = $this->getParent()->getParameter('languageId', $this->loggedUser->getLanguage()->getId());
 		$form->addSelect('languages', '', $languages)
 			->setDefaultValue($defaultLanguage);
