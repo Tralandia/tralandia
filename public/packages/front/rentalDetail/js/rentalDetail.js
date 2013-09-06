@@ -28,7 +28,6 @@
 				lng: parseFloat(base.mapCoordinates[1])
 			};
 
-			console.log(base.map);
 
 			base.myLatlng = new google.maps.LatLng(base.map.lat,base.map.lng);
 
@@ -316,7 +315,6 @@
 
 			base.responSedata = data;
 
-			console.log(data);
 
 			return data;
 			
