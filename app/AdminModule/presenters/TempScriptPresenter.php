@@ -6,6 +6,7 @@ namespace AdminModule;
 use Doctrine\ORM\QueryBuilder;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
+use Nette\Utils\Strings;
 
 class TempScriptPresenter extends BasePresenter {
 
@@ -21,6 +22,12 @@ class TempScriptPresenter extends BasePresenter {
 	 * @var \Robot\CreateMissingTranslationsRobot
 	 */
 	protected $createMissingTranslationsRobot;
+
+	/**
+	 * @autowire
+	 * @var \Transliterator
+	 */
+	protected $transliterator;
 
 	public function actionCreateMissingTranslationsForLocations()
 	{
@@ -244,5 +251,45 @@ class TempScriptPresenter extends BasePresenter {
 		}
 		$this->sendPayload();
 	}
+
+	public function actionFixBrokenLocations()
+	{
+		$addressRepository = $this->em->getRepository(ADDRESS_ENTITY);
+		$locations = $this->em->getRepository(LOCATION_ENTITY)->findBy(['localName' => NULL]);
+		/** @var $locationDecoratorFactory \Model\Location\ILocationDecoratorFactory */
+		$locationDecoratorFactory = $this->context->locationDecoratorFactory;
+
+		/** @var $location \Entity\Location\Location */
+		foreach($locations as $location) {
+			$name = $location->getName()->getSourceTranslationText();
+
+			$newSlug = $this->transliterator->transliterate($name);
+			$newSlug = Strings::webalize($newSlug);
+
+			$existingLocation = $this->locationRepositoryAccessor->get()->findOneBy(array(
+				'parent' => $location->getParent(),
+				'slug' => $newSlug,
+			));
+
+			if($existingLocation && $location->getId() != $existingLocation->getId()) {
+				$addresses = $addressRepository->findByLocality($location);
+				/** @var $address \Entity\Contact\Address */
+				foreach($addresses as $address) {
+					$address->setLocality($existingLocation);
+				}
+
+				$this->em->remove($location);
+			} else {
+				$locationService = $locationDecoratorFactory->create($location);
+
+				$locationService->updateLocalName();
+				$locationService->updateSlug();
+			}
+
+			$this->em->flush();
+		}
+
+	}
+
 
 }

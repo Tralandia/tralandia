@@ -10,6 +10,11 @@ use Nette\Utils\Strings;
  */
 class LocationService extends Service\BaseService {
 
+	/**
+	 * @var \Transliterator
+	 */
+	public $transliterator;
+
 	protected $routingPathSegmentRepositoryAccessor;
 	protected $routingPathSegmentOldRepositoryAccessor;
 	protected $locationRepositoryAccessor;
@@ -27,13 +32,27 @@ class LocationService extends Service\BaseService {
 		$this->phraseDecoratorFactory = $factory;
 	}
 
-	public function inject(\Service\PolygonService $service) {
+	public function inject(\Service\PolygonService $service, \Transliterator $transliterator) {
 		$this->polygonService = $service;
+		$this->transliterator = $transliterator;
 	}
 
 	public function setName(\Entity\Phrase\Phrase $name) {
 		$this->getEntity()->name = $name;
 		$this->updateSlug();
+		$this->updateLocalName();
+	}
+
+	public function updateLocalName()
+	{
+		$namePhrase = $this->getEntity()->name;
+
+		$translation = $namePhrase->getSourceTranslation();
+		if(!$translation) {
+			throw new \Exception('Nenasiel som zdrojovy preklad pre frazu!');
+		}
+
+		$this->getEntity()->localName = $translation->translation;
 	}
 
 	public function updateSlug() {
@@ -43,7 +62,8 @@ class LocationService extends Service\BaseService {
 		if(!$translation) {
 			throw new \Exception('Nenasiel som zdrojovy preklad pre frazu!');
 		}
-		$newSlug = Strings::webalize($translation->translation);
+		$newSlug = $this->transliterator->transliterate($translation->translation);
+		$newSlug = Strings::webalize($newSlug);
 
 		$oldSlug = $this->getEntity()->slug;
 
@@ -88,7 +108,7 @@ class LocationService extends Service\BaseService {
 				$pathSegmentOld->entityId = $pathSegment->entityId;
 
 				$pathSegmentOld->pathSegment = $oldSlug;
-				$pathSegmentOld->pathSegmentNew = $newSlug;			
+				$pathSegmentOld->pathSegmentNew = $pathSegment;
 
 				$this->locationRepositoryAccessor->get()->persist($pathSegmentOld);
 				$this->locationRepositoryAccessor->get()->flush($pathSegmentOld);
