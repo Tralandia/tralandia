@@ -10,7 +10,6 @@
         
         base.init = function(){
             
-            console.log('wrgerg');
             
             base.options = $.extend({},$.reportBugPlugin.defaultOptions, options);
             base._bind();
