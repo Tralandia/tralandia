@@ -231,8 +231,8 @@ class Location extends \Entity\BaseEntityDetails {
 
 	public function getFlagName()
 	{
-		$parentIso = $this->getParent()->getIso();
-		$name = $parentIso ? : $this->getIso();
+		$parentIso = $this->getParent() ? $this->getParent()->getIso() : NULL;
+		$name = $parentIso ? $parentIso : $this->getIso();
 		return $name . '.png';
 	}
 
