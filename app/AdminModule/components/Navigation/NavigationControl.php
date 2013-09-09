@@ -188,13 +188,12 @@ class NavigationControl extends BaseControl
 			'searchInUserContent' => '__searchInUserContent__',
 		];
 
-		$rentalLink = $this->presenter->link(':Admin:Rental:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
-		$form->addText('rental', '')
-			->getControlPrototype()
-			->data('redirect', $rentalLink);
-
-
-		$form->addCheckbox('searchInUserContent', '');
+		if($this->loggedUser->isSuperAdmin()) {
+			$rentalLink = $this->presenter->link(':Admin:Rental:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
+			$form->addText('rental', '')
+				->getControlPrototype()
+				->data('redirect', $rentalLink);
+		}
 
 
 		$phraseLink = $this->presenter->link(':Admin:PhraseList:search', $parameters);
@@ -219,6 +218,9 @@ class NavigationControl extends BaseControl
 		$form->addSelect('languages', '', $languages)
 			->setDefaultValue($defaultLanguage);
 			//->setPrompt('all'); vykomentovane, treba premysliet UI ak najdem hladany vyraz vo viacerich jazykoch...
+
+		$form->addCheckbox('searchInUserContent', '');
+
 
 		return $form;
 	}
