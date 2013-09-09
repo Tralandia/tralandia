@@ -203,18 +203,23 @@ class NavigationControl extends BaseControl
 
 
 		$languages = [];
+		$defaultLanguage = $this->loggedUser->getLanguage()->getId();
 		if($this->loggedUser->isTranslator()) {
 			$rows = $this->languageRepository->findByTranslator($this->loggedUser);
+			$defaultLanguage = reset($rows)->getId();
+			$en = $this->languageRepository->find(CENTRAL_LANGUAGE);
+			array_push($rows, $en);
 		} else {
 			$rows = $this->languageRepository->findSupported();
 		}
+
 		/** @var $row \Entity\Language */
 		foreach($rows as $row) {
 			$languages[$row->getId()] = Strings::upper($row->getIso());
 		}
 		$this->collator->asort($languages);
 
-		$defaultLanguage = $this->getParent()->getParameter('languageId', $this->loggedUser->getLanguage()->getId());
+		$defaultLanguage = $this->getParent()->getParameter('languageId', $defaultLanguage);
 		$form->addSelect('languages', '', $languages)
 			->setDefaultValue($defaultLanguage);
 			//->setPrompt('all'); vykomentovane, treba premysliet UI ak najdem hladany vyraz vo viacerich jazykoch...
