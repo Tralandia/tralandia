@@ -76,7 +76,12 @@ class RentalCreator
 
 		$user->addRental($rental);
 
-		$rental->getName()->createTranslation($address->getPrimaryLocation()->getDefaultLanguage(), $rentalName);
+		$nameTranslationLanguage = $address->getPrimaryLocation()->getDefaultLanguage();
+		if($translation = $rental->getName()->getTranslation($nameTranslationLanguage)) {
+			$translation->setTranslation($rentalName);
+		} else {
+			$rental->getName()->createTranslation($nameTranslationLanguage, $rentalName);
+		}
 
 		return $rental;
 	}

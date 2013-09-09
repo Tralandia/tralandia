@@ -68,11 +68,14 @@ class RentalPhotosContainer extends BaseContainer
 	 * @param \Extras\Forms\Control\MfuControl $upload
 	 * @param array|\Nette\Http\FileUpload[] $files
 	 */
-	public function processUpload(MfuControl $upload, array $files)
+	public function processUpload(MfuControl $upload, $files)
 	{
 		$payload = [];
 		$minWidth = RentalImageStorage::MIN_WIDTH;
 		$minHeight = RentalImageStorage::MIN_HEIGHT;
+		if($files instanceof \Nette\Http\FileUpload) {
+			$files = [$files];
+		}
 		foreach($files as $file) {
 			if($file->isOk()) {
 				if($file->isImage()) {

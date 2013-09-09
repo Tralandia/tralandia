@@ -83,7 +83,7 @@ class Discarder {
 		}
 
 		$rentalSearchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
-		$rentalSearchCaching->removeRental($rental);
+		$rentalSearchCaching->deleteRental($rental);
 
 		/** @var $rentalRepository \Repository\Rental\RentalRepository */
 		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
