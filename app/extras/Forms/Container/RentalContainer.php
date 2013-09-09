@@ -105,6 +105,7 @@ class RentalContainer extends BaseContainer
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
 			->setOption('append', $this->translate('o490', 2))
+			->setRequired()
 			->addRule(Form::INTEGER, $this->translate('o100106'))
 			->addRule(Form::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
@@ -118,6 +119,7 @@ class RentalContainer extends BaseContainer
 
 		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addMultiOptionList('board', 'o100080', $amenityBoard)
+			->setRequired()
 			->addRule(Form::FILLED, $this->translate('o100109'))//->setOption('help', $this->translate('o5956'))
 		;
 
