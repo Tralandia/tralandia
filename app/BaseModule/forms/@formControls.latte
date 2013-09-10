@@ -286,6 +286,8 @@
 	{include #opentag , class => 'simpleInput' , control => $control}
 		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}
 		
+			{dump $control->isRequired()}
+
 			{if $control->isRequired()}
 				<i class="icon-asterisk"></i>
 			{/if}
