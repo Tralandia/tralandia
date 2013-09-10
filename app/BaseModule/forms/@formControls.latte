@@ -285,6 +285,7 @@
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
 		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}
+		
 			{if $control->isRequired()}
 				<i class="icon-asterisk"></i>
 			{/if}
