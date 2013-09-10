@@ -189,7 +189,7 @@
 		<td colspan="3">
 			<table class="interview">
 				<tr>
-					<td>{_$control->caption}</td>
+					<td class="caption">{_$control->caption}</td>
 				</tr>
 				<tr>
 					<td>{!$input}</td>
@@ -308,7 +308,11 @@
 			<table class="checkboxes">
 				<tr>
 					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
-					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td>
+					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}
+						{if $control->isRequired()}
+							<i class="icon-asterisk"></i>
+						{/if}
+					</td>
 					<td>
 						<span class="help">{$control->getOption('help')}</span>
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
