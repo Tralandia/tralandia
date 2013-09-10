@@ -10,9 +10,12 @@ abstract class BaseControl extends Control {
 	protected function createTemplate($class = NULL) {
 		$template = parent::createTemplate($class);
 
+		$helpers = $this->presenter->getContext()->getService('templateHelpers');
+		$template->registerHelperLoader(array($helpers, 'loader'));
+
 		$path = dirname(ClassType::from($this)->getFileName()) . '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
 
-		$template->setTranslator($this->presenter->getService('translator'));
+		$template->setTranslator($this->presenter->getContext()->getService('translator'));
 
 		if(is_file($path)) {
 			$template->setFile($path); // automatické nastavení šablony
