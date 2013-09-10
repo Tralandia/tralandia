@@ -88,12 +88,13 @@
 
 									<p class="answer">
 										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
-
+										
 											{foreach $amenities as $amenity}
 
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if !$iterator->last}, {/if}
 
 											{/foreach}
+
 										{/foreach}
 									</p>
 
