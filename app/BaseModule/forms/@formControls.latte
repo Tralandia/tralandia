@@ -284,7 +284,11 @@
 	{default $colCount = 1}
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
-		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
+		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}
+			{if $control->isRequired()}
+				<i class="icon-asterisk"></i>
+			{/if}
+		</td>
 		<td>
 			{foreach $control as $key => $label}
 			{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*}
