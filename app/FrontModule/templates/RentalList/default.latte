@@ -87,12 +87,14 @@
 									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
 									<p class="answer">
+										{var $isFirst = true}
 										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
-										
+											
 											{foreach $amenities as $amenity}
 
-												{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if !$iterator->last}, {/if}
-
+												{if $isFirst}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if !$iterator->last}, {/if}
+												{var $isFirst = false}
+												
 											{/foreach}
 
 										{/foreach}
