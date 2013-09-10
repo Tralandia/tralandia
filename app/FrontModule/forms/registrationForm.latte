@@ -22,9 +22,14 @@
 			{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}
 			{var $rentalContainer = $form['rental']}
 
-			{include #fieldset, text => 'o100084' , required => true}
+			{include #fieldset, text => 'o100084'}
+			
 			{include #email, control => $form['email']}
+			{dump $form['email']->isRequired()}
+			
 			{include #password, control => $form['password']}
+			{dump $form['password']->isRequired()}
+
 
 			{include #fieldset, text => 'o960'}
 			{*{include #text, control => $form['name']}*}
@@ -49,6 +54,8 @@
 
 			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
+
+			{dump $rentalContainer['board']->isRequired()}
 
 			{include #fieldset, text => 'o100086', required => true}
 			{include #address, control => $rentalContainer['address']}
