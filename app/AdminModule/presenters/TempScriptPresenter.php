@@ -12,6 +12,12 @@ class TempScriptPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Robot\GeneratePathSegmentsRobot
+	 */
+	protected $generatePathSegmentsRobot;
+
+	/**
+	 * @autowire
 	 * @var \Dictionary\UpdateTranslationVariations
 	 */
 	protected $variationUpdater;
@@ -289,6 +295,15 @@ class TempScriptPresenter extends BasePresenter {
 			$this->em->flush();
 		}
 
+	}
+
+
+	public function actionGeneratePathSegments()
+	{
+		$generatePathSegmentsRobot = $this->generatePathSegmentsRobot;
+
+		$generatePathSegmentsRobot->run();
+		$this->terminate();
 	}
 
 
