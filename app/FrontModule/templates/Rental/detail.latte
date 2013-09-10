@@ -179,7 +179,7 @@
 									{if count($rental->pricelists) > 0}
 									{var $pricesAvailable = true}
 									{foreach $rental->pricelists as $pricelist}
-									<li n:class="$iterator->fisrt ? separator">
+									<li n:class="$iterator->first ? separator">
 										{if $pricelist->name} {$pricelist->name} {/if} <span class="language">{_$pricelist->language->name}</span>
 										<i class="icon-save"></i> <a href="{$pricelist->filePath}"
 										class="btn-pricelist">{_o955}</a>
