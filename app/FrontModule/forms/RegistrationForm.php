@@ -119,13 +119,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				->setOption('help', $this->translate('o3095'))
 				->setOption('prepend', '<i class="icon-envelope"></i>')
 				->setAttribute('placeholder', 'email@email.com')
-				->setRequired()
+				->setRequired($this->translate('o3095'))
 				->addRule(self::EMAIL, $this->translate('o100144'));
 
 			$this->addPassword('password', 'o997')
 				->setOption('help', $this->translate('o100145'))
 				->setOption('prepend', '<i class="icon-lock"></i>')
-				->setRequired()
+				->setRequired($this->translate('o100145'))
 				->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 
 			$this->addText('url', 'o977')
