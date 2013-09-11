@@ -168,11 +168,11 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$iso = $language->getIso();
 
 			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
-				->setOption('help', $this->translate('o100071'))
+				->setOption('help', $this->translate('o100071', null, null, null, $language))
 				 ->addRule(self::MAX_LENGTH, $this->translate('o100101'), 70);
 
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
-				->setOption('help', '');
+				->setOption('help', $this->translate('726', null, null, null, $language));
 			$i = 1;
 			foreach($questions as $question) {
 				$interviewContainer[$question->getId()]->addTextArea($iso, $i.'. '.$question->getQuestion()->getTranslationText($language));

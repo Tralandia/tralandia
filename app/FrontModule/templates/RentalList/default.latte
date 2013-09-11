@@ -89,10 +89,16 @@
 									<p class="answer">
 										{var $isFirst = true}
 										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
-											
+
+											{if $iterator->last}
+												{var $coverLast = true}
+											{else}
+												{var $coverLast = false}
+											{/if}
+
 											{foreach $amenities as $amenity}
 
-												{if $isFirst}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if !$iterator->last}, {/if}
+												{if $isFirst}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if $coverLast && $iterator->last}.{else}, {/if}
 												{var $isFirst = false}
 												
 											{/foreach}
