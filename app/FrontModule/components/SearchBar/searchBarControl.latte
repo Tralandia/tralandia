@@ -1,6 +1,6 @@
 {var $searchFormClass = 'searchForm'}
 {$jsVariables->for('form.' . $searchFormClass)}
-{* {dump $tests} *}
+
 
 <div class="span3" data-searchCount="{link getSearchCount!}" id="sidebar">
 <div class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
@@ -37,7 +37,7 @@
 			</div>
 
 
-		<div class="helpText">EUR {_490}</div>
+		<div class="helpText">{$environmentLocation->defaultCurrency->iso} {_490}</div>
 
 		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
 			<i class="icon-home"></i>

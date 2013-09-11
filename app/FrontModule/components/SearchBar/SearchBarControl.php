@@ -186,7 +186,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->noResultsText = $presenter->translate('151891');
 		$template->bottomLinksCallback = $this->directLinks;
 		$template->isHomepage = $this->isHomepage;
-
+		$template->environmentLocation = $this->environment->getPrimaryLocation();
+		
 		$template->render();
 	}
 
