@@ -11,7 +11,7 @@ class PhoneContainer extends BaseContainer
 	/**
 	 * @var \Extras\Books\Phone
 	 */
-	protected $phoneBook;	
+	protected $phoneBook;
 
 	/**
 	 * @var \Nette\Localization\ITranslator $translator
@@ -96,7 +96,7 @@ class PhoneContainer extends BaseContainer
 
 	public function validate() {
 		$values = $this->getFormattedValues();
-		if (!$values->entity) {
+		if ($values->entity === FALSE) {
 			$this->getMainControl()->addError($this->translator->translate('151882'));
 		}
 	}
