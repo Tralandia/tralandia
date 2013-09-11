@@ -298,11 +298,18 @@ class TempScriptPresenter extends BasePresenter {
 	}
 
 
-	public function actionGeneratePathSegments()
+	public function actionGeneratePathSegments($id)
 	{
 		$generatePathSegmentsRobot = $this->generatePathSegmentsRobot;
 
-		$generatePathSegmentsRobot->run();
+		if($id == 'pages') {
+			$generatePathSegmentsRobot->runPages();
+		} else if ($id == 'locations') {
+			$generatePathSegmentsRobot->runLocations();
+		} else if ($id == 'types') {
+			$generatePathSegmentsRobot->runTypes();
+		}
+
 		$this->terminate();
 	}
 
