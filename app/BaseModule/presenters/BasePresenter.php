@@ -12,7 +12,7 @@ use Routers\OwnerRouteList;
 
 abstract class BasePresenter extends Presenter {
 
-	use \Kdyby\AutowireProperties;
+	use \Kdyby\Autowired\AutowireProperties;
 	use \TFindEntityHelper;
 
 	const FLASH_INFO = 'info';
@@ -393,6 +393,13 @@ abstract class BasePresenter extends Presenter {
 			$header->setRobots('noindex,follow');
 		}
 
+		$centralLanguage = $this->findLanguage(CENTRAL_LANGUAGE);
+		$importantLanguages = $this->primaryLocation->getImportantLanguages($centralLanguage);
+
+		if(!array_key_exists($this->language->getId(), $importantLanguages)) {
+			$header->setRobots('noindex,nofollow');
+		}
+
 
 		return $header;
 	}
@@ -539,11 +546,17 @@ abstract class BasePresenter extends Presenter {
 
 	public function actionAfterLogin()
 	{
+		$this->actionRedirectToDefaultPage();
+		$this->redirect('this');
+	}
+
+
+	public function actionRedirectToDefaultPage()
+	{
 		$user = $this->getUser();
 		if ($homepage = $user->getIdentity()->homepage){
 			$this->redirect($homepage);
 		}
-		$this->redirect('this');
 	}
 
 

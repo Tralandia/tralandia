@@ -17,6 +17,14 @@ use Routers\BaseRoute;
  */
 class LanguageRepository extends \Repository\BaseRepository {
 
+	/**
+	 * @return \Entity\Language
+	 */
+	public function findCentral()
+	{
+		return $this->find(CENTRAL_LANGUAGE);
+	}
+
 	public function findSupported($order = NULL) {
 		$entityName = $this->_entityName;
 		return $this->findBySupported($entityName::SUPPORTED, $order);
@@ -42,6 +50,21 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 		$return = array();
 		foreach ($supported as $key => $language) {
+			$return[$translator->translate($language->name)] = $language;
+		}
+
+		 $collator->ksort($return);
+
+		return $return;
+
+	}
+
+
+	public function getAllSortedByName(ITranslator $translator, Collator $collator) {
+		$all = $this->findAll();
+
+		$return = array();
+		foreach ($all as $key => $language) {
 			$return[$translator->translate($language->name)] = $language;
 		}
 

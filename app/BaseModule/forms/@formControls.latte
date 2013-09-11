@@ -18,12 +18,26 @@
 	*}
 	{define #fieldset}
 	{default $text = ''}
+	{default $required = false}
 	{default $id = ''}
 	<tr>
-		<td colspan="3" id="{$id}" class="fieldset">{_$text}</td>
+		<td colspan="3" id="{$id}" class="fieldset"><div class="separator"></div>{_$text}<i n:if="$required" class="icon-asterisk"></i></td>
 	</tr>
 	{/define #fieldset}
 
+
+	{*
+	infobox -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	*}
+	{define #infobox}
+	{default $text = ''}
+	<tr class="simpleInput">
+		<td colspan=3>
+			<div class="formHelpText info">{_$text}</div>
+		</td>
+	</tr>
+	{/define #infobox}
 
 	{*
 	Text Control -------------------------------------------
@@ -173,9 +187,9 @@
 	{/capture}
 	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td colspan="3">
-			<table>
+			<table class="interview">
 				<tr>
-					<td>{_$control->caption}</td>
+					<td class="caption">{_$control->caption}</td>
 				</tr>
 				<tr>
 					<td>{!$input}</td>
@@ -205,6 +219,9 @@
 	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td>
 			{_$control->caption}
+			{if $control->isRequired()}
+				<i class="icon-asterisk"></i>
+			{/if}
 		</td>
 		<td>
 			{capture $input}
@@ -267,7 +284,12 @@
 	{default $colCount = 1}
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
-		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
+		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}
+		
+			{if $control->isRequired()}
+				<i class="icon-asterisk"></i>
+			{/if}
+		</td>
 		<td>
 			{foreach $control as $key => $label}
 			{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*}
@@ -283,9 +305,14 @@
 	{var $countPerCol = ceil(count($control->items)/$colCount)}
 	<tr>
 		<td colspan="3">
-			<table class="checkboxes" style="width: 100%;">
+			<table class="checkboxes">
 				<tr>
-					<td colspan="{$colCount-1}" class="fieldset">{_$control->caption|firstUpper}</td>
+					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
+					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}
+						{if $control->isRequired()}
+							<i class="icon-asterisk"></i>
+						{/if}
+					</td>
 					<td>
 						<span class="help">{$control->getOption('help')}</span>
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
@@ -356,6 +383,9 @@
 {include #opentag , class => 'simpleInput ' , control => $container}
 	<td>
 		{_$mainControl->caption}
+		{if $mainControl->isRequired()}
+			<i class="icon-asterisk"></i>
+		{/if}		
 	</td>
 	<td>
 		<table>
@@ -602,28 +632,23 @@
 
 				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
-				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
-					<li data-id="{$image->getId()}" class="ui-state-default">
-						<img n:image="$image">
-						<a href="" class="remove" title="{_o100088}"></a>
+				<ul id="sortable" class="ui-sortable">
+
+					{foreach  $container->getImages() as $image } 
+						<li data-id="{$image->getId()}" class="ui-state-default">
+							<img n:image="$image">
+							<a href="" class="remove" title="{_o100088}"></a>
+						</li>				
+					{/foreach}
+
+					<li class="addPhotoButton">
+						<span title="{_o100087}" data-placement="bottom" class="btn btn-green tooltipElem fileinput-button">
+							<i class="icon-plus"></i>
+							{input $container['upload']}
+						</span>
 					</li>
+
 				</ul>
-			</div>
-
-		</div>
-		<div class="row-fluid text">
-			<div class="span3">
-
-				<span class="btn btn-green fileinput-button">
-					<i class="icon-upload-alt"></i>
-					<span>{_o100087}</span>
-					{input $container['upload']}
-				</span>
-
-			</div>
-
-			<div class="span9">
-			<p>{_o100097}</p>
 			</div>
 
 		</div>
@@ -666,7 +691,7 @@
 							<span class="file-placeholder">{$component['fileSize']->getValue()|bytes}</span>
 						{else}
 							<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button">
-								<i class="entypo-upload"></i>
+								<i class="icon-upload-alt"></i>
 								<span>{label $component['file']}{/label}</span>
 								{input $component['file']}
 							</span>

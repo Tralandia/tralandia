@@ -148,12 +148,6 @@ parameters:
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
 
-#redis:
-#	storage: on
-#	journal: on
-#	database: 0
-#	session: {database: 1}
-
 doctrine:
 	connections:
 		default: %database%
@@ -190,22 +184,6 @@ services:
 	nullStorage:
 		class: \Nette\Caching\Storages\DevNullStorage
 		autowired: false
-
-#	translatorRedisClient:
-#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 2)
-#		autowired: false
-#
-#	translatorRedisStorage:
-#		class: Kdyby\Redis\RedisStorage(@translatorRedisClient, Kdyby\Redis\RedisJournal(@translatorRedisClient))
-#		autowired: false
-#
-#	searchRedisClient:
-#		class: Kdyby\Redis\RedisClient(127.0.0.1, NULL, 3)
-#		autowired: false
-#
-#	searchRedisStorage:
-#		class: Kdyby\Redis\RedisStorage(@searchRedisClient, Kdyby\Redis\RedisJournal(@searchRedisClient))
-#		autowired: false
 
 	dibiConnection:
 		class: \DibiConnection(%cacheDatabase%)
@@ -310,6 +288,10 @@ services:
 	# ==============================
 	# ==================== SERVICES
 	# ==============================
+	transliterator:
+		class: \Transliterator
+		factory: Transliterator::create("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC")
+
 	googleGeocodeService: GoogleGeocodeServiceV3(@googleServiceCommunicator)
 	googleServiceCommunicator: CurlCommunicator
 

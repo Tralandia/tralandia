@@ -50,12 +50,13 @@
 			{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 			{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
 
-
-			{include #fieldset, text => 'o100086'}
+			{include #fieldset, text => 'o100086', required => true}
 			{include #address, control => $rentalContainer['address']}
 
 
-			{include #fieldset, text => 'o980'}
+			{include #fieldset, text => 'o980' , required => true}
+			{include #infobox, text => 'o100097' }
+		
 			{include #rentalPhotos, control => $rentalContainer['photos']}
 
 			{include #submit, control => $form['submit'], icon => 'entypo-ok' , dataLoadingText => 'o100203'}

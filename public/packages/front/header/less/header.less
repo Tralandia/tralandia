@@ -398,6 +398,66 @@
 		li {
 			width: 100%;
 
+			&.socialSite {
+				border-top: 1px solid #C7C7C7;
+				padding-top: 4px;
+				height: 26px;
+				overflow: hidden;
+				
+				span.text {
+					display: block;
+					clear: none;
+					font-size: 12px;
+					float: left;
+					font-weight: normal;
+					color: #888;
+					width: 100px;
+					padding: 4px 10px 0 10px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;		
+				}
+
+				a {
+					padding: 3px 10px;
+					float: left;
+					clear: none;
+					font-size: 12px;
+					display: inline;
+
+					i {
+						font-size: 17px;
+						margin-right: 3px;
+					}
+
+					&.facebook {
+						color: #3c599f;
+						i {
+							color: #3c599f;
+						}
+					}
+					&.twitter {
+						color: #00abf0;
+						i {
+							color: #00abf0;
+						}
+					}
+					&.googlePlus {
+						color: #d95232;
+						i {
+							color: #d95232;
+						}
+					}
+
+					span {
+						display: inline;
+						clear: none;
+						color: inherit;
+						font-weight: normal;
+					}
+				}
+			}
+
 			ul {
 				padding: 4px 0;
 				margin-left: 10px;
@@ -493,6 +553,10 @@
 					color: #444;
 					line-height: 26px;
 					border-right: 1px solid #bbb;
+
+					&.blue {
+						color: @darkBlue;
+					}
 
 					&.last {
 						border-right: none;

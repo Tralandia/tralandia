@@ -102,6 +102,8 @@ parameters:
 					#- fileUpload/lib/js/main.js
 				css:
 					- fileUpload/lib/css/jquery.fileupload-ui.css
+					- fileUpload/custom/less/fileImputUi.less
+
 			fontEntypo:
 				css:
 					- fontEntypo/custom/less/entypoIcon.less
@@ -174,6 +176,8 @@ parameters:
 					- front/_base/less/ie.less
 					# retina display
 					- front/_base/less/retina.less
+					# price control grid for owner edit form
+					# - front/_base/less/priceControlGrid.less
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
@@ -210,6 +214,10 @@ parameters:
 					- front/_base/js/reservationForm.js
 					# root home
 					- front/home/js/rootHome.js
+					# 
+					- front/_base/js/formChangeNotifi.js
+					# report bug plugin
+					- front/_base/js/reportBug.js
 
 
 			historyPlugin:
@@ -248,7 +256,7 @@ parameters:
 					- bootstrap/lib/js/bootstrap-alert.js
 					- bootstrap/lib/js/bootstrap-tooltip.js
 					- bootstrap/lib/js/bootstrap-popover.js
-					#- bootstrap/lib/js/bootstrap-scrollspy.js
+					- bootstrap/lib/js/bootstrap-scrollspy.js
 					- bootstrap/lib/js/bootstrap-tab.js
 					#- bootstrap/lib/js/bootstrap-transition.js
 					#- bootstrap/lib/js/bootstrap-typeahead.js
@@ -299,11 +307,11 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
-				-  %webloader.packages.select2%
+				
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
-
+				-  %webloader.packages.select2%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%

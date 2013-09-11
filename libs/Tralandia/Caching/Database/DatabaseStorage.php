@@ -76,7 +76,11 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	 */
 	public function clean(array $conditions)
 	{
-
+//		$tags = Nette\Utils\Arrays::get($conditions, Nette\Caching\Cache::TAGS, NULL);
+//
+//		if(is_array($tags) && count($tags)) {
+//			$this->database->cleanByTag($tags);
+//		}
 	}
 
 
