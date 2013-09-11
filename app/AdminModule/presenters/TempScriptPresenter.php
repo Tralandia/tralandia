@@ -261,7 +261,7 @@ class TempScriptPresenter extends BasePresenter {
 	public function actionFixBrokenLocations()
 	{
 		$addressRepository = $this->em->getRepository(ADDRESS_ENTITY);
-		$locations = $this->em->getRepository(LOCATION_ENTITY)->findBy(['localName' => NULL]);
+		$locations = $this->em->getRepository(LOCATION_ENTITY)->findBy(['slug' => NULL]);
 		/** @var $locationDecoratorFactory \Model\Location\ILocationDecoratorFactory */
 		$locationDecoratorFactory = $this->context->locationDecoratorFactory;
 

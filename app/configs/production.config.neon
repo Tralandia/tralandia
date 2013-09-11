@@ -1,5 +1,6 @@
 php:
 	memory_limit: 1024M
+	max_execution_time: 240
 
 nette:
 	session:
