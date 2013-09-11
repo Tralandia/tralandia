@@ -78,7 +78,6 @@ class DictionaryManagerDataSource extends BaseDataSource
 
 
 			$return[$key] = $row;
-			break;
 		}
 
 		return $return;
