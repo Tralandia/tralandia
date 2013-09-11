@@ -27,6 +27,10 @@
 @inputFontSize : 16px;
 
 
+/* info box  */
+@infoboxBackground : #d2e8f5;
+@infoboxBorder: rgb(115, 158, 185);
+
 input[type=text] , textarea {
 	box-shadow: none;
 }
@@ -57,6 +61,8 @@ form.dashboard {
 	margin: 0 0 6px;
 }
 
+#content.noPadding {
+
 table.formTable {
 	// border: 1px solid black;
 	// td {
@@ -70,9 +76,21 @@ table.formTable {
 		padding-top: 20px;
 		padding-bottom: 10px;
 		color: @darkGreen;
+
+		i.icon-asterisk {
+			font-size: 11px;
+			color: @red;
+			padding-left: 1px;
+		}
 	}
 
-
+	.separator {
+		height: 1px;
+		border-top: 1px solid #cbd2a0;
+		margin-left: -11px;
+		margin-bottom: 15px;
+		margin-right: -17px;		
+	}
 
 	.btn.btn-cancel {
 		margin-left: 10px;
@@ -128,6 +146,90 @@ table.formTable {
 
 	tr.simpleInput {
 		height: 46px;
+
+		i.icon-asterisk {
+			font-size: 8px;
+			color: @red;
+			position: relative;
+			top: -4px;
+			left: -2px;
+		}
+
+		div.formHelpText.info {
+			margin: 0 0 10px 0;
+			padding: 10px;
+			font-size: 14px;
+
+			a.btn-blue {
+				float: right;
+			}
+		}
+
+		.langTabs {
+
+			.content {
+				background: #F8FAE9;
+				.border-radius(0 4px 4px 4px);
+				border: 1px solid #b0c13b;
+
+				table.interview {
+					width: 672px;
+					margin-bottom: 10px;
+
+					tr {
+						td {
+							padding: 0;
+
+							&.caption {
+								padding: 10px 0;
+							}
+						}
+					}
+				}
+			}
+
+			table {
+				tr:nth-child(1) td , tr:nth-child(2) td{
+					padding-top:1px;
+					padding-bottom: 1px;
+					vertical-align: middle;
+				}
+			}
+
+			.header {
+				height: 30px;
+			}
+
+			a.tabPane  {
+				
+				padding: 5px 10px;
+				position: relative;
+				top: 4px;
+				float: left;
+				margin-right: 3px;
+				.border-radius(4px 4px 0 0);
+				border: 1px solid #b0c13b;
+				border-bottom: none;
+				&.current {
+					background: #F8FAE9;
+					border-color: #b0c13b;
+					padding-bottom: 6px;
+				}
+			}
+
+			td:nth-child(1), td:nth-child(3) {
+				padding-left: 10px;
+
+			}
+
+			td:nth-child(1){
+				width: 180px;
+				font-size: 13px;
+				line-height: 15px;
+			}
+	
+		}
+
 		td:nth-child(1) {
 			width: 180px;
 			font-size: 13px;
@@ -150,7 +252,7 @@ table.formTable {
 			}
 
 			textarea {
-				height: 70px;
+				height: 50px;
 				margin: 0;
 			}
 		}
@@ -267,10 +369,11 @@ table.formTable {
 				}
 				div {
 					width: 24px;
-					#gradient > .vertical(rgb(241, 250, 209),rgb(186, 196, 148));
+					background: #eaf0d7;
 					.basic-border-radius(0px);
 					b:before {
-						left: 6px;
+						left: 5px;
+						top: 1px;
 						position: relative;
 					}
 				}
@@ -329,6 +432,18 @@ table.formTable {
 	table.checkboxes , .simpleInput {
 		width: 100%;
 		.box-size();
+
+		&.interview {
+			tr:nth-child(1) {
+				height:21px;
+				td {
+					padding-bottom: 4px;
+					padding-top: 7px;
+					margin: 0;
+				}
+			}
+		}
+
 		tr:nth-child(1) {
 			font-size: 15px;
 			line-height: 15px;
@@ -384,6 +499,8 @@ table.formTable {
 			line-height: 14px;
 		}
 	}
+
+
 
 
 	.invalid {
@@ -466,7 +583,9 @@ table.formTable {
 						color-stop(1, #D2E8F5)
 					);
 
-					border: 1px solid rgb(115, 158, 185);
+
+
+					border: 1px solid @infoboxBorder;
 					position: relative;
 					background: #fdddd7;
 					border: 1px solid #ff0000;
@@ -535,23 +654,10 @@ table.formTable {
 					-moz-border-radius: 3px;
 					border-radius: 3px;
 					position: relative;
-					background: #c2e1f5;
 
-					background-image: linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -o-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -moz-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -webkit-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
-					background-image: -ms-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background: @infoboxBackground;
 
-					background-image: -webkit-gradient(
-						linear,
-						left bottom,
-						left top,
-						color-stop(0, #C2E1F5),
-						color-stop(1, #D2E8F5)
-					);
-
-					border: 1px solid rgb(115, 158, 185);
+					border: 1px solid @infoboxBorder;
 				}
 				.help:after, .help:before {
 					top: 100%;
@@ -565,7 +671,7 @@ table.formTable {
 
 				.help:after {
 					border-color: rgba(136,183,213,0);
-					border-top-color: #c2e1f5;
+					border-top-color: @infoboxBackground;
 					border-width: 10px;
 					left: 10%;
 					margin-left: -10px;
@@ -573,7 +679,7 @@ table.formTable {
 
 				.help:before {
 					border-color: rgba(194,225,245,0);
-					border-top-color: rgb(115, 158, 185);
+					border-top-color: @infoboxBorder;
 					border-width: 11px;
 					left: 10%;
 					margin-left: -11px;
@@ -613,14 +719,21 @@ table.formTable {
 				float: none;
 				margin: 0;
 				width: 128px;
-				height: 20px;
+				display: inline-block;
+				height: 30px;
+
+				i {
+					top: 11px;
+				}
 				span {
 					white-space: nowrap;
 					overflow: hidden;
 					width: 91px;
 					text-overflow: ellipsis;
-					top: 0px;
-					padding-right: 12px;
+					top: -8px;
+					margin-right: 0;
+					float: right;
+					padding-right: 10px;					
 				}
 			}
 
@@ -649,6 +762,10 @@ table.formTable {
 	}
 
 }
+
+}
+
+
 .mainForm.select2-drop {
 	border: 1px solid #b0c13b;
 	border-top-width: 0px;
@@ -666,7 +783,6 @@ table.formTable {
 }
 
 .classification {
-	display: none;
 	span {
 		font-size: 13px;
 	}
@@ -742,7 +858,7 @@ table.formTable {
 			color-stop(1, #D2E8F5)
 		);
 
-		border: 1px solid rgb(115, 158, 185);
+		border: 1px solid @infoboxBorder;
 		position: relative;
 		background: #fdddd7;
 		border: 1px solid #ff0000;
@@ -1080,7 +1196,115 @@ form {
 .dashboard {
 	.btn.btn-greenDark {
 		float: left;
+		padding: 7px 30px;
+
 		margin-left: 100px;	
 		margin-bottom: 4px;
+		border: none;
+		background: #fd8d03;
+		color: #FFF;
+
+		small {
+			font-weight: normal;
+			font-size: 15px;
+		}
+	}
+
+	.btn-green  {
+		padding: 1px 10px;
+		font-weight: normal;
+		border: none;
+		background: #708711;
+		&:hover {
+			background: #a7ba24;
+		}
+
+		i {
+			font-size: 11px;
+			float: left;
+			top: 4px;
+			margin: 0;
+			&.icon-upload-alt {
+
+			}
+
+			&.icon-plus {
+				left: -2px;
+			}
+		}
 	}
 }
+
+.rentalRemoveLink  {
+	margin: 15px 10px 0 10px;
+}
+
+#content.noPadding {
+	.formHelpText , p.formHelpText {
+		color: rgb(74, 110, 133);
+		padding: 10px;
+		margin-bottom: 10px;
+		display: block;
+		.border-radius(3px);
+		position: relative;
+		line-height: 20px;
+		background: rgb(210, 232, 245);
+
+		border: 1px solid @infoboxBorder;
+
+		&.info {
+			margin: 0 10px;
+			padding: 10px;
+			padding-left: 0;
+		}
+
+		i {
+			font-size: 40px;
+			width: 28px;
+			position: relative;
+			top: -7px;
+		}
+
+		.infoIcon {
+			width: 70px;
+			text-align: center;
+		}
+
+		a.btn-blue {
+			float: right;
+		}
+	}
+}
+
+.control-photo .ui-sortable li.addPhotoButton {
+	background: transparent;
+	border: 1px solid @lightGreen;
+
+	&:hover {
+		border: 1px solid @darkGreen;
+	}
+
+		.btn.btn-green.fileinput-button {
+			border: none;
+			.border-radius(0);
+			height: 60px;
+			line-height: 44px;
+			width: 80px;
+			text-align: center;
+			background: transparent;
+
+			i.icon-plus {
+				font-size: 30px;
+				line-height: 30px;
+				float: none;
+				margin: 0;
+				display: inline;
+				color: @darkGreen;
+				text-shadow:none;	
+			}
+		}	
+}
+
+
+
+

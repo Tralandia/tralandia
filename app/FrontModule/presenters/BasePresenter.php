@@ -2,6 +2,7 @@
 
 namespace FrontModule;
 
+use Entity\Location\Location;
 use Nette;
 
 abstract class BasePresenter extends \BasePresenter {
@@ -212,14 +213,7 @@ abstract class BasePresenter extends \BasePresenter {
 			} else {
 				/** @var $location \Entity\Location\Location */
 				foreach($group as $location) {
-					$temp = [];
-					$temp['name'] = $this->translate($location->getName());
-					if($this->language->getId() !== $this->primaryLocation->getDefaultLanguage()->getId()) {
-						$temp['nameSource'] = $location->getName()->getSourceTranslationText();
-					}
-					if(isset($temp['nameSource']) && $temp['name'] == $temp['nameSource']) {
-						unset($temp['nameSource']);
-					}
+					$temp = $this->getLocationName($location);
 					$temp['slug'] = $location->getSlug();
 					if($location->isPrimary()) {
 						$temp['icon'] = '/images/flags/' . $location->getFlagName();
@@ -229,6 +223,26 @@ abstract class BasePresenter extends \BasePresenter {
 			}
 		}
 		$this->sendJson($json);
+	}
+
+
+	/**
+	 * @param Location $location
+	 *
+	 * @return array
+	 */
+	public function getLocationName(Location $location)
+	{
+		$return = [];
+		$return['name'] = $this->translate($location->getName());
+		if($this->language->getId() !== $this->primaryLocation->getDefaultLanguage()->getId()) {
+			$return['nameSource'] = $location->getName()->getSourceTranslationText();
+		}
+		if(isset($return['nameSource']) && $return['name'] == $return['nameSource']) {
+			unset($return['nameSource']);
+		}
+
+		return $return;
 	}
 
 	protected function generateFavoriteLink()

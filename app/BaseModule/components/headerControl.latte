@@ -41,7 +41,7 @@
 							</li>
 						{else}
 							<li class="headerIcon">
-								<a href="{plink $loggedUser->getRole()->getHomePage()}">{$loggedUser->getLogin()}</a>
+								<a href="{plink redirectToDefaultPage}">{$loggedUser->getLogin()}</a>
 							</li>
 						{/if}
 						<li n:if="$user->identity->isFake()" class="headerIcon">
@@ -52,10 +52,16 @@
 								<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
 							</li>
 						{/if}
-						<li class="headerIcon last">
+						<li class="headerIcon">
 							<a href="{$getLogoutLink()}" >{_o1594}</a>
 						</li>
-
+						<li>
+							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
+									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
+								</a>
+							</div>
+						</li>
 					{else}
 
 						<li class="headerIcon">
@@ -64,11 +70,6 @@
 							</a>
 						</li>
 
-
-
-
-
-
 						<li class="headerIcon">
 							<a href="{plink :Front:SupportUs:default}" class="green">
 								<strong>{_o100195}</strong>
@@ -76,7 +77,7 @@
 						</li>
 
 						<li class="headerIcon">
-							<a href="{plink Registration:}" class="red">
+							<a href="{plink Registration:}" class="blue">
 								<strong>{_o100044}</strong>
 							</a>
 						</li>
@@ -107,10 +108,15 @@
 								{else}
 									{var $class = NULL}
 								{/if}
+								{if array_key_exists($language->getId(), $importantLanguages)}
+									{var $rel = NULL}
+								{else}
+									{var $rel = 'nofollow'}
+								{/if}
 								{if $language->getId() == $environment->getLanguage()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}" n:attr="class => $class"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
+									<a href="{plink this, language => $language}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
@@ -146,18 +152,24 @@
 
 	<div class="socialIcons socialPluginsInit" id="socialIcons">
 		<i class="icon-facebook"></i>
-		<i class="icon-google-plus"></i>
 		<i class="icon-twitter"></i>
+		<i class="icon-google-plus"></i>
 		<i class="icon-pinterest"></i>
 
 		<ul class="dropdown-menu" id="socialIconsMenu">
 			<li class="socialIconCover">
 				<ul class="social-buttons">
+					<li>{$facebookShareTag}</li>
 					<li>{$twitterShareTag}</li>
 					<li>{$googlePlusShareTag}</li>
-					<li>{$facebookShareTag}</li>
 					<li>{$pinterestShareTag}</li>
 				</ul>
+			</li>
+			<li class="socialSite">
+				<span class="text">{_152825}</span>
+				<a class="facebook linkToSocialSite" tagret="_blank" href="{$facebookPage}"><i class="icon-facebook"></i><span>Facebook</span></a>
+				<a class="twitter linkToSocialSite" tagret="_blank" href="{$twitterProfile}"><i class="icon-twitter"></i><span>Twitter</span></a>
+				<a class="googlePlus linkToSocialSite" tagret="_blank" href="{$googlePlusProfile}"><i class="icon-google-plus"></i><span>Google Plus</span></a>
 			</li>
 			{* <li class="loader"><i class="icon-spinner icon-spin"></i></li> *}
 		</ul>

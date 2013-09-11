@@ -206,7 +206,6 @@ function generateRedirectUrl(count){
 			url+='&do=searchBar-getSearchCount';
 		}
 	}
-	
 
 	return url;
 	// 
@@ -252,10 +251,14 @@ function updateCriteriaCount(){
 function searchLoader(status){
 	switch(status){
 		case 'start':
-			$('#searchLoaderStatus').removeClass('hide');
+			$('form.searchForm #searchLoaderStatus').css({
+				'visibility':'visible'
+			});
 		break;
 		case 'stop':
-			$('#searchLoaderStatus').addClass('hide');
+			$('form.searchForm #searchLoaderStatus').css({
+				'visibility':'hidden'
+			});
 		break;		
 	}
 }
@@ -326,9 +329,13 @@ function _updatePriceTo(){
 	}
 
 	$priceTo.find('option').each(function(k,v){
+
 		$(this).attr('disabled',false);
-		if($(this).val() <= priceFromValue){
+
+		if(parseInt($(this).val()) <= parseInt(priceFromValue)){
 			$(this).attr('disabled',true);
+			
+			// console.log('pricefrom'+priceFromValue);
 		}
 	});
 	
@@ -343,11 +350,24 @@ $(function(){
 	$('[data-autocomplete-url]').searchFormSuggest();
 
 	$('.searchForm .select2.disabledFulltext').select2({
-		dropdownCssClass: 'searchSelect',
+		dropdownCssClass: 'searchSelect disableFulltext',
 		allowClear: true,
-		minimumResultsForSearch: 'X',
-	});	
-	
+		minimumResultsForSearch: 99,
+		placeholder:true,
+	});
+
+
+	$(".select2 , .sidebarLocation").on("select2-opening",function(e){
+
+		var cssClass = $(this).data('cssClass');
+			if(typeof cssClass != 'undefined'){
+				setTimeout(function(){
+					$('body').find('#select2-drop').addClass(cssClass);
+				},1);
+			}
+
+	});
+
 	$('.searchForm .select2:not(.disabledFulltext)').select2({
 		dropdownCssClass: 'searchSelect'
 	   // matcher: function(term, text, opt) {

@@ -10,5 +10,6 @@ services:
 	- [class: Listener\PolygonCalculatorListener, tags: [kdyby.subscriber]]
 	- [class: Listener\RequestTranslationsEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\RequestTranslationsHistoryLogListener, tags: [kdyby.subscriber]]
+	- [class: Listener\AcceptedTranslationsEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\TranslationsSetAsPaidHistoryLogListener, tags: [kdyby.subscriber]]
 

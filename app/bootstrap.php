@@ -34,7 +34,7 @@ $configurator->addParameters([
 ]);
 
 
-//$configurator->setDebugMode(false);
+// $configurator->setDebugMode(false);
 
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
@@ -51,7 +51,6 @@ require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
-Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 

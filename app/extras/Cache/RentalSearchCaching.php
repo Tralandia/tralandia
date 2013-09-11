@@ -59,11 +59,25 @@ class RentalSearchCaching extends \Nette\Object {
 				if (isset($value[$rental->getId()])) unset($this->cacheContent[$key][$rental->getId()]);
 			} else {
 				foreach ($value as $key2 => $value2) {
-					if (isset($value2[$rental->getId()])) unset($this->cacheContent[$key][$key2][$rental->getId()]);
-					if (count($this->cacheContent[$key][$key2]) == 0) unset($this->cacheContent[$key][$key2]);
+					if (isset($value2[$rental->getId()])) {
+						unset($this->cacheContent[$key][$key2][$rental->getId()]);
+					}
+					if (count($this->cacheContent[$key][$key2]) == 0) {
+						unset($this->cacheContent[$key][$key2]);
+					}
 				}
 			}
 		}
+	}
+
+
+	/**
+	 * @param Rental $rental
+	 */
+	public function deleteRental(Rental $rental)
+	{
+		$this->removeRental($rental);
+		$this->save();
 	}
 
 

@@ -119,11 +119,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				->setOption('help', $this->translate('o3095'))
 				->setOption('prepend', '<i class="icon-envelope"></i>')
 				->setAttribute('placeholder', 'email@email.com')
+				->setRequired()
 				->addRule(self::EMAIL, $this->translate('o100144'));
 
 			$this->addPassword('password', 'o997')
 				->setOption('help', $this->translate('o100145'))
 				->setOption('prepend', '<i class="icon-lock"></i>')
+				->setRequired()
 				->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 
 			$this->addText('url', 'o977')
@@ -143,7 +145,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 			$rentalContainer->addText('name', '152275')
 				->setOption('help', $this->translate('o100071'))
-				->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+				->setRequired()
+				->addRule(self::MAX_LENGTH, $this->translate('o100101'), 70);
 
 			$currency = $this->country->getDefaultCurrency();
 			if($currency) {

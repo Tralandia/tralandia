@@ -82,4 +82,10 @@ class DatabaseClient {
 		return $value;
 	}
 
+
+	public function cleanByTag(array $tags)
+	{
+		$tags = ',,' . implode(',,', $tags) . ',,';
+		$this->connection->delete($this->table)->where('tags LIKE %~like~', $tags);
+	}
 }

@@ -89,18 +89,19 @@
 
 		base._initDetail = function(){
 
+			// console.log(base._getHistory());
 
 			if(base._getHistory() != null){
 
 				base._setRentalDetailVariables();
 
 				if(base._isRentalInHistory()){
-					base._renderNavigationBar();
-					$(base.options.selectorPaginatorContainer).addClass('show');
+					if(base._getHistory().rentalCount > 1){
+						base._renderNavigationBar();
+						$(base.options.selectorPaginatorContainer).addClass('show');
+					}
 				} else {
-
 					base._deleteHistory();
-					console.log('nepatri do mojej historie');
 					// @todo ajax function
 				}
 
@@ -118,21 +119,17 @@
 			base.$listName = $(base.options.selectorNavBarListName);
 			base.$objectText = $(base.options.selectorObjectText);
 
-			base.rentalDetailVariables = $(base.options.selectorRentalinfo).data('info');
+			base.rentalDetailVariables = {
+				id: $(base.options.selectorRentalinfo).data('infoId'),
+				name: $(base.options.selectorRentalinfo).data('infoName'),
+			};
 		};
 
 		base._isRentalInHistory = function(){
 
 			var r = false;
 
-			// console.log(base.rentalDetailVariables);
-			// console.log(base._getHistory());
-			// console.log(base._getHistory().listData);
-			// console.log(base.rentalDetailVariables.id);
-			// console.log(base._getHistory().listData);
-
 			$.each(base._getHistory().listData,function(k,v){				
-
 
 				if(parseInt(base.rentalDetailVariables.id) == parseInt(v.id)){
 					r = true;
@@ -141,10 +138,6 @@
 			});
 
 			return r;
-		};
-
-		base._loadFullHistory = function(){
-			
 		};
 
 		base._renderPaginator = function(data,dataHistory){
@@ -186,9 +179,6 @@
 				if(typeof data.nextLink == 'undefined'){
 
 						jQuery.getJSON( base._createUrlForAjax(dataHistory) , function(d){
-
-							// console.log('ajax');
-							// console.log(d);
 
 							dataHistory.listData = d.listData;
 							base._setHistory(dataHistory);
@@ -304,12 +294,17 @@
 		// fetch rentals to array 
 		base._getListRentals = function(){
 
-			// console.log(base._getListInfo());
-
 			var r = [];
+
 			$(base.options.selectorRentalPostRow).each(function(k,v){
-				r.push($(this).find('variables').data('info'));
+				var rpush = {
+					name: $(this).find('variables').data('infoName'),
+					id: $(this).find('variables').data('infoId'),
+					url: $(this).find('variables').data('infoUrl'),
+				};
+				r.push(rpush);
 			});
+
 			return r ;			
 		};
 
@@ -337,7 +332,17 @@
 
 
 		base._getListInfo = function(){
-			return $(base.options.selectorListInfo).data('info');
+			// return $(base.options.selectorListInfo).data('info');
+
+			return {
+				name: $(base.options.selectorListInfo).data('infoName'),
+				id: $(base.options.selectorListInfo).data('infoId'),
+				url: $(base.options.selectorListInfo).data('infoUrl'),
+				rentalCount: $(base.options.selectorListInfo).data('infoRentalCount'),
+				listTitle: $(base.options.selectorListInfo).data('infoListTitle'),
+				paginatorPage: $(base.options.selectorListInfo).data('infoPaginatorPage'),
+				pagging: $(base.options.selectorListInfo).data('infoPagging'),
+			};
 		}
 
 		// get all rental list data

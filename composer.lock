@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6e775cfb547548ec40b93c38e50154bc",
+    "hash": "56bee70852a73265f2f5fcccaa3ecd4f",
     "packages": [
         {
             "name": "dg/dibi",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d"
+                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/1728437f5d3c6c274a60835f3abe577250cd801d",
-                "reference": "1728437f5d3c6c274a60835f3abe577250cd801d",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
+                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
                 "shasum": ""
             },
             "require-dev": {
@@ -54,48 +54,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2013-08-11 18:59:28"
-        },
-        {
-            "name": "hosiplan/nette-autowire-properties",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
-                "reference": "v0.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
-                "reference": "v0.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com"
-                }
-            ],
-            "description": "Lazy-Autowire of properties for Nette PresenterComponents.",
-            "keywords": [
-                "nette"
-            ],
-            "time": "2012-12-21 13:52:10"
+            "time": "2013-08-29 08:28:25"
         },
         {
             "name": "janmarek/mockista",
@@ -154,17 +113,68 @@
             "time": "2013-06-24 12:24:03"
         },
         {
+            "name": "kdyby/autowired",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/Autowired.git",
+                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/Autowired/zipball/00734d2c01e0262af93a428cb9758ad1d6c11a4c",
+                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "@dev"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby\\Autowired": "src/"
+                },
+                "classmap": [
+                    "src/Kdyby/Autowired/exceptions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Syntax sugar for working with services in Nette Framework",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "autowire",
+                "di",
+                "kdyby",
+                "nette"
+            ],
+            "time": "2013-08-22 22:10:12"
+        },
+        {
             "name": "kdyby/events",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "ad2f8859c2825ea479b60f4f4d6108de1fd4b617"
+                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/ad2f8859c2825ea479b60f4f4d6108de1fd4b617",
-                "reference": "ad2f8859c2825ea479b60f4f4d6108de1fd4b617",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
+                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
                 "shasum": ""
             },
             "require": {
@@ -203,7 +213,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-08-15 09:59:11"
+            "time": "2013-08-22 22:10:12"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -211,12 +221,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c"
+                "reference": "3e7ee05008c14c5f259bb5827a6b617595e23621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
-                "reference": "6ac1d22f82cabe58aff0abb7f5de2dd33b87034c",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/3e7ee05008c14c5f259bb5827a6b617595e23621",
+                "reference": "3e7ee05008c14c5f259bb5827a6b617595e23621",
                 "shasum": ""
             },
             "require": {
@@ -252,62 +262,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-07-09 00:51:48"
-        },
-        {
-            "name": "kdyby/redis",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Kdyby/Redis.git",
-                "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/414bb3ed659e8caa360754ec5bee959441f4be87",
-                "reference": "597f70140fd847a89b5bdf78996d73133a5eaf4b",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "@dev"
-            },
-            "require-dev": {
-                "nette/tester": "@dev"
-            },
-            "suggest": {
-                "ext-redis": "The php redis extension https://github.com/nicolasff/phpredis/ is required for connecting to redis server"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kdyby\\Redis\\": "src/"
-                },
-                "classmap": [
-                    "src/Kdyby/Redis/exceptions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com"
-                }
-            ],
-            "description": "Redis storage for Nette Framework",
-            "homepage": "http://kdyby.org",
-            "keywords": [
-                "cache",
-                "client",
-                "kdyby",
-                "nette",
-                "redis"
-            ],
-            "time": "2013-06-30 13:36:22"
+            "time": "2013-08-22 22:10:12"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -315,12 +270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "2.6.6"
+                "reference": "c15e7e3ae5c9dc9f200cded68715ba92e3f96274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/2.6.6",
-                "reference": "2.6.6",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/c15e7e3ae5c9dc9f200cded68715ba92e3f96274",
+                "reference": "c15e7e3ae5c9dc9f200cded68715ba92e3f96274",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +288,10 @@
             "autoload": {
                 "classmap": [
                     "Mobile_Detect.php"
-                ]
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -343,7 +301,7 @@
                 {
                     "name": "Serban Ghita",
                     "email": "serbanghita@gmail.com",
-                    "homepage": "http://ghita.org",
+                    "homepage": "http://mobiledetect.net",
                     "role": "Developer"
                 }
             ],
@@ -356,7 +314,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-08-03 13:07:23"
+            "time": "2013-09-06 08:56:04"
         },
         {
             "name": "nette/nette",
@@ -368,7 +326,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/9d077ae6b8d49ed718e5ace6da007f876afeda13",
+                "url": "https://api.github.com/repos/nette/nette/zipball/9a62e1bbb3db317962ac2b1ac9a9bd5b9b1d6d81",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -530,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "v2.3"
+                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/v2.3",
-                "reference": "v2.3",
+                "url": "https://api.github.com/repos/dg/texy/zipball/11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
+                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
                 "shasum": ""
             },
             "require": {
@@ -593,12 +551,6 @@
             "alias_normalized": "dev-@",
             "version": "9999999-dev",
             "package": "nextras/forms"
-        },
-        {
-            "alias": "@dev",
-            "alias_normalized": "dev-@",
-            "version": "9999999-dev",
-            "package": "kdyby/redis"
         }
     ],
     "minimum-stability": "dev",
@@ -608,8 +560,7 @@
         "nextras/datagrid": 20,
         "kdyby/events": 20,
         "kdyby/forms-replicator": 20,
-        "kdyby/redis": 20,
-        "hosiplan/nette-autowire-properties": 20,
+        "kdyby/autowired": 20,
         "mobiledetect/mobiledetectlib": 20,
         "dg/dibi": 20,
         "texy/texy": 20,

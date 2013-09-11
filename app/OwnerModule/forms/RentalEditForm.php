@@ -3,6 +3,7 @@
 namespace OwnerModule\Forms;
 
 use Doctrine\ORM\EntityManager;
+use Entity\ImportantLanguageForLocation;
 use Entity\Rental\Rental;
 use Environment\Collator;
 use Environment\Environment;
@@ -103,7 +104,12 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
-		$supportedLanguages = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
+		$centralLanguage = $this->languageRepository->findCentral();
+		$importantLanguages = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
+		$importantLanguagesForSelect = [];
+		foreach($importantLanguages as $language) {
+			$importantLanguagesForSelect[$language->getId()] = $this->translate($language->getName());
+		}
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
 		$currency = $this->country->getDefaultCurrency();
@@ -121,7 +127,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$pricelistUpload = $rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
-
 
 
 		$rentalContainer->addText('url', 'o977')
@@ -145,14 +150,11 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
 
-		$languages = array();
+		$languages = array($this->translate('153133'));
 
 		foreach($supportedLanguagesForSelect as $language){
 			$languages[$language->getIso()] = $this->translate($language->getName());
 		}
-
-		$rentalContainer->addSelect('translationLanguage', '##', $languages)
-						->setDefaultValue($this->environment->getLanguage()->getIso());
 
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
@@ -162,17 +164,14 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$interviewContainer->addContainer($question->getId());
 		}
 
-		/** @var $language \Entity\Language */
-		foreach($supportedLanguages as $language) {
+		foreach($importantLanguages as $language) {
 			$iso = $language->getIso();
 
 			$nameContainer->addText($iso, $this->translate('152275', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getName()) . ':')
-				->setOption('help', $this->translate('o100071'));
-				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+				->setOption('help', $this->translate('o100071'))
+				 ->addRule(self::MAX_LENGTH, $this->translate('o100101'), 70);
 
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
-				->setOption('prepend', $this->translate($language->getName()) . ':')
 				->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {
@@ -180,6 +179,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 				++$i;
 			}
 		}
+
+		$rentalContainer->addMultiOptionList('spokenLanguages', $this->translate('13137'), $importantLanguagesForSelect);
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'))
 			->setRequired($this->translate('1257'));
