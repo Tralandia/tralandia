@@ -24,6 +24,8 @@
 					 {/if}
 
 					<ul n:if="$currentRental">
+						<li ><a href="{link :Front:Rental:detail $rental}" target="_blank"><i class="icon icon-angle-right"></i>{_152320}</a></li>
+
 						<li class="info"><i class="icon icon-angle-right"></i>{_152732} <strong>{if $rental->isLive()}{_152730}{else}{_152731}{/if}</strong></li>
 						<li class="info tooltipElem" title="{_153019}"><i class="icon icon-angle-right"></i>{_152733} <strong>{$rental->getRank()}%</strong></li>
 

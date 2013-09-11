@@ -312,12 +312,13 @@ ul.arrows {
 }
 
 .btn.btn-blue {
-	background: #4a6e85;
+	background: @darkBlue;
 	color: #fff;
+	text-shadow: none;
 	font-weight: normal;
 
 	&:hover {
-		background: #5D8FAF;
+		background: #346EBE;
 	}
 }
 
@@ -860,21 +861,27 @@ ul.arrows {
 @btnGreenGradientStartColor : #a7ba24 ;
 @btnGreenGradientStopColor : #4c6505 ;
 
-.btn.btn-green {
+.btn.btn-green , .btn-blue {
 	border: 1px solid @btnGreenBorderColor;
-	#gradient > .vertical(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
+	background: #708711;
 	color: #fff;
+	font-weight: normal;
+	font-size: 13px;
+	border: none;
 	text-shadow:0 0 3px @btnGreenGradientStopColor;
 	&:hover , &.active {
 		background-position: 0;
-		color: #fff;
-		#gradient > .vertical(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
+		background: #a7ba24;
 	}
 
 	i {
 		position: relative;
 
 
+	}
+
+	.btn-mini {
+		padding: 1px 10px;
 	}
 
 	
