@@ -700,7 +700,6 @@ $(function(){
 			// remove image function
 			$removeLinkElement.live('click',function(){
 
-
 				var $el = $(this);
 
 				$el.parent().css({
@@ -751,6 +750,7 @@ $(function(){
 						});
 
 						$listGallery.append(html);
+						$listGallery.find('.addPhotoButton').appendTo('#sortable');
 						//return false;
 						firstStart = true;
 
