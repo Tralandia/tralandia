@@ -43,6 +43,8 @@ parameters:
 	projectEmail: 'info@tralandia.com'
 
 	maxReservationCountPerDay: 10
+	rentalCountOnHome: 99
+	rentalCountOnRootHome: 135
 
 	staticDomain: "http://tralandiastatic.com"
 	storageDir: /../../static

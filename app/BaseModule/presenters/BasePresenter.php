@@ -114,6 +114,11 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $tester;
 
+	/**
+	 * @var array
+	 */
+	public $contextParameters;
+
 
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
@@ -123,6 +128,7 @@ abstract class BasePresenter extends Presenter {
 
 	protected function startup() {
 		parent::startup();
+		$this->contextParameters = $this->getContext()->getParameters();
 		$this->initializeFindEntityHelper($this->em);
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
