@@ -79,6 +79,7 @@ parameters:
 			jqueryUi:
 				js:
 					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
+					# - jqueryUi/lib/i18n/jquery.ui.datepicker-hu.js
 				css:
 					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
 					- jqueryUi/custom/datepicker.css.less
