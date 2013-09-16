@@ -746,7 +746,7 @@ $(function(){
 
 						var html = '';
 						$.each(data.originalFiles,function(k,v){
-							html+= '<li class="loading" id="+divId+"><i class="icon-spinner icon-spin"></i></li>';
+							html+= '<li data-name="'+data.originalFiles[k].name+'" class="loading" id="+divId+"><i class="icon-spinner icon-spin"></i></li>';
 						});
 
 						$listGallery.append(html);
@@ -768,7 +768,7 @@ $(function(){
 
 							if(data.result[0].error){
 
-								$ajaxErrors.append('<li>'+data.originalFiles[0].name+' <strong>'+errors[data.result[0].error]+'</strong></li>')
+								$ajaxErrors.append('<li>'+$(this).data('name')+' <strong>'+errors[data.result[0].error]+'</strong></li>')
 
 								$(this).remove();
 
