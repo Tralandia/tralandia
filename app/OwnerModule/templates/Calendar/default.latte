@@ -1,3 +1,11 @@
 {block content}
 
 <h1>Kalendar</h1>
+
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form calendarForm}
+
+	{include #calendar, control => $form['calendar']}
+	{include #submit, control => $form['submit'], icon => 'entypo-ok'}
+
+{/form}
