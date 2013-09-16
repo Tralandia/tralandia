@@ -474,15 +474,12 @@ $(function(){
 // calendar edit function
 (function($){
 	$.calendarEdit = function(el, options){
-		// To avoid scope issues, use 'base' instead of 'this'
-		// to reference this class from internal events and functions.
+
 		var base = this;
 
-		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
 
-		// Add a reverse reference to the DOM object
 		base.$el.data("calendarEdit", base);
 
 		base.init = function(){
@@ -490,7 +487,6 @@ $(function(){
 			base.options = $.extend({},$.calendarEdit.defaultOptions, options);
 
 		};
-
 
 		base.init();
 	};
@@ -536,8 +532,6 @@ $(function(){
 				$.calendarEdit.conteiner = defaultValue.split(',');
 			}
 
-
-
 			$calendarForm.find('.calendar').each(function(i){
 
 				var calendar = this;
@@ -545,7 +539,9 @@ $(function(){
 
 				$calendar.find('.day.active').click(function(){
 
-					var currentTime = $(this).attr('data-date');
+
+					var currentTime = $(this).attr('data-day');
+					console.log(currentTime);
 
 					if(!$(this).hasClass('selected')){
 
