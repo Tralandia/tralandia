@@ -1,4 +1,5 @@
 @import '../../../bootstrap/lib/less/mixins.less';
+@import '../../../front/_base/less/lessFunctions.less';
 
 .select2-container {
 
@@ -182,6 +183,15 @@ input[type=text].select2-input {
 	}	
 }
 
+.select2-container .select2-choice , .select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
+	background: #fff;
+	border-color: @lightGreen;
+	box-shadow: none;
+}
+
+.calendarWidgetControl .select2-container .select2-choice .select2-arrow b {
+	left: 0;
+}
 /* retina */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
   .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice .select2-arrow b {
