@@ -10,4 +10,13 @@ class CalendarPresenter extends BasePresenter {
 
 	}
 
+
+	public function createComponentCalendarForm()
+	{
+		$form = $this->simpleFormFactory->create();
+		$form->addCalendarContainer('calendar');
+
+		return $form;
+	}
+
 }
