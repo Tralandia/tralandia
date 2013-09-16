@@ -79,7 +79,81 @@ parameters:
 			jqueryUi:
 				js:
 					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
-					# - jqueryUi/lib/i18n/jquery.ui.datepicker-hu.js
+					# localization 
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-af.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ar-DZ.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ar.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-az.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-be.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-bg.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-bs.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ca.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-cs.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-cy-GB.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-da.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-de.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-el.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-en-AU.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-en-GB.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-en-NZ.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-eo.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-es.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-et.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-eu.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fa.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fi.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fo.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fr-CA.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fr-CH.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-fr.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-gl.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-he.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-hi.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-hr.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-hu.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-hy.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-id.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-is.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-it-CH.js   
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-it.js	    
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ja.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ka.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-kk.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-km.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ko.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ky.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-lb.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-lt.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-lv.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-mk.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ml.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ms.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-nb.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-nl-BE.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-nl.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-nn.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-no.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-pl.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-pt-BR.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-pt.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-rm.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ro.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ru.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sk.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sl.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sq.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sr-SR.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sr.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-sv.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-ta.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-th.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-tj.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-tr.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-uk.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-vi.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-zh-CN.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-zh-HK.js
+					- jqueryUi/lib/i18n/jquery.ui.datepicker-zh-TW.js						    
 				css:
 					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
 					- jqueryUi/custom/datepicker.css.less
