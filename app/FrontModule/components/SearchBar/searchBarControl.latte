@@ -39,27 +39,25 @@
 
 		<div class="helpText">{$environmentLocation->defaultCurrency->iso} {_490}</div>
 
-		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent">
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 
-		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
-		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent">
 			<i class="icon-food"></i>
 			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
-		<div class="inputFilterSearch toggleHideContent {$isHomepage() ? hide}">
+		<div class="inputFilterSearch toggleHideContent">
 			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected' ,  data-css-class => 'searchSelect disableFulltext'}
 		</div>
 
-		{if $isHomepage()}
-			<a class="searchMoreFilter onClickThisHide toggleHide" id="advancedSearchCriteriaButton" data-toggle-hide-for=".inputFilterSearch.toggleHideContent" data-open-text="#show filter options" data-close-text="#hide filter options" href="#"><i class="icon-plus"></i> <span>{_151879}</span></a>
-		{/if}
+
 
 		
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
