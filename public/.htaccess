@@ -40,7 +40,7 @@ Deny from 125.77.135.1
   RewriteCond %{HTTP_USER_AGENT} AhrefsBot [OR]
   RewriteCond %{HTTP_USER_AGENT} JikeSpider [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
-  RewriteCond %{HTTP_USER_AGENT} SeznamBot [OR]
+  #RewriteCond %{HTTP_USER_AGENT} SeznamBot [OR]
   RewriteCond %{HTTP_USER_AGENT} Jyxobot [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
   RewriteCond %{HTTP_USER_AGENT} UnisterBot [OR]
