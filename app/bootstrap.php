@@ -129,6 +129,12 @@ FormContainer::extensionMethod('addRentalPriceListContainer',
 		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $rental, $translator, $collator);
 	});
 
+FormContainer::extensionMethod('addCalendarContainer',
+	function (FormContainer $container, $name, $label) use ($dic) {
+		$locale = $dic->getService('environment')->getLocale();
+		return $container[$name] = new \Extras\Forms\Container\CalendarContainer($label, $locale);
+	});
+
 FormContainer::extensionMethod('addAddressContainer',
 	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
 		$addressCreator = $dic->getService('addressCreator');
