@@ -5,10 +5,12 @@
 <div class="span3" data-searchCount="{link getSearchCount!}" id="sidebar">
 <div class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 
-	{cache $searchBarCacheOptions['key'],
-		if => $searchBarCacheOptions['enabled'],
-		expire => $searchBarCacheOptions['expiration'],
-		tags => $searchBarCacheOptions['tags']}
+	{var $tempCacheOptions = $getCacheOptions('searchBar')}
+
+	{cache $tempCacheOptions['key'],
+		if => $tempCacheOptions['enabled'],
+		expire => $tempCacheOptions['expiration'],
+		tags => $tempCacheOptions['tags']}
 
 
 	{form searchForm , class => $searchFormClass, data-cache => $rand }
@@ -25,7 +27,7 @@
 				data-js-location-slug => 'location-slug',
 				data-no-results-text => $noResultsText,
 				data-autocomplete-url => $autocompleteUrl,
-				data-format-input-too-short => $formatInputTooShort, 
+				data-format-input-too-short => $formatInputTooShort,
 				data-css-class => 'filterSelect' }
 		</div>
 
@@ -59,7 +61,7 @@
 
 
 
-		
+
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
 		</div>
 		<i id="searchLoaderStatus" class="icon-spinner icon-spin pull-left"></i>
@@ -72,10 +74,12 @@
 	{/cache}
 
 
-	{cache $searchLinksCacheOptions['key'],
-		if => $searchLinksCacheOptions['enabled'],
-		expire => $searchLinksCacheOptions['expiration'],
-		tags => $searchLinksCacheOptions['tags']}
+	{var $tempCacheOptions = $getCacheOptions('searchLinks')}
+
+	{cache $tempCacheOptions['key'],
+		if => $tempCacheOptions['enabled'],
+		expire => $tempCacheOptions['expiration'],
+		tags => $tempCacheOptions['tags']}
 
 		{if $totalResultsCount > 1 }
 			{var $bottomLinks = $bottomLinksCallback()}

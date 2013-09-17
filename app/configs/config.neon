@@ -111,12 +111,12 @@ parameters:
 			tags: ['[name]']
 		rentalBrick:
 			enabled: true
-			key: '[language]_[rental]'
+			key: '[language]_rental/[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		rentalDetail:
 			enabled: ture
-			key: '[language]_[rental]'
+			key: '[language]_rental/[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		home:
@@ -172,7 +172,7 @@ services:
 
 	# CACHE
 	frontRouteCache: Nette\Caching\Cache(@cacheStorage, 'FrontRoute')
-	templateCache: Nette\Caching\Cache(@cacheStorage, 'Nette.Templating.Cache')
+	templateCache: Nette\Caching\Cache(@templateCacheStorage, 'Nette.Templating.Cache')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
@@ -181,7 +181,9 @@ services:
 
 
 	cacheStorage:
+#		class: Nette\Caching\Storages\FileStorage(%tempDir%)
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', %memcachePrefix%)
+
 
 	nullStorage:
 		class: \Nette\Caching\Storages\DevNullStorage

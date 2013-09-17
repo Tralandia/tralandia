@@ -1,8 +1,10 @@
 
-{cache $headerCacheOptions['key'],
-	if => $headerCacheOptions['enabled'],
-	expire => $headerCacheOptions['expiration'],
-	tags => $headerCacheOptions['tags']}
+{var $tempCacheOptions = $getCacheOptions('header')}
+
+{cache $tempCacheOptions['key'],
+	if => $tempCacheOptions['enabled'],
+	expire => $tempCacheOptions['expiration'],
+	tags => $tempCacheOptions['tags']}
 
 
 	{control header}
