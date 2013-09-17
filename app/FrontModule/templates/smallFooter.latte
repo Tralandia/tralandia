@@ -1,8 +1,10 @@
 
-{cache $footerCacheOptions['key'],
-	if => $footerCacheOptions['enabled'],
-	expire => $footerCacheOptions['expiration'],
-	tags => $footerCacheOptions['tags']}
+{var $tempCacheOptions = $getCacheOptions('footer')}
+
+{cache $tempCacheOptions['key'],
+	if => $tempCacheOptions['enabled'],
+	expire => $tempCacheOptions['expiration'],
+	tags => $tempCacheOptions['tags']}
 
 
 	<div class="container">
@@ -24,7 +26,7 @@
 					<li><a class="contactLinks" href="{plink :Front:Tou:default}">{_o100123}</a></li>
 					<li><a class="contactLinks" href="{plink :Front:Faq:default}">{_o100122}</a></li>
 					<li><a class="contactLinks" href="{plink Registration:}">{_1228}</a></li>
-					
+
 
 				</ul>
 			</div>

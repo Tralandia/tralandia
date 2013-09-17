@@ -120,6 +120,12 @@ abstract class BasePresenter extends Presenter {
 	public $contextParameters;
 
 
+	/**
+	 * @var array
+	 */
+	public $cacheOptions;
+
+
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
@@ -242,8 +248,6 @@ abstract class BasePresenter extends Presenter {
 			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]', '[homepage]', '[zeroSearch]'];
 			$replaceVariables = [$optionName, $language, $primaryLocation, $url, $homepage, $zeroSearch];
 
-			$propertyName = $optionName . 'CacheOptions';
-
 			$options['enabled'] = $templateCacheEnabled && $options['enabled'] ? 1 : 0;
 
 			if(array_key_exists('if', $options)) {
@@ -258,7 +262,7 @@ abstract class BasePresenter extends Presenter {
 
 			$options['key'] = str_replace($searchVariables, $replaceVariables, $options['key']);
 
-			$options['tags'][] = $options['key'];
+			$options['tags'] = array_merge($options['tags'], explode('_', $options['key']));
 			if(is_array($options['tags'])) {
 				foreach($options['tags'] as $keyTag => $tag) {
 					$options['tags'][$keyTag] = str_replace($searchVariables, $replaceVariables, $tag);
@@ -267,10 +271,29 @@ abstract class BasePresenter extends Presenter {
 
 			eval("\$options['enabled'] = {$options['enabled']};");
 
-			$template->{$propertyName} = $options;
-			//d($optionName, $options);
+			$this->cacheOptions[$optionName] = $options;
+			d($optionName, $options);
 		}
 
+		$template->getCacheOptions = $this->getCacheOptions;
+
+	}
+
+	public function getCacheOptions($section, array $variables = NULL)
+	{
+		$options = $this->cacheOptions[$section];
+		if($variables) {
+			$tags = implode('%%', $options['tags']);
+			$key = $options['key'];
+			foreach($variables as $name => $value) {
+				$tags = str_replace('['.$name.']', $value, $tags);
+				$key = str_replace('['.$name.']', $value, $key);
+			}
+			$options['key'] = $key;
+			$options['tags'] = explode('%%', $tags);
+		}
+
+		return $options;
 	}
 
 	protected function createTemplate($class = NULL) {
