@@ -576,9 +576,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @return bool
+	 */
 	public function isLive()
 	{
-		return $this->status != \Entity\Rental\Rental::STATUS_LIVE;
+		return $this->status == \Entity\Rental\Rental::STATUS_LIVE;
 	}
 
 
@@ -759,6 +762,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function hasPlacement()
 	{
 		return $this->placements->count() ? TRUE : FALSE;
+	}
+
+	public function setPlacement(Placement $placement)
+	{
+		$this->placements->clear();
+		$this->addPlacement($placement);
 	}
 
 	/**

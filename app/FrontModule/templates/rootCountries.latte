@@ -1,7 +1,9 @@
-{cache $rootCountriesCacheOptions['key'],
-	if => $rootCountriesCacheOptions['enabled'],
-	expire => $rootCountriesCacheOptions['expiration'],
-	tags => $rootCountriesCacheOptions['tags']}
+{var $tempCacheOptions = $getCacheOptions('rootCountries')}
+
+{cache $tempCacheOptions['key'],
+	if => $tempCacheOptions['enabled'],
+	expire => $tempCacheOptions['expiration'],
+	tags => $tempCacheOptions['tags']}
 
 {control rootCountries}
 

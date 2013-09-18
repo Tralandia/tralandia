@@ -1,9 +1,10 @@
 {#content}
-{cache $allDestinationsCacheOptions['key'],
-	if => $allDestinationsCacheOptions['enabled'],
-	expire => $allDestinationsCacheOptions['expiration'],
-	tags => $allDestinationsCacheOptions['tags']}
+{var $tempCacheOptions = $getCacheOptions('allDestinations')}
 
+{cache $tempCacheOptions['key'],
+	if => $tempCacheOptions['enabled'],
+	expire => $tempCacheOptions['expiration'],
+	tags => $tempCacheOptions['tags']}
 
 	<h1>
 	{_o100185}

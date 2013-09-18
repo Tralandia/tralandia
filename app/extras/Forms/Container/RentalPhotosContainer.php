@@ -80,7 +80,7 @@ class RentalPhotosContainer extends BaseContainer
 			if($file->isOk()) {
 				if($file->isImage()) {
 					$image = $file->toImage();
-					if($image->getWidth() <= $minWidth || $image->getHeight() <= $minHeight) {
+					if($image->getWidth() < $minWidth || $image->getHeight() < $minHeight) {
 						$payload[] = [
 							'error' => 'smallImage',
 						];

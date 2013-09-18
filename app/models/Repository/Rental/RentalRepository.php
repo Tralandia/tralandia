@@ -153,11 +153,19 @@ class RentalRepository extends \Repository\BaseRepository {
 	public function getFeaturedRentals($limit=99)
 	{
 		$qb = $this->_em->createQueryBuilder();
+
 		$qb->select('r')
 			->from($this->_entityName, 'r')
+			->innerJoin('r.services', 's')
 			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
+			->andWhere($qb->expr()->eq('s.serviceType', '?1'))
+			->andWhere($qb->expr()->lte('s.dateFrom', '?2'))
+			->andWhere($qb->expr()->gt('s.dateTo', '?2'))
+			->setParameter(1, 'featured')
+			->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
 			->orderBy('r.rank', 'DESC')
-			->setMaxResults($limit);
+			->setMaxResults($limit)
+		;
 
 		return $qb->getQuery()->getResult();
 	}
