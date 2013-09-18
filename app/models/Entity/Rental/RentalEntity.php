@@ -576,9 +576,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @return bool
+	 */
 	public function isLive()
 	{
-		return $this->status != \Entity\Rental\Rental::STATUS_LIVE;
+		return $this->status == \Entity\Rental\Rental::STATUS_LIVE;
 	}
 
 
