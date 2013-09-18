@@ -303,11 +303,14 @@ class TempScriptPresenter extends BasePresenter {
 		$generatePathSegmentsRobot = $this->generatePathSegmentsRobot;
 
 		if($id == 'pages') {
+			$qb = $this->em->createQueryBuilder();
+			$qb->delete(PATH_SEGMENT_ENTITY, 'e')->where('e.type = ?1')->setParameter(1, 2);
+			$qb->getQuery()->execute();
 			$generatePathSegmentsRobot->runPages();
 		} else if ($id == 'locations') {
-			$generatePathSegmentsRobot->runLocations();
+//			$generatePathSegmentsRobot->runLocations();
 		} else if ($id == 'types') {
-			$generatePathSegmentsRobot->runTypes();
+//			$generatePathSegmentsRobot->runTypes();
 		}
 
 		$this->terminate();
