@@ -197,12 +197,13 @@ class PhraseListPresenter extends BasePresenter {
 
 		if($this->user->isInRole(Role::TRANSLATOR)) {
 			$this->preFillTranslations = FALSE;
+
+			$this->specialOption = [
+				'label' => 'Complete',
+				'type' => 'translated',
+			];
 		}
 
-		$this->specialOption = [
-			'label' => 'Complete',
-			'type' => 'translated',
-		];
 
 		$this->enableOnlyOneLanguage($language);
 

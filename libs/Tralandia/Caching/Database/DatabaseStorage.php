@@ -55,8 +55,13 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	public function write($key, $data, array $dependencies)
 	{
 		$tags = Nette\Utils\Arrays::get($dependencies, Nette\Caching\Cache::TAGS, NULL);
+		$expiration = Nette\Utils\Arrays::get($dependencies, Nette\Caching\Cache::EXPIRATION, NULL);
 
-		$this->database->save($key, $data, $tags);
+		if($expiration) {
+			$expiration += time();
+		}
+
+		$this->database->save($key, $data, $expiration, $tags);
 	}
 
 	/**
@@ -66,7 +71,7 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	 */
 	public function remove($key)
 	{
-
+		$this->database->clearByIds([$key]);
 	}
 
 	/**
@@ -76,11 +81,11 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	 */
 	public function clean(array $conditions)
 	{
-//		$tags = Nette\Utils\Arrays::get($conditions, Nette\Caching\Cache::TAGS, NULL);
-//
-//		if(is_array($tags) && count($tags)) {
-//			$this->database->cleanByTag($tags);
-//		}
+		$tags = Nette\Utils\Arrays::get($conditions, Nette\Caching\Cache::TAGS, NULL);
+
+		if(is_array($tags) && count($tags)) {
+			$this->database->cleanByTags($tags);
+		}
 	}
 
 

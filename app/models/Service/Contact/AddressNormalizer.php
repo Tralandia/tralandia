@@ -201,7 +201,7 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		// IF it's in USA, create a 4-letter ISO code
-		if ($this->itsInUsa($info)) {
+		if ($this->itsInUsa($info) || $this->itsInCanada($info) || $this->itsInAustralia($info)) {
 			$info[self::PRIMARY_LOCATION] = $info[self::PRIMARY_LOCATION] . $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
 
@@ -325,6 +325,20 @@ class AddressNormalizer extends \Nette\Object {
 		return isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])
 			&& isset($info[self::PRIMARY_LOCATION])
 			&& Strings::lower($info[self::PRIMARY_LOCATION]) == 'us';
+	}
+
+	private function itsInCanada($info)
+	{
+		return isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])
+			&& isset($info[self::PRIMARY_LOCATION])
+			&& Strings::lower($info[self::PRIMARY_LOCATION]) == 'ca';
+	}
+
+	private function itsInAustralia($info)
+	{
+		return isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])
+			&& isset($info[self::PRIMARY_LOCATION])
+			&& Strings::lower($info[self::PRIMARY_LOCATION]) == 'au';
 	}
 
 }

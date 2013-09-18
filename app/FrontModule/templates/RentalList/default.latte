@@ -28,23 +28,17 @@
 							{var $rentalId = $rentalId->getId()}
 						{/if}
 
-						{capture $rentalBrickCacheOptionsKey|trim}
-							{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rentalId}
-						{/capture}
+						{var $tempCacheOptions = $getCacheOptions('rentalBrick', ['rental' => $rentalId])}
 
-						{var $currentTags = $rentalBrickCacheOptions['tags']}
-						{var $currentTags[] = 'rental/'.$rentalId}
-
-						{cache $rentalBrickCacheOptionsKey,
-							if => $rentalBrickCacheOptions['enabled'],
-							expire => $rentalBrickCacheOptions['expiration'],
-							tags => $currentTags}
+						{cache $tempCacheOptions['key'],
+							if => $tempCacheOptions['enabled'],
+							expire => $tempCacheOptions['expiration'],
+							tags => $tempCacheOptions['tags']}
 
 
 						{var $rentalData = $findRental($rentalId); }
 						{var $rentalService = $rentalData['service']; }
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
-						{var $nameIsTranslated = $rentalData['nameIsTranslated']; }
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
 
@@ -64,25 +58,18 @@
 								<div class="span8">
 									{capture $rentalName}{_$rental->name}{/capture}
 									{capture $rentalLocation}{_$rental->type->name|firstUpper} {if $rental->hasPlacement()}{_$rental->getPlacement()->name}, {/if}{_$rental->address->locality->name}{/capture}
-									{if $nameIsTranslated}
-										{var $rentalTitle = $rentalName}
-										{var $rentalSubTitle = $rentalLocation}
-									{else}
-										{var $rentalTitle = $rentalLocation}
-										{var $rentalSubTitle = $rentalName}
-									{/if}
 
 									<variables data-info-name="{_$rental->name}" data-info-url="{link Rental:detail $rental}" data-info-id="{$rental->id}"></variables>
 
 									<h2>
-										<a href="{link Rental:detail $rental}" title="{$rentalTitle}">{$rentalTitle}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}
+										<a href="{link Rental:detail $rental}" title="{$rentalName}">{$rentalName}</a>{if $rental->classification > 0}&nbsp;<span class="classification" n:inner-for="$i = 0; $i < $rental->classification; $i++"><i class="entypo-star"></i></span>{/if}
 									</h2>
 
-									<button data-id="{$rental->id}" data-name="{$rentalTitle}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" class="addToFavorites btn btn-mini listCompareBtn active"><i class="icon-heart"></i><i class="icon-heart-empty"></i></button>
+									<button data-id="{$rental->id}" data-name="{$rentalName}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" class="addToFavorites btn btn-mini listCompareBtn active"><i class="icon-heart"></i><i class="icon-heart-empty"></i></button>
 
 									<div class="clearfix"></div>
 
-									<p class="locations">{$rentalSubTitle}</p>
+									<p class="locations">{$rentalLocation}</p>
 
 									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
@@ -100,7 +87,7 @@
 
 												{if $isFirst}{_$amenity->name|firstUpper}{else}{_$amenity->name|lower}{/if}{if $coverLast && $iterator->last}.{else}, {/if}
 												{var $isFirst = false}
-												
+
 											{/foreach}
 
 										{/foreach}
