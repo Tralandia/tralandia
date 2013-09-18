@@ -26,6 +26,14 @@ class AddressNormalizerTest extends \Tests\TestCase
 		// $this->rentalName = 'Chata Chalupa';
 	}
 
+
+	public function testFff()
+	{
+		$normalizer = $this->getContext()->addressNormalizer;
+		$info = $normalizer->getInfoUsingGps(new Extras\Types\Latlong(46.800059, -65.983887));
+
+	}
+
 	protected function createAddress($data) {
 		$address = $this->getContext()->contactAddressRepositoryAccessor->get()->createNew();
 		if (isset($data['latitude']) && isset($data['longitude'])) {
@@ -51,7 +59,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 		));
 
 		$normalizer->update($address, true);
-		
+
 		$gps = $address->getGps();
 		$this->assertSame($gps->getLatitude(), 47.9241334);
 		$this->assertSame($gps->getLongitude(), 18.1274789);
@@ -65,7 +73,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 		));
 
 		$normalizer->update($address, true);
-		
+
 		$this->assertSame($address->primaryLocation, $this->location['sk']);
 		$this->assertSame($address->postalCode, '94651');
 		$this->assertSame($address->address, 'Nová 58');
@@ -82,7 +90,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 		));
 
 		$result = $normalizer->update($address, true);
-		
+
 		$this->assertSame($result, \Entity\Contact\Address::STATUS_MISPLACED);
 
 

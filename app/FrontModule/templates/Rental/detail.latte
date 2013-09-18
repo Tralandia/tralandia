@@ -8,15 +8,12 @@
 
 	{var $featured = $rentalService->isFeatured(); }
 
+	{var $tempCacheOptions = $getCacheOptions('rentalDetail', ['rental' => $rental->getId()])}
 
-	{capture $rentalDetailCacheOptionsKey}
-		{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rental->getId()}
-	{/capture}
-
-	{cache $rentalDetailCacheOptionsKey,
-		if => $rentalDetailCacheOptions['enabled'],
-		expire => $rentalDetailCacheOptions['expiration'],
-		tags => $rentalDetailCacheOptions['tags']}
+	{cache $tempCacheOptions['key'],
+		if => $tempCacheOptions['enabled'],
+		expire => $tempCacheOptions['expiration'],
+		tags => $tempCacheOptions['tags']}
 
 <variables name="rentalDetailInfo" data-info-name="{_$rental->name}" data-info-id="{$rental->id}"></variables>
 
@@ -45,7 +42,7 @@
 					<div class="span5 relative">
 
 						<h1 class="addToViewList" id="{$rental->id}">
-							{_$rental->name} 
+							{_$rental->name}
 							{if $rental->classification > 0 }
 								&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
 							{/if}

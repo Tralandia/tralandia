@@ -41,7 +41,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getRentals()
 	{
-		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals(135);
+		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
