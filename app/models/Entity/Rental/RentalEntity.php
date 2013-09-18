@@ -764,6 +764,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->placements->count() ? TRUE : FALSE;
 	}
 
+	public function setPlacement(Placement $placement)
+	{
+		$this->placements->clear();
+		$this->addPlacement($placement);
+	}
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
