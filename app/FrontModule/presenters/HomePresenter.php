@@ -42,7 +42,7 @@ class HomePresenter extends BasePresenter {
 	public function getRentals()
 	{
 		$search = $this->rentalSearchFactory->create($this->primaryLocation);
-		$featuredIds = $search->getFeaturedRentals(99);
+		$featuredIds = $search->getFeaturedRentals($this->contextParameters['rentalCountOnHome']);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {

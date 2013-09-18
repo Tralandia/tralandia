@@ -72,7 +72,7 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['placement']) {
 			$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 			$placementEntity = $placementRepository->find($value);
-			$rental->addPlacement($placementEntity);
+			$rental->setPlacement($placementEntity);
 		}
 
 		if ($value = $values['type']) {

@@ -5,6 +5,7 @@ namespace Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 use Nette\Utils\Arrays;
+use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
@@ -114,6 +115,7 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	public function setTranslation($translation)
 	{
+		$translation = Strings::trim($translation);
 		$this->translation = $translation;
 
 		list($plural, $gender, $case) = $this->getDefaultVariationPath();
@@ -170,7 +172,7 @@ class Translation extends \Entity\BaseEntity {
 					foreach ($cases as $caseKey => $caseValue) {
 						try {
 							$i = Arrays::get($isset, array($pluralKey, $genderKey, $caseKey));
-							$variationsTemp[$pluralKey][$genderKey][$caseKey] = $variations[$pluralKey][$genderKey][$caseKey];
+							$variationsTemp[$pluralKey][$genderKey][$caseKey] = Strings::trim($variations[$pluralKey][$genderKey][$caseKey]);
 						} catch (\Nette\InvalidArgumentException $e) {
 							$this->wrongVariationsScheme($this->variations, $variations);
 						}

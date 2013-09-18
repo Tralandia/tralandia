@@ -1,9 +1,11 @@
 {block content}
 
-{cache $homeCacheOptions['key'],
-	if => $homeCacheOptions['enabled'],
-	expire => $homeCacheOptions['expiration'],
-	tags => $homeCacheOptions['tags']}
+{var $tempCacheOptions = $getCacheOptions('home')}
+
+{cache $tempCacheOptions['key'],
+	if => $tempCacheOptions['enabled'],
+	expire => $tempCacheOptions['expiration'],
+	tags => $tempCacheOptions['tags']}
 
 {include APP_DIR.'/FrontModule/templates/homeList.latte'}
 

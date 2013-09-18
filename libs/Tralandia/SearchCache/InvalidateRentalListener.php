@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Extras\Cache\IRentalSearchCachingFactory;
 use Nette;
+use Nette\Caching\Cache;
 
 class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 
@@ -21,10 +22,16 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	 */
 	private $rentalSearchCachingFactory;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $templateCache;
 
-	public function __construct(IRentalSearchCachingFactory $rentalSearchCachingFactory)
+
+	public function __construct(Cache $templateCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
 	{
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+		$this->templateCache = $templateCache;
 	}
 
 	public function getSubscribedEvents()
@@ -40,6 +47,10 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	{
 		$rentalSearchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
 		$rentalSearchCaching->updateRental($rental);
+
+		$this->templateCache->clean([
+			Cache::TAGS => ['rental/' . $rental->getId()],
+		]);
 	}
 
 
