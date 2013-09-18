@@ -88,7 +88,7 @@
 
 									<p class="answer">
 										{var $isFirst = true}
-										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['board']) as $amenities}
+										{foreach $rental->getAmenitiesByImportantGroupByType(TRUE,['board']) as $amenities}
 
 											{if $iterator->last}
 												{var $coverLast = true}
