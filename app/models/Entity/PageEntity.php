@@ -14,12 +14,6 @@ use	Extras\Annotation as EA;
 class Page extends \Entity\BaseEntity {
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $name;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -62,33 +56,20 @@ class Page extends \Entity\BaseEntity {
 	 */
 	protected $genericContent;
 
+	/**
+	 * @var Boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $generatePathSegment = FALSE;
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
-	/**
-	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Page
-	 */
-	public function setName(\Entity\Phrase\Phrase $name)
-	{
-		$this->name = $name;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Phrase|NULL
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-		
 	/**
 	 * @param string
 	 * @return \Entity\Page
@@ -99,7 +80,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Page
 	 */
@@ -109,7 +90,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -117,7 +98,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Page
@@ -128,7 +109,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Page
 	 */
@@ -138,7 +119,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -146,7 +127,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->hash;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Page
@@ -157,7 +138,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -165,7 +146,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->destination;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Page
@@ -176,7 +157,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Page
 	 */
@@ -186,7 +167,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -194,7 +175,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->parameters;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Page
@@ -205,7 +186,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -213,7 +194,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->titlePattern;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Page
@@ -224,7 +205,7 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -232,7 +213,7 @@ class Page extends \Entity\BaseEntity {
 	{
 		return $this->h1Pattern;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Page
@@ -243,12 +224,30 @@ class Page extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getGenericContent()
 	{
 		return $this->genericContent;
+	}
+
+
+	/**
+	 * @return boolean
+	 */
+	public function getGeneratePathSegment()
+	{
+		return $this->generatePathSegment;
+	}
+
+
+	/**
+	 * @param boolean $generatePathSegment
+	 */
+	public function setGeneratePathSegment($generatePathSegment)
+	{
+		$this->generatePathSegment = $generatePathSegment;
 	}
 }
