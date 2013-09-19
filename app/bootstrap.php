@@ -62,9 +62,6 @@ if ($section !== 'production') {
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 
-if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
-	$configurator->addConfig(APP_DIR . '/configs/import.config.neon', FALSE);
-}
 
 if(array_key_exists('useCache', $_COOKIE) && !$_COOKIE['useCache']) {
 	$configurator->addConfig(APP_DIR . '/configs/noCache.config.neon', FALSE);
