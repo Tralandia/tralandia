@@ -92,8 +92,10 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
-				$thisPathSegment = $this->translate($page->name, $language);
-				if (Strings::length($thisPathSegment) == 0) $thisPathSegment = $this->translate($page->name, $centralLanguage);
+				if(!$page->generatePathSegment) continue;
+
+				$thisPathSegment = $this->translate($page->titlePattern, $language);
+				if (Strings::length($thisPathSegment) == 0) $thisPathSegment = $this->translate($page->titlePattern, $centralLanguage);
 				if (Strings::length($thisPathSegment) == 0) continue;
 
 				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
