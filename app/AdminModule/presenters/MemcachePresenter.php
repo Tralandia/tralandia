@@ -8,7 +8,6 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Nette\Utils\Arrays,
-	Extras\Import as I,
 	Service\Dictionary as D,
 	Service as S,
 	Service\Log as SLog;
@@ -57,7 +56,7 @@ class MemcachePresenter extends BasePresenter {
 	                }
 	           }
 	        }
-	    }   
+	    }
 
 	    return $foundKeys;
 	}
