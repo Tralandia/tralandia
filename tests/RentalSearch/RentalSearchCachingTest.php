@@ -23,8 +23,8 @@ class RentalSearchCachingTest extends \Tests\TestCase
 	}
 
 	public function testGeneration() {
-		$this->rentalSearchCaching->updateWholeCache();
-		//$this->rentalSearchCaching->updateRental($this->findRental(15047));
+//		$this->rentalSearchCaching->updateWholeCache();
+		$this->rentalSearchCaching->updateRental($this->findRental(15047));
 		$r = 1;
 	}
 
