@@ -35,6 +35,12 @@ class TempScriptPresenter extends BasePresenter {
 	 */
 	protected $transliterator;
 
+	/**
+	 * @autowire
+	 * @var \Service\PolygonService
+	 */
+	protected $polygonCalculator;
+
 	public function actionCreateMissingTranslationsForLocations()
 	{
 
@@ -314,6 +320,25 @@ class TempScriptPresenter extends BasePresenter {
 		}
 
 		$this->terminate();
+	}
+
+
+	public function actionUpdatePolygons($id)
+	{
+		/** @var $locationRepository \Repository\Location\LocationRepository */
+		$locationRepository = $this->locationRepositoryAccessor->get();
+		$qb = $locationRepository->createQueryBuilder('e');
+		$qb->andWhere($qb->expr()->eq('e.type', 4));
+		$qb->andWhere($qb->expr()->notIn('e.polygons', ['false', 'null']));
+		$i = 200;
+		$qb->setMaxResults($i)->setFirstResult($id * $i);
+		$locations = $qb->getQuery()->getResult();
+
+		foreach($locations as $location) {
+			$this->polygonCalculator->setRentalsForLocation($location);
+		}
+
+		$this->em->flush();
 	}
 
 
