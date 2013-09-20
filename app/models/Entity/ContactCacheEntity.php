@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="contact_cache", 
+ * @ORM\Table(name="contact_cache",
  * 			indexes={
  * 				@ORM\index(name="entityName", columns={"entityName"}),
  * 				@ORM\index(name="entityId", columns={"entityId"}),
@@ -16,7 +16,7 @@ use	Extras\Annotation as EA;
  * 				@ORM\index(name="value", columns={"value"}),
  * 		  	}
  * 		)
- * @EA\Primary(key="id", value="entityName")
+ *
  */
 class ContactCache extends \Entity\BaseEntity {
 
@@ -47,12 +47,12 @@ class ContactCache extends \Entity\BaseEntity {
 
 								//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\ContactCache
@@ -63,7 +63,7 @@ class ContactCache extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -71,7 +71,7 @@ class ContactCache extends \Entity\BaseEntity {
 	{
 		return $this->entityName;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\ContactCache
@@ -82,7 +82,7 @@ class ContactCache extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -90,7 +90,7 @@ class ContactCache extends \Entity\BaseEntity {
 	{
 		return $this->entityId;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\ContactCache
@@ -101,7 +101,7 @@ class ContactCache extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -109,7 +109,7 @@ class ContactCache extends \Entity\BaseEntity {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\ContactCache
@@ -120,7 +120,7 @@ class ContactCache extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

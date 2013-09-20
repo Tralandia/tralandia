@@ -37,13 +37,19 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $page;
 
-	public $userRepositoryAccessor;
+	public $userDao;
 
 
 	public $cssFiles;
 	public $cssRemoteFiles;
 	public $jsFiles;
 	public $jsRemoteFiles;
+
+	protected $favoriteListDao;
+
+	protected $rentalDao;
+
+	protected $rentalTypeDao;
 
 	/**
 	 * @autowire
@@ -78,12 +84,12 @@ abstract class BasePresenter extends Presenter {
 	/**
 	 * @var \Repository\LanguageRepository
 	 */
-	protected $languageRepositoryAccessor;
+	protected $languageDao;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
 	 */
-	protected $locationRepositoryAccessor;
+	protected $locationDao;
 
 	/**
 	 * @autowire
@@ -127,8 +133,12 @@ abstract class BasePresenter extends Presenter {
 
 
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->languageDao = $dic->getService('doctrine.default.entityManager')->dao(LANGUAGE_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
+		$this->userDao = $dic->getService('doctrine.default.entityManager')->dao(USER_ENTITY);
+		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_TYPE_ENTITY);
+		$this->rentalDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_ENTITY);
+		$this->favoriteListDao = $dic->getService('doctrine.default.entityManager')->dao(FAVORITELIST_ENTITY);
 	}
 
 
@@ -170,16 +180,13 @@ abstract class BasePresenter extends Presenter {
 		}
 
 		if($this->user->isLoggedIn()) {
-			$this->loggedUser = $this->userRepositoryAccessor->get()->find($this->user->getId());
+			$this->loggedUser = $this->userDao->find($this->user->getId());
 			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
 				$this->redirect(':Front:Sign:out');
 			}
 		}
 	}
 
-	public function injectUserRepository(\Nette\DI\Container $dic) {
-		$this->userRepositoryAccessor = $dic->userRepositoryAccessor;
-	}
 
 	public function getPreviousBackLink() {
 		$environmentSection = $this->context->session->getSection('environment');
@@ -501,7 +508,7 @@ abstract class BasePresenter extends Presenter {
 				$info = $addressNormalizer->getInfoUsingGps($gps);
 			}
 		} else {
-			$primaryLocation = $this->locationRepositoryAccessor->get()->find($primaryLocation);
+			$primaryLocation = $this->locationDao->get()->find($primaryLocation);
 			$info = $addressNormalizer->getInfoUsingAddress($primaryLocation, $address, '', $locality, $postalCode);
 		}
 
@@ -554,7 +561,7 @@ abstract class BasePresenter extends Presenter {
 		$identity = $this->authenticator->authenticate([$login, $password]);
 
 		/** @var $user \Entity\User\User */
-		$user = $this->userRepositoryAccessor->get()->find($identity->getId());
+		$user = $this->userDao->find($identity->getId());
 
 		if($this->primaryLocation->getId() != $user->getPrimaryLocation()->getId()
 			|| $this->language->getId() != $user->getLanguage()->getId())

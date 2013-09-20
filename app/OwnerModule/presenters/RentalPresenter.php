@@ -45,7 +45,7 @@ class RentalPresenter extends BasePresenter
 
 	public function actionEdit($id)
 	{
-		$this->rental = $this->rentalRepositoryAccessor->get()->find($id);
+		$this->rental = $this->rentalDao->get()->find($id);
 
 		$this->checkPermission($this->rental, 'edit');
 

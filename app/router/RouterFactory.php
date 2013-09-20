@@ -28,8 +28,8 @@ class RouterFactory
 	 */
 	protected $frontRouteFactory;
 
-	public $languageRepositoryAccessor;
-	public $locationRepositoryAccessor;
+	public $languageDao;
+	public $locationDao;
 
 	private $domainMask;
 
@@ -51,8 +51,8 @@ class RouterFactory
 	 */
 	public function create()
 	{
-		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->findOneByOldId($this->defaultLanguage);
-		$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->findOneByOldId($this->defaultPrimaryLocation);
+		$this->defaultLanguage = $this->languageDao->findOneByOldId($this->defaultLanguage);
+		$this->defaultPrimaryLocation = $this->locationDao->findOneByOldId($this->defaultPrimaryLocation);
 
 		$router = new RouteList();
 

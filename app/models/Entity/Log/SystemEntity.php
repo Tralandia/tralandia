@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="log_system")
- * @EA\Generator(skip="{setSlug}")
+ *
  */
 class System extends \Entity\BaseEntityDetails {
 

@@ -14,31 +14,24 @@ use Nette\Utils\Strings;
 class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 {
 
-	protected $phraseDecoratorFactory;
-	protected $locationDecoratorFactory;
 
-	protected $routingPathSegmentRepositoryAccessor;
-	protected $languageRepositoryAccessor;
-	protected $pageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
-	protected $rentalTypeRepositoryAccessor;
-	protected $locationTypeRepositoryAccessor;
+	protected $routingPathSegmentDao;
+	protected $languageDao;
+	protected $pageDao;
+	protected $locationDao;
+	protected $rentalTypeDao;
+	protected $locationTypeDao;
 
 	public function injectDic(\Nette\DI\Container $dic) {
-		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
-		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->dao(PATH_SEGMENT_ENTITY);
+		$this->languageDao = $dic->getService('doctrine.default.entityManager')->dao(LANGUAGE_ENTITY);
+		$this->pageDao = $dic->getService('doctrine.default.entityManager')->dao(PAGE_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
+		$this->locationTypeDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_TYPE_ENTITY);
+		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_TYPE_ENTITY);
 	}
 
 
-
-	public function inject(Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory, Model\Location\ILocationDecoratorFactory $locationDecoratorFactory) {
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
-		$this->locationDecoratorFactory = $locationDecoratorFactory;
-	}
 
 	public function needToRun()
 	{
@@ -48,47 +41,47 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	public function run()
 	{
 
-		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
+		$languageList = $this->languageDao->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
 
-		$this->languageRepositoryAccessor->get()->flush();
+		$this->languageDao->flush();
 	}
 
 	public function runTypes()
 	{
 
-		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
+		$languageList = $this->languageDao->findBySupported(TRUE);
 
 		$this->persistRentalTypesSegments($languageList);
 
-		$this->languageRepositoryAccessor->get()->flush();
+		$this->languageDao->flush();
 	}
 
 	public function runLocations()
 	{
 		$this->persistLocationsSegments();
 
-		$this->languageRepositoryAccessor->get()->flush();
+		$this->languageDao->flush();
 	}
 
 
 	public function runPages()
 	{
-		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
+		$languageList = $this->languageDao->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
 
-		$this->languageRepositoryAccessor->get()->flush();
+		$this->languageDao->flush();
 
 	}
 
 	protected function persistPagesSegments($languageList)
 	{
-		$pages = $this->pageRepositoryAccessor->get()->findAll();
-		$centralLanguage = $this->languageRepositoryAccessor->get()->find(CENTRAL_LANGUAGE);
+		$pages = $this->pageDao->findAll();
+		$centralLanguage = $this->languageDao->find(CENTRAL_LANGUAGE);
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
@@ -98,26 +91,25 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				if (Strings::length($thisPathSegment) == 0) $thisPathSegment = $this->translate($page->titlePattern, $centralLanguage);
 				if (Strings::length($thisPathSegment) == 0) continue;
 
-				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity = $this->routingPathSegmentDao->createNew();
 				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $thisPathSegment;
 				$entity->type = PathSegment::PAGE;
 				$entity->entityId = $page->id;
 
-				$this->pageRepositoryAccessor->get()->persist($entity);
+				$this->pageDao->persist($entity);
 			}
 		}
 	}
 
 	protected function persistLocationsSegments()
 	{
-		$locations = $this->locationRepositoryAccessor->get()->findAllLocalityAndRegion();
+		$locations = $this->locationDao->findAllLocalityAndRegion();
 		foreach ($locations as $location) {
-			//$locationService = $this->locationDecoratorFactory->create($location);
 			$country = $location->getPrimaryParent('country');
 
-			$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+			$entity = $this->routingPathSegmentDao->createNew();
 			$entity->primaryLocation = $country;
 			$entity->language = NULL;
 
@@ -128,24 +120,24 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$entity->type = PathSegment::LOCATION;
 			$entity->entityId = $location->id;
 
-			$this->locationRepositoryAccessor->get()->persist($entity);
+			$this->locationDao->persist($entity);
 		}
 	}
 
 	protected function persistRentalTypesSegments($languageList)
 	{
 
-		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
+		$rentalTypes = $this->rentalTypeDao->findAll();
 		foreach ($languageList as $languageId => $language) {
 			foreach ($rentalTypes as $type) {
-				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity = $this->routingPathSegmentDao->createNew();
 				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($type->name, $language, 1, 0, 'nominative');
 				$entity->type = PathSegment::RENTAL_TYPE;
 				$entity->entityId = $type->id;
 
-				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
+				$this->rentalTypeDao->persist($entity);
 			}
 		}
 	}

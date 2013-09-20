@@ -20,12 +20,9 @@ class AddressNormalizer extends \Nette\Object {
 	protected $address;
 	protected $geocodeService;
 
-	protected $locationRepositoryAccessor;
-	protected $locationTypeRepositoryAccessor;
+	protected $locationDao;
 	protected $locationDecoratorFactory;
 
-	protected $phraseRepositoryAccessor;
-	protected $phraseTypeRepositoryAccessor;
 
 	/**
 	 * @var \Environment\Environment
@@ -34,10 +31,8 @@ class AddressNormalizer extends \Nette\Object {
 
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
-		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
-		$this->phraseTypeRepositoryAccessor = $dic->phraseTypeRepositoryAccessor;
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
+
 	}
 
 	public function inject(\Model\Location\ILocationDecoratorFactory $factory) {
@@ -211,10 +206,10 @@ class AddressNormalizer extends \Nette\Object {
 			}
 		}
 
-		$locationRepository = $this->locationRepositoryAccessor->get();
-		$info[self::PRIMARY_LOCATION] = $locationRepository->findOneByIso($info[self::PRIMARY_LOCATION]);
+		$locationDao = $this->locationDao;
+		$info[self::PRIMARY_LOCATION] = $locationDao->findOneByIso($info[self::PRIMARY_LOCATION]);
 		if(isset($info[self::LOCALITY])) {
-			$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
+			$info[self::LOCALITY] = $locationDao->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
 		}
 
 		$l = $response->getLocation();
@@ -308,8 +303,7 @@ class AddressNormalizer extends \Nette\Object {
 				$address->locality = $locality;
 			}
 		} else {
-			$locationRepository = $this->locationRepositoryAccessor->get();
-			$locality = $locationRepository->findOrCreateLocality($locality, $address->getPrimaryLocation());
+			$locality = $this->locationDao->findOrCreateLocality($locality, $address->getPrimaryLocation());
 
 			$address->locality = $locality;
 		}

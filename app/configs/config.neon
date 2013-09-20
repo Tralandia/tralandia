@@ -21,8 +21,12 @@ nette:
 	security:
 		frames:
 
+
 extensions:
+	console: Kdyby\Console\DI\ConsoleExtension
 	events: Kdyby\Events\DI\EventsExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
 
 
 parameters:
@@ -60,15 +64,6 @@ parameters:
 	webTempPath: /webtemp
 
 	memcachePrefix: tralandia_
-
-	database:
-		user: root
-		password: root
-		host: 127.0.0.1
-		dbname: tralandia
-		charset: utf8
-		driver: pdo_mysql
-		debugger: false
 
 	cacheDatabase:
 		user: root
@@ -150,17 +145,20 @@ parameters:
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
 
+
 doctrine:
-	connections:
-		default: %database%
+	user: root
+	password: root
+	host: 127.0.0.1
+	dbname: tralandia
+	charset: utf8
+	driver: pdo_mysql
+	debugger: false
+	metadata:
+		Tralandia: %appDir%/models
 
-	entityManagers:
-		default:
-			connection: default
-			proxyAutogenerate: FALSE
-
-	console:
-		entityManager: default
+console:
+	url: http://www.com.tra.com/
 
 presenter:
 	configsDir: %appDir%/configs/presenters
@@ -219,16 +217,16 @@ services:
 	rentalSearchService:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
 
-	favoriteList: FavoriteList(@rentalRepositoryAccessor)
+	favoriteList: FavoriteList(@doctrine.dao(Entity\Rental\Rental))
 	lastSearch: LastSearch(@session::getSection('lastSearch'))
-	lastSeen: LastSeen(@rentalRepositoryAccessor)
+	lastSeen: LastSeen(@doctrine.dao(Entity\Rental\Rental))
 
 	# ROUTER
 	routerFactory:
 		class: Routers\RouterFactory(%domainMask%, [defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
-			- $locationRepositoryAccessor(@locationRepositoryAccessor)
-			- $languageRepositoryAccessor(@languageRepositoryAccessor)
+			- $locationRepositoryAccessor(@doctrine.dao(Entity\Location\Location))
+			- $languageRepositoryAccessor(@doctrine.dao(Entity\Language))
 
 	router: @routerFactory::create
 
@@ -245,9 +243,9 @@ services:
 		setup:
 			- "?->getAuthorizator()->buildAssertions(?);"(@self, @self)
 
-	authenticator: Security\Authenticator(@userRepositoryAccessor::get())
+	authenticator: Security\Authenticator(@doctrine.dao(Entity\User\User))
 
-	authorizator: Security\SimpleAcl(@userRoleRepositoryAccessor::get())
+	authorizator: Security\SimpleAcl(@doctrine.dao(Entity\User\Role))
 
 	environment:
 		class: Environment\Environment
@@ -272,9 +270,7 @@ services:
 	generatePathSegmentsRobot: Robot\GeneratePathSegmentsRobot
 	createMissingTranslationsRobot: Robot\CreateMissingTranslationsRobot
 
-	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor, @locationRepositoryAccessor)
-	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)
-	urlBook: Extras\Books\Url(@contactUrlRepositoryAccessor)
+	phoneBook: Extras\Books\Phone(@doctrine.dao(Entity\Contact\Phone), @doctrine.dao(Entity\Location\Location))
 
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
@@ -300,19 +296,19 @@ services:
 	googleServiceCommunicator: CurlCommunicator
 
 	polygonService: Service\PolygonService
-	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
+	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
 	rentalCreator: Service\Rental\RentalCreator
 	addressCreator: Service\Contact\AddressCreator
 	userCreator: User\UserCreator
-	findOrCreateUser: User\FindOrCreateUser(@userRepositoryAccessor::get())
+	findOrCreateUser: User\FindOrCreateUser(@doctrine.dao(Entity\User\User))
 
 	addressNormalizer: Service\Contact\AddressNormalizer
 
 
 	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
 	rentalImagePipe: Image\RentalImagePipe(%rentalImagePath%, %staticDomain%)
-	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
-	rentalPriceListManager: RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
+	rentalImageManager: Image\RentalImageManager(@doctrine.dao(Entity\Rental\Image))
+	rentalPriceListManager: RentalPriceListManager(@doctrine.dao(Entity\Rental\Pricelist), @rentalPricelistStorage)
 	rentalPriceListPipe: Image\RentalPriceListPipe(%rentalPricelistPath%, %staticDomain%)
 	- Tralandia\Rental\RankCalculator
 	- Tralandia\Rental\Discarder
@@ -372,10 +368,10 @@ services:
 	# ==================== DATA SOURCES
 	# ==============================
 
-	amenityDataSource: DataSource\AmenityDataSource(@rentalAmenityRepositoryAccessor::get())
-	countryDataSource: DataSource\CountryDataSource(@locationRepositoryAccessor::get())
-	localityDataSource: DataSource\LocalityDataSource(@locationRepositoryAccessor::get())
-	regionDataSource: DataSource\RegionDataSource(@locationRepositoryAccessor::get())
+	amenityDataSource: DataSource\AmenityDataSource(@doctrine.dao(Entity\Rental\Amenity))
+	countryDataSource: DataSource\CountryDataSource(@doctrine.dao(Entity\Location\Location))
+	localityDataSource: DataSource\LocalityDataSource(@doctrine.dao(Entity\Location\Location))
+	regionDataSource: DataSource\RegionDataSource(@doctrine.dao(Entity\Location\Location))
 	dictionaryManagerDataSource: DataSource\DictionaryManagerDataSource
 	rentalDataSourceFactory: DataSource\RentalDataSource
 
@@ -410,7 +406,7 @@ factories:
 #		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	userEditFormFactory:
-		class: OwnerModule\Forms\UserEditForm(%user%, @userRepositoryAccessor)
+		class: OwnerModule\Forms\UserEditForm(%user%, @doctrine.dao(Entity\User\User))
 		parameters: [Entity\User\User user]
 		implement: OwnerModule\Forms\IUserEditFormFactory
 
@@ -419,7 +415,7 @@ factories:
 		implement: BaseModule\Forms\Sign\IInFormFactory
 
 	forgotPasswordFormFactory:
-		class: BaseModule\Forms\ForgotPasswordForm(@userRepositoryAccessor)
+		class: BaseModule\Forms\ForgotPasswordForm(@doctrine.dao(Entity\User\User))
 		implement: BaseModule\Forms\IForgotPasswordFormFactory
 
 	rentalReservationFormFactory:
@@ -428,13 +424,12 @@ factories:
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 #	contactFormFactory:
-#		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
+#		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor)
 #		parameters: [\Entity\User\User user = NULL, \Entity\Language language = NULL]
 #		implement: FrontModule\Forms\IContactFormFactory
 
 	ticketFormFactory:
-		class: FrontModule\Forms\TicketForm(%user%, %ticket%, @ticketMessageRepositoryAccessor::get(),
-		@faqQuestionRepositoryAccessor::get())
+		class: FrontModule\Forms\TicketForm(%user%, %ticket%, @doctrine.dao(Entity\Ticket\Message), @doctrine.dao(Entity\Faq\Question))
 		parameters: [Entity\User\User user, Entity\Ticket\Ticket ticket]
 		implement: FrontModule\Forms\ITicketFormFactory
 
@@ -489,7 +484,7 @@ factories:
 		arguments: [%mask%, %metadata%, ... ]
 		parameters: [mask, metadata]
 		setup:
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
 		implement: Routers\ISimpleRouteFactory
 
 	baseRouteFactory:
@@ -502,19 +497,18 @@ factories:
 		class: Routers\FrontRoute
 		arguments: [ %domainMask%, ... ]
 		setup:
-			- $locationRepositoryAccessor(@locationRepositoryAccessor)
-			- $languageRepositoryAccessor(@languageRepositoryAccessor)
-			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
-			- $rentalPlacementRepositoryAccessor(@rentalPlacementRepositoryAccessor)
-			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-			- $routingPathSegmentOldRepositoryAccessor(@routingPathSegmentOldRepositoryAccessor)
-			- $domainRepositoryAccessor(@domainRepositoryAccessor)
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $phraseDecoratorFactory(@phraseDecoratorFactory)
+			- $locationRepositoryAccessor(@doctrine.dao(Entity\Location\Location))
+			- $languageRepositoryAccessor(@doctrine.dao(Entity\Language))
+			- $rentalRepositoryAccessor(@doctrine.dao(Entity\Rental\Rental))
+			- $rentalTypeRepositoryAccessor(@doctrine.dao(Entity\Rental\Type))
+			- $rentalAmenityRepositoryAccessor(@doctrine.dao(Entity\Rental\Amenity))
+			- $rentalPlacementRepositoryAccessor(@doctrine.dao(Entity\Rental\Placement))
+			- $routingPathSegmentRepositoryAccessor(@doctrine.dao(Entity\Routing\PathSegment))
+			- $routingPathSegmentOldRepositoryAccessor(@doctrine.dao(Entity\Routing\PathSegmentOld))
+			- $domainRepositoryAccessor(@doctrine.dao(Entity\Domain))
+			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
+			- $favoriteListRepositoryAccessor(@doctrine.dao(Entity\FavoriteList))
+			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
 #			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
@@ -540,13 +534,13 @@ factories:
 	# ==================== SERVICES
 	# ==============================
 	rentalSearchServiceFactory:
-		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache)
+		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache, @doctrine.dao(Entity\Rental\Rental))
 		parameters: [Entity\Location\Location location]
 		implement: Service\Rental\IRentalSearchServiceFactory
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService
-		arguments: [%url%, %request%, @pageRepositoryAccessor]
+		arguments: [%url%, %request%, @doctrine.dao(Entity\Page)]
 		parameters: [url, Nette\Application\Request request]
 		implement: Service\Seo\ISeoServiceFactory
 
@@ -556,7 +550,7 @@ factories:
 		implement: Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
-		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
+		class: Extras\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @translatorCache)
 		parameters: [Entity\Language language]
 		implement: Extras\ITranslatorFactory
 
@@ -572,7 +566,7 @@ factories:
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
-	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @contactAddressRepositoryAccessor)
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @doctrine.dao(Entity\Contact\Address))
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
@@ -586,7 +580,7 @@ factories:
 		implement: AdminModule\Grids\IRentalGridFactory
 
 	rentalTypeGridFactory:
-		class: AdminModule\Grids\RentalTypeGrid(@rentalTypeRepositoryAccessor::get())
+		class: AdminModule\Grids\RentalTypeGrid(@doctrine.dao(Entity\Rental\Type))
 		implement: AdminModule\Grids\IRentalTypeGridFactory
 
 	amenityGridFactory:
@@ -594,19 +588,19 @@ factories:
 		implement: AdminModule\Grids\IAmenityGridFactory
 
 	amenityTypeGridFactory:
-		class: AdminModule\Grids\AmenityTypeGrid(@rentalAmenityTypeRepositoryAccessor::get())
+		class: AdminModule\Grids\AmenityTypeGrid(@doctrine.dao(Entity\Rental\AmenityType))
 		implement: AdminModule\Grids\IAmenityTypeGridFactory
 
 	currencyGridFactory:
-		class: AdminModule\Grids\CurrencyGrid(@currencyRepositoryAccessor::get())
+		class: AdminModule\Grids\CurrencyGrid(@doctrine.dao(Entity\Currency))
 		implement: AdminModule\Grids\ICurrencyGridFactory
 
 	domainGridFactory:
-		class: AdminModule\Grids\DomainGrid(@domainRepositoryAccessor::get())
+		class: AdminModule\Grids\DomainGrid(@doctrine.dao(Entity\Domain))
 		implement: AdminModule\Grids\IDomainGridFactory
 
 	languageGridFactory:
-		class: AdminModule\Grids\LanguageGrid(@languageRepositoryAccessor::get())
+		class: AdminModule\Grids\LanguageGrid(@doctrine.dao(Entity\Language))
 		implement: AdminModule\Grids\ILanguageGridFactory
 
 	countryGridFactory:
@@ -622,20 +616,20 @@ factories:
 		implement: AdminModule\Grids\ILocalityGridFactory
 
 	locationTypeGridFactory:
-		class: AdminModule\Grids\LocationTypeGrid(@locationTypeRepositoryAccessor::get())
+		class: AdminModule\Grids\LocationTypeGrid(@doctrine.dao(Entity\Location\Type))
 		implement: AdminModule\Grids\ILocationTypeGridFactory
 
 	phraseTypeGridFactory:
-		class: AdminModule\Grids\PhraseTypeGrid(@phraseTypeRepositoryAccessor::get())
+		class: AdminModule\Grids\PhraseTypeGrid(@doctrine.dao(Entity\Phrase\Type))
 		implement: AdminModule\Grids\IPhraseTypeGridFactory
 
 	phraseCheckingCentralGridFactory:
-		class: AdminModule\Grids\PhraseCheckingCentralGrid(@phraseRepositoryAccessor::get())
+		class: AdminModule\Grids\PhraseCheckingCentralGrid(@doctrine.dao(Entity\Phrase\Phrase))
 		implement: AdminModule\Grids\IPhraseCheckingCentralGridFactory
 
 	phraseCheckingSupportedGridFactory:
 		class: AdminModule\Grids\PhraseCheckingSupportedGrid
-		arguments: [@phraseRepositoryAccessor::get(), @dictionary.findOutdatedTranslations, @languageRepositoryAccessor, @translator, @collator]
+		arguments: [@doctrine.dao(Entity\Phrase\Phrase), @dictionary.findOutdatedTranslations, @doctrine.dao(Entity\Language), @translator, @collator]
 		implement: AdminModule\Grids\IPhraseCheckingSupportedGridFactory
 
 	statisticsDictionaryGridFactory:
@@ -656,7 +650,5 @@ factories:
 
 includes:
 	- webLoader.neon
-	- acl/acl.neon
 	- modelServices.neon
-	- oldRepositoryServices.neon
 	- listeners.neon

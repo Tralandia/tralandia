@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="ticket_attachment")
- * @EA\Primary(key="id", value="name")
+ *
  */
 class Attachment extends \Entity\BaseEntity {
 
@@ -35,12 +35,12 @@ class Attachment extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Ticket\Attachment
@@ -51,7 +51,7 @@ class Attachment extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -59,7 +59,7 @@ class Attachment extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Attachment
@@ -70,7 +70,7 @@ class Attachment extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Ticket\Attachment
 	 */
@@ -80,7 +80,7 @@ class Attachment extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Ticket\Message|NULL
 	 */
@@ -88,7 +88,7 @@ class Attachment extends \Entity\BaseEntity {
 	{
 		return $this->message;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Ticket\Attachment
@@ -99,7 +99,7 @@ class Attachment extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

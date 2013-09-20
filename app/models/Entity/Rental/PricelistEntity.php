@@ -14,7 +14,7 @@ use Nette\Http\FileUpload;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="rental_pricelist")
- * @EA\Primary(key="id", value="name")
+ *
  */
 class Pricelist extends \Entity\BaseEntity
 {

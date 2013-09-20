@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Contact\AddressRepository")
+ * @ORM\Entity
  * @ORM\Table(name="contact_address")
- * @EA\Generator(skip="{setLatitude, unsetLatitude, getLatitude, setLongitude, unsetLongitude, getLongitude}")
+ *
  */
 class Address extends \Entity\BaseEntity {
 

@@ -3,6 +3,7 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
+use Tralandia\BaseDao;
 
 class PhraseCheckingSupportedGrid extends AdminGridControl {
 
@@ -19,21 +20,22 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	public $collator;
 
 	/**
-	 * @var \Repository\LanguageRepository
-	 */
-	protected $languageRepositoryAccessor;
-
-	/**
 	 * @var \Dictionary\FindOutdatedTranslations
 	 */
 	protected $findOutdatedTranslations;
 
-	public function __construct($repository, $findOutdatedTranslations, $languageRepositoryAccessor, $translator, $collator) {
-		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $languageDao;
+
+
+	public function __construct($repository, $findOutdatedTranslations,BaseDao $languageDao, $translator, $collator) {
 		$this->findOutdatedTranslations = $findOutdatedTranslations;
 		$this->translator = $translator;
 		$this->repository = $repository;
 		$this->collator = $collator;
+		$this->languageDao = $languageDao;
 	}
 
 	public function render() {
@@ -52,7 +54,7 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 		$grid->setPagination(self::ITEMS_PER_PAGE, $this->getDataSourceCount);
 
 		$grid->setFilterFormFactory(function() {
-			$languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect($this->translator, $this->collator);
+			$languages = $this->languageDao->getSupportedForSelect($this->translator, $this->collator);
 
 			$form = new \Nette\Forms\Container;
 			$form->addSelect(self::FILTER_LANGUAGE, NULL, $languages)
@@ -94,7 +96,7 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	{
 		$language = NULL;
 		if (isset($filter[self::FILTER_LANGUAGE])) {
-			$language = $this->languageRepositoryAccessor->get()->find($filter[self::FILTER_LANGUAGE]);
+			$language = $this->languageDao->find($filter[self::FILTER_LANGUAGE]);
 		}
 
 		return $language;

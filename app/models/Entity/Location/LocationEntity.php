@@ -10,10 +10,10 @@ use	Extras\Annotation as EA;
 use Routers\FrontRoute;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
+ * @ORM\Entity
  * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="localName", columns={"localName"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
- * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{setSlug, getIso, getParent, setLatitude, unsetLatitude, getLatitude, setLongitude, unsetLongitude, getLongitude}")
+ *
+ *
 */
 class Location extends \Entity\BaseEntityDetails {
 

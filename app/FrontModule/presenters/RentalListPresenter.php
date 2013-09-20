@@ -150,7 +150,7 @@ class RentalListPresenter extends BasePresenter {
 		if($id instanceof \Entity\Rental\Rental) {
 			$rental = $id;
 		} else {
-			$rental = $this->rentalRepositoryAccessor->get()->find($id);
+			$rental = $this->rentalDao->get()->find($id);
 			if(!$rental) {
 				throw new \Exception('ID: ' . $id);
 			}

@@ -21,6 +21,7 @@ define('BLACK_LIST_ENTITY', '\Entity\User\BlackList');
 define('RESERVATION_ENTITY', '\Entity\User\RentalReservation');
 define('CONTACT_EMAIL_ENTITY', '\Entity\Contact\Email');
 define('PATH_SEGMENT_ENTITY', '\Entity\Routing\PathSegment');
+define('PATH_SEGMENT_OLD_ENTITY', '\Entity\Routing\PathSegmentOld');
 define('CURRENCY_ENTITY', '\Entity\Currency');
 define('PAGE_ENTITY', '\Entity\Page');
 define('PHRASE_ENTITY', '\Entity\Phrase\Phrase');
@@ -36,4 +37,7 @@ define('ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
 define('BANNED_EMAIL_ENTITY', '\Entity\Rental\BannedEmail');
 define('BANNED_PHONE_ENTITY', '\Entity\Rental\BannedPhone');
 define('ADDRESS_ENTITY', '\Entity\Contact\Address');
+define('FAVORITELIST_ENTITY', '\Entity\FavoriteList');
+define('FAQ_CATEGORY_ENTITY', '\Entity\Faq\Category');
+define('TICKET_ENTITY', '\Entity\Ticket\Ticket');
 

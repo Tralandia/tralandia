@@ -18,14 +18,6 @@ class RootHomePresenter extends BasePresenter {
 	 */
 	protected $translator;
 
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	public $rentalRepositoryAccessor;
-
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
 
 	public function renderDefault() {
 
@@ -41,7 +33,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getRentals()
 	{
-		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
+		$featuredIds = $this->rentalDao->get()->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
@@ -54,7 +46,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getLocationRentalsCount()
 	{
-		$counts = $this->rentalRepositoryAccessor->get()->getCounts(NULL, TRUE);
+		$counts = $this->rentalDao->get()->getCounts(NULL, TRUE);
 		return array_sum($counts);
 	}
 

@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Rental\PlacementRepository")
+ * @ORM\Entity
  * @ORM\Table(name="rental_placement")
- * @EA\Primary(key="id", value="id")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class Placement extends \Entity\BaseEntity {
 
@@ -19,7 +19,7 @@ class Placement extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
@@ -39,13 +39,13 @@ class Placement extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -53,7 +53,7 @@ class Placement extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Placement
@@ -64,7 +64,7 @@ class Placement extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
