@@ -82,7 +82,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
-		$this->template->worldwideCount = $this->locationDao->get()->getWorldwideRentalCount();
+		$this->template->worldwideCount = $this->locationDao->getWorldwideRentalCount();
 
 		$this->template->homeCacheId = 'home' . $this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
@@ -137,7 +137,7 @@ abstract class BasePresenter extends \BasePresenter {
 		if(strlen($string)) {
 			$suggest = $this->getSuggestionForLocation($string);
 			/** @var $rentalRepository \Repository\Rental\RentalRepository */
-			$rentalRepository = $this->rentalDao->get();
+			$rentalRepository = $this->rentalDao;
 			$suggest['rentals'] = $rentalRepository->findSuggestForSearch($string, $this->primaryLocation);
 			if(is_numeric($string)) {
 				$suggest['rentalId'] = $rentalRepository->find($string);
@@ -170,7 +170,7 @@ abstract class BasePresenter extends \BasePresenter {
 	{
 		$suggestLocations = [];
 		/** @var $locationRepository \Repository\Location\LocationRepository */
-		$locationRepository = $this->locationDao->get();
+		$locationRepository = $this->locationDao;
 		//$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
 
 		$suggestLocations['localitiesAndRegions'] = $locationRepository->findSuggestForLocalityAndRegion(
@@ -231,7 +231,7 @@ abstract class BasePresenter extends \BasePresenter {
 	{
 		$rentals = $this->favoriteList->getRentalList();
 		if(count($rentals)) {
-			$favoriteListRepository = $this->favoriteListDao->get();
+			$favoriteListRepository = $this->favoriteListDao;
 			/** @var $favoriteList \Entity\FavoriteList */
 			$favoriteList = $favoriteListRepository->createNew();
 			$favoriteList->addRentals($rentals);

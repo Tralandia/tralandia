@@ -31,7 +31,7 @@ class AddressNormalizer extends \Nette\Object {
 
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
 
 	}
 

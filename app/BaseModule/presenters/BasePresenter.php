@@ -7,7 +7,7 @@ use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 use Nette\Application\UI\Presenter;
 use Routers\FrontRoute;
-use Routers\OwnerRouteList;
+use Routers\BaseRoute;
 
 
 abstract class BasePresenter extends Presenter {
@@ -133,12 +133,12 @@ abstract class BasePresenter extends Presenter {
 
 
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
-		$this->languageDao = $dic->getService('doctrine.default.entityManager')->dao(LANGUAGE_ENTITY);
-		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
-		$this->userDao = $dic->getService('doctrine.default.entityManager')->dao(USER_ENTITY);
-		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_TYPE_ENTITY);
-		$this->rentalDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_ENTITY);
-		$this->favoriteListDao = $dic->getService('doctrine.default.entityManager')->dao(FAVORITELIST_ENTITY);
+		$this->languageDao = $dic->getService('doctrine.default.entityManager')->getDao(LANGUAGE_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
+		$this->userDao = $dic->getService('doctrine.default.entityManager')->getDao(USER_ENTITY);
+		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_TYPE_ENTITY);
+		$this->rentalDao = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_ENTITY);
+		$this->favoriteListDao = $dic->getService('doctrine.default.entityManager')->getDao(FAVORITELIST_ENTITY);
 	}
 
 
@@ -161,14 +161,14 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect('this', $parameters);
 		}
 
-		if($autologin = $this->getParameter(OwnerRouteList::AUTOLOGIN)) {
+		if($autologin = $this->getParameter(BaseRoute::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
 				$this->login($identity);
 			} catch(\Nette\Security\AuthenticationException $e) {
 			}
 			$parameters = $this->getParameters();
-			unset($parameters[OwnerRouteList::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
+			unset($parameters[BaseRoute::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
 			$this->redirect('this', $parameters);
 		}
 
@@ -508,7 +508,7 @@ abstract class BasePresenter extends Presenter {
 				$info = $addressNormalizer->getInfoUsingGps($gps);
 			}
 		} else {
-			$primaryLocation = $this->locationDao->get()->find($primaryLocation);
+			$primaryLocation = $this->locationDao->find($primaryLocation);
 			$info = $addressNormalizer->getInfoUsingAddress($primaryLocation, $address, '', $locality, $postalCode);
 		}
 
@@ -570,7 +570,7 @@ abstract class BasePresenter extends Presenter {
 			$parameters = [
 				\Routers\BaseRoute::PRIMARY_LOCATION => $user->getPrimaryLocation(),
 				\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
-				OwnerRouteList::AUTOLOGIN => $hash,
+				BaseRoute::AUTOLOGIN => $hash,
 				FrontRoute::PAGE => NULL,
 			];
 			$this->redirect(':Front:Sign:afterLogin', $parameters);

@@ -53,7 +53,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 	public function actionRequestTranslations($id)
 	{
-		$language = $this->languageDao->get()->find($id);
+		$language = $this->languageDao->find($id);
 		if(!$language) {
 			throw new BadRequestException;
 		}

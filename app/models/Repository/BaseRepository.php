@@ -86,16 +86,6 @@ class BaseRepository extends EntityRepository {
 	}
 
 
-	/**
-	 * @param string $alias
-	 *
-	 * @return \Doctrine\ORM\QueryBuilder
-	 */
-	public function createQueryBuilder($alias = 'e')
-	{
-		return parent::createQueryBuilder($alias);
-	}
-
 
 	public function getDataSource() {
 		return $this->createQueryBuilder();

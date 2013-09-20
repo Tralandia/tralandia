@@ -7,6 +7,7 @@ use Nette\Caching\Cache,
 	Nette\Utils\Finder,
 	Nette\Utils\Strings,
 	Nette\Security\Permission;
+use Tralandia\BaseDao;
 
 class SimpleAcl extends Permission
 {
@@ -19,7 +20,7 @@ class SimpleAcl extends Permission
 	protected $roleRepository;
 
 
-	public function __construct(\Repository\User\RoleRepository $roleRepository)
+	public function __construct(BaseDao $roleRepository)
 	{
 		$this->roleRepository = $roleRepository;
 	}

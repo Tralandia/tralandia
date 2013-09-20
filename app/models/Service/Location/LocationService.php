@@ -22,9 +22,9 @@ class LocationService extends Service\BaseService {
 	protected $polygonService;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->dao(PATH_SEGMENT_ENTITY);
-		$this->routingPathSegmentOldDao = $dic->getService('doctrine.default.entityManager')->dao(PATH_SEGMENT_OLD_ENTITY);
-		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
+		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->getDao(PATH_SEGMENT_ENTITY);
+		$this->routingPathSegmentOldDao = $dic->getService('doctrine.default.entityManager')->getDao(PATH_SEGMENT_OLD_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
 	}
 
 

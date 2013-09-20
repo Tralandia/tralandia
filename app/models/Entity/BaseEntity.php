@@ -5,22 +5,15 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Proxy\Proxy;
 use Extras;
+use Kdyby\Doctrine\Entities\IdentifiedEntity;
 use Nette\Utils\Strings;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
+ * @ORM\MappedSuperclass(repositoryClass="\Tralandia\BaseDao")
  * @ORM\Table(indexes={@ORM\index(name="oldId", columns={"oldId"})})
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security\IResource {
-
-	/**
-	 * @var integer
-	 * @ORM\Id
-	 * @ORM\GeneratedValue
-	 * @ORM\Column(type="integer")
-	 */
-	protected $id;
+class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {
 
 	/**
 	 * @var integer
@@ -68,21 +61,6 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 		$this->id = $id;
 
 		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	final public function getId()
-	{
-		if ($this instanceof Proxy && !$this->__isInitialized__ && !$this->id) {
-			$identifier = $this->getReflection()->getProperty('_identifier');
-			$identifier->setAccessible(TRUE);
-			$id = $identifier->getValue($this);
-			$this->id = reset($id);
-		}
-
-		return $this->id;
 	}
 
 	/**
@@ -152,6 +130,22 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 	public function getUpdated() {
 		return $this->updated;
 	}
+
+
+	public function __set($name, $value) {
+		// if ($this->getReflection()->hasProperty($name)) {
+		// 	$this->{$name} = $value;
+		// 	return;
+		// }
+		if($value === NULL) {
+			$method = 'unset' . Strings::firstUpper($name);
+			$this->{$method}();
+			return NULL;
+		}
+
+		parent::__set($name, $value);
+	}
+
 
 
 }
