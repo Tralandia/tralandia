@@ -33,7 +33,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getRentals()
 	{
-		$featuredIds = $this->rentalDao->get()->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
+		$featuredIds = $this->rentalDao->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
@@ -46,7 +46,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getLocationRentalsCount()
 	{
-		$counts = $this->rentalDao->get()->getCounts(NULL, TRUE);
+		$counts = $this->rentalDao->getCounts(NULL, TRUE);
 		return array_sum($counts);
 	}
 

@@ -30,7 +30,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 	}
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->reservationDao = $dic->getService('doctrine.default.entityManager')->dao(RESERVATION_ENTITY);
+		$this->reservationDao = $dic->getService('doctrine.default.entityManager')->getDao(RESERVATION_ENTITY);
 	}
 
 	protected function startup() {

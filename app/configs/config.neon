@@ -155,7 +155,7 @@ doctrine:
 	driver: pdo_mysql
 	debugger: false
 	metadata:
-		Tralandia: %appDir%/models
+		Entity: %appDir%/models
 
 console:
 	url: http://www.com.tra.com/
@@ -225,13 +225,10 @@ services:
 	routerFactory:
 		class: Routers\RouterFactory(%domainMask%, [defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
-			- $locationRepositoryAccessor(@doctrine.dao(Entity\Location\Location))
-			- $languageRepositoryAccessor(@doctrine.dao(Entity\Language))
+			- $locationDao(@doctrine.dao(Entity\Location\Location))
+			- $languageDao(@doctrine.dao(Entity\Language))
 
 	router: @routerFactory::create
-
-	console: @doctrine.console
-	model: @doctrine.entityManagers.default
 
 	nette.presenterFactory:
 		factory: Extras\Presenter\Factory::factory(%appDir%, %tempDir%/presenters, @container)
@@ -424,7 +421,7 @@ factories:
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 #	contactFormFactory:
-#		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor)
+#		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketDao)
 #		parameters: [\Entity\User\User user = NULL, \Entity\Language language = NULL]
 #		implement: FrontModule\Forms\IContactFormFactory
 
@@ -466,11 +463,6 @@ factories:
 		parameters: [Service\Seo\SeoService pageSeo, Entity\User\User user = NULL]
 		implement: BaseModule\Components\IHeaderControlFactory
 
-	footerControlFactory:
-		class: FrontModule\Components\Footer\FooterControl(%location%)
-		parameters: [Entity\Location\Location location]
-		implement: FrontModule\Components\Footer\IFooterControlFactory
-
 	navigationControlFactory:
 		class: AdminModule\Components\NavigationControl(%user%)
 		parameters: [Nette\Security\User user]
@@ -484,7 +476,7 @@ factories:
 		arguments: [%mask%, %metadata%, ... ]
 		parameters: [mask, metadata]
 		setup:
-			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
+			- $pageDao(@doctrine.dao(Entity\Page))
 		implement: Routers\ISimpleRouteFactory
 
 	baseRouteFactory:
@@ -497,18 +489,18 @@ factories:
 		class: Routers\FrontRoute
 		arguments: [ %domainMask%, ... ]
 		setup:
-			- $locationRepositoryAccessor(@doctrine.dao(Entity\Location\Location))
-			- $languageRepositoryAccessor(@doctrine.dao(Entity\Language))
-			- $rentalRepositoryAccessor(@doctrine.dao(Entity\Rental\Rental))
-			- $rentalTypeRepositoryAccessor(@doctrine.dao(Entity\Rental\Type))
-			- $rentalAmenityRepositoryAccessor(@doctrine.dao(Entity\Rental\Amenity))
-			- $rentalPlacementRepositoryAccessor(@doctrine.dao(Entity\Rental\Placement))
-			- $routingPathSegmentRepositoryAccessor(@doctrine.dao(Entity\Routing\PathSegment))
-			- $routingPathSegmentOldRepositoryAccessor(@doctrine.dao(Entity\Routing\PathSegmentOld))
-			- $domainRepositoryAccessor(@doctrine.dao(Entity\Domain))
-			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
-			- $favoriteListRepositoryAccessor(@doctrine.dao(Entity\FavoriteList))
-			- $pageRepositoryAccessor(@doctrine.dao(Entity\Page))
+			- $locationDao(@doctrine.dao(Entity\Location\Location))
+			- $languageDao(@doctrine.dao(Entity\Language))
+			- $rentalDao(@doctrine.dao(Entity\Rental\Rental))
+			- $rentalTypeDao(@doctrine.dao(Entity\Rental\Type))
+			- $rentalAmenityDao(@doctrine.dao(Entity\Rental\Amenity))
+			- $rentalPlacementDao(@doctrine.dao(Entity\Rental\Placement))
+			- $routingPathSegmentDao(@doctrine.dao(Entity\Routing\PathSegment))
+			- $routingPathSegmentOldDao(@doctrine.dao(Entity\Routing\PathSegmentOld))
+			- $domainDao(@doctrine.dao(Entity\Domain))
+			- $pageDao(@doctrine.dao(Entity\Page))
+			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
+			- $pageDao(@doctrine.dao(Entity\Page))
 #			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
@@ -526,7 +518,7 @@ factories:
 		implement: Extras\Cache\IRentalSearchCachingFactory
 
 	rentalOrderCachingFactory:
-		class: Extras\Cache\RentalOrderCaching(%location%, @rentalOrderCache)
+		class: Extras\Cache\RentalOrderCaching(%location%, @doctrine.dao(Entity\Rental\Rental), @rentalOrderCache)
 		parameters: [Entity\Location\Location location]
 		implement: Extras\Cache\IRentalOrderCachingFactory
 
@@ -565,10 +557,7 @@ factories:
 		implement: Mail\ICompilerFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
-	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
 	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @doctrine.dao(Entity\Contact\Address))
-	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
-	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
 
 	# ==============================

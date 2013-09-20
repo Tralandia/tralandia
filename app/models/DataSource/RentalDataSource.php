@@ -27,11 +27,6 @@ class RentalDataSource extends BaseDataSource {
 	private $phoneBook;
 
 	/**
-	 * @var \Extras\Books\Email
-	 */
-	private $emailBook;
-
-	/**
 	 * @var \Security\Authenticator
 	 */
 	private $authenticator;
@@ -45,15 +40,13 @@ class RentalDataSource extends BaseDataSource {
 	/**
 	 * @param EntityManager $em
 	 * @param \Extras\Books\Phone $phoneBook
-	 * @param \Extras\Books\Email $emailBook
 	 * @param \Security\Authenticator $authenticator
 	 * @param \Nette\Application\Application $application
 	 */
-	public function __construct(EntityManager $em, Phone $phoneBook, Email $emailBook, Authenticator $authenticator, Application $application)
+	public function __construct(EntityManager $em, Phone $phoneBook, Authenticator $authenticator, Application $application)
 	{
 		$this->em = $em;
 		$this->phoneBook = $phoneBook;
-		$this->emailBook = $emailBook;
 		$this->authenticator = $authenticator;
 		$this->application = $application;
 	}

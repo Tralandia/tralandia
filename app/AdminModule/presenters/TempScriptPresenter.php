@@ -278,7 +278,7 @@ class TempScriptPresenter extends BasePresenter {
 			$newSlug = $this->transliterator->transliterate($name);
 			$newSlug = Strings::webalize($newSlug);
 
-			$existingLocation = $this->locationDao->get()->findOneBy(array(
+			$existingLocation = $this->locationDao->findOneBy(array(
 				'parent' => $location->getParent(),
 				'slug' => $newSlug,
 			));

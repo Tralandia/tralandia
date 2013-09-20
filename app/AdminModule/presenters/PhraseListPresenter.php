@@ -85,7 +85,7 @@ class PhraseListPresenter extends BasePresenter {
 	protected $preFillTranslations = TRUE;
 
 	public function injectDic(\Nette\DI\Container $dic) {
-		$this->phraseDao = $dic->getService('doctrine.default.entityManager')->dao(PHRASE_ENTITY);
+		$this->phraseDao = $dic->getService('doctrine.default.entityManager')->getDao(PHRASE_ENTITY);
 	}
 
 
@@ -101,7 +101,7 @@ class PhraseListPresenter extends BasePresenter {
 
 	public function actionWaitingForCentral()
 	{
-		$language = $this->languageDao->get()->find(CENTRAL_LANGUAGE);
+		$language = $this->languageDao->find(CENTRAL_LANGUAGE);
 
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->phraseDao->getCountByStatus(Phrase::WAITING_FOR_CENTRAL));
@@ -125,7 +125,7 @@ class PhraseListPresenter extends BasePresenter {
 
 	public function actionNotReady()
 	{
-		$language = $this->languageDao->get()->find(CENTRAL_LANGUAGE);
+		$language = $this->languageDao->find(CENTRAL_LANGUAGE);
 
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->phraseDao->getCountByStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING));
@@ -155,7 +155,7 @@ class PhraseListPresenter extends BasePresenter {
 		}
 
 		/** @var $language \Entity\Language */
-		$language = $this->languageDao->get()->findOneByIso($languageIso);
+		$language = $this->languageDao->findOneByIso($languageIso);
 
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->phraseDao->getNotCheckedCount($language));
@@ -180,13 +180,13 @@ class PhraseListPresenter extends BasePresenter {
 	{
 		$to = $id;
 		if(!$to) {
-			$language = $this->languageDao->get()->findOneByTranslator($this->loggedUser);
+			$language = $this->languageDao->findOneByTranslator($this->loggedUser);
 			$this->redirect('this', ['id' => $language->getIso()]);
 		}
 
 
 		/** @var $language \Entity\Language */
-		$language = $this->languageDao->get()->findOneByIso($to);
+		$language = $this->languageDao->findOneByIso($to);
 
 		$paginator = $this->getPaginator();
 		$paginator->setItemCount($this->findOutdatedTranslations->getWaitingForTranslationCount($language));
@@ -214,7 +214,7 @@ class PhraseListPresenter extends BasePresenter {
 	public function actionSearch($search, $languageId, $searchInUserContent)
 	{
 		$searchInUserContent = (bool) $searchInUserContent;
-		$language = $this->languageDao->get()->find($languageId);
+		$language = $this->languageDao->find($languageId);
 		if(!$language) {
 			throw new BadRequestException;
 		}
@@ -287,7 +287,7 @@ class PhraseListPresenter extends BasePresenter {
 
 		$translator = $this->context->translator;
 		if($this->user->isInRole(Role::TRANSLATOR)) {
-			$translatorLanguages = $this->languageDao->get()->findByTranslator($this->loggedUser);
+			$translatorLanguages = $this->languageDao->findByTranslator($this->loggedUser);
 			$translatorLanguages = $this->resultSorter->translateAndSort($translatorLanguages);
 			$phraseContainerSettings['editableLanguages'] = $translatorLanguages;
 

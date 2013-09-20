@@ -38,7 +38,7 @@ class Phone extends Nette\Object {
 	 * @return Entity\Contact\Phone|false
 	 */
 	public function find($number) {
-		return $this->phoneDao->get()->findOneByValue($this->prepareNumber($number));
+		return $this->phoneDao->findOneByValue($this->prepareNumber($number));
 	}
 
 
@@ -52,7 +52,7 @@ class Phone extends Nette\Object {
 	public function getOrCreate($number, $prefix = NULL) {
 		if (!$phone = $this->find($number)) {
 			$defaultCountry = NULL;
-			if($prefix) $defaultCountry = $this->locationDao->get()->findOneByPhonePrefix($prefix);
+			if($prefix) $defaultCountry = $this->locationDao->findOneByPhonePrefix($prefix);
 			$response = $this->serviceRequest($number, $defaultCountry);
 			if (!isset($response->validationResult) || $response->validationResult->isValidNumber != 'true') {
 				return FALSE;
@@ -60,15 +60,15 @@ class Phone extends Nette\Object {
 			$number = $this->prepareNumber($response->formattingResults->E164);
 
 			if (!$phone = $this->find($number)) {
-				$phone = $this->phoneDao->get()->createNew();
-				$primaryLocation = $this->locationDao->get()->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
+				$phone = $this->phoneDao->createNew();
+				$primaryLocation = $this->locationDao->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
 
 				$phone->setValue($this->prepareNumber($response->formattingResults->E164))
 					->setInternational($response->formattingResults->international)
 					->setNational($response->formattingResults->national)
 					->setPrimaryLocation($primaryLocation);
-				$this->phoneDao->get()->persist($phone);
-				$this->phoneDao->get()->flush($phone);
+				$this->phoneDao->persist($phone);
+				$this->phoneDao->flush($phone);
 			}
 		}
 

@@ -43,7 +43,6 @@ $robotLoader->addDirectory(APP_DIR)
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 
 require_once LIBS_DIR . '/tools.php';
-Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
 
@@ -138,7 +137,8 @@ FormContainer::extensionMethod('addAddressContainer',
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
-
+\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 
 // Run the application!
 if (PHP_SAPI == 'cli') {

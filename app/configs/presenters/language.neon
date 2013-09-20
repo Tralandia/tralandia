@@ -25,7 +25,7 @@ form:
 			label: Translator
 			control:
 				type: select
-				repository: @userRepositoryAccessor
+				repository: @doctrine.dao(Entity\User\User)
 				items: [findTranslatorsForSelect]
 				prompt: '---'
 		translationPrice:

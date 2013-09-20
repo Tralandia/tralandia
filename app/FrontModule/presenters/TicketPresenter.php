@@ -20,7 +20,7 @@ class TicketPresenter extends BasePresenter {
 
 
 	public function actionShow($id) {
-		$ticket = $this->getContext()->getService('doctrine.default.entityManager')->dao(TICKET_ENTITY)->find($id);
+		$ticket = $this->getContext()->getService('doctrine.default.entityManager')->getDao(TICKET_ENTITY)->find($id);
 
 		if(!$ticket) {
 			$this->redirect('Home:');

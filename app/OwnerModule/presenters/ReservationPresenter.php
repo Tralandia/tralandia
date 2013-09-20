@@ -10,7 +10,7 @@ class ReservationPresenter extends BasePresenter {
 	public function actionList($rental)
 	{
 		/** @var $rental \Entity\Rental\Rental */
-		$rental = $this->rentalDao->get()->find($rental);
+		$rental = $this->rentalDao->find($rental);
 		if(!$rental) {
 			throw new InvalidArgumentException;
 		}

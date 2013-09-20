@@ -23,12 +23,12 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected $locationTypeDao;
 
 	public function injectDic(\Nette\DI\Container $dic) {
-		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->dao(PATH_SEGMENT_ENTITY);
-		$this->languageDao = $dic->getService('doctrine.default.entityManager')->dao(LANGUAGE_ENTITY);
-		$this->pageDao = $dic->getService('doctrine.default.entityManager')->dao(PAGE_ENTITY);
-		$this->locationDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_ENTITY);
-		$this->locationTypeDao = $dic->getService('doctrine.default.entityManager')->dao(LOCATION_TYPE_ENTITY);
-		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->dao(RENTAL_TYPE_ENTITY);
+		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->getDao(PATH_SEGMENT_ENTITY);
+		$this->languageDao = $dic->getService('doctrine.default.entityManager')->getDao(LANGUAGE_ENTITY);
+		$this->pageDao = $dic->getService('doctrine.default.entityManager')->getDao(PAGE_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
+		$this->locationTypeDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_TYPE_ENTITY);
+		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_TYPE_ENTITY);
 	}
 
 

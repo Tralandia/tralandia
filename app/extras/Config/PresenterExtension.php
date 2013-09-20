@@ -4,7 +4,7 @@ namespace Extras\Config;
 
 use Nette, Extras;
 
-class PresenterExtension extends Nette\Config\CompilerExtension
+class PresenterExtension extends Nette\DI\CompilerExtension
 {
 	public $defaults = array(
 		'configsDir' => '%appDir%/configs/presenters'
@@ -32,7 +32,7 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 				->setAutowired(FALSE);
 
 			$builder->addDefinition($this->prefix($prefix))
-				->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix($prefix)));
+				->setClass('Nette\DI\Extensions\NetteAccessor', array('@container', $this->prefix($prefix)));
 
 			$generator = $builder->addDefinition($this->prefix($prefix . '.formGenerator'))
 				->setClass('Extras\FormMask\Generator', array(new Nette\DI\Statement('Extras\FormMask\Mask')))
@@ -114,7 +114,7 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 	 */
 	public static function register(Nette\Config\Configurator $configurator, $name = 'presenter') {
 		$class = get_called_class();
-		$configurator->onCompile[] = function(Nette\Config\Configurator $configurator, Nette\Config\Compiler $compiler) use($class, $name) {
+		$configurator->onCompile[] = function(Nette\Configurator $configurator, Nette\DI\Compiler $compiler) use($class, $name) {
 			$compiler->addExtension($name, new $class);
 		};
 	}
