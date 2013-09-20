@@ -13,7 +13,7 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
+ * @ORM\Entity
  * @ORM\Table(name="rental",
  * 		indexes={
  * 			@ORM\index(name="status", columns={"status"}),
@@ -21,8 +21,8 @@ use Nette\Utils\Strings;
  * 			@ORM\index(name="rank", columns={"rank"}),
  * 			@ORM\index(name="calendarUpdated", columns={"calendarUpdated"})
  * 		})
- * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages, getPrice, setPrice, setSlug, getCalendar, setCalendar, setUrl}")
+ *
+ *
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {

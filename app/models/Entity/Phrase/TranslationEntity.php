@@ -8,15 +8,15 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
+ * @ORM\Entity
  * @ORM\Table(name="phrase_translation",
  * 				indexes={
  * 					@ORM\index(name="translation", columns={"translation"}),
  * 					@ORM\index(name="status", columns={"status"})
  * 				}
  * 			)
- * @EA\Primary(key="id", value="")
- * @EA\Generator(skip="{setTranslation, getTranslation, setVariations, updateVariations}")
+ *
+ *
  */
 class Translation extends \Entity\BaseEntity {
 

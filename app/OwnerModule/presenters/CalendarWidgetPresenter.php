@@ -23,8 +23,8 @@ class CalendarWidgetPresenter extends BasePresenter {
 	public function actionDefault($id)
 	{
 		$this->template->environment = $this->environment;
-		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
-		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
+		$this->template->thisRental = $this->rentalDao->get()->find($id);
+		$this->template->languages = $this->languageDao->get()->getSupportedForSelect(
 			$this->translator,
 			$this->collator
 		);
@@ -38,7 +38,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 	public function actionGenerateCode($id, $wLanguage, $columns, $rows)
 	{
-		$language = $this->languageRepositoryAccessor->get()->find($wLanguage);
+		$language = $this->languageDao->get()->find($wLanguage);
 		$rental = $this->findRental($id);
 		if(!$language) {
 			throw new BadRequestException;

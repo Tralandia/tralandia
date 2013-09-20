@@ -18,9 +18,7 @@ if(array_key_exists('useCache', $_GET)) {
 
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
-require_once LIBS_DIR . '/rado_functions.php';
 
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
@@ -137,13 +135,10 @@ FormContainer::extensionMethod('addAddressContainer',
 	});
 
 
-// @todo toto niekam schovat
-// Panel\Todo::register($container->parameters['appDir']);
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
 
-//Extras\Models\Service::$translator = $container->translator;
 
 // Run the application!
 if (PHP_SAPI == 'cli') {

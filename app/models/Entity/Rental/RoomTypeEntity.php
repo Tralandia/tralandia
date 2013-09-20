@@ -9,8 +9,8 @@ use    Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_roomtype")
- * @EA\Primary(key="id", value="id")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class RoomType extends \Entity\BaseEntity
 {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace FrontModule;
 
 use Nette;
@@ -12,19 +12,15 @@ class TicketPresenter extends BasePresenter {
 	 */
 	protected $ticketFormFactory;
 
-	public $ticketRepositoryAccessor;
 
 	/**
 	 * @var \Entity\Ticket\Ticket
 	 */
 	public $ticket;
 
-	public function injectDic(\Nette\DI\Container $dic) {
-		$this->ticketRepositoryAccessor = $dic->ticketRepositoryAccessor;
-	}
 
 	public function actionShow($id) {
-		$ticket = $this->ticketRepositoryAccessor->get()->find($id);
+		$ticket = $this->getContext()->getService('doctrine.default.entityManager')->dao(TICKET_ENTITY)->find($id);
 
 		if(!$ticket) {
 			$this->redirect('Home:');

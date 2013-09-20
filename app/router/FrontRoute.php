@@ -66,17 +66,17 @@ class FrontRoute extends BaseRoute
 		self::FAVORITE_LIST,
 	];
 
-	public $locationRepositoryAccessor;
-	public $languageRepositoryAccessor;
-	public $rentalRepositoryAccessor;
-	public $rentalTypeRepositoryAccessor;
-	public $rentalAmenityRepositoryAccessor;
-	public $rentalPlacementRepositoryAccessor;
-	public $routingPathSegmentRepositoryAccessor;
-	public $routingPathSegmentOldRepositoryAccessor;
-	public $domainRepositoryAccessor;
-	public $favoriteListRepositoryAccessor;
-	public $pageRepositoryAccessor;
+	public $locationDao;
+	public $languageDao;
+	public $rentalDao;
+	public $rentalTypeDao;
+	public $rentalAmenityDao;
+	public $rentalPlacementDao;
+	public $routingPathSegmentDao;
+	public $routingPathSegmentOldDao;
+	public $domainDao;
+	public $favoriteListDao;
+	public $pageDao;
 	public $phraseDecoratorFactory;
 
 	/**
@@ -129,7 +129,7 @@ class FrontRoute extends BaseRoute
 			unset($params[self::HASH]);
 
 			if(is_array($pathSegments) && 'external/calendar/calendar.php' == join('/',$pathSegments)) {
-				if(isset($params['id']) && $rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($params['id'])) {
+				if(isset($params['id']) && $rental = $this->rentalDao->findOneByOldId($params['id'])) {
 					$params[self::RENTAL] = $rental;
 					$presenter = 'CalendarIframe';
 					$params['action'] = 'default';
@@ -164,13 +164,13 @@ class FrontRoute extends BaseRoute
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
 				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)$~')) {
-					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
+					if($rental = $this->rentalDao->findOneByOldId($match[1])) {
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
 				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)$~')) {
-					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
+					if($rental = $this->rentalDao->find($match[1])) {
 						/** @var $rental \Entity\Rental\Rental */
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
@@ -178,7 +178,7 @@ class FrontRoute extends BaseRoute
 						$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
 					}
 				} else if ($match = Strings::match($pathSegment, '~f([0-9]*)$~')) {
-					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
+					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListDao->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
 						$presenter = 'RentalList';
 						$params['action'] = 'default';
@@ -198,7 +198,7 @@ class FrontRoute extends BaseRoute
 						$params[self::PAGE] = $segmentList[self::PAGE];
 						if($page->getDestination() == ':Front:CalendarIframe:default') {
 							$rentalId = $pathSegments[1];
-							if($rentalId && $rental = $this->rentalRepositoryAccessor->get()->find($rentalId)) {
+							if($rentalId && $rental = $this->rentalDao->find($rentalId)) {
 								/** @var $rental \Entity\Rental\Rental */
 								$params[self::RENTAL] = $rental;
 								$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
@@ -347,7 +347,7 @@ class FrontRoute extends BaseRoute
 				break;
 			default:
 				$destination = ':Front:'.$presenter.':'.$action;
-				$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
+				$page = $this->pageDao->findOneByDestination($destination);
 				if($page) {
 					$params[self::PAGE] = $page;
 				} else {
@@ -412,11 +412,11 @@ class FrontRoute extends BaseRoute
 		}
 
 		if(isset($params[self::BOARD])) {
-			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->get()->find($params[self::BOARD]);
+			$params[self::BOARD] = $this->rentalAmenityDao->find($params[self::BOARD]);
 		}
 
 		if(isset($params[self::PLACEMENT])) {
-			$params[self::PLACEMENT] = $this->rentalPlacementRepositoryAccessor->get()->find($params[self::PLACEMENT]);
+			$params[self::PLACEMENT] = $this->rentalPlacementDao->find($params[self::PLACEMENT]);
 		}
 
 		return $params;
@@ -481,8 +481,8 @@ class FrontRoute extends BaseRoute
 
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 
-		$pathSegmentRepository = $this->routingPathSegmentRepositoryAccessor->get();
-		$pathSegmentOldRepository = $this->routingPathSegmentOldRepositoryAccessor->get();
+		$pathSegmentRepository = $this->routingPathSegmentDao;
+		$pathSegmentOldRepository = $this->routingPathSegmentOldDao;
 
 		foreach ($pathSegments as $value) {
 			$pathSegment = $pathSegmentRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
@@ -492,7 +492,7 @@ class FrontRoute extends BaseRoute
 				$pathSegment = $pathSegment->getPathSegmentNew();
 			}
 			$keyTemp = $pathSegmentTypesFlip[$pathSegment->getType()];
-			$accessor = $keyTemp.'RepositoryAccessor';
+			$accessor = $keyTemp.'Dao';
 			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($pathSegment->getEntityId());
 		}
 
@@ -508,12 +508,12 @@ class FrontRoute extends BaseRoute
 		$segment = NULL;
 
 		if($segmentName == 'location') {
-			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId
 			));
 		} else {
-			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId,
 				'language' => $language

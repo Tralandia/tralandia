@@ -8,6 +8,7 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
 use Model\Phrase\IPhraseDecoratorFactory;
+use Tralandia\BaseDao;
 
 class Translator implements \Nette\Localization\ITranslator {
 
@@ -28,13 +29,16 @@ class Translator implements \Nette\Localization\ITranslator {
 	 */
 	protected $cache;
 
-	protected $phraseRepositoryAccessor;
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $phraseDao;
 
 
-	public function __construct(Language $language, $phraseRepositoryAccessor, Cache $translatorCache) {
+	public function __construct(Language $language, BaseDao $phraseDao, Cache $translatorCache) {
 		$this->language = $language;
-		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
 		$this->cache = $translatorCache;
+		$this->phraseDao = $phraseDao;
 	}
 
 	public function setLanguage(Language $language)
@@ -113,9 +117,9 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			if(is_scalar($phrase)) {
 				if(Strings::match($phrase, '~o[0-9]+~')) {
-					$phrase = $this->phraseRepositoryAccessor->get()->findOneByOldId(substr($phrase, 1));
+					$phrase = $this->phraseDao->findOneByOldId(substr($phrase, 1));
 				} else if(is_numeric($phrase)) {
-					$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
+					$phrase = $this->phraseDao->find($phrase);
 				} else {
 					return $phrase;
 					//throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
@@ -123,12 +127,6 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$phrase) $translation = FALSE;
-
-//			# Mark as Used
-//			if($phrase instanceof Phrase && !$phrase->getUsed()) {
-//				$phrase->setUsed(TRUE);
-//				$this->phraseRepositoryAccessor->get()->update($phrase);
-//			}
 
 			if ($translation === NULL && $translations = $phrase->getMainTranslations($language)) {
 				$firstIteration = TRUE;

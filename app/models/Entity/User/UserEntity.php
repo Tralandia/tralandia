@@ -10,9 +10,9 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity(repositoryClass="Repository\User\UserRepository")
+ * @ORM\Entity
  * @ORM\Table(name="user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"})})
- * @EA\Primary(key="id", value="login")
+ *
  */
 class User extends \Entity\BaseEntityDetails {
 

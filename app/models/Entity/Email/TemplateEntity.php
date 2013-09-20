@@ -9,8 +9,8 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="email_template")
- * @EA\Primary(key="id", value="domain")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class Template extends \Entity\BaseEntity {
 

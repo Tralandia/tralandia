@@ -17,7 +17,7 @@ use	Extras\Annotation as EA;
  * 			@ORM\index(name="positionRequired", columns={"positionRequired"}),
  * 			@ORM\index(name="translated", columns={"translated"})
  * 		})
- * @EA\Primary(key="id", value="name")
+ *
  */
 class Type extends \Entity\BaseEntity {
 

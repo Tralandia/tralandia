@@ -159,7 +159,7 @@ class RentalPresenter extends BasePresenter {
 		$bar['all'] = array_slice($bar['all'], $start, 12);
 		if (!isset($bar['currentKey'])) return FALSE;
 
-		$barRentals = $this->context->rentalRepositoryAccessor->get()->findById($bar['all']);
+		$barRentals = $this->rentalDao->findById($bar['all']);
 
 		$barRentals = \Tools::sortArrayByArray($barRentals, $bar['all'], function($v) {return $v->getId();});
 
@@ -172,11 +172,11 @@ class RentalPresenter extends BasePresenter {
 		$lastSearchResults['totalCount'] = $bar['totalCount'];
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']-1])) {
-			$lastSearchResults['prevRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']-1]);
+			$lastSearchResults['prevRental'] = $this->rentalDao->find($bar['all'][$lastSearchResults['currentKey']-1]);
 		}
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']+1])) {
-			$lastSearchResults['nextRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']+1]);
+			$lastSearchResults['nextRental'] = $this->rentalDao->find($bar['all'][$lastSearchResults['currentKey']+1]);
 		}
 
 		if (!$lastSearchResults['totalCount']>1 && $this->template->navigationBarLastActive=='navigationBarSearchResults') {

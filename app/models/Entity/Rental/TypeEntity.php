@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use    Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Rental\TypeRepository")
+ * @ORM\Entity
  * @ORM\Table(name="rental_type")
- * @EA\Primary(key="id", value="id")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class Type extends \Entity\BaseEntity
 {
@@ -64,14 +64,14 @@ class Type extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -79,7 +79,7 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Type
@@ -90,7 +90,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -98,7 +98,7 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Type
@@ -112,7 +112,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Type
@@ -124,7 +124,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
@@ -132,7 +132,7 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->rentals;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Rental\Type
@@ -143,7 +143,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */

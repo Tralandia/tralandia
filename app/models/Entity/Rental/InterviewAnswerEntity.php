@@ -9,7 +9,7 @@ use    Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_interviewanswer")
- * @EA\Primary(key="id", value="id")
+ *
  */
 class InterviewAnswer extends \Entity\BaseEntityDetails
 {
