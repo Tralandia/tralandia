@@ -125,12 +125,12 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['interview']) {
-			$answers = $rental->interviewAnswers;
+			$answers = $rental->getInterviewAnswers();
 			foreach ($answers as $answer) {
-				if (isset($value->{$answer->question->id})) {
-					$phrase = $answer->answer;
+				if (isset($value->{$answer->getQuestion()->getId()})) {
+					$phrase = $answer->getAnswer();
 					$translationsVariations = [];
-					foreach ($value[$answer->question->id] as $languageIso => $val) {
+					foreach ($value[$answer->getQuestion()->getId()] as $languageIso => $val) {
 						$translationsVariations[$languageIso] = $val;
 					}
 					$this->phraseManager->updateTranslations($phrase, $translationsVariations);
