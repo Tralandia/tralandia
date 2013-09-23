@@ -473,16 +473,14 @@ $(function(){
 
 // calendar edit function
 (function($){
+
 	$.calendarEdit = function(el, options){
-		// To avoid scope issues, use 'base' instead of 'this'
-		// to reference this class from internal events and functions.
+
 		var base = this;
 
-		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
 
-		// Add a reverse reference to the DOM object
 		base.$el.data("calendarEdit", base);
 
 		base.init = function(){
@@ -491,14 +489,12 @@ $(function(){
 
 		};
 
-
 		base.init();
 	};
 
 	$.calendarEdit.defaultOptions = {
 
 	};
-
 
 	$.calendarEdit.conteiner = [];
 
@@ -532,11 +528,18 @@ $(function(){
 			var $input = $calendarForm.find('input[type=hidden]');
 			var defaultValue = $input.val();
 
+			var $buttonSave = $('.calendarSumitButton');
+
+			var inputValues = $input.val();
+			console.log(inputValues);
+
 			if(defaultValue.length > 0){
 				$.calendarEdit.conteiner = defaultValue.split(',');
 			}
 
-
+			$input.on('change',function(){
+				console.log($(this).val());
+			})
 
 			$calendarForm.find('.calendar').each(function(i){
 
@@ -545,7 +548,8 @@ $(function(){
 
 				$calendar.find('.day.active').click(function(){
 
-					var currentTime = $(this).attr('data-date');
+					var currentTime = $(this).attr('data-day');
+					// console.log(currentTime);
 
 					if(!$(this).hasClass('selected')){
 
@@ -554,6 +558,7 @@ $(function(){
 						$.calendarEdit.addDate(currentTime,$input);
 
 					} else {
+
 						$(this).removeClass('selected');
 
 						$.calendarEdit.removeDate(currentTime,$input);
@@ -593,6 +598,17 @@ $(function(){
 						}
 
 					});
+
+					var newInputValues = $input.val();
+
+					if(newInputValues != inputValues){
+						$buttonSave.attr('disabled',false);
+						$buttonSave.find('small').html($buttonSave.data('activeText'));
+					} else {
+						$buttonSave.attr('disabled',true);
+						$buttonSave.find('small').html($buttonSave.data('inactiveText'));
+					}
+
 
 					return false;
 

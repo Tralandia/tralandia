@@ -17,7 +17,6 @@ if(array_key_exists('useCache', $_GET)) {
 
 
 
-
 // Load Nette Framework
 require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
@@ -34,7 +33,7 @@ $configurator->addParameters([
 ]);
 
 
-// $configurator->setDebugMode(false);
+$configurator->setDebugMode(false);
 
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
