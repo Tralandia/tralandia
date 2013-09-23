@@ -1,10 +1,13 @@
+nette:
+	container:
+		debugger: false  # aktivuje panel v Debugger baru
+
+
 parameters:
 
 	database:
+		dbname: tralandia_test
 		debugger: false
-
-	cacheDatabase:
-		database: tralandia_cache
 
 	templateCache:
 		enabled: true
