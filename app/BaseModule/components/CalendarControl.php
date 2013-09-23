@@ -10,9 +10,18 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $locale;
 
-	public function __construct(\Environment\Locale $locale) {
+
+	/**
+	 * @var array|null
+	 */
+	protected $selectedDays;
+
+
+
+	public function __construct(\Environment\Locale $locale, array $selectedDays = NULL) {
 		parent::__construct();
 		$this->locale = $locale;
+		$this->selectedDays = $selectedDays;
 	}
 
 	public function renderIframe($monthsCount, array $selectedDays = NULL){
@@ -27,7 +36,9 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		$this->render($monthsCount,$selectedDays);
 	}
 
-	public function render($monthsCount, array $selectedDays = NULL) {
+	public function render($monthsCount, array $selectedDays = NULL)
+	{
+		$selectedDays = $selectedDays ? $selectedDays : $this->selectedDays;
 
 		$template = $this->template;
 		if(!isset($template->containerClass)){
