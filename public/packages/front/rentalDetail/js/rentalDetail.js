@@ -569,11 +569,7 @@ function rentalDetailDatepickerInit(){
 
 	var lang = $( "html" ).attr('lang');
 
-	// console.log(lang);12
-
 	$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
-
-
 
 
 	$( ".datepicker" ).datepicker({ 
