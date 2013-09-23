@@ -377,7 +377,7 @@ ul.arrows {
 }
 
 .btn.btn-greenDark {	
-	#gradient > .vertical(#A7BA24,#4C6505);
+	/*#gradient > .vertical(#A7BA24,#4C6505);*/
 	border: 1px solid #4C6505;
 	color: @white;
 	padding: 5px 15px;
@@ -386,7 +386,7 @@ ul.arrows {
 	margin-top: 5px;
 
 	&:hover , &.active {		
-		#gradient > .vertical(#B8CC2D,#5D7A0A);
+		/*#gradient > .vertical(#B8CC2D,#5D7A0A);*/
 		background-position: 0;
 	}
 
@@ -874,16 +874,27 @@ ul.arrows {
 		background: #a7ba24;
 	}
 
+	&.active {
+		i.icon-spinner {
+			display: inline-block;
+		}
+
+		i.icon-ok {
+			display: none;
+		}		
+	}
+
 	i {
 		position: relative;
 
-
+		&.icon-spinner {
+			display: none;
+		}
 	}
 
 	.btn-mini {
 		padding: 1px 10px;
 	}
-
 	
 }
 
