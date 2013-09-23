@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "fe789779738faf42bdec647e75057c42c5200120"
+                "reference": "2089df36e360a0f5319064157d10ce6ad492686f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/fe789779738faf42bdec647e75057c42c5200120",
-                "reference": "fe789779738faf42bdec647e75057c42c5200120",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2089df36e360a0f5319064157d10ce6ad492686f",
+                "reference": "2089df36e360a0f5319064157d10ce6ad492686f",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-09-15 18:05:01"
+            "time": "2013-09-20 18:05:38"
         },
         {
             "name": "janmarek/mockista",
@@ -1036,18 +1036,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/lessphp.git",
-                "reference": "9cfa4728e186f2679394b903bc2340926062990a"
+                "reference": "6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/9cfa4728e186f2679394b903bc2340926062990a",
-                "reference": "9cfa4728e186f2679394b903bc2340926062990a",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a",
+                "reference": "6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a",
                 "shasum": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3-dev"
+                    "dev-master": "0.4.x-dev"
                 }
             },
             "autoload": {
@@ -1069,7 +1069,7 @@
             ],
             "description": "lessphp is a compiler for LESS written in PHP.",
             "homepage": "http://leafo.net/lessphp/",
-            "time": "2013-09-11 20:11:27"
+            "time": "2013-09-20 21:39:29"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1252,7 +1252,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextras/forms/zipball/cbba902160d5a7a63b5ae7aa7fd221c9ecf06720",
+                "url": "https://api.github.com/repos/nextras/forms/zipball/5e56bac12552f6b89aebea5c59a245a72d4e3ac3",
                 "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
                 "shasum": ""
             },
@@ -1296,12 +1296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "20057d4202148ac7524144c20aeb5ed7e83acd56"
+                "reference": "2b9e91a60b4cac3edae1aaef23b9cb25b37fb627"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/20057d4202148ac7524144c20aeb5ed7e83acd56",
-                "reference": "20057d4202148ac7524144c20aeb5ed7e83acd56",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/2b9e91a60b4cac3edae1aaef23b9cb25b37fb627",
+                "reference": "2b9e91a60b4cac3edae1aaef23b9cb25b37fb627",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-19 09:47:34"
+            "time": "2013-09-22 18:04:51"
         },
         {
             "name": "texy/texy",
