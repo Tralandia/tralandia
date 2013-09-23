@@ -1,0 +1,60 @@
+{block content}
+
+<h1>#Kalendar</h1>
+
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form calendarForm , class => 'ajax'}
+
+	{include #calendar, control => $form['calendar']}
+	{* {include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'marginRight pull-right btn-orange'} *}
+
+	<button disabled="true" type="submit" data-active-text="{_o100083}" data-inactive-text="#zmeny Ulozene" class="btn marginRight pull-right calendarSumitButton btn-orange" name="_submit">
+		<i class="icon-ok"></i> <i class="icon-spinner icon-spin"></i> <small>#zmeny Ulozene</small>
+	</button>
+
+{/form}
+
+<div class="clearfix"></div>
+{var $currentLanguageId = $environment->getPrimaryLocation()->defaultLanguage->id}
+<h1 class="marginLeft pull-left">{_o100186}</h1>
+
+{if count($rentals)>1}
+	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
+	<option>selct</option>
+		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //CalendarWidget:, id => $rental->id}">{_$rental->name}</option>
+	</select>
+{/if}
+
+<div class="clearfix"></div>
+
+<p>{_o100187}</p>
+
+<form data-id="{$thisRental->id}" id="calendarWidgetControl" data-link-template="{!$linkTemplate}">
+
+	<div class="control-group calendarWidgetControl clearfix">
+
+		<div class="controls">
+			<select name="rows" class="select2 notFulltext">
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100180,$i}</option>
+			</select>
+		</div>
+
+		<div class="controls">
+			<select name="columns" class="select2 notFulltext">
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100181,$i}</option>
+			</select>
+		</div>
+
+		<div class="controls">
+			<select name="language" class="select2 notFulltext">
+				<option n:foreach="$languages as $id => $languageName" n:attr="selected => ($id==$currentLanguageId ? 'selected')" value="{$id}">{$languageName}</option>
+			</select>
+		</div>
+	</div>
+
+</form>
+
+<div id="calendarIframeViewer"></div>
+<p>{_o2547}</p>
+<textarea id="htmlOutputFromViewer" class="calendarWidgetLink autoselect" rows="3"></textarea>
+
