@@ -3,7 +3,16 @@
 namespace OwnerModule;
 
 
-class CalendarPresenter extends BasePresenter {
+use BaseModule\Forms\SimpleForm;
+
+class CalendarPresenter extends BasePresenter
+{
+
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
+	protected $currentRental;
+
 
 	/**
 	 * @autowire
@@ -20,17 +29,34 @@ class CalendarPresenter extends BasePresenter {
 	public function createComponentCalendarForm()
 	{
 		$form = $this->simpleFormFactory->create();
-		$form->addCalendarContainer('calendar', 'Calendar');
+		$form->addCalendarContainer('calendar', 'Calendar', $this->currentRental->getCalendar());
 
 		// $form->addSubmit('submit', 'o100083');
+
+		$form->onSuccess[] = $this->processCalendarForm;
 
 		return $form;
 	}
 
+	public function processCalendarForm(SimpleForm $form)
+	{
+		$values = $form->getFormattedValues(TRUE);
+
+		$rental = $this->currentRental;
+
+		$rental->updateCalendar($values['calendar']['data']);
+
+		$this->em->flush($rental);
+
+		$this->payload->success = TRUE;
+		$this->sendPayload();
+	}
+
 	public function actionDefault($id)
 	{
+		$this->currentRental = $this->findRental($id);
 		$this->template->environment = $this->environment;
-		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
+		$this->template->thisRental = $this->currentRental;
 		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
 			$this->translator,
 			$this->collator

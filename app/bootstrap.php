@@ -129,9 +129,9 @@ FormContainer::extensionMethod('addRentalPriceListContainer',
 	});
 
 FormContainer::extensionMethod('addCalendarContainer',
-	function (FormContainer $container, $name, $label) use ($dic) {
+	function (FormContainer $container, $name, $label, $selectedDays = NULL) use ($dic) {
 		$locale = $dic->getService('environment')->getLocale();
-		return $container[$name] = new \Extras\Forms\Container\CalendarContainer($label, $locale);
+		return $container[$name] = new \Extras\Forms\Container\CalendarContainer($label, $locale, $selectedDays);
 	});
 
 FormContainer::extensionMethod('addAddressContainer',
