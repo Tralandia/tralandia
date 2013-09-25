@@ -124,6 +124,23 @@ class TranslationRepository extends \Repository\BaseRepository {
 	}
 
 
+	public function sumUnpaidAmount(Language $language, $status)
+	{
+		$qb = $this->createQueryBuilder();
+
+		$qb->where($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language)
+			->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', $status);
+
+		$qb = $this->filterTranslatedTypes($qb);
+
+		$qb->select('sum(e.unpaidAmount)');
+
+		$sum = $qb->getQuery()->getSingleScalarResult();
+
+		return $sum ? $sum : 0;
+	}
+
+
 	public function calculateTranslatedWordsCount(Language $language)
 	{
 		$qb = $this->createQueryBuilder();

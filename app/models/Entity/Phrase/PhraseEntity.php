@@ -199,20 +199,30 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	public function getWordsCount(Language $language)
 	{
-		if ($language->getId() == CENTRAL_LANGUAGE) {
-			$translatedFromText = $this->getSourceTranslationText();
-		} else {
-			$translatedFromText = $this->getCentralTranslationText();
-		}
+		$translatedFromText = $this->getDefaultSourceTranslation($language)->getTranslation();
 
-		// zrusim premenne [premenne]
-		$translatedFromText = preg_replace('#\[[a-zA-Z-_]+\]#', '', $translatedFromText);
-
-		$defaultVariationWordsCount = str_word_count($translatedFromText);
+		$defaultVariationWordsCount = \Tools::wordCount($translatedFromText);
 
 		$variationsCount = $this->getType()->getVariationsCount($language);
 
 		return $defaultVariationWordsCount * $variationsCount;
+	}
+
+
+	/**
+	 * @param Language $language
+	 *
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function getDefaultSourceTranslation(Language $language)
+	{
+		if ($language->getId() == CENTRAL_LANGUAGE) {
+			$translatedFrom = $this->getSourceTranslation();
+		} else {
+			$translatedFrom = $this->getCentralTranslation();
+		}
+
+		return $translatedFrom;
 	}
 
 

@@ -5,6 +5,7 @@ namespace DataSource;
 
 use Dictionary\FindOutdatedTranslations;
 use Doctrine\ORM\EntityManager;
+use Entity\Phrase\Translation;
 use Nette\ArrayHash;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Paginator;
@@ -65,16 +66,14 @@ class DictionaryManagerDataSource extends BaseDataSource
 			$row['toCheck'] = $translationRepository->toCheckCount($language);
 			$translationsToCheck = $translationRepository->toCheckQb($language)->getQuery()->getResult();
 			$row['wordsToCheck'] = $translationRepository->calculateWordsInTranslations($translationsToCheck);
-			$row['priceToCheck'] = $language->getTranslationPriceForWords($row['wordsToCheck']);
+			$row['priceToCheck'] = $translationRepository->sumUnpaidAmount($language, Translation::WAITING_FOR_CHECKING);
 
-			$row['wordsToPay'] = $translationRepository->calculateWordsCountToPay($language);
 			$row['translator'] = $language->getTranslator();
 
 			$row['toTranslate'] = $row['toTranslate'] == 0 ? '' : $row['toTranslate'];
 			$row['toCheck'] = $row['toCheck'] == 0 ? '' : $row['toCheck'];
 
-			$row['wordsToPay'] = $row['wordsToPay'] == 0 ? '' : $row['wordsToPay'];
-			$row['priceToPay'] = $language->getTranslationPriceForWords($row['wordsToPay']);
+			$row['priceToPay'] = $translationRepository->sumUnpaidAmount($language, Translation::WAITING_FOR_PAYMENT);
 
 
 			$return[$key] = $row;

@@ -403,7 +403,7 @@ abstract class BasePresenter extends Presenter {
 
 
 		$header->setDocType(HeaderControl::HTML_5);
-		$header->setLanguage($this->primaryLocation->getIso());
+		$header->setLanguage($this->language->getIso());
 
 		$header->setTitle('Tralandia');
 

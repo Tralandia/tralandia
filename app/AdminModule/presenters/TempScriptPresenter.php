@@ -342,4 +342,34 @@ class TempScriptPresenter extends BasePresenter {
 	}
 
 
+	public function actionUpdateTranslationsUnpaidAmount($id)
+	{
+		/** @var $translationRepository \Repository\Phrase\TranslationRepository */
+		$translationRepository = $this->em->getRepository(TRANSLATION_ENTITY);
+
+		$qb = $translationRepository->createQueryBuilder('e');
+
+		$qb->andWhere($qb->expr()->in('e.status', ':status'))
+			->setParameter('status', [Translation::WAITING_FOR_PAYMENT, Translation::WAITING_FOR_CHECKING]);
+
+		$qb->andWhere($qb->expr()->isNull('e.unpaidAmount'));
+
+		$qb = $translationRepository->filterTranslatedTypes($qb);
+
+		$qb->setMaxResults($id);
+
+		$translations = $qb->getQuery()->getResult();
+
+		/** @var $translation \Entity\Phrase\Translation */
+		foreach($translations as $translation) {
+			$emptyVariations = $translation->getPhrase()->getTranslationVariationsMatrix($translation->getLanguage());
+			$translation->updateUnpaidAmount($emptyVariations);
+		}
+
+		$this->em->flush();
+
+		$this->sendPayload();
+	}
+
+
 }

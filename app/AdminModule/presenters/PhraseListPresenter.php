@@ -344,23 +344,25 @@ class PhraseListPresenter extends BasePresenter {
 
 		$phrasesIds = [];
 		$wordsCount = 0;
+
 		foreach($formValues['list'] as $phraseId => $values) {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
 			$phrase = $phraseValues['phrase'];
 
+			/** @var $translation \Entity\Phrase\Translation */
 			if($specialOptionType == 'translated' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
 					try {
 						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
 					} catch(TranslationsNotCompleteException $e) {
 						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
 					}
 				}
 			} else if($specialOptionType == 'checked' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
-					/** @var $translation \Entity\Phrase\Translation */
 					$translation->setStatus(Translation::WAITING_FOR_PAYMENT);
 					$wordsCount += $translation->getWordsCount();
 					$checkedLanguage = $translation->getLanguage();
@@ -371,15 +373,27 @@ class PhraseListPresenter extends BasePresenter {
 				$this->updateTranslationStatus->setPhraseReadyForCorrection($phrase, $this->loggedUser);
 			} else if((isset($formValues['smallCorrection']) && $formValues['smallCorrection']) || $this->user->isInRole(Role::TRANSLATOR)) {
 				// v tomto pripade sa nemeni status
+				foreach($phraseValues['changedTranslations'] as $translation) {
+					if($translation->isComplete()) {
+						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
+					}
+				}
 			} else {
 				foreach($phraseValues['changedTranslations'] as $translation) {
 					try {
 						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
+						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
 					} catch(TranslationsNotCompleteException $e) {
 						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
 					}
 				}
 			}
+
+			if($this->user->isInRole(Role::TRANSLATOR)) {
+				foreach($phraseValues['changedTranslations'] as $translation) {
+				}
+			}
+
 			$phrasesIds[] = $phraseId;
 		}
 
