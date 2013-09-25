@@ -1,5 +1,3 @@
-
-
 var Nette = Nette || {};
 
 Nette.addError = function(elem, message) {
@@ -77,6 +75,8 @@ $('a.ajax.btn-warning').click(function (e) {
         	if(data.responseText.success == true){
         		$self.removeClass('btn-warning').addClass('btn-success');
         	}
+
+
         }
     }, this, e);
 });
@@ -108,8 +108,38 @@ var c = $.nette.ext('snippets');
 		
 		rentalDetailDatepickerInit();
 		$("select.select2").select2();
+
 	}	
+
+$.ajaxSetup({
+	success: function(data){
+		if(data.success == true){
+
+			var form = $(this)[0];
+			var $form = null;
+
+			$('form.ajax').each(function(){
+				var current = $(this);
+				if(current.attr('action') == form.url){
+					$form = current;
+				}
+			});
+
+			$form.find('button.active').removeClass('active');
+
+			var inactiveText = $form.find('button').data('inactiveText');
+
+				if(typeof inactiveText != 'undefined'){
+					$form.find('button small').html(inactiveText);
+				}
+		}
+	}
 });
+
+	
+});
+
+
 
 
 
