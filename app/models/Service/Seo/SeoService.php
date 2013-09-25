@@ -5,7 +5,7 @@ namespace Service\Seo;
 use Nette, Extras, Service, Doctrine, Entity;
 use Nette\Utils\Strings;
 use Routers\FrontRoute;
-use Extras\Translator;
+use Tralandia\Localization\Translator;
 use Tralandia\BaseDao;
 
 /**

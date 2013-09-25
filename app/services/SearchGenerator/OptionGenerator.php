@@ -7,7 +7,7 @@ use Entity\Currency;
 use Entity\Language;
 use Entity\Location\Location;
 use Environment\Environment;
-use Extras\Translator;
+use Tralandia\Localization\Translator;
 use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
@@ -45,7 +45,7 @@ class OptionGenerator
 	protected $spokenLanguages;
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	protected $translator;
 

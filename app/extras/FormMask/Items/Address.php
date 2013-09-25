@@ -15,7 +15,7 @@ class Address extends Select {
 	 * @param Extras\Models\Entity\IEntity
 	 * @param Extras\Translator
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Translator $translator) {
+	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, \Tralandia\Localization\Translator $translator) {
 		parent::__construct($name, $label, $entity, $translator);
 		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name)));
 	}
@@ -28,7 +28,7 @@ class Address extends Select {
 		if (!is_callable($this->getValueGetter())) {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
-		
+
 		return $this->getValueGetter()->invoke();
 	}
 

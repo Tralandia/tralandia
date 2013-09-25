@@ -27,12 +27,5 @@ namespace Service\Rental {
 
 namespace Extras {
 
-	interface ITranslatorFactory {
-		/**
-		 * @param \Entity\Language $language
-		 *
-		 * @return Translator
-		 */
-		function create(\Entity\Language $language);
-	}
+
 }

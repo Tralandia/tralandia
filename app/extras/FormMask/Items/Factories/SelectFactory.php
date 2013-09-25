@@ -8,14 +8,14 @@ use Extras;
  * @author Branislav Vaculčiak
  */
 class SelectFactory implements IFactory {
-	
-	/** @var Extras\Translator */
+
+	/** @var \Tralandia\Localization\Translator */
 	protected $translator;
 
 	/**
 	 * @param Extras\Translator
 	 */
-	public function __construct(Extras\Translator $translator) {
+	public function __construct(\Tralandia\Localization\Translator $translator) {
 		$this->translator = $translator;
 	}
 

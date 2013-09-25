@@ -389,6 +389,13 @@ services:
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
+	####################### REFACTORING
+	##############################################
+
+	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Location\Location))
+
+	##############################################
+
 factories:
 	# ==============================
 	# ==================== FORMS
@@ -542,9 +549,9 @@ factories:
 		implement: Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
-		class: Extras\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @translatorCache)
+		class: Tralandia\Localization\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @translatorCache)
 		parameters: [Entity\Language language]
-		implement: Extras\ITranslatorFactory
+		implement: Tralandia\Localization\ITranslatorFactory
 
 	environmentFactory:
 		class: Environment\Environment(%location%, %language%)

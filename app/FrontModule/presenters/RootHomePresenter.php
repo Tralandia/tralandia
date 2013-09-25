@@ -14,7 +14,7 @@ class RootHomePresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	protected $translator;
 

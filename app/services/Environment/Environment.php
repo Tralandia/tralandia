@@ -26,12 +26,12 @@ class Environment extends Nette\Object
 	protected $request;
 
 	/**
-	 * @var \Extras\ITranslatorFactory
+	 * @var \Tralandia\Localization\ITranslatorFactory
 	 */
 	protected $translatorFactory;
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	protected $translator;
 
@@ -44,9 +44,9 @@ class Environment extends Nette\Object
 	/**
 	 * @param \Entity\Location\Location $primaryLocation
 	 * @param \Entity\Language $language
-	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 * @param \Tralandia\Localization\ITranslatorFactory $translatorFactory
 	 */
-	public function __construct(Location $primaryLocation, Language $language, \Extras\ITranslatorFactory $translatorFactory)
+	public function __construct(Location $primaryLocation, Language $language, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
 	{
 		$this->primaryLocation = $primaryLocation;
 		$this->language = $language;
@@ -82,7 +82,7 @@ class Environment extends Nette\Object
 
 
 	/**
-	 * @return \Extras\Translator
+	 * @return \Tralandia\Localization\Translator
 	 */
 	public function getTranslator()
 	{
@@ -131,11 +131,11 @@ class Environment extends Nette\Object
 
 	/**
 	 * @param Nette\Application\Request[] $request
-	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 * @param \Tralandia\Localization\ITranslatorFactory $translatorFactory
 	 *
 	 * @return \Environment\Environment
 	 */
-	public static function createFromRequest(array $request, \Extras\ITranslatorFactory $translatorFactory)
+	public static function createFromRequest(array $request, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
 	{
 		$request = reset($request);
 		$parameters = $request->getParameters();
@@ -150,11 +150,11 @@ class Environment extends Nette\Object
 	 * @param $location
 	 * @param $language
 	 * @param EntityManager $em
-	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 * @param \Tralandia\Localization\ITranslatorFactory $translatorFactory
 	 *
 	 * @return Environment
 	 */
-	public static function createFromIds($location, $language, EntityManager $em, \Extras\ITranslatorFactory $translatorFactory)
+	public static function createFromIds($location, $language, EntityManager $em, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
 	{
 		$locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$languageRepository = $em->getRepository(LANGUAGE_ENTITY);
