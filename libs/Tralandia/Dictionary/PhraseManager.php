@@ -39,6 +39,7 @@ class PhraseManager {
 	public function updateTranslations(Phrase $phrase, array $translationsVariations)
 	{
 		$return = [
+			'oldVariations' => [],
 			'changedTranslations' => [],
 			'displayedTranslations' => []
 		];
@@ -81,15 +82,18 @@ class PhraseManager {
 
 			if($translationIsChanged) {
 				$return['changedTranslations'][] = $translation;
+				$return['oldVariations'][$translation->getId()] = $translation->getVariations();
+
+				# update translation
+				if(isset($defaultTranslation)) {
+					$translation->setTranslation($defaultTranslation);
+				} else {
+					$translation->updateVariations($variations);
+				}
 			}
+
 			$return['displayedTranslations'][] = $translation;
 
-			# update translation
-			if(isset($defaultTranslation)) {
-				$translation->setTranslation($defaultTranslation);
-			} else {
-				$translation->updateVariations($variations);
-			}
 		}
 
 		return $return;

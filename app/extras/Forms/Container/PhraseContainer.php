@@ -231,6 +231,7 @@ class PhraseContainer extends BaseContainer
 
 		$result = $this->phraseManager->updateTranslations($phrase, $translationsVariations);
 
+		$values['oldVariations'] = $result['oldVariations'];
 		$values['changedTranslations'] = $result['changedTranslations'];
 		$values['displayedTranslations'] = $result['displayedTranslations'];
 

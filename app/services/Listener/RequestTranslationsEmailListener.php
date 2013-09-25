@@ -15,11 +15,11 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		return ['AdminModule\Grids\Dictionary\ManagerGrid::onRequestTranslations'];
 	}
 
-	public function onRequestTranslations(Language $language, $wordsCountToPay, User $requestedBy)
+	public function onRequestTranslations(Language $language, User $requestedBy)
 	{
 		$message = new \Nette\Mail\Message();
 
-		$emailCompiler = $this->prepareCompiler($language, $wordsCountToPay);
+		$emailCompiler = $this->prepareCompiler($language);
 		$body = $emailCompiler->compileBody();
 		$user = $language->getTranslator();
 
@@ -34,7 +34,7 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 	}
 
 
-	private function prepareCompiler(Language $language, $wordsCount)
+	private function prepareCompiler(Language $language)
 	{
 		$user = $language->getTranslator();
 		$emailCompiler = $this->createCompiler($user->getPrimaryLocation(), $user->getLanguage());
@@ -43,8 +43,6 @@ class RequestTranslationsEmailListener extends BaseEmailListener
 		$deadline = (new Nette\DateTime())->modify('+2 days')->format('Y-m-d');
 		$emailCompiler->addTranslator('translator', $user);
 		$emailCompiler->addLanguage('language', $language);
-		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
-		$emailCompiler->addCustomVariable('totalPrice', $language->getTranslationPriceForWords($wordsCount));
 		$emailCompiler->addCustomVariable('deadline', $deadline);
 
 		return $emailCompiler;

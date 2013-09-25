@@ -412,4 +412,13 @@ class Tools {
 		return $periods;
 	}
 
+
+	public static function wordCount($string)
+	{
+		// zrusim premenne [premenne]
+		$string = preg_replace('#\[[a-zA-Z-_]+\]#', '', $string);
+
+		return str_word_count($string);
+	}
+
 }

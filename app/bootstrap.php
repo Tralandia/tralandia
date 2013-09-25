@@ -33,8 +33,6 @@ $configurator->addParameters([
 ]);
 
 
-$configurator->setDebugMode(false);
-
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
 

@@ -126,7 +126,6 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 			$yearMonth = $nextDay->format('Y-m');
 			$day = $nextDay->format('d');
 			if(isset($months[$yearMonth]['days'][$day])) {
-				$months[$yearMonth]['days'][$day]['selected'] = TRUE;
 				$months[$yearMonth]['days'][$day]['status']['end'] = TRUE;
 			}
 		}

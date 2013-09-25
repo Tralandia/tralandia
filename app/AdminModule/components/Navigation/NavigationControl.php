@@ -144,17 +144,11 @@ class NavigationControl extends BaseControl
 				$languageTree = [];
 				$languageTree['label'] = $language->getName()->getCentralTranslationText() . ' (' . $language->getIso() . ')';
 
-				$toTranslateCount = $this->outdatedTranslations->getWaitingForTranslationCount($language);
 				$languageItems = [];
 				$languageItems['toTranslate'] = [
-					'label' => "To Translate ($toTranslateCount)",
+					'label' => "To Translate",
 					'link' => 'PhraseList:toTranslate',
 					'linkArgs' => ['id' => $language->getIso()],
-				];
-
-				$translatedWordsCount = $translationRepository->calculateTranslatedWordsCount($language);
-				$languageItems['translatedWords'] = [
-					'label' => "Translated $translatedWordsCount"
 				];
 
 				$languageTree['items'] = $languageItems;

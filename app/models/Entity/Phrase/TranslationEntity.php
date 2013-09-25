@@ -74,6 +74,12 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	protected $status = self::WAITING_FOR_CENTRAL;
 
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $unpaidAmount = NULL;
+
 
 	public function __toString() {
 		$translation = $this->getDefaultVariation();
@@ -210,6 +216,28 @@ class Translation extends \Entity\BaseEntity {
 		$return = array(\Entity\Language::DEFAULT_SINGULAR, \Entity\Language::DEFAULT_GENDER, \Entity\Language::DEFAULT_CASE);
 
 		return $return;
+	}
+
+
+	public function updateUnpaidAmount($oldVariations)
+	{
+		if($oldVariations != $this->variations && $this->unpaidAmount === NULL) {
+			$sourceTranslation = $this->getPhrase()->getDefaultSourceTranslation($this->getLanguage());
+			$wordCount = 0;
+			foreach ($this->getVariations() as $pluralKey => $genders) {
+				foreach ($genders as $genderKey => $cases) {
+					foreach ($cases as $caseKey => $caseValue) {
+						$oldCaseValue = $oldVariations[$pluralKey][$genderKey][$caseKey];
+						if($oldCaseValue != $caseValue) {
+							$wordCount += \Tools::wordCount($sourceTranslation->getVariation($pluralKey, $genderKey, $caseKey));
+						}
+					}
+				}
+			}
+
+			$amount = $this->getLanguage()->getTranslationPriceForWords($wordCount);
+			$this->unpaidAmount = $amount;
+		}
 	}
 
 
@@ -385,5 +413,23 @@ class Translation extends \Entity\BaseEntity {
 	public function getWordsCount()
 	{
 		return $this->getPhrase()->getWordsCount($this->language);
+	}
+
+
+	/**
+	 * @return float
+	 */
+	public function getUnpaidAmount()
+	{
+		return $this->unpaidAmount;
+	}
+
+
+	/**
+	 * @param float $unpaidAmount
+	 */
+	public function setUnpaidAmount($unpaidAmount)
+	{
+		$this->unpaidAmount = $unpaidAmount;
 	}
 }

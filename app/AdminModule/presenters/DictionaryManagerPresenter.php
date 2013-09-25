@@ -58,12 +58,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 			throw new BadRequestException;
 		}
 
-		$translationsToTranslate = $this->outdatedTranslations->getWaitingForTranslation($language);
-		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsInTranslations($translationsToTranslate);
-
-
-		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
-		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
+		$this->requestTranslationsEmailListener->onRequestTranslations($language, $this->loggedUser);
 
 		//$this->flashMessage('Request sent!');
 		$this->payload->success = TRUE;
