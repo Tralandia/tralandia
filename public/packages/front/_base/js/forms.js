@@ -548,6 +548,12 @@ $(function(){
 
 				$calendar.find('.day.active').click(function(){
 
+					var statusClass = {
+						first: 'status01',
+						last: 'status10',
+						middle: 'status11'
+					}
+
 					var currentTime = $(this).attr('data-day');
 					// console.log(currentTime);
 
@@ -559,16 +565,12 @@ $(function(){
 
 					} else {
 
+						// console.log('vyvoleny');
 						$(this).removeClass('selected');
+						$(this).addClass(' status00');
 
 						$.calendarEdit.removeDate(currentTime,$input);
 
-					}
-
-					var statusClass = {
-						first: 'status01',
-						last: 'status10',
-						middle: 'status11'
 					}
 
 					var stats = 0 ;
