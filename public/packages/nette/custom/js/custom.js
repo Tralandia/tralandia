@@ -111,13 +111,29 @@ var c = $.nette.ext('snippets');
 
 	}	
 
-jQuery.extend({
-    nette: {
-        success: function (payload) {
-            // redirect
-            console.log(payload);
-        }
-    }
+$.ajaxSetup({
+	success: function(data){
+		if(data.success == true){
+
+			var form = $(this)[0];
+			var $form = null;
+
+			$('form.ajax').each(function(){
+				var current = $(this);
+				if(current.attr('action') == form.url){
+					$form = current;
+				}
+			});
+
+			$form.find('button.active').removeClass('active');
+
+			var inactiveText = $form.find('button').data('inactiveText');
+
+				if(typeof inactiveText != 'undefined'){
+					$form.find('button small').html(inactiveText);
+				}
+		}
+	}
 });
 
 	
