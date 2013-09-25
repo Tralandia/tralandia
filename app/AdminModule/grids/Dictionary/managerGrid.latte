@@ -30,8 +30,8 @@
 	</td>
 {/define}
 
-{define #col-wordsToPay}
-	<td>{$cell}{if $cell > 0} w <span style="color: grey; font-size: 9px;">({$row->priceToPay} EUR)</span>{/if}</td>
+{define #col-priceToPay}
+	<td>{$cell|number:2} EUR</td>
 {/define}
 
 {define #row-actions}
@@ -47,7 +47,7 @@
 			</ul>
 		</div> *}
 		{var $translator = $row->language->getTranslator()}
-		<a n:if="$row->wordsToPay" href="{plink markAsPaid $row->language->getId()}" class="ajax btn btn-small btn-warning" target="_blank">Mark as paid</a>
+		<a n:if="$row->priceToPay" href="{plink markAsPaid $row->language->getId()}" class="ajax btn btn-small btn-warning" target="_blank">Mark as paid</a>
 
 		{if $translator}
 			{$translator->getLogin()}

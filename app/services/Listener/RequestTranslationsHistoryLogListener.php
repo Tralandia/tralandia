@@ -16,7 +16,6 @@ class RequestTranslationsHistoryLogListener extends BaseHistoryLogListener {
 
 	public function onRequestTranslations(Language $language, $wordsCountToPay, User $requestedBy)
 	{
-
 		$log = $this->createLog(History::TRANSLATION_INVOICE_REQUEST);
 
 		$translator = $language->getTranslator();
