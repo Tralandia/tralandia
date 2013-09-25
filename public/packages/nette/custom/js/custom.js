@@ -1,5 +1,3 @@
-
-
 var Nette = Nette || {};
 
 Nette.addError = function(elem, message) {
@@ -77,6 +75,8 @@ $('a.ajax.btn-warning').click(function (e) {
         	if(data.responseText.success == true){
         		$self.removeClass('btn-warning').addClass('btn-success');
         	}
+
+
         }
     }, this, e);
 });
@@ -108,8 +108,22 @@ var c = $.nette.ext('snippets');
 		
 		rentalDetailDatepickerInit();
 		$("select.select2").select2();
+
 	}	
+
+jQuery.extend({
+    nette: {
+        success: function (payload) {
+            // redirect
+            console.log(payload);
+        }
+    }
 });
+
+	
+});
+
+
 
 
 
