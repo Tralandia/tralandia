@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "2089df36e360a0f5319064157d10ce6ad492686f"
+                "reference": "bd7c7ebaf353f038fae2f828802ecda823190759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2089df36e360a0f5319064157d10ce6ad492686f",
-                "reference": "2089df36e360a0f5319064157d10ce6ad492686f",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/bd7c7ebaf353f038fae2f828802ecda823190759",
+                "reference": "bd7c7ebaf353f038fae2f828802ecda823190759",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-09-20 18:05:38"
+            "time": "2013-09-24 01:10:22"
         },
         {
             "name": "janmarek/mockista",
@@ -830,12 +830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "11e02599f0d9368397a6b21669a3dd50e3ec9de6"
+                "reference": "2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/11e02599f0d9368397a6b21669a3dd50e3ec9de6",
-                "reference": "11e02599f0d9368397a6b21669a3dd50e3ec9de6",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65",
+                "reference": "2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-09-16 21:16:38"
+            "time": "2013-09-25 01:01:34"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -1036,12 +1036,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/lessphp.git",
-                "reference": "6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a"
+                "reference": "85bd4557920d5f4fcbf41beb621e91b842e3621b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a",
-                "reference": "6eee2d0f0dd49a288e17a2e7e6ea71ccc026042a",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/85bd4557920d5f4fcbf41beb621e91b842e3621b",
+                "reference": "85bd4557920d5f4fcbf41beb621e91b842e3621b",
                 "shasum": ""
             },
             "type": "library",
@@ -1069,7 +1069,7 @@
             ],
             "description": "lessphp is a compiler for LESS written in PHP.",
             "homepage": "http://leafo.net/lessphp/",
-            "time": "2013-09-20 21:39:29"
+            "time": "2013-09-24 19:29:14"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1252,13 +1252,13 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextras/forms/zipball/5e56bac12552f6b89aebea5c59a245a72d4e3ac3",
+                "url": "https://api.github.com/repos/nextras/forms/zipball/de7d54e780e0037ffc7767cc35405fe21e399679",
                 "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
                 "shasum": ""
             },
             "require": {
                 "nette/nette": "dev-master",
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "type": "library",
             "autoload": {
@@ -1296,12 +1296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "2b9e91a60b4cac3edae1aaef23b9cb25b37fb627"
+                "reference": "e430d7416327a93be77b3c4844c191a10cc8c1c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/2b9e91a60b4cac3edae1aaef23b9cb25b37fb627",
-                "reference": "2b9e91a60b4cac3edae1aaef23b9cb25b37fb627",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/e430d7416327a93be77b3c4844c191a10cc8c1c7",
+                "reference": "e430d7416327a93be77b3c4844c191a10cc8c1c7",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-22 18:04:51"
+            "time": "2013-09-25 06:04:58"
         },
         {
             "name": "texy/texy",

@@ -1,13 +1,12 @@
 <?php
 
-namespace Extras;
+namespace Tralandia\Localization;
 
 use Entity\Phrase\Phrase;
 use Nette\Caching\Cache;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
-use Model\Phrase\IPhraseDecoratorFactory;
 use Tralandia\BaseDao;
 
 class Translator implements \Nette\Localization\ITranslator {
@@ -201,4 +200,14 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	}
 
+}
+
+
+interface ITranslatorFactory {
+	/**
+	 * @param \Entity\Language $language
+	 *
+	 * @return Translator
+	 */
+	function create(\Entity\Language $language);
 }

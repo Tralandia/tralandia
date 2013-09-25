@@ -12,18 +12,18 @@ class AddressFactory implements IFactory {
 	/** @var Extras\Models\Repository\RepositoryAccessor */
 	protected $repositoryAccessor;
 
-	/** @var Extras\Translator */
+	/** @var \Tralandia\Localization\Translator */
 	protected $translator;
 
 	/**
 	 * @param Extras\Translator
 	 * @param Extras\Models\Repository\RepositoryAccessor
 	 */
-	public function __construct(Extras\Translator $translator, Extras\Models\Repository\RepositoryAccessor $repositoryAccessor) {
+	public function __construct(\Tralandia\Localization\Translator $translator, Extras\Models\Repository\RepositoryAccessor $repositoryAccessor) {
 		$this->repositoryAccessor = $repositoryAccessor;
 		$this->translator = $translator;
 	}
-	
+
 	/**
 	 * @param string
 	 * @param string

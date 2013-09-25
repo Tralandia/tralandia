@@ -121,6 +121,12 @@ abstract class BasePresenter extends Presenter {
 	public $tester;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Localization\Translator
+	 */
+	public $translator;
+
+	/**
 	 * @var array
 	 */
 	public $contextParameters;
@@ -215,7 +221,7 @@ abstract class BasePresenter extends Presenter {
 		$parameters = $this->getContext()->getParameters();
 		$this->template->projectEmail = $parameters['projectEmail'];
 		$this->template->staticPath = '/'; #@todo toto tu je na co ?
-		$this->template->setTranslator($this->getService('translator'));
+		$this->template->setTranslator($this->translator);
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();

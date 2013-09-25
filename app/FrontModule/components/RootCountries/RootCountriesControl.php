@@ -12,7 +12,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	protected $environment;
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	protected $translator;
 
@@ -32,7 +32,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	private $resultSorter;
 
 
-	public function __construct(\Extras\Translator $translator, Environment $environment,
+	public function __construct(\Tralandia\Localization\Translator $translator, Environment $environment,
 								EntityManager $em, \ResultSorter $resultSorter)
 	{
 		parent::__construct();

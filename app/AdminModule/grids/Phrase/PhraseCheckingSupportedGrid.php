@@ -10,7 +10,7 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	const FILTER_LANGUAGE = 'language';
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	public $translator;
 

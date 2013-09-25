@@ -49,6 +49,12 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $shareLinks;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	protected $rentals;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
@@ -82,7 +88,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
-		$this->template->worldwideCount = $this->locationDao->getWorldwideRentalCount();
+		$this->template->worldwideCount = $this->rentals->worldwideCount();
 
 		$this->template->homeCacheId = 'home' . $this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
