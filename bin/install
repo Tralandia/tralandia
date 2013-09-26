@@ -54,5 +54,3 @@ php -f $WORKING_DIR/public/index.php orm:generate-proxies
 
 #@toto toto je tu len docasne!
 sudo chmod -R 777 $WORKING_DIR/temp
-
-wget -q http://www.sk.tra.com/admin/run-robot/search-cache -O /dev/null

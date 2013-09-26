@@ -135,7 +135,7 @@ class PhraseContainer extends BaseContainer
 
 		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
 
-		$preFillTranslations = $this->getSettings('preFillTranslations');
+		$preFillTranslations = $this->getSettings('preFillTranslations') || $phraseType->getPreFillForTranslator();
 		/** @var $language \Entity\Language */
 		foreach($languages as $language) {
 			if(is_array($editableLanguages) && !in_array($language, $editableLanguages)) {
@@ -149,9 +149,8 @@ class PhraseContainer extends BaseContainer
 
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
-			if($preFillTranslations) {
-				$languageContainer['variations']->setDefaults($translation->getVariations());
-			}
+
+			$preFillTranslations && $languageContainer['variations']->setDefaults($translation->getVariations());
 
 			$genderList = $language->getGenders();
 			if($phraseType->getGenderRequired() && count($genderList)) {
