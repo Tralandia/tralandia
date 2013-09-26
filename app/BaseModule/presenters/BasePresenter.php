@@ -124,7 +124,7 @@ abstract class BasePresenter extends Presenter {
 	 * @autowire
 	 * @var \Tralandia\Localization\Translator
 	 */
-	public $translator;
+	protected $translator;
 
 	/**
 	 * @var array

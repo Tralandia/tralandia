@@ -12,11 +12,6 @@ class RootHomePresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
-	/**
-	 * @autowire
-	 * @var \Tralandia\Localization\Translator
-	 */
-	protected $translator;
 
 
 	public function renderDefault() {
