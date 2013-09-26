@@ -22,4 +22,4 @@ parameters:
 
 
 services:
-	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
+#	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)

@@ -345,6 +345,7 @@ class PhraseListPresenter extends BasePresenter {
 		$phrasesIds = [];
 		$wordsCount = 0;
 
+		$isTranslator = $this->user->isInRole(Role::TRANSLATOR);
 		foreach($formValues['list'] as $phraseId => $values) {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
@@ -356,7 +357,9 @@ class PhraseListPresenter extends BasePresenter {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
 					try {
 						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
-						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
+						if($isTranslator && isset($phraseValues['oldVariations'][$translation->getId()])) {
+							$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
+						}
 					} catch(TranslationsNotCompleteException $e) {
 						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
 					}
@@ -375,14 +378,14 @@ class PhraseListPresenter extends BasePresenter {
 				// v tomto pripade sa nemeni status
 				foreach($phraseValues['changedTranslations'] as $translation) {
 					if($translation->isComplete()) {
-						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
+						$isTranslator && $translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
 					}
 				}
 			} else {
 				foreach($phraseValues['changedTranslations'] as $translation) {
 					try {
 						$this->updateTranslationStatus->translationUpdated($translation, $this->loggedUser);
-						$translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
+						$isTranslator && $translation->updateUnpaidAmount($phraseValues['oldVariations'][$translation->getId()]);
 					} catch(TranslationsNotCompleteException $e) {
 						$this->flashMessage('Translation #' . $translation->getId() . ' is not translated completely. Please correct / complete it.');
 					}
