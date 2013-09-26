@@ -137,7 +137,7 @@ class TranslationRepository extends \Repository\BaseRepository {
 
 		$sum = $qb->getQuery()->getSingleScalarResult();
 
-		return $sum ? $sum : 0;
+		return $sum ? round($sum, 3) : 0;
 	}
 
 

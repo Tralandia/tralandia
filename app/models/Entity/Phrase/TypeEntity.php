@@ -92,6 +92,12 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $translated = FALSE;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $preFillForTranslator = FALSE;
+
 	public function isSimple()
 	{
 		return !($this->pluralVariationsRequired || $this->genderVariationsRequired || $this->locativesRequired || $this->positionRequired);
@@ -379,5 +385,23 @@ class Type extends \Entity\BaseEntity {
 	public function getTranslated()
 	{
 		return $this->translated;
+	}
+
+
+	/**
+	 * @return boolean
+	 */
+	public function getPreFillForTranslator()
+	{
+		return $this->preFillForTranslator;
+	}
+
+
+	/**
+	 * @param boolean $preFillForTranslator
+	 */
+	public function setPreFillForTranslator($preFillForTranslator)
+	{
+		$this->preFillForTranslator = $preFillForTranslator;
 	}
 }
