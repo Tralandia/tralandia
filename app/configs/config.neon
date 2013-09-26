@@ -393,6 +393,7 @@ services:
 	##############################################
 
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Location\Location))
+	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 
 	##############################################
 

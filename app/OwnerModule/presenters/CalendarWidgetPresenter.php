@@ -10,12 +10,6 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\Localization\Translator
-	 */
-	protected $translator;
-
-	/**
-	 * @autowire
 	 * @var \Environment\Collator
 	 */
 	protected $collator;

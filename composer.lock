@@ -830,12 +830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65"
+                "reference": "72cf740fa833823cc4f41e8d2939471f2bda81f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65",
-                "reference": "2aa7bc26d5a24480c3aa4db0d7e9fd5ba26a6d65",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/72cf740fa833823cc4f41e8d2939471f2bda81f8",
+                "reference": "72cf740fa833823cc4f41e8d2939471f2bda81f8",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-09-25 01:01:34"
+            "time": "2013-09-25 18:12:52"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -1036,12 +1036,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/lessphp.git",
-                "reference": "85bd4557920d5f4fcbf41beb621e91b842e3621b"
+                "reference": "e2d39fc6ceb23ae06282bad9d65c6de5a9c8aa15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/85bd4557920d5f4fcbf41beb621e91b842e3621b",
-                "reference": "85bd4557920d5f4fcbf41beb621e91b842e3621b",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/e2d39fc6ceb23ae06282bad9d65c6de5a9c8aa15",
+                "reference": "e2d39fc6ceb23ae06282bad9d65c6de5a9c8aa15",
                 "shasum": ""
             },
             "type": "library",
@@ -1069,7 +1069,7 @@
             ],
             "description": "lessphp is a compiler for LESS written in PHP.",
             "homepage": "http://leafo.net/lessphp/",
-            "time": "2013-09-24 19:29:14"
+            "time": "2013-09-25 15:07:34"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
