@@ -1,6 +1,6 @@
 {block content}
 
-<h1>#Kalendar</h1>
+<h1>{_151834}</h1>
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form calendarForm , class => 'ajax'}
@@ -8,15 +8,15 @@
 	{include #calendar, control => $form['calendar']}
 	{* {include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'marginRight pull-right btn-orange'} *}
 
-	<button disabled="true" type="submit" data-active-text="{_o100083}" data-inactive-text="#zmeny Ulozene" class="btn marginRight pull-right calendarSumitButton btn-orange" name="_submit">
-		<i class="icon-ok"></i> <i class="icon-spinner icon-spin"></i> <small>#zmeny Ulozene</small>
+	<button disabled="true" type="submit" data-active-text="{_o100083}" data-inactive-text="{_154781}" class="btn marginRight pull-center calendarSumitButton btn-orange" name="_submit">
+		<i class="icon-ok"></i> <i class="icon-spinner icon-spin"></i> <small>{_154781}</small>
 	</button>
 
 {/form}
 
 <div class="clearfix"></div>
 {var $currentLanguageId = $environment->getPrimaryLocation()->defaultLanguage->id}
-<h1 class="marginLeft pull-left">{_o100186}</h1>
+<h1 class="marginLeft marginTop2 pull-left">{_o100186}</h1>
 
 {if count($rentals)>1}
 	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
@@ -34,14 +34,14 @@
 	<div class="control-group calendarWidgetControl clearfix">
 
 		<div class="controls">
-			<select name="rows" class="select2 notFulltext">
-				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100180,$i}</option>
+			<select name="rows" class="select2 disabledFulltext notFulltext">
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_154789 , null ,[ count => $i ]}</option>
 			</select>
 		</div>
 
 		<div class="controls">
 			<select name="columns" class="select2 notFulltext">
-				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100181,$i}</option>
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_154790 , null ,[ count => $i ]}</option>
 			</select>
 		</div>
 
