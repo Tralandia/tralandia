@@ -80,6 +80,7 @@ parameters:
 				js:
 					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
 					# localization 
+					- jqueryUi/custom/i18n/jquery.ui.datepicker-en.js	    
 					- jqueryUi/lib/i18n/jquery.ui.datepicker-af.js	    
 					- jqueryUi/lib/i18n/jquery.ui.datepicker-ar-DZ.js   
 					- jqueryUi/lib/i18n/jquery.ui.datepicker-ar.js	    
