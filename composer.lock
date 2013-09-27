@@ -326,7 +326,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/283eaac69b3dc9336c723ee63d446876e102b1bf",
+                "url": "https://api.github.com/repos/nette/nette/zipball/6176a686c64e4b1bfccfe4ee81db588208c70797",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
