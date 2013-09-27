@@ -64,7 +64,7 @@ class CalendarContainer extends BaseContainer
 	{
 		$values = $this->getValues($asArray);
 
-		$values['data'] = explode(',', $values['data']);
+		$values['data'] = array_filter(explode(',', $values['data']));
 
 		$dateTime = [];
 		foreach($values['data'] as $key => $day) {
