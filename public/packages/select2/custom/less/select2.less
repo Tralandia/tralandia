@@ -28,8 +28,7 @@
 						font-style: normal;
 						text-decoration: inherit;
 						-webkit-font-smoothing: antialiased;
-						font-size: 18px;
-						/* sprites.less reset */
+						font-size: 18px;						
 						display: inline;
 						width: auto;
 						height: auto;
@@ -74,7 +73,7 @@
 	border: 0px;
 }
 
-.select2-drop.select2-drop-active {
+.select2-drop.select2-drop-active .select2-search {
 	&:before {
 		font-family: entypo;
 		content:'\1F50D';
@@ -87,7 +86,13 @@
 		top: -1px;
 		z-index: 9000;	
 		color: #999;
-	}	
+	}
+
+	&.select2-search-hidden {
+		&:before {
+			content:'';
+		}
+	}
 }
 
 
