@@ -687,6 +687,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		foreach ($calendar as $key => $date) {
 			$calendar[$key] = $date->format('z');
 		}
+
 		$this->calendar = ',' . (implode(',', $calendar)) . ',';
 		$this->formattedCalendar = NULL;
 
