@@ -395,6 +395,7 @@ services:
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 	- \Tralandia\Location\Countries(@doctrine.dao(Entity\Location\Location))
+	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment))
 
 	##############################################
 
