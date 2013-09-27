@@ -9,7 +9,9 @@ namespace Tralandia\Language;
 
 
 use Entity\Language;
+use Environment\Environment;
 use Nette;
+use Nette\Localization\ITranslator;
 use Tralandia\BaseDao;
 
 class Languages {
@@ -20,10 +22,16 @@ class Languages {
 	 */
 	private $languageDao;
 
+	/**
+	 * @var \Environment\Environment
+	 */
+	private $environment;
 
-	public function __construct(BaseDao $languageDao)
+
+	public function __construct(BaseDao $languageDao, Environment $environment)
 	{
 		$this->languageDao = $languageDao;
+		$this->environment = $environment;
 	}
 
 

@@ -13,6 +13,7 @@ use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
 use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
+use Tralandia\Location\Countries;
 
 class OptionGenerator
 {
@@ -49,16 +50,22 @@ class OptionGenerator
 	 */
 	protected $translator;
 
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $countries;
+
 
 	/**
 	 * @param \Environment\Environment $environment
 	 * @param TopLocations $topLocations
 	 * @param SpokenLanguages $spokenLanguages
 	 * @param \Service\Rental\IRentalSearchServiceFactory $searchFactory
+	 * @param \Tralandia\Location\Countries $countries
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
 	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages,
-								IRentalSearchServiceFactory $searchFactory, EntityManager $em)
+								IRentalSearchServiceFactory $searchFactory, Countries $countries, EntityManager $em)
 	{
 		$this->environment = $environment;
 		$this->searchFactory = $searchFactory;
@@ -66,6 +73,7 @@ class OptionGenerator
 		$this->topLocations = $topLocations;
 		$this->spokenLanguages = $spokenLanguages;
 		$this->em = $em;
+		$this->countries = $countries;
 	}
 
 
@@ -180,8 +188,7 @@ class OptionGenerator
 	 */
 	public function generateCountries(Presenter $presenter)
 	{
-		$locations = $this->em->getRepository(LOCATION_ENTITY)
-			->getCountriesForSelect($this->translator, $this->getCollator(), $presenter, ':Front:Home:');
+		$locations = $this->countries->getForSelect($presenter, ':Front:Home:');
 
 		return $locations;
 	}
