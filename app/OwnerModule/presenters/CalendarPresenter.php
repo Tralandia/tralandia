@@ -26,6 +26,12 @@ class CalendarPresenter extends BasePresenter
 	 */
 	protected $collator;
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\SearchCache\InvalidateRentalListener
+	 */
+	protected $invalidateRentalListener;
+
 	public function createComponentCalendarForm()
 	{
 		$form = $this->simpleFormFactory->create();
@@ -47,6 +53,8 @@ class CalendarPresenter extends BasePresenter
 		$rental->updateCalendar($values['calendar']['data']);
 
 		$this->em->flush($rental);
+
+		$this->invalidateRentalListener->onSuccess($rental);
 
 		$this->payload->success = TRUE;
 		$this->sendPayload();
