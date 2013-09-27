@@ -32,6 +32,11 @@ class AddressNormalizer extends \Nette\Object {
 	 */
 	private $environment;
 
+	/**
+	 * @var \Transliterator
+	 */
+	private $transliterator;
+
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
@@ -48,14 +53,16 @@ class AddressNormalizer extends \Nette\Object {
 	/**
 	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
 	 * @param \Environment\Environment $environment
+	 * @param \Transliterator $transliterator
 	 */
-	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment) {
+	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, \Transliterator $transliterator) {
 		$this->geocodeService = $googleGeocodeService;
 		$this->environment = $environment;
 		$this->geocodeService->setRequestDefaults(array(
 			'region' => $environment->getPrimaryLocation()->getIso(),
 			'language' => $environment->getPrimaryLocation()->getDefaultLanguage()->getIso(),
 		));
+		$this->transliterator = $transliterator;
 	}
 
 	/**
@@ -214,7 +221,7 @@ class AddressNormalizer extends \Nette\Object {
 		$locationRepository = $this->locationRepositoryAccessor->get();
 		$info[self::PRIMARY_LOCATION] = $locationRepository->findOneByIso($info[self::PRIMARY_LOCATION]);
 		if(isset($info[self::LOCALITY])) {
-			$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
+			$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION], $this->transliterator);
 		}
 
 		$l = $response->getLocation();
@@ -309,7 +316,7 @@ class AddressNormalizer extends \Nette\Object {
 			}
 		} else {
 			$locationRepository = $this->locationRepositoryAccessor->get();
-			$locality = $locationRepository->findOrCreateLocality($locality, $address->getPrimaryLocation());
+			$locality = $locationRepository->findOrCreateLocality($locality, $address->getPrimaryLocation(), $this->transliterator);
 
 			$address->locality = $locality;
 		}
