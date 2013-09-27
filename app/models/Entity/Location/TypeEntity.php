@@ -14,6 +14,7 @@ use	Extras\Annotation as EA;
  */
 class Type extends \Entity\BaseEntityDetails {
 
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
