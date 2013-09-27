@@ -128,28 +128,28 @@
 		//  @todo ajax callback
 		base._renderOtherRentals = function(lat,lng){
 
-			var html = '';
+			// var html = '';
 
-			$.each(base._returnRentalsTmp(lat,lng),function(k,v){
+			// $.each(base._returnRentalsTmp(lat,lng),function(k,v){
 
 
-				var markerSize = 'other-mini';
+			// 	var markerSize = 'other-mini';
 
-					if(v.isImportant){
-						markerSize = 'other-small';
-					}
+			// 		if(v.isImportant){
+			// 			markerSize = 'other-small';
+			// 		}
 
-				base._makeMarker(v.lat,v.lng,v.name,markerSize,k);
+			// 	base._makeMarker(v.lat,v.lng,v.name,markerSize,k);
 
-				if(k < 9){
-					html += '<li data-id="'+v.id+'" data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
-				}
+			// 	if(k < 9){
+			// 		html += '<li data-id="'+v.id+'" data-meta=\''+JSON.stringify(v)+'\'><img src="'+v.thumbnail+'"></li>';
+			// 	}
 
-			});
+			// });
 
-			$(base.options.otherRentaliListSelector).html(html);
+			// $(base.options.otherRentaliListSelector).html(html);
 
-			$(base.options.otherRentaliListSelector+' li').live('click',base._listOtherClickListener);
+			// $(base.options.otherRentaliListSelector+' li').live('click',base._listOtherClickListener);
 
 		};
 
