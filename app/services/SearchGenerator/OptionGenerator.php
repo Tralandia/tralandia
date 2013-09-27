@@ -14,6 +14,7 @@ use Nette\ArrayHash;
 use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 use Tralandia\Location\Countries;
+use Tralandia\Routing\PathSegments;
 
 class OptionGenerator
 {
@@ -55,17 +56,23 @@ class OptionGenerator
 	 */
 	private $countries;
 
+	/**
+	 * @var \Tralandia\Routing\PathSegments
+	 */
+	private $pathSegments;
+
 
 	/**
 	 * @param \Environment\Environment $environment
 	 * @param TopLocations $topLocations
 	 * @param SpokenLanguages $spokenLanguages
 	 * @param \Service\Rental\IRentalSearchServiceFactory $searchFactory
+	 * @param \Tralandia\Routing\PathSegments $pathSegments
 	 * @param \Tralandia\Location\Countries $countries
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
 	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages,
-								IRentalSearchServiceFactory $searchFactory, Countries $countries, EntityManager $em)
+								IRentalSearchServiceFactory $searchFactory,PathSegments $pathSegments, Countries $countries, EntityManager $em)
 	{
 		$this->environment = $environment;
 		$this->searchFactory = $searchFactory;
@@ -74,6 +81,7 @@ class OptionGenerator
 		$this->spokenLanguages = $spokenLanguages;
 		$this->em = $em;
 		$this->countries = $countries;
+		$this->pathSegments = $pathSegments;
 	}
 
 
@@ -92,7 +100,7 @@ class OptionGenerator
 	public function generateRentalType()
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
-		$pathSegments = $this->em->getRepository(PATH_SEGMENT_ENTITY)->findRentalTypes($this->environment->getLanguage());
+		$pathSegments = $this->pathSegments->findRentalTypes($this->environment->getLanguage());
 
 		$typeSegments = [];
 		foreach ($pathSegments as $pathSegment) {

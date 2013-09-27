@@ -25,7 +25,7 @@
         "dg/dibi": "dev-master",
 		"texy/texy": "dev-release-2.x",
 		"janmarek/mockista": "dev-master",
-        "leafo/lessphp": "dev-master"
+        "leafo/lessphp": "dev-master#366fb52"
 	},
 	"repositories": [
 		{
