@@ -279,7 +279,7 @@
 									{if $rental->phone->international}
 
 										<strong>
-										<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper}) {$rental->phone->international}
+										<i class="icon-phone"></i> ({$rental->phone->primaryLocation->iso|upper|truncate:2:""}) {$rental->phone->international}
 										</strong>
 
 									{/if}
