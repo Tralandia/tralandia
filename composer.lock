@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "008187982d27cb864ffc44120b5e14e9cd1eb2e2"
+                "reference": "1414cc315e926eacc7857e59cc4af9675baf61cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/008187982d27cb864ffc44120b5e14e9cd1eb2e2",
-                "reference": "008187982d27cb864ffc44120b5e14e9cd1eb2e2",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/1414cc315e926eacc7857e59cc4af9675baf61cb",
+                "reference": "1414cc315e926eacc7857e59cc4af9675baf61cb",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-09-26 21:23:07"
+            "time": "2013-09-28 17:46:09"
         },
         {
             "name": "janmarek/mockista",
@@ -830,12 +830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "2dfc1ca4ee72d893bd28554d5bac8f809b01e3ef"
+                "reference": "7f007ae09c2fd4f914ba896d7da7387ec421c0e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/2dfc1ca4ee72d893bd28554d5bac8f809b01e3ef",
-                "reference": "2dfc1ca4ee72d893bd28554d5bac8f809b01e3ef",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/7f007ae09c2fd4f914ba896d7da7387ec421c0e7",
+                "reference": "7f007ae09c2fd4f914ba896d7da7387ec421c0e7",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-09-26 19:21:48"
+            "time": "2013-09-27 12:23:45"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -1133,7 +1133,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/6176a686c64e4b1bfccfe4ee81db588208c70797",
+                "url": "https://api.github.com/repos/nette/nette/zipball/ae11ca1b86d4b140ffc70632f9d4f24a45e83141",
                 "reference": "9bf0292",
                 "shasum": ""
             },

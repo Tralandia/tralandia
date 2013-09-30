@@ -3,6 +3,7 @@
 namespace FrontModule;
 
 use Entity\Location\Location;
+use Entity\Rental\Rental;
 use Nette;
 
 abstract class BasePresenter extends \BasePresenter {
@@ -127,6 +128,17 @@ abstract class BasePresenter extends \BasePresenter {
 	public function createComponentHeader()
 	{
 		return $this->headerControlFactory->create($this->pageSeo, $this->loggedUser);
+	}
+
+
+	/**
+	 * @param Rental $rental
+	 *
+	 * @return bool
+	 */
+	public function isRentalFeatured(Rental $rental)
+	{
+		return $this->rentals->isFeatured($rental);
 	}
 
 

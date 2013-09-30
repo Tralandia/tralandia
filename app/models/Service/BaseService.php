@@ -18,14 +18,14 @@ class BaseService extends Extras\Models\Service\Service {
 	}
 
 	/**
-	 * @return Nette\DateTime
+	 * @return \DateTime
 	 */
 	public function getCreated() {
 		return $this->entity->getCreated();
 	}
 
 	/**
-	 * @return Nette\DateTime
+	 * @return \DateTime
 	 */
 	public function getUpdated() {
 		return $this->entity->getUpdated();
