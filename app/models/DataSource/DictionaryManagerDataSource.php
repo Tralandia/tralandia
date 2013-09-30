@@ -64,8 +64,6 @@ class DictionaryManagerDataSource extends BaseDataSource
 			$row['priceToTranslate'] = $language->getTranslationPriceForWords($row['wordsToTranslate']);
 
 			$row['toCheck'] = $translationRepository->toCheckCount($language);
-			$translationsToCheck = $translationRepository->toCheckQb($language)->getQuery()->getResult();
-			$row['wordsToCheck'] = $translationRepository->calculateWordsInTranslations($translationsToCheck);
 			$row['priceToCheck'] = $translationRepository->sumUnpaidAmount($language, Translation::WAITING_FOR_CHECKING);
 
 			$row['translator'] = $language->getTranslator();
