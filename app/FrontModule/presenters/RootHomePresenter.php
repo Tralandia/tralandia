@@ -24,24 +24,19 @@ class RootHomePresenter extends BasePresenter {
 		$this->template->rentals = $this->getRentals;
 		$this->template->isRootHome = TRUE;
 		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
+		$this->template->isRentalFeatured = $this->isRentalFeatured;
 	}
 
 	public function getRentals()
 	{
-		$featuredIds = $this->rentalDao->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
-
-		$rentals = array();
-		foreach ($featuredIds as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
-			$rentals[$rental->id]['entity'] = $rental;
-		}
+		$rentals = $this->rentals->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
 
 		return $rentals;
 	}
 
 	public function getLocationRentalsCount()
 	{
-		$counts = $this->rentalDao->getCounts(NULL, TRUE);
+		$counts = $this->rentals->getCounts(NULL, TRUE);
 		return array_sum($counts);
 	}
 

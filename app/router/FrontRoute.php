@@ -98,8 +98,6 @@ class FrontRoute extends BaseRoute
 	public function __construct($domainMask, EntityManager $em, \Device $device)
 	{
 		$this->device = $device;
-		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
-		//$mask = '//[!<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>/][<hash .*>]';
 		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $em);
@@ -117,7 +115,6 @@ class FrontRoute extends BaseRoute
 		if ($appRequest = $route->match($httpRequest)) {
 			$presenter = NULL;
 			$params['action'] = NULL;
-			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
 			if(isset($params[self::HASH])) {

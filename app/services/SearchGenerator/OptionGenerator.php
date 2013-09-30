@@ -7,6 +7,7 @@ use Entity\Currency;
 use Entity\Language;
 use Entity\Location\Location;
 use Environment\Environment;
+use Tralandia\Amenity\Amenities;
 use Tralandia\Localization\Translator;
 use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
@@ -61,6 +62,11 @@ class OptionGenerator
 	 */
 	private $pathSegments;
 
+	/**
+	 * @var \Tralandia\Amenity\Amenities
+	 */
+	private $amenities;
+
 
 	/**
 	 * @param \Environment\Environment $environment
@@ -72,7 +78,8 @@ class OptionGenerator
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
 	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages,
-								IRentalSearchServiceFactory $searchFactory,PathSegments $pathSegments, Countries $countries, EntityManager $em)
+								IRentalSearchServiceFactory $searchFactory, PathSegments $pathSegments,
+								Countries $countries, Amenities $amenities, EntityManager $em)
 	{
 		$this->environment = $environment;
 		$this->searchFactory = $searchFactory;
@@ -82,6 +89,7 @@ class OptionGenerator
 		$this->em = $em;
 		$this->countries = $countries;
 		$this->pathSegments = $pathSegments;
+		$this->amenities = $amenities;
 	}
 
 
@@ -297,9 +305,7 @@ class OptionGenerator
 	 */
 	public function generateBoard()
 	{
-		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)
-			->findByBoardTypeForSelect($this->translator, $this->getCollator());
-
+		$boards = $this->amenities->findByBoardTypeForSelect();
 		return $boards;
 	}
 

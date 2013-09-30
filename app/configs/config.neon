@@ -392,10 +392,11 @@ services:
 	####################### REFACTORING
 	##############################################
 
-	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Location\Location))
+	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 	- \Tralandia\Location\Countries(@doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment))
+	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
 
 	##############################################
 

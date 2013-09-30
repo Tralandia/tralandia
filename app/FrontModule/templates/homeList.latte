@@ -10,7 +10,7 @@
 {/if}
 	{$pageH1}
 	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
-	
+
 </h1>
 
 <div class="row-fluid">
@@ -19,19 +19,18 @@
 
 		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 
-		{var $rentalService = $rental['service']; }
-		{var $featured = $rentalService->isFeatured(); }
+		{var $featured = $isRentalFeatured($rental); }
 
 			<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
-				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
+				<a n:href=":Front:Rental:detail $rental" title="{_$rental->name}" >
 					<div class="position">TOP</div>
-					{if $mainImage = $rental['entity']->getMainImage()}
-						<img alt="{_$rental['entity']->name}" n:image="$mainImage"/>
+					{if $mainImage = $rental->getMainImage()}
+						<img alt="{_$rental->name}" n:image="$mainImage"/>
 					{/if}
 					{ifset $isRootHome}
-						<div class="label">{_$rental['entity']->address->locality->name}, {_$rental['entity']->address->primaryLocation->name}</div>
+						<div class="label">{_$rental->address->locality->name}, {_$rental->address->primaryLocation->name}</div>
 					{else}
-						<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
+						<div class="label">{_$rental->address->locality->name} – {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}</div>
 					{/ifset}
 				</a>
 			</li>

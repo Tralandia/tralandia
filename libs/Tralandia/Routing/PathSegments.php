@@ -23,13 +23,20 @@ class PathSegments {
 	 */
 	private $pathSegmentDao;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $oldPathSegmentDao;
+
 
 	/**
-	 * @param BaseDao $pathSegmentDao
+	 * @param \Tralandia\BaseDao $pathSegmentDao
+	 * @param \Tralandia\BaseDao $oldPathSegmentDao
 	 */
-	public function __construct(BaseDao $pathSegmentDao)
+	public function __construct(BaseDao $pathSegmentDao, BaseDao $oldPathSegmentDao)
 	{
 		$this->pathSegmentDao = $pathSegmentDao;
+		$this->oldPathSegmentDao = $oldPathSegmentDao;
 	}
 
 
@@ -56,12 +63,13 @@ class PathSegments {
 	 * @param Language $language
 	 * @param Location $location
 	 * @param $pathSegment
+	 * @param bool $old
 	 *
 	 * @return \Entity\Routing\PathSegment|null
 	 */
-	public function findOneForRouter(Language $language, Location $location , $pathSegment)
+	public function findOneForRouter(Language $language, Location $location , $pathSegment, $old = NULL)
 	{
-		$qb = $this->getBasicQB($language, $location);
+		$qb = $this->getBasicQB($language, $location, $old);
 
 		$qb->andWhere($qb->expr()->eq('e.pathSegment', ':pathSegment'))
 			->setParameter(':pathSegment', $pathSegment);
@@ -72,6 +80,18 @@ class PathSegments {
 		$t = $qb->getQuery()->getOneOrNullResult();
 
 		return $t;
+	}
+
+	/**
+	 * @param Language $language
+	 * @param Location $location
+	 * @param $pathSegment
+	 *
+	 * @return \Entity\Routing\PathSegment|null
+	 */
+	public function findOneOldForRouter(Language $language, Location $location , $pathSegment)
+	{
+		return $this->findOneForRouter($language, $location, $pathSegment, TRUE);
 	}
 
 	/**
@@ -110,12 +130,17 @@ class PathSegments {
 	/**
 	 * @param \Entity\Language $language
 	 * @param \Entity\Location\Location $location
+	 * @param null $old
 	 *
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function getBasicQB(Language $language = NULL, Location $location = NULL)
+	protected function getBasicQB(Language $language = NULL, Location $location = NULL, $old = NULL)
 	{
-		$qb = $this->pathSegmentDao->createQueryBuilder('e');
+		if($old) {
+			$qb = $this->oldPathSegmentDao->createQueryBuilder('e');
+		} else {
+			$qb = $this->pathSegmentDao->createQueryBuilder('e');
+		}
 
 		$languageOr = $qb->expr()->orx();
 		if($language) $languageOr->add($qb->expr()->eq('e.language', $language->getId()));
