@@ -10,7 +10,7 @@
 	<td>
 		{if $cell}
 
-			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank">{$cell} p</a>&nbsp;=&nbsp;~{$row->wordsToTranslate}&nbsp;w<br/>({$row->priceToTranslate|number:2}&nbsp;EUR)
+			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank">{$cell}&nbsp;p</a>&nbsp;=&nbsp;~{$row->wordsToTranslate}&nbsp;w<br/>({$row->priceToTranslate|number:2}&nbsp;EUR)
 			<a n:if="$row->language->getTranslator()" href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		{else}
 			{$cell}
@@ -22,7 +22,7 @@
 	<td>
 	{if $cell}
 
-		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"> {$cell} p</a><br/>({$row->priceToCheck|number:2}&nbsp;EUR)
+		<a href="{plink PhraseList:notCheckedTranslations $row->language->getIso()}" target="_blank"> {$cell}&nbsp;p</a><br/>({$row->priceToCheck|number:2}&nbsp;EUR)
 
 	{else}
 		{$cell}
