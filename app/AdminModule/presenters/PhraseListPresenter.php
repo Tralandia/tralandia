@@ -343,7 +343,7 @@ class PhraseListPresenter extends BasePresenter {
 		$formValues = $form->getValues(TRUE);
 
 		$phrasesIds = [];
-		$wordsCount = 0;
+		$totalAmount = 0;
 
 		$isTranslator = $this->user->isInRole(Role::TRANSLATOR);
 		foreach($formValues['list'] as $phraseId => $values) {
@@ -367,7 +367,7 @@ class PhraseListPresenter extends BasePresenter {
 			} else if($specialOptionType == 'checked' && $specialOptionValue) {
 				foreach($phraseValues['displayedTranslations'] as $translation) {
 					$translation->setStatus(Translation::WAITING_FOR_PAYMENT);
-					$wordsCount += $translation->getWordsCount();
+					$totalAmount += $translation->getUnpaidAmount();
 					$checkedLanguage = $translation->getLanguage();
 				}
 			} else if($specialOptionType == 'ready' && $specialOptionValue) {
@@ -400,8 +400,8 @@ class PhraseListPresenter extends BasePresenter {
 			$phrasesIds[] = $phraseId;
 		}
 
-		if(isset($checkedLanguage) && $wordsCount > 0 && $this->loggedUser->isSuperAdmin()) {
-			$this->acceptedTranslationsEmailListener->onAcceptedTranslations($checkedLanguage, $wordsCount);
+		if(isset($checkedLanguage) && $totalAmount > 0 && $this->loggedUser->isSuperAdmin()) {
+			$this->acceptedTranslationsEmailListener->onAcceptedTranslations($checkedLanguage, $totalAmount);
 		}
 
 		$phraseRepository->flush();

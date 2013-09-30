@@ -15,11 +15,11 @@ class AcceptedTranslationsEmailListener extends BaseEmailListener
 		return [];
 	}
 
-	public function onAcceptedTranslations(Language $language, $wordsCountToPay)
+	public function onAcceptedTranslations(Language $language, $totalAmount)
 	{
 		$message = new \Nette\Mail\Message();
 
-		$emailCompiler = $this->prepareCompiler($language, $wordsCountToPay);
+		$emailCompiler = $this->prepareCompiler($language, $totalAmount);
 		$body = $emailCompiler->compileBody();
 		$user = $language->getTranslator();
 
@@ -34,7 +34,7 @@ class AcceptedTranslationsEmailListener extends BaseEmailListener
 	}
 
 
-	private function prepareCompiler(Language $language, $wordsCount)
+	private function prepareCompiler(Language $language, $totalAmount)
 	{
 		$user = $language->getTranslator();
 		$emailCompiler = $this->createCompiler($user->getPrimaryLocation(), $user->getLanguage());
@@ -42,8 +42,8 @@ class AcceptedTranslationsEmailListener extends BaseEmailListener
 
 		$emailCompiler->addTranslator('translator', $user);
 		$emailCompiler->addLanguage('language', $language);
-		$emailCompiler->addCustomVariable('wordCount', $wordsCount);
-		$emailCompiler->addCustomVariable('amount', $language->getTranslationPriceForWords($wordsCount));
+		$emailCompiler->addCustomVariable('wordCount', NULL);
+		$emailCompiler->addCustomVariable('amount', $totalAmount);
 
 		return $emailCompiler;
 	}
