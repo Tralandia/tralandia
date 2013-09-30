@@ -229,7 +229,7 @@ class Translation extends \Entity\BaseEntity {
 					foreach ($cases as $caseKey => $caseValue) {
 						$oldCaseValue = $oldVariations[$pluralKey][$genderKey][$caseKey];
 						if($oldCaseValue != $caseValue) {
-							$wordCount += \Tools::wordCount($sourceTranslation->getVariation($pluralKey, $genderKey, $caseKey));
+							$wordCount += \Tools::wordCount($sourceTranslation->getTranslation());
 						}
 					}
 				}
