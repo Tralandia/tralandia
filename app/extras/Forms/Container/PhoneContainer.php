@@ -70,7 +70,6 @@ class PhoneContainer extends BaseContainer
 
 	public function getFormattedValues($asArray = FALSE)
 	{
-
 		$number = $this['number']->getValue();
 
 		if($number) {
