@@ -285,7 +285,7 @@ abstract class BasePresenter extends Presenter {
 			eval("\$options['enabled'] = {$options['enabled']};");
 
 			$this->cacheOptions[$optionName] = $options;
-			d($optionName, $options);
+//			d($optionName, $options);
 		}
 
 		$template->getCacheOptions = $this->getCacheOptions;

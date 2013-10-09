@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ec9275e0debc38a7cb79014bfa20c813",
+    "hash": "d116cc211163d231b7e3996a6cb7da00",
     "packages": [
         {
             "name": "dg/dibi",
@@ -343,16 +343,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "e0ffc8a9cab3a5c1ca3bd8ccce19a218a38f3b5d"
+                "reference": "3c811d7d8192a76f2eec96747741669c9298f60e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e0ffc8a9cab3a5c1ca3bd8ccce19a218a38f3b5d",
-                "reference": "e0ffc8a9cab3a5c1ca3bd8ccce19a218a38f3b5d",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3c811d7d8192a76f2eec96747741669c9298f60e",
+                "reference": "3c811d7d8192a76f2eec96747741669c9298f60e",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "2.4.*@beta",
+                "doctrine/common": "2.4.*",
                 "php": ">=5.3.2"
             },
             "require-dev": {
@@ -405,7 +405,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-09-26 21:17:08"
+            "time": "2013-10-07 18:23:26"
         },
         {
             "name": "doctrine/inflector",
@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "1414cc315e926eacc7857e59cc4af9675baf61cb"
+                "reference": "ded3d20630f2f1b535d5f7c76f0e14876b6286b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/1414cc315e926eacc7857e59cc4af9675baf61cb",
-                "reference": "1414cc315e926eacc7857e59cc4af9675baf61cb",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/ded3d20630f2f1b535d5f7c76f0e14876b6286b7",
+                "reference": "ded3d20630f2f1b535d5f7c76f0e14876b6286b7",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-09-28 17:46:09"
+            "time": "2013-10-07 18:22:14"
         },
         {
             "name": "janmarek/mockista",
@@ -830,12 +830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "7f007ae09c2fd4f914ba896d7da7387ec421c0e7"
+                "reference": "6a98a25ee619cc77b4cff7acc46906fe7d8e3d92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/7f007ae09c2fd4f914ba896d7da7387ec421c0e7",
-                "reference": "7f007ae09c2fd4f914ba896d7da7387ec421c0e7",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/6a98a25ee619cc77b4cff7acc46906fe7d8e3d92",
+                "reference": "6a98a25ee619cc77b4cff7acc46906fe7d8e3d92",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-09-27 12:23:45"
+            "time": "2013-10-08 12:53:30"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -1040,7 +1040,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/6e8e724fc7edcedc83a52cd18acc5b72f7dd3c40",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/c6cd043c94ba2a94ae3eeedc7a4c925302b61252",
                 "reference": "366fb52",
                 "shasum": ""
             },
@@ -1077,12 +1077,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "68970bba09238bbe840ff0910a8a9fb54398133a"
+                "reference": "28df44903eb07cb896fe0336fb17c8fee136800e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/68970bba09238bbe840ff0910a8a9fb54398133a",
-                "reference": "68970bba09238bbe840ff0910a8a9fb54398133a",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/28df44903eb07cb896fe0336fb17c8fee136800e",
+                "reference": "28df44903eb07cb896fe0336fb17c8fee136800e",
                 "shasum": ""
             },
             "require": {
@@ -1121,7 +1121,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-            "time": "2013-09-17 10:36:32"
+            "time": "2013-10-02 08:24:15"
         },
         {
             "name": "nette/nette",
@@ -1248,12 +1248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextras/forms.git",
-                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d"
+                "reference": "d04287f506318cd135d7b3e1cd3247d110464057"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/nextras/forms/zipball/de7d54e780e0037ffc7767cc35405fe21e399679",
-                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
+                "reference": "d04287f506318cd135d7b3e1cd3247d110464057",
                 "shasum": ""
             },
             "require": {
@@ -1287,7 +1287,7 @@
                 "form",
                 "nette"
             ],
-            "time": "2013-04-09 14:26:20"
+            "time": "2013-07-28 20:50:11"
         },
         {
             "name": "symfony/console",
@@ -1296,12 +1296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "e430d7416327a93be77b3c4844c191a10cc8c1c7"
+                "reference": "421ac6e2e5e665907fbf359a8f175b55b93b6a22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/e430d7416327a93be77b3c4844c191a10cc8c1c7",
-                "reference": "e430d7416327a93be77b3c4844c191a10cc8c1c7",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/421ac6e2e5e665907fbf359a8f175b55b93b6a22",
+                "reference": "421ac6e2e5e665907fbf359a8f175b55b93b6a22",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-25 06:04:58"
+            "time": "2013-10-09 07:29:29"
         },
         {
             "name": "texy/texy",

@@ -89,21 +89,29 @@ class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {
 		return $this->oldId;
 	}
 
+
 	/**
-	 * @ORM\prePersist
-	 * @param \Nette\DateTime $created
+	 * @ORM\PrePersist
+	 * @return BaseEntity
+	 */
+	public function fillCreated()
+	{
+		if(!$this->created) {
+			$this->created = new \DateTime();
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * @param \DateTime $created
 	 *
 	 * @return \Entity\BaseEntity
 	 */
-	public function setCreated(\Nette\DateTime $created = NULL){
+	public function setCreated(\DateTime $created = NULL){
 
-		if($created) {
-			$this->created = $created;
-		}
-
-		if(!$this->created) {
-			$this->created = new \Nette\DateTime();
-		}
+		$this->created = $created ? $created : new \DateTime;
 
 		return $this;
 	}
@@ -116,8 +124,8 @@ class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {
 	}
 
 	/**
-	 * @ORM\prePersist
-	 * @ORM\preUpdate
+	 * @ORM\PrePersist
+	 * @ORM\PreUpdate
 	 * @return \Entity\BaseEntity
 	 */
 	public function setUpdated() {

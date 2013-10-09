@@ -2,16 +2,9 @@
 
 namespace FrontModule;
 use Entity\Rental\Rental;
-use Model\Rental\IRentalDecoratorFactory;
 use Routers\FrontRoute;
 
 class HomePresenter extends BasePresenter {
-
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
 	/**
 	 * @autowire

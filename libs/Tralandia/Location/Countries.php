@@ -118,4 +118,39 @@ class Countries {
 
 	}
 
+
+	/**
+	 * @return array
+	 */
+	public function getPhonePrefixes() {
+
+		$qb = $this->locationDao->createQueryBuilder('l');
+
+		$qb->select('l.id, l.iso, l.phonePrefix')
+			->innerJoin('l.type', 't')
+			->where($qb->expr()->eq('t.slug', ':country'))
+			->setParameter('country', 'country')
+			->groupBy('l.phonePrefix')
+			->orderBy('l.iso')
+		;
+
+		$return = [];
+		$rows = $qb->getQuery()->getResult();
+
+		foreach($rows as $row) {
+			if ($row['phonePrefix'] == 1) {
+				$return[$row['phonePrefix']] =  'US (+'.$row['phonePrefix'].')';
+			} else if ($row['phonePrefix'] == 61) {
+				$return[$row['phonePrefix']] = 'AU (+'.$row['phonePrefix'].')';
+			} else {
+				$return[$row['phonePrefix']] = strtoupper($row['iso']) . ' (+'.$row['phonePrefix'].')';
+			}
+		}
+
+		$this->collator->asort($return);
+
+		return $return;
+
+	}
+
 }

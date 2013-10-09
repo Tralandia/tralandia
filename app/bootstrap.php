@@ -1,9 +1,8 @@
 <?php
 
-use Nette\Diagnostics\Debugger,
-	Nette\Environment,
-	Nette\Application\Routers\Route,
-	Nella\Addons\Doctrine\Config\Extension;
+use Nette\Diagnostics\Debugger;
+use Nette\Environment;
+use Nette\Application\Routers\Route;
 use Nette\Forms\Container as FormContainer;
 
 
@@ -13,9 +12,6 @@ if(array_key_exists('useCache', $_GET)) {
 	header("Location: /");
 	die();
 }
-
-
-
 
 
 // Load Nette Framework
@@ -32,7 +28,7 @@ $configurator->addParameters([
 ]);
 
 
-// $configurator->setDebugMode(false);
+$configurator->setDebugMode(false);
 
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
@@ -41,6 +37,7 @@ $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
+	->addDirectory(TEMP_DIR . '/proxies')
 	->register();
 
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
@@ -68,6 +65,11 @@ if(array_key_exists('useCache', $_COOKIE) && !$_COOKIE['useCache']) {
 }
 
 $dic = $container = $configurator->createContainer();
+
+//$tablePrefix = new \DoctrineExtensions\TablePrefix(NULL, '_');
+//$container->getService('doctrine.default.connection')->getEventManager()->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+
+
 // Debugger::$editor = $container->parameters['editor'];
 
 FormContainer::extensionMethod('addPhraseContainer',
@@ -87,14 +89,14 @@ FormContainer::extensionMethod('addPhoneContainer',
 FormContainer::extensionMethod('addRentalTypeContainer',
 	function (FormContainer $container, $name, $rental, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
-		$rentalTypeRepository = $dic->getService('rentalTypeRepositoryAccessor')->get();
+		$rentalTypeRepository = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_TYPE_ENTITY);
 		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rental, $rentalTypes, $translator, $rentalTypeRepository);
 	});
 
 FormContainer::extensionMethod('addRentalPhotosContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
 		$imageManager = $dic->getService('rentalImageManager');
-		$imageRepository = $dic->getService('rentalImageRepositoryAccessor')->get();
+		$imageRepository = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_IMAGE_ENTITY);
 		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
 	});
 
@@ -138,8 +140,4 @@ require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 
 // Run the application!
-if (PHP_SAPI == 'cli') {
-	$container->console->run();
-} else {
-	$container->application->run();
-}
+$container->application->run();

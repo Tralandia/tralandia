@@ -181,7 +181,7 @@ class AddressContainer extends BaseContainer
 		return $this->address->getPrimaryLocation();
 	}
 
-	public function validate() {
+	public function validate(array $controls = NULL) {
 		$values = $this->getFormattedValues();
 		if (!$values['addressEntity']) {
 			$this->getMainControl()->addError($this->translator->translate('o100134'));

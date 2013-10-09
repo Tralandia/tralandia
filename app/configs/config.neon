@@ -154,6 +154,7 @@ doctrine:
 	charset: utf8
 	driver: pdo_mysql
 	debugger: false
+	autoGenerateProxyClasses: true
 	metadata:
 		Entity: %appDir%/models
 
@@ -389,16 +390,23 @@ services:
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
-	####################### REFACTORING
-	##############################################
+	############################################################
+	#==========================================================#
+	#====================== REFACTORING =======================#
+	#==========================================================#
+	############################################################
 
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 	- \Tralandia\Location\Countries(@doctrine.dao(Entity\Location\Location))
-	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment))
+	- \Tralandia\Location\Locations(@doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Location\Type), ...)
+	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
 	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
+	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
+	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
 
-	##############################################
+	# ==========================================================
+	# ==========================================================
 
 factories:
 	# ==============================
@@ -507,7 +515,6 @@ factories:
 			- $rentalAmenityDao(@doctrine.dao(Entity\Rental\Amenity))
 			- $rentalPlacementDao(@doctrine.dao(Entity\Rental\Placement))
 			- $routingPathSegmentDao(@doctrine.dao(Entity\Routing\PathSegment))
-			- $routingPathSegmentOldDao(@doctrine.dao(Entity\Routing\PathSegmentOld))
 			- $domainDao(@doctrine.dao(Entity\Domain))
 			- $pageDao(@doctrine.dao(Entity\Page))
 			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))

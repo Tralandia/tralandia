@@ -6,6 +6,7 @@ use Entity\Contact\Address;
 use Environment\Environment;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
+use Tralandia\Location\Locations;
 
 class AddressNormalizer extends \Nette\Object {
 
@@ -20,37 +21,30 @@ class AddressNormalizer extends \Nette\Object {
 	protected $address;
 	protected $geocodeService;
 
-	protected $locationDao;
-	protected $locationDecoratorFactory;
-
-
 	/**
 	 * @var \Environment\Environment
 	 */
 	private $environment;
 
-
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
-
-	}
-
-	public function inject(\Model\Location\ILocationDecoratorFactory $factory) {
-		$this->locationDecoratorFactory = $factory;
-	}
+	/**
+	 * @var \Tralandia\Location\Locations
+	 */
+	private $locations;
 
 
 	/**
 	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
 	 * @param \Environment\Environment $environment
+	 * @param \Tralandia\Location\Locations $locations
 	 */
-	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment) {
+	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, Locations $locations) {
 		$this->geocodeService = $googleGeocodeService;
 		$this->environment = $environment;
 		$this->geocodeService->setRequestDefaults(array(
 			'region' => $environment->getPrimaryLocation()->getIso(),
 			'language' => $environment->getPrimaryLocation()->getDefaultLanguage()->getIso(),
 		));
+		$this->locations = $locations;
 	}
 
 	/**
@@ -206,10 +200,9 @@ class AddressNormalizer extends \Nette\Object {
 			}
 		}
 
-		$locationDao = $this->locationDao;
-		$info[self::PRIMARY_LOCATION] = $locationDao->findOneByIso($info[self::PRIMARY_LOCATION]);
+		$info[self::PRIMARY_LOCATION] = $this->locations->findOneByIso($info[self::PRIMARY_LOCATION]);
 		if(isset($info[self::LOCALITY])) {
-			$info[self::LOCALITY] = $locationDao->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
+			$info[self::LOCALITY] = $this->locations->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
 		}
 
 		$l = $response->getLocation();
@@ -303,7 +296,7 @@ class AddressNormalizer extends \Nette\Object {
 				$address->locality = $locality;
 			}
 		} else {
-			$locality = $this->locationDao->findOrCreateLocality($locality, $address->getPrimaryLocation());
+			$locality = $this->locations->findOrCreateLocality($locality, $address->getPrimaryLocation());
 
 			$address->locality = $locality;
 		}

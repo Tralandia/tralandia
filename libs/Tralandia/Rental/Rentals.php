@@ -9,6 +9,7 @@ namespace Tralandia\Rental;
 
 
 use Entity\Location\Location;
+use Entity\Rental\Rental;
 use Nette;
 use Tralandia\BaseDao;
 
@@ -131,6 +132,48 @@ class Rentals {
 			->orderBy('r.rank', 'DESC')
 			->setMaxResults($limit)
 		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @param Location $location
+	 * @param null $status
+	 * @param array $order
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function findByPrimaryLocationQB(Location $location, $status = NULL, array $order = NULL)
+	{
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb->innerJoin('r.address', 'a')
+			->andWhere($qb->expr()->eq('a.primaryLocation', $location->getId()));
+
+		if ($status != NULL) {
+			$qb->andWhere($qb->expr()->eq('r.status', $status ? Rental::STATUS_LIVE : Rental::STATUS_DRAFT));
+		}
+
+		if($order) {
+			foreach($order as $key => $value) {
+				$qb->addOrderBy($key, $value);
+			}
+		}
+
+		return $qb;
+	}
+
+
+	/**
+	 * @param Location $location
+	 * @param null $status
+	 * @param array $order
+	 *
+	 * @return \Entity\Rental\Rental[]
+	 */
+	public function findByPrimaryLocation(Location $location, $status = NULL, array $order = NULL)
+	{
+		$qb = $this->findByPrimaryLocationQB($location, $status, $order);
 
 		return $qb->getQuery()->getResult();
 	}
