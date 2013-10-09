@@ -19,7 +19,7 @@
         "kdyby/events": "dev-master",
         "kdyby/autowired": "@dev",
         "kdyby/forms-replicator": "@dev",
-        "nextras/forms": "dev-master#1acbac741b0c46851fa83daa49cabb5fa64b6f0d as @dev",
+        "nextras/forms": "dev-master#d04287f506318cd135d7b3e1cd3247d110464057 as @dev",
         "nextras/datagrid": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
         "dg/dibi": "dev-master",

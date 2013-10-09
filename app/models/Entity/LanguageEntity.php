@@ -163,6 +163,12 @@ class Language extends \Entity\BaseEntityDetails {
 		return round($wordsCount * $this->getTranslationPrice(), 2);
 	}
 
+
+	public function __sleep()
+	{
+		return array('id');
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */

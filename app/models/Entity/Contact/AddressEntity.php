@@ -62,8 +62,8 @@ class Address extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", cascade={"persist"})
-	 * @ORM\JoinTable(name="location_address",
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location")
+	 * @ORM\JoinTable(name="_location_address",
 	 *      joinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id")}
 	 *      )

@@ -3,6 +3,7 @@
 namespace Service;
 
 use Service, Doctrine, Entity;
+use Tralandia\Rental\Rentals;
 
 /**
  * @author Radoslav Toth
@@ -10,29 +11,36 @@ use Service, Doctrine, Entity;
 class PolygonService {
 
 	/**
-	 * @var \Repository\Location\LocationRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $locationRepository;
+	protected $locationDao;
 
 	/**
-	 * @var \Repository\Location\TypeRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $locationTypeRepository;
+	protected $locationTypeDao;
 
 	/**
-	 * @var \Repository\Rental\RentalRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $rentalRepository;
+	protected $rentalDao;
+
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
 
 
 	/**
 	 * @param Doctrine\ORM\EntityManager $em
+	 * @param \Tralandia\Rental\Rentals $rentals
 	 */
-	public function __construct(Doctrine\ORM\EntityManager $em)
+	public function __construct(Doctrine\ORM\EntityManager $em, Rentals $rentals)
 	{
-		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
-		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
-		$this->locationTypeRepository = $em->getRepository(LOCATION_TYPE_ENTITY);
+		$this->rentalDao = $em->getRepository(RENTAL_ENTITY);
+		$this->locationDao = $em->getRepository(LOCATION_ENTITY);
+		$this->locationTypeDao = $em->getRepository(LOCATION_TYPE_ENTITY);
+		$this->rentals = $rentals;
 	}
 
 
@@ -41,7 +49,7 @@ class PolygonService {
 	 */
 	public function update($entity = NULL)
 	{
-		$this->rentalRepository->update($entity);
+		$this->rentalDao->save($entity);
 	}
 
 
@@ -52,9 +60,9 @@ class PolygonService {
 	 */
 	public function setLocationsForRental(\Entity\Rental\Rental $rental){
 		$matches = array();
-		$locationType = $this->locationTypeRepository->findOneBy(array('slug' => 'region'));
+		$locationType = $this->locationTypeDao->findOneBy(array('slug' => 'region'));
 
-		$locations = $this->locationRepository->findBy(array(
+		$locations = $this->locationDao->findBy(array(
 			'parent' => $rental->primaryLocation,
 			'type' => $locationType,
 		));
@@ -83,7 +91,7 @@ class PolygonService {
 				}
 			}
 		}
-		$rental->address->setLocations($matches);
+		$rental->getAddress()->setLocations($matches);
 
 		return TRUE;
 	}
@@ -96,16 +104,16 @@ class PolygonService {
 	 */
 	public function setRentalsForLocation(\Entity\Location\Location $location){
 
-		$locationType = $this->locationTypeRepository->findOneBy(array('slug' => 'region'));
+		$locationType = $this->locationTypeDao->findOneBy(array('slug' => 'region'));
 
-		$rentals = $this->rentalRepository->findByPrimaryLocation(
+		$rentals = $this->rentals->findByPrimaryLocation(
 			$location->getPrimaryParent(),
 			\Entity\Rental\Rental::STATUS_LIVE
 		);
 
 		// This is only done for regions, not localities or countries
 		// Return false if no latitude, longitude or missing polygons
-		if ($location->type != $locationType || !$location->polygons) {
+		if ($location->getType() != $locationType || !$location->getPolygons()) {
 			return FALSE;
 		}
 
@@ -118,7 +126,7 @@ class PolygonService {
 			} else {
 				continue;
 			}
-			foreach ($location->polygons as $key2 => $val2) {
+			foreach ($location->getPolygons() as $key2 => $val2) {
 				if(count($val2) == 4){
 					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){
 						$matches = true;
@@ -132,7 +140,7 @@ class PolygonService {
 					}
 				}
 			}
-			if ($matches === TRUE) $rental->address->addLocation($location);
+			if ($matches === TRUE) $rental->getAddress()->addLocation($location);
 		}
 		return TRUE;
 	}

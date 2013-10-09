@@ -1,10 +1,5 @@
 factories:
 
-	rentalDecoratorFactory:
-		class: Service\Rental\RentalService(..., %entity%)
-		parameters: [Entity\Rental\Rental entity]
-		implement: Model\Rental\IRentalDecoratorFactory
-
 #	rentalImageDecoratorFactory:
 #		class: Service\Rental\ImageDecorator(..., %entity%)
 #		parameters: [Entity\Rental\Rental entity]

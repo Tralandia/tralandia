@@ -65,7 +65,7 @@ class PathSegments {
 	 * @param $pathSegment
 	 * @param bool $old
 	 *
-	 * @return \Entity\Routing\PathSegment|null
+	 * @return \Entity\Routing\PathSegment|\Entity\Routing\PathSegmentOld|null
 	 */
 	public function findOneForRouter(Language $language, Location $location , $pathSegment, $old = NULL)
 	{

@@ -37,11 +37,9 @@
 
 
 						{var $rentalData = $findRental($rentalId); }
-						{var $rentalService = $rentalData['service']; }
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
-						{var $rental = $rentalService->getEntity(); }
-						{var $featured = $rentalService->isFeatured(); }
-
+						{var $rental = $rentalData['entity'] }
+						{var $featured = $isRentalFeatured($rental); }
 
 							<div class="row-fluid rentalList" data-cache="{$rand}" data-rental-rank="{$rental->getRank()}">
 								<div class="span4">

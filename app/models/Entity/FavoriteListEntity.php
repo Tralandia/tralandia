@@ -24,7 +24,7 @@ class FavoriteList extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental")
-	 * @ORM\JoinTable(name="favorite_list_rental",
+	 * @ORM\JoinTable(name="_favorite_list_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="favorite_list_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")}
 	 *      )

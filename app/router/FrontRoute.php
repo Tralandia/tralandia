@@ -12,6 +12,7 @@ use Repository\Location\LocationRepository;
 use Nette\Application\Routers\Route;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
+use Tralandia\Routing\PathSegments;
 
 class FrontRoute extends BaseRoute
 {
@@ -72,8 +73,12 @@ class FrontRoute extends BaseRoute
 	public $rentalTypeDao;
 	public $rentalAmenityDao;
 	public $rentalPlacementDao;
+
+	/**
+	 * @var \Tralandia\Routing\PathSegments
+	 */
+	public $pathSegments;
 	public $routingPathSegmentDao;
-	public $routingPathSegmentOldDao;
 	public $domainDao;
 	public $favoriteListDao;
 	public $pageDao;
@@ -94,13 +99,15 @@ class FrontRoute extends BaseRoute
 	 * @param string $domainMask
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Device $device
+	 * @param \Tralandia\Routing\PathSegments $pathSegments
 	 */
-	public function __construct($domainMask, EntityManager $em, \Device $device)
+	public function __construct($domainMask, EntityManager $em, \Device $device, PathSegments $pathSegments)
 	{
 		$this->device = $device;
 		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $em);
+		$this->pathSegments = $pathSegments;
 	}
 
 
@@ -478,19 +485,17 @@ class FrontRoute extends BaseRoute
 
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 
-		$pathSegmentRepository = $this->routingPathSegmentDao;
-		$pathSegmentOldRepository = $this->routingPathSegmentOldDao;
 
 		foreach ($pathSegments as $value) {
-			$pathSegment = $pathSegmentRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+			$pathSegment = $this->pathSegments->findOneForRouter($params['language'], $params['primaryLocation'], $value);
 			if(!$pathSegment) {
-				$pathSegment = $pathSegmentOldRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+				$pathSegment = $this->pathSegments->findOneForRouter($params['language'], $params['primaryLocation'], $value, TRUE);
 				if(!$pathSegment) continue;
 				$pathSegment = $pathSegment->getPathSegmentNew();
 			}
 			$keyTemp = $pathSegmentTypesFlip[$pathSegment->getType()];
 			$accessor = $keyTemp.'Dao';
-			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($pathSegment->getEntityId());
+			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->find($pathSegment->getEntityId());
 		}
 
 

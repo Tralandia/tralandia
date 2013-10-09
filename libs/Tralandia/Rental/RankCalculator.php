@@ -27,6 +27,11 @@ class RankCalculator {
 	}
 
 
+	/**
+	 * @param Rental $rental
+	 *
+	 * @throws \Exception
+	 */
 	public function updateRank(Rental $rental){
 
 //		$conditionalCompulsoryInformation = array('price');

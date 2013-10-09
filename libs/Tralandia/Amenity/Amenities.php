@@ -223,7 +223,6 @@ class Amenities
 	 */
 	protected function findByTypeForSelect($type)
 	{
-		$type = $this->amenityTypeDao->findOneBySlug($type);
 		$return = [];
 		$rows = $this->findByType($type);
 		foreach ($rows as $row) {
@@ -241,7 +240,7 @@ class Amenities
 	 */
 	public function findImportantForSelect()
 	{
-		$rows = $this->findByImportant(TRUE);
+		$rows = $this->amenityTypeDao->findByImportant(TRUE);
 		foreach ($rows as $row) {
 			if ($row->type->slug == 'animal') continue;
 			$return[$row->id] = $this->translator->translate($row->name);
