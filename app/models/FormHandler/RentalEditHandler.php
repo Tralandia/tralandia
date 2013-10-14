@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Entity\Rental\Pricelist;
 use \Nette\DI\Container;
+use Tralandia\Amenity\Amenities;
 use Tralandia\Dictionary\PhraseManager;
+use Tralandia\Language\Languages;
 
 class RentalEditHandler extends FormHandler
 {
@@ -33,12 +35,26 @@ class RentalEditHandler extends FormHandler
 	 */
 	private $phraseManager;
 
+	/**
+	 * @var \Tralandia\Amenity\Amenities
+	 */
+	private $amenities;
 
-	public function __construct(Rental $rental, PhraseManager $phraseManager, EntityManager $em)
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
+
+	public function __construct(Rental $rental, PhraseManager $phraseManager,
+								Amenities $amenities, Languages $languages,
+								EntityManager $em)
 	{
 		$this->em = $em;
 		$this->rental = $rental;
 		$this->phraseManager = $phraseManager;
+		$this->amenities = $amenities;
+		$this->languages = $languages;
 	}
 
 
@@ -49,9 +65,7 @@ class RentalEditHandler extends FormHandler
 
 
 		if($value = $values['spokenLanguages']) {
-			/** @var $languageRepository \Repository\LanguageRepository */
-			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-			$spokenLanguages = $languageRepository->findByIds($value);
+			$spokenLanguages = $this->languages->findByIds($value);
 			$rental->setSpokenLanguages($spokenLanguages);
 		}
 
@@ -165,7 +179,7 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['pet']) {
-			$petAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByPetType();
+			$petAmenity = $this->amenities->findByPetType();
 
 			foreach ($petAmenity as $amenity) {
 				if ($value && $amenity->id == $value) {
@@ -177,7 +191,7 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['ownerAvailability']) {
-			$availabilityAmenities = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByOwnerAvailabilityType();
+			$availabilityAmenities = $this->amenities->findByOwnerAvailabilityType();
 			foreach ($availabilityAmenities as $amenity) {
 				if ($amenity->getId() == $value) {
 					$rental->addAmenity($amenity);
@@ -204,7 +218,7 @@ class RentalEditHandler extends FormHandler
 		$rental->rooms = $values['roomsLayout'];
 
 		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
-		$rentalRepository->flush();
+		$rentalRepository->save($rental);
 
 		if(isset($gpsIsChanged)) {
 			$this->onGpsChange($rental);

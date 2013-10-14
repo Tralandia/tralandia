@@ -1,16 +1,9 @@
 <?php
 
 namespace FrontModule;
-use Model\Rental\IRentalDecoratorFactory;
-use Routers\FrontRoute;
 
 class RootHomePresenter extends BasePresenter {
 
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
 
 

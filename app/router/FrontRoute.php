@@ -12,6 +12,7 @@ use Repository\Location\LocationRepository;
 use Nette\Application\Routers\Route;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
+use Tralandia\Location\Countries;
 use Tralandia\Routing\PathSegments;
 
 class FrontRoute extends BaseRoute
@@ -154,9 +155,17 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) && $params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
 				$countrySlug = $pathSegments[0];
-				$qb = $this->locationRepository->findByTypeQb('country');
+
+				$qb = $this->locationDao->createQueryBuilder('e');
+
+				$qb->innerJoin('e.type', 't')
+					->where($qb->expr()->eq('t.slug', ':type'))
+					->setParameter('type', 'country');
+
 				$qb->andWhere($qb->expr()->eq('e.slug', ':slug'))->setParameter('slug', $countrySlug);
+
 				$country = $qb->getQuery()->getOneOrNullResult();
+
 				if($country) {
 					array_shift($pathSegments);
 					$params[self::PRIMARY_LOCATION] = $country;

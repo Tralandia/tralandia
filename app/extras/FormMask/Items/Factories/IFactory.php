@@ -2,7 +2,7 @@
 
 namespace Extras\FormMask\Items\Foctories;
 
-use Extras\Models\Entity\IEntity;
+use \Entity\BaseEntity;
 
 /**
  * @author Branislav Vaculčiak
@@ -12,7 +12,7 @@ interface IFactory {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 */
-	public function create($name, $label, IEntity $entity);
+	public function create($name, $label, BaseEntity $entity);
 }

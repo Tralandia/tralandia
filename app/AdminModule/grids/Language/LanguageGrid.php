@@ -26,6 +26,7 @@ class LanguageGrid extends AdminGridControl {
 
 		return $grid;
 	}
+
 }
 
 interface ILanguageGridFactory {

@@ -1,23 +1,25 @@
 <?php
 
 
-namespace Dictionary;
+namespace Tralandia\Dictionary;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
+use Tralandia\BaseDao;
 
 class FulltextSearch {
 
 	/**
-	 * @var \Repository\Phrase\TranslationRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	private $translationRepository;
+	private $translationDao;
 
 
-	public function __construct(EntityManager $em)
+	public function __construct(BaseDao $translationDao)
 	{
-		$this->translationRepository = $em->getRepository(TRANSLATION_ENTITY);
+		$this->translationDao = $translationDao;
 	}
 
 
@@ -34,7 +36,7 @@ class FulltextSearch {
 	public function getResultCount($string, Language $language = NULL, $searchInUserContent = FALSE)
 	{
 		$qb = $this->createQb($string, $language, $searchInUserContent);
-		return $this->translationRepository->getCount($qb);
+		return (new Paginator($qb))->count();
 	}
 
 
@@ -47,7 +49,7 @@ class FulltextSearch {
 	 */
 	protected function createQb($string, Language $language = NULL, $searchInUserContent = FALSE)
 	{
-		$qb = $this->translationRepository->createQueryBuilder();
+		$qb = $this->translationDao->createQueryBuilder('e');
 
 		$phraseIsJoined = FALSE;
 		$joinLanguages = TRUE;

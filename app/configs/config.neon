@@ -339,7 +339,6 @@ services:
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
 	dictionary.updateTranslationVariations: Dictionary\UpdateTranslationVariations
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
-	dictionary.fulltextSearch: Dictionary\FulltextSearch
 	dictionary.markAsPaid: Dictionary\MarkAsPaid
 	dictionary.phraseManager: Tralandia\Dictionary\PhraseManager
 
@@ -359,7 +358,6 @@ services:
 	# ====================
 	# ==============================
 
-	supportedLanguages: SupportedLanguages
 	allLanguages: AllLanguages
 
 	# ==============================
@@ -396,14 +394,19 @@ services:
 	#==========================================================#
 	############################################################
 
-	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
+	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
+	- \Tralandia\Dictionary\FulltextSearch(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
+	- \Tralandia\Language\SupportedLanguages
 	- \Tralandia\Location\Countries(@doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Location\Locations(@doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Location\Type), ...)
-	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
-	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
+	- \Tralandia\Phrase\Phrases(@doctrine.dao(Entity\Phrase\Phrase))
+	- \Tralandia\Phrase\Translations(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
+	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
 	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
+	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
+	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
 
 	# ==========================================================
 	# ==========================================================

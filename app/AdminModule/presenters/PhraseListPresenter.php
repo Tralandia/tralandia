@@ -35,13 +35,13 @@ class PhraseListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Dictionary\FulltextSearch
+	 * @var \Tralandia\Dictionary\FulltextSearch
 	 */
 	protected $fulltextSearch;
 
 	/**
 	 * @autowire
-	 * @var \SupportedLanguages
+	 * @var \Tralandia\Language\SupportedLanguages
 	 */
 	protected $supportedLanguages;
 
@@ -61,6 +61,12 @@ class PhraseListPresenter extends BasePresenter {
 	 * @var \Repository\Phrase\PhraseRepository
 	 */
 	protected $phraseDao;
+
+	/**
+	 * @autowire
+	 * @var \Tralandia\Phrase\Phrases
+	 */
+	protected $phrasesFacade;
 
 	/**
 	 * @var array|\Entity\Phrase\Phrase[]
@@ -104,9 +110,9 @@ class PhraseListPresenter extends BasePresenter {
 		$language = $this->languageDao->find(CENTRAL_LANGUAGE);
 
 		$paginator = $this->getPaginator();
-		$paginator->setItemCount($this->phraseDao->getCountByStatus(Phrase::WAITING_FOR_CENTRAL));
+		$paginator->setItemCount($this->phrasesFacade->getCountByStatus(Phrase::WAITING_FOR_CENTRAL));
 
-		$qb = $this->phraseDao->findByStatusQb(Phrase::WAITING_FOR_CENTRAL);
+		$qb = $this->phrasesFacade->findByStatusQb(Phrase::WAITING_FOR_CENTRAL);
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
@@ -128,9 +134,9 @@ class PhraseListPresenter extends BasePresenter {
 		$language = $this->languageDao->find(CENTRAL_LANGUAGE);
 
 		$paginator = $this->getPaginator();
-		$paginator->setItemCount($this->phraseDao->getCountByStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING));
+		$paginator->setItemCount($this->phrasesFacade->getCountByStatus(Phrase::WAITING_FOR_CORRECTION_CHECKING));
 
-		$qb = $this->phraseDao->findByStatusQb(Phrase::WAITING_FOR_CORRECTION_CHECKING);
+		$qb = $this->phrasesFacade->findByStatusQb(Phrase::WAITING_FOR_CORRECTION_CHECKING);
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();
@@ -158,9 +164,9 @@ class PhraseListPresenter extends BasePresenter {
 		$language = $this->languageDao->findOneByIso($languageIso);
 
 		$paginator = $this->getPaginator();
-		$paginator->setItemCount($this->phraseDao->getNotCheckedCount($language));
+		$paginator->setItemCount($this->phrasesFacade->getNotCheckedCount($language));
 
-		$qb = $this->phraseDao->findNotCheckedTranslationsQb($language);
+		$qb = $this->phrasesFacade->findNotCheckedTranslationsQb($language);
 		$qb->setMaxResults($this->itemsPerPage)
 			->setFirstResult($paginator->getOffset());
 		$this->phrases = $qb->getQuery()->getResult();

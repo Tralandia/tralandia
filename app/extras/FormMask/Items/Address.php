@@ -12,10 +12,10 @@ class Address extends Select {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Translator
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, \Tralandia\Localization\Translator $translator) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity, \Tralandia\Localization\Translator $translator) {
 		parent::__construct($name, $label, $entity, $translator);
 		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name)));
 	}

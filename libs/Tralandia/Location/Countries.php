@@ -153,4 +153,23 @@ class Countries {
 
 	}
 
+
+	/**
+	 * @param $slug
+	 *
+	 * @return |Entity\Location\Location|NULL|mixed
+	 */
+	public function findOneBySlug($slug)
+	{
+		$qb = $this->locationDao->createQueryBuilder('e');
+
+		$qb->innerJoin('e.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))
+			->setParameter('type', 'country');
+
+		$qb->andWhere($qb->expr()->eq('e.slug', ':slug'))->setParameter('slug', $slug);
+
+		return $qb->getQuery()->getOneOrNullResult();
+	}
+
 }

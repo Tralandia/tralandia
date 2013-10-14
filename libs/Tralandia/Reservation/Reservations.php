@@ -1,16 +1,36 @@
 <?php
-namespace Repository\User;
+/**
+ * This file is part of the Tralandia.
+ * User: david
+ * Created at: 10/10/13 8:42 AM
+ */
+
+namespace Tralandia\Reservation;
+
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Rental\Rental;
 use Entity\User\User;
+use Nette;
+use Tralandia\BaseDao;
 
-/**
- * RentalReservationRepository class
- *
- * @author Dávid Ďurika
- */
-class RentalReservationRepository extends \Repository\BaseRepository {
+class Reservations
+{
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $reservationDao;
+
+
+	/**
+	 * @param BaseDao $reservationDao
+	 */
+	public function __construct(BaseDao $reservationDao)
+	{
+		$this->reservationDao = $reservationDao;
+	}
+
 
 	/**
 	 * @param User $user
@@ -19,9 +39,8 @@ class RentalReservationRepository extends \Repository\BaseRepository {
 	 */
 	public function getReservationsCountByUser(User $user)
 	{
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('count(e) as total')
-			->from($this->_entityName, 'e');
+		$qb = $this->reservationDao->createQueryBuilder('e');
+		$qb->select('count(e) as total');
 
 		$rentals = $user->getRentals();
 		foreach ($rentals as $rental) {
@@ -72,15 +91,14 @@ class RentalReservationRepository extends \Repository\BaseRepository {
 	 */
 	protected function findForRentalQb(Rental $rental)
 	{
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('e')
-			->from($this->_entityName, 'e');
+		$qb = $this->reservationDao->createQueryBuilder('e');
 
 		$qb->andWhere($qb->expr()->eq('e.rental', ':rental'))
 			->setParameter('rental', $rental);
 
 		return $qb;
 	}
+
 
 
 }

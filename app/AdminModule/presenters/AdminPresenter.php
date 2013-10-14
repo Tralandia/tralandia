@@ -36,7 +36,7 @@ class AdminPresenter extends BasePresenter {
 
 		$this->settings = $this->getService('presenter.' . $this->getConfigName() . '.settings');
 		$this->template->settings = $this->settings;
-		$this->repository = $this->context->model->getRepository($this->settings->getEntityClass());
+		$this->repository = $this->context->getService('doctrine.default.entityManager')->getRepository($this->settings->getEntityClass());
 	}
 
 	/**
@@ -52,7 +52,7 @@ class AdminPresenter extends BasePresenter {
 	 */
 	public function actionAdd() {
 		$entity = $this->repository->createNew();
-		$this->getService('model')->persist($entity);
+		$this->context->getService('doctrine.default.entityManager')->persist($entity);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = 'novééé';
 	}
@@ -64,7 +64,7 @@ class AdminPresenter extends BasePresenter {
 		$entity = $this->repository->find($id);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = $entity->name->getCentralTranslationText();
-		$this->settings->id = $entity->id;
+		$this->settings->id = $entity->getId();
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AdminPresenter extends BasePresenter {
 	 */
 	public function getForm($name, $entity) {
 		$presenter = $this;
-		$model = $this->getService('model');
+		$model = $this->context->getService('doctrine.default.entityManager');
 		/** @var $formMaskFactory \Extras\FormMask\FormFactory */
 		$formMaskFactory = $this->getService("presenter.$name.form");
 		$form = $formMaskFactory->create($entity);

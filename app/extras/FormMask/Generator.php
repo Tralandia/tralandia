@@ -9,7 +9,7 @@ use Nette, Extras;
  */
 class Generator extends Nette\Object {
 
-	/** @var Extras\Models\Entity\IEntity */
+	/** @var \Entity\BaseEntity */
 	protected $entity;
 
 	/** @var Extras\FormMask\Mask */
@@ -84,10 +84,10 @@ class Generator extends Nette\Object {
 
 	/**
 	 * Setter entity
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @return Generator
 	 */
-	public function setEntity(Extras\Models\Entity\IEntity $entity) {
+	public function setEntity(\Entity\BaseEntity $entity) {
 		$this->entity = $entity;
 		return $this;
 	}

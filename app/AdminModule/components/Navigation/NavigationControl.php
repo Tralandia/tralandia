@@ -13,6 +13,7 @@ use Entity\User\Role;
 use Environment\Collator;
 use Environment\Environment;
 use Nette\Security\User;
+use Tralandia\Language\Languages;
 
 class NavigationControl extends BaseControl
 {
@@ -54,15 +55,21 @@ class NavigationControl extends BaseControl
 	 */
 	private $outdatedTranslations;
 
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
 
 	/**
 	 * @param User $user
 	 * @param ISimpleFormFactory $simpleFormFactory
+	 * @param \Tralandia\Language\Languages $languages
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Environment\Collator $collator
 	 * @param \Dictionary\FindOutdatedTranslations $outdatedTranslations
 	 */
-	public function __construct(User $user, ISimpleFormFactory $simpleFormFactory, EntityManager $em,
+	public function __construct(User $user, ISimpleFormFactory $simpleFormFactory, Languages $languages, EntityManager $em,
 								Collator $collator, FindOutdatedTranslations $outdatedTranslations)
 	{
 		$this->user = $user;
@@ -72,6 +79,7 @@ class NavigationControl extends BaseControl
 		$this->collator = $collator;
 		$this->em = $em;
 		$this->outdatedTranslations = $outdatedTranslations;
+		$this->languages = $languages;
 	}
 
 
@@ -204,7 +212,7 @@ class NavigationControl extends BaseControl
 			$en = $this->languageRepository->find(CENTRAL_LANGUAGE);
 			array_push($rows, $en);
 		} else {
-			$rows = $this->languageRepository->findSupported();
+			$rows = $this->languages->findSupported();
 		}
 
 		/** @var $row \Entity\Language */
@@ -227,7 +235,7 @@ class NavigationControl extends BaseControl
 
 	private function loadNavigation()
 	{
-		$config = new \Nette\Config\Loader;
+		$config = new \Nette\DI\Config\Loader;
 
 		$file = $this->user->getRoles()[0];
 

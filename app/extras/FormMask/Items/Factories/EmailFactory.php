@@ -8,7 +8,7 @@ use Extras;
  * @author Branislav Vaculčiak
  */
 class EmailFactory implements IFactory {
-	
+
 	/** @var Extras\Books\Email */
 	protected $book;
 
@@ -22,11 +22,11 @@ class EmailFactory implements IFactory {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Books\Email
 	 * @return Extras\FormMask\Items\Email
 	 */
-	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
+	public function create($name, $label, \Entity\BaseEntity $entity) {
 		return new Extras\FormMask\Items\Email($name, $label, $entity, $this->book);
 	}
 }

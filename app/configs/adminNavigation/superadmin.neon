@@ -60,22 +60,22 @@ common:
 				country:
 					label: Countries
 					link: ':Admin:Country:list'
-				region:
-					label: Regions
-					link: ':Admin:Region:list'
-				locality:
-					label: Localities
-					link: ':Admin:Locality:list'
+#				region:
+#					label: Regions
+#					link: ':Admin:Region:list'
+#				locality:
+#					label: Localities
+#					link: ':Admin:Locality:list'
 
-		stats:
-			label: Stats
-			items:
-				registrations:
-					label: Registrations
-					link: ':Admin:StatisticsRegistrations:list'
-				reservations:
-					label: Reservations
-					link: ':Admin:StatisticsReservations:list'
+#		stats:
+#			label: Stats
+#			items:
+#				registrations:
+#					label: Registrations
+#					link: ':Admin:StatisticsRegistrations:list'
+#				reservations:
+#					label: Reservations
+#					link: ':Admin:StatisticsReservations:list'
 
 		cache:
 			label: Cache
