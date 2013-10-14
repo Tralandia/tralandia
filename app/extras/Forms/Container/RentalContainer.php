@@ -138,7 +138,7 @@ class RentalContainer extends BaseContainer
 	{
 		$rental = $this->rental;
 
-		$placement = 0;
+		$placement = NULL;
 		foreach ($rental->getPlacements() as $place) {
 			$placement = $place->getId();
 			break;

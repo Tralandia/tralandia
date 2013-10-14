@@ -74,9 +74,10 @@ $dic = $container = $configurator->createContainer();
 
 FormContainer::extensionMethod('addPhraseContainer',
 	function (FormContainer $container, $name, $phrase) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$phraseManager = $dic->getByType('Tralandia\Dictionary\PhraseManager');
-		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $phraseManager, $em);
+		$languages = $dic->getByType('\Tralandia\Language\Languages');
+		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $phraseManager, $languages, $em);
 	});
 
 FormContainer::extensionMethod('addPhoneContainer',
@@ -102,7 +103,7 @@ FormContainer::extensionMethod('addRentalPhotosContainer',
 
 FormContainer::extensionMethod('addPriceContainer',
 	function (FormContainer $container, $name, $label) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
 		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $em, $translator, $collator);
@@ -110,7 +111,7 @@ FormContainer::extensionMethod('addPriceContainer',
 
 FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$manager = $dic->getService('rentalPriceListManager');
 		$translator = $dic->getService('translator');
 		$allLanguages = $dic->getService('allLanguages');
@@ -119,7 +120,7 @@ FormContainer::extensionMethod('addRentalPriceUploadContainer',
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
 	function (FormContainer $container, $name, $currency, $rental) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
 		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $rental, $translator, $collator);

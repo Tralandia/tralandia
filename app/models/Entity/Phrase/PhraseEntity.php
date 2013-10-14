@@ -371,7 +371,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	public function removeTranslation(\Entity\Phrase\Translation $translation)
 	{
 		$this->translations->removeElement($translation);
-		$translation->unsetPhrase();
+		//$translation->unsetPhrase();
 
 		return $this;
 	}

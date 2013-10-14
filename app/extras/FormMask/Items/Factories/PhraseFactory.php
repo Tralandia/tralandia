@@ -27,10 +27,10 @@ class PhraseFactory implements IFactory {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @return Extras\FormMask\Items\Phrase
 	 */
-	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
+	public function create($name, $label, \Entity\BaseEntity $entity) {
 		return new Extras\FormMask\Items\Phrase($name, $label, $this->serviceFactory->create($entity->$name), $this->language);
 	}
 }

@@ -13,6 +13,9 @@ use Nette\Localization\ITranslator;
 use Entity\Location\Location;
 use Repository\Location\LocationRepository;
 use Repository\LanguageRepository;
+use Tralandia\Amenity\Amenities;
+use Tralandia\Language\Languages;
+use Tralandia\Location\Countries;
 
 /**
  * RegistrationForm class
@@ -67,22 +70,37 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $interviewQuestionRepository;
 
-	/**
-	 * @var \Repository\Rental\AmenityRepository
-	 */
-	protected $amenityRepository;
 
 	protected $phraseRepository;
+
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $countries;
+
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
+	/**
+	 * @var \Tralandia\Amenity\Amenities
+	 */
+	private $amenities;
 
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Environment\Environment $environment
 	 * @param IRentalContainerFactory $rentalContainerFactory
+	 * @param \Tralandia\Location\Countries $countries
+	 * @param \Tralandia\Language\Languages $languages
+	 * @param \Tralandia\Amenity\Amenities $amenities
 	 * @param EntityManager $em
 	 * @param ITranslator $translator
 	 */
 	public function __construct(Rental $rental, Environment $environment, IRentalContainerFactory $rentalContainerFactory,
+								Countries $countries, Languages $languages, Amenities $amenities,
 								EntityManager $em, ITranslator $translator)
 	{
 		$this->rental = $rental;
@@ -95,22 +113,24 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
-		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
 		$this->phraseRepository = $em->getRepository(PHRASE_ENTITY);
+		$this->countries = $countries;
+		$this->languages = $languages;
+		$this->amenities = $amenities;
 		parent::__construct($translator);
 	}
 
 
 	public function buildForm()
 	{
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
+		$phonePrefixes = $this->countries->getPhonePrefixes();
 		$centralLanguage = $this->languageRepository->find(CENTRAL_LANGUAGE);
 		$importantLanguages = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 		$importantLanguagesForSelect = [];
 		foreach($importantLanguages as $language) {
 			$importantLanguagesForSelect[$language->getId()] = $this->translate($language->getName());
 		}
-		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
+		$supportedLanguagesForSelect = $this->languages->getSupportedSortedByName();
 		$questions = $this->interviewQuestionRepository->findAll();
 		$currency = $this->country->getDefaultCurrency();
 
@@ -188,31 +208,31 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'))
 						->setOption('help', $this->translate('152269'));
 
-		$amenities = $this->amenityRepository->findByChildrenTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByChildrenTypeForSelect();
 		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
 
-		$amenities = $this->amenityRepository->findByServiceTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByServiceTypeForSelect();
 		$rentalContainer->addMultiOptionList('service', 'o100171', $amenities);
 
-		$amenities = $this->amenityRepository->findByWellnessTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByWellnessTypeForSelect();
 		$rentalContainer->addMultiOptionList('wellness', 'o100172', $amenities);
 
-		$amenities = $this->amenityRepository->findByKitchenTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByKitchenTypeForSelect();
 		$rentalContainer->addMultiOptionList('kitchen', 'o100174', $amenities);
 
-		$amenities = $this->amenityRepository->findByBathroomTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByBathroomTypeForSelect();
 		$rentalContainer->addMultiOptionList('bathroom', 'o100175', $amenities);
 
-		$amenities = $this->amenityRepository->findByNearByTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByNearByTypeForSelect();
 		$rentalContainer->addMultiOptionList('nearBy', '152277', $amenities);
 
-		$amenities = $this->amenityRepository->findByRentalServicesTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByRentalServicesTypeForSelect();
 		$rentalContainer->addMultiOptionList('rentalServices', '152278', $amenities);
 
-		$amenities = $this->amenityRepository->findByOnFacilityTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findByOnFacilityTypeForSelect();
 		$rentalContainer->addMultiOptionList('onFacility', '152279', $amenities);
 
-		$amenities = $this->amenityRepository->findBySportsFunTypeForSelect($this->getTranslator(), $this->collator);
+		$amenities = $this->amenities->findBySportsFunTypeForSelect();
 		$rentalContainer->addMultiOptionList('sportsFun', '152280', $amenities);
 
 		$this->addSubmit('submit', 'o100083');

@@ -1,6 +1,8 @@
 <?php
 
 use Entity\User\User;
+use Nette\Application\Request;
+use Nette\Application\Responses\ForwardResponse;
 use Nette\Security\IAuthorizator;
 use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
@@ -178,12 +180,12 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect('this', $parameters);
 		}
 
-		$backLink = $this->storeRequest();
-		if(!$this->getHttpRequest()->isPost()) {
-			$environmentSection = $this->context->session->getSection('environment');
-			$environmentSection->previousLink = $environmentSection->actualLink;
-			$environmentSection->actualLink = $backLink;
-		}
+//		$backLink = $this->storeRequest();
+//		if(!$this->getHttpRequest()->isPost()) {
+//			$environmentSection = $this->context->session->getSection('environment');
+//			$environmentSection->previousLink = $environmentSection->actualLink;
+//			$environmentSection->actualLink = $backLink;
+//		}
 
 		if($this->user->isLoggedIn()) {
 			$this->loggedUser = $this->userDao->find($this->user->getId());
@@ -622,5 +624,7 @@ abstract class BasePresenter extends Presenter {
 		}
 		$this->redirect(':Front:Home:');
 	}
+
+
 
 }

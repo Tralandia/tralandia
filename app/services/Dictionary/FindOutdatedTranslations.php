@@ -6,6 +6,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Doctrine\ORM\EntityManager;
+use Tralandia\Phrase\Translations;
 
 class FindOutdatedTranslations {
 
@@ -14,9 +15,16 @@ class FindOutdatedTranslations {
 	 */
 	protected $_em;
 
-	public function __construct(EntityManager $entityManager)
+	/**
+	 * @var \Tralandia\Phrase\Translations
+	 */
+	private $translations;
+
+
+	public function __construct(Translations $translations, EntityManager $entityManager)
 	{
 		$this->_em = $entityManager;
+		$this->translations = $translations;
 	}
 
 	public function getWaitingForCentral(\Entity\Language $language = NULL, $limit = NULL, $offset = NULL)
@@ -72,7 +80,7 @@ class FindOutdatedTranslations {
 		$query->select('e');
 		$query->from('\Entity\Phrase\Translation', 'e');
 
-		$query = $this->_em->getRepository(TRANSLATION_ENTITY)->filterTranslatedTypes($query);
+		$query = $this->translations->filterTranslatedTypes($query);
 
 		if ($language) {
 			$query->andWhere('e.language = :language');

@@ -96,6 +96,56 @@ class Languages {
 
 
 	/**
+	 * @return array
+	 */
+	public function getSupportedSortedByName() {
+		$supported = $this->findSupported();
+
+		$return = array();
+		foreach ($supported as $key => $language) {
+			$return[$this->translator->translate($language->getName())] = $language;
+		}
+
+		$this->collator->ksort($return);
+
+		return $return;
+
+	}
+
+
+	/**
+	 * @param $ids
+	 *
+	 * @return \Entity\Language[]
+	 */
+	public function findByIds($ids)
+	{
+		$qb = $this->languageDao->createQueryBuilder('e');
+		$qb->where($qb->expr()->in('e.id', $ids));
+
+		return $qb->getQuery()->getResult();
+	}
+
+
+	/**
+	 * @param array $iso
+	 *
+	 * @return array
+	 */
+	public function findPairsByIso(array $iso)
+	{
+		$qb = $this->languageDao->createQueryBuilder('e');
+		$qb->where($qb->expr()->in('e.iso', $iso));
+
+		$result = $qb->getQuery()->getResult();
+		$result = \Tools::arrayMap($result, function($key, $value) {return $value->getIso();}, NULL);
+
+		return $result;
+	}
+
+
+
+	/**
 	 * @param Presenter $presenter
 	 *
 	 * @return array
