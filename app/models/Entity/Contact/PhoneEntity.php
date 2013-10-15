@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="contact_phone", indexes={@ORM\index(name="value", columns={"value"})})
+ * @ORM\Table(name="contact_phone", indexes={@ORM\Index(name="value", columns={"value"})})
  */
 class Phone extends \Entity\BaseEntity {
 

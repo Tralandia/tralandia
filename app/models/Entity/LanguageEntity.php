@@ -10,9 +10,9 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity
  * @ORM\Table(name="language", indexes={
- * 		@ORM\index(name="iso", columns={"iso"}),
- * 		@ORM\index(name="live", columns={"live"}),
- * 		@ORM\index(name="supported", columns={"supported"})
+ * 		@ORM\Index(name="iso", columns={"iso"}),
+ * 		@ORM\Index(name="live", columns={"live"}),
+ * 		@ORM\Index(name="supported", columns={"supported"})
  * })
  *
  */

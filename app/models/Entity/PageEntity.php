@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="page", indexes={@ORM\index(name="destination", columns={"destination"})})
+ * @ORM\Table(name="page", indexes={@ORM\Index(name="destination", columns={"destination"})})
  *
  */
 class Page extends \Entity\BaseEntity {

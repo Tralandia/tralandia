@@ -11,8 +11,8 @@ use Nette\Utils\Strings;
  * @ORM\Entity
  * @ORM\Table(name="phrase_translation",
  * 				indexes={
- * 					@ORM\index(name="translation", columns={"translation"}),
- * 					@ORM\index(name="status", columns={"status"})
+ * 					@ORM\Index(name="translation", columns={"translation"}),
+ * 					@ORM\Index(name="status", columns={"status"})
  * 				}
  * 			)
  *

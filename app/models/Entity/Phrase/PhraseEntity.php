@@ -11,7 +11,7 @@ use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="phrase", indexes={@ORM\index(name="status", columns={"status"})})
+ * @ORM\Table(name="phrase", indexes={@ORM\Index(name="status", columns={"status"})})
  *
  *
  */

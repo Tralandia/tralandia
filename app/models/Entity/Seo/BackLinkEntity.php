@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"})})
+ * @ORM\Table(name="seo_backlink", indexes={@ORM\Index(name="rental", columns={"rental_id"})})
  *
  */
 class BackLink extends \Entity\BaseEntity {
