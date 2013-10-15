@@ -9,6 +9,7 @@ use Nette\DateTime;
 use Routers\FrontRoute;
 use Service\Seo\ISeoServiceFactory;
 use Service\Seo\SeoService;
+use Tralandia\Language\Languages;
 
 class HeaderControl extends \BaseModule\Components\BaseControl {
 
@@ -42,8 +43,14 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $shareLinks;
 
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
+
 	public function __construct(SeoService $pageSeo, User $user = NULL, Environment $environment, EntityManager $em,
-								ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
+								Languages $languages, ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
 		parent::__construct();
 		$this->pageSeo = $pageSeo;
 		$this->user = $user;
@@ -51,17 +58,14 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$this->em = $em;
 		$this->seoFactory = $seoFactory;
 		$this->shareLinks = $shareLinks;
+		$this->languages = $languages;
 	}
 
 	public function render() {
 
 		$template = $this->template;
 
-		/** @var $languageRepository \Repository\LanguageRepository */
-		$languageRepository = $this->em->getRepository('\Entity\Language');
-		$translator = $this->environment->getTranslator();
-		$collator = $this->environment->getLocale()->getCollator();
-		$liveLanguages = $languageRepository->getLiveSortedByName($translator, $collator);
+		$liveLanguages = $this->languages->findLive($this->environment->getLanguage());
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
@@ -74,7 +78,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 			$template->slogan = $template->translate('o21083').' '.$template->translate(
 				$primaryLocation->getName(),
 				NULL,
-				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
+				array(\Tralandia\Localization\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
 			);
 			$template->showFlag = TRUE;
 		}
@@ -96,7 +100,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->isoCode = $this->environment->getPrimaryLocation()->getIso(Location::LAST_2_CHARACTERS);
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
-		$centralLanguage = $languageRepository->findCentral();
+		$centralLanguage = $this->languages->findCentral();
 		$template->importantLanguages = $importantLanguagesIsos = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 
 		$template->environment = $this->environment;

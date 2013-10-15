@@ -7,9 +7,7 @@ use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \SecuredPresenter {
 
-	protected $userRentalReservationRepositoryAccessor;
-	protected $rentalTypeRepositoryAccessor;
-	protected $rentalRepositoryAccessor;
+	protected $reservationDao;
 
 
 	protected $seoFactory;
@@ -21,9 +19,18 @@ abstract class BasePresenter extends \SecuredPresenter {
 	protected $headerControlFactory;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Reservation\Reservations
+	 */
+	protected $reservations;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
+
+
+
 
 
 	public function injectSeo(ISeoServiceFactory $seoFactory)
@@ -32,9 +39,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 	}
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->userRentalReservationRepositoryAccessor = $dic->userRentalReservationRepositoryAccessor;
-		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->reservationDao = $dic->getService('doctrine.default.entityManager')->getDao(RESERVATION_ENTITY);
 	}
 
 	protected function startup() {
@@ -55,7 +60,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->template->envLanguage = $this->environment->getLanguage();
 		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
 
-		$this->template->reservationsCount = $this->userRentalReservationRepositoryAccessor->get()->getReservationsCountByUser($this->loggedUser);
+		$this->template->reservationsCount = $this->reservations->getReservationsCountByUser($this->loggedUser);
 
 
 		$this->template->rentalList = $this->loggedUser->getRentals();

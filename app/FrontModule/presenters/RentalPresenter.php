@@ -4,7 +4,6 @@ namespace FrontModule;
 
 use Entity\Rental\Image;
 use Entity\Rental\Rental;
-use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
@@ -12,12 +11,6 @@ use Nette\Utils\Strings;
 
 
 class RentalPresenter extends BasePresenter {
-
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
 	/**
 	 * @autowire
@@ -58,7 +51,6 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 
-		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = [];
 		foreach ($rental->getInterviewAnswers() as $key => $answer) {
 			$answerText = $answer->getAnswer()->getTranslation($this->language);
@@ -72,7 +64,6 @@ class RentalPresenter extends BasePresenter {
 		$localitySeo = $this->seoFactory->create($link, $this->getLastCreatedRequest());
 
 		$this->template->rental = $rental;
-		$this->template->rentalService = $rentalService;
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
 
@@ -87,6 +78,7 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->pet = $rental->getPetAmenity();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
+		$this->template->isRentalFeatured = $this->isRentalFeatured;
 
 		$formattedCalendar = [];
 		foreach($rental->getCalendar() as $day) {
@@ -159,7 +151,7 @@ class RentalPresenter extends BasePresenter {
 		$bar['all'] = array_slice($bar['all'], $start, 12);
 		if (!isset($bar['currentKey'])) return FALSE;
 
-		$barRentals = $this->context->rentalRepositoryAccessor->get()->findById($bar['all']);
+		$barRentals = $this->rentalDao->findById($bar['all']);
 
 		$barRentals = \Tools::sortArrayByArray($barRentals, $bar['all'], function($v) {return $v->getId();});
 
@@ -172,11 +164,11 @@ class RentalPresenter extends BasePresenter {
 		$lastSearchResults['totalCount'] = $bar['totalCount'];
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']-1])) {
-			$lastSearchResults['prevRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']-1]);
+			$lastSearchResults['prevRental'] = $this->rentalDao->find($bar['all'][$lastSearchResults['currentKey']-1]);
 		}
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']+1])) {
-			$lastSearchResults['nextRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']+1]);
+			$lastSearchResults['nextRental'] = $this->rentalDao->find($bar['all'][$lastSearchResults['currentKey']+1]);
 		}
 
 		if (!$lastSearchResults['totalCount']>1 && $this->template->navigationBarLastActive=='navigationBarSearchResults') {

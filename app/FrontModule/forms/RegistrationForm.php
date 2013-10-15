@@ -10,9 +10,9 @@ use Nette;
 use Nette\Localization\ITranslator;
 use Entity\Location\Location;
 use OwnerModule\BasePresenter;
-use Repository\Location\LocationRepository;
-use Repository\LanguageRepository;
-use Extras\Forms\Container\AddressContainer;
+use Tralandia\Amenity\Amenities;
+use Tralandia\Language\Languages;
+use Tralandia\Location\Countries;
 
 /**
  * RegistrationForm class
@@ -48,16 +48,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	protected $rentalContainerFactory;
 
 	/**
-	 * @var \Repository\Location\LocationRepository
-	 */
-	protected $locationRepository;
-
-	/**
-	 * @var \Repository\LanguageRepository
-	 */
-	protected $languageRepository;
-
-	/**
 	 * @var \Repository\User\UserRepository
 	 */
 	protected $userRepository;
@@ -68,18 +58,33 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	protected $currencyRepository;
 
 	/**
-	 * @var \Repository\Rental\AmenityRepository
+	 * @var \Tralandia\Location\Countries
 	 */
-	protected $amenityRepository;
+	private $countries;
+
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
+	/**
+	 * @var \Tralandia\Amenity\Amenities
+	 */
+	private $amenities;
+
 
 	/**
 	 * @param Environment $environment
 	 * @param Nette\Application\UI\Presenter $presenter
+	 * @param \Tralandia\Location\Countries $countries
+	 * @param \Tralandia\Language\Languages $languages
+	 * @param \Tralandia\Amenity\Amenities $amenities
 	 * @param \Extras\Forms\Container\IRentalContainerFactory $rentalContainerFactory
 	 * @param EntityManager $em
 	 * @param ITranslator $translator
 	 */
 	public function __construct(Environment $environment, Nette\Application\UI\Presenter $presenter,
+								Countries $countries, Languages $languages, Amenities $amenities,
 								IRentalContainerFactory $rentalContainerFactory,
 								EntityManager $em, ITranslator $translator)
 	{
@@ -89,20 +94,20 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->collator = $environment->getLocale()->getCollator();
 		$this->rentalContainerFactory = $rentalContainerFactory;
 
-		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
-		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
 		$this->currencyRepository = $em->getRepository(CURRENCY_ENTITY);
-		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
+		$this->countries = $countries;
+		$this->languages = $languages;
+		$this->amenities = $amenities;
 		parent::__construct($translator);
 	}
 
 
 	public function buildForm()
 	{
-		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator, $this->uiPresenter);
-		$languages = $this->languageRepository->getForSelectWithLinks($this->translator, $this->collator, $this->uiPresenter);
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->collator);
+		$countries = $this->countries->getForSelect($this->uiPresenter);
+		$languages = $this->languages->getForSelectWithLinks($this->uiPresenter);
+		$phonePrefixes = $this->countries->getPhonePrefixes();
 
 		$countrySelect = $this->addSelect('country', 'o1094', $countries);
 		//1347
@@ -160,7 +165,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
 			}
 
-			$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
+			$amenityImportant = $this->amenities->findImportantForSelect();
 			$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)//->setOption('help', $this->translate('o5956'))
 			;
 
@@ -211,7 +216,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 
 		];
-//		$this->setDefaults($defaults);
+		$this->setDefaults($defaults);
 	}
 
 

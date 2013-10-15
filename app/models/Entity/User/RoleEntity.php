@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\User\RoleRepository")
+ * @ORM\Entity
  * @ORM\Table(name="user_role", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Primary(key="id", value="name")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class Role extends \Entity\BaseEntity {
 
@@ -75,14 +75,14 @@ class Role extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\Role
@@ -93,7 +93,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -101,7 +101,7 @@ class Role extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -109,7 +109,7 @@ class Role extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\User\Role
 	 * @return \Entity\User\Role
@@ -120,7 +120,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\Role
 	 */
@@ -130,7 +130,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\Role|NULL
 	 */
@@ -138,7 +138,7 @@ class Role extends \Entity\BaseEntity {
 	{
 		return $this->parent;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\Role
@@ -149,7 +149,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\Role
 	 */
@@ -159,7 +159,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -167,7 +167,7 @@ class Role extends \Entity\BaseEntity {
 	{
 		return $this->homePage;
 	}
-		
+
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Role
@@ -181,7 +181,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Role
@@ -193,7 +193,7 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\User\User[]
 	 */

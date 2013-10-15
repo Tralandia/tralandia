@@ -12,6 +12,8 @@ use Repository\Location\LocationRepository;
 use Nette\Application\Routers\Route;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
+use Tralandia\Location\Countries;
+use Tralandia\Routing\PathSegments;
 
 class FrontRoute extends BaseRoute
 {
@@ -66,17 +68,21 @@ class FrontRoute extends BaseRoute
 		self::FAVORITE_LIST,
 	];
 
-	public $locationRepositoryAccessor;
-	public $languageRepositoryAccessor;
-	public $rentalRepositoryAccessor;
-	public $rentalTypeRepositoryAccessor;
-	public $rentalAmenityRepositoryAccessor;
-	public $rentalPlacementRepositoryAccessor;
-	public $routingPathSegmentRepositoryAccessor;
-	public $routingPathSegmentOldRepositoryAccessor;
-	public $domainRepositoryAccessor;
-	public $favoriteListRepositoryAccessor;
-	public $pageRepositoryAccessor;
+	public $locationDao;
+	public $languageDao;
+	public $rentalDao;
+	public $rentalTypeDao;
+	public $rentalAmenityDao;
+	public $rentalPlacementDao;
+
+	/**
+	 * @var \Tralandia\Routing\PathSegments
+	 */
+	public $pathSegments;
+	public $routingPathSegmentDao;
+	public $domainDao;
+	public $favoriteListDao;
+	public $pageDao;
 	public $phraseDecoratorFactory;
 
 	/**
@@ -94,15 +100,15 @@ class FrontRoute extends BaseRoute
 	 * @param string $domainMask
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Device $device
+	 * @param \Tralandia\Routing\PathSegments $pathSegments
 	 */
-	public function __construct($domainMask, EntityManager $em, \Device $device)
+	public function __construct($domainMask, EntityManager $em, \Device $device, PathSegments $pathSegments)
 	{
 		$this->device = $device;
-		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
-		//$mask = '//[!<language ([a-z]{2}|www)>.tralandia.<primaryLocation [a-z]{2,4}>/][<hash .*>]';
 		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $em);
+		$this->pathSegments = $pathSegments;
 	}
 
 
@@ -117,7 +123,6 @@ class FrontRoute extends BaseRoute
 		if ($appRequest = $route->match($httpRequest)) {
 			$presenter = NULL;
 			$params['action'] = NULL;
-			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
 			if(isset($params[self::HASH])) {
@@ -129,7 +134,7 @@ class FrontRoute extends BaseRoute
 			unset($params[self::HASH]);
 
 			if(is_array($pathSegments) && 'external/calendar/calendar.php' == join('/',$pathSegments)) {
-				if(isset($params['id']) && $rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($params['id'])) {
+				if(isset($params['id']) && $rental = $this->rentalDao->findOneByOldId($params['id'])) {
 					$params[self::RENTAL] = $rental;
 					$presenter = 'CalendarIframe';
 					$params['action'] = 'default';
@@ -150,9 +155,17 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) && $params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
 				$countrySlug = $pathSegments[0];
-				$qb = $this->locationRepository->findByTypeQb('country');
+
+				$qb = $this->locationDao->createQueryBuilder('e');
+
+				$qb->innerJoin('e.type', 't')
+					->where($qb->expr()->eq('t.slug', ':type'))
+					->setParameter('type', 'country');
+
 				$qb->andWhere($qb->expr()->eq('e.slug', ':slug'))->setParameter('slug', $countrySlug);
+
 				$country = $qb->getQuery()->getOneOrNullResult();
+
 				if($country) {
 					array_shift($pathSegments);
 					$params[self::PRIMARY_LOCATION] = $country;
@@ -164,13 +177,13 @@ class FrontRoute extends BaseRoute
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
 				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)$~')) {
-					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
+					if($rental = $this->rentalDao->findOneByOldId($match[1])) {
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
 				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)$~')) {
-					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
+					if($rental = $this->rentalDao->find($match[1])) {
 						/** @var $rental \Entity\Rental\Rental */
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
@@ -178,7 +191,7 @@ class FrontRoute extends BaseRoute
 						$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
 					}
 				} else if ($match = Strings::match($pathSegment, '~f([0-9]*)$~')) {
-					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
+					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListDao->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
 						$presenter = 'RentalList';
 						$params['action'] = 'default';
@@ -198,7 +211,7 @@ class FrontRoute extends BaseRoute
 						$params[self::PAGE] = $segmentList[self::PAGE];
 						if($page->getDestination() == ':Front:CalendarIframe:default') {
 							$rentalId = $pathSegments[1];
-							if($rentalId && $rental = $this->rentalRepositoryAccessor->get()->find($rentalId)) {
+							if($rentalId && $rental = $this->rentalDao->find($rentalId)) {
 								/** @var $rental \Entity\Rental\Rental */
 								$params[self::RENTAL] = $rental;
 								$params[self::PRIMARY_LOCATION] = $rental->getAddress()->getPrimaryLocation();
@@ -347,7 +360,7 @@ class FrontRoute extends BaseRoute
 				break;
 			default:
 				$destination = ':Front:'.$presenter.':'.$action;
-				$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
+				$page = $this->pageDao->findOneByDestination($destination);
 				if($page) {
 					$params[self::PAGE] = $page;
 				} else {
@@ -412,11 +425,11 @@ class FrontRoute extends BaseRoute
 		}
 
 		if(isset($params[self::BOARD])) {
-			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->get()->find($params[self::BOARD]);
+			$params[self::BOARD] = $this->rentalAmenityDao->find($params[self::BOARD]);
 		}
 
 		if(isset($params[self::PLACEMENT])) {
-			$params[self::PLACEMENT] = $this->rentalPlacementRepositoryAccessor->get()->find($params[self::PLACEMENT]);
+			$params[self::PLACEMENT] = $this->rentalPlacementDao->find($params[self::PLACEMENT]);
 		}
 
 		return $params;
@@ -481,19 +494,17 @@ class FrontRoute extends BaseRoute
 
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 
-		$pathSegmentRepository = $this->routingPathSegmentRepositoryAccessor->get();
-		$pathSegmentOldRepository = $this->routingPathSegmentOldRepositoryAccessor->get();
 
 		foreach ($pathSegments as $value) {
-			$pathSegment = $pathSegmentRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+			$pathSegment = $this->pathSegments->findOneForRouter($params['language'], $params['primaryLocation'], $value);
 			if(!$pathSegment) {
-				$pathSegment = $pathSegmentOldRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+				$pathSegment = $this->pathSegments->findOneForRouter($params['language'], $params['primaryLocation'], $value, TRUE);
 				if(!$pathSegment) continue;
 				$pathSegment = $pathSegment->getPathSegmentNew();
 			}
 			$keyTemp = $pathSegmentTypesFlip[$pathSegment->getType()];
-			$accessor = $keyTemp.'RepositoryAccessor';
-			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($pathSegment->getEntityId());
+			$accessor = $keyTemp.'Dao';
+			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->find($pathSegment->getEntityId());
 		}
 
 
@@ -508,12 +519,12 @@ class FrontRoute extends BaseRoute
 		$segment = NULL;
 
 		if($segmentName == 'location') {
-			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId
 			));
 		} else {
-			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId,
 				'language' => $language

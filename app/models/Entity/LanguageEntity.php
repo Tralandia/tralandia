@@ -8,13 +8,13 @@ use Entity\User\User;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\LanguageRepository")
+ * @ORM\Entity
  * @ORM\Table(name="language", indexes={
  * 		@ORM\index(name="iso", columns={"iso"}),
  * 		@ORM\index(name="live", columns={"live"}),
  * 		@ORM\index(name="supported", columns={"supported"})
  * })
- * @EA\Primary(key="id", value="iso")
+ *
  */
 class Language extends \Entity\BaseEntityDetails {
 
@@ -161,6 +161,12 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getTranslationPriceForWords($wordsCount)
 	{
 		return round($wordsCount * $this->getTranslationPrice(), 2);
+	}
+
+
+	public function __sleep()
+	{
+		return array('id');
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!

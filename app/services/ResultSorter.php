@@ -4,7 +4,7 @@ class ResultSorter {
 
 
 	/**
-	 * @var Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	private $translator;
 
@@ -15,10 +15,10 @@ class ResultSorter {
 
 
 	/**
-	 * @param \Extras\Translator $translator
+	 * @param \Tralandia\Localization\Translator $translator
 	 * @param \Environment\Collator $collator
 	 */
-	public function __construct(\Extras\Translator $translator, \Environment\Collator $collator) {
+	public function __construct(\Tralandia\Localization\Translator $translator, \Environment\Collator $collator) {
 
 		$this->translator = $translator;
 		$this->collator = $collator;

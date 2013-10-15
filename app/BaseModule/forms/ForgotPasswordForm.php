@@ -3,6 +3,7 @@
 namespace BaseModule\Forms;
 
 use Nette;
+use Tralandia\BaseDao;
 
 class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 
@@ -12,17 +13,18 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 	public $onAfterProcess = [];
 
 	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $userRepositoryAccessor;
+	private $userDao;
+
 
 	/**
-	 * @param \Extras\Models\Repository\RepositoryAccessor $userRepositoryAccessor
+	 * @param \Tralandia\BaseDao $userDao
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(\Extras\Models\Repository\RepositoryAccessor $userRepositoryAccessor, Nette\Localization\ITranslator $translator)
+	public function __construct(BaseDao $userDao, Nette\Localization\ITranslator $translator)
 	{
-		$this->userRepositoryAccessor = $userRepositoryAccessor;
+		$this->userDao = $userDao;
 		parent::__construct($translator);
 	}
 
@@ -46,7 +48,7 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 	public function validation(ForgotPasswordForm $form)
 	{
 		$values = $form->getValues();
-		if(!$this['email']->hasErrors() && !$user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email)) {
+		if(!$this['email']->hasErrors() && !$user = $this->userDao->findOneByLogin($values->email)) {
 			$this['email']->addError($this->translate('152282'));
 		}
 	}
@@ -58,7 +60,7 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 	public function process(ForgotPasswordForm $form)
 	{
 		$values = $form->getValues();
-		$user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email);
+		$user = $this->userDao->findOneByLogin($values->email);
 		$this->onAfterProcess($user);
 	}
 

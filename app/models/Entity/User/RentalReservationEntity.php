@@ -7,7 +7,7 @@ use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\User\RentalReservationRepository")
+ * @ORM\Entity
  * @ORM\Table(name="user_rentalreservation", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
  */
 class RentalReservation extends \Entity\BaseEntity {

@@ -12,10 +12,10 @@ class ReadOnlyPhrase extends AdvancedPhrase {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Environment
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, \Environment\Environment $environment) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity, \Environment\Environment $environment) {
 		parent::__construct($name, $label, $entity, $environment);
 		$this->setValueSetter(null);
 	}

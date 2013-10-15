@@ -8,7 +8,7 @@ use Extras;
  * @author Branislav Vaculčiak
  */
 class UrlFactory implements IFactory {
-	
+
 	/** @var Extras\Books\Url */
 	protected $book;
 
@@ -22,11 +22,11 @@ class UrlFactory implements IFactory {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Books\Url
 	 * @return Extras\FormMask\Items\Url
 	 */
-	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
+	public function create($name, $label, \Entity\BaseEntity $entity) {
 		return new Extras\FormMask\Items\Url($name, $label, $entity, $this->book);
 	}
 }

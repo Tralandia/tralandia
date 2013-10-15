@@ -21,7 +21,7 @@ parameters:
 		dbname: tralandia
 		charset: utf8
 		driver: pdo_mysql
-		debugger: true
+		debugger: false
 
 services:
 #	nette.mailer: JanDrabek\MailPanel\SessionDumpMailer

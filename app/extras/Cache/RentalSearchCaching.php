@@ -8,6 +8,7 @@ use Entity\Location\Location;
 use Entity\Rental\Rental;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
+use Tralandia\Rental\Rentals;
 
 class RentalSearchCaching extends \Nette\Object {
 
@@ -30,11 +31,23 @@ class RentalSearchCaching extends \Nette\Object {
 	 */
 	private $em;
 
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
 
-	public function __construct(Location $location, Cache $searchCache, EntityManager $em) {
+
+	/**
+	 * @param Location $location
+	 * @param Cache $searchCache
+	 * @param EntityManager $em
+	 * @param Rentals $rentals
+	 */
+	public function __construct(Location $location, Cache $searchCache, EntityManager $em, Rentals $rentals) {
 		$this->em = $em;
 		$this->location = $location;
 		$this->cache = $searchCache;
+		$this->rentals = $rentals;
 		$this->load();
 	}
 
@@ -138,9 +151,7 @@ class RentalSearchCaching extends \Nette\Object {
 	 */
 	public function regenerateData(Rental $rental = NULL)
 	{
-		/** @var $rentalRepository \Repository\Rental\RentalRepository */
-		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
-		$baseQb = $rentalRepository->findByPrimaryLocationQB($this->location, TRUE);
+		$baseQb = $this->rentals->findByPrimaryLocationQB($this->location, TRUE);
 
 		if($rental) {
 			$baseQb->andWhere('r.id = :onlyForRental')->setParameter('onlyForRental', $rental->getId());

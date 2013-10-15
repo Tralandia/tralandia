@@ -30,19 +30,19 @@
 
 	{var $dateContainer = $form['date']}
 {* 	<div n:class="$dateContainer['from']->hasErrors() ? 'control-group error' : 'control-group' ">
-	
+
 		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
-	
+
 	<span class="control-error" id="error-msg-reservation-from">
 		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div> *}
 
 	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
-	
+
 		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" , data-reservations => $formatedCalendar }
 		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to" , data-reservations => $formatedCalendar}
-		
+
 
 	<span class="control-error" id="error-msg-reservation-to">
 		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
@@ -76,6 +76,6 @@
 
 
 
-	
+
 	{* {input submit, class => "btn btn-orange" , icon => 'entypo-send'} *}
 {/form}

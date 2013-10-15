@@ -9,15 +9,15 @@ use Nette, Extras, VojtechDobes;
  */
 class Map extends Base {
 
-	/** @var Extras\Models\Entity\IEntity */
+	/** @var \Entity\BaseEntity */
 	protected $entity;
 
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity) {
 		$this->name = $name;
 		$this->label = $label;
 		$this->entity = $entity;

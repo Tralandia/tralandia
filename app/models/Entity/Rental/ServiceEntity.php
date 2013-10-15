@@ -11,7 +11,7 @@ use Extras\FileStorage;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_service")
- * @EA\Primary(key="id", value="name")
+ *
  */
 class Service extends \Entity\BaseEntity
 {

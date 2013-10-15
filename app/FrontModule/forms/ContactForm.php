@@ -23,7 +23,7 @@ class ContactForm extends BaseForm {
 
 	public $ticketRepository;
 
-	public function __construct(\Entity\User\User $user = NULL, \Entity\Language $language = NULL, $ticketRepository)
+	public function __construct(\Entity\User\User $user = NULL, \Entity\Language $language = NULL, $ticketDao)
 	{
 		$this->user = $user;
 		$this->language = $language;
@@ -32,7 +32,7 @@ class ContactForm extends BaseForm {
 			throw new \Nette\InvalidArgumentException;
 		}
 
-		$this->ticketRepository = $ticketRepository;
+		$this->ticketRepository = $ticketDao;
 
 		parent::__construct();
 	}

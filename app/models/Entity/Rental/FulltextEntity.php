@@ -9,7 +9,7 @@ use    Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_fulltext")
- * @EA\Primary(key="id", value="value")
+ *
  */
 class Fulltext extends \Entity\BaseEntity
 {

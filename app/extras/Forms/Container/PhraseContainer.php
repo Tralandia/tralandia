@@ -11,6 +11,7 @@ use Nette\NotImplementedException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Tralandia\Dictionary\PhraseManager;
+use Tralandia\Language\Languages;
 
 class PhraseContainer extends BaseContainer
 {
@@ -41,8 +42,13 @@ class PhraseContainer extends BaseContainer
 	 */
 	private $phraseManager;
 
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
 
-	public function __construct(Phrase $phrase, PhraseManager $phraseManager, EntityManager $em)
+
+	public function __construct(Phrase $phrase, PhraseManager $phraseManager, Languages $languages, EntityManager $em)
 	{
 		$this->phrase = $phrase;
 
@@ -50,6 +56,7 @@ class PhraseContainer extends BaseContainer
 		parent::__construct();
 		$this->em = $em;
 		$this->phraseManager = $phraseManager;
+		$this->languages = $languages;
 	}
 
 
@@ -133,7 +140,7 @@ class PhraseContainer extends BaseContainer
 			$editableLanguages = [$editableLanguages];
 		}
 
-		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported();
+		$languages = $this->languages->findSupported();
 
 		$preFillTranslations = $this->getSettings('preFillTranslations');
 		/** @var $language \Entity\Language */

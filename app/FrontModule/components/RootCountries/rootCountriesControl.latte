@@ -11,7 +11,7 @@
 				<span class="parent" data-for="{$country['entity']->getIso()}"><img src="/images/flags/{$country['entity']->getIso()}.png" />
 
 					{var $rentalCount = isset($rentalCounts[$country['entity']->getId()]) ? $rentalCounts[$country['entity']->getId()] : 0}
-					{$country['name']}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
+					{_$country['entity']->getName()}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 
 				</span>
 
@@ -22,7 +22,7 @@
 					<li>
 						<a href="{plink //:Front:Home:default, Routers\BaseRoute::PRIMARY_LOCATION => $children['entity']}">
 						<i class="icon-angle-right"></i>
-						{$children['name']}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
+						{_$children['entity']->getName()}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 						</a>
 					</li>
 				</ul>
@@ -32,7 +32,7 @@
 				<a href="{plink //:Front:Home:default, Routers\BaseRoute::PRIMARY_LOCATION => $country['entity']}"><img src="/images/flags/{$country['entity']->getIso()}.png" />
 
 					{var $rentalCount = isset($rentalCounts[$country['entity']->getId()]) ? $rentalCounts[$country['entity']->getId()] : 0}
-					{$country['name']}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
+					{_$country['entity']->getName()}&nbsp;{if $rentalCount}<span class="counter">{$rentalCount}</span>{/if}
 
 				</a>
 

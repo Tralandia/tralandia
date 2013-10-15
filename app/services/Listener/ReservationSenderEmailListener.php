@@ -1,8 +1,8 @@
 <?php
 namespace Listener;
 
-use Entity\User\RentalReservation;
 use Nette;
+use Entity\User\RentalReservation;
 
 class ReservationSenderEmailListener extends BaseEmailListener
 {

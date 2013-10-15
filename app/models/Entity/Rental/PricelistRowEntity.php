@@ -13,8 +13,8 @@ use Nette\Http\FileUpload;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_pricelistrow")
- * @EA\Primary(key="id", value="name")
- * @EA\Generator(skip="{getPrice,setPrice}")
+ *
+ *
  */
 class PricelistRow extends \Entity\BaseEntity
 {

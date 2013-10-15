@@ -7,6 +7,8 @@ use Entity\Contact\Phone;
 use Environment\Environment;
 use Nette;
 use Nette\DateTime;
+use Tralandia\BaseDao;
+use Tralandia\Location\Countries;
 
 /**
  * ReservationForm class
@@ -30,11 +32,6 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	protected $environment;
 
-	/**
-	 * @var \Repository\Location\LocationRepository
-	 */
-	protected $locationRepository;
-
 	protected $reservationRepository;
 
 	/**
@@ -47,30 +44,37 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	private $request;
 
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $counties;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Doctrine\ORM\EntityManager $em
+	 * @param \Tralandia\Location\Countries $counties
 	 * @param \ReservationProtector $reservationProtector
 	 * @param \Environment\Environment $environment
+	 * @param \Nette\Http\Request $request
 	 */
-	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em,
+	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em, Countries $counties,
 								\ReservationProtector $reservationProtector,
 								Environment $environment, \Nette\Http\Request $request)
 	{
 		$this->rental = $rental;
 		$this->environment = $environment;
-		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->reservationRepository = $em->getRepository(RESERVATION_ENTITY);
 		$this->reservationProtector = $reservationProtector;
 		$this->request = $request;
+		$this->counties = $counties;
 
 		parent::__construct($environment->getTranslator());
 	}
 
 	public function buildForm()
 	{
-		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes($this->environment->getLocale()->getCollator());
+		$phonePrefixes = $this->counties->getPhonePrefixes();
 
 
 //		$nameControl = $this->addText('name')

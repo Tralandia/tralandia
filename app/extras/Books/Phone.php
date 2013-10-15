@@ -3,25 +3,32 @@
 namespace Extras\Books;
 
 use Nette, Extras, Entity;
+use Tralandia\BaseDao;
 
 /**
  * Trieda sluzi ako databaza unikatnych telefonnych cisel.
  */
 class Phone extends Nette\Object {
 
-	/** @var Extras\Models\Repository\RepositoryAccessor */
-	private $phoneRepository;
-	private $locationRepository;
+	/** @var \Tralandia\BaseDao */
+	private $phoneDao;
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $locationDao;
 
 	/** @var string */
 	private $serviceUrl = 'http://tra-devel.soft1.sk:8080/phonenumberparser?';
 
+
 	/**
-	 * @param Extras\Models\Repository\RepositoryAccessor $phoneRepository
+	 * @param \Tralandia\BaseDao $phoneDao
+	 * @param \Tralandia\BaseDao $locationDao
 	 */
-	public function __construct(Extras\Models\Repository\RepositoryAccessor $phoneRepository, Extras\Models\Repository\RepositoryAccessor $locationRepository) {
-		$this->phoneRepository = $phoneRepository;
-		$this->locationRepository = $locationRepository;
+	public function __construct(BaseDao $phoneDao, BaseDao $locationDao) {
+		$this->phoneDao = $phoneDao;
+		$this->locationDao = $locationDao;
 	}
 
 	/**
@@ -31,7 +38,7 @@ class Phone extends Nette\Object {
 	 * @return Entity\Contact\Phone|false
 	 */
 	public function find($number) {
-		return $this->phoneRepository->get()->findOneByValue($this->prepareNumber($number));
+		return $this->phoneDao->findOneByValue($this->prepareNumber($number));
 	}
 
 
@@ -45,7 +52,7 @@ class Phone extends Nette\Object {
 	public function getOrCreate($number, $prefix = NULL) {
 		if (!$phone = $this->find($number)) {
 			$defaultCountry = NULL;
-			if($prefix) $defaultCountry = $this->locationRepository->get()->findOneByPhonePrefix($prefix);
+			if($prefix) $defaultCountry = $this->locationDao->findOneByPhonePrefix($prefix);
 			$response = $this->serviceRequest($number, $defaultCountry);
 			if (!isset($response->validationResult) || $response->validationResult->isValidNumber != 'true') {
 				return FALSE;
@@ -53,15 +60,15 @@ class Phone extends Nette\Object {
 			$number = $this->prepareNumber($response->formattingResults->E164);
 
 			if (!$phone = $this->find($number)) {
-				$phone = $this->phoneRepository->get()->createNew();
-				$primaryLocation = $this->locationRepository->get()->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
+				$phone = $this->phoneDao->createNew();
+				$primaryLocation = $this->locationDao->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
 
 				$phone->setValue($this->prepareNumber($response->formattingResults->E164))
 					->setInternational($response->formattingResults->international)
 					->setNational($response->formattingResults->national)
 					->setPrimaryLocation($primaryLocation);
-				$this->phoneRepository->get()->persist($phone);
-				$this->phoneRepository->get()->flush($phone);
+				$this->phoneDao->persist($phone);
+				$this->phoneDao->flush($phone);
 			}
 		}
 
