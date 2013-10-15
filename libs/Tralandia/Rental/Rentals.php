@@ -136,6 +136,33 @@ class Rentals {
 		return $qb->getQuery()->getResult();
 	}
 
+
+	/**
+	 * @param Location $location
+	 *
+	 * @return mixed
+	 */
+	public function findFeatured(Location $location) {
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb->select('r.id')
+			->innerJoin('r.address', 'a')
+			->innerJoin('r.services', 's')
+			->where($qb->expr()->eq('a.primaryLocation', $location->id))
+			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
+			->andWhere($qb->expr()->eq('s.serviceType', '?1'))
+			->andWhere($qb->expr()->lte('s.dateFrom', '?2'))
+			->andWhere($qb->expr()->gt('s.dateTo', '?2'))
+			->setParameter(1, 'featured')
+			->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+
+
+
 	/**
 	 * @param Location $location
 	 * @param null $status

@@ -538,7 +538,7 @@ factories:
 		implement: Extras\Cache\IRentalSearchCachingFactory
 
 	rentalOrderCachingFactory:
-		class: Extras\Cache\RentalOrderCaching(%location%, @doctrine.dao(Entity\Rental\Rental), @rentalOrderCache)
+		class: Extras\Cache\RentalOrderCaching(%location%, @doctrine.dao(Entity\Location\Location), @rentalOrderCache)
 		parameters: [Entity\Location\Location location]
 		implement: Extras\Cache\IRentalOrderCachingFactory
 
