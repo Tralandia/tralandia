@@ -5,6 +5,7 @@ namespace Extras\Cache;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
 use Tralandia\BaseDao;
+use Tralandia\Rental\Rentals;
 
 class RentalOrderCaching extends \Nette\Object {
 
@@ -13,17 +14,24 @@ class RentalOrderCaching extends \Nette\Object {
 	protected $cacheContent;
 	protected $location;
 
+
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
+
 	/**
 	 * @var \Tralandia\BaseDao
 	 */
-	private $rentalDao;
+	private $locationDao;
 
 
-	public function __construct($location, BaseDao $rentalDao, Cache $orderCache) {
+	public function __construct($location, BaseDao $locationDao, Cache $orderCache, Rentals $rentals) {
 		$this->location = $location;
 		$this->cache = $orderCache;
+		$this->rentals = $rentals;
+		$this->locationDao = $locationDao;
 		$this->load();
-		$this->rentalDao = $rentalDao;
 	}
 
 	protected function load() {
@@ -74,7 +82,7 @@ class RentalOrderCaching extends \Nette\Object {
 	protected function createFeaturedList() {
 		// Clear the featured list first
 		$this->cacheContent['featured'] = array();
-		$rentals = $this->rentalDao->findFeatured($this->location);
+		$rentals = $this->rentals->findFeatured($this->location);
 		foreach ($rentals as $key => $value) {
 			$this->cacheContent['featured'][$value['id']] = $value['id'];
 		}
@@ -87,9 +95,7 @@ class RentalOrderCaching extends \Nette\Object {
 		$featured = $this->cacheContent['featured'];
 
 		$notFeatured = array();
-		/** @var $rentalRepository \Repository\Rental\RentalRepository */
-		$rentalRepository = $this->rentalDao;
-		$rentals = $rentalRepository->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.rank' => 'DESC']);
+		$rentals = $this->rentals->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.rank' => 'DESC']);
 		foreach ($rentals as $key => $value) {
 			$notFeatured[$value->id] = $value->id;
 		}
@@ -104,7 +110,7 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->cacheContent['order'] = $order;
 
 		$this->location->rentalCount = count($order);
-		$this->rentalDao->flush();
+		$this->locationDao->save($this->location);
 
 		$this->save();
 		return $order;
