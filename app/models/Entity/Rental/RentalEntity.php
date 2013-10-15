@@ -16,10 +16,10 @@ use Nette\Utils\Strings;
  * @ORM\Entity
  * @ORM\Table(name="rental",
  * 		indexes={
- * 			@ORM\index(name="status", columns={"status"}),
- * 			@ORM\index(name="slug", columns={"slug"}),
- * 			@ORM\index(name="rank", columns={"rank"}),
- * 			@ORM\index(name="calendarUpdated", columns={"calendarUpdated"})
+ * 			@ORM\Index(name="status", columns={"status"}),
+ * 			@ORM\Index(name="slug", columns={"slug"}),
+ * 			@ORM\Index(name="rank", columns={"rank"}),
+ * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"})
  * 		})
  *
  *

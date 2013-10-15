@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
+ * @ORM\Table(name="medium", indexes={@ORM\Index(name="uri", columns={"uri"}), @ORM\Index(name="oldUrl", columns={"oldUrl"}), @ORM\Index(name="sort", columns={"sort"})})
  *
  */
 class Medium extends \Entity\BaseEntityDetails {

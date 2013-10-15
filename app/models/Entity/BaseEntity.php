@@ -10,7 +10,7 @@ use Nette\Utils\Strings;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="\Tralandia\BaseDao")
- * @ORM\Table(indexes={@ORM\index(name="oldId", columns={"oldId"})})
+ * @ORM\Table(indexes={@ORM\Index(name="oldId", columns={"oldId"})})
  * @ORM\HasLifecycleCallbacks
  */
 class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {

@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
+ * @ORM\Table(name="currency", indexes={@ORM\Index(name="name", columns={"name_id"}), @ORM\Index(name="iso", columns={"iso"})})
  *
  *
 */

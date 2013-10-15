@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
+ * @ORM\Table(name="domain", indexes={@ORM\Index(name="domain", columns={"domain"})})
  *
  */
 class Domain extends \Entity\BaseEntity {

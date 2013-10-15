@@ -30,12 +30,6 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 	/**
 	 * @autowire
-	 * @var \Dictionary\MarkAsPaid
-	 */
-	protected $markAsPaid;
-
-	/**
-	 * @autowire
 	 * @var \Robot\CreateMissingTranslationsRobot
 	 */
 	protected $createMissingTranslationsRobot;
@@ -45,6 +39,12 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	 * @var \Dictionary\FindOutdatedTranslations
 	 */
 	protected $outdatedTranslations;
+
+	/**
+	 * @autowire
+	 * @var \Tralandia\Phrase\Translations
+	 */
+	protected $translations;
 
 	/**
 	 * @var array
@@ -59,7 +59,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 		}
 
 		$translationsToTranslate = $this->outdatedTranslations->getWaitingForTranslation($language);
-		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsInTranslations($translationsToTranslate);
+		$wordsCountToPay = $this->translations->calculateWordsInTranslations($translationsToTranslate);
 
 
 		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
@@ -74,7 +74,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 	public function actionMarkAsPaid($id)
 	{
 		$language = $this->findLanguage($id);
-		$changedIds = $this->markAsPaid->mark($language, $this->loggedUser);
+		$changedIds = $this->translations->markAsPaid($language, $this->loggedUser);
 
 		$this->translationsSetAsPaidHistoryLogListener->onMarkAsPaid($language, $changedIds, $this->loggedUser);
 

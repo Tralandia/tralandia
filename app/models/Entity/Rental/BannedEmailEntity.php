@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Maju zakaz registracie
  * @ORM\Entity
- * @ORM\Table(name="rental_bannedemail", indexes={@ORM\index(name="email", columns={"email"})})
+ * @ORM\Table(name="rental_bannedemail", indexes={@ORM\Index(name="email", columns={"email"})})
  */
 class BannedEmail extends \Entity\BaseEntity {
 
