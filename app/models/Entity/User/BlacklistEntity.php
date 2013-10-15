@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Maju zakaz posielat rezervacie
  * @ORM\Entity
- * @ORM\Table(name="user_blacklist", indexes={@ORM\index(name="email", columns={"email"})})
+ * @ORM\Table(name="user_blacklist", indexes={@ORM\Index(name="email", columns={"email"})})
 */
 class Blacklist extends \Entity\BaseEntity {
 

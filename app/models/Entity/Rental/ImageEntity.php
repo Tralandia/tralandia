@@ -12,7 +12,7 @@ use Nette\Http\FileUpload;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_image", indexes={@ORM\index(name="sort", columns={"sort"})})
+ * @ORM\Table(name="rental_image", indexes={@ORM\Index(name="sort", columns={"sort"})})
  *
  */
 class Image extends \Entity\BaseEntity

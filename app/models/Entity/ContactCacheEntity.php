@@ -10,10 +10,10 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="contact_cache",
  * 			indexes={
- * 				@ORM\index(name="entityName", columns={"entityName"}),
- * 				@ORM\index(name="entityId", columns={"entityId"}),
- * 				@ORM\index(name="type", columns={"type"}),
- * 				@ORM\index(name="value", columns={"value"}),
+ * 				@ORM\Index(name="entityName", columns={"entityName"}),
+ * 				@ORM\Index(name="entityId", columns={"entityId"}),
+ * 				@ORM\Index(name="type", columns={"type"}),
+ * 				@ORM\Index(name="value", columns={"value"}),
  * 		  	}
  * 		)
  *
