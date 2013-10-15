@@ -339,7 +339,6 @@ services:
 	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
 	dictionary.updateTranslationVariations: Dictionary\UpdateTranslationVariations
 	dictionary.findOutdatedTranslations: Dictionary\FindOutdatedTranslations
-	dictionary.markAsPaid: Dictionary\MarkAsPaid
 	dictionary.phraseManager: Tralandia\Dictionary\PhraseManager
 
 
