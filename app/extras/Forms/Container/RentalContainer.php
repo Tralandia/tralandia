@@ -5,12 +5,14 @@ namespace Extras\Forms\Container;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Contact\Address;
-use Entity\Contact\Phone;
 use Entity\Rental\Rental;
 use Environment\Environment;
 use FrontModule\Forms\RegistrationForm;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
+use Tralandia\Amenity\Amenities;
+use Tralandia\Placement\Placements;
+use Tralandia\Rental\Types;
 
 class RentalContainer extends BaseContainer
 {
@@ -36,24 +38,23 @@ class RentalContainer extends BaseContainer
 	protected $translator;
 
 	/**
-	 * @var \Repository\User\UserRepository
+	 * @var \Tralandia\Placement\Placements
 	 */
-	protected $userRepository;
+	private $placements;
 
 	/**
-	 * @var \Repository\Rental\TypeRepository
+	 * @var \Tralandia\Rental\Types
 	 */
-	protected $rentalTypeRepository;
+	private $rentalTypes;
 
 	/**
-	 * @var \Repository\Rental\AmenityRepository
+	 * @var \Tralandia\Amenity\Amenities
 	 */
-	protected $amenityRepository;
-
-	protected $placementRepository;
+	private $amenities;
 
 
 	public function __construct(Environment $environment, Rental $rental = NULL,
+								Placements $placements, Types $rentalTypes, Amenities $amenities,
 								EntityManager $em, ITranslator $translator)
 	{
 		parent::__construct();
@@ -62,10 +63,9 @@ class RentalContainer extends BaseContainer
 		$this->country = $environment->getPrimaryLocation();
 		$this->collator = $environment->getLocale()->getCollator();
 
-		$this->rentalTypeRepository = $em->getRepository(RENTAL_TYPE_ENTITY);
-		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
-		$this->placementRepository = $em->getRepository(RENTAL_PLACEMENT_ENTITY);
-		$this->userRepository = $em->getRepository(USER_ENTITY);
+		$this->placements = $placements;
+		$this->rentalTypes = $rentalTypes;
+		$this->amenities = $amenities;
 
 		$this->buildContainer();
 	}
@@ -79,13 +79,13 @@ class RentalContainer extends BaseContainer
 			$this->addAddressContainer('address', $this->country);
 		}
 
-		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
+		$placement = $this->placements->getForSelect();
 		$this->addSelect('placement', 'o100143', $placement)
 			->setOption('help', $this->translate('152270'))
 			->setRequired($this->translate('152270'))
 			->setPrompt('o854');
 
-		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
+		$rentalTypes = $this->rentalTypes->getForSelect();
 		$this->addRentalTypeContainer('type', $this->rental, $rentalTypes);
 
 		$check = \Tools::$checkInOutOption;
@@ -110,20 +110,20 @@ class RentalContainer extends BaseContainer
 			->addRule(Form::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
 
-		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
+		$amenityPets = $this->amenities->findByAnimalTypeForSelect();
 		$this->addSelect('pet', 'o100079', $amenityPets)
 			->setPrompt('o854')
 			->setRequired($this->translate('o100108'))
 			//->setOption('help', $this->translate('o5956'))
 		;
 
-		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
+		$amenityBoard = $this->amenities->findByBoardTypeForSelect();
 		$this->addMultiOptionList('board', 'o100080', $amenityBoard)
 			->setRequired()
 			->addRule(Form::FILLED, $this->translate('o100109'))//->setOption('help', $this->translate('o5956'))
 		;
 
-		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->getTranslator(), $this->collator);
+		$amenityAvailability = $this->amenities->findByAvailabilityTypeForSelect();
 		$this->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			->setPrompt('o854')
 			->setRequired($this->translate('o100107'));
@@ -138,7 +138,7 @@ class RentalContainer extends BaseContainer
 	{
 		$rental = $this->rental;
 
-		$placement = 0;
+		$placement = NULL;
 		foreach ($rental->getPlacements() as $place) {
 			$placement = $place->getId();
 			break;

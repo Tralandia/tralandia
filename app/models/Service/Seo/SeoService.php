@@ -5,7 +5,8 @@ namespace Service\Seo;
 use Nette, Extras, Service, Doctrine, Entity;
 use Nette\Utils\Strings;
 use Routers\FrontRoute;
-use Extras\Translator;
+use Tralandia\Localization\Translator;
+use Tralandia\BaseDao;
 
 /**
  * @author Dávid Ďurika
@@ -22,7 +23,6 @@ class SeoService extends Nette\Object {
 	protected $page = NULL;
 	protected $url;
 	protected $phraseDecoratorFactory;
-	protected $pageRepositoryAccessor;
 
 	protected $pathSegmentParameters;
 
@@ -68,19 +68,25 @@ class SeoService extends Nette\Object {
 		Translator::VARIATION_CASE => \Entity\Language::DEFAULT_CASE,
 	);
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $pageDao;
+
 
 	/**
 	 * @param string $url
 	 * @param Nette\Application\Request $request
-	 * @param $pageRepositoryAccessor
+	 * @param \Tralandia\BaseDao $pageDao
 	 * @param \Nette\Localization\ITranslator $translator
+	 *
 	 */
-	public function __construct($url, Nette\Application\Request $request, $pageRepositoryAccessor,
+	public function __construct($url, Nette\Application\Request $request, BaseDao $pageDao,
 								Nette\Localization\ITranslator $translator)
 	{
 		$this->url = $url;
+		$this->pageDao = $pageDao;
 		$this->request = $request;
-		$this->pageRepositoryAccessor = $pageRepositoryAccessor;
 		$this->requestParameters = $this->request->getParameters();
 		$this->translator = $translator;
 
@@ -150,7 +156,7 @@ class SeoService extends Nette\Object {
 			} else {
 				$hash = '';
 			}
-			$page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+			$page = $this->pageDao->findOneBy(array('hash' => $hash, 'destination' => $destination));
 			if(!$page) {
 				$page = FALSE;
 			}

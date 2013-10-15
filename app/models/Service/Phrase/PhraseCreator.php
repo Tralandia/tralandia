@@ -2,6 +2,7 @@
 namespace Service\Phrase;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Language;
 use Extras\Models\Entity\Entity;
 use Nette;
 use Nette\Utils\Strings;
@@ -60,7 +61,7 @@ class PhraseCreator extends Nette\Object
 		$phrase->createTranslation($en, $sourceTranslation);
 
 		if($phraseType->getTranslateTo() == \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED) {
-			$supportedLanguages = $this->languageRepository->findSupported();
+			$supportedLanguages = $this->languageRepository->findBySupported(Language::SUPPORTED);
 			foreach($supportedLanguages as $language) {
 				if($language->getId() == $en->getId()) continue;
 				$phrase->createTranslation($language);

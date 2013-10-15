@@ -10,10 +10,10 @@ use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Phrase\PhraseRepository")
+ * @ORM\Entity
  * @ORM\Table(name="phrase", indexes={@ORM\index(name="status", columns={"status"})})
- * @EA\Primary(key="id", value="translations")
- * @EA\Generator(skip="{setStatus}")
+ *
+ *
  */
 class Phrase extends \Entity\BaseEntityDetails {
 
@@ -371,7 +371,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	public function removeTranslation(\Entity\Phrase\Translation $translation)
 	{
 		$this->translations->removeElement($translation);
-		$translation->unsetPhrase();
+		//$translation->unsetPhrase();
 
 		return $this;
 	}

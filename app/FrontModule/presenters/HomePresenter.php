@@ -1,16 +1,10 @@
 <?php
 
 namespace FrontModule;
-use Model\Rental\IRentalDecoratorFactory;
+use Entity\Rental\Rental;
 use Routers\FrontRoute;
 
 class HomePresenter extends BasePresenter {
-
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
 	/**
 	 * @autowire
@@ -37,21 +31,17 @@ class HomePresenter extends BasePresenter {
 //		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 		$this->template->isHome = TRUE;
 		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
+		$this->template->isRentalFeatured = $this->isRentalFeatured;
 	}
 
 	public function getRentals()
 	{
 		$search = $this->rentalSearchFactory->create($this->primaryLocation);
-		$featuredIds = $search->getFeaturedRentals($this->contextParameters['rentalCountOnHome']);
-
-		$rentals = array();
-		foreach ($featuredIds as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
-			$rentals[$rental->id]['entity'] = $rental;
-		}
+		$rentals = $search->getFeaturedRentals($this->contextParameters['rentalCountOnHome']);
 
 		return $rentals;
 	}
+
 
 	public function getLocationRentalsCount()
 	{

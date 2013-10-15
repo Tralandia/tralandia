@@ -51,7 +51,15 @@ class RentalPriceListContainer extends BaseContainer
 		$this->rental = $rental;
 		$this->translator = $translator;
 		$this->currency = $currency;
-		$this->roomTypes = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->getForSelect($translator, $collator);
+
+		$rows = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->findAll();
+		$roomTypes = [];
+		foreach($rows as $row) {
+			$roomTypes[$row->id] = $translator->translate($row->name);
+		}
+		$collator->asort($roomTypes);
+		$this->roomTypes = $roomTypes;
+
 		$this->pricelistRows = $this->rental->getPricelistRows();
 
 		$maxCount = 51;

@@ -13,26 +13,29 @@ use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\Phrase\Type;
 use Nette;
+use Tralandia\Language\Languages;
 
 class PhraseManager {
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	protected $translationDao;
 
 	/**
-	 * @var \Repository\BaseRepository
+	 * @var \Tralandia\Language\Languages
 	 */
-	protected $languageRepository;
+	private $languages;
 
 
 	/**
-	 * @var \Repository\BaseRepository
+	 * @param Languages $languages
+	 * @param EntityManager $em
 	 */
-	protected $phraseRepository;
-
-
-	public function __construct(EntityManager $em)
+	public function __construct(Languages $languages, EntityManager $em)
 	{
-		$this->phraseRepository = $em->getRepository(PHRASE_ENTITY);
-		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$this->translationDao = $em->getRepository(TRANSLATION_ENTITY);
+		$this->languages = $languages;
 	}
 
 
@@ -42,7 +45,7 @@ class PhraseManager {
 			'changedTranslations' => [],
 			'displayedTranslations' => []
 		];
-		$languages = $this->languageRepository->findPairsByIso(array_keys($translationsVariations));
+		$languages = $this->languages->findPairsByIso(array_keys($translationsVariations));
 		foreach($translationsVariations as $languageIso => $variations) {
 
 			# zistim ci updatujem vsetky variacie alebo len defaultnu
@@ -99,7 +102,7 @@ class PhraseManager {
 	private function removeTranslation(Phrase $phrase, Translation $translation)
 	{
 		$phrase->removeTranslation($translation);
-		$this->phraseRepository->remove($translation);
+		$this->translationDao->delete($translation);
 	}
 
 

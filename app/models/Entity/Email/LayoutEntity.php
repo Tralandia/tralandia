@@ -8,7 +8,7 @@ use Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="email_layout")
- * @EA\Generator(skip="{setSlug}")
+ *
  */
 class Layout extends \Entity\BaseEntity {
 
@@ -39,16 +39,16 @@ class Layout extends \Entity\BaseEntity {
 		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
 		return $this;
-	}		
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @return \Entity\Email\Layout
 	 */
@@ -58,7 +58,7 @@ class Layout extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -66,7 +66,7 @@ class Layout extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Email\Layout
@@ -77,7 +77,7 @@ class Layout extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Email\Layout
 	 */
@@ -87,7 +87,7 @@ class Layout extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -95,7 +95,7 @@ class Layout extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Email\Layout
@@ -106,7 +106,7 @@ class Layout extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

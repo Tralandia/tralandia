@@ -9,7 +9,7 @@ use    Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_interviewquestion")
- * @EA\Primary(key="id", value="id")
+ *
  */
 class InterviewQuestion extends \Entity\BaseEntityDetails
 {
@@ -35,12 +35,12 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\InterviewQuestion
@@ -51,7 +51,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -59,7 +59,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 	{
 		return $this->question;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\InterviewQuestion
@@ -70,7 +70,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -78,7 +78,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 	{
 		return $this->questionFe;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\InterviewQuestion
@@ -89,7 +89,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

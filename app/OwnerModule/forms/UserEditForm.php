@@ -6,6 +6,7 @@ use Entity\Rental\Rental;
 use Entity\User\User;
 use Nette\Forms\Form;
 use Nette\Localization\ITranslator;
+use Tralandia\BaseDao;
 
 class UserEditForm extends BaseForm {
 
@@ -14,17 +15,20 @@ class UserEditForm extends BaseForm {
 	 */
 	protected $user;
 
-	protected $userRepositoryAccessor;
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $userDao;
 
 
 	/**
 	 * @param \Entity\User\User $user
-	 * @param $userRepositoryAccessor
+	 * @param \Tralandia\BaseDao $userDao
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(User $user, $userRepositoryAccessor, ITranslator $translator){
+	public function __construct(User $user, BaseDao $userDao, ITranslator $translator){
 		$this->user = $user;
-		$this->userRepositoryAccessor = $userRepositoryAccessor;
+		$this->userDao = $userDao;
 		parent::__construct($translator);
 	}
 
@@ -65,7 +69,7 @@ class UserEditForm extends BaseForm {
 		}
 //		$user->setNewsletter($values->newsletter);
 
-		$this->userRepositoryAccessor->get()->update($user);
+		$this->userDao->save($user);
 	}
 
 }

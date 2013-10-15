@@ -12,4 +12,5 @@ services:
 	- [class: Listener\RequestTranslationsHistoryLogListener, tags: [kdyby.subscriber]]
 	- [class: Listener\AcceptedTranslationsEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\TranslationsSetAsPaidHistoryLogListener, tags: [kdyby.subscriber]]
+	- [class: Tralandia\Doctrine\TablePrefixListener, tags: [kdyby.subscriber]]
 

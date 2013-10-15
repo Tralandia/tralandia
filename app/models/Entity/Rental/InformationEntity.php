@@ -9,7 +9,7 @@ use    Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_information")
- * @EA\Primary(key="id", value="name")
+ *
  */
 class Information extends \Entity\BaseEntityDetails
 {
@@ -34,13 +34,13 @@ class Information extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Rental\Information
@@ -51,7 +51,7 @@ class Information extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -59,7 +59,7 @@ class Information extends \Entity\BaseEntityDetails
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Information
@@ -70,7 +70,7 @@ class Information extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -78,7 +78,7 @@ class Information extends \Entity\BaseEntityDetails
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Rental\Information
@@ -89,7 +89,7 @@ class Information extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -97,5 +97,5 @@ class Information extends \Entity\BaseEntityDetails
 	{
 		return $this->compulsory;
 	}
-		
+
 }

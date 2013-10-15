@@ -24,12 +24,12 @@ class TicketForm extends BaseForm {
 	protected $messageRepository;
 	protected $questionRepository;
 
-	public function __construct(\Entity\User\User $user, \Entity\Ticket\Ticket $ticket, $messageRepository,
+	public function __construct(\Entity\User\User $user, \Entity\Ticket\Ticket $ticket, $messageDao,
 								$questionRepository)
 	{
 		$this->user = $user;
 		$this->ticket = $ticket;
-		$this->messageRepository = $messageRepository;
+		$this->messageRepository = $messageDao;
 		$this->questionRepository = $questionRepository;
 
 		parent::__construct();
@@ -58,9 +58,9 @@ class TicketForm extends BaseForm {
 		$this->onSuccess[] = callback($this, 'process');
 	}
 
-	public function setDefaultsValues() 
+	public function setDefaultsValues()
 	{
-		
+
 	}
 
 	public function process(TicketForm $form)

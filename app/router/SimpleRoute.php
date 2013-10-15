@@ -10,7 +10,7 @@ use Nette\Utils\Arrays;
 class SimpleRoute extends BaseRoute
 {
 
-	public $pageRepositoryAccessor;
+	public $pageDao;
 
 
 	/**
@@ -87,7 +87,7 @@ class SimpleRoute extends BaseRoute
 			return TRUE;
 		}
 
-		$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
+		$page = $this->pageDao->findOneByDestination($destination);
 
 		return $page != NULL;
 	}
