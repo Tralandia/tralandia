@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
 use Entity\Phrase\Translation;
+use Entity\User\User;
 use Nette;
 use Tralandia\BaseDao;
 
@@ -187,6 +188,32 @@ class Translations
 		}
 
 		return $totalCount;
+	}
+
+
+	/**
+	 * @param Language $language
+	 * @param User $responsibleUser
+	 *
+	 * @return array
+	 */
+	public function markAsPaid(Language $language, User $responsibleUser)
+	{
+		$notPaidQb = $this->findNotPaidQb($language)
+			->select('e.id');
+
+		$ids = $notPaidQb->getQuery()->getResult();
+		$ids = \Tools::arrayMap($ids, 'id');
+
+		if(count($ids)) {
+			$qb = $this->translationDao->createQueryBuilder();
+			$qb->update(TRANSLATION_ENTITY, 'e')
+				->set('e.status', ':status')->setParameter('status', Translation::UP_TO_DATE)
+				->where($qb->expr()->in('e.id', $ids));
+
+			$qb->getQuery()->execute();
+		}
+		return $ids;
 	}
 
 }

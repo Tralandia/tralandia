@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"})})
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="login", columns={"login"}), @ORM\Index(name="password", columns={"password"})})
  *
  */
 class User extends \Entity\BaseEntityDetails {

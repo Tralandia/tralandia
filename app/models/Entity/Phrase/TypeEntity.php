@@ -9,13 +9,13 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="phrase_type",
  * 		indexes={
- * 			@ORM\index(name="entityName", columns={"entityName"}),
- * 			@ORM\index(name="entityAttribute", columns={"entityAttribute"}),
- * 			@ORM\index(name="pluralVariationsRequired", columns={"pluralVariationsRequired"}),
- * 			@ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}),
- * 			@ORM\index(name="locativesRequired", columns={"locativesRequired"}),
- * 			@ORM\index(name="positionRequired", columns={"positionRequired"}),
- * 			@ORM\index(name="translated", columns={"translated"})
+ * 			@ORM\Index(name="entityName", columns={"entityName"}),
+ * 			@ORM\Index(name="entityAttribute", columns={"entityAttribute"}),
+ * 			@ORM\Index(name="pluralVariationsRequired", columns={"pluralVariationsRequired"}),
+ * 			@ORM\Index(name="genderVariationsRequired", columns={"genderVariationsRequired"}),
+ * 			@ORM\Index(name="locativesRequired", columns={"locativesRequired"}),
+ * 			@ORM\Index(name="positionRequired", columns={"positionRequired"}),
+ * 			@ORM\Index(name="translated", columns={"translated"})
  * 		})
  *
  */
