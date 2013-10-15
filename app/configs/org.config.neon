@@ -12,15 +12,6 @@ parameters:
 
 	memcachePrefix: org_
 
-	database:
-		user: tralandia
-		password: 986269962525
-		host: 127.0.0.1
-		dbname: tralandia
-		charset: utf8
-		driver: pdo_mysql
-		debugger: false
-
 	cacheDatabase:
 		user: tralandia
 		password: 986269962525
@@ -34,6 +25,19 @@ parameters:
 #	staticDomain: NULL
 #	storageDir: /storage
 #	storagePath: /storage
+
+doctrine:
+	user: tralandia
+	password: 986269962525
+	host: 127.0.0.1
+	dbname: tralandia
+	charset: utf8
+	driver: pdo_mysql
+	debugger: false
+	autoGenerateProxyClasses: true
+	metadata:
+		Entity: %appDir%/models
+
 
 
 services:
