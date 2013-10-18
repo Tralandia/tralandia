@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d116cc211163d231b7e3996a6cb7da00",
+    "hash": "847bc8e0775c51416410711b15781906",
     "packages": [
         {
             "name": "dg/dibi",
@@ -11,13 +11,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541"
+                "reference": "3b1e9e263292003407e1061244659fddc76955cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
-                "reference": "a47395d16af0ffabf0eb5ee5ee7f1a1ed5e75541",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/3b1e9e263292003407e1061244659fddc76955cf",
+                "reference": "3b1e9e263292003407e1061244659fddc76955cf",
                 "shasum": ""
+            },
+            "replace": {
+                "dg/dibi": "self.version"
             },
             "require-dev": {
                 "nette/tester": "@dev"
@@ -54,7 +57,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2013-08-29 08:28:25"
+            "time": "2013-10-16 23:20:44"
         },
         {
             "name": "doctrine/annotations",
@@ -343,12 +346,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3c811d7d8192a76f2eec96747741669c9298f60e"
+                "reference": "a619261b6b96341951f93d228493818ba334d0f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3c811d7d8192a76f2eec96747741669c9298f60e",
-                "reference": "3c811d7d8192a76f2eec96747741669c9298f60e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a619261b6b96341951f93d228493818ba334d0f6",
+                "reference": "a619261b6b96341951f93d228493818ba334d0f6",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +408,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-10-07 18:23:26"
+            "time": "2013-10-09 16:42:00"
         },
         {
             "name": "doctrine/inflector",
@@ -538,12 +541,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "ded3d20630f2f1b535d5f7c76f0e14876b6286b7"
+                "reference": "d2e731174ce2776df5e89e8a5ac020923b9b06c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/ded3d20630f2f1b535d5f7c76f0e14876b6286b7",
-                "reference": "ded3d20630f2f1b535d5f7c76f0e14876b6286b7",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d2e731174ce2776df5e89e8a5ac020923b9b06c1",
+                "reference": "d2e731174ce2776df5e89e8a5ac020923b9b06c1",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +608,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-10-07 18:22:14"
+            "time": "2013-10-17 14:18:12"
         },
         {
             "name": "janmarek/mockista",
@@ -830,12 +833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "6a98a25ee619cc77b4cff7acc46906fe7d8e3d92"
+                "reference": "37e486699abaa14af3bfb512ed8ac941939e0e93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/6a98a25ee619cc77b4cff7acc46906fe7d8e3d92",
-                "reference": "6a98a25ee619cc77b4cff7acc46906fe7d8e3d92",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/37e486699abaa14af3bfb512ed8ac941939e0e93",
+                "reference": "37e486699abaa14af3bfb512ed8ac941939e0e93",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +884,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-10-08 12:53:30"
+            "time": "2013-10-10 00:09:44"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -935,12 +938,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea"
+                "reference": "a3183035ba28775e9632a75d5c447e750f816d29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
-                "reference": "1c63710c7bea4c7741b3e3b1bc05bffa81563dea",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/a3183035ba28775e9632a75d5c447e750f816d29",
+                "reference": "a3183035ba28775e9632a75d5c447e750f816d29",
                 "shasum": ""
             },
             "require": {
@@ -979,7 +982,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-08-22 22:10:12"
+            "time": "2013-10-16 18:25:32"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -1029,47 +1032,6 @@
                 "replicator"
             ],
             "time": "2013-08-22 22:10:12"
-        },
-        {
-            "name": "leafo/lessphp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leafo/lessphp.git",
-                "reference": "366fb52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/c6cd043c94ba2a94ae3eeedc7a4c925302b61252",
-                "reference": "366fb52",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.4.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lessc.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                }
-            ],
-            "description": "lessphp is a compiler for LESS written in PHP.",
-            "homepage": "http://leafo.net/lessphp/",
-            "time": "2013-07-09 16:25:09"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1133,7 +1095,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/ae11ca1b86d4b140ffc70632f9d4f24a45e83141",
+                "url": "https://api.github.com/repos/nette/nette/zipball/39b480c311f9c88320ca4a343f864198fb65af52",
                 "reference": "9bf0292",
                 "shasum": ""
             },
@@ -1296,12 +1258,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "421ac6e2e5e665907fbf359a8f175b55b93b6a22"
+                "reference": "608960cd7f7e906e64d6586b9152e308f7ea0ff2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/421ac6e2e5e665907fbf359a8f175b55b93b6a22",
-                "reference": "421ac6e2e5e665907fbf359a8f175b55b93b6a22",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/608960cd7f7e906e64d6586b9152e308f7ea0ff2",
+                "reference": "608960cd7f7e906e64d6586b9152e308f7ea0ff2",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1302,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-10-09 07:29:29"
+            "time": "2013-10-16 16:16:10"
         },
         {
             "name": "texy/texy",
@@ -1419,8 +1381,7 @@
         "mobiledetect/mobiledetectlib": 20,
         "dg/dibi": 20,
         "texy/texy": 20,
-        "janmarek/mockista": 20,
-        "leafo/lessphp": 20
+        "janmarek/mockista": 20
     },
     "platform": {
         "php": ">= 5.3.0"

@@ -24,8 +24,7 @@
 		"mobiledetect/mobiledetectlib": "dev-master",
         "dg/dibi": "dev-master",
 		"texy/texy": "dev-release-2.x",
-		"janmarek/mockista": "dev-master",
-        "leafo/lessphp": "dev-master#366fb52"
+		"janmarek/mockista": "dev-master"
 	},
 	"repositories": [
 		{
