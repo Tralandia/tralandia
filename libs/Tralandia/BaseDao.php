@@ -45,5 +45,4 @@ class BaseDao extends EntityDao {
 		return $newEntity;
 	}
 
-
 }
