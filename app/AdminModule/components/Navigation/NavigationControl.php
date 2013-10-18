@@ -160,9 +160,8 @@ class NavigationControl extends BaseControl
 					'linkArgs' => ['id' => $language->getIso()],
 				];
 
-				$translatedWordsCount = $translationRepository->calculateTranslatedWordsCount($language);
 				$languageItems['translatedWords'] = [
-					'label' => "Translated $translatedWordsCount"
+					'label' => "Translated"
 				];
 
 				$languageTree['items'] = $languageItems;

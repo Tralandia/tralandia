@@ -67,8 +67,8 @@ class Phone extends Nette\Object {
 					->setInternational($response->formattingResults->international)
 					->setNational($response->formattingResults->national)
 					->setPrimaryLocation($primaryLocation);
-				$this->phoneDao->persist($phone);
-				$this->phoneDao->flush($phone);
+
+				$this->phoneDao->save($phone);
 			}
 		}
 

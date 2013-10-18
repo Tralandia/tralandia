@@ -58,7 +58,7 @@ class PhraseListPresenter extends BasePresenter {
 	protected $updateTranslationStatus;
 
 	/**
-	 * @var \Repository\Phrase\PhraseRepository
+	 * @var \Tralandia\BaseDao
 	 */
 	protected $phraseDao;
 
@@ -345,7 +345,7 @@ class PhraseListPresenter extends BasePresenter {
 
 	public function processPhraseEditForm($form)
 	{
-		$phraseRepository = $this->phraseDao;
+		$phraseDao = $this->phraseDao;
 		$formValues = $form->getValues(TRUE);
 
 		$phrasesIds = [];
@@ -393,7 +393,7 @@ class PhraseListPresenter extends BasePresenter {
 			$this->acceptedTranslationsEmailListener->onAcceptedTranslations($checkedLanguage, $wordsCount);
 		}
 
-		$phraseRepository->flush();
+		$phraseDao->save();
 
 		$this->invalidatePhrasesCache($phrasesIds);
 
