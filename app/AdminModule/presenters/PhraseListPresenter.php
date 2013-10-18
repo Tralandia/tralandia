@@ -404,13 +404,12 @@ class PhraseListPresenter extends BasePresenter {
 			}
 
 			$phrasesIds[] = $phraseId;
+			$phraseDao->save($phrase, $phraseValues['changedTranslations']);
 		}
 
 		if(isset($checkedLanguage) && $totalAmount > 0 && $this->loggedUser->isSuperAdmin()) {
 			$this->acceptedTranslationsEmailListener->onAcceptedTranslations($checkedLanguage, $totalAmount);
 		}
-
-		$phraseDao->save();
 
 		$this->invalidatePhrasesCache($phrasesIds);
 
