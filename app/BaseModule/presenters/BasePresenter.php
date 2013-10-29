@@ -95,6 +95,12 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
+	 * @var \Tralandia\Location\Locations
+	 */
+	protected $locations;
+
+	/**
+	 * @autowire
 	 * @var \Device
 	 */
 	protected $device;

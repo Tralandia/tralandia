@@ -187,11 +187,8 @@ abstract class BasePresenter extends \BasePresenter {
 	protected function getSuggestionForLocation($string)
 	{
 		$suggestLocations = [];
-		/** @var $locationRepository \Repository\Location\LocationRepository */
-		$locationRepository = $this->locationDao;
-		//$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
 
-		$suggestLocations['localitiesAndRegions'] = $locationRepository->findSuggestForLocalityAndRegion(
+		$suggestLocations['localitiesAndRegions'] = $this->locations->findSuggestForLocalityAndRegion(
 			$string,
 			$this->primaryLocation,
 			$this->language
