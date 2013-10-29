@@ -8,6 +8,7 @@
 namespace Tralandia\Location;
 
 
+use Entity\Language;
 use Entity\Location\Location;
 use Entity\Rental\Rental;
 use InvalidArgumentException;
@@ -106,5 +107,34 @@ class Locations
 	{
 		return $this->locationDao->findOneByIso($iso);
 	}
+
+
+	public function findAllLocalityAndRegion()
+	{
+		$qb = $this->locationDao->createQueryBuilder('e');
+		$qb->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region']);
+
+		return $qb->getQuery()->getResult();
+	}
+
+	public function findSuggestForLocalityAndRegion($search,Location $location, Language $language)
+	{
+		$qb = $this->locationDao->createQueryBuilder('e');
+		$qb->leftJoin('e.type', 't')
+			->innerJoin('e.name', 'n')
+			->leftJoin('n.translations', 'tt')
+			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region'])
+			->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $location)
+			->andWhere($qb->expr()->orx(
+				$qb->expr()->eq('tt.language', ':language'),
+				$qb->expr()->eq('tt.language', 'n.sourceLanguage')
+			))
+			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%")
+			->setParameter('language', $language);
+
+		return $qb->getQuery()->getResult();
+	}
+
 
 }
