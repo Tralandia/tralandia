@@ -15,5 +15,4 @@ if (PHP_SAPI != 'cli') {
 	}
 }
 
-
 require __DIR__ . '/bootstrap.php';
