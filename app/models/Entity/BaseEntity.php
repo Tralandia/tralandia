@@ -5,22 +5,15 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Proxy\Proxy;
 use Extras;
+use Kdyby\Doctrine\Entities\IdentifiedEntity;
 use Nette\Utils\Strings;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
- * @ORM\Table(indexes={@ORM\index(name="oldId", columns={"oldId"})})
+ * @ORM\MappedSuperclass(repositoryClass="\Tralandia\BaseDao")
+ * @ORM\Table(indexes={@ORM\Index(name="oldId", columns={"oldId"})})
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security\IResource {
-
-	/**
-	 * @var integer
-	 * @ORM\Id
-	 * @ORM\GeneratedValue
-	 * @ORM\Column(type="integer")
-	 */
-	protected $id;
+class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {
 
 	/**
 	 * @var integer
@@ -71,21 +64,6 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 	}
 
 	/**
-	 * @return integer|NULL
-	 */
-	final public function getId()
-	{
-		if ($this instanceof Proxy && !$this->__isInitialized__ && !$this->id) {
-			$identifier = $this->getReflection()->getProperty('_identifier');
-			$identifier->setAccessible(TRUE);
-			$id = $identifier->getValue($this);
-			$this->id = reset($id);
-		}
-
-		return $this->id;
-	}
-
-	/**
 	 * @param integer
 	 * @return \Entity\BaseEntity
 	 */
@@ -111,21 +89,29 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 		return $this->oldId;
 	}
 
+
 	/**
-	 * @ORM\prePersist
-	 * @param \Nette\DateTime $created
+	 * @ORM\PrePersist
+	 * @return BaseEntity
+	 */
+	public function fillCreated()
+	{
+		if(!$this->created) {
+			$this->created = new \DateTime();
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * @param \DateTime $created
 	 *
 	 * @return \Entity\BaseEntity
 	 */
-	public function setCreated(\Nette\DateTime $created = NULL){
+	public function setCreated(\DateTime $created = NULL){
 
-		if($created) {
-			$this->created = $created;
-		}
-
-		if(!$this->created) {
-			$this->created = new \Nette\DateTime();
-		}
+		$this->created = $created ? $created : new \DateTime;
 
 		return $this;
 	}
@@ -138,8 +124,8 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 	}
 
 	/**
-	 * @ORM\prePersist
-	 * @ORM\preUpdate
+	 * @ORM\PrePersist
+	 * @ORM\PreUpdate
 	 * @return \Entity\BaseEntity
 	 */
 	public function setUpdated() {
@@ -152,6 +138,22 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 	public function getUpdated() {
 		return $this->updated;
 	}
+
+
+	public function __set($name, $value) {
+		// if ($this->getReflection()->hasProperty($name)) {
+		// 	$this->{$name} = $value;
+		// 	return;
+		// }
+		if($value === NULL) {
+			$method = 'unset' . Strings::firstUpper($name);
+			$this->{$method}();
+			return NULL;
+		}
+
+		parent::__set($name, $value);
+	}
+
 
 
 }

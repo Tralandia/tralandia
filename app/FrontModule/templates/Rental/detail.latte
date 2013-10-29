@@ -1,12 +1,11 @@
 {*
 	$rental        Entity\Rental\Rental
-	$rentalService Service\Rental\RentalService
 	$locality      Service\Seo\SeoService
 	*}
 
 	{block content}
 
-	{var $featured = $rentalService->isFeatured(); }
+	{var $featured = $isRentalFeatured($rental); }
 
 	{var $tempCacheOptions = $getCacheOptions('rentalDetail', ['rental' => $rental->getId()])}
 

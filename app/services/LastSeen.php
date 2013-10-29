@@ -24,13 +24,17 @@ class LastSeen {
 	 */
 	protected $seen;
 
-	protected $rentalRepositoryAccessor;
+	/**
+	 * @var Tralandia\BaseDao
+	 */
+	private $rentalDao;
 
-	public function __construct($rentalRepositoryAccessor, Request $httpRequest, Response $httpResponse)
+
+	public function __construct(\Tralandia\BaseDao $rentalDao, Request $httpRequest, Response $httpResponse)
 	{
-		$this->rentalRepositoryAccessor = $rentalRepositoryAccessor;
 		$this->httpRequest = $httpRequest;
 		$this->httpResponse = $httpResponse;
+		$this->rentalDao = $rentalDao;
 	}
 
 	public function visit(\Entity\Rental\Rental $rental)
@@ -64,7 +68,7 @@ class LastSeen {
 	{
 		$rentals = array();
 		foreach($this->getSeen($limit) as $rentalId) {
-			$rental = $this->rentalRepositoryAccessor->get()->findOneById($rentalId);
+			$rental = $this->rentalDao->findOneById($rentalId);
 			if (!$rental) continue;
 
 			$rentals[] = $rental;

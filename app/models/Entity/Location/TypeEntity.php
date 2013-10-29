@@ -8,18 +8,19 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Primary(key="id", value="name")
- * @EA\Generator(skip="{setSlug}")
+ * @ORM\Table(name="location_type", indexes={@ORM\Index(name="slug", columns={"slug"})})
+ *
+ *
  */
 class Type extends \Entity\BaseEntityDetails {
+
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
@@ -46,12 +47,12 @@ class Type extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Type
@@ -62,7 +63,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -70,7 +71,7 @@ class Type extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -78,7 +79,7 @@ class Type extends \Entity\BaseEntityDetails {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Location\Type
@@ -89,7 +90,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */

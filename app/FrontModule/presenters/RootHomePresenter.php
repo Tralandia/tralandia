@@ -1,31 +1,11 @@
 <?php
 
 namespace FrontModule;
-use Model\Rental\IRentalDecoratorFactory;
-use Routers\FrontRoute;
 
 class RootHomePresenter extends BasePresenter {
 
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
-	/**
-	 * @autowire
-	 * @var \Extras\Translator
-	 */
-	protected $translator;
 
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	public $rentalRepositoryAccessor;
-
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
 
 	public function renderDefault() {
 
@@ -37,24 +17,19 @@ class RootHomePresenter extends BasePresenter {
 		$this->template->rentals = $this->getRentals;
 		$this->template->isRootHome = TRUE;
 		$this->template->locationRentalsCount = $this->getLocationRentalsCount;
+		$this->template->isRentalFeatured = $this->isRentalFeatured;
 	}
 
 	public function getRentals()
 	{
-		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
-
-		$rentals = array();
-		foreach ($featuredIds as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
-			$rentals[$rental->id]['entity'] = $rental;
-		}
+		$rentals = $this->rentals->getFeaturedRentals($this->contextParameters['rentalCountOnRootHome']);
 
 		return $rentals;
 	}
 
 	public function getLocationRentalsCount()
 	{
-		$counts = $this->rentalRepositoryAccessor->get()->getCounts(NULL, TRUE);
+		$counts = $this->rentals->getCounts(NULL, TRUE);
 		return array_sum($counts);
 	}
 

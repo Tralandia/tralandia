@@ -17,14 +17,14 @@ class BanListManager
 {
 
 	/**
-	 * @var \Repository\BaseRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $bannedPhoneRepository;
+	protected $bannedPhoneDao;
 
 	/**
-	 * @var \Repository\BaseRepository
+	 * @var \Tralandia\BaseDao
 	 */
-	protected $bannedEmailRepository;
+	protected $bannedEmailDao;
 
 
 	/**
@@ -32,8 +32,8 @@ class BanListManager
 	 */
 	public function __construct(EntityManager $em)
 	{
-		$this->bannedPhoneRepository = $em->getRepository(BANNED_PHONE_ENTITY);
-		$this->bannedEmailRepository = $em->getRepository(BANNED_EMAIL_ENTITY);
+		$this->bannedPhoneDao = $em->getRepository(BANNED_PHONE_ENTITY);
+		$this->bannedEmailDao = $em->getRepository(BANNED_EMAIL_ENTITY);
 	}
 
 
@@ -51,6 +51,11 @@ class BanListManager
 	}
 
 
+	/**
+	 * @param Rental $rental
+	 *
+	 * @return $this
+	 */
 	public function unbanRental(Rental $rental)
 	{
 		$this->unbanEmail($rental->getEmail());
@@ -73,10 +78,10 @@ class BanListManager
 		$bannedEmail = $this->findBannedEmail($email);
 		if (!$bannedEmail) {
 			/** @var $bannedEmail \Entity\Rental\BannedEmail */
-			$bannedEmail = $this->bannedEmailRepository->createNew();
+			$bannedEmail = $this->bannedEmailDao->createNew();
 			$bannedEmail->setEmail($email);
 
-			$this->bannedEmailRepository->save($bannedEmail);
+			$this->bannedEmailDao->save($bannedEmail);
 		}
 
 		return $bannedEmail;
@@ -91,7 +96,7 @@ class BanListManager
 		$bannedEmail = $this->findBannedEmail($email);
 
 		if($bannedEmail) {
-			$this->bannedEmailRepository->delete($bannedEmail);
+			$this->bannedEmailDao->delete($bannedEmail);
 		}
 	}
 
@@ -103,7 +108,7 @@ class BanListManager
 	 */
 	public function findBannedEmail($email)
 	{
-		return $this->bannedEmailRepository->findOneBy(['email' => $email]);
+		return $this->bannedEmailDao->findOneBy(['email' => $email]);
 	}
 
 
@@ -120,10 +125,10 @@ class BanListManager
 		$bannedPhone = $this->findBannedPhone($phone);
 		if (!$bannedPhone) {
 			/** @var $bannedPhone \Entity\Rental\BannedPhone */
-			$bannedPhone = $this->bannedPhoneRepository->createNew();
+			$bannedPhone = $this->bannedPhoneDao->createNew();
 			$bannedPhone->setPhone($phone);
 
-			$this->bannedPhoneRepository->save($bannedPhone);
+			$this->bannedPhoneDao->save($bannedPhone);
 		}
 
 		return $bannedPhone;
@@ -138,7 +143,7 @@ class BanListManager
 		$bannedPhone = $this->findBannedPhone($phone);
 
 		if($bannedPhone) {
-			$this->bannedPhoneRepository->delete($bannedPhone);
+			$this->bannedPhoneDao->delete($bannedPhone);
 		}
 	}
 
@@ -150,6 +155,6 @@ class BanListManager
 	 */
 	public function findBannedPhone(Phone $phone)
 	{
-		return $this->bannedPhoneRepository->findOneBy(['phone' => $phone->getId()]);
+		return $this->bannedPhoneDao->findOneBy(['phone' => $phone->getId()]);
 	}
 }

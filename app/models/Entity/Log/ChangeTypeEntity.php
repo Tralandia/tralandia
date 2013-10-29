@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="log_changetype")
- * @EA\Generator(skip="{setSlug}")
+ *
  */
 class ChangeType extends \Entity\BaseEntity {
 
@@ -17,7 +17,7 @@ class ChangeType extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -43,12 +43,12 @@ class ChangeType extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -56,7 +56,7 @@ class ChangeType extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Log\ChangeType
@@ -67,7 +67,7 @@ class ChangeType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Log\ChangeType
 	 */
@@ -77,7 +77,7 @@ class ChangeType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -85,7 +85,7 @@ class ChangeType extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Log\ChangeType
@@ -96,7 +96,7 @@ class ChangeType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */

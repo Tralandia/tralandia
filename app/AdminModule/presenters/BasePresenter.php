@@ -68,7 +68,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 	public function actionFakeLogin($id)
 	{
-		$user = $this->userRepositoryAccessor->get()->find($id);
+		$user = $this->userDao->find($id);
 		if(!$user) {
 			throw new BadRequestException;
 		}

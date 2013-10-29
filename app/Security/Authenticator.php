@@ -6,6 +6,7 @@ use Entity\User\User;
 use Nette\Object,
 	Nette\Security as NS,
 	Nette\Environment;
+use Tralandia\BaseDao;
 
 /**
  * Users authenticator.
@@ -13,23 +14,24 @@ use Nette\Object,
 class Authenticator extends Object implements NS\IAuthenticator
 {
 
-	/**
-	 * @var \Repository\User\UserRepository
-	 */
-	protected $userRepository;
 
 	/**
 	 * @var string
 	 */
 	protected static $autoLoginDelimiter = '-';
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $userDao;
+
 
 	/**
-	 * @param \Repository\User\UserRepository $userRepository
+	 * @param BaseDao $userDao
 	 */
-	public function __construct(\Repository\User\UserRepository $userRepository)
+	public function __construct(BaseDao $userDao)
 	{
-		$this->userRepository = $userRepository;
+		$this->userDao = $userDao;
 	}
 
 
@@ -43,7 +45,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	{
 		list($email, $password) = $credentials;
 
-		$user = $this->userRepository->findOneByLogin($email);
+		$user = $this->userDao->findOneByLogin($email);
 
 		if (!$user) {
 			throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);

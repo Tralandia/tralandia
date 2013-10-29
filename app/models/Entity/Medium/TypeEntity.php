@@ -9,8 +9,8 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="medium_type")
- * @EA\Primary(key="id", value="name")
- * @EA\Generator(skip="{setSlug}")
+ *
+ *
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -19,7 +19,7 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
@@ -39,12 +39,12 @@ class Type extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -52,7 +52,7 @@ class Type extends \Entity\BaseEntityDetails {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Medium\Type
@@ -63,7 +63,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

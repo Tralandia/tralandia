@@ -12,10 +12,10 @@ class Phone extends Email {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Books\Phone
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Books\Phone $book) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity, Extras\Books\Phone $book) {
 		$this->name = $name;
 		$this->label = $label;
 		$this->entity = $entity;

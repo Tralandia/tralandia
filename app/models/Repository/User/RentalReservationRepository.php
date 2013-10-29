@@ -12,6 +12,11 @@ use Entity\User\User;
  */
 class RentalReservationRepository extends \Repository\BaseRepository {
 
+	/**
+	 * @param User $user
+	 *
+	 * @return int
+	 */
 	public function getReservationsCountByUser(User $user)
 	{
 		$qb = $this->_em->createQueryBuilder();

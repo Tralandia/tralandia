@@ -374,7 +374,7 @@ class Tools {
 	}
 
 
-	public static function entitiesMap(array $array, $keyOrValue, $value = NULL)
+	public static function entitiesMap(array $array, $keyOrValue, $value = NULL, \Nette\Localization\ITranslator $translator = NULL)
 	{
 		if(is_string($keyOrValue)) {
 			$keyOrValue = function($key, $val) use ($keyOrValue) {
@@ -382,8 +382,12 @@ class Tools {
 			};
 		}
 		if(is_string($value)) {
-			$value = function($val) use ($value) {
-				return $val->{$value};
+			$value = function($val) use ($value, $translator) {
+				$return = $val->{$value};
+				if($translator) {
+					$return = $translator->translate($return);
+				}
+				return $return;
 			};
 		}
 		return self::arrayMap($array, $keyOrValue, $value);

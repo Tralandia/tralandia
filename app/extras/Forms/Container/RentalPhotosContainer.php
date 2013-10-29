@@ -19,20 +19,20 @@ class RentalPhotosContainer extends BaseContainer
 	 */
 	protected $imageManager;
 
-	protected $imageRepository;
+	protected $imageDao;
 
 
 	/**
 	 * @param \Entity\Rental\Rental|NULL $rental
 	 * @param \Image\RentalImageManager $imageManager
-	 * @param $imageRepository
+	 * @param $imageDao
 	 */
-	public function __construct(\Entity\Rental\Rental $rental = NULL, RentalImageManager $imageManager, $imageRepository)
+	public function __construct(\Entity\Rental\Rental $rental = NULL, RentalImageManager $imageManager, $imageDao)
 	{
 		parent::__construct();
 		$this->rental = $rental;
 		$this->imageManager = $imageManager;
-		$this->imageRepository = $imageRepository;
+		$this->imageDao = $imageDao;
 
 		$this['upload'] = $upload = new MfuControl();
 		$upload->allowMultiple()->onUpload[] = $this->processUpload;
@@ -116,7 +116,7 @@ class RentalPhotosContainer extends BaseContainer
 
 		$imagesTemp = [];
 		if(count($values['sort'])) {
-			$images = $this->imageRepository->findById($values['sort']);
+			$images = $this->imageDao->findById($values['sort']);
 
 			$imagesTemp = array_flip($values['sort']);
 			foreach($images as $image) {

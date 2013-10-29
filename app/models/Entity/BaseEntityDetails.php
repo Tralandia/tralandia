@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Nette\Utils\Arrays;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
+ * @ORM\MappedSuperclass(repositoryClass="\Tralandia\BaseDao")
  */
 class BaseEntityDetails extends \Entity\BaseEntity {
 

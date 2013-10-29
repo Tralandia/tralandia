@@ -63,15 +63,7 @@ abstract class BaseGridControl extends BaseControl {
 	 */
 	public function getDataSource($filter, $order, Paginator $paginator = NULL)
 	{
-		/** @var $builder \Doctrine\ORM\QueryBuilder */
-		$builder = $this->repository->getDataSource();
-		//$builder->orderBy('e.' . $this->orderBy, $this->sort);
-
-
-		$query = $builder->getQuery();
-		//$query->setFirstResult(($paginator->page - 1) * $paginator->itemsPerPage);
-		//$query->setMaxResults($paginator->itemsPerPage);
-		return $query->getResult();
+		return $this->repository->findAll();
 	}
 
 	/**

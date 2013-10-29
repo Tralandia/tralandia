@@ -15,22 +15,18 @@ class LocationService extends Service\BaseService {
 	 */
 	public $transliterator;
 
-	protected $routingPathSegmentRepositoryAccessor;
-	protected $routingPathSegmentOldRepositoryAccessor;
-	protected $locationRepositoryAccessor;
+	protected $routingPathSegmentDao;
+	protected $routingPathSegmentOldDao;
+	protected $locationDao;
 
-	protected $phraseDecoratorFactory;
 	protected $polygonService;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
-		$this->routingPathSegmentOldRepositoryAccessor = $dic->routingPathSegmentOldRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->routingPathSegmentDao = $dic->getService('doctrine.default.entityManager')->getDao(PATH_SEGMENT_ENTITY);
+		$this->routingPathSegmentOldDao = $dic->getService('doctrine.default.entityManager')->getDao(PATH_SEGMENT_OLD_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
 	}
 
-	public function injectPhrase(\Model\Phrase\IPhraseDecoratorFactory $factory) {
-		$this->phraseDecoratorFactory = $factory;
-	}
 
 	public function inject(\Service\PolygonService $service, \Transliterator $transliterator) {
 		$this->polygonService = $service;
@@ -70,7 +66,7 @@ class LocationService extends Service\BaseService {
 		if ($newSlug != $oldSlug) {
 			$existingLocation = 1;
 			while ($existingLocation) {
-				$existingLocation = $this->locationRepositoryAccessor->get()->findOneBy(array(
+				$existingLocation = $this->locationDao->findOneBy(array(
 					'parent' => $this->getEntity()->parent,
 					'slug' => $newSlug,
 				));
@@ -82,7 +78,7 @@ class LocationService extends Service\BaseService {
 			$this->getEntity()->slug = $newSlug;
 
 			// Load the existing pathSegment and update it
-			$pathSegment = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+			$pathSegment = $this->routingPathSegmentDao->findOneBy(array(
 				'type' => 6,
 				'entityId' => $this->getEntity()->id,
 			));
@@ -90,19 +86,19 @@ class LocationService extends Service\BaseService {
 			if ($pathSegment) {
 				$pathSegment->pathSegment = $newSlug;
 			} else {
-				$pathSegment = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$pathSegment = $this->routingPathSegmentDao->createNew();
 				$pathSegment->primaryLocation = $this->getEntity()->parent;
 				$pathSegment->type = \Entity\Routing\PathSegment::LOCATION;
 				$pathSegment->entityId = $this->getEntity()->id;
 				$pathSegment->pathSegment = $newSlug;
 			}
 
-			$this->locationRepositoryAccessor->get()->persist($pathSegment);
-			$this->locationRepositoryAccessor->get()->flush($pathSegment);
+			$this->locationDao->persist($pathSegment);
+			$this->locationDao->flush($pathSegment);
 
 			if ($oldSlug) {
 				// Create a new pathSegmentOld and update it
-				$pathSegmentOld = $this->routingPathSegmentOldRepositoryAccessor->get()->createNew();
+				$pathSegmentOld = $this->routingPathSegmentOldDao->createNew();
 				$pathSegmentOld->primaryLocation = $pathSegment->primaryLocation;
 				$pathSegmentOld->type = $pathSegment->type;
 				$pathSegmentOld->entityId = $pathSegment->entityId;
@@ -110,8 +106,8 @@ class LocationService extends Service\BaseService {
 				$pathSegmentOld->pathSegment = $oldSlug;
 				$pathSegmentOld->pathSegmentNew = $pathSegment;
 
-				$this->locationRepositoryAccessor->get()->persist($pathSegmentOld);
-				$this->locationRepositoryAccessor->get()->flush($pathSegmentOld);
+				$this->locationDao->persist($pathSegmentOld);
+				$this->locationDao->flush($pathSegmentOld);
 			}
 		}
 		return $newSlug;

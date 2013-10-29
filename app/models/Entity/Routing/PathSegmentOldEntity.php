@@ -8,8 +8,8 @@ use Entity\Routing;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Routing\PathSegmentOldRepository")
- * @ORM\Table(name="routing_pathsegmentold", indexes={@ORM\index(name="pathSegment", columns={"pathSegment"}), @ORM\index(name="type", columns={"type"}), @ORM\index(name="entityId", columns={"entityId"})})
+ * @ORM\Entity
+ * @ORM\Table(name="routing_pathsegmentold", indexes={@ORM\Index(name="pathSegment", columns={"pathSegment"}), @ORM\Index(name="type", columns={"type"}), @ORM\Index(name="entityId", columns={"entityId"})})
  */
 class PathSegmentOld extends \Entity\BaseEntity {
 

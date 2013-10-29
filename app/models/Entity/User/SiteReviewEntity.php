@@ -7,8 +7,8 @@ use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\User\SiteReviewRepository")
- * @ORM\Table(name="user_sitereview", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
+ * @ORM\Entity
+ * @ORM\Table(name="user_sitereview", indexes={@ORM\Index(name="senderEmail", columns={"senderEmail"})})
  */
 class SiteReview extends \Entity\BaseEntity {
 
@@ -59,12 +59,12 @@ class SiteReview extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\User\SiteReview
@@ -75,7 +75,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\SiteReview
 	 */
@@ -85,7 +85,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -93,7 +93,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\SiteReview
@@ -104,7 +104,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\User\SiteReview
 	 */
@@ -114,7 +114,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -122,7 +122,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->primaryLocation;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\SiteReview
@@ -133,7 +133,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -141,7 +141,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\SiteReview
@@ -152,7 +152,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -160,7 +160,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->senderEmail;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\SiteReview
@@ -171,7 +171,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -179,7 +179,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->senderName;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\User\SiteReview
@@ -190,7 +190,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -198,7 +198,7 @@ class SiteReview extends \Entity\BaseEntity {
 	{
 		return $this->testimonial;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\User\SiteReview
@@ -209,7 +209,7 @@ class SiteReview extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

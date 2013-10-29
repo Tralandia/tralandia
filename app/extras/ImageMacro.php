@@ -64,7 +64,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroAttrImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('?>src="<?php echo %escape($_imagePipe->request(%node.word))?>" <?php');
+		return $writer->write('?> src="<?php echo %escape($_imagePipe->request(%node.word))?>" <?php');
 	}
 
 	/* ------------------ Fake image macros ------------------ */
@@ -78,7 +78,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroFakeAttrImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('?>src="<?php echo %escape($_imagePipe->requestFake())?>" <?php');
+		return $writer->write('?> src="<?php echo %escape($_imagePipe->requestFake())?>" <?php');
 	}
 	/* -------------------------------------------------------- */
 

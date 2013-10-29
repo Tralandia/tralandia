@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
- * @EA\Primary(key="id", value="id")
+ *
  */
 class SeoUrl extends \Entity\BaseEntity {
 
@@ -70,17 +70,17 @@ class SeoUrl extends \Entity\BaseEntity {
 	 */
 	protected $ppcKeywords;
 
-	
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\SeoUrl
@@ -91,7 +91,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
@@ -101,7 +101,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -109,7 +109,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->location;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Seo\SeoUrl
@@ -120,7 +120,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
@@ -130,7 +130,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Type|NULL
 	 */
@@ -138,7 +138,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->rentalType;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Seo\SeoUrl
@@ -149,7 +149,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
@@ -159,7 +159,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -167,7 +167,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->page;
 	}
-		
+
 	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
@@ -181,7 +181,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
@@ -193,7 +193,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Medium\Medium[]
 	 */
@@ -201,7 +201,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->media;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
@@ -212,7 +212,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -220,7 +220,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->title;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
@@ -231,7 +231,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -239,7 +239,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->heading;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
@@ -250,7 +250,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -258,7 +258,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->tabName;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
@@ -269,7 +269,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -277,7 +277,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	{
 		return $this->description;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
@@ -288,7 +288,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */

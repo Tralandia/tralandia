@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\ImportantLanguageForLocationRepository")
+ * @ORM\Entity
  * @ORM\Table(name="important_language_for_location")
 */
 class ImportantLanguageForLocation extends \Entity\BaseEntity {

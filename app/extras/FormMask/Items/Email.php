@@ -9,7 +9,7 @@ use Nette, Extras;
  */
 class Email extends Base {
 
-	/** @var Extras\Models\Entity\IEntity */
+	/** @var \Entity\BaseEntity */
 	protected $entity;
 
 	/** @var Extras\Books\Email */
@@ -18,10 +18,10 @@ class Email extends Base {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Books\Email
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Books\Email $book) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity, Extras\Books\Email $book) {
 		$this->name = $name;
 		$this->label = $label;
 		$this->entity = $entity;

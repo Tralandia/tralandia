@@ -8,9 +8,9 @@ use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_amenitytype", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{setSlug}")
+ * @ORM\Table(name="rental_amenitytype", indexes={@ORM\Index(name="slug", columns={"slug"})})
+ *
+ *
  */
 class AmenityType extends \Entity\BaseEntity
 {

@@ -2,6 +2,7 @@
 
 namespace Extras\FormMask;
 
+use Entity\BaseEntity;
 use Nette, Extras;
 
 /**
@@ -24,11 +25,11 @@ class FormFactory {
 	/**
 	 * Vytvorenie formulara
 	 *
-	 * @param \Extras\Models\Entity\IEntity $entity
+	 * @param \Entity\BaseEntity $entity
 	 *
 	 * @return \Nette\Application\UI\Form
 	 */
-	public function create(Extras\Models\Entity\IEntity $entity) {
+	public function create(BaseEntity $entity) {
 		$form = new Nette\Application\UI\Form;
 		$form->setRenderer(new Extras\Forms\Rendering\DefaultRenderer);
 		$form->onSuccess[] = array($this->generator->getMask(), 'process');

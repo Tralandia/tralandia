@@ -11,7 +11,7 @@ use Nette\Utils\Strings;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="log_history")
- * @EA\Generator(skip="{setSlug, setData, getData}")
+ *
  */
 class History extends \Entity\BaseEntity {
 

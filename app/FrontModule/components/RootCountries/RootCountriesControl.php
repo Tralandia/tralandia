@@ -3,6 +3,8 @@ namespace FrontModule\Components\RootCountries;
 
 use Environment\Environment;
 use Doctrine\ORM\EntityManager;
+use Tralandia\Location\Countries;
+use Tralandia\Rental\Rentals;
 
 class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
@@ -12,7 +14,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	protected $environment;
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	protected $translator;
 
@@ -21,33 +23,41 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $locationRepository;
 
-	/**
-	 * @var \Repository\Rental\RentalRepository
-	 */
-	protected $rentalRepository;
 
 	/**
 	 * @var \ResultSorter
 	 */
 	private $resultSorter;
 
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
 
-	public function __construct(\Extras\Translator $translator, Environment $environment,
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $countries;
+
+
+	public function __construct(\Tralandia\Localization\Translator $translator, Environment $environment,
+								Rentals $rentals, Countries $countries,
 								EntityManager $em, \ResultSorter $resultSorter)
 	{
 		parent::__construct();
 		$this->environment = $environment;
 		$this->translator = $translator;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
-		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
 		$this->resultSorter = $resultSorter;
+		$this->rentals = $rentals;
+		$this->countries = $countries;
 	}
 
 	public function render()
 	{
 		$template = $this->template;
 
-		$template->rentalCounts = $rentalCounts = $this->rentalRepository->getCounts(NULL, TRUE);
+		$template->rentalCounts = $rentalCounts = $this->rentals->getCounts(NULL, TRUE);
 		$template->countries = $this->getCountries();
 
 		$template->render();
@@ -55,34 +65,36 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
 	private function getCountries()
 	{
-		$countries =  $this->locationRepository->getCountriesOrdered(
-			$this->translator,
-			$this->environment->getLocale()->getCollator()
-		);
+		$countries =  $this->countries->findAll();
 
 		$us = $this->locationRepository->findOneByIso('us');
 		$ca = $this->locationRepository->findOneByIso('ca');
 		$au = $this->locationRepository->findOneByIso('au');
+		$countriesTemp = [];
 		foreach($countries as $key => $country) {
-			if($country['entity']->getParent()->getId() == $us->getId()) {
-				$countries[$us->getId()]['entity'] = $us;
-				$countries[$us->getId()]['name'] = $this->translator->translate($us->getName());
-				$countries[$us->getId()]['children'][$country['entity']->getId()] = $country;
-				unset($countries[$key]);
-			} else if($country['entity']->getParent()->getId() == $ca->getId()) {
-				$countries[$ca->getId()]['entity'] = $ca;
-				$countries[$ca->getId()]['name'] = $this->translator->translate($ca->getName());
-				$countries[$ca->getId()]['children'][$country['entity']->getId()] = $country;
-				unset($countries[$key]);
-			} else if($country['entity']->getParent()->getId() == $au->getId()) {
-				$countries[$au->getId()]['entity'] = $au;
-				$countries[$au->getId()]['name'] = $this->translator->translate($au->getName());
-				$countries[$au->getId()]['children'][$country['entity']->getId()] = $country;
-				unset($countries[$key]);
+			if($country->getParent()->getId() == $us->getId()) {
+				$countriesTemp[$us->getId()]['entity'] = $us;
+				$countriesTemp[$us->getId()]['children'][$country->getId()] = [
+					'entity' => $country,
+				];
+			} else if($country->getParent()->getId() == $ca->getId()) {
+				$countriesTemp[$ca->getId()]['entity'] = $ca;
+				$countriesTemp[$ca->getId()]['children'][$country->getId()] = [
+					'entity' => $country,
+				];
+			} else if($country->getParent()->getId() == $au->getId()) {
+				$countriesTemp[$au->getId()]['entity'] = $au;
+				$countriesTemp[$au->getId()]['children'][$country->getId()] = [
+					'entity' => $country,
+				];
+			} else {
+				$countriesTemp[$country->getId()] = [
+					'entity' => $country,
+				];
 			}
 		}
 
-		$countries = $this->resultSorter->translateAndSort($countries, function($v){return $v['name'];});
+		$countries = $this->resultSorter->translateAndSort($countriesTemp, function($v) {return $v['entity']->getName();});
 
 		return $countries;
 	}

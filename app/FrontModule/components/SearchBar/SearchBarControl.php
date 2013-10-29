@@ -15,6 +15,7 @@ use Nette\Utils\Strings;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
+use Tralandia\Routing\PathSegments;
 
 class SearchBarControl extends \BaseModule\Components\BaseControl {
 
@@ -96,6 +97,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $searchFormFactory;
 
+	/**
+	 * @var \Tralandia\Routing\PathSegments
+	 */
+	private $pathSegments;
+
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
@@ -106,7 +112,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 * @param \Device $device
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
-								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator, \Device $device)
+								ISearchFormFactory $searchFormFactory, PathSegments $pathSegments,
+								OptionGenerator $searchOptionGenerator, \Device $device)
 	{
 		parent::__construct();
 		$this->search = $search;
@@ -115,6 +122,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->em = $em;
 		$this->searchFormFactory = $searchFormFactory;
 		$this->searchOptionGenerator = $searchOptionGenerator;
+		$this->pathSegments = $pathSegments;
 	}
 
 	public function render()
@@ -141,8 +149,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		}
 
 		if($this->rentalType) {
-			$pathSegment = $this->em->getRepository(PATH_SEGMENT_ENTITY)
-				->findRentalType($this->environment->getLanguage(), $this->rentalType);
+			$pathSegment = $this->pathSegments->findRentalType($this->environment->getLanguage(), $this->rentalType);
 
 			$jsVariables['data-rental-type'] = $pathSegment->getPathSegment();
 		}
@@ -187,7 +194,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->bottomLinksCallback = $this->directLinks;
 		$template->isHomepage = $this->isHomepage;
 		$template->environmentLocation = $this->environment->getPrimaryLocation();
-		
+
 		$template->render();
 	}
 

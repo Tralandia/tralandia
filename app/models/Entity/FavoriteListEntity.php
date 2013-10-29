@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="favorite_list")
- * @EA\Generator(skip="{setLastUsed}")
+ *
  */
 class FavoriteList extends \Entity\BaseEntity {
 
@@ -24,7 +24,7 @@ class FavoriteList extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental")
-	 * @ORM\JoinTable(name="favorite_list_rental",
+	 * @ORM\JoinTable(name="_favorite_list_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="favorite_list_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id")}
 	 *      )
@@ -58,14 +58,14 @@ class FavoriteList extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -73,7 +73,7 @@ class FavoriteList extends \Entity\BaseEntity {
 	{
 		return $this->lastUsed;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\FavoriteList
@@ -86,7 +86,7 @@ class FavoriteList extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\FavoriteList
@@ -97,7 +97,7 @@ class FavoriteList extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */

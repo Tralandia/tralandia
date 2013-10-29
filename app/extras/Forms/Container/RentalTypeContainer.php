@@ -3,6 +3,7 @@
 namespace Extras\Forms\Container;
 
 
+use Kdyby\Doctrine\EntityDao;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
 use Entity\Rental\Rental;
@@ -11,27 +12,29 @@ use Repository\Rental\TypeRepository;
 class RentalTypeContainer extends BaseContainer
 {
 
-	/**
-	 * @var \Repository\Rental\TypeRepository
-	 */
-	protected $rentalTypeRepository;
 
 	/**
 	 * @var \Entity\Rental\Rental
 	 */
 	protected $rental;
 
+	/**
+	 * @var \Kdyby\Doctrine\EntityDao
+	 */
+	private $rentalTypeDao;
+
 
 	/**
+	 * @param \Entity\Rental\Rental $rental
 	 * @param array $rentalTypes
 	 * @param ITranslator $translator
-	 * @param $rentalTypeRepository
+	 * @param \Kdyby\Doctrine\EntityDao $rentalTypeDao
 	 */
-	public function __construct(Rental $rental = NULL, array $rentalTypes, ITranslator $translator, TypeRepository $rentalTypeRepository)
+	public function __construct(Rental $rental = NULL, array $rentalTypes, ITranslator $translator, EntityDao $rentalTypeDao)
 	{
 		parent::__construct();
 
-		$this->rentalTypeRepository = $rentalTypeRepository;
+		$this->rentalTypeDao = $rentalTypeDao;
 		$this->rental = $rental;
 
 		$typesOptions = [];
@@ -75,7 +78,7 @@ class RentalTypeContainer extends BaseContainer
 	public function getFormattedValues($asArray = FALSE)
 	{
 		$values = $this->getValues($asArray);
-		$values['type'] = $this->rentalTypeRepository->find($values['type']);
+		$values['type'] = $this->rentalTypeDao->find($values['type']);
 		return $values;
 	}
 

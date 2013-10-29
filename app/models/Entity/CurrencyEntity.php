@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\CurrencyRepository")
- * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
- * @EA\Primary(key="id", value="iso")
- * @EA\Generator(skip="{setExchangeRate}")
+ * @ORM\Entity
+ * @ORM\Table(name="currency", indexes={@ORM\Index(name="name", columns={"name_id"}), @ORM\Index(name="iso", columns={"iso"})})
+ *
+ *
 */
 class Currency extends \Entity\BaseEntity {
 
@@ -68,12 +68,12 @@ class Currency extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Currency
@@ -84,7 +84,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -92,7 +92,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Currency
@@ -103,7 +103,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -111,7 +111,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->iso;
 	}
-		
+
 	/**
 	 * @return \Entity\Currency
 	 */
@@ -121,7 +121,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return float|NULL
 	 */
@@ -129,7 +129,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->exchangeRate;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Currency
@@ -140,7 +140,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Currency
 	 */
@@ -150,7 +150,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -158,7 +158,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->rounding;
 	}
-		
+
 	/**
 	 * @param float
 	 * @return \Entity\Currency
@@ -169,7 +169,7 @@ class Currency extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return float|NULL
 	 */

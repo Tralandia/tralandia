@@ -3,7 +3,7 @@
 namespace Extras\Forms\Container;
 
 use Doctrine\ORM\EntityManager;
-use Extras\Translator;
+use Tralandia\Localization\Translator;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\SubmitButton;
 
@@ -30,7 +30,7 @@ class RentalPriceUploadContainer extends BaseContainer
 	protected $languages = [];
 
 	/**
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Localization\Translator
 	 */
 	private $translator;
 

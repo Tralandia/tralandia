@@ -2,52 +2,7 @@
 
 WORKING_DIR=`pwd`
 
-sudo rm -rf $WORKING_DIR/temp
-sudo mkdir -m 777 $WORKING_DIR/temp
-sudo chmod -R 777 $WORKING_DIR/app/models/Entity
-
-if [ ! -d $WORKING_DIR/temp/sessions ]; then
-	sudo mkdir -m 777 $WORKING_DIR/temp/sessions
-else
-	sudo chmod 777 $WORKING_DIR/temp/sessions
-fi
-
-if [ ! -d $WORKING_DIR/temp/proxies ]; then
-	sudo mkdir -m 777 $WORKING_DIR/temp/proxies
-else
-	sudo chmod 777 $WORKING_DIR/temp/proxies
-fi
-
-if [ ! -d $WORKING_DIR/temp/presenters ]; then
-	sudo mkdir -m 777 $WORKING_DIR/temp/presenters
-else
-	sudo chmod 777 $WORKING_DIR/temp/presenters
-fi
-
-if [ ! -d $WORKING_DIR/log ]; then
-	sudo mkdir -m 777 $WORKING_DIR/log
-else
-	sudo chmod 777 $WORKING_DIR/log
-fi
-
-if [ ! -d $WORKING_DIR/public/webtemp ]; then
-	sudo mkdir -m 777 $WORKING_DIR/public/webtemp
-else
-	sudo chmod 777 $WORKING_DIR/public/webtemp
-	sudo rm -rf $WORKING_DIR/public/webtemp/*
-fi
-
-if [ ! -d $WORKING_DIR/app/locale ]; then
-	sudo mkdir -m 777 $WORKING_DIR/app/locale
-else
-	sudo chmod -R 777 $WORKING_DIR/app/locale
-fi
-
-if [ ! -d $WORKING_DIR/public/storage ]; then
-	sudo mkdir -m 777 $WORKING_DIR/public/storage
-else
-	sudo chmod -R 777 $WORKING_DIR/public/storage
-fi
+sh $WORKING_DIR/bin/flush-cache
 
 sudo rm -rf $WORKING_DIR/log/*
 php -f $WORKING_DIR/public/index.php orm:generate-proxies

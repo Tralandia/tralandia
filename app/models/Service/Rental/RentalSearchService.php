@@ -6,6 +6,7 @@ use Service, Doctrine, Entity, Nette;
 use Extras\Cache\Cache;
 use Nette\Utils\Arrays;
 use Robot\IUpdateRentalSearchCacheRobotFactory;
+use Tralandia\BaseDao;
 
 class RentalSearchService extends Nette\Object
 {
@@ -54,9 +55,14 @@ class RentalSearchService extends Nette\Object
 	 * @var \Extras\Cache\RentalOrderCaching
 	 */
 	protected $rentalOrderCaching;
-	protected $rentalRepositoryAccessor;
 
-	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $rentalDao;
+
+
+	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,BaseDao $rentalDao,
 								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
 								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory)
 	{
@@ -65,11 +71,7 @@ class RentalSearchService extends Nette\Object
 		$this->rentalSearchCache = $rentalSearchCache;
 		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
-	}
-
-	public function inject(\Nette\DI\Container $container)
-	{
-		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
+		$this->rentalDao = $rentalDao;
 	}
 
 	/**
@@ -182,7 +184,7 @@ class RentalSearchService extends Nette\Object
 	{
 		$results = $this->getRentalsIds($page);
 
-		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findById($results);
+		$rentalsEntities = $this->rentalDao->findById($results);
 
 		return \Tools::sortArrayByArray($rentalsEntities, $results, function($v) {return $v->getId();});
 	}
@@ -219,7 +221,7 @@ class RentalSearchService extends Nette\Object
 
 		if(count($results)) {
 			$sort = $results;
-			$results = $this->rentalRepositoryAccessor->get()->findById($results);
+			$results = $this->rentalDao->findById($results);
 			$results = \Tools::sortArrayByArray($results, $sort, function($value) {return $value->getId();});
 		} else {
 			$results = [];

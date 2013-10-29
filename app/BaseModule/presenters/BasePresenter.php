@@ -1,13 +1,15 @@
 <?php
 
 use Entity\User\User;
+use Nette\Application\Request;
+use Nette\Application\Responses\ForwardResponse;
 use Nette\Security\IAuthorizator;
 use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 use Nette\Application\UI\Presenter;
 use Routers\FrontRoute;
-use Routers\OwnerRouteList;
+use Routers\BaseRoute;
 
 
 abstract class BasePresenter extends Presenter {
@@ -37,13 +39,19 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $page;
 
-	public $userRepositoryAccessor;
+	public $userDao;
 
 
 	public $cssFiles;
 	public $cssRemoteFiles;
 	public $jsFiles;
 	public $jsRemoteFiles;
+
+	protected $favoriteListDao;
+
+	protected $rentalDao;
+
+	protected $rentalTypeDao;
 
 	/**
 	 * @autowire
@@ -78,12 +86,18 @@ abstract class BasePresenter extends Presenter {
 	/**
 	 * @var \Repository\LanguageRepository
 	 */
-	protected $languageRepositoryAccessor;
+	protected $languageDao;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
 	 */
-	protected $locationRepositoryAccessor;
+	protected $locationDao;
+
+	/**
+	 * @autowire
+	 * @var \Tralandia\Location\Locations
+	 */
+	protected $locations;
 
 	/**
 	 * @autowire
@@ -115,6 +129,12 @@ abstract class BasePresenter extends Presenter {
 	public $tester;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Localization\Translator
+	 */
+	protected $translator;
+
+	/**
 	 * @var array
 	 */
 	public $contextParameters;
@@ -127,8 +147,12 @@ abstract class BasePresenter extends Presenter {
 
 
 	public function injectLLRepositories(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->languageDao = $dic->getService('doctrine.default.entityManager')->getDao(LANGUAGE_ENTITY);
+		$this->locationDao = $dic->getService('doctrine.default.entityManager')->getDao(LOCATION_ENTITY);
+		$this->userDao = $dic->getService('doctrine.default.entityManager')->getDao(USER_ENTITY);
+		$this->rentalTypeDao = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_TYPE_ENTITY);
+		$this->rentalDao = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_ENTITY);
+		$this->favoriteListDao = $dic->getService('doctrine.default.entityManager')->getDao(FAVORITELIST_ENTITY);
 	}
 
 
@@ -151,35 +175,32 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect('this', $parameters);
 		}
 
-		if($autologin = $this->getParameter(OwnerRouteList::AUTOLOGIN)) {
+		if($autologin = $this->getParameter(BaseRoute::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
 				$this->login($identity);
 			} catch(\Nette\Security\AuthenticationException $e) {
 			}
 			$parameters = $this->getParameters();
-			unset($parameters[OwnerRouteList::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
+			unset($parameters[BaseRoute::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
 			$this->redirect('this', $parameters);
 		}
 
-		$backLink = $this->storeRequest();
-		if(!$this->getHttpRequest()->isPost()) {
-			$environmentSection = $this->context->session->getSection('environment');
-			$environmentSection->previousLink = $environmentSection->actualLink;
-			$environmentSection->actualLink = $backLink;
-		}
+//		$backLink = $this->storeRequest();
+//		if(!$this->getHttpRequest()->isPost()) {
+//			$environmentSection = $this->context->session->getSection('environment');
+//			$environmentSection->previousLink = $environmentSection->actualLink;
+//			$environmentSection->actualLink = $backLink;
+//		}
 
 		if($this->user->isLoggedIn()) {
-			$this->loggedUser = $this->userRepositoryAccessor->get()->find($this->user->getId());
+			$this->loggedUser = $this->userDao->find($this->user->getId());
 			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
 				$this->redirect(':Front:Sign:out');
 			}
 		}
 	}
 
-	public function injectUserRepository(\Nette\DI\Container $dic) {
-		$this->userRepositoryAccessor = $dic->userRepositoryAccessor;
-	}
 
 	public function getPreviousBackLink() {
 		$environmentSection = $this->context->session->getSection('environment');
@@ -208,7 +229,7 @@ abstract class BasePresenter extends Presenter {
 		$parameters = $this->getContext()->getParameters();
 		$this->template->projectEmail = $parameters['projectEmail'];
 		$this->template->staticPath = '/'; #@todo toto tu je na co ?
-		$this->template->setTranslator($this->getService('translator'));
+		$this->template->setTranslator($this->translator);
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
@@ -272,7 +293,7 @@ abstract class BasePresenter extends Presenter {
 			eval("\$options['enabled'] = {$options['enabled']};");
 
 			$this->cacheOptions[$optionName] = $options;
-			d($optionName, $options);
+//			d($optionName, $options);
 		}
 
 		$template->getCacheOptions = $this->getCacheOptions;
@@ -501,7 +522,7 @@ abstract class BasePresenter extends Presenter {
 				$info = $addressNormalizer->getInfoUsingGps($gps);
 			}
 		} else {
-			$primaryLocation = $this->locationRepositoryAccessor->get()->find($primaryLocation);
+			$primaryLocation = $this->locationDao->find($primaryLocation);
 			$info = $addressNormalizer->getInfoUsingAddress($primaryLocation, $address, '', $locality, $postalCode);
 		}
 
@@ -554,7 +575,7 @@ abstract class BasePresenter extends Presenter {
 		$identity = $this->authenticator->authenticate([$login, $password]);
 
 		/** @var $user \Entity\User\User */
-		$user = $this->userRepositoryAccessor->get()->find($identity->getId());
+		$user = $this->userDao->find($identity->getId());
 
 		if($this->primaryLocation->getId() != $user->getPrimaryLocation()->getId()
 			|| $this->language->getId() != $user->getLanguage()->getId())
@@ -563,7 +584,7 @@ abstract class BasePresenter extends Presenter {
 			$parameters = [
 				\Routers\BaseRoute::PRIMARY_LOCATION => $user->getPrimaryLocation(),
 				\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
-				OwnerRouteList::AUTOLOGIN => $hash,
+				BaseRoute::AUTOLOGIN => $hash,
 				FrontRoute::PAGE => NULL,
 			];
 			$this->redirect(':Front:Sign:afterLogin', $parameters);
@@ -609,5 +630,7 @@ abstract class BasePresenter extends Presenter {
 		}
 		$this->redirect(':Front:Home:');
 	}
+
+
 
 }

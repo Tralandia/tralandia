@@ -8,8 +8,8 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
- * @EA\Primary(key="id", value="name")
+ * @ORM\Table(name="medium", indexes={@ORM\Index(name="uri", columns={"uri"}), @ORM\Index(name="oldUrl", columns={"oldUrl"}), @ORM\Index(name="sort", columns={"sort"})})
+ *
  */
 class Medium extends \Entity\BaseEntityDetails {
 
@@ -59,12 +59,12 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Medium\Type
 	 * @return \Entity\Medium\Medium
@@ -75,7 +75,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -85,7 +85,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Type|NULL
 	 */
@@ -93,7 +93,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Medium\Medium
@@ -104,7 +104,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -112,7 +112,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param \Entity\Seo\SeoUrl
 	 * @return \Entity\Medium\Medium
@@ -123,7 +123,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -133,7 +133,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\SeoUrl|NULL
 	 */
@@ -141,7 +141,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->seoUrl;
 	}
-		
+
 	/**
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Medium\Medium
@@ -152,7 +152,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -162,7 +162,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Ticket\Message|NULL
 	 */
@@ -170,7 +170,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->message;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Medium\Medium
@@ -181,7 +181,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -191,7 +191,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -199,7 +199,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->uri;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Medium\Medium
@@ -210,7 +210,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -220,7 +220,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -228,7 +228,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	{
 		return $this->oldUrl;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Medium\Medium
@@ -239,7 +239,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -249,7 +249,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

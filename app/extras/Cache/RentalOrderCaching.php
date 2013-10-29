@@ -4,6 +4,8 @@ namespace Extras\Cache;
 
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
+use Tralandia\BaseDao;
+use Tralandia\Rental\Rentals;
 
 class RentalOrderCaching extends \Nette\Object {
 
@@ -11,15 +13,24 @@ class RentalOrderCaching extends \Nette\Object {
 	protected $cache;
 	protected $cacheContent;
 	protected $location;
-	protected $rentalRepositoryAccessor;
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-	}
 
-	public function __construct($location, Cache $orderCache) {
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $locationDao;
+
+
+	public function __construct($location, BaseDao $locationDao, Cache $orderCache, Rentals $rentals) {
 		$this->location = $location;
 		$this->cache = $orderCache;
+		$this->rentals = $rentals;
+		$this->locationDao = $locationDao;
 		$this->load();
 	}
 
@@ -71,7 +82,7 @@ class RentalOrderCaching extends \Nette\Object {
 	protected function createFeaturedList() {
 		// Clear the featured list first
 		$this->cacheContent['featured'] = array();
-		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
+		$rentals = $this->rentals->findFeatured($this->location);
 		foreach ($rentals as $key => $value) {
 			$this->cacheContent['featured'][$value['id']] = $value['id'];
 		}
@@ -84,9 +95,7 @@ class RentalOrderCaching extends \Nette\Object {
 		$featured = $this->cacheContent['featured'];
 
 		$notFeatured = array();
-		/** @var $rentalRepository \Repository\Rental\RentalRepository */
-		$rentalRepository = $this->rentalRepositoryAccessor->get();
-		$rentals = $rentalRepository->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.rank' => 'DESC']);
+		$rentals = $this->rentals->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.rank' => 'DESC']);
 		foreach ($rentals as $key => $value) {
 			$notFeatured[$value->id] = $value->id;
 		}
@@ -101,7 +110,7 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->cacheContent['order'] = $order;
 
 		$this->location->rentalCount = count($order);
-		$this->rentalRepositoryAccessor->get()->flush();
+		$this->locationDao->save($this->location);
 
 		$this->save();
 		return $order;

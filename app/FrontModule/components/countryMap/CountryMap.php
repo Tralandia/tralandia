@@ -1,17 +1,25 @@
-<?php 
+<?php
 namespace FrontModule\Components\CountryMap;
 
 use Nette\Application\UI\Control;
+use Tralandia\BaseDao;
 
 class CountryMap extends \BaseModule\Components\BaseControl {
 
-	public $locationRepositoryAccessor;
-	public $locationTypeRepositoryAccessor;
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	public $locationDao;
 
-	public function __construct($locationRepositoryAccessor, $locationTypeRepositoryAccessor) {
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	public $locationTypeDao;
 
-		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $locationTypeRepositoryAccessor;
+	public function __construct(BaseDao $locationDao,BaseDao $locationTypeDao) {
+
+		$this->locationDao = $locationDao;
+		$this->locationTypeDao = $locationTypeDao;
 
 		parent::__construct();
 
@@ -19,7 +27,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 
 	public function render() {
 
-		$country = $this->locationRepositoryAccessor->findOneBySlug('slovakia');
+		$country = $this->locationDao->findOneBySlug('slovakia');
 
 		$clickMapData = $this->getClickMapData($country);
 
@@ -39,14 +47,14 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$navigatorData = array();
 
 		$navigatorData['top'] = array(
-			$this->locationRepositoryAccessor->find(1),
+			$this->locationDao->find(1),
 			$country
 		);
 
 		$navigatorData['otherCountries'] = array();
 		if ($country->clickMapData) {
 			foreach ($country->clickMapData['otherCountries'] as $countryId) {
-				$navigatorData['otherCountries'][] = $this->locationRepositoryAccessor->find($countryId);
+				$navigatorData['otherCountries'][] = $this->locationDao->find($countryId);
 			}
 		}
 
@@ -61,9 +69,9 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 			'mapBox' => array()
 		));
 
-		$type = $this->locationTypeRepositoryAccessor->findBySlug('region');
+		$type = $this->locationTypeDao->findBySlug('region');
 
-		foreach ($this->locationRepositoryAccessor->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
+		foreach ($this->locationDao->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}
@@ -71,7 +79,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 				$list['mapBox'][$key] = $location;
 			}
  		}
- 		
+
 		return $list;
 
 	}

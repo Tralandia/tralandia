@@ -13,16 +13,16 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
+ * @ORM\Entity
  * @ORM\Table(name="rental",
  * 		indexes={
- * 			@ORM\index(name="status", columns={"status"}),
- * 			@ORM\index(name="slug", columns={"slug"}),
- * 			@ORM\index(name="rank", columns={"rank"}),
- * 			@ORM\index(name="calendarUpdated", columns={"calendarUpdated"})
+ * 			@ORM\Index(name="status", columns={"status"}),
+ * 			@ORM\Index(name="slug", columns={"slug"}),
+ * 			@ORM\Index(name="rank", columns={"rank"}),
+ * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"})
  * 		})
- * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages, getPrice, setPrice, setSlug, getCalendar, setCalendar, setUrl}")
+ *
+ *
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -73,7 +73,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Information", cascade={"persist"})
-	 * @ORM\JoinTable(name="information_rental",
+	 * @ORM\JoinTable(name="_information_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="information_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )
@@ -90,7 +90,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Placement")
-	 * @ORM\JoinTable(name="placement_rental",
+	 * @ORM\JoinTable(name="_placement_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="placement_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )
@@ -142,7 +142,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Language")
-	 * @ORM\JoinTable(name="language_rental",
+	 * @ORM\JoinTable(name="_language_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="language_id", referencedColumnName="id")}
 	 *      )
@@ -152,7 +152,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity")
-	 * @ORM\JoinTable(name="amenity_rental",
+	 * @ORM\JoinTable(name="_amenity_rental",
 	 *      joinColumns={@ORM\JoinColumn(name="rental_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id", onDelete="CASCADE")}
 	 *      )

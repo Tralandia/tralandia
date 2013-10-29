@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_titlesuffix")
- * @EA\Primary(key="id", value="suffix")
+ *
  */
 class TitleSuffix extends \Entity\BaseEntity {
 
@@ -34,12 +34,12 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 			//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\TitleSuffix
@@ -50,7 +50,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
@@ -60,7 +60,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -68,7 +68,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 	{
 		return $this->country;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Seo\TitleSuffix
@@ -79,7 +79,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
@@ -89,7 +89,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -97,7 +97,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Seo\TitleSuffix
@@ -108,7 +108,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
@@ -118,7 +118,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

@@ -2,7 +2,6 @@
 
 namespace FrontModule;
 
-use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
@@ -16,12 +15,6 @@ class RentalListPresenter extends BasePresenter {
 	 * @var array
 	 */
 	public $onSendFavoriteList = [];
-
-	/**
-	 * @autowire
-	 * @var \Model\Rental\IRentalDecoratorFactory
-	 */
-	protected $rentalDecoratorFactory;
 
 	/**
 	 * @autowire
@@ -98,18 +91,10 @@ class RentalListPresenter extends BasePresenter {
 			$rentals = $search->getRentalsIds($paginator->getPage());
 		}
 
-
-		//d($rentalsEntities);
-//		$rentals = array();
-//		foreach ($rentalsEntities as $rental) {
-//			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
-//			$rentals[$rental->id]['entity'] = $rental;
-//			$rentals[$rental->id]['featured'] = $orderCache->isFeatured($rental);
-//		}
-
 		$this->template->rentals = $rentals;
 		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();
+		$this->template->isRentalFeatured = $this->isRentalFeatured;
 	}
 
 
@@ -150,7 +135,7 @@ class RentalListPresenter extends BasePresenter {
 		if($id instanceof \Entity\Rental\Rental) {
 			$rental = $id;
 		} else {
-			$rental = $this->rentalRepositoryAccessor->get()->find($id);
+			$rental = $this->rentalDao->find($id);
 			if(!$rental) {
 				throw new \Exception('ID: ' . $id);
 			}
@@ -168,7 +153,7 @@ class RentalListPresenter extends BasePresenter {
 
 
 		return [
-			'service' => $this->rentalDecoratorFactory->create($rental),
+			'entity' => $rental,
 			'firstInterviewAnswerText' => $firstInterviewAnswerText,
 		];
 	}

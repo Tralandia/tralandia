@@ -4,10 +4,9 @@ namespace Image;
 
 use Nette;
 use Entity\Rental\Image;
+use Tralandia\BaseDao;
 
 class RentalImageManager {
-
-	protected $rentalImageRepositoryAccessor;
 
 	/**
 	 * @var RentalImageStorage
@@ -20,15 +19,22 @@ class RentalImageManager {
 	protected $pipe;
 
 	/**
-	 * @param $rentalImageRepositoryAccessor
+	 * @var \Tralandia\BaseDao
+	 */
+	private $rentalImageDao;
+
+
+	/**
+	 * @param \Tralandia\BaseDao $rentalImageDao
 	 * @param RentalImageStorage $storage
 	 * @param RentalImagePipe $pipe
+	 *
 	 */
-	public function __construct($rentalImageRepositoryAccessor, RentalImageStorage $storage, RentalImagePipe $pipe)
+	public function __construct(BaseDao $rentalImageDao, RentalImageStorage $storage, RentalImagePipe $pipe)
 	{
-		$this->rentalImageRepositoryAccessor = $rentalImageRepositoryAccessor;
 		$this->storage = $storage;
 		$this->pipe = $pipe;
+		$this->rentalImageDao = $rentalImageDao;
 	}
 
 	/**
@@ -40,12 +46,10 @@ class RentalImageManager {
 	{
 		$path = $this->storage->saveImage($image);
 
-		$imageRepository = $this->rentalImageRepositoryAccessor->get();
-
 		/** @var $image \Entity\Rental\Image */
-		$image = $imageRepository->createNew();
+		$image = $this->rentalImageDao->createNew();
 		$image->setFilePath($path);
-		$imageRepository->save($image);
+		$this->rentalImageDao->save($image);
 		return $image;
 	}
 
@@ -54,15 +58,12 @@ class RentalImageManager {
 		return $this->save($image);
 	}
 
-	/**
-	 * @return TRUE|FALSE
-	 */
+
 	public function delete(\Entity\Rental\Image $image)
 	{
 		$this->storage->delete($image->getFilePath());
 
-		$imageRepository = $this->rentalImageRepositoryAccessor->get();
-		return $imageRepository->delete($image);
+		return $this->rentalImageDao->delete($image);
 	}
 
 	/**

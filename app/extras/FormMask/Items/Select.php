@@ -18,7 +18,7 @@ class Select extends Text {
 	/** @var array */
 	protected $itemsParams;
 
-	/** @var Extras\Translator */
+	/** @var \Tralandia\Localization\Translator */
 	protected $translator;
 
 	/**
@@ -29,10 +29,10 @@ class Select extends Text {
 	/**
 	 * @param string
 	 * @param string
-	 * @param Extras\Models\Entity\IEntity
+	 * @param \Entity\BaseEntity
 	 * @param Extras\Translator
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Translator $translator) {
+	public function __construct($name, $label, \Entity\BaseEntity $entity, \Tralandia\Localization\Translator $translator) {
 		parent::__construct($name, $label, $entity);
 		$this->translator = $translator;
 		$this->setValueUnSetter(new Extras\Callback($entity, $this->unSetterMethodName($this->name)));

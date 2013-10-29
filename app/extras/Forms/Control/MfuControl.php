@@ -12,6 +12,8 @@ namespace Extras\Forms\Control;
 
 use Kdyby;
 use Nette;
+use Nette\Forms\Controls\UploadControl;
+use Nette\Forms\Form;
 use Nette\Http;
 
 
@@ -60,8 +62,8 @@ class MfuControl extends Nette\Forms\Controls\BaseControl
 	 */
 	protected function attached($parent)
 	{
-		if ($parent instanceof Nette\Forms\Form) {
-			if ($parent->getMethod() !== Nette\Forms\Form::POST) {
+		if ($parent instanceof Form) {
+			if ($parent->getMethod() !== Form::POST) {
 				throw new Nette\InvalidStateException('File upload requires method POST.');
 			}
 			$parent->getElementPrototype()->enctype = 'multipart/form-data';
@@ -125,7 +127,7 @@ class MfuControl extends Nette\Forms\Controls\BaseControl
 			$this->value = array($value);
 
 		} else {
-			$this->value = new Http\FileUpload(NULL);
+			$this->value = array(new Http\FileUpload(NULL));
 		}
 
 		return $this;
@@ -144,6 +146,10 @@ class MfuControl extends Nette\Forms\Controls\BaseControl
 		}
 	}
 
+	public function getHttpData($type = Form::DATA_FILE, $htmlTail = NULL)
+	{
+		return parent::getHttpData($type, $htmlTail);
+	}
 
 
 	/**

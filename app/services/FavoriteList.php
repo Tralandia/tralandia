@@ -6,17 +6,21 @@ use Repository\Rental\RentalRepository;
 class FavoriteList extends \Nette\Object
 {
 
-	protected $rentalRepositoryAccessor;
-
 	/**
 	 * @var Nette\Http\Request
 	 */
 	protected $httpRequest;
 
-	public function __construct($rentalRepositoryAccessor, Request $httpRequest)
+	/**
+	 * @var Tralandia\BaseDao
+	 */
+	private $rentalDao;
+
+
+	public function __construct(\Tralandia\BaseDao $rentalDao, Request $httpRequest)
 	{
-		$this->rentalRepositoryAccessor = $rentalRepositoryAccessor;
 		$this->httpRequest = $httpRequest;
+		$this->rentalDao = $rentalDao;
 	}
 
 	public function getRentalList()
@@ -24,7 +28,7 @@ class FavoriteList extends \Nette\Object
 		$ids = $this->getRentalIds();
 
 		if(count($ids)) {
-			$rentals = $this->rentalRepositoryAccessor->get()->findById($ids);
+			$rentals = $this->rentalDao->findById($ids);
 		}
 
 		if(isset($rentals)) {

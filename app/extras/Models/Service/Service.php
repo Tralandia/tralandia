@@ -16,15 +16,16 @@ abstract class Service extends Nette\Object implements IService {
 	protected $entityManager = null;
 
 	/**
-	 * @var Extras\IEntity
+	 * @var \Entity\BaseEntity
 	 */
 	protected $entity = null;
 
+
 	/**
-	 * @param Doctrine\ORM\EntityManager
-	 * @param IEntity
+	 * @param \Doctrine\ORM\EntityManager $entityManager
+	 * @param \Entity\BaseEntity $entity
 	 */
-	public function __construct(Doctrine\ORM\EntityManager $entityManager, Extras\Models\Entity\IEntity $entity) {
+	public function __construct(Doctrine\ORM\EntityManager $entityManager, \Entity\BaseEntity $entity) {
 		$this->entityManager = $entityManager;
 		$this->entity = $entity;
 	}
@@ -61,7 +62,7 @@ abstract class Service extends Nette\Object implements IService {
 		try {
 			$this->getEntityManager()->persist($this->entity);
 			if ($flush) $this->getEntityManager()->flush($this->entity);
-			return true; 
+			return true;
 		} catch (Exception $e) {
 			// @todo brano tu by som normalne vyhodil vynimku, ci ?
 			return false;
@@ -76,7 +77,7 @@ abstract class Service extends Nette\Object implements IService {
 		try {
 			$this->getEntityManager()->remove($this->entity);
 			if ($flush) $this->getEntityManager()->flush($this->entity);
-			return true; 
+			return true;
 		} catch (Exception $e) {
 			// @todo brano tu by som normalne vyhodil vynimku, ci ?
 			return false;

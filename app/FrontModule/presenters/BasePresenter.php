@@ -3,21 +3,10 @@
 namespace FrontModule;
 
 use Entity\Location\Location;
+use Entity\Rental\Rental;
 use Nette;
 
 abstract class BasePresenter extends \BasePresenter {
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	protected $rentalTypeRepositoryAccessor;
-
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	protected $rentalRepositoryAccessor;
-
-	protected $favoriteListRepositoryAccessor;
-
 	/**
 	 * @autowire
 	 * @var \Service\Seo\ISeoServiceFactory
@@ -61,15 +50,15 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $shareLinks;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	protected $rentals;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
-
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-		$this->favoriteListRepositoryAccessor = $dic->favoriteListRepositoryAccessor;
-	}
 
 	protected function startup() {
 		parent::startup();
@@ -100,7 +89,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
-		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
+		$this->template->worldwideCount = $this->rentals->worldwideCount();
 
 		$this->template->homeCacheId = 'home' . $this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
@@ -142,6 +131,17 @@ abstract class BasePresenter extends \BasePresenter {
 	}
 
 
+	/**
+	 * @param Rental $rental
+	 *
+	 * @return bool
+	 */
+	public function isRentalFeatured(Rental $rental)
+	{
+		return $this->rentals->isFeatured($rental);
+	}
+
+
 	public function actionLocationSuggestion($string)
 	{
 		if(strlen($string)) {
@@ -155,7 +155,7 @@ abstract class BasePresenter extends \BasePresenter {
 		if(strlen($string)) {
 			$suggest = $this->getSuggestionForLocation($string);
 			/** @var $rentalRepository \Repository\Rental\RentalRepository */
-			$rentalRepository = $this->rentalRepositoryAccessor->get();
+			$rentalRepository = $this->rentalDao;
 			$suggest['rentals'] = $rentalRepository->findSuggestForSearch($string, $this->primaryLocation);
 			if(is_numeric($string)) {
 				$suggest['rentalId'] = $rentalRepository->find($string);
@@ -187,11 +187,8 @@ abstract class BasePresenter extends \BasePresenter {
 	protected function getSuggestionForLocation($string)
 	{
 		$suggestLocations = [];
-		/** @var $locationRepository \Repository\Location\LocationRepository */
-		$locationRepository = $this->locationRepositoryAccessor->get();
-		//$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
 
-		$suggestLocations['localitiesAndRegions'] = $locationRepository->findSuggestForLocalityAndRegion(
+		$suggestLocations['localitiesAndRegions'] = $this->locations->findSuggestForLocalityAndRegion(
 			$string,
 			$this->primaryLocation,
 			$this->language
@@ -249,7 +246,7 @@ abstract class BasePresenter extends \BasePresenter {
 	{
 		$rentals = $this->favoriteList->getRentalList();
 		if(count($rentals)) {
-			$favoriteListRepository = $this->favoriteListRepositoryAccessor->get();
+			$favoriteListRepository = $this->favoriteListDao;
 			/** @var $favoriteList \Entity\FavoriteList */
 			$favoriteList = $favoriteListRepository->createNew();
 			$favoriteList->addRentals($rentals);

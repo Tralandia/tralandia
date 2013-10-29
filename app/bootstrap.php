@@ -1,9 +1,8 @@
 <?php
 
-use Nette\Diagnostics\Debugger,
-	Nette\Environment,
-	Nette\Application\Routers\Route,
-	Nella\Addons\Doctrine\Config\Extension;
+use Nette\Diagnostics\Debugger;
+use Nette\Environment;
+use Nette\Application\Routers\Route;
 use Nette\Forms\Container as FormContainer;
 
 
@@ -14,13 +13,8 @@ if(array_key_exists('useCache', $_GET)) {
 	die();
 }
 
-
-
-
 // Load Nette Framework
-require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
-require_once LIBS_DIR . '/rado_functions.php';
 
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
@@ -33,6 +27,9 @@ $configurator->addParameters([
 ]);
 
 
+
+$configurator->setDebugMode(false);
+
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);
 
@@ -40,12 +37,12 @@ $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
+	->addDirectory(TEMP_DIR . '/proxies')
 	->register();
 
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 
 require_once LIBS_DIR . '/tools.php';
-Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
 
@@ -62,22 +59,25 @@ if ($section !== 'production') {
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 
-if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
-	$configurator->addConfig(APP_DIR . '/configs/import.config.neon', FALSE);
-}
 
 if(array_key_exists('useCache', $_COOKIE) && !$_COOKIE['useCache']) {
 	$configurator->addConfig(APP_DIR . '/configs/noCache.config.neon', FALSE);
 }
 
 $dic = $container = $configurator->createContainer();
+
+//$tablePrefix = new \DoctrineExtensions\TablePrefix(NULL, '_');
+//$container->getService('doctrine.default.connection')->getEventManager()->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+
+
 // Debugger::$editor = $container->parameters['editor'];
 
 FormContainer::extensionMethod('addPhraseContainer',
 	function (FormContainer $container, $name, $phrase) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$phraseManager = $dic->getByType('Tralandia\Dictionary\PhraseManager');
-		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $phraseManager, $em);
+		$languages = $dic->getByType('\Tralandia\Language\Languages');
+		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($phrase, $phraseManager, $languages, $em);
 	});
 
 FormContainer::extensionMethod('addPhoneContainer',
@@ -90,20 +90,20 @@ FormContainer::extensionMethod('addPhoneContainer',
 FormContainer::extensionMethod('addRentalTypeContainer',
 	function (FormContainer $container, $name, $rental, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
-		$rentalTypeRepository = $dic->getService('rentalTypeRepositoryAccessor')->get();
+		$rentalTypeRepository = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_TYPE_ENTITY);
 		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rental, $rentalTypes, $translator, $rentalTypeRepository);
 	});
 
 FormContainer::extensionMethod('addRentalPhotosContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
 		$imageManager = $dic->getService('rentalImageManager');
-		$imageRepository = $dic->getService('rentalImageRepositoryAccessor')->get();
+		$imageRepository = $dic->getService('doctrine.default.entityManager')->getDao(RENTAL_IMAGE_ENTITY);
 		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
 	});
 
 FormContainer::extensionMethod('addPriceContainer',
 	function (FormContainer $container, $name, $label) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
 		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $em, $translator, $collator);
@@ -111,7 +111,7 @@ FormContainer::extensionMethod('addPriceContainer',
 
 FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$manager = $dic->getService('rentalPriceListManager');
 		$translator = $dic->getService('translator');
 		$allLanguages = $dic->getService('allLanguages');
@@ -120,7 +120,7 @@ FormContainer::extensionMethod('addRentalPriceUploadContainer',
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
 	function (FormContainer $container, $name, $currency, $rental) use ($dic) {
-		$em = $dic->getService('model');
+		$em = $dic->getService('doctrine.default.entityManager');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
 		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $rental, $translator, $collator);
@@ -140,17 +140,11 @@ FormContainer::extensionMethod('addAddressContainer',
 	});
 
 
-// @todo toto niekam schovat
-// Panel\Todo::register($container->parameters['appDir']);
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
-
-//Extras\Models\Service::$translator = $container->translator;
+\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 
 // Run the application!
-if (PHP_SAPI == 'cli') {
-	$container->console->run();
-} else {
-	$container->application->run();
-}
+$container->application->run();

@@ -11,8 +11,8 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"})})
- * @EA\Primary(key="id", value="id")
+ * @ORM\Table(name="seo_backlink", indexes={@ORM\Index(name="rental", columns={"rental_id"})})
+ *
  */
 class BackLink extends \Entity\BaseEntity {
 
@@ -31,12 +31,12 @@ class BackLink extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Seo\BackLink
@@ -47,7 +47,7 @@ class BackLink extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
@@ -57,7 +57,7 @@ class BackLink extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -65,7 +65,7 @@ class BackLink extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Seo\BackLink
@@ -76,7 +76,7 @@ class BackLink extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
@@ -86,7 +86,7 @@ class BackLink extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */

@@ -6,6 +6,7 @@ use Entity\Contact\Address;
 use Environment\Environment;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
+use Tralandia\Location\Locations;
 
 class AddressNormalizer extends \Nette\Object {
 
@@ -20,49 +21,30 @@ class AddressNormalizer extends \Nette\Object {
 	protected $address;
 	protected $geocodeService;
 
-	protected $locationRepositoryAccessor;
-	protected $locationTypeRepositoryAccessor;
-	protected $locationDecoratorFactory;
-
-	protected $phraseRepositoryAccessor;
-	protected $phraseTypeRepositoryAccessor;
-
 	/**
 	 * @var \Environment\Environment
 	 */
 	private $environment;
 
 	/**
-	 * @var \Transliterator
+	 * @var \Tralandia\Location\Locations
 	 */
-	private $transliterator;
-
-
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
-		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
-		$this->phraseTypeRepositoryAccessor = $dic->phraseTypeRepositoryAccessor;
-	}
-
-	public function inject(\Model\Location\ILocationDecoratorFactory $factory) {
-		$this->locationDecoratorFactory = $factory;
-	}
+	private $locations;
 
 
 	/**
 	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
 	 * @param \Environment\Environment $environment
-	 * @param \Transliterator $transliterator
+	 * @param \Tralandia\Location\Locations $locations
 	 */
-	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, \Transliterator $transliterator) {
+	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, Locations $locations) {
 		$this->geocodeService = $googleGeocodeService;
 		$this->environment = $environment;
 		$this->geocodeService->setRequestDefaults(array(
 			'region' => $environment->getPrimaryLocation()->getIso(),
 			'language' => $environment->getPrimaryLocation()->getDefaultLanguage()->getIso(),
 		));
-		$this->transliterator = $transliterator;
+		$this->locations = $locations;
 	}
 
 	/**
@@ -218,10 +200,9 @@ class AddressNormalizer extends \Nette\Object {
 			}
 		}
 
-		$locationRepository = $this->locationRepositoryAccessor->get();
-		$info[self::PRIMARY_LOCATION] = $locationRepository->findOneByIso($info[self::PRIMARY_LOCATION]);
+		$info[self::PRIMARY_LOCATION] = $this->locations->findOneByIso($info[self::PRIMARY_LOCATION]);
 		if(isset($info[self::LOCALITY])) {
-			$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION], $this->transliterator);
+			$info[self::LOCALITY] = $this->locations->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
 		}
 
 		$l = $response->getLocation();
@@ -315,8 +296,7 @@ class AddressNormalizer extends \Nette\Object {
 				$address->locality = $locality;
 			}
 		} else {
-			$locationRepository = $this->locationRepositoryAccessor->get();
-			$locality = $locationRepository->findOrCreateLocality($locality, $address->getPrimaryLocation(), $this->transliterator);
+			$locality = $this->locations->findOrCreateLocality($locality, $address->getPrimaryLocation());
 
 			$address->locality = $locality;
 		}
