@@ -450,7 +450,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{input $container['address'], data-name => "address", class => 'rentalAutocompleteAddress' , data-validation-message => "gps-validation-message"}</td>
+				<td><div class="mapInputSearchContainer">{input $container['address'], data-name => "address", class => 'rentalAutocompleteAddress' , data-validation-message => "gps-validation-message"}</div></td>
 			</tr>
 
 		</table>
@@ -467,6 +467,42 @@
 		</div>
 		{* <div id="gps_position"></div> *}
 
+	</td>
+</tr>
+
+<tr class="simpleInput ">
+	<td>
+		#Mesto/Obec
+			<i class="icon-asterisk"></i>
+	</td>
+	<td>
+		<table>
+			<tr>
+				<td><input class="addressCityInput" type="text" name="" maxlength="70" id="" class="rentalLocation" required="" value=""></td>
+			</tr>
+		</table>
+	</td>
+	<td>
+		<span class="help">#blah</span>
+		<span class="invalidAlert"></span>
+	</td>
+</tr>
+
+<tr class="simpleInput ">
+	<td>
+		#Adresa
+			<i class="icon-asterisk"></i>
+	</td>
+	<td>
+		<table>
+			<tr>
+				<td><input class="addressInput" type="text" name="" maxlength="70" id="" class="rentalAddress" required="" value=""></td>
+			</tr>
+		</table>
+	</td>
+	<td>
+		<span class="help">#blah</span>
+		<span class="invalidAlert"></span>
 	</td>
 </tr>
 

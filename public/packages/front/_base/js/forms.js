@@ -428,6 +428,7 @@ $(function(){
 						if(!data.status){
 							$.mapControl.responseValidation(data);
 
+
 							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 							//	marker.setPosition(newPosition);
 						}
@@ -835,7 +836,6 @@ $(function(){
 		base.init = function(){
 
 			base.options = $.extend({},$.formMapControl.defaultOptions, options);
-
 		};
 
 		base.init();
@@ -871,6 +871,44 @@ $(function(){
 		$('.rentalAddressLatitude').val(lat);
 		$('.rentalAddressLongitude').val(lng);
 	};
+
+	$.fn.loadAddress = function(address){
+
+		var realName = '';
+
+		var exist = false;
+
+		$.each(address.address_components,function(k,v){
+			
+			$.each(v.types,function(kk,vv){
+				if(vv == 'locality' && !exist){
+					realName = v.long_name;
+					exist = true;
+				}
+			});
+		})
+
+
+		var $addressCityInput = $('input.addressCityInput');
+
+		var oldValue = $addressCityInput.val();
+
+		if(realName.length > 0){
+			$addressCityInput.val(realName);
+			$addressCityInput.attr('disabled',true);
+		} else {
+			$addressCityInput.attr('disabled',false);
+		}
+
+	
+		var $address = $('input.addressInput');
+
+		if($address.val().length == 0 || realName != oldValue){
+			$address.val(address.formatted_address);
+		}
+
+		return realName;
+	}
 
 	$.fn.formMapControl = function( options){
 		return this.each(function(){
@@ -931,7 +969,8 @@ $(function(){
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
-					$.fn.updateFormGeo(event.latLng.jb,event.latLng.kb);
+					console.log(r[0]);
+					$.fn.loadAddress(r[0]);			
 					$(currentId).val(r[0].formatted_address);
 				} else {
 					alert('address error');
@@ -949,6 +988,10 @@ $(function(){
 			input.className = 'notfound';
 			return;
 		  }
+
+		  //------------------------------------------------------------------------------------
+		  $.fn.loadAddress(autocomplete.getPlace());
+		  //------------------------------------------------------------------------------------
 
 		  if (place.geometry.viewport) {
 			map.fitBounds(place.geometry.viewport);
