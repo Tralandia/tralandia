@@ -59,7 +59,7 @@ class BanListManager
 	public function unbanRental(Rental $rental)
 	{
 		$this->unbanEmail($rental->getEmail());
-		$this->unbanPhone($rental->getPhone());
+		$rental->getPhone() && $this->unbanPhone($rental->getPhone());
 
 		return $this;
 	}
