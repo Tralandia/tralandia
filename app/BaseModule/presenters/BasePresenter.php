@@ -612,10 +612,13 @@ abstract class BasePresenter extends Presenter {
 
 	public function login(\Security\Identity $identity)
 	{
-//		if($identity->isInRole(\Entity\User\Role::OWNER)) {
-//			$this->flashMessage('o100194', self::FLASH_SUCCESS);
-//			$this->redirect(':Front:Sign:in');
-//		}
+		if($identity->isInRole(\Entity\User\Role::TRANSLATOR)) {
+			$user = $this->findUser($identity->getId());
+			if(!$this->languageDao->findOneByTranslator($user)) {
+				$this->flashMessage('Your translator account does not have any language to translate assigned. If this is an error, please send a message to info@tralandia.com. Thank you.', self::FLASH_WARNING);
+				$this->redirect(':Front:Home:default');
+			}
+		}
 		$user = $this->getUser();
 		$user->setExpiration('+ 30 days', FALSE);
 		$user->login($identity);
