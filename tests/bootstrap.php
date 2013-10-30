@@ -1,7 +1,6 @@
 <?php
 
-use Nette\Diagnostics\Debugger,
-	Nella\Addons\Doctrine\Config\Extension;
+use Nette\Diagnostics\Debugger;
 
 // Absolute filesystem path to the web root
 define('ROOT_DIR', __DIR__ . '/..');
@@ -19,7 +18,6 @@ require APP_DIR . '/entityConstants.php';
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 
 // Load configuration from config.neon
@@ -35,7 +33,7 @@ $robotLoader->addDirectory(APP_DIR)
 	->register();
 
 require_once LIBS_DIR . '/tools.php';
-Extension::register($configurator);
+
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
 
@@ -46,9 +44,12 @@ $container = $configurator->createContainer();
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
+\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 
 # toto musi byt to dole!
 Debugger::enable(FALSE);
 
 
 //ob_start();
+//$container->application->run();

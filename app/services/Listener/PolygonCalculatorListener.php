@@ -43,6 +43,5 @@ class PolygonCalculatorListener implements \Kdyby\Events\Subscriber
 	{
 		$this->polygonCalculator->setLocationsForRental($rental);
 		$this->polygonCalculator->update($rental);
-		$this->polygonCalculator->update($rental->getAddress());
 	}
 }

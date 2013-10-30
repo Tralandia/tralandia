@@ -74,9 +74,9 @@
 								{if $firstAnswer}
 								<tr>
 									<td n:class="$teaser ? 'firstAnswer' : 'firstAnswer padding'">
-
-										{if count($rental->amenities) > 0}
+										{if !count($rental->amenities)}
 											{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+
 											{if !count($importantAmenities)}
 												{var
 													$importantAmenities = array_slice($notImportantAmenities,0, 2);
@@ -222,7 +222,6 @@
 									<div class="amenitiesStart">
 										{foreach $rental->getAmenitiesByImportantGroupByType(NULL,['contact-person-availability','animal']) as $amenities}
 										<li class="{reset($amenities)->getType()->getSlug()}">
-										{dump $amenities}
 
 											{var $firstAmenity = false}
 											{var $lastAmenity = false}

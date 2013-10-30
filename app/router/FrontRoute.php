@@ -231,6 +231,10 @@ class FrontRoute extends BaseRoute
 				$segmentList = array();
 			}
 
+			if(count($pathSegments) && $params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
+				unset($params[self::RENTAL_TYPE], $params[self::LOCATION]);
+			}
+
 			if(isset($params[self::CAPACITY])
 				|| isset($params[self::SPOKEN_LANGUAGE])
 				|| isset($params[self::BOARD])

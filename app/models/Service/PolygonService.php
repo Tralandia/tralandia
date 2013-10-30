@@ -45,11 +45,13 @@ class PolygonService {
 
 
 	/**
-	 * @param null $entity
+	 * @param \Entity\Rental\Rental $rental
+	 *
+	 * @internal param null $entity
 	 */
-	public function update($entity = NULL)
+	public function update(Entity\Rental\Rental $rental)
 	{
-		$this->rentalDao->save($entity);
+		$this->rentalDao->save($rental, $rental->getAddress());
 	}
 
 
