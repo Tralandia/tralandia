@@ -77,12 +77,6 @@
 										{if !count($rental->amenities)}
 											{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
 
-											{if !count($importantAmenities)}
-												{var
-													$importantAmenities = array_slice($notImportantAmenities,0, 2);
-												}
-											{/if}
-
 											{foreach $importantAmenities  as $amenities}
 												{var $firstAmenity = false}
 												{var $lastAmenity = false}
