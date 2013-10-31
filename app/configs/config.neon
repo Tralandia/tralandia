@@ -8,7 +8,7 @@ nette:
 		debugger: false  # aktivuje panel v Debugger baru
 
 	session:
-		autoStart: smart
+		autoStart: true
 		expiration: '+1 year'
 		cookie_path: '/'
 		cookie_domain: '.tra.com'
