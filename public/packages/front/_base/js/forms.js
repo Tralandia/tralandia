@@ -387,7 +387,7 @@ $(function(){
 				// var lat = parseFloat($(this).attr('data-latitude'));
 				// var lng = parseFloat($(this).attr('data-longitude'));
 
-				console.log('init maops plugin'+lat+' '+lng+' '+zoom);
+				// console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
@@ -532,14 +532,14 @@ $(function(){
 			var $buttonSave = $('.calendarSumitButton');
 
 			var inputValues = $input.val();
-			console.log(inputValues);
+			// console.log(inputValues);
 
 			if(defaultValue.length > 0){
 				$.calendarEdit.conteiner = defaultValue.split(',');
 			}
 
 			$input.on('change',function(){
-				console.log($(this).val());
+				// console.log($(this).val());
 			})
 
 			$calendarForm.find('.calendar').each(function(i){
@@ -889,7 +889,7 @@ $(function(){
 		})
 
 
-		var $addressCityInput = $('input.addressCityInput');
+		var $addressCityInput = $('.addressCityInput input');
 
 		var oldValue = $addressCityInput.val();
 
@@ -901,7 +901,7 @@ $(function(){
 		}
 
 	
-		var $address = $('input.addressInput');
+		var $address = $('.addressInput input');
 
 		if($address.val().length == 0 || realName != oldValue){
 			$address.val(address.formatted_address);
@@ -969,8 +969,9 @@ $(function(){
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
-					console.log(r[0]);
-					$.fn.loadAddress(r[0]);			
+					$.fn.loadAddress(r[0]);	
+					$.fn.updateFormGeo(r[0].geometry.location.lat(),r[0].geometry.location.lng());		
+					// console.log(r[0]);
 					$(currentId).val(r[0].formatted_address);
 				} else {
 					alert('address error');
@@ -1000,8 +1001,7 @@ $(function(){
 			map.setZoom(17);
 		  }
 
-		  $.fn.updateFormGeo(place.geometry.location.jb,place.geometry.location.kb);
-		  // console.log(place.geometry.location.jb);
+		  $.fn.updateFormGeo(place.geometry.location.lat(),place.geometry.location.lng());
 
 		  if(marker){
 			marker.setPosition(place.geometry.location);
