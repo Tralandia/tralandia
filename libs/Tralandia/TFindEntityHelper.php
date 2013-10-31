@@ -140,6 +140,19 @@ trait TFindEntityHelper {
 
 
 	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
+	 * @return \Entity\User\User|null
+	 */
+	public function findUser($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(USER_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
 	 * @param $entityName
 	 * @param $id
 	 * @param bool $need

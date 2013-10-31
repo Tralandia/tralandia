@@ -2,6 +2,7 @@
 
 namespace Extras\Books;
 
+use libphonenumber\PhoneNumberFormat;
 use Nette, Extras, Entity;
 use Tralandia\BaseDao;
 
@@ -17,10 +18,6 @@ class Phone extends Nette\Object {
 	 * @var \Tralandia\BaseDao
 	 */
 	private $locationDao;
-
-	/** @var string */
-	private $serviceUrl = 'http://tra-devel.soft1.sk:8080/phonenumberparser?';
-
 
 	/**
 	 * @param \Tralandia\BaseDao $phoneDao
@@ -54,18 +51,17 @@ class Phone extends Nette\Object {
 			$defaultCountry = NULL;
 			if($prefix) $defaultCountry = $this->locationDao->findOneByPhonePrefix($prefix);
 			$response = $this->serviceRequest($number, $defaultCountry);
-			if (!isset($response->validationResult) || $response->validationResult->isValidNumber != 'true') {
+			if (!$response || !$response->isValid) {
 				return FALSE;
 			}
-			$number = $this->prepareNumber($response->formattingResults->E164);
 
-			if (!$phone = $this->find($number)) {
+			if (!$phone = $this->find($response->E164)) {
 				$phone = $this->phoneDao->createNew();
-				$primaryLocation = $this->locationDao->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
+				$primaryLocation = $this->locationDao->findOneByIso(strtolower($response->regionCode));
 
-				$phone->setValue($this->prepareNumber($response->formattingResults->E164))
-					->setInternational($response->formattingResults->international)
-					->setNational($response->formattingResults->national)
+				$phone->setValue($this->prepareNumber($response->E164))
+					->setInternational($response->international)
+					->setNational($response->national)
 					->setPrimaryLocation($primaryLocation);
 
 				$this->phoneDao->save($phone);
@@ -94,18 +90,29 @@ class Phone extends Nette\Object {
 		return preg_replace('~[^0-9]~', '', $number);
 	}
 
+
 	/**
-	 * Vyrvoti GET request na online sluzbu a vracia JSON response
-	 * @param string $number
-	 * @return int
+	 * @param $number
+	 * @param Entity\Location\Location $defaultCountry
+	 *
+	 * @return \Nette\ArrayHash|null
 	 */
 	private function serviceRequest($number,Entity\Location\Location $defaultCountry = NULL) {
-		$query = [];
-		$query['phoneNumber'] = $number;
-		if($defaultCountry) $query['defaultCountry'] = substr($defaultCountry->getIso(), 0, 2);
-		$query = http_build_query($query);
-		$response = file_get_contents($this->serviceUrl . $query);
-		$response = Nette\Utils\Json::decode(str_replace('\'', '"', $response));
-		return $response;
+		$defaultCountry && $defaultCountryIso = strtoupper(substr($defaultCountry->getIso(), 0, 2));
+
+		$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+		try {
+			$phoneNumber = $phoneUtil->parse($number, isset($defaultCountryIso) ? $defaultCountryIso : 'EN');
+			$response = new Nette\ArrayHash();
+			$response->isValid = $phoneUtil->isValidNumber($phoneNumber);
+			$response->regionCode = $phoneUtil->getRegionCodeForNumber($phoneNumber);
+			$response->E164 = $phoneUtil->format($phoneNumber, PhoneNumberFormat::E164);
+			$response->international = $phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
+			$response->national = $phoneUtil->format($phoneNumber, PhoneNumberFormat::NATIONAL);
+			return $response;
+		} catch(\libphonenumber\NumberParseException $e) {
+			return NULL;
+		}
+
 	}
 }

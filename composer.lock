@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "847bc8e0775c51416410711b15781906",
+    "hash": "37d51601397d79ec1dea4700f9f9a273",
     "packages": [
         {
             "name": "dg/dibi",
@@ -132,16 +132,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179"
+                "reference": "e16d7adf45664a50fa86f515b6d5e7f670130449"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/d0e4447707a064a5814b18cb0dcc2f24185f6179",
-                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/e16d7adf45664a50fa86f515b6d5e7f670130449",
+                "reference": "e16d7adf45664a50fa86f515b6d5e7f670130449",
                 "shasum": ""
             },
             "require": {
@@ -149,6 +149,10 @@
             },
             "conflict": {
                 "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
             "extra": {
@@ -197,7 +201,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2013-09-26 19:23:25"
+            "time": "2013-10-25 19:04:14"
         },
         {
             "name": "doctrine/collections",
@@ -346,12 +350,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "a619261b6b96341951f93d228493818ba334d0f6"
+                "reference": "0e4de6bab9c0b7cfde3e5d1faedb0a68e9c1e08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a619261b6b96341951f93d228493818ba334d0f6",
-                "reference": "a619261b6b96341951f93d228493818ba334d0f6",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/0e4de6bab9c0b7cfde3e5d1faedb0a68e9c1e08a",
+                "reference": "0e4de6bab9c0b7cfde3e5d1faedb0a68e9c1e08a",
                 "shasum": ""
             },
             "require": {
@@ -408,7 +412,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-10-09 16:42:00"
+            "time": "2013-10-23 04:32:37"
         },
         {
             "name": "doctrine/inflector",
@@ -541,12 +545,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "d2e731174ce2776df5e89e8a5ac020923b9b06c1"
+                "reference": "514dd4e8528c47c47d97765ac041ce91d8147a36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d2e731174ce2776df5e89e8a5ac020923b9b06c1",
-                "reference": "d2e731174ce2776df5e89e8a5ac020923b9b06c1",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/514dd4e8528c47c47d97765ac041ce91d8147a36",
+                "reference": "514dd4e8528c47c47d97765ac041ce91d8147a36",
                 "shasum": ""
             },
             "require": {
@@ -608,7 +612,52 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-10-17 14:18:12"
+            "time": "2013-10-26 10:32:53"
+        },
+        {
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "593316607a2a18606a4b45ef795a0dfbcd65e7ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/593316607a2a18606a4b45ef795a0dfbcd65e7ef",
+                "reference": "593316607a2a18606a4b45ef795a0dfbcd65e7ef",
+                "shasum": ""
+            },
+            "replace": {
+                "practo/libphonenumber-for-php": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "libphonenumber": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Unofficial PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2013-09-30 12:23:15"
         },
         {
             "name": "janmarek/mockista",
@@ -616,12 +665,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janmarek/mockista.git",
-                "reference": "300c8bc71256cf04c426a5a37c0608577a7908b4"
+                "reference": "c605b9dcad6b4cdc7d9ce2f5576515ffde903477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janmarek/mockista/zipball/300c8bc71256cf04c426a5a37c0608577a7908b4",
-                "reference": "300c8bc71256cf04c426a5a37c0608577a7908b4",
+                "url": "https://api.github.com/repos/janmarek/mockista/zipball/c605b9dcad6b4cdc7d9ce2f5576515ffde903477",
+                "reference": "c605b9dcad6b4cdc7d9ce2f5576515ffde903477",
                 "shasum": ""
             },
             "require-dev": {
@@ -664,25 +713,25 @@
                 "testing",
                 "tests"
             ],
-            "time": "2013-06-24 12:24:03"
+            "time": "2013-10-30 14:18:41"
         },
         {
             "name": "kdyby/annotations",
-            "version": "dev-master",
+            "version": "v2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Annotations.git",
-                "reference": "fcb98945454e6e09359506d370a1af14545ed4a2"
+                "reference": "f03fe3929ebb5607386e78c93cee340e87cd04a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Annotations/zipball/fcb98945454e6e09359506d370a1af14545ed4a2",
-                "reference": "fcb98945454e6e09359506d370a1af14545ed4a2",
+                "url": "https://api.github.com/repos/Kdyby/Annotations/zipball/f03fe3929ebb5607386e78c93cee340e87cd04a0",
+                "reference": "f03fe3929ebb5607386e78c93cee340e87cd04a0",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "~1.1",
-                "kdyby/doctrine-cache": "@dev",
+                "kdyby/doctrine-cache": "~2.0",
                 "nette/nette": "@dev"
             },
             "conflict": {
@@ -722,7 +771,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-09-26 19:15:32"
+            "time": "2013-10-23 22:10:53"
         },
         {
             "name": "kdyby/autowired",
@@ -777,21 +826,21 @@
         },
         {
             "name": "kdyby/console",
-            "version": "dev-master",
+            "version": "v2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Console.git",
-                "reference": "1994a87080c0629978467c4386338ee26238d340"
+                "reference": "66346ea70e9729cb0accbc15ddb129b73030cce6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Console/zipball/1994a87080c0629978467c4386338ee26238d340",
-                "reference": "1994a87080c0629978467c4386338ee26238d340",
+                "url": "https://api.github.com/repos/Kdyby/Console/zipball/66346ea70e9729cb0accbc15ddb129b73030cce6",
+                "reference": "66346ea70e9729cb0accbc15ddb129b73030cce6",
                 "shasum": ""
             },
             "require": {
                 "nette/nette": "@dev",
-                "symfony/console": "~2.2"
+                "symfony/console": "~2.3"
             },
             "require-dev": {
                 "nette/tester": "@dev"
@@ -825,7 +874,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-09-13 15:26:55"
+            "time": "2013-10-23 22:15:36"
         },
         {
             "name": "kdyby/doctrine",
@@ -833,20 +882,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "37e486699abaa14af3bfb512ed8ac941939e0e93"
+                "reference": "5a5bac0060af1bf227ef2b9b23184bb5d2950b3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/37e486699abaa14af3bfb512ed8ac941939e0e93",
-                "reference": "37e486699abaa14af3bfb512ed8ac941939e0e93",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/5a5bac0060af1bf227ef2b9b23184bb5d2950b3a",
+                "reference": "5a5bac0060af1bf227ef2b9b23184bb5d2950b3a",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "~2.4",
-                "kdyby/annotations": "@dev",
-                "kdyby/console": "@dev",
-                "kdyby/events": "@dev",
-                "nette/nette": "@dev"
+                "kdyby/annotations": "~2.0",
+                "kdyby/console": "~2.0",
+                "kdyby/doctrine-cache": "~2.1",
+                "kdyby/events": "~2.0",
+                "nette/nette": "@dev",
+                "symfony/property-access": "~2.3"
             },
             "require-dev": {
                 "dg/dibi": "~2.0",
@@ -884,20 +935,20 @@
                 "nette",
                 "orm"
             ],
-            "time": "2013-10-10 00:09:44"
+            "time": "2013-10-29 23:07:33"
         },
         {
             "name": "kdyby/doctrine-cache",
-            "version": "dev-master",
+            "version": "v2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/DoctrineCache.git",
-                "reference": "90393a0a799ed6c7250dc1a1751addd792fc832b"
+                "reference": "daa7040e4fa59572f037229c67277b91b745d2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/DoctrineCache/zipball/90393a0a799ed6c7250dc1a1751addd792fc832b",
-                "reference": "90393a0a799ed6c7250dc1a1751addd792fc832b",
+                "url": "https://api.github.com/repos/Kdyby/DoctrineCache/zipball/daa7040e4fa59572f037229c67277b91b745d2da",
+                "reference": "daa7040e4fa59572f037229c67277b91b745d2da",
                 "shasum": ""
             },
             "require": {
@@ -930,11 +981,11 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-08-12 13:21:11"
+            "time": "2013-10-27 19:47:35"
         },
         {
             "name": "kdyby/events",
-            "version": "dev-master",
+            "version": "v2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
@@ -1095,7 +1146,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/39b480c311f9c88320ca4a343f864198fb65af52",
+                "url": "https://api.github.com/repos/nette/nette/zipball/720d7901a3c00c000ccb1b7759f19af07c0c6526",
                 "reference": "9bf0292",
                 "shasum": ""
             },
@@ -1258,12 +1309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "608960cd7f7e906e64d6586b9152e308f7ea0ff2"
+                "reference": "eca72b22138f66f4244a3eddc18c7261cfcd130c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/608960cd7f7e906e64d6586b9152e308f7ea0ff2",
-                "reference": "608960cd7f7e906e64d6586b9152e308f7ea0ff2",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/eca72b22138f66f4244a3eddc18c7261cfcd130c",
+                "reference": "eca72b22138f66f4244a3eddc18c7261cfcd130c",
                 "shasum": ""
             },
             "require": {
@@ -1302,7 +1353,65 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-10-16 16:16:10"
+            "time": "2013-10-30 08:33:58"
+        },
+        {
+            "name": "symfony/property-access",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/PropertyAccess",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/PropertyAccess.git",
+                "reference": "3a6e9c7786b37077d54247bef165f5f8a4f9d128"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/PropertyAccess/zipball/3a6e9c7786b37077d54247bef165f5f8a4f9d128",
+                "reference": "3a6e9c7786b37077d54247bef165f5f8a4f9d128",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\PropertyAccess\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony PropertyAccess Component",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "access",
+                "array",
+                "extraction",
+                "index",
+                "injection",
+                "object",
+                "property",
+                "property path",
+                "reflection"
+            ],
+            "time": "2013-10-30 08:33:58"
         },
         {
             "name": "texy/texy",
@@ -1310,16 +1419,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847"
+                "reference": "79d0e1517363ab32edf2db8ec515e3dc84f50f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
-                "reference": "11c34e6df7846ff1e02e6ef7c0ef4a1e3af40847",
+                "url": "https://api.github.com/repos/dg/texy/zipball/79d0e1517363ab32edf2db8ec515e3dc84f50f0a",
+                "reference": "79d0e1517363ab32edf2db8ec515e3dc84f50f0a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0.0"
+            },
+            "replace": {
+                "dg/texy": "self.version"
             },
             "require-dev": {
                 "nette/tester": "0.9.*"
@@ -1355,7 +1467,7 @@
                 "wiki",
                 "xhtml"
             ],
-            "time": "2013-07-19 22:05:37"
+            "time": "2013-10-16 20:01:41"
         }
     ],
     "packages-dev": [
