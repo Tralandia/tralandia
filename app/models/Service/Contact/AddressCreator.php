@@ -3,8 +3,10 @@ namespace Service\Contact;
 
 
 use Doctrine\ORM\EntityManager;
+use Entity\Location\Location;
 use Extras\Types\Latlong;
 use Nette\Utils\Arrays;
+use Tralandia\Location\Locations;
 
 class AddressCreator
 {
@@ -20,39 +22,48 @@ class AddressCreator
 	protected $addressNormalizer;
 
 	/**
+	 * @var \Tralandia\Location\Locations
+	 */
+	private $locations;
+
+
+	/**
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param AddressNormalizer $addressNormalizer
 	 */
-	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer)
+	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer, Locations $locations)
 	{
 		$this->em = $em;
 		$this->addressNormalizer = $addressNormalizer;
+		$this->locations = $locations;
 	}
 
 
 	/**
 	 * @param string $address
+	 * @param string $city
+	 * @param \Entity\Location\Location $primaryLocation
 	 * @param \Extras\Types\Latlong $gps
 	 *
 	 * @return \Entity\Contact\Address
 	 */
-	public function create($address, Latlong $gps)
+	public function create($address, $city,Location $primaryLocation, Latlong $gps)
 	{
-		if (!$info = $this->validate($address, $gps)) return NULL;
-
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
+
+		$locality = $this->locations->findOrCreateLocality($city, $primaryLocation);
 
 		/** @var $addressEntity \Entity\Contact\Address */
 		$addressEntity = $addressRepository->createNew();
-		$addressEntity->setPrimaryLocation($info[AddressNormalizer::PRIMARY_LOCATION]);
-		$addressEntity->setAddress($info[AddressNormalizer::ADDRESS]);
-		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
+		$addressEntity->setPrimaryLocation($primaryLocation);
+//		$addressEntity->setAddress($info[AddressNormalizer::ADDRESS]);
+//		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
 		$addressEntity->setFormattedAddress($address);
 
-		$addressEntity->setLocality($info[AddressNormalizer::LOCALITY]);
-		$addressEntity->setSubLocality($info[AddressNormalizer::SUBLOCALITY]);
+		$addressEntity->setLocality($locality);
+//		$addressEntity->setSubLocality($info[AddressNormalizer::SUBLOCALITY]);
 
-		$gps = new \Extras\Types\Latlong($info[AddressNormalizer::LATITUDE], $info[AddressNormalizer::LONGITUDE]);
+//		$gps = new \Extras\Types\Latlong($info[AddressNormalizer::LATITUDE], $info[AddressNormalizer::LONGITUDE]);
 		$addressEntity->setGps($gps);
 
 		return $addressEntity;
