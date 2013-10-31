@@ -285,7 +285,7 @@
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
 		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}
-		
+
 			{if $control->isRequired()}
 				<i class="icon-asterisk"></i>
 			{/if}
@@ -385,7 +385,7 @@
 		{_$mainControl->caption}
 		{if $mainControl->isRequired()}
 			<i class="icon-asterisk"></i>
-		{/if}		
+		{/if}
 	</td>
 	<td>
 		<table>
@@ -450,7 +450,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><div class="mapInputSearchContainer">{input $container['address'], data-name => "address", class => 'rentalAutocompleteAddress' , data-validation-message => "gps-validation-message"}</div></td>
+				<td><div class="mapInputSearchContainer">{input $container['search'], data-name => "address", class => 'rentalAutocompleteAddress' , data-validation-message => "gps-validation-message"}</div></td>
 			</tr>
 
 		</table>
@@ -470,41 +470,8 @@
 	</td>
 </tr>
 
-<tr class="simpleInput ">
-	<td>
-		#Mesto/Obec
-			<i class="icon-asterisk"></i>
-	</td>
-	<td>
-		<table>
-			<tr>
-				<td><input class="addressCityInput" type="text" name="" maxlength="70" id="" class="rentalLocation" required="" value=""></td>
-			</tr>
-		</table>
-	</td>
-	<td>
-		<span class="help">#blah</span>
-		<span class="invalidAlert"></span>
-	</td>
-</tr>
-
-<tr class="simpleInput ">
-	<td>
-		#Adresa
-			<i class="icon-asterisk"></i>
-	</td>
-	<td>
-		<table>
-			<tr>
-				<td><input class="addressInput" type="text" name="" maxlength="70" id="" class="rentalAddress" required="" value=""></td>
-			</tr>
-		</table>
-	</td>
-	<td>
-		<span class="help">#blah</span>
-		<span class="invalidAlert"></span>
-	</td>
-</tr>
+		{include #text, control => $container['city'], class => 'addressCityInput'}
+		{include #text, control => $container['address'], class => 'addressInput'}
 
 {/define #address}
 
@@ -670,11 +637,11 @@
 
 				<ul id="sortable" class="ui-sortable">
 
-					{foreach  $container->getImages() as $image } 
+					{foreach  $container->getImages() as $image }
 						<li data-id="{$image->getId()}" class="ui-state-default">
 							<img n:image="$image">
 							<a href="" class="remove" title="{_o100088}"></a>
-						</li>				
+						</li>
 					{/foreach}
 
 					<li class="addPhotoButton">

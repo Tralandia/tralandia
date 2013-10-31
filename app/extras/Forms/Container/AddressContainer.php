@@ -54,11 +54,13 @@ class AddressContainer extends BaseContainer
 		}
 
 
-		$this->addText('address', '#Address')
+		$this->addText('search', '#Address')
 			->getControlPrototype()
 			->setPlaceholder('o100091');
 
-		$this->addHidden('location');
+		$this->addText('city', '#C');
+		$this->addText('address', '#A');
+
 		$this->addHidden('latitude')
 					->setAttribute('class','rentalAddressLatitude');
 		$this->addHidden('longitude')
