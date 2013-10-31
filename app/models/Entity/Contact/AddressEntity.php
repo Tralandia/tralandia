@@ -31,18 +31,6 @@ class Address extends \Entity\BaseEntity {
 	protected $address;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $formattedAddress;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $postalCode;
-
-	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
@@ -53,12 +41,6 @@ class Address extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
 	protected $locality;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $subLocality;
 
 	/**
 	 * @var Collection
@@ -81,6 +63,32 @@ class Address extends \Entity\BaseEntity {
 	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $longitude;
+
+
+
+	/**
+	 * #nepouzivane od 31/12/2013
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $formattedAddress;
+
+	/**
+	 * #nepouzivane od 31/12/2013
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $postalCode;
+
+
+	/**
+	 * #nepouzivane od 31/12/2013
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subLocality;
+
+
 
 	/**
 	 * @param \Extras\Types\Latlong
