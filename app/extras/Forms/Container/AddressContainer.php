@@ -20,7 +20,7 @@ class AddressContainer extends BaseContainer
 	/**
 	 * @var Location
 	 */
-	protected $location;
+	protected $primaryLocation;
 
 	/**
 	 * @var \Service\Contact\AddressCreator
@@ -47,18 +47,21 @@ class AddressContainer extends BaseContainer
 
 		if($addressOrLocation instanceof Address) {
 			$this->address = $addressOrLocation;
+			$this->primaryLocation = $this->address->getPrimaryLocation();
 		} else if($addressOrLocation instanceof Location) {
-			$this->location = $addressOrLocation;
+			$this->primaryLocation = $addressOrLocation;
 		} else {
 			throw new InvalidArgumentException;
 		}
 
 
-		$this->addText('address', '#Address')
+		$this->addText('search', '#Address')
 			->getControlPrototype()
 			->setPlaceholder('o100091');
 
-		$this->addHidden('location');
+		$this->addText('city', '#C');
+		$this->addText('address', '#A');
+
 		$this->addHidden('latitude')
 					->setAttribute('class','rentalAddressLatitude');
 		$this->addHidden('longitude')
@@ -89,7 +92,7 @@ class AddressContainer extends BaseContainer
 			}
 			return $zoom;
 		} else {
-			return $this->location->getDefaultZoom();
+			return $this->primaryLocation->getDefaultZoom();
 		}
 	}
 
@@ -120,7 +123,7 @@ class AddressContainer extends BaseContainer
 	{
 		if($this->address) {
 			$defaults = [
-				'location' => $this->address->getPrimaryLocation()->getId(),
+				'city' => $this->translator->translate($this->address->getLocality()->getName()),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
@@ -128,9 +131,9 @@ class AddressContainer extends BaseContainer
 			$defaults['address'] = $formattedAddress;
 		} else {
 			$defaults = [
-				'location' => $this->location->getId(),
-				'latitude' => $this->location->getGps()->getLatitude(),
-				'longitude' => $this->location->getGps()->getLongitude(),
+				//'city' => $this->translator->translate($this->primaryLocation->getName()),
+				'latitude' => $this->primaryLocation->getGps()->getLatitude(),
+				'longitude' => $this->primaryLocation->getGps()->getLongitude(),
 			];
 		}
 		$this->setDefaults($defaults);
@@ -144,7 +147,7 @@ class AddressContainer extends BaseContainer
 		if($values instanceof Address) {
 			$valuesTemp = [
 				'address' => $values->getFormattedAddress(),
-				'location' => $values->getPrimaryLocation()->getId(),
+				'city' => $this->translator->translate($values->getLocality()->getName()),
 				'latitude' => $values->getGps()->getLatitude(),
 				'longitude' => $values->getGps()->getLongitude(),
 			];
@@ -160,10 +163,11 @@ class AddressContainer extends BaseContainer
 		$return = $asArray ? array() : new \Nette\ArrayHash;
 
 		$address = $this['address']->getValue();
+		$city = $this['city']->getValue();
 		$latitude = $this['latitude']->getValue();
 		$longitude = $this['longitude']->getValue();
 		if($address) {
-			$address = $this->addressCreator->create($address, new Latlong($latitude, $longitude));
+			$address = $this->addressCreator->create($address, $city, $this->primaryLocation, new Latlong($latitude, $longitude));
 			$return['addressEntity'] = $address;
 		} else {
 			$return['addressEntity'] = NULL;
@@ -178,7 +182,7 @@ class AddressContainer extends BaseContainer
 	 */
 	public function getPrimaryLocation()
 	{
-		return $this->address->getPrimaryLocation();
+		return $this->primaryLocation;
 	}
 
 	public function validate(array $controls = NULL) {
