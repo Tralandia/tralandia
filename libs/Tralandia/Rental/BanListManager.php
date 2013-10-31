@@ -45,7 +45,7 @@ class BanListManager
 	public function banRental(Rental $rental)
 	{
 		$this->banEmail($rental->getEmail());
-		$this->banPhone($rental->getPhone());
+		$rental->getPhone() && $this->banPhone($rental->getPhone());
 
 		return $this;
 	}
