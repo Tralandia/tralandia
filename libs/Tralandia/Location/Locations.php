@@ -87,11 +87,11 @@ class Locations
 			$localityEntity->type = $locationType;
 
 			// We must save the new location to be able to work on it's slug
-			$this->save($localityEntity);
+			$this->locationDao->save($localityEntity);
 
 			$newLocalityDecorator->setName($namePhrase);
 
-			$this->save($localityEntity); // ?? neviem naco to tu je...
+			$this->locationDao->save($localityEntity); // ?? neviem naco to tu je...
 		}
 
 		return $localityEntity;
