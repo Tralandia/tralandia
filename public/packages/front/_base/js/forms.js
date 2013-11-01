@@ -898,6 +898,7 @@ $(function(){
 			$addressCityInput.attr('disabled',true);
 		} else {
 			$addressCityInput.attr('disabled',false);
+			$addressCityInput.val('');
 		}
 
 	
