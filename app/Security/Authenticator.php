@@ -110,7 +110,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	public function autologin($autologin)
 	{
 		list($userId,) = explode(self::$autoLoginDelimiter, $autologin, 2);
-		if (!$user = $this->userRepository->find($userId)) {
+		if (!$user = $this->userDao->find($userId)) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 		$autologinHash = $this->calculateAutoLoginHash($user);
