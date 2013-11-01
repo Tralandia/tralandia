@@ -879,7 +879,7 @@ $(function(){
 		var exist = false;
 
 		$.each(address.address_components,function(k,v){
-			
+
 			$.each(v.types,function(kk,vv){
 				if(vv == 'locality' && !exist){
 					realName = v.long_name;
@@ -895,13 +895,13 @@ $(function(){
 
 		if(realName.length > 0){
 			$addressCityInput.val(realName);
-			$addressCityInput.attr('disabled',true);
+			$addressCityInput.attr('readonly',true);
 		} else {
-			$addressCityInput.attr('disabled',false);
+			$addressCityInput.attr('readonly',false);
 			$addressCityInput.val('');
 		}
 
-	
+
 		var $address = $('.addressInput input');
 
 		if($address.val().length == 0 || realName != oldValue){
@@ -970,8 +970,8 @@ $(function(){
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
-					$.fn.loadAddress(r[0]);	
-					$.fn.updateFormGeo(r[0].geometry.location.lat(),r[0].geometry.location.lng());		
+					$.fn.loadAddress(r[0]);
+					$.fn.updateFormGeo(r[0].geometry.location.lat(),r[0].geometry.location.lng());
 					// console.log(r[0]);
 					$(currentId).val(r[0].formatted_address);
 				} else {
