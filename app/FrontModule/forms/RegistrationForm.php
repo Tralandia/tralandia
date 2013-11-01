@@ -209,14 +209,14 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				'important' => [50, 188],
 
 				'address' => [
-					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+					'address' => 'Ludovita. Štúra 8, Nové Zámky, Slovakia',
 				],
 				'checkIn' => 8,
 				'checkOut' => 9,
 			],
 
 		];
-		// $this->setDefaults($defaults);
+		$this->setDefaults($defaults);
 	}
 
 

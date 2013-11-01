@@ -286,15 +286,9 @@
 
 									<div class="addressInformation">
 
-										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-											<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
-												{$rental->address->address}
-												{if $rental->address->subLocality}
-												({$rental->address->subLocality})
-												{/if}
-												{$rental->address->postalCode} {_$rental->address->locality->name} <br/>
-											</a>
-										{/if}
+										<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
+											{$rental->address->formattedAddress}<br/>
+										</a>
 
 										{if $rental->url}
 											<a target="_blank" class="websiteUrl" rel="nofollow" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
