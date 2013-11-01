@@ -59,8 +59,10 @@ class AddressContainer extends BaseContainer
 			->getControlPrototype()
 			->setPlaceholder('o100091');
 
-		$this->addText('city', '#C');
-		$this->addText('address', '#A');
+		$this->addText('city', '157047')
+			->setRequired(' ');
+		$this->addText('address', '817')
+			->setRequired(' ');
 
 		$this->addHidden('latitude')
 					->setAttribute('class','rentalAddressLatitude');
