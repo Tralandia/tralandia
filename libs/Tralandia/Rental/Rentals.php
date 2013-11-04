@@ -59,7 +59,8 @@ class Rentals {
 	 *
 	 * @return array
 	 */
-	public function getCounts(Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL) {
+	public function getCounts(Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL)
+	{
 		$qb = $this->rentalDao->createQueryBuilder('r');
 
 		$qb->select('l.id locationId', 'COUNT(r.id) as c')
