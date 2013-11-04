@@ -85,20 +85,20 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('email')
 			->addRule(self::EMAIL, 'o100144')
 			->getControlPrototype()
-				->setPlaceholder('o1034');
+				->setPlaceholder($this->translate('o1034'));
 
 		$date = $this->addContainer('date');
 		$today = (new DateTime)->modify('today');
 		$dateFromControl = $date->addAdvancedDatePicker('from')
 			->getControlPrototype()
-			->setPlaceholder('o1043');
+			->setPlaceholder($this->translate('o1043'));
 
 		$dateFromControl->addCondition(self::FILLED)
 			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
 		$dateToControl = $date->addAdvancedDatePicker('to')
 			->getControlPrototype()
-				->setPlaceholder('o1044');
+				->setPlaceholder($this->translate('o1044'));
 
 		$dateToControl->addCondition(self::FILLED)
 			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
@@ -112,7 +112,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$phoneContainer->getNumberControl()
 			->getControlPrototype()
-				->setPlaceholder('o1037');
+				->setPlaceholder($this->translate('o1037'));
 
 
 		$parents = array();
@@ -137,7 +137,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$messageControl = $this->addTextArea('message')
 			->getControlPrototype()
-			->setPlaceholder('o12279');
+			->setPlaceholder($this->translate('o12279'));
 
 		$messageControl->addCondition(self::FILLED)
 			->addRule(self::MIN_LENGTH, 'o100162', 3);
