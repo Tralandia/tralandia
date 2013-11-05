@@ -93,8 +93,7 @@ class LocationService extends Service\BaseService {
 				$pathSegment->pathSegment = $newSlug;
 			}
 
-			$this->locationDao->persist($pathSegment);
-			$this->locationDao->flush($pathSegment);
+			$this->routingPathSegmentDao->save($pathSegment);
 
 			if ($oldSlug) {
 				// Create a new pathSegmentOld and update it
@@ -106,8 +105,7 @@ class LocationService extends Service\BaseService {
 				$pathSegmentOld->pathSegment = $oldSlug;
 				$pathSegmentOld->pathSegmentNew = $pathSegment;
 
-				$this->locationDao->persist($pathSegmentOld);
-				$this->locationDao->flush($pathSegmentOld);
+				$this->routingPathSegmentOldDao->save($pathSegmentOld);
 			}
 		}
 		return $newSlug;

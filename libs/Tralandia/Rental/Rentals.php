@@ -207,4 +207,23 @@ class Rentals {
 	}
 
 
+	/**
+	 * @param $email
+	 *
+	 * @return mixed
+	 */
+	public function findByEmailOrUserEmail($email)
+	{
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb->innerJoin('r.user', 'u')
+			->where($qb->expr()->eq('r.email', ':email'))
+			->orWhere($qb->expr()->eq('u.login', ':email'))
+			->setParameter('email', $email);
+
+		return $qb->getQuery()->getResult();
+	}
+
+
+
 }
