@@ -13,18 +13,11 @@ class CalendarPresenter extends BasePresenter
 	 */
 	protected $currentRental;
 
-
 	/**
 	 * @autowire
-	 * @var \Extras\Translator
+	 * @var \Tralandia\Language\Languages
 	 */
-	protected $translator;
-
-	/**
-	 * @autowire
-	 * @var \Environment\Collator
-	 */
-	protected $collator;
+	protected $languages;
 
 	/**
 	 * @autowire
@@ -65,10 +58,7 @@ class CalendarPresenter extends BasePresenter
 		$this->currentRental = $this->findRental($id);
 		$this->template->environment = $this->environment;
 		$this->template->thisRental = $this->currentRental;
-		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
-			$this->translator,
-			$this->collator
-		);
+		$this->template->languages = $this->languages->getSupportedForSelect();
 
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
