@@ -128,8 +128,8 @@ class RentalPhotosContainer extends BaseContainer
 			$images = $this->rental->getImages();
 			foreach($images as $image) {
 				if(isset($imagesTemp[$image->getId()])) continue;
-				$this->rental->removeImage($image);
 				$this->imageManager->delete($image);
+				$this->rental->removeImage($image);
 			}
 		}
 

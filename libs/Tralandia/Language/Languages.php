@@ -185,4 +185,22 @@ class Languages {
 	}
 
 
+	/**
+	 * @return array
+	 */
+	public function getSupportedForSelect()
+	{
+		$return = [];
+		$rows = $this->findSupported();
+		foreach($rows as $row) {
+			$return[$row->id] = $this->translator->translate($row->name);
+		}
+		$this->collator->asort($return);
+
+		return $return;
+
+	}
+
+
+
 }

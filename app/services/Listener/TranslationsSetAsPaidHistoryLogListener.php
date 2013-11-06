@@ -18,9 +18,6 @@ class TranslationsSetAsPaidHistoryLogListener extends BaseHistoryLogListener {
 	{
 		$log = $this->createLog(History::TRANSLATIONS_SET_AS_PAID);
 
-		$translations = $this->em->getRepository(TRANSLATION_ENTITY)->findByIds($changedIds);
-
-		$wordsCountToPay = $this->em->getRepository(TRANSLATION_ENTITY)->calculateWordsInTranslations($translations);
 		$translator = $language->getTranslator();
 		$data = [
 			'language' => [
@@ -37,8 +34,6 @@ class TranslationsSetAsPaidHistoryLogListener extends BaseHistoryLogListener {
 				'email' => $requestedBy->getEmail(),
 			],
 			'changedIds' => $changedIds,
-			'wordsCountToPay' => $wordsCountToPay,
-			'totalPrice' => $language->getTranslationPrice() * $wordsCountToPay,
 		];
 
 		$log->setData($data);

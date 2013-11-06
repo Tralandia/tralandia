@@ -85,6 +85,8 @@ class RentalPriceListContainer extends BaseContainer
 		$container->addText('price', 'o100078')
 			->setOption('append', $this->currency->getIso() . ' ' . $this->translator->translate('o100004'))
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
+
+		$container->addHidden('entityId', '');
 	}
 
 	public function getFormattedValues($asArray = FALSE)
@@ -131,7 +133,8 @@ class RentalPriceListContainer extends BaseContainer
 				'roomType' => $pricelistRow->getRoomType()->getId(),
 				'bedCount' => $pricelistRow->getBedCount(),
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
-				'price' => $pricelistRow->getPrice()->getSourceAmount()
+				'price' => $pricelistRow->getPrice()->getSourceAmount(),
+				'entityId' => $pricelistRow->id
 			];
 		}
 

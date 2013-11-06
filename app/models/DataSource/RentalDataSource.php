@@ -13,6 +13,7 @@ use Nette\Utils\Paginator;
 use Nette\Utils\Validators;
 use Routers\FrontRoute;
 use Security\Authenticator;
+use Tralandia\Rental\Rentals;
 
 class RentalDataSource extends BaseDataSource {
 
@@ -36,19 +37,26 @@ class RentalDataSource extends BaseDataSource {
 	 */
 	private $application;
 
+	/**
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	private $rentals;
+
 
 	/**
 	 * @param EntityManager $em
 	 * @param \Extras\Books\Phone $phoneBook
+	 * @param \Tralandia\Rental\Rentals $rentals
 	 * @param \Security\Authenticator $authenticator
 	 * @param \Nette\Application\Application $application
 	 */
-	public function __construct(EntityManager $em, Phone $phoneBook, Authenticator $authenticator, Application $application)
+	public function __construct(EntityManager $em, Phone $phoneBook, Rentals $rentals, Authenticator $authenticator, Application $application)
 	{
 		$this->em = $em;
 		$this->phoneBook = $phoneBook;
 		$this->authenticator = $authenticator;
 		$this->application = $application;
+		$this->rentals = $rentals;
 	}
 
 
@@ -63,7 +71,7 @@ class RentalDataSource extends BaseDataSource {
 			if($phone = $this->phoneBook->getOrCreate($search)) {
 				$result = $this->em->getRepository(RENTAL_ENTITY)->findByPhone($phone);
 			} else if(Validators::isEmail($search)) {
-				$result = $this->em->getRepository(RENTAL_ENTITY)->findByEmailOrUserEmail($search);
+				$result = $this->rentals->findByEmailOrUserEmail($search);
 			} else if (is_numeric($search)) {
 				$result = $this->em->getRepository(RENTAL_ENTITY)->findById($search);
 			}
