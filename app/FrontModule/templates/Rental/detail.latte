@@ -1,7 +1,7 @@
 {*
 	$rental        Entity\Rental\Rental
 	$locality      Service\Seo\SeoService
-	*}
+*}
 
 	{block content}
 
@@ -287,6 +287,11 @@
 									<div class="addressInformation">
 
 										<a href="#" class="scrollTo" data-scroll-to="#objectDetailMap">
+											{if $rental->address->formattedAddress}
+												{$rental->address->formattedAddress}
+											{else}
+												{$rental->address->address}, {$rental->address->postalCode} {_$rental->address->locality->name}
+											{/if}
 											{$rental->address->formattedAddress}<br/>
 										</a>
 
