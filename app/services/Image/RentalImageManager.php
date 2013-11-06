@@ -63,7 +63,7 @@ class RentalImageManager {
 	{
 		$this->storage->delete($image->getFilePath());
 
-		return $this->rentalImageDao->delete($image);
+		$this->rentalImageDao->delete($image);
 	}
 
 	/**

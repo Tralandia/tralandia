@@ -217,8 +217,8 @@ class RentalEditHandler extends FormHandler
 
 		$rental->rooms = $values['roomsLayout'];
 
-		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
-		$rentalRepository->save($rental);
+		$this->em->persist($rental);
+		$this->em->flush();
 
 		if(isset($gpsIsChanged)) {
 			$this->onGpsChange($rental);
