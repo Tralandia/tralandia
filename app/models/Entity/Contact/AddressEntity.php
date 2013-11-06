@@ -64,10 +64,7 @@ class Address extends \Entity\BaseEntity {
 	 */
 	protected $longitude;
 
-
-
 	/**
-	 * #nepouzivane od 31/12/2013
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
