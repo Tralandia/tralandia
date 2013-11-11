@@ -233,6 +233,8 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) && $params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
 				unset($params[self::RENTAL_TYPE], $params[self::LOCATION]);
+				$presenter = 'RootHome';
+				$params['action'] = 'default';
 			}
 
 			if(isset($params[self::CAPACITY])

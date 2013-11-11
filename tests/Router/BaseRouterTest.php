@@ -32,23 +32,23 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		if ($request) { // matched
 			$params = $request->getParameters();
 
-			$this->assertSame($expectedPresenter, $request->getPresenterName(), 'Nazov prezenteru sa nezhoduje!');
+			$this->assertSame($expectedPresenter, $request->getPresenterName(), 'Nazov prezenteru sa nezhoduje! pre: ' . $url);
 
 			foreach($params as $paramName => $param) {
 				$this->assertArrayHasKey($paramName, $expectedParams);
 				if($expectedParams[$paramName] instanceof BaseEntity) {
-					$this->assertEntities($expectedParams[$paramName], $param);
+					$this->assertEntities($expectedParams[$paramName], $param, 'Chyba v ' . $url);
 				} else {
-					$this->assertSame($expectedParams[$paramName], $param);
+					$this->assertSame($expectedParams[$paramName], $param, 'Chyba v ' . $url);
 				}
 			}
 
 			foreach($expectedParams as $paramName => $value) {
 				$this->assertArrayHasKey($paramName, $params);
 				if($value instanceof BaseEntity) {
-					$this->assertEntities($value, $params[$paramName]);
+					$this->assertEntities($value, $params[$paramName], 'Chyba v ' . $url);
 				} else {
-					$this->assertSame($value, $params[$paramName]);
+					$this->assertSame($value, $params[$paramName], 'Chyba v ' . $url);
 				}
 			}
 
@@ -56,10 +56,10 @@ abstract class BaseRouterTest extends \Tests\TestCase
 			//$request->setParameters($params);
 			$result = $route->constructUrl($request, $url);
 
-			$this->assertEquals( $expectedUrl, $result );
+			$this->assertEquals( $expectedUrl, $result , 'Chyba v ' . $url);
 
 		} else { // not matched
-			$this->assertNull( $expectedPresenter );
+			$this->assertNull( $expectedPresenter , 'Chyba v ' . $url);
 		}
 		return $request;
 	}
