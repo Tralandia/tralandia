@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Language;
 use Nette;
 use Nette\Application\Routers\Route;
+use Nette\Utils\Strings;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
@@ -201,8 +202,17 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		/** @var $domain \Entity\Domain */
 		$domain = $this->domainRepository->findOneByDomain($host);
-		if(!$domain) return NULL;
-		return $domain->getLocation();
+		if(!$domain) {
+			if($match = Strings::match($host, '~^([a-z]{2})\.tralandia\.com$~')) {
+				$domain = $this->domainRepository->findOneByDomain('tralandia.' . $match[1]);
+			}
+		}
+
+		if(!$domain) {
+			return NULL;
+		} else {
+			return $domain->getLocation();
+		}
 	}
 
 }
