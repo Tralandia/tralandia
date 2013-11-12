@@ -47,6 +47,14 @@ class FrontRouterTest extends BaseRouterTest
 			'months' => '8',
 		));
 
+		$this->routeIn($route, 'http://www.tralandia.com/login', 'Sign', array(
+			'action' => 'in',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+			FrontRoute::PAGE => $this->findPage(2)
+		), 'http://www.tralandia.com/login');
+
+
 		$this->routeIn($route, 'http://ro.al.tralandia.com/', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(236),
@@ -121,109 +129,12 @@ class FrontRouterTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		), 'http://www.usal.tralandia.com/registration', 'http://www.tralandia.com/');
 
-		$this->routeIn($route, 'http://www.sk.tralandia.com/external/calendar/calendar.php?id=1&months=8', 'CalendarIframe', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::RENTAL => $this->findRental(1),
-			'months' => '8',
-		), 'http://www.sk.tralandia.com/kalendar-obsadenosti/1?months=8');
-
-		$this->routeIn($route, 'http://us.ch.tralandia.com/', 'Home', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(158),
-			FrontRoute::LANGUAGE => $this->findLanguage(33),
-		), 'http://www.ch.tralandia.com/');
-
-
 		$this->routeIn($route, 'http://www.usal.tralandia.com/', 'Home', array(
 			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(256),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		));
 
-
-
-
-		$this->routeIn($route, 'http://www.com.tralandia.com/baratsagos-hangulu-gibraltar-vendeghaz-a-r280', 'Rental', array(
-			'action' => 'detail',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(159),
-			FrontRoute::LANGUAGE => $this->findLanguage(38),
-			FrontRoute::RENTAL => $this->findRental(280),
-		), 'http://en.hu.tralandia.com/baratsagos-hangulu-gibraltar-vendeghaz-a-r280');
-
-		$this->routeIn($route, 'http://sk.usal.tralandia.com/registracia', 'Registration', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::PAGE => $this->findPage(1),
-		));
-
-		// ak objekt uz neexistuje
-		$this->routeIn($route, 'http://www.sk.tralandia.com/f', 'RentalList', array(
-			'action' => 'redirectToFavorites',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-		));
-
-		$this->routeIn($route, 'http://www.sk.tralandia.com/external/calendar/calendar.php?id=test&months=8', 'Home', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			'id' => 'test',
-			'months' => '8',
-		), 'http://www.sk.tralandia.com/?id=test&months=8');
-
-
-		$this->routeIn($route, 'http://www.sk.tralandia.com/prihlasenie', 'Sign', array(
-			'action' => 'in',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::PAGE => $this->findPage(2),
-		));
-
-		$this->routeIn($route, 'http://www.sk.tralandia.com/houseboaty', 'RentalList', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->findRentalType(14),
-		), 'http://www.sk.tralandia.com/ine');
-
-		$this->routeIn($route, 'http://www.sk.tralandia.com/liptov/drevenice', 'RentalList', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->findLocation(331),
-			FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->findRentalType(10),
-		), 'http://www.sk.tralandia.com/liptov/chaty');
-
-		$this->routeIn($route, 'http://www.com.tralandia.com/', 'RootHome', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
-			FrontRoute::LANGUAGE => $this->findLanguage(38),
-		));
-
-		$this->routeIn($route, 'http://www.com.tralandia.com/support-tralandia', 'SupportUs', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
-			FrontRoute::LANGUAGE => $this->findLanguage(38),
-			FrontRoute::PAGE => $this->findPage(16),
-		));
-
-		$this->routeIn($route, 'http://www.com.tralandia.com/registration', 'Registration', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
-			FrontRoute::LANGUAGE => $this->findLanguage(38),
-			FrontRoute::PAGE => $this->findPage(1),
-		));
-
-		$this->routeIn($route, 'http://www.sk.tralandia.com/registracia', 'Registration', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::PAGE => $this->findPage(1),
-		));
 
 	}
-
 }

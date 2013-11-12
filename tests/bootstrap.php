@@ -24,7 +24,9 @@ require_once VENDOR_DIR . '/autoload.php';
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->addParameters(array('appDir' => APP_DIR, 'centralLanguage' => CENTRAL_LANGUAGE));
-$configurator->enableDebugger(ROOT_DIR . '/log');
+
+//$configurator->enableDebugger(ROOT_DIR . '/log');
+
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(__DIR__)
