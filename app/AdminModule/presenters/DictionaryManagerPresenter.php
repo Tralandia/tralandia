@@ -63,7 +63,7 @@ class DictionaryManagerPresenter extends AdminPresenter {
 
 
 		$this->requestTranslationsHistoryLogListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
-		$this->requestTranslationsEmailListener->onRequestTranslations($language, $wordsCountToPay, $this->loggedUser);
+		$this->requestTranslationsEmailListener->onRequestTranslations($language, $this->loggedUser);
 
 		//$this->flashMessage('Request sent!');
 		$this->payload->success = TRUE;

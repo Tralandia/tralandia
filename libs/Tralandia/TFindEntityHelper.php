@@ -144,6 +144,19 @@ trait TFindEntityHelper {
 	 * @param bool $need
 	 * @param string $by
 	 *
+	 * @return \Entity\Page|null
+	 */
+	public function findBoard($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(RENTAL_AMENITY_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
 	 * @return \Entity\User\User|null
 	 */
 	public function findUser($id, $need = TRUE, $by = 'id')

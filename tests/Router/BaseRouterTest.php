@@ -75,7 +75,7 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		$this->assertEquals($expectUrl, $url);
 	}
 
-	public function assertEntities(BaseEntity $expected,BaseEntity $actual, $message = NULL)
+	public function assertEntities(BaseEntity $expected, BaseEntity $actual, $message = NULL)
 	{
 		$this->assertSame($expected->getClass(), $actual->getClass(), $message);
 		$this->assertSame($expected->getId(), $actual->getId(), $message);
