@@ -79,7 +79,7 @@ class FileStorage extends Nette\Object
 	{
 		$filePath = $this->filesDir . $filePath;
 		if (!file_exists($filePath)) {
-			throw new Nette\FileNotFoundException("$filePath");
+			//throw new Nette\FileNotFoundException("$filePath");
 		}
 		return unlink($filePath);
 	}

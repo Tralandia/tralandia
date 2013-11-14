@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Language;
 use Nette;
 use Nette\Application\Routers\Route;
+use Nette\Utils\Strings;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
@@ -127,8 +128,10 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		if(isset($params['host'])) {
 			$params['www'] = substr($params['www'], 0, -1);
 			if(!$primaryLocation = $this->getPrimaryLocationFromHost($params[self::LANGUAGE] . '.' . $params['host'])) {
-				if(!$primaryLocation = $this->getPrimaryLocationFromHost($params['host'])) {
-					$primaryLocation = $this->locationRepository->findOneByIso('com');
+				if(!$primaryLocation = $this->getPrimaryLocationFromHost($params[self::LANGUAGE] . '.' . $params['host'], TRUE)) {
+					if(!$primaryLocation = $this->getPrimaryLocationFromHost($params['host'])) {
+						$primaryLocation = $this->locationRepository->findOneByIso('com');
+					}
 				}
 			} else {
 				$params[self::LANGUAGE] = $params['www'];
@@ -194,15 +197,25 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 
 	/**
 	 * @param $host
+	 * @param bool $tryNewUrl
 	 *
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]|null
 	 */
-	private function getPrimaryLocationFromHost($host)
+	private function getPrimaryLocationFromHost($host, $tryNewUrl = FALSE)
 	{
 		/** @var $domain \Entity\Domain */
 		$domain = $this->domainRepository->findOneByDomain($host);
-		if(!$domain) return NULL;
-		return $domain->getLocation();
+		if(!$domain && $tryNewUrl) {
+			if($match = Strings::match($host, '~^([a-z]{2})\.([a-z]{2})\.tralandia\.com$~')) {
+				$domain = $this->domainRepository->findOneByDomain('tralandia.' . $match[2]);
+			}
+		}
+
+		if(!$domain) {
+			return NULL;
+		} else {
+			return $domain->getLocation();
+		}
 	}
 
 }
