@@ -209,6 +209,7 @@ class Translations
 			$qb = $this->translationDao->createQueryBuilder();
 			$qb->update(TRANSLATION_ENTITY, 'e')
 				->set('e.status', ':status')->setParameter('status', Translation::UP_TO_DATE)
+				->set('e.unpaidAmount', ':unpaidAmount')->setParameter('unpaidAmount', NULL)
 				->where($qb->expr()->in('e.id', $ids));
 
 			$qb->getQuery()->execute();
