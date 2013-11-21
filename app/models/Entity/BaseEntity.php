@@ -46,7 +46,7 @@ class BaseEntity extends IdentifiedEntity implements \Nette\Security\IResource {
 	public function getClass()
 	{
 		$class = get_class($this);
-		if(Strings::contains($class, '\Proxies\\')) {
+		if(Strings::contains($class, 'Kdyby\GeneratedProxy\\')) {
 			$class = get_parent_class($this);
 		}
 

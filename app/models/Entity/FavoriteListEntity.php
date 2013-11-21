@@ -31,24 +31,20 @@ class FavoriteList extends \Entity\BaseEntity {
 	 */
 	protected $rentals;
 
+
 	/**
-	 * @ORM\prePersist
-	 * @param \DateTime $lastUsed
-	 *
+	 * @ORM\PrePersist
 	 * @return FavoriteList
 	 */
-	public function setLastUsed(\DateTime $lastUsed = NULL){
-
-		if($lastUsed) {
-			$this->lastUsed = $lastUsed;
-		}
-
+	public function fillLastUpdate()
+	{
 		if(!$this->lastUsed) {
 			$this->lastUsed = new \DateTime();
 		}
 
 		return $this;
 	}
+
 
 
 	public function addRentals($rentals)

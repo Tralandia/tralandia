@@ -289,7 +289,7 @@ class AddressNormalizer extends \Nette\Object {
 		if ($locality === NULL) {
 			$address->locality = NULL;
 		} else if ($locality instanceof \Entity\Location\Location) {
-			if ($locality->parent != $address->primaryLocation) {
+			if ($locality->parent->getId() != $address->primaryLocation->getId()) {
 				throw new WrongCountryException("AddressNormalizer - can't set the locality,
 				because it is outside the primaryLocation", 1);
 			} else {

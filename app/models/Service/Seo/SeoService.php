@@ -210,6 +210,8 @@ class SeoService extends Nette\Object {
 
 		$texts = array();
 		foreach ($variables as $value) {
+			if(!array_key_exists($value['replacement'], $this->replacements)) continue;
+
 			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')
 				&& !$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION]) )
 			{

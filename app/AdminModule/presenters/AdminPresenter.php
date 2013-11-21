@@ -34,7 +34,7 @@ class AdminPresenter extends BasePresenter {
 	public function startup() {
 		parent::startup();
 
-		$this->settings = $this->getService('presenter.' . $this->getConfigName() . '.settings');
+		$this->settings = $this->getContext()->getService('presenter.' . $this->getConfigName() . '.settings');
 		$this->template->settings = $this->settings;
 		$this->repository = $this->context->getService('doctrine.default.entityManager')->getRepository($this->settings->getEntityClass());
 	}
@@ -74,7 +74,7 @@ class AdminPresenter extends BasePresenter {
 		$presenter = $this;
 		$model = $this->context->getService('doctrine.default.entityManager');
 		/** @var $formMaskFactory \Extras\FormMask\FormFactory */
-		$formMaskFactory = $this->getService("presenter.$name.form");
+		$formMaskFactory = $this->getContext()->getService("presenter.$name.form");
 		$form = $formMaskFactory->create($entity);
 
 
@@ -90,7 +90,7 @@ class AdminPresenter extends BasePresenter {
 	 * Komponenta data gridu
 	 */
 	protected function createComponentDataGrid() {
-		$grid = $this->getService('presenter.' . $this->getConfigName() . '.gridFactory')->create();
+		$grid = $this->getContext()->getService('presenter.' . $this->getConfigName() . '.gridFactory')->create();
 
 		return $grid;
 	}

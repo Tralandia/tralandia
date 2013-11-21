@@ -281,7 +281,7 @@ class PhraseListPresenter extends BasePresenter {
 			'toLanguages' => $language->getId()
 		]);
 
-		$editForm['toLanguages']->setDisabled();
+		//$editForm['toLanguages']->setDisabled();
 	}
 
 
@@ -304,10 +304,18 @@ class PhraseListPresenter extends BasePresenter {
 			);
 			$showOptions = FALSE;
 		} else {
-			$toLanguages = $this->supportedLanguages->getForSelect(
-				function($key, $value) {return $value->getId();},
-				function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
-			);
+			if(is_array($this->editableLanguages)) {
+				$toLanguages = \Tools::arrayMap(
+					$this->editableLanguages,
+					function($key, $value) {return $value->getId();},
+					function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
+				);
+			} else {
+				$toLanguages = $this->supportedLanguages->getForSelect(
+					function($key, $value) {return $value->getId();},
+					function($value) use($translator) {return Strings::upper($value->getIso()) . ' - ' . $translator->translate($value->getName());}
+				);
+			}
 			$showOptions = TRUE;
 			$phraseContainerSettings['isAdmin'] = TRUE;
 			$form->addCheckbox('smallCorrection', 'Small correction');
@@ -398,13 +406,9 @@ class PhraseListPresenter extends BasePresenter {
 				}
 			}
 
-			if($this->user->isInRole(Role::TRANSLATOR)) {
-				foreach($phraseValues['changedTranslations'] as $translation) {
-				}
-			}
 
 			$phrasesIds[] = $phraseId;
-			$phraseDao->save($phrase, $phraseValues['changedTranslations']);
+			$phraseDao->save($phrase, $phraseValues['displayedTranslations']);
 		}
 
 		if(isset($checkedLanguage) && $totalAmount > 0 && $this->loggedUser->isSuperAdmin()) {
