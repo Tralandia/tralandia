@@ -72,21 +72,23 @@ class RegistrationData {
 		$rental = $rentalCreator->create($data['address'], $data['primaryLocation']->iso, $data['name']);
 
 		/* Ak sa nachadza dany email alebo cislo v dtb merge-ovanie udajov */
-		$rentalObjectMail = $rentalRepository->findOneBy(['email' => $data['email']]);
-		$rentalObjectPhone = $rentalRepository->findOneBy(['phone' => $data['phone']]);
+		$rentalObjectMail = is_null($data['email']) ? NULL : $rentalRepository->findOneBy(['email' => $data['email']]);
+		$rentalObjectPhone = is_null($data['phone']) ? NULL : $rentalRepository->findOneBy(['phone' => $data['phone']]);
 		$rentalObject = isset($rentalObjectMail) ? $rentalObjectMail : $rentalObjectPhone;
 		if($rentalObject){
 			$mergeData = new MergeData($this->em);
 			$mergeData->merge($data, $rentalObject);
 		} else {
-			if($data['phone']) $rental->setPhone($data['phone']);
-			if($data['url']) $rental->setUrl($data['url']);
+			is_null($data['phone']) ? : $rental->setPhone($data['phone']);
+			is_null($data['contactName']) ? : $rental->setContactName($data['contactName']);
+			is_null($data['url']) ? : $rental->setUrl($data['url']);
+			is_null($data['bedroomCount']) ? : $rental->setBedroomCount($data['bedroomCount']);
 
 			$rental->setType($data['type'])
 				->setEditLanguage($data['editLanguage'])
 				->addSpokenLanguage($data['spokenLanguage'])
-				->setContactName($data['contactName'])
-				->setBedroomCount($data['bedroomCount'])
+//				->setContactName($data['contactName'])
+//				->setBedroomCount($data['bedroomCount'])
 				->setEmail($data['email'])
 				->setClassification($data['classification'])
 				->setMaxCapacity($data['maxCapacity'])
@@ -94,21 +96,15 @@ class RegistrationData {
 				->setCheckOut($data['checkOut'])
 				->setFloatPrice($data['price']);
 
-			$imageSort = 1;
 			if (isset($data['images'])) {
 				foreach ($data['images'] as $path) {
-					$image = $imageDao->createNew();
-					$image->setRental($rental)
-						->setFilePath($path)
-						->setSort($imageSort);
-					$rental->addImage($image);
-					$imageSort++;
-					$a = $this->rm->saveFromFile($path);
+					$image = $this->rm->saveFromFile($path);
+					$this->em->persist($rental->addImage($image));
+//					$a = $rental->addImage($image);
 				}
 			}
 
-			$rental->addInterviewAnswer($data['description']);
-
+			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
 			$this->em->persist($rental);
 			$this->em->flush();
 

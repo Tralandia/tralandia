@@ -47,6 +47,7 @@ class Phone extends Nette\Object {
 	 * @return Entity\Contact\Phone|false
 	 */
 	public function getOrCreate($number, $prefix = NULL) {
+		$number = $this->prepareNumber($number);
 		if (!$phone = $this->find($number)) {
 			$defaultCountry = NULL;
 			if($prefix) $defaultCountry = $this->locationDao->findOneByPhonePrefix($prefix);
