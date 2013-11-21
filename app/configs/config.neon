@@ -391,6 +391,8 @@ services:
 	# ==============================
 	# ==================== Components/Registrator
 	# ==============================
+	- \Tralandia\Harvester\ProcessingData
+	- \Tralandia\Harvester\RegistrationData
 
 
 	############################################################
