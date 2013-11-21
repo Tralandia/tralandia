@@ -44,14 +44,19 @@ class RentalCreator
 	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer)
 	{
 		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
+		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		$this->interviewAnswerRepository = $em->getRepository(INTERVIEW_ANSWER_ENTITY);
 		$this->addressNormalizer = $addressNormalizer;
 	}
 
-	public function create(\Entity\Contact\Address $address, User $user, $rentalName)
+	public function create(\Entity\Contact\Address $address, $value, $rentalName)
 	{
-		$language = $user->getLanguage();
+		if (is_object($value)){
+			$language = $value->getLanguage();
+		} else {
+			$language = $this->languageRepository->findOneByIso($value);
+		}
 
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
@@ -73,8 +78,10 @@ class RentalCreator
 
 		$this->addressNormalizer->update($address, TRUE);
 		$rental->setAddress($address);
+		if (is_object($value)){
+			$value->addRental($rental);
+		}
 
-		$user->addRental($rental);
 
 		$nameTranslationLanguage = $address->getPrimaryLocation()->getDefaultLanguage();
 		if($translation = $rental->getName()->getTranslation($nameTranslationLanguage)) {
