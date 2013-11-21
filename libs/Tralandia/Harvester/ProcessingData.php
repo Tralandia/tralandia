@@ -64,7 +64,7 @@ class ProcessingData {
 			if ($response != false){
 				$objectData['phone'][$key] = $response;
 			} else {
-				$objectData['phone'] = null;
+				$objectData['phone'] = [];
 			}
 		}
 
@@ -86,7 +86,7 @@ class ProcessingData {
 
 		$data = [
 			'email' => $objectData['email'],
-			'phone' => $objectData['phone'][0],
+			'phone' => $objectData['phone'],
 //			'name' => $objectData['name'],
 			'name' => $this->getName($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['name']),
 			'primaryLocation' => $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]),
