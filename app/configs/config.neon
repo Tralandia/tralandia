@@ -387,6 +387,12 @@ services:
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
+
+	# ==============================
+	# ==================== Components/Registrator
+	# ==============================
+
+
 	############################################################
 	#==========================================================#
 	#====================== REFACTORING =======================#

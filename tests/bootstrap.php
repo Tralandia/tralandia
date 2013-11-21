@@ -23,10 +23,9 @@ require_once VENDOR_DIR . '/autoload.php';
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addParameters(array('appDir' => APP_DIR, 'centralLanguage' => CENTRAL_LANGUAGE));
-
-//$configurator->enableDebugger(ROOT_DIR . '/log');
-
+$wwwDir = dirname(__FILE__) . '/../public';
+$configurator->addParameters(array('appDir' => APP_DIR, 'wwwDir' => $wwwDir, 'centralLanguage' => CENTRAL_LANGUAGE));
+$configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(__DIR__)
@@ -38,8 +37,10 @@ require_once LIBS_DIR . '/tools.php';
 
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
+$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/test.config.neon', FALSE);
 
 $container = $configurator->createContainer();
