@@ -91,5 +91,20 @@ class HarvestedContacts
 	}
 
 
-
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param $type
+	 * @param $value
+	 *
+	 * @return HarvestedContact
+	 */
+	public function addIfNotExists(\Entity\Rental\Rental $rental, $type, $value)
+	{
+		$entity = $this->findOneBy(['type' => $type, 'value' => $value]);
+		if($entity) {
+			return $entity;
+		} else {
+			return $this->add($rental, $type, $value);
+		}
+	}
 }

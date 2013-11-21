@@ -7,6 +7,7 @@
 
 namespace Tralandia\Harvester;
 
+use Entity\HarvestedContact;
 use Entity\Rental\Rental;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
@@ -19,11 +20,20 @@ class MergeData {
 	 */
 	protected $em;
 
+	/**
+	 * @var HarvestedContacts
+	 */
+	private $harvestedContacts;
 
 
-	public function __construct(\Kdyby\Doctrine\EntityManager $em)
+	/**
+	 * @param HarvestedContacts $harvestedContacts
+	 * @param \Kdyby\Doctrine\EntityManager $em
+	 */
+	public function __construct(HarvestedContacts $harvestedContacts, \Kdyby\Doctrine\EntityManager $em)
 	{
 		$this->em = $em;
+		$this->harvestedContacts = $harvestedContacts;
 	}
 
 	public function merge($processingData, Rental $rental){
@@ -51,9 +61,10 @@ class MergeData {
 			'checkOut' => empty($checkOut) ? $processingData['checkOut'] : $checkOut,
 			'maxCapacity' =>empty($maxCapacity) ? $processingData['maxCapacity'] : $maxCapacity,
 			'bedroomCount' =>empty($bedroomCount) ? $processingData['bedroomCount'] : $bedroomCount,
-			'phone' => empty($phone) ? $processingData['phone'] : $phone,
+			'phone' => empty($phone) ? reset($processingData['phone']) : $phone,
 			'description' => empty($description) ? $processingData['description'] : $description,
 		];
+
 		$rental->setContactName($data['contactName'])
 			->setBedroomCount($data['bedroomCount'])
 			->setClassification($data['classification'])
@@ -62,7 +73,9 @@ class MergeData {
 			->setCheckOut($data['checkOut'])
 			->setUrl($data['url'])
 			->setEmail($data['email']);
-		if (!is_null($phone)) $rental->setPhone($data['phone']);
+		if (is_null($phone) && isset($data['phone'])) $rental->setPhone($data['phone']);
+
+
 		$rentalDao->save($rental);
 
 	}

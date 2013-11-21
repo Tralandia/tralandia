@@ -7,6 +7,7 @@
 
 namespace Tralandia\Harvester;
 
+use Entity\HarvestedContact;
 use Entity\User\Role;
 use Environment\Environment;
 use Image\RentalImageManager;
@@ -24,11 +25,6 @@ class RegistrationData {
     protected $rentalCreator;
 
     /**
-     * @var \Environment\Environment
-     */
-    protected $environment;
-
-    /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
@@ -42,20 +38,33 @@ class RegistrationData {
 	 */
 	private $rm;
 
-    /**
-    * @param \Service\Rental\RentalCreator $rentalCreator
-    * @param \Environment\Environment $environment
-    * @param \Doctrine\ORM\EntityManager $em
-	* @param \Image\RentalImageManager $rm
-    */
-    public function __construct(RentalCreator $rentalCreator, Environment $environment,
-								EntityManager $em, RentalImageManager $rm)
+	/**
+	 * @var HarvestedContacts
+	 */
+	private $harvestedContacts;
+
+	/**
+	 * @var MergeData
+	 */
+	private $mergeData;
+
+
+	/**
+	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 * @param HarvestedContacts $harvestedContacts
+	 * @param \Doctrine\ORM\EntityManager $em
+	 * @param \Image\RentalImageManager $rm
+	 * @param MergeData $mergeData
+	 */
+    public function __construct(RentalCreator $rentalCreator, HarvestedContacts $harvestedContacts,
+								EntityManager $em, RentalImageManager $rm, MergeData $mergeData)
     {
         $this->rentalCreator = $rentalCreator;
-        $this->environment = $environment;
         $this->em = $em;
 		$this->rm = $rm;
-    }
+		$this->harvestedContacts = $harvestedContacts;
+		$this->mergeData = $mergeData;
+	}
 
     public function registration($data){
 		$userRepository = $this->em->getRepository(USER_ENTITY);
@@ -68,17 +77,25 @@ class RegistrationData {
 
 		$rentalCreator = $this->rentalCreator;
 
-		/** @var $rental \Entity\Rental\Rental */
-		$rental = $rentalCreator->create($data['address'], $data['primaryLocation']->iso, $data['name']);
-
 		/* Ak sa nachadza dany email alebo cislo v dtb merge-ovanie udajov */
-		$rentalObjectMail = is_null($data['email']) ? NULL : $rentalRepository->findOneBy(['email' => $data['email']]);
-		$rentalObjectPhone = is_null($data['phone']) ? NULL : $rentalRepository->findOneBy(['phone' => $data['phone']]);
-		$rentalObject = isset($rentalObjectMail) ? $rentalObjectMail : $rentalObjectPhone;
-		if($rentalObject){
-			$mergeData = new MergeData($this->em);
-			$mergeData->merge($data, $rentalObject);
+		$rental = $this->harvestedContacts->findRentalByEmail($data['email']);
+		if(!$rental && is_array($data['phone'])) {
+			foreach($data['phone'] as $phone) {
+				$rental = $this->harvestedContacts->findRentalByPhone($phone);
+				if($rental) break;
+			}
+		}
+
+		$return = ['success' => FALSE];
+		if($rental){
+			$mergeData = $this->mergeData;
+			$mergeData->merge($data, $rental);
+			$return['success'] = TRUE;
+			$return['merged'] = TRUE;
 		} else {
+			/** @var $rental \Entity\Rental\Rental */
+			$rental = $rentalCreator->create($data['address'], $data['primaryLocation']->iso, $data['name']);
+
 			is_null($data['phone']) ? : $rental->setPhone($data['phone']);
 			is_null($data['contactName']) ? : $rental->setContactName($data['contactName']);
 			is_null($data['url']) ? : $rental->setUrl($data['url']);
@@ -105,12 +122,26 @@ class RegistrationData {
 			}
 
 			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
+
 			$this->em->persist($rental);
 			$this->em->flush();
+			$return['success'] = TRUE;
+			$return['registered'] = TRUE;
 
-			return $rental;
 		}
 
-    }
+		foreach($data['phone'] as $phone) {
+			$this->harvestedContacts->addIfNotExists($rental, HarvestedContact::TYPE_PHONE, $phone);
+		}
+
+		$this->harvestedContacts->addIfNotExists($rental, HarvestedContact::TYPE_EMAIL, $data['email']);
+
+
+
+		$return['rental'] = $rental;
+
+		return $return;
+
+	}
 
 }

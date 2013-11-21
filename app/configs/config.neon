@@ -393,6 +393,7 @@ services:
 	# ==============================
 	- \Tralandia\Harvester\ProcessingData
 	- \Tralandia\Harvester\RegistrationData
+	- \Tralandia\Harvester\MergeData
 
 
 	############################################################

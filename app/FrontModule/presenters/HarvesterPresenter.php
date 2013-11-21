@@ -39,8 +39,11 @@ class HarvesterPresenter extends BasePresenter
 			try {
 				$data = Json::decode($data, Json::FORCE_ARRAY);
 				$data = $this->harvesterDataValidator->process($data);
-				$rental = $this->harvesterRegistrator->registration($data);
-				$this->payload->success = TRUE;
+				$response = $this->harvesterRegistrator->registration($data);
+				$this->payload->success = $response['success'];
+				isset($response['registered']) && $this->payload->registered = $response['registered'];
+				isset($response['merged']) && $this->payload->registered = $response['merged'];
+				$this->payload->rental = $response['rental']->getId();
 			} catch(\Exception $e) {
 				$this->payload->success = FALSE;
 				//throw $e;
