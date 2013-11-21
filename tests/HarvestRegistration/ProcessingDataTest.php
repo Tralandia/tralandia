@@ -112,7 +112,7 @@ class ProcessingDataTest extends TestCase
 
 	public function testValidData()
 	{
-		$data = $this->getValidData();
+		$data = $this->objectData;
 
 		$this->assertEquals($data['country'], $rental->getPrimaryLocation()->getId());
 		$this->assertEquals($data['language'], $rental->getEditLanguage()->getId());
