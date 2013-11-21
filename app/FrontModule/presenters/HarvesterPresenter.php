@@ -14,6 +14,18 @@ use Nette\Utils\Json;
 class HarvesterPresenter extends BasePresenter
 {
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\Harvester\ProcessingData
+	 */
+	protected $harvesterDataValidator;
+
+	/**
+	 * @autowire
+	 * @var \Tralandia\Harvester\RegistrationData
+	 */
+	protected $harvesterRegistrator;
+
 	const TOKEN_SALT = '4d\e24hRwj';
 
 
@@ -22,9 +34,18 @@ class HarvesterPresenter extends BasePresenter
 		$post = $this->getRequest()->getPost();
 		$data = Nette\Utils\Arrays::get($post, 'data', '');
 		$data = urldecode($data);
+
 		if($this->isTokenValid($token, $data)) {
-			$data = Json::decode($data, Json::FORCE_ARRAY);
-			$this->payload->success = TRUE;
+			try {
+				$data = Json::decode($data, Json::FORCE_ARRAY);
+				$data = $this->harvesterDataValidator->process($data);
+				$rental = $this->harvesterRegistrator->registration($data);
+				$this->payload->success = TRUE;
+			} catch(\Exception $e) {
+				$this->payload->success = FALSE;
+				//throw $e;
+			}
+
 			$this->sendPayload();
 		} else {
 			$this->terminate();
