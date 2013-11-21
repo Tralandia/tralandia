@@ -44,15 +44,36 @@ class ProcessingData {
 
 
     public function process($objectData){
-        $this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $objectData['gps']);
+		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $objectData['gps']);
 		$locationDao = $this->em->getRepository(LOCATION_ENTITY);
 		$currencyDao = $this->em->getRepository(CURRENCY_ENTITY);
 		$rentalTypeDao = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
+
+		$objectData['primaryLocation'] = $objectData['language'];
+
 		$formattedAddress = $this->getAddress(array(
 			isset($objectData['gps'][0]) ? $objectData['gps'][0] : $this->getGps($objectData['address'])['latitude'],
 			isset($objectData['gps'][1]) ? $objectData['gps'][1] : $this->getGps($objectData['address'])['longitude']));
 
+
+		$prefix = $locationDao->findOneBy(['iso' => $objectData['language']])->phonePrefix;
+		$objectData['phone'] = explode(',', $objectData['phone']);
+		foreach($objectData['phone'] as $key => $value){
+			$response = $this->phone->getOrCreate($value, $prefix);
+			if ($response != false){
+				$objectData['phone'][$key] = $response;
+			} else {
+				$objectData['phone'] = null;
+			}
+		}
+
+		/* Osetrenie typu */
+		$type = $rentalTypeDao->findOneBy(['slug' => $objectData['type']]);
+		$objectData['type'] = is_null($type) ? 'hotel' : $objectData['type'];
+
+		$spokenLanguage = $languageDao->findOneBy(['iso' => $objectData['language']]);
+		$objectData['spokenLanguage'] = is_null($spokenLanguage) ? $languageDao->findOneBy(['iso' => $objectData['language']]): $spokenLanguage;
 
 		$lastUpdate = new \DateTime($objectData['lastUpdate']);
         $address = $this->createAddress(array(
@@ -62,12 +83,12 @@ class ProcessingData {
 			'longitude' => isset($objectData['gps'][1]) ? $objectData['gps'][1] : $this->getGps($objectData['address'])['longitude'],
         	'formattedAddress' => $formattedAddress
 		));
-		$a = $objectData['name'];
+
 		$data = [
 			'email' => $objectData['email'],
-			'phone' => $this->phone->getOrCreate($objectData['phone']),
+			'phone' => $objectData['phone'][0],
 //			'name' => $objectData['name'],
-			'name' => $this->getName($languageDao->findOneBy(['iso' => $objectData['primaryLocation']]), $objectData['name']),
+			'name' => $this->getName($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['name']),
 			'primaryLocation' => $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]),
 			'maxCapacity' => $objectData['maxCapacity'],
 			'type' => $rentalTypeDao->findOneBy(['slug' => $objectData['type']]),
@@ -75,12 +96,12 @@ class ProcessingData {
 			'address' => $address,
 			'contactName' => $objectData['contactName'],
 			'url' => $objectData['url'],
-			'editLanguage' => $this->getEditLanguage($objectData['primaryLocation']),
-			'spokenLanguage' => $languageDao->findOneBy(['iso' => $objectData['spokenLanguage']]),
+			'editLanguage' => $this->getEditLanguage($objectData['language']),
+			'spokenLanguage' => $spokenLanguage,
 			'checkIn' => $objectData['checkIn'],
 			'checkOut' => $objectData['checkOut'],
 			'price' => $this->getPrice($objectData['price'], $locationDao->findOneBy(['iso' => $objectData['primaryLocation']])),
-			'description' => $this->getDescription($languageDao->findOneBy(['iso' => $objectData['primaryLocation']]), $objectData['description']),
+			'description' => $this->getDescription($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['description']),
 			'images' => $objectData['images'],
 			'bedroomCount' => $objectData['bedroomCount'],
 			'lastUpdate' => $lastUpdate->format('Y-m-d H:i:s')
