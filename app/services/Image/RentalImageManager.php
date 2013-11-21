@@ -53,6 +53,12 @@ class RentalImageManager {
 		return $image;
 	}
 
+
+	/**
+	 * @param $uri
+	 *
+	 * @return \Entity\Rental\Image
+	 */
 	public function saveFromFile($uri) {
 		$image = Nette\Image::fromFile($uri);
 		return $this->save($image);

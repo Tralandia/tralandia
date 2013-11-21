@@ -61,9 +61,8 @@ class MergeData {
 			->setCheckIn($data['checkIn'])
 			->setCheckOut($data['checkOut'])
 			->setUrl($data['url'])
-			->setPhone($data['phone'])
 			->setEmail($data['email']);
-
+		if (!is_null($phone)) $rental->setPhone($data['phone']);
 		$rentalDao->save($rental);
 
 	}
