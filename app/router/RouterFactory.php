@@ -56,7 +56,6 @@ class RouterFactory
 
 		$router = new RouteList();
 
-
 		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
