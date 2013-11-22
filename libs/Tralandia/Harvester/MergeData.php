@@ -73,7 +73,8 @@ class MergeData {
 			->setCheckOut($data['checkOut'])
 			->setUrl($data['url'])
 			->setEmail($data['email']);
-		if (is_null($phone) && isset($data['phone'])) $rental->setPhone($data['phone']);
+
+		if (!empty($phone) && isset($data['phone'])) $rental->setPhone($data['phone']);
 
 
 		$rentalDao->save($rental);
