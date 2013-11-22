@@ -100,7 +100,7 @@ class HarvestedContacts
 	 */
 	public function addIfNotExists(\Entity\Rental\Rental $rental, $type, $value)
 	{
-		$entity = $this->findOneBy(['type' => $type, 'value' => $value]);
+		$entity = $this->harvestedContactsDao->findOneBy(['type' => $type, 'value' => $value]);
 		if($entity) {
 			return $entity;
 		} else {

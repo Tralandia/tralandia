@@ -95,8 +95,8 @@ class RegistrationData {
 		} else {
 			/** @var $rental \Entity\Rental\Rental */
 			$rental = $rentalCreator->create($data['address'], $data['primaryLocation']->iso, $data['name']);
-
-			is_null($data['phone']) ? : $rental->setPhone($data['phone']);
+			$a = $data['phone'];
+			empty($data['phone']) ? : $rental->setPhone($data['phone'][0]);
 			is_null($data['contactName']) ? : $rental->setContactName($data['contactName']);
 			is_null($data['url']) ? : $rental->setUrl($data['url']);
 			is_null($data['bedroomCount']) ? : $rental->setBedroomCount($data['bedroomCount']);
@@ -113,13 +113,12 @@ class RegistrationData {
 				->setCheckOut($data['checkOut'])
 				->setFloatPrice($data['price']);
 
-			if (isset($data['images'])) {
-				foreach ($data['images'] as $path) {
-					$image = $this->rm->saveFromFile($path);
-					$this->em->persist($rental->addImage($image));
-//					$a = $rental->addImage($image);
-				}
-			}
+//			if (isset($data['images'])) {
+//				foreach ($data['images'] as $path) {
+//					$image = $this->rm->saveFromFile($path);
+//					$this->em->persist($rental->addImage($image));
+//				}
+//			}
 
 			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
 
