@@ -53,7 +53,7 @@ class RentalTypeContainer extends BaseContainer
 			->setRequired($translator->translate('1287'))
 		;
 		// @todo prerobit ★ na html znak
-		$this->addSelect('classification', 'o25137', array('★', '★ ★', '★ ★ ★', '★ ★ ★ ★', '★ ★ ★ ★ ★'))
+		$this->addSelect('classification', 'o25137', array(1 => '★', '★ ★', '★ ★ ★', '★ ★ ★ ★', '★ ★ ★ ★ ★'))
 			->setRequired($translator->translate('o100104'))
 			//->setOption('help', $this->translate('o5956'))
 		;
