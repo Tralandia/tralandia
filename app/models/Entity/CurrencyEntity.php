@@ -30,13 +30,13 @@ class Currency extends \Entity\BaseEntity {
 	 * @var float
 	 * @ORM\Column(type="float", nullable=true)
 	 */
-	protected $exchangeRate;
+	protected $exchangeRate = 0;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $rounding;
+	protected $rounding = 2;
 
 	/**
 	 * @var float

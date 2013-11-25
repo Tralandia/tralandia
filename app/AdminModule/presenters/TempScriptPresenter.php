@@ -371,5 +371,4 @@ class TempScriptPresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
-
 }
