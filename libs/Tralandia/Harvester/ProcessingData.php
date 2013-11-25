@@ -7,9 +7,12 @@
 
 namespace Tralandia\Harvester;
 
+use Entity\Location\Location;
 use Extras\Books\Phone;
+use Extras\Types\Latlong;
 use Kdyby\Doctrine\EntityManager;
 use Nette\InvalidArgumentException;
+use Nette\Utils\Arrays;
 use Service\Contact\AddressNormalizer;
 
 
@@ -40,18 +43,16 @@ class ProcessingData {
 
     public function process($objectData)
 	{
-		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $objectData['gps']);
+		$latitude = Arrays::get($objectData, ['gps', 0], NULL);
+		$longitude = Arrays::get($objectData, ['gps', 1], NULL);
+
+		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $latitude, $longitude);
 		$locationDao = $this->em->getRepository(LOCATION_ENTITY);
 		$currencyDao = $this->em->getRepository(CURRENCY_ENTITY);
 		$rentalTypeDao = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 
 		$objectData['primaryLocation'] = $objectData['language'];
-
-		$formattedAddress = $this->getAddress(array(
-			isset($objectData['gps'][0]) ? $objectData['gps'][0] : $this->getGps($objectData['address'])['latitude'],
-			isset($objectData['gps'][1]) ? $objectData['gps'][1] : $this->getGps($objectData['address'])['longitude']));
-
 
 		$prefix = $locationDao->findOneBy(['iso' => $objectData['language']])->phonePrefix;
 		$objectData['phone'] = explode(',', $objectData['phone']);
@@ -72,20 +73,16 @@ class ProcessingData {
 		$objectData['spokenLanguage'] = is_null($spokenLanguage) ? $languageDao->findOneBy(['iso' => $objectData['language']]): $spokenLanguage;
 
 		$lastUpdate = new \DateTime($objectData['lastUpdate']);
-        $address = $this->createAddress(array(
-            'primaryLocation' => $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]),
-            'address' => isset($objectData['address']) ? $objectData['address'] : $this->getAddress($objectData['gps']),
-            'latitude' => isset($objectData['gps'][0]) ? $objectData['gps'][0] : $this->getGps($objectData['address'])['latitude'],
-			'longitude' => isset($objectData['gps'][1]) ? $objectData['gps'][1] : $this->getGps($objectData['address'])['longitude'],
-        	'formattedAddress' => $formattedAddress
-		));
+
+		$primaryLocation = $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]);
+        $address = $this->createAddress(new Latlong($latitude, $longitude), $primaryLocation);
 
 		$data = [
 			'email' => $objectData['email'],
 			'phone' => $objectData['phone'],
 //			'name' => $objectData['name'],
 			'name' => $this->getName($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['name']),
-			'primaryLocation' => $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]),
+			'primaryLocation' => $primaryLocation,
 			'maxCapacity' => $objectData['maxCapacity'],
 			'type' => $rentalTypeDao->findOneBy(['slug' => $objectData['type']]),
 			'classification' => $objectData['classification'],
@@ -96,7 +93,7 @@ class ProcessingData {
 			'spokenLanguage' => $spokenLanguage,
 			'checkIn' => $objectData['checkIn'],
 			'checkOut' => $objectData['checkOut'],
-			'price' => $this->getPrice($objectData['price'], $locationDao->findOneBy(['iso' => $objectData['primaryLocation']])),
+			'price' => $this->getPrice($objectData['price'], $primaryLocation),
 //			'description' => $this->getDescription($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['description']),
 			'description' => $objectData['description'],
 			'images' => $objectData['images'],
@@ -107,24 +104,24 @@ class ProcessingData {
         return($data);
     }
 
-    protected function requiredParameter($email, $phone, $images, $name, $gps) {
-        if ((isset($email) || isset($phone)) && count($images) && isset($name) && isset($gps)){
+    protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude) {
+        if ((isset($email) || isset($phone)) && count($images) && isset($name) && $latitude && $longitude){
             return TRUE;
         } else {
 			throw new InvalidArgumentsException('Chyba potrebny parameter');
         }
     }
 
-    protected function createAddress($data) {
+    protected function createAddress(LatLong $latLong, Location $primaryLocation) {
         $addressDao = $this->em->getRepository(ADDRESS_ENTITY);
-        $address = $addressDao->createNew();
-        if (isset($data['latitude']) && isset($data['longitude'])) {
-            $address->setGps(new \Extras\Types\LatLong($data['latitude'],$data['longitude']));
-        }
-		unset($data['latitude'], $data['longitude']);
-        foreach ($data as $key => $value) {
-            $address->$key = $value;
-        }
+		/** @var $address \Entity\Contact\Address */
+		$address = $addressDao->createNew();
+		$address->setPrimaryLocation($primaryLocation);
+		$address->setGps($latLong);
+
+
+		$this->addressNormalizer->update($address);
+
         return $address;
     }
 
@@ -145,13 +142,13 @@ class ProcessingData {
 		return $data;
 	}
 
-	protected function getInfo($address, $gps){
-		if(isset($gps)){
-			return $this->addressNormalizer->getInfoUsingGps(new \Extras\Types\Latlong($gps[0], $gps[1]));
-		}else{
-			return $this->addressNormalizer->getInfoUsingAddress($address);
-		}
-	}
+//	protected function getInfo($address, $gps){
+//		if(isset($gps)){
+//			return $this->addressNormalizer->getInfoUsingGps(new \Extras\Types\Latlong($gps[0], $gps[1]));
+//		}else{
+//			return $this->addressNormalizer->getInfoUsingAddress($address);
+//		}
+//	}
 
 	protected function getPrice($price, $primaryLocation){
 		$currencyDao = $this->em->getRepository(CURRENCY_ENTITY);
