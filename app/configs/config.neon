@@ -387,6 +387,16 @@ services:
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
+
+	# ==============================
+	# ==================== Components/Registrator
+	# ==============================
+	- \Tralandia\Harvester\ProcessingData
+	- \Tralandia\Harvester\RegistrationData
+	- \Tralandia\Harvester\MergeData
+	- \Tralandia\Harvester\HarvestedContacts(@doctrine.dao(Entity\HarvestedContact))
+
+
 	############################################################
 	#==========================================================#
 	#====================== REFACTORING =======================#

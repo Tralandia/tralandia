@@ -1,0 +1,14 @@
+nette:
+	container:
+		debugger: false  # aktivuje panel v Debugger baru
+
+
+parameters:
+
+	templateCache:
+		enabled: false
+
+	staticDomain: NULL
+	storageDir: /storage
+	storagePath: /storage
+

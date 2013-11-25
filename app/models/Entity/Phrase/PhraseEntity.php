@@ -344,6 +344,24 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 
 
+	/**
+	 * @param Language $language
+	 * @param $text
+	 *
+	 * @return Translation|null
+	 */
+	public function setOrCreateTranslationText(\Entity\Language $language, $text)
+	{
+		if($translation = $this->getTranslation($language)) {
+			$translation->setTranslation($text);
+		} else {
+			$translation = $this->createTranslation($language, $text);
+		}
+
+		return $translation;
+	}
+
+
 	public function getHelpDescription()
 	{
 		return $this->getDetail(self::TRANSLATION_HELP);
