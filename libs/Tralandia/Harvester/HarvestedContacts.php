@@ -8,6 +8,7 @@
 namespace Tralandia\Harvester;
 
 
+use Entity\Contact\Phone;
 use Entity\HarvestedContact;
 use Entity\Rental\Rental;
 use Nette;
@@ -100,6 +101,9 @@ class HarvestedContacts
 	 */
 	public function addIfNotExists(\Entity\Rental\Rental $rental, $type, $value)
 	{
+		if($value instanceof Phone) {
+			$value = (string) $value;
+		}
 		$entity = $this->harvestedContactsDao->findOneBy(['type' => $type, 'value' => $value]);
 		if($entity) {
 			return $entity;

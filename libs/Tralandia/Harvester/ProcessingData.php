@@ -7,15 +7,9 @@
 
 namespace Tralandia\Harvester;
 
-
-use Entity\Language;
-use Entity\Location\Location;
 use Extras\Books\Phone;
-use Image\RentalImageManager;
 use Kdyby\Doctrine\EntityManager;
 use Service\Contact\AddressNormalizer;
-use Symfony\Component\Console\Tests\Output\NullOutputTest;
-use Nette\DateTime;
 
 
 class ProcessingData {
@@ -43,7 +37,8 @@ class ProcessingData {
 	}
 
 
-    public function process($objectData){
+    public function process($objectData)
+	{
 		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $objectData['gps']);
 		$locationDao = $this->em->getRepository(LOCATION_ENTITY);
 		$currencyDao = $this->em->getRepository(CURRENCY_ENTITY);
@@ -101,7 +96,8 @@ class ProcessingData {
 			'checkIn' => $objectData['checkIn'],
 			'checkOut' => $objectData['checkOut'],
 			'price' => $this->getPrice($objectData['price'], $locationDao->findOneBy(['iso' => $objectData['primaryLocation']])),
-			'description' => $this->getDescription($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['description']),
+//			'description' => $this->getDescription($languageDao->findOneBy(['iso' => $objectData['language']]), $objectData['description']),
+			'description' => $objectData['description'],
 			'images' => $objectData['images'],
 			'bedroomCount' => $objectData['bedroomCount'],
 			'lastUpdate' => $lastUpdate->format('Y-m-d H:i:s')
@@ -114,8 +110,7 @@ class ProcessingData {
         if ((isset($email) || isset($phone)) && isset($images) && isset($name) && isset($gps)){
             return TRUE;
         } else {
-			exit('Error: Chyba potrebny parameter');
-            return FALSE;
+			throw new \Exception('Chyba potrebny parameter');
         }
     }
 
@@ -171,19 +166,19 @@ class ProcessingData {
 		return $price;
 	}
 
-	protected function getDescription(\Entity\Language $language, $description){
-		$questionDao = $this->em->getRepository(INTERVIEW_QUESTION_ENTITY);
-		$answerDao = $this->em->getRepository(INTERVIEW_ANSWER_ENTITY);
-		$question = $questionDao->createNew();
-		$question = $questionDao->findOneBy(['id' => 1]);
-//		$question = $question->setQuestion(new \Entity\Phrase\Phrase($description));
-		$answer = $answerDao->createNew();
-		$answer->setQuestion($question);
-		$answer->answer->createTranslation($language, $description);
-//		$answer = $answer->setAnswer(new \Entity\Phrase\Phrase($description));
-		return $answer;
-	}
-
+//	protected function getDescription(\Entity\Language $language, $description){
+//		$questionDao = $this->em->getRepository(INTERVIEW_QUESTION_ENTITY);
+//		$answerDao = $this->em->getRepository(INTERVIEW_ANSWER_ENTITY);
+//		$question = $questionDao->createNew();
+//		$question = $questionDao->findOneBy(['id' => 1]);
+////		$question = $question->setQuestion(new \Entity\Phrase\Phrase($description));
+//		$answer = $answerDao->createNew();
+//		$answer->setQuestion($question);
+//		$answer->answer->createTranslation($language, $description);
+////		$answer = $answer->setAnswer(new \Entity\Phrase\Phrase($description));
+//		return $answer;
+//	}
+//
 	protected function getEditLanguage($language){
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 		return $languageDao->findOneBy(['iso' => $language]);

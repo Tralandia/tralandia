@@ -50,12 +50,12 @@ class RentalCreator
 		$this->addressNormalizer = $addressNormalizer;
 	}
 
-	public function create(\Entity\Contact\Address $address, $value, $rentalName)
+	public function create(\Entity\Contact\Address $address, $userOrPrimaryLocation, $rentalName)
 	{
-		if (is_object($value)){
-			$language = $value->getLanguage();
+		if ($userOrPrimaryLocation instanceof User){
+			$language = $userOrPrimaryLocation->getLanguage();
 		} else {
-			$language = $this->languageRepository->findOneByIso($value);
+			$language = $userOrPrimaryLocation;
 		}
 
 		/** @var $rental \Entity\Rental\Rental */
@@ -78,8 +78,8 @@ class RentalCreator
 
 		$this->addressNormalizer->update($address, TRUE);
 		$rental->setAddress($address);
-		if (is_object($value)){
-			$value->addRental($rental);
+		if ($userOrPrimaryLocation instanceof User){
+			$userOrPrimaryLocation->addRental($rental);
 		}
 
 

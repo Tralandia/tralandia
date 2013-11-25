@@ -122,7 +122,7 @@ class Translation extends \Entity\BaseEntity {
 	public function setTranslation($translation)
 	{
 		$translation = Strings::trim($translation);
-		$this->translation = $translation;
+		$this->translation = Strings::truncate($translation, 255, NULL);
 
 		list($plural, $gender, $case) = $this->getDefaultVariationPath();
 		$this->variations[$plural][$gender][$case] = $translation;

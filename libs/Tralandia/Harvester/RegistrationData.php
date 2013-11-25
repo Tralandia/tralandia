@@ -8,18 +8,33 @@
 namespace Tralandia\Harvester;
 
 use Entity\HarvestedContact;
-use Entity\User\Role;
-use Environment\Environment;
 use Image\RentalImageManager;
+use Nette\Object;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
-use User\UserCreator;
-use Nette\Utils\Strings;
 
 
-class RegistrationData {
+class RegistrationData extends Object {
 
-    /**
+
+	/**
+	 * @var array
+	 */
+	public $onRegister = [];
+
+
+	/**
+	 * @var array
+	 */
+	public $onMerge = [];
+
+
+	/**
+	 * @var array
+	 */
+	public $onSuccess = [];
+
+	/**
      * @var \Service\Rental\RentalCreator
      */
     protected $rentalCreator;
@@ -58,7 +73,7 @@ class RegistrationData {
 	 */
     public function __construct(RentalCreator $rentalCreator, HarvestedContacts $harvestedContacts,
 								EntityManager $em, RentalImageManager $rm, MergeData $mergeData)
-    {
+	{
         $this->rentalCreator = $rentalCreator;
         $this->em = $em;
 		$this->rm = $rm;
@@ -66,15 +81,8 @@ class RegistrationData {
 		$this->mergeData = $mergeData;
 	}
 
-    public function registration($data){
-		$userRepository = $this->em->getRepository(USER_ENTITY);
-		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
-        $locationRepository = $this->em->getRepository(LOCATION_ENTITY);
-        $languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-		$imageDao = $this->em->getRepository(RENTAL_IMAGE_ENTITY);
-
-		/* Bude nova tabulka s kontaktmi(email, tel. c.), kde sa to bude kontrolovat */
-
+    public function registration($data)
+	{
 		$rentalCreator = $this->rentalCreator;
 
 		/* Ak sa nachadza dany email alebo cislo v dtb merge-ovanie udajov */
@@ -92,9 +100,11 @@ class RegistrationData {
 			$mergeData->merge($data, $rental);
 			$return['success'] = TRUE;
 			$return['merged'] = TRUE;
+			$this->onMerge($rental);
 		} else {
+			$language = $data['primaryLocation']->defaultLanguage;
 			/** @var $rental \Entity\Rental\Rental */
-			$rental = $rentalCreator->create($data['address'], $data['primaryLocation']->iso, $data['name']);
+			$rental = $rentalCreator->create($data['address'], $language, $data['name']);
 			$a = $data['phone'];
 			empty($data['phone']) ? : $rental->setPhone($data['phone'][0]);
 			is_null($data['contactName']) ? : $rental->setContactName($data['contactName']);
@@ -113,20 +123,23 @@ class RegistrationData {
 				->setCheckOut($data['checkOut'])
 				->setFloatPrice($data['price']);
 
-//			if (isset($data['images'])) {
-//				foreach ($data['images'] as $path) {
-//					$image = $this->rm->saveFromFile($path);
-//					$this->em->persist($rental->addImage($image));
-//				}
-//			}
+			if (isset($data['images'])) {
+				foreach ($data['images'] as $path) {
+					$image = $this->rm->saveFromFile($path);
+					$this->em->persist($rental->addImage($image));
+				}
+			}
 
-			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
+//			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
+			if($data['description']) {
+				$rental->getFirstInterviewAnswer()->getAnswer()->setOrCreateTranslationText($language, $data['description']);
+			}
 
 			$this->em->persist($rental);
 			$this->em->flush();
 			$return['success'] = TRUE;
 			$return['registered'] = TRUE;
-
+			$this->onRegister($rental);
 		}
 
 		foreach($data['phone'] as $phone) {
@@ -138,6 +151,8 @@ class RegistrationData {
 
 
 		$return['rental'] = $rental;
+
+		$this->onSuccess($rental);
 
 		return $return;
 
