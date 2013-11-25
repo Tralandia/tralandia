@@ -10,7 +10,7 @@ parameters:
 		debugger: false
 
 	templateCache:
-		enabled: true
+		enabled: false
 
 	staticDomain: NULL
 	storageDir: /storage
