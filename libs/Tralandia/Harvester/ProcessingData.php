@@ -7,6 +7,7 @@
 
 namespace Tralandia\Harvester;
 
+use Entity\Language;
 use Entity\Location\Location;
 use Extras\Books\Phone;
 use Extras\Types\Latlong;
@@ -52,7 +53,20 @@ class ProcessingData {
 		$rentalTypeDao = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 
-		$primaryLocation = $locationDao->findOneBy(['iso' => $objectData['country']]);
+
+		/* Osetrenie typu */
+		$type = $rentalTypeDao->findOneBy(['slug' => $objectData['type']]);
+		$objectData['type'] = is_null($type) ? 'hotel' : $objectData['type'];
+
+		$spokenLanguage = $language = $languageDao->findOneBy(['iso' => $objectData['language']]);
+		$objectData['spokenLanguage'] = is_null($spokenLanguage) ? $languageDao->findOneBy(['iso' => $objectData['language']]): $spokenLanguage;
+
+		$lastUpdate = new \DateTime($objectData['lastUpdate']);
+
+        $address = $this->createAddress(new Latlong($latitude, $longitude), $language);
+
+		$primaryLocation = $address->getPrimaryLocation();
+
 		$prefix = $primaryLocation->phonePrefix;
 		$objectData['phone'] = explode(',', $objectData['phone']);
 		foreach($objectData['phone'] as $key => $value){
@@ -64,16 +78,6 @@ class ProcessingData {
 			}
 		}
 
-		/* Osetrenie typu */
-		$type = $rentalTypeDao->findOneBy(['slug' => $objectData['type']]);
-		$objectData['type'] = is_null($type) ? 'hotel' : $objectData['type'];
-
-		$spokenLanguage = $languageDao->findOneBy(['iso' => $objectData['language']]);
-		$objectData['spokenLanguage'] = is_null($spokenLanguage) ? $languageDao->findOneBy(['iso' => $objectData['language']]): $spokenLanguage;
-
-		$lastUpdate = new \DateTime($objectData['lastUpdate']);
-
-        $address = $this->createAddress(new Latlong($latitude, $longitude), $primaryLocation);
 
 		$data = [
 			'email' => $objectData['email'],
@@ -111,15 +115,13 @@ class ProcessingData {
         }
     }
 
-    protected function createAddress(LatLong $latLong, Location $primaryLocation) {
+    protected function createAddress(LatLong $latLong, Language $language) {
         $addressDao = $this->em->getRepository(ADDRESS_ENTITY);
 		/** @var $address \Entity\Contact\Address */
 		$address = $addressDao->createNew();
-		$address->setPrimaryLocation($primaryLocation);
 		$address->setGps($latLong);
 
-
-		$this->addressNormalizer->update($address);
+		$this->addressNormalizer->update($address, TRUE, $language);
 
         return $address;
     }

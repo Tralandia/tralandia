@@ -3,6 +3,7 @@
 namespace Service\Contact;
 
 use Entity\Contact\Address;
+use Entity\Language;
 use Environment\Environment;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
@@ -47,22 +48,26 @@ class AddressNormalizer extends \Nette\Object {
 		$this->locations = $locations;
 	}
 
+
 	/**
 	 * @param \Entity\Contact\Address $address
 	 * @param bool $override
+	 * @param \Entity\Language $language
 	 *
 	 * @return string
-	 * @throws \Exception
 	 */
-	public function update(\Entity\Contact\Address $address, $override = FALSE) {
-		if (!$address->primaryLocation) {
-			throw new \Exception('\Entity\Contact\Address has no primaryLocation');
+	public function update(\Entity\Contact\Address $address, $override = FALSE,Language $language = NULL) {
+		$options = [];
+		if ($address->primaryLocation) {
+			$options['region'] = $address->getPrimaryLocation()->getIso();
+			$options['language'] = $address->getPrimaryLocation()->getDefaultLanguage()->getIso();
 		}
 
-		$this->geocodeService->setRequestDefaults(array(
-			'region' => $address->getPrimaryLocation()->getIso(),
-			'language' => $address->getPrimaryLocation()->getDefaultLanguage()->getIso(),
-		));
+		if($language) {
+			$options['language'] = $language->getIso();
+		}
+
+		if(count($options)) $this->geocodeService->setRequestDefaults($options);
 
 		$latLong = $address->getGps();
 		if ($latLong->isValid()) {
@@ -241,14 +246,8 @@ class AddressNormalizer extends \Nette\Object {
 	 */
 	protected function updateAddressData($address, array $info, $override) {
 		// If the location is outside the primaryLocation, return false
-		if ($info[self::PRIMARY_LOCATION] instanceof \Entity\Location\Location
-			&& $info[self::PRIMARY_LOCATION]->getId() != $address->primaryLocation->getId())
-		{
-			$address->status = \Entity\Contact\Address::STATUS_MISPLACED;
-		} else if (isset($info[self::LOCALITY])) {
-			$address->status = \Entity\Contact\Address::STATUS_OK;
-		} else {
-			$address->status = \Entity\Contact\Address::STATUS_INCOMPLETE;
+		if ($info[self::PRIMARY_LOCATION] instanceof \Entity\Location\Location) {
+			$address->primaryLocation = $info[self::PRIMARY_LOCATION];
 		}
 
 		// Set the Address Entity details
