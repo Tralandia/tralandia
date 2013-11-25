@@ -124,7 +124,7 @@ class RegistrationData extends Object {
 				->setFloatPrice($data['price']);
 
 			if (isset($data['images'])) {
-				$i = 0;
+				$i = 1;
 				foreach ($data['images'] as $path) {
 					$image = $this->rm->saveFromFile($path);
 					$this->em->persist($rental->addImage($image));
