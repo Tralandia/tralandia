@@ -43,6 +43,7 @@ class ProcessingData {
 
     public function process($objectData)
 	{
+		var_dump($objectData);
 		$latitude = Arrays::get($objectData, ['gps', 0], NULL);
 		$longitude = Arrays::get($objectData, ['gps', 1], NULL);
 
@@ -104,7 +105,8 @@ class ProcessingData {
         return($data);
     }
 
-    protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude) {
+    protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude)
+	{
         if ((isset($email) || isset($phone)) && count($images) && isset($name) && $latitude && $longitude){
             return TRUE;
         } else {
