@@ -9,6 +9,7 @@ namespace Tralandia\Harvester;
 
 use Extras\Books\Phone;
 use Kdyby\Doctrine\EntityManager;
+use Nette\InvalidArgumentException;
 use Service\Contact\AddressNormalizer;
 
 
@@ -107,10 +108,10 @@ class ProcessingData {
     }
 
     protected function requiredParameter($email, $phone, $images, $name, $gps) {
-        if ((isset($email) || isset($phone)) && isset($images) && isset($name) && isset($gps)){
+        if ((isset($email) || isset($phone)) && is_array($images) && isset($name) && isset($gps)){
             return TRUE;
         } else {
-			throw new \Exception('Chyba potrebny parameter');
+			throw new InvalidArgumentsException('Chyba potrebny parameter');
         }
     }
 
@@ -193,3 +194,6 @@ class ProcessingData {
 		return $phrase->createTranslation($language, $name);
 	}
 }
+
+
+class InvalidArgumentsException extends InvalidArgumentException {}

@@ -10,6 +10,7 @@ namespace FrontModule;
 
 use Nette;
 use Nette\Utils\Json;
+use Tralandia\Harvester\InvalidArgumentsException;
 
 class HarvesterPresenter extends BasePresenter
 {
@@ -46,6 +47,11 @@ class HarvesterPresenter extends BasePresenter
 				$this->payload->rental = $response['rental']->getId();
 			} catch(\Exception $e) {
 				$this->payload->success = FALSE;
+				if($e instanceof InvalidArgumentsException) {
+					$this->payload->error = 'invalidData';
+				} else {
+					$this->payload->error = 'error';
+				}
 				//throw $e;
 			}
 
