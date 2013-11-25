@@ -108,7 +108,7 @@ class ProcessingData {
     }
 
     protected function requiredParameter($email, $phone, $images, $name, $gps) {
-        if ((isset($email) || isset($phone)) && is_array($images) && isset($name) && isset($gps)){
+        if ((isset($email) || isset($phone)) && count($images) && isset($name) && isset($gps)){
             return TRUE;
         } else {
 			throw new InvalidArgumentsException('Chyba potrebny parameter');
