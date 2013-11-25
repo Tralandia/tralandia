@@ -43,7 +43,6 @@ class ProcessingData {
 
     public function process($objectData)
 	{
-		var_dump($objectData);
 		$latitude = Arrays::get($objectData, ['gps', 0], NULL);
 		$longitude = Arrays::get($objectData, ['gps', 1], NULL);
 
