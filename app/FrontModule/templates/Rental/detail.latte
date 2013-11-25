@@ -140,7 +140,7 @@
 								{/if}
 
 
-							<ul class="detailPriceList">
+							<ul class="detailPriceList" n:if="count($rental->pricelistRows) > 0 || $rental->price->getSourceAmount()">
 								<li><h3 n:class="$pricesAvailable ? full : small">
 
 								{if $rental->maxCapacity > 0}
@@ -149,7 +149,8 @@
 									{_571}
 								{/if}
 
-								<span>{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+								<span n:if="$rental->price->getSourceAmount()">{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+
 								</h3>
 								{if count($rental->pricelistRows) > 0}
 								<ul>
