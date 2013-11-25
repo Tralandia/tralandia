@@ -43,8 +43,8 @@ class ProcessingData {
 
     public function process($objectData)
 	{
-		$latitude = Arrays::get($objectData, ['gps', 0], NULL);
-		$longitude = Arrays::get($objectData, ['gps', 1], NULL);
+		$latitude = Arrays::get($objectData, ['gps', 'latitude'], NULL);
+		$longitude = Arrays::get($objectData, ['gps', 'longitude'], NULL);
 
 		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $latitude, $longitude);
 		$locationDao = $this->em->getRepository(LOCATION_ENTITY);
@@ -52,9 +52,8 @@ class ProcessingData {
 		$rentalTypeDao = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 
-		$objectData['primaryLocation'] = $objectData['language'];
-
-		$prefix = $locationDao->findOneBy(['iso' => $objectData['language']])->phonePrefix;
+		$primaryLocation = $locationDao->findOneBy(['iso' => $objectData['country']]);
+		$prefix = $primaryLocation->phonePrefix;
 		$objectData['phone'] = explode(',', $objectData['phone']);
 		foreach($objectData['phone'] as $key => $value){
 			$response = $this->phone->getOrCreate($value, $prefix);
@@ -74,7 +73,6 @@ class ProcessingData {
 
 		$lastUpdate = new \DateTime($objectData['lastUpdate']);
 
-		$primaryLocation = $locationDao->findOneBy(['iso' => $objectData['primaryLocation']]);
         $address = $this->createAddress(new Latlong($latitude, $longitude), $primaryLocation);
 
 		$data = [
