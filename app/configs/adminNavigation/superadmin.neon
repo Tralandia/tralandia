@@ -73,9 +73,9 @@ common:
 				registrations:
 					label: Registrations
 					link: ':Admin:StatisticsRegistrations:list'
-#				reservations:
-#					label: Reservations
-#					link: ':Admin:StatisticsReservations:list'
+				reservations:
+					label: Reservations
+					link: ':Admin:StatisticsReservations:list'
 
 		cache:
 			label: Cache
