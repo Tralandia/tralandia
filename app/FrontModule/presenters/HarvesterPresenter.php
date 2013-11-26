@@ -47,6 +47,7 @@ class HarvesterPresenter extends BasePresenter
 				$this->payload->rental = $response['rental']->getId();
 			} catch(\Exception $e) {
 				$this->payload->success = FALSE;
+				$this->payload->message = $e->getMessage();
 				if($e instanceof InvalidArgumentsException) {
 					$this->payload->error = 'invalidData';
 				} else {
