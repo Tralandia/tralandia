@@ -294,7 +294,7 @@ services:
 	googleServiceCommunicator: CurlCommunicator
 
 	polygonService: Service\PolygonService
-	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location))
+	rentalRegistrationsStats: Service\Statistics\RentalRegistrations
 	rentalCreator: Service\Rental\RentalCreator
 	addressCreator: Service\Contact\AddressCreator
 	userCreator: User\UserCreator

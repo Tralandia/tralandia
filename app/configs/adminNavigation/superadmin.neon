@@ -67,12 +67,12 @@ common:
 #					label: Localities
 #					link: ':Admin:Locality:list'
 
-#		stats:
-#			label: Stats
-#			items:
-#				registrations:
-#					label: Registrations
-#					link: ':Admin:StatisticsRegistrations:list'
+		stats:
+			label: Stats
+			items:
+				registrations:
+					label: Registrations
+					link: ':Admin:StatisticsRegistrations:list'
 #				reservations:
 #					label: Reservations
 #					link: ':Admin:StatisticsReservations:list'

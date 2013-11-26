@@ -3,28 +3,34 @@
 namespace Service\Statistics;
 
 use Doctrine, Entity;
+use Tralandia\BaseDao;
+use Tralandia\Location\Countries;
+use Tralandia\Rental\Rentals;
 
 /**
  * @author
  */
 class RentalRegistrations {
 
-	protected $rentalRepository;
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $countries;
 
 	/**
-	 * @var \Repository\Location\LocationRepository
+	 * @var \Tralandia\Rental\Rentals
 	 */
-	protected $locationRepository;
+	private $rentals;
 
-	public function __construct(\Repository\Rental\RentalRepository $rentalRepository,
-								\Repository\Location\LocationRepository $locationRepository) {
 
-		$this->rentalRepository = $rentalRepository;
-		$this->locationRepository = $locationRepository;
+	public function __construct(Rentals $rentals, Countries $countries) {
+
+		$this->countries = $countries;
+		$this->rentals = $rentals;
 	}
 
 	public function getData() {
-		$countries = $this->locationRepository->findCountries();
+		$countries = $this->countries->findAll();
 		$countries = \Tools::arrayMap($countries, function($key, $value) {return $value->getId();}, NULL);
 
 		$results = array();
@@ -36,8 +42,8 @@ class RentalRegistrations {
 			$from = $value['from'];
 			$to = $value['to'];
 
-			$total = $this->rentalRepository->getCounts(NULL, NULL, $from, $to);
-			$live = $this->rentalRepository->getCounts(NULL, TRUE, $from, $to);
+			$total = $this->rentals->getCounts(NULL, NULL, $from, $to);
+			$live = $this->rentals->getCounts(NULL, TRUE, $from, $to);
 			$results[$key]['total'] = $total;
 			$results[$key]['live'] = $live;
 

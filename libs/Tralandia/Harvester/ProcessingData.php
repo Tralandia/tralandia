@@ -109,19 +109,19 @@ class ProcessingData {
     protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude)
 	{
 		if(!$email && !$phone) {
-			throw new InvalidArgumentsException('Chyba email alebo tel. cislo');
+			throw new InvalidArgumentsException('Chýba email aj tel. cislo');
 		}
 
 		if(!count($images)) {
-			throw new InvalidArgumentsException('Chybaju obrazky');
+			throw new InvalidArgumentsException('Chýbaju obrazky');
 		}
 
 		if(!$name) {
-			throw new InvalidArgumentsException('Chyba nazov');
+			throw new InvalidArgumentsException('Chýba nazov');
 		}
 
 		if(!$latitude || !$longitude) {
-			throw new InvalidArgumentsException('Chyba GPS');
+			throw new InvalidArgumentsException('Chýba GPS');
 		}
     }
 
