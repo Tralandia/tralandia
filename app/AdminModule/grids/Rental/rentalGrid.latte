@@ -19,7 +19,7 @@
 {define #col-email}
 	<td>
 		{$row['entity']->getEmail()}
-		<small n:if="$row['entity']->getUser()">{$row['entity']->getUser()->getLogin()}<small>
+		<small n:if="$row['entity']->getUser()">{$row['entity']->getUser()->getLogin()}</small>
 	</td>
 {/define}
 
