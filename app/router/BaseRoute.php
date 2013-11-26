@@ -127,9 +127,11 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 
 		if(isset($params['host'])) {
 			$params['www'] = substr($params['www'], 0, -1);
-			if(!$primaryLocation = $this->getPrimaryLocationFromHost($params[self::LANGUAGE] . '.' . $params['host'])) {
-				if(!$primaryLocation = $this->getPrimaryLocationFromHost($params[self::LANGUAGE] . '.' . $params['host'], TRUE)) {
-					if(!$primaryLocation = $this->getPrimaryLocationFromHost($params['host'])) {
+			$domain = $params[self::LANGUAGE] . '.' . $params['host'];
+			if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain)) {
+				$params['www'] && $domain = $params['www'] . '.' . $domain;
+				if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain, TRUE)) {
+					if(!$primaryLocation = $this->getPrimaryLocationByDomain($params['host'])) {
 						$primaryLocation = $this->locationRepository->findOneByIso('com');
 					}
 				}
@@ -201,12 +203,12 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	 *
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]|null
 	 */
-	private function getPrimaryLocationFromHost($host, $tryNewUrl = FALSE)
+	private function getPrimaryLocationByDomain($host, $tryNewUrl = FALSE)
 	{
 		/** @var $domain \Entity\Domain */
 		$domain = $this->domainRepository->findOneByDomain($host);
 		if(!$domain && $tryNewUrl) {
-			if($match = Strings::match($host, '~^([a-z]{2})\.([a-z]{2})\.tralandia\.com$~')) {
+			if($match = Strings::match($host, '~^([a-z]{2}|www)\.([a-z]{2})\.tralandia\.com$~')) {
 				$domain = $this->domainRepository->findOneByDomain('tralandia.' . $match[2]);
 			}
 		}
