@@ -80,6 +80,8 @@ class HarvestedContacts
 	 */
 	public function add(\Entity\Rental\Rental $rental, $type, $value)
 	{
+		if(!$value) return NULL;
+
 		/** @var $entity \Entity\HarvestedContact */
 		$entity = $this->harvestedContactsDao->createNew();
 		$entity->rental = $rental;

@@ -133,10 +133,10 @@ class RegistrationData extends Object {
 				}
 			}
 
-//			is_null($data['description']->answer->getId()) ? : $rental->addInterviewAnswer($data['description']);
-			if($data['description']) {
-				$rental->getFirstInterviewAnswer()->getAnswer()->setOrCreateTranslationText($language, $data['description']);
-			}
+			// @todo zatial to neukladame kvoli SEO
+//			if($data['description']) {
+//				$rental->getFirstInterviewAnswer()->getAnswer()->setOrCreateTranslationText($language, $data['description']);
+//			}
 
 			$this->em->persist($rental);
 			$this->em->flush();
