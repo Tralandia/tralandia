@@ -108,11 +108,21 @@ class ProcessingData {
 
     protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude)
 	{
-        if ((isset($email) || isset($phone)) && count($images) && isset($name) && $latitude && $longitude){
-            return TRUE;
-        } else {
-			throw new InvalidArgumentsException('Chyba potrebny parameter');
-        }
+		if(!$email && !$phone) {
+			throw new InvalidArgumentsException('Chyba email alebo tel. cislo');
+		}
+
+		if(!count($images)) {
+			throw new InvalidArgumentsException('Chybaju obrazky');
+		}
+
+		if(!$name) {
+			throw new InvalidArgumentsException('Chyba nazov');
+		}
+
+		if(!$latitude || !$longitude) {
+			throw new InvalidArgumentsException('Chyba GPS');
+		}
     }
 
     protected function createAddress(LatLong $latLong, Language $language) {
