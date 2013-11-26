@@ -37,9 +37,8 @@ class Reservations implements IDataSource {
 	public function getData($filter, $order, Paginator $paginator = NULL)
 	{
 		$data = [];
-		$countries = [];
-		$periods = \Tools::getPeriods();
 		$defaultRowData = ['iso' => '','today' => '','yesterday' => '','thisWeek' => '','lastWeek' => '','thisMonth' => '','lastMonth' => '','total' => ''];
+		$periods = \Tools::getPeriods();
 		foreach($periods as $key => $value) {
 			$qb = $this->reservationRepository->createQueryBuilder('e');
 			$qb->select('pl.iso AS iso, count(e) AS c')
@@ -52,17 +51,24 @@ class Reservations implements IDataSource {
 
 			$result = $qb->getQuery()->getResult();
 			foreach($result as $row) {
-				$countries[$row['iso']] = $row['iso'];
 				$data[$row['iso']][$key] = $row['c'];
 			}
 		}
 
-		foreach($countries as $country) {
+		$total = $defaultRowData;
+		$total['iso'] = 'total';
+		foreach($data as $country => $rowData) {
 			$data[$country] = array_merge($defaultRowData, $data[$country]);
 			$data[$country]['iso'] = $country;
+			foreach($data[$country] as $key => $cell) {
+				if($key == 'iso') continue;
+				$total[$key] += $cell;
+			}
 		}
 
 		ksort($data);
+
+		$data = ['total' => $total] + $data;
 
 		return Nette\ArrayHash::from($data);
 	}
