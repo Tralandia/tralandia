@@ -134,9 +134,9 @@ class RegistrationData extends Object {
 			}
 
 			// @todo zatial to neukladame kvoli SEO
-//			if($data['description']) {
-//				$rental->getFirstInterviewAnswer()->getAnswer()->setOrCreateTranslationText($language, $data['description']);
-//			}
+			if($data['description']) {
+				$rental->getFirstInterviewAnswer()->getAnswer()->setOrCreateTranslationText($language, $data['description']);
+			}
 
 			$this->em->persist($rental);
 			$this->em->flush();
