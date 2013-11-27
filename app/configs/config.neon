@@ -145,6 +145,8 @@ parameters:
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
 
+	defaultImage: '/default.jpg'
+
 
 doctrine:
 	user: root

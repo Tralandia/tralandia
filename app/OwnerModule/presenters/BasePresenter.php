@@ -62,7 +62,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 		$this->template->reservationsCount = $this->reservations->getReservationsCountByUser($this->loggedUser);
 
-
+//		$this->template->rental = $this->rental;
 		$this->template->rentalList = $this->loggedUser->getRentals();
 		$this->template->owner = $this->loggedUser;
 		parent::beforeRender();

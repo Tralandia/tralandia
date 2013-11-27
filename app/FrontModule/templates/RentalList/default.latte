@@ -39,6 +39,7 @@
 						{var $rentalData = $findRental($rentalId); }
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
 						{var $rental = $rentalData['entity'] }
+						{var $teaser = $rental->getTeaser()->getTranslation($language)}
 						{var $featured = $isRentalFeatured($rental); }
 
 							<div class="row-fluid rentalList" data-cache="{$rand}" data-rental-rank="{$rental->getRank()}">
@@ -69,7 +70,7 @@
 
 									<p class="locations">{$rentalLocation}</p>
 
-									<p class="red teaser">{_$rental->teaser|firstUpper}</p>
+									<p class="red teaser">{$teaser|firstUpper|truncate:200}</p>
 
 									<p class="answer">
 										{var $isFirst = true}

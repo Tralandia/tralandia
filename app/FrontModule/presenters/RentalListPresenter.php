@@ -91,6 +91,7 @@ class RentalListPresenter extends BasePresenter {
 			$rentals = $search->getRentalsIds($paginator->getPage());
 		}
 
+		$this->template->language = $this->language;
 		$this->template->rentals = $rentals;
 		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();

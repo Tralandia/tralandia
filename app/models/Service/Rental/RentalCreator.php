@@ -36,18 +36,24 @@ class RentalCreator
 	 */
 	protected $addressNormalizer;
 
+	/**
+	 * @var \Transliterator
+	 */
+	private $transliterator;
+
 
 	/**
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Service\Contact\AddressNormalizer $addressNormalizer
 	 */
-	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer)
+	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer, \Transliterator $transliterator)
 	{
 		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		$this->interviewAnswerRepository = $em->getRepository(INTERVIEW_ANSWER_ENTITY);
 		$this->addressNormalizer = $addressNormalizer;
+		$this->transliterator = $transliterator;
 	}
 
 	public function create(\Entity\Contact\Address $address, $userOrPrimaryLocation, $rentalName)
@@ -61,6 +67,7 @@ class RentalCreator
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
 
+		$rentalName = $this->transliterator->transliterate($rentalName);
 		$rental->setSlug($rentalName);
 
 		$rental->getName()->setSourceLanguage($language);
@@ -83,11 +90,10 @@ class RentalCreator
 		}
 
 
-		$nameTranslationLanguage = $address->getPrimaryLocation()->getDefaultLanguage();
-		if($translation = $rental->getName()->getTranslation($nameTranslationLanguage)) {
+		if($translation = $rental->getName()->getTranslation($language)) {
 			$translation->setTranslation($rentalName);
 		} else {
-			$rental->getName()->createTranslation($nameTranslationLanguage, $rentalName);
+			$rental->getName()->createTranslation($language, $rentalName);
 		}
 
 		return $rental;

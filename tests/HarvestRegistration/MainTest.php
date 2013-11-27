@@ -109,7 +109,7 @@ class MainTest extends TestCase
 	{
 		$processingData = new Harvester\ProcessingData($this->addressNormalizer, $this->phone, $this->em);
 		$process = $processingData->process($this->objectData);
-		$registrationData = new Harvester\RegistrationData($this->rentalCreator, $this->harvestedContacts, $this->em, $this->rm, $this->mergeData);
+		$registrationData = new Harvester\RegistrationData($this->rentalCreator, $this->harvestedContacts, $this->em, $this->rm, $this->mergeData, $this->userCreator, $this->environment);
 		$outputData = $registrationData->registration($process);
 	}
 

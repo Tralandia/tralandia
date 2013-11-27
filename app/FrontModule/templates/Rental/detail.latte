@@ -65,7 +65,7 @@
 						<table class="teaser">
 							{if $teaser}
 							<tr>
-								<td class="content">{$teaser}
+								<td class="content">{$teaser|truncate:200}
 								{if $firstAnswer}
 									<a href="#" class="scrollTo" data-scroll-to="#interviewAnswers">{_152271}</a></td>
 								{/if}
