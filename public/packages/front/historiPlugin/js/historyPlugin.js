@@ -105,8 +105,6 @@
 					// @todo ajax function
 				}
 
-				
-
 			}
 		};
 
@@ -160,30 +158,39 @@
 								  .addClass('disabled');					
 				}
 
-
-
 				base.$listName.attr('href',dataHistory.listUrl);							  						  
 				base.$listFullCount.html(dataHistory.rentalCount);	
 				base.$objectText.html(base.rentalDetailVariables.rentalText);
 				base.$rentalListPosition.html(data.currentObjectPosition);
+
 		};
+
+
+		base._createUrlForAjax = function(dataHistory){
+			var u = dataHistory.listUrl.split('?');
+
+				if(u.length > 1){
+					return u[0]+'?getDataForBreadcrumb=1';
+				} else {
+					return dataHistory.listUrl+'?getDataForBreadcrumb=1';
+				}
+		}
 
 		base._renderNavigationBar = function(){
 
-			var data = base._getInformationFromHistory();
+			var data = base._getInformationFromHistory(false);
 
 			dataHistory = base._getHistory();
-
-				// console.log(data);
 
 				if(typeof data.nextLink == 'undefined'){
 
 						jQuery.getJSON( base._createUrlForAjax(dataHistory) , function(d){
 
 							dataHistory.listData = d.listData;
+
 							base._setHistory(dataHistory);
-							// console.log('----');
-							data = base._getInformationFromHistory();
+							data = base._getInformationFromHistory(true);
+
 							base._renderPaginator(data,dataHistory);
 
 						});
@@ -196,19 +203,10 @@
 
 		};
 
-		base._createUrlForAjax = function(dataHistory){
-			var u = dataHistory.listUrl.split('?');
-
-				if(u.length > 1){
-					return u[0]+'?getDataForBreadcrumb=1';
-				} else {
-					return dataHistory.listUrl+'?getDataForBreadcrumb=1';
-				}
-		}
-
-		base._getInformationFromHistory = function(){
+		base._getInformationFromHistory = function(fulllistHistory){
 
 			var dataHistory = base._getHistory();
+
 			var data = dataHistory.listData;
 			
 			var r = {
@@ -226,10 +224,12 @@
 				
 			});
 
-
-
-			if((dataHistory.pageCountPosition > 1) && (arrayCurrentPosition < dataHistory.rentalCount)){
-				r.currentObjectPosition = r.currentObjectPosition + ( (dataHistory.pageCountPosition - 1)*dataHistory.pagging );
+			if(!fulllistHistory){
+				if((dataHistory.pageCountPosition > 1) && (arrayCurrentPosition < dataHistory.rentalCount)){
+					r.currentObjectPosition = arrayCurrentPosition + ( (dataHistory.pageCountPosition - 1)*50 );
+				}				
+			} else {
+				r.currentObjectPosition = arrayCurrentPosition;
 			}
 
 			if(arrayCurrentPosition > 1){
@@ -238,17 +238,11 @@
 				r.prevLink = false;
 			}
 
-
-			// console.log(arrayCurrentPosition);
-			// console.log(dataHistory.rentalCount);
-
 			if(arrayCurrentPosition < dataHistory.rentalCount){
 				r.nextLink = data[arrayCurrentPosition];
 			} else {
 				r.nextLink = false;
 			} 
-
-			// console.log(r);
 
 			return r;
 
