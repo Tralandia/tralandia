@@ -129,6 +129,12 @@ class RegistrationData extends Object {
 				$this->em->persist($user);
 			}
 
+			if(isset($user)) {
+				$language = $user->getLanguage();
+			} else {
+				$language = $data['primaryLocation']->defaultLanguage;
+			}
+
 			/** @var $rental \Entity\Rental\Rental */
 			$rental = $rentalCreator->create($data['address'], $user, $data['name']);
 
