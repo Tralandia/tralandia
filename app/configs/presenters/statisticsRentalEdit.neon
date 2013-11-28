@@ -1,0 +1,11 @@
+entity: Entity\Rental\EditLog
+
+parameters:
+	title: Rental edit statistics
+	h1: 'Rental edit -> %name%'
+	hideAddNewButton: true
+
+gridFactory: @statisticsRentalEditGridFactory
+
+form:
+	fields:

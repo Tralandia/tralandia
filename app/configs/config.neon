@@ -665,6 +665,11 @@ factories:
 		class: AdminModule\Grids\Statistics\ReservationsGrid
 		implement: AdminModule\Grids\Statistics\IReservationsGridFactory
 
+	statisticsRentalEditGridFactory:
+		class: AdminModule\Grids\Statistics\RentalEditGrid
+		arguments: [@doctrine.dao(Entity\Rental\EditLog)]
+		implement: AdminModule\Grids\Statistics\IRentalEditGridFactory
+
 	dictionaryManagerGridFactory:
 		class: AdminModule\Grids\Dictionary\ManagerGrid
 		implement: AdminModule\Grids\Dictionary\IManagerGridFactory

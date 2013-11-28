@@ -76,6 +76,9 @@ common:
 				reservations:
 					label: Reservations
 					link: ':Admin:StatisticsReservations:list'
+				edit:
+					label: Edit
+					link: ':Admin:StatisticsRentalEdit:list'
 
 		cache:
 			label: Cache
