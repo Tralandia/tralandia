@@ -51,7 +51,9 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 		$targetPath = $image->getFilePath() . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
 		$defaultImage = '/default.jpg';
 		$path = $this->publicPath($targetPath);
-		//file_exists($path) ? : $path = $this->publicPath($defaultImage);
+		if ($this->isUrlExists($path) == FALSE) {
+			$path = $this->publicPath($defaultImage);
+		}
 		return $path;
 	}
 
@@ -63,6 +65,26 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	private function publicPath($file)
 	{
 		return $this->baseUrl . $file;
+	}
+
+	/**
+	 * @param string $url
+	 * @return bool
+	 */
+	private function isUrlExists($url)
+	{
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_exec($ch);
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		if($code == 200){
+			$status = true;
+		}else{
+			$status = false;
+		}
+		curl_close($ch);
+		return $status;
 	}
 
 }
