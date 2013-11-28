@@ -8,10 +8,14 @@
 namespace Tralandia\Harvester;
 
 use Entity\HarvestedContact;
+use Entity\User\Role;
+use Environment\Environment;
+use Extras\Books\Phone;
 use Image\RentalImageManager;
 use Nette\Object;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
+use User\UserCreator;
 
 
 class RegistrationData extends Object {
@@ -63,6 +67,16 @@ class RegistrationData extends Object {
 	 */
 	private $mergeData;
 
+	/**
+	 * @var \Environment\Environment
+	 */
+	private $environment;
+
+	/**
+	 * @var UserCreator
+	 */
+	private $userCreator;
+
 
 	/**
 	 * @param \Service\Rental\RentalCreator $rentalCreator
@@ -70,15 +84,19 @@ class RegistrationData extends Object {
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Image\RentalImageManager $rm
 	 * @param MergeData $mergeData
+	 * @param \User\UserCreator $userCreator
+	 * @param \Environment\Environment $environment
 	 */
     public function __construct(RentalCreator $rentalCreator, HarvestedContacts $harvestedContacts,
-								EntityManager $em, RentalImageManager $rm, MergeData $mergeData)
+								EntityManager $em, RentalImageManager $rm, MergeData $mergeData, UserCreator $userCreator, Environment $environment)
 	{
         $this->rentalCreator = $rentalCreator;
         $this->em = $em;
 		$this->rm = $rm;
 		$this->harvestedContacts = $harvestedContacts;
 		$this->mergeData = $mergeData;
+		$this->environment = $environment;
+		$this->userCreator = $userCreator;
 	}
 
     public function registration($data)
@@ -102,11 +120,20 @@ class RegistrationData extends Object {
 			$return['merged'] = TRUE;
 			$this->onMerge($rental);
 		} else {
-			$language = $data['primaryLocation']->defaultLanguage;
+
+			if($data['email']){
+				/** @var $rental \Entity\User\User */
+				$user = $this->userCreator->create($data['email'], $this->environment, Role::OWNER);
+				$user->setPassword(\Nette\Utils\Strings::random(10));
+
+				$this->em->persist($user);
+			}
+
 			/** @var $rental \Entity\Rental\Rental */
-			$rental = $rentalCreator->create($data['address'], $language, $data['name']);
-			$a = $data['phone'];
-			empty($data['phone']) ? : $rental->setPhone($data['phone'][0]);
+			$rental = $rentalCreator->create($data['address'], $user, $data['name']);
+
+			isset($data['phone'][0]) && ($data['phone'][0] instanceof \Entity\Contact\Phone) && $rental->setPhone($data['phone'][0]);
+
 			is_null($data['contactName']) ? : $rental->setContactName($data['contactName']);
 			is_null($data['url']) ? : $rental->setUrl($data['url']);
 			is_null($data['bedroomCount']) ? : $rental->setBedroomCount($data['bedroomCount']);
@@ -121,6 +148,7 @@ class RegistrationData extends Object {
 				->setMaxCapacity($data['maxCapacity'])
 				->setCheckIn($data['checkIn'])
 				->setCheckOut($data['checkOut'])
+				->setHarvested(TRUE)
 				->setFloatPrice($data['price']);
 
 			if (isset($data['images'])) {

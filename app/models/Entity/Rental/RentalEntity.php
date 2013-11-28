@@ -270,6 +270,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	private $sortedImages;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $harvested = FALSE;
+
 
 
 	public function getMainImage()
@@ -305,7 +311,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		}
 
 		$images = $this->sortedImages;
-
 		if($limit !== NULL || $offset > 0) {
 			$images = array_slice($images, $offset, $limit);
 		}

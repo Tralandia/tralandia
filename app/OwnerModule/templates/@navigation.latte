@@ -17,12 +17,12 @@
 
 				<li>
 
-					 {if $currentRental}
+					 {if $currentRental === $rental}
 					 	<a class="current" href="#"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
 					 {else}
-					 	<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+					 	<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()} <small>({$rental->getRank()}%)</small></a>
 					 {/if}
-
+					{if $currentRental === $rental}
 					<ul n:if="$currentRental">
 						<li ><a href="{link :Front:Rental:detail $rental}" target="_blank"><i class="icon icon-angle-right"></i>{_152320}</a></li>
 
@@ -44,6 +44,7 @@
 
 
 					</ul>
+					{/if}
 				</li>
 			{/foreach}
 

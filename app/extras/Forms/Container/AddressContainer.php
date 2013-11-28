@@ -104,7 +104,7 @@ class AddressContainer extends BaseContainer
 	 */
 	public function shouldShowMarker()
 	{
-		return (int) ($this->getAddressEntity() instanceof Address);
+		return (int) ($this->getAddressEntity() instanceof Address || $this->getForm()->isSubmitted());
 	}
 
 
