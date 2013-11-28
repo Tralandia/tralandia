@@ -12,8 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="rental_log")
- *
+ * @ORM\Table(name="rental_editLog")
  *
  */
 class EditLog extends \Entity\BaseEntity
@@ -23,15 +22,6 @@ class EditLog extends \Entity\BaseEntity
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", cascade={"persist"})
 	 */
 	protected $rental;
-
-
-	//@entity-generator-code --- NEMAZAT !!!
-
-	/* ----------------------------- Methods ----------------------------- */
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }
 

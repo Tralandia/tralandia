@@ -11,12 +11,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
 use Doctrine\ORM\QueryBuilder;
 use Entity\Location\Location;
+use Entity\Rental\Rental;
 use Environment\IEnvironmentFactory;
 use Mail\ICompilerFactory;
 use Nette;
 use Doctrine\ORM\EntityManager;
 
-abstract class RentalEditLogListener extends Nette\Object implements \Kdyby\Events\Subscriber
+class RentalEditLogListener extends Nette\Object implements \Kdyby\Events\Subscriber
 {
 
 	/**
@@ -40,21 +41,26 @@ abstract class RentalEditLogListener extends Nette\Object implements \Kdyby\Even
 	public function createLog(Rental $rental)
 	{
 		$editLogDao = $this->em->getRepository(EDIT_LOG_ENTITY);
-		$$rental->getCreated();
+
+		$d = new \Nette\DateTime();
+
 		/** @var $qb QueryBuilder */
-		$qb = $editLogDao->createQueryBuilder('r')
-			->where('r.rental_id = ?1')->setParameter(1, $rental->getId())
-			->andWhere('e.created >= ?2')->setParameter('2', $value['from'])
-			->andWhere('e.created < ?1')->setParameter('1', $value['to']);
+		$qb = $editLogDao->createQueryBuilder('e')
+			->where('e.rental = ?1')->setParameter(1, $rental->getId())
+			->andWhere('e.created >= ?2')->setParameter(2, $d->modifyClone('first day of this month'), \Doctrine\DBAL\Types\Type::DATETIME)
+			->andWhere('e.created <= ?3')->setParameter(3, $d->modifyClone('last day of this month'), \Doctrine\DBAL\Types\Type::DATETIME)
+			->setMaxResults(1);
 
 		$count = (new Paginator($qb))->count();
 
-		/** @var $log \Entity\Rental\EditLog */
-		$log = $editLogDao->createNew();
-		$log->setRental($rental);
+		if(!$count) {
+			/** @var $log \Entity\Rental\EditLog */
+			$log = $editLogDao->createNew();
+			$log->setRental($rental);
 
-		$this->em->persist($log);
-		$this->em->flush($log);
+			$this->em->persist($log);
+			$this->em->flush($log);
+		}
 	}
 
 	/**
