@@ -11,7 +11,7 @@
 		{if $cell}
 
 			<a href="{plink PhraseList:toTranslate $row->language->getIso()}" target="_blank">{$cell}&nbsp;p</a>&nbsp;=&nbsp;~{$row->wordsToTranslate}&nbsp;w<br/>({$row->priceToTranslate|number:2}&nbsp;EUR)
-			<a n:if="$row->language->getTranslator()" href="{plink requestTranslations $row->language->getId()}" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
+			<a n:if="$row->language->getTranslator()" href="{plink requestTranslations $row->language->getId()}" class="a btn btn-small btn-warning"><i class="icon-envelope"></i></a>
 		{else}
 			{$cell}
 		{/if}
