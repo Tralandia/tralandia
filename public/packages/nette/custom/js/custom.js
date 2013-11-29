@@ -64,21 +64,24 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
 
 $(document).ready(function(){
 
-$('a.ajax.btn-warning').click(function (e) {
+$('a.a.btn-warning').click(function (e) {
+
+	e.preventDefault();
 
 	var $self = $(this);
 
     $.nette.ajax({
         validate: false,
-        complete: function(data){
-        	data.responseText = JSON.parse(data.responseText);
-        	if(data.responseText.success == true){
+        success: function(data){
+
+        	if(data.success == true){
         		$self.removeClass('btn-warning').addClass('btn-success');
         	}
 
-
         }
     }, this, e);
+
+    return false;
 });
 
 $.nette.init(function (netteAjaxHandler) {
@@ -111,30 +114,34 @@ var c = $.nette.ext('snippets');
 
 	}	
 
-$.ajaxSetup({
-	success: function(data){
-		if(data.success == true){
+	$.ajaxSetup({
+		success: function(data){
 
-			var form = $(this)[0];
-			var $form = null;
+			if(data.success == true){
 
-			$('form.ajax').each(function(){
-				var current = $(this);
-				if(current.attr('action') == form.url){
-					$form = current;
-				}
-			});
+				var form = $(this)[0];
+				var $form = null;
 
-			$form.find('button.active').removeClass('active');
 
-			var inactiveText = $form.find('button').data('inactiveText');
+				$('form.ajax').each(function(){
+
+					var current = $(this);
+					if(current.attr('action') == form.url){
+						$form = current;
+					}
+				});
+
+				$form.find('button.active').removeClass('active');
+
+				var inactiveText = $form.find('button').data('inactiveText');
 
 				if(typeof inactiveText != 'undefined'){
 					$form.find('button small').html(inactiveText);
 				}
+
+			}
 		}
-	}
-});
+	});
 
 	
 });
