@@ -75,10 +75,13 @@ class AddressNormalizer extends \Nette\Object {
 		} else {
 			$info = $this->getInfoUsingAddress($address);
 		}
+		if (is_array($info)){
+			$this->updateAddressData($address, $info, TRUE);
+			return $address->status;
+		} else {
+			return FALSE;
+		}
 
-		$this->updateAddressData($address, $info, TRUE);
-
-		return $address->status;
 	}
 
 	/**
