@@ -409,7 +409,11 @@ class PhraseListPresenter extends BasePresenter {
 
 
 			$phrasesIds[] = $phraseId;
-			$phraseDao->save($phrase, $phrase->getTranslations());
+			$translations = $phrase->getTranslations();
+			if($translations instanceof \Doctrine\Common\Collections\ArrayCollection) {
+				$translations = $translations->toArray();
+			}
+			$phraseDao->save($phrase, $translations);
 		}
 
 		if(isset($checkedLanguage) && $totalAmount > 0 && $this->loggedUser->isSuperAdmin()) {
