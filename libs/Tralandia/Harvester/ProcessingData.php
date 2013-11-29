@@ -131,7 +131,10 @@ class ProcessingData {
 		$address = $addressDao->createNew();
 		$address->setGps($latLong);
 
-		$this->addressNormalizer->update($address, TRUE, $language);
+		$response = $this->addressNormalizer->update($address, TRUE, $language);
+		if ($response == FALSE){
+			throw new InvalidArgumentsException('Chýba GPS');
+		}
 
         return $address;
     }
