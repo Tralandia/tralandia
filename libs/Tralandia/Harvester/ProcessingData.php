@@ -56,10 +56,14 @@ class ProcessingData {
 
 		/* Pomocou adresy hladam GPS ak nie su */
 		if (!$latitude){
-			$latitude = $this->getGps($objectData['address'])['latitude'];
+			if (!$latitude = $this->getGps($objectData['address'])['latitude']){
+				throw new InvalidArgumentsException('Chýba GPS');
+			}
 		}
 		if (!$longitude) {
-			$longitude = $this->getGps($objectData['address'])['longitude'];
+			if (!$longitude = $this->getGps($objectData['address'])['longitude']){
+				throw new InvalidArgumentsException('Chýba GPS');
+			}
 		}
 
 		/* Osetrenie typu */
