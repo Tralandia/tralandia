@@ -410,6 +410,9 @@ class PhraseListPresenter extends BasePresenter {
 
 			$phrasesIds[] = $phraseId;
 			$translations = $phrase->getTranslations();
+			if($translations instanceof \Doctrine\ORM\PersistentCollection) {
+				$translations = $translations->toArray();
+			}
 			if($translations instanceof \Doctrine\Common\Collections\ArrayCollection) {
 				$translations = $translations->toArray();
 			}
