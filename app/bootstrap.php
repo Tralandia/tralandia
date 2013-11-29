@@ -26,9 +26,8 @@ $configurator->addParameters([
 	'centralLanguage' => CENTRAL_LANGUAGE,
 ]);
 
-
-
-$configurator->setDebugMode(false);
+// $configurator->setDebugMode(false);
+$configurator->setDebugMode(true);
 
 $logEmail = 'durika.d@gmail.com';
 $configurator->enableDebugger(ROOT_DIR . '/log', $logEmail);

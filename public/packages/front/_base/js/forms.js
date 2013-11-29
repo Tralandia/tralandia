@@ -250,9 +250,6 @@ $(function(){
 
 		};
 
-
-
-
 		base.init();
 	};
 
@@ -358,11 +355,8 @@ $(function(){
 		return this.each(function(){
 			(new $.mapControl(this, options));
 
-
-
 			var self = this;
 			var $self = $(this);
-
 			var requestUrl = $self.attr('data-link');
 
 			// render map and add map listener
@@ -373,8 +367,7 @@ $(function(){
 
 			var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
 
-
-
+			
 				/*
 				var lat = parseFloat(coordinates[0]);
 				var lng = parseFloat(coordinates[1]);
@@ -383,6 +376,8 @@ $(function(){
 
 				var lat = parseFloat($inputLat.val());
 				var lng = parseFloat($inputLng.val());
+
+
 
 				// var lat = parseFloat($(this).attr('data-latitude'));
 				// var lng = parseFloat($(this).attr('data-longitude'));
@@ -915,13 +910,24 @@ $(function(){
 		return this.each(function(){
 			(new $.formMapControl(this,options));
 
+			var $mapDiv = $('#map_canvas');
 
-			var lat = $('#map_canvas').attr('data-latitude'),
-			lng = $('#map_canvas').attr('data-longitude'),
+			var lat = $mapDiv.attr('data-latitude'),
+			lng = $mapDiv.attr('data-longitude'),
 			latlng = new google.maps.LatLng(lat, lng),
 			image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
-			zoom = $('#map_canvas').attr('data-zoom') || 12;
+			zoom = $mapDiv.attr('data-zoom') || 12;
+			var disabledInputs = $mapDiv.data('readonly');
 
+			var $addressCityInput = $('.addressCityInput input');
+			var $addressInput = $('.addressInput input');
+
+			if(disabledInputs){
+				$addressCityInput.attr('readonly',true);
+				$addressInput.attr('readonly',true);
+			}
+
+			zoom = parseInt(zoom);
 
 			var mapOptions = {
 				center: latlng,
@@ -944,7 +950,7 @@ $(function(){
 
 			var infowindow = new google.maps.InfoWindow();
 
-			var marker = false;
+			var marker = false;			
 
 			if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
 
@@ -982,7 +988,7 @@ $(function(){
 		});
 
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
-				infowindow.close();
+			infowindow.close();
 		  // marker.setVisible(false);
 		  input.className = '';
 		  var place = autocomplete.getPlace();
