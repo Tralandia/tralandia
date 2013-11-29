@@ -47,12 +47,20 @@ class ProcessingData {
 		$latitude = Arrays::get($objectData, ['gps', 'latitude'], NULL);
 		$longitude = Arrays::get($objectData, ['gps', 'longitude'], NULL);
 
-		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $latitude, $longitude);
+
+		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $latitude, $longitude, $objectData['address']);
 		$locationDao = $this->em->getRepository(LOCATION_ENTITY);
 		$currencyDao = $this->em->getRepository(CURRENCY_ENTITY);
 		$rentalTypeDao = $this->em->getRepository(RENTAL_TYPE_ENTITY);
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 
+		/* Pomocou adresy hladam GPS ak nie su */
+		if (!$latitude){
+			$latitude = $this->getGps($objectData['address'])['latitude'];
+		}
+		if (!$longitude) {
+			$longitude = $this->getGps($objectData['address'])['longitude'];
+		}
 
 		/* Osetrenie typu */
 		$type = $rentalTypeDao->findOneBy(['slug' => $objectData['type']]);
@@ -106,7 +114,7 @@ class ProcessingData {
         return($data);
     }
 
-    protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude)
+    protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude, $address)
 	{
 		if(!$email && !$phone) {
 			throw new InvalidArgumentsException('Chýba email aj tel. cislo');
@@ -120,8 +128,8 @@ class ProcessingData {
 			throw new InvalidArgumentsException('Chýba nazov');
 		}
 
-		if(!$latitude || !$longitude) {
-			throw new InvalidArgumentsException('Chýba GPS');
+		if((!$latitude || !$longitude) && !$address) {
+			throw new InvalidArgumentsException('Chýba GPS alebo adresa');
 		}
     }
 
