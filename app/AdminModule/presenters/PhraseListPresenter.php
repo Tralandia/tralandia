@@ -364,6 +364,7 @@ class PhraseListPresenter extends BasePresenter {
 			$specialOptionType = Arrays::get($values,'specialOptionType', NULL);
 			$specialOptionValue = Arrays::get($values,'specialOptionValue', NULL);
 			$phraseValues = $form['list'][$phraseId]->getFormattedValues();
+			/** @var $phrase \Entity\Phrase\Phrase */
 			$phrase = $phraseValues['phrase'];
 
 			/** @var $translation \Entity\Phrase\Translation */
@@ -408,7 +409,7 @@ class PhraseListPresenter extends BasePresenter {
 
 
 			$phrasesIds[] = $phraseId;
-			$phraseDao->save($phrase, $phraseValues['displayedTranslations']);
+			$phraseDao->save($phrase, $phrase->getTranslations());
 		}
 
 		if(isset($checkedLanguage) && $totalAmount > 0 && $this->loggedUser->isSuperAdmin()) {
