@@ -58,10 +58,10 @@ class ProcessingData {
 		$latLong = $this->getGps($objectData['address']);
 		if (!$latitude || !$longitude){
 			if (!$latitude = $latLong['latitude']){
-				throw new InvalidArgumentsException('Chýba GPS');
+				throw new InvalidArgumentsException('Chýba GPS (nenasla sa ani z adresy)');
 			}
 			if (!$longitude = $latLong['longitude']){
-				throw new InvalidArgumentsException('Chýba GPS');
+				throw new InvalidArgumentsException('Chýba GPS (nenasla sa ani z adresy)');
 			}
 		}
 
