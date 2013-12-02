@@ -231,3 +231,13 @@ $(function() {
 		}
 	});
 });
+
+$(function(){
+	
+	var $textareas = $('.phraseEditForm').find('textarea');
+
+	$textareas.each(function(){
+		var scH = $(this)[0].scrollHeight;
+		$(this).height(scH);
+	});
+});
