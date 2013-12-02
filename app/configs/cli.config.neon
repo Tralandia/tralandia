@@ -20,8 +20,12 @@ parameters:
 	rentalCountOnHome: 9
 	rentalCountOnRootHome: 9
 
-	testerEmail: 'durika.d@gmail.com'
-
 
 services:
+
+	environment:
+		class: Environment\Environment
+		factory: Environment\Environment::createFromIso('gb', 'en')
+
+	nette.mailer: \Mail\EmailerMailer(@environment::getPrimaryLocation(), ...)
 #	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)

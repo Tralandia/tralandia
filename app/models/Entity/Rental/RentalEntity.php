@@ -276,6 +276,22 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	protected $harvested = FALSE;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $emailSent = FALSE;
+
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getContactEmail()
+	{
+		return $this->email ? $this->email : $this->getOwner()->getLogin();
+	}
+
+
 
 
 	public function getMainImage()

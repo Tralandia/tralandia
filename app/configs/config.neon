@@ -45,6 +45,8 @@ parameters:
 		code: false
 
 	projectEmail: 'info@tralandia.com'
+	testerEmail: 'toth.radoslav@gmail.com'
+
 
 	maxReservationCountPerDay: 10
 	rentalCountOnHome: 99
@@ -213,7 +215,7 @@ services:
 #	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
 	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
 
-	tester: Tester\Options
+	tester: Tester\Options(%testerEmail%, ...)
 #	tester: Tester\NoTester
 
 	# SEARCH
@@ -421,6 +423,9 @@ services:
 
 	# ==========================================================
 	# ==========================================================
+
+	- [class: \Tralandia\Console\EmailManagerCommand, tags: [kdyby.console.command]]
+
 
 factories:
 	# ==============================

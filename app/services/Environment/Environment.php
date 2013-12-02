@@ -165,6 +165,17 @@ class Environment extends Nette\Object
 		return new self($primaryLocation, $language, $translatorFactory);
 	}
 
+	public static function createFromIso($location, $language, EntityManager $em, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
+	{
+		$locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+
+		$primaryLocation = $locationRepository->findOneByIso($location);
+		$language = $languageRepository->findOneByIso($language);
+
+		return new self($primaryLocation, $language, $translatorFactory);
+	}
+
 }
 
 
