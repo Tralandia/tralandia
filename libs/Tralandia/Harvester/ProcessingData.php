@@ -55,14 +55,13 @@ class ProcessingData {
 		$languageDao = $this->em->getRepository(LANGUAGE_ENTITY);
 
 		/* Pomocou adresy hladam GPS ak nie su */
-		if (!$latitude){
-			if (!$latitude = $this->getGps($objectData['address'])['latitude']){
-				throw new InvalidArgumentsException('Chýba GPS');
+		$latLong = $this->getGps($objectData['address']);
+		if (!$latitude || !$longitude){
+			if (!$latitude = $latLong['latitude']){
+				throw new InvalidArgumentsException('Chýba GPS (nenasla sa ani z adresy)');
 			}
-		}
-		if (!$longitude) {
-			if (!$longitude = $this->getGps($objectData['address'])['longitude']){
-				throw new InvalidArgumentsException('Chýba GPS');
+			if (!$longitude = $latLong['longitude']){
+				throw new InvalidArgumentsException('Chýba GPS (nenasla sa ani z adresy)');
 			}
 		}
 
