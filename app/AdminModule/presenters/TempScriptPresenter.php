@@ -6,6 +6,8 @@ namespace AdminModule;
 use Doctrine\ORM\QueryBuilder;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
+use Entity\User\Role;
+use Environment\Environment;
 use Nette\Utils\Strings;
 
 class TempScriptPresenter extends BasePresenter {
@@ -40,6 +42,12 @@ class TempScriptPresenter extends BasePresenter {
 	 * @var \Service\PolygonService
 	 */
 	protected $polygonCalculator;
+
+	/**
+	 * @autowire
+	 * @var \User\UserCreator
+	 */
+	protected $userCreator;
 
 	public function actionCreateMissingTranslationsForLocations()
 	{
@@ -371,4 +379,36 @@ class TempScriptPresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
+	public function actionCreateMissingUser()
+	{
+		$this->userCreator = $this->getContext()->userCreator;
+		$translatorFactory = $this->getContext()->getByType('\Tralandia\Localization\ITranslatorFactory');
+		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);
+		$qb = $rentalRepository->createQueryBuilder('e');
+		$qb->andWhere($qb->expr()->isNull('e.user'));
+		$qb->andWhere(($qb->expr()->isNotNull('e.email')));
+		$rentals = $qb->getQuery()->getResult();
+
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($rentals as $rental){
+			$primaryLocation = $rental->getPrimaryLocation();
+			$language = $rental->getEditLanguage();
+
+			$environment = new Environment($primaryLocation, $language, $translatorFactory);
+			/** @var $user \Entity\User\User */
+			$user = $this->userCreator->create($rental->email, $environment, Role::OWNER);
+			$user->setPassword(\Nette\Utils\Strings::random(10));
+
+			$user->addRental($rental);
+
+			$this->em->persist($user);
+			$this->em->persist($rental);
+		}
+		$this->em->flush();
+
+		$this->payload->success = true;
+		$this->sendPayload();
+	}
+
 }
+
