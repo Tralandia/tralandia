@@ -88,7 +88,7 @@ class EmailManagerCommand extends BaseCommand
 				$this->log($output, 'sent', 'email_manager');
 
 
-				sleep(10);
+				sleep(1);
 			}
 
 			$output->writeLn('------------- THE END -------------');
