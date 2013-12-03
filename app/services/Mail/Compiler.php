@@ -330,8 +330,12 @@ class Compiler {
 
 		$html = $this->environment->getTranslator()->translate($template->getSubject());
 
+		\Nette\Diagnostics\Debugger::log('T'.$html, 'subject');
+
 		$variables = $this->findAllVariables($html);
 		$html = $this->replaceVariables($html, $variables);
+
+		\Nette\Diagnostics\Debugger::log('V'.$html, 'subject');
 
 		return $html;
 	}
