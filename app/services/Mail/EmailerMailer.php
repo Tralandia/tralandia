@@ -89,7 +89,6 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 
 		if (count($insert)) {
 			$query = 'INSERT INTO emailer_queued (urgency, confirmed, batch_id, stamp, from_email, from_name, to_email, to_name, bcc_email, subject, body, body_html, attachments, domain, test) VALUES ' . implode(', ', $insert);
-
 			//ape($query);
 			return (bool)$this->qEmailer($query);
 		} else {
@@ -113,6 +112,8 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		}
 		//if(Invoicing::$testMode) pr($query);
 
+		\Nette\Diagnostics\Debugger::log($query, 'emailer_query');
+
 		if ($r = @mysql_query($query, $emailerConnection)) {
 			if (stripos($query, "insert into emailer") !== FALSE) {
 				$r = mysql_insert_id($emailerConnection);
@@ -120,7 +121,9 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 
 			return $r;
 		} else {
-			throw new \Exception(mysql_error($emailerConnection));
+			$error = new \Exception(mysql_error($emailerConnection));
+			\Nette\Diagnostics\Debugger::log($error->getMessage(), 'emailer_query');
+			throw $error;
 			//return FALSE;
 		}
 	}
