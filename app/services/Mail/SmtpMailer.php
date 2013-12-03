@@ -8,6 +8,7 @@
 namespace Mail;
 
 
+use Environment\Environment;
 use Nette;
 use Tester\NoTester;
 
@@ -18,17 +19,18 @@ class SmtpMailer extends Nette\Mail\SmtpMailer {
 
 	/**
 	 * @param array $options
-	 * @param \Entity\Location\Location $primaryLocation
+	 * @param \Environment\Environment $environment
 	 * @param \Tester\ITester $tester
+	 *
 	 */
-	public function __construct(array $options = array(), \Entity\Location\Location $primaryLocation, \Tester\ITester $tester)
+	public function __construct(array $options = array(), Environment $environment, \Tester\ITester $tester)
 	{
 		if($tester instanceof NoTester) {
 		} else {
 			$this->tester = $tester;
 		}
 
-		$this->primaryLocation = $primaryLocation;
+		$this->environment = $environment;
 
 		parent::__construct($options);
 	}
