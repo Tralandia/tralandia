@@ -54,7 +54,6 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		$params['bcc_email'] = $bccEmail;
 
 		$params['subject'] = $mail->getSubject();
-		\Nette\Diagnostics\Debugger::log('P'.$params['subject'], 'subject');
 		$params['body'] = $mail->getBody();
 		$params['body_html'] = $mail->getHtmlBody();
 
@@ -78,8 +77,6 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 				$t[] = '"' . $val['to_name'] . '"';
 				$t[] = '"' . $val['bcc_email'] . '"';
 				$t[] = '"' . $val['subject'] . '"';
-				$ts = end($t);
-				\Nette\Diagnostics\Debugger::log('Q'.$ts, 'subject');
 				$t[] = '"' . addslashes(gzcompress($val['body'])) . '"';
 				$t[] = '"' . addslashes(gzcompress($val['body_html'])) . '"';
 				$t[] = '""'; //'"'.$val['attachments'].'"';
@@ -112,6 +109,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 			);
 			$emailerConnection = mysql_connect($config['host'], $config['user'], $config['password']);
 			mysql_select_db($config['database'], $emailerConnection);
+			mysql_query("SET NAMES utf8");
 		}
 		//if(Invoicing::$testMode) pr($query);
 
