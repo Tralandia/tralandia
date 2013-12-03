@@ -108,11 +108,13 @@ class RegistrationData extends Object {
 
 		/** @var $mainUser \Entity\User\User */
 		$mainUser = $this->em->getRepository(USER_ENTITY)->findOneBy(['login' => $data['email']]);
-		foreach($mainUser->getRentals() as $rental){
-			if(!$rental->harvested) {
-				$return['success'] = TRUE;
-				$return['already_registered'] = TRUE;
-				return $return;
+		if($mainUser && $mainUser->getRentals()) {
+			foreach($mainUser->getRentals() as $rental){
+				if(!$rental->harvested) {
+					$return['success'] = TRUE;
+					$return['already_registered'] = TRUE;
+					return $return;
+				}
 			}
 		}
 
