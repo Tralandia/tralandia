@@ -334,6 +334,8 @@ class Compiler {
 			$variables = $this->findAllVariables($html);
 			$html = $this->replaceVariables($html, $variables);
 
+			Strings::fixEncoding($html);
+
 			$this->subject = $html;
 		}
 
