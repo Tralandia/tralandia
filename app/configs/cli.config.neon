@@ -29,7 +29,6 @@ services:
 		factory: Environment\Environment::createFromIso('gb', 'en')
 
 	nette.mailer: \Mail\EmailerMailer
-#	nette.mailer: \Mail\SendmailMailer
 
 
 	tester: Tester\NoTester

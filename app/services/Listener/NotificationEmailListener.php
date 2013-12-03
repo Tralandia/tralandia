@@ -8,7 +8,8 @@ class NotificationEmailListener extends BaseEmailListener implements \Kdyby\Even
 
 	public function getSubscribedEvents()
 	{
-		//return ['FormHandler\RegistrationHandler::onSuccess'];
+//		return ['FormHandler\RegistrationHandler::onSuccess'];
+		return [];
 	}
 
 
