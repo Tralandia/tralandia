@@ -85,13 +85,14 @@ class EmailManagerCommand extends BaseCommand
 
 				$this->log($output, 'rental: ' . $rental->id . ', email: ' . $rental->getContactEmail(), 'email_manager');
 
-				$rental->emailSent = TRUE;
-				$this->rentalDao->save($rental);
-
 				$user = $rental->getUser();
 				$environment->resetTo($user->getPrimaryLocation(), $user->getLanguage());
 
 				$this->notificationEmailListener->onSuccess($rental);
+
+				$rental->emailSent = TRUE;
+				$this->rentalDao->save($rental);
+
 				$this->log($output, 'sent', 'email_manager');
 
 
