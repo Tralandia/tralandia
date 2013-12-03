@@ -326,20 +326,14 @@ class Compiler {
 	 */
 	public function compileSubject()
 	{
-		if(!$this->subject) {
-			$template = $this->getTemplate();
+		$template = $this->getTemplate();
 
-			$html = $this->environment->getTranslator()->translate($template->getSubject());
+		$html = $this->environment->getTranslator()->translate($template->getSubject());
 
-			$variables = $this->findAllVariables($html);
-			$html = $this->replaceVariables($html, $variables);
+		$variables = $this->findAllVariables($html);
+		$html = $this->replaceVariables($html, $variables);
 
-			Strings::fixEncoding($html);
-
-			$this->subject = $html;
-		}
-
-		return $this->subject;
+		return $html;
 	}
 
 
