@@ -15,6 +15,7 @@ use Image\RentalImageManager;
 use Nette\Object;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
+use Tralandia\Localization\ITranslatorFactory;
 use User\UserCreator;
 
 
@@ -68,14 +69,14 @@ class RegistrationData extends Object {
 	private $mergeData;
 
 	/**
-	 * @var \Environment\Environment
-	 */
-	private $environment;
-
-	/**
 	 * @var UserCreator
 	 */
 	private $userCreator;
+
+	/**
+	 * @var \Tralandia\Localization\ITranslatorFactory
+	 */
+	private $translatorFactory;
 
 
 	/**
@@ -85,18 +86,19 @@ class RegistrationData extends Object {
 	 * @param \Image\RentalImageManager $rm
 	 * @param MergeData $mergeData
 	 * @param \User\UserCreator $userCreator
-	 * @param \Environment\Environment $environment
+	 * @param \Tralandia\Localization\ITranslatorFactory $translatorFactory
+	 *
 	 */
     public function __construct(RentalCreator $rentalCreator, HarvestedContacts $harvestedContacts,
-								EntityManager $em, RentalImageManager $rm, MergeData $mergeData, UserCreator $userCreator, Environment $environment)
+								EntityManager $em, RentalImageManager $rm, MergeData $mergeData, UserCreator $userCreator, ITranslatorFactory $translatorFactory)
 	{
         $this->rentalCreator = $rentalCreator;
         $this->em = $em;
 		$this->rm = $rm;
 		$this->harvestedContacts = $harvestedContacts;
 		$this->mergeData = $mergeData;
-		$this->environment = $environment;
 		$this->userCreator = $userCreator;
+		$this->translatorFactory = $translatorFactory;
 	}
 
     public function registration($data)
@@ -122,8 +124,11 @@ class RegistrationData extends Object {
 		} else {
 
 			if($data['email']){
-				/** @var $rental \Entity\User\User */
-				$user = $this->userCreator->create($data['email'], $this->environment, Role::OWNER);
+				$language = $data['primaryLocation']->defaultLanguage;
+
+				$environment = new Environment($data['primaryLocation'], $language, $this->translatorFactory);
+				/** @var $user \Entity\User\User */
+				$user = $this->userCreator->create($data['email'], $environment, Role::OWNER);
 				$user->setPassword(\Nette\Utils\Strings::random(10));
 
 				$this->em->persist($user);
