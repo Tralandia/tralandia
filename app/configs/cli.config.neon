@@ -20,6 +20,7 @@ parameters:
 	rentalCountOnHome: 9
 	rentalCountOnRootHome: 9
 
+	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
 services:
 
@@ -29,3 +30,6 @@ services:
 
 	nette.mailer: \Mail\EmailerMailer(@environment::getPrimaryLocation(), ...)
 #	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
+
+
+	tester: Tester\NoTester
