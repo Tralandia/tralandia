@@ -431,7 +431,7 @@ class TempScriptPresenter extends BasePresenter {
 			$discarder->discard($rental);
 
 			$this->userDao->delete($user);
-			//break;
+			break;
 		}
 	}
 
