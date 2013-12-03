@@ -20,9 +20,9 @@ trait TMailer {
 	private $tester;
 
 	/**
-	 * @var \Entity\Location\Location
+	 * @var \Environment\Environment
 	 */
-	private $primaryLocation;
+	private $environment;
 
 
 	/**
@@ -51,7 +51,7 @@ trait TMailer {
 			$message->addReplyTo($fromEmail, $fromName);
 		}
 
-		$domain = $this->primaryLocation->getFirstDomain();
+		$domain = $this->environment->getPrimaryLocation()->getFirstDomain();
 		$message->setFrom('info@' . $domain->getDomain(), ucfirst($domain->getDomain()));
 
 		$message->addBcc('tralandia.testing@gmail.com');

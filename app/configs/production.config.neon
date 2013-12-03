@@ -41,7 +41,7 @@ doctrine:
 
 
 services:
-#	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
-	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
+#	nette.mailer: EmailerMailer
+	nette.mailer: \Mail\SmtpMailer(%smtp%, ...)
 
 	tester: Tester\NoTester
