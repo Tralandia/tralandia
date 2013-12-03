@@ -8,6 +8,7 @@
 namespace Mail;
 
 use Nette;
+use Nette\Diagnostics\Debugger;
 use Nette\Mail\Message;
 
 class EmailerMailer extends \Nette\Mail\SendmailMailer
@@ -102,10 +103,10 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		static $emailerConnection;
 		if (!$emailerConnection) {
 			$config = array(
-				'host' => '93.184.77.84',
-				'user' => 'as000500',
-				'password' => 'nundilli',
-				'database' => 'as000500db',
+				'host' => 'tra-emailer.soft1.sk',
+				'user' => 'emailer',
+				'password' => '974jd7YRN32CO',
+				'database' => 'emailer',
 			);
 			$emailerConnection = mysql_connect($config['host'], $config['user'], $config['password']);
 			mysql_select_db($config['database'], $emailerConnection);
@@ -119,8 +120,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 
 			return $r;
 		} else {
-			throw new Exception(mysql_error($emailerConnection));
-			//Debugger::log($e);
+			throw new \Exception(mysql_error($emailerConnection));
 			//return FALSE;
 		}
 	}

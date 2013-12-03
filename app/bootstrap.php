@@ -59,6 +59,9 @@ if ($section !== 'production') {
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 
+if(php_sapi_name() == 'cli') {
+	$configurator->addConfig(__DIR__ . '/configs/cli.config.neon');
+}
 
 if(array_key_exists('useCache', $_COOKIE) && !$_COOKIE['useCache']) {
 	$configurator->addConfig(APP_DIR . '/configs/noCache.config.neon', FALSE);

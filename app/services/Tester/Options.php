@@ -25,14 +25,16 @@ class Options implements ITester
 
 
 	/**
+	 * @param $defaultEmail
 	 * @param \Nette\Http\Session $session
 	 */
-	public function __construct(\Nette\Http\Session $session)
+	public function __construct($defaultEmail, \Nette\Http\Session $session)
 	{
 		$section = $session->getSection('testerOptions');
 		$section->setExpiration(NULL);
 
 		$this->section = $section;
+		$this->defaultEmail = $defaultEmail;
 	}
 
 
