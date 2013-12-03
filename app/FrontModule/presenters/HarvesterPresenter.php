@@ -44,6 +44,7 @@ class HarvesterPresenter extends BasePresenter
 				$this->payload->success = $response['success'];
 				isset($response['registered']) && $this->payload->registered = $response['registered'];
 				isset($response['merged']) && $this->payload->registered = $response['merged'];
+				isset($response['already_registered']) && $this->payload->alreadyRegistered = $response['already_registered'];
 				$this->payload->rental = $response['rental']->getId();
 			} catch(\Exception $e) {
 				$this->payload->success = FALSE;

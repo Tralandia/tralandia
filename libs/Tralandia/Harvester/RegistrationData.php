@@ -103,7 +103,18 @@ class RegistrationData extends Object {
 
     public function registration($data)
 	{
+		$return = ['success' => FALSE];
 		$rentalCreator = $this->rentalCreator;
+
+		/** @var $mainUser \Entity\User\User */
+		$mainUser = $this->em->getRepository(USER_ENTITY)->findOneBy(['login' => $data['email']]);
+		foreach($mainUser->getRentals() as $rental){
+			if(!$rental->harvested) {
+				$return['success'] = TRUE;
+				$return['already_registered'] = TRUE;
+				return $return;
+			}
+		}
 
 		/* Ak sa nachadza dany email alebo cislo v dtb merge-ovanie udajov */
 		$rental = $this->harvestedContacts->findRentalByEmail($data['email']);
@@ -114,7 +125,6 @@ class RegistrationData extends Object {
 			}
 		}
 
-		$return = ['success' => FALSE];
 		if($rental){
 			$mergeData = $this->mergeData;
 			$mergeData->merge($data, $rental);
