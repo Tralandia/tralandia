@@ -49,6 +49,9 @@ abstract class BasePresenter extends Presenter {
 
 	protected $favoriteListDao;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
 	protected $rentalDao;
 
 	protected $rentalTypeDao;
