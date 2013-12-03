@@ -42,7 +42,7 @@ class EmailManagerCommand extends BaseCommand
 		$this->setName('email:manager');
 
 
-		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 15);
+		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
 	}
 
 
@@ -72,7 +72,11 @@ class EmailManagerCommand extends BaseCommand
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 
+
 		try {
+			/** @var $environment \Environment\Environment */
+			$environment = $this->getHelper('dic')->getByType('\Environment\Environment');
+
 			while($this->endsAt > time()) {
 				$this->log($output, '--------', 'email_manager');
 
@@ -83,6 +87,9 @@ class EmailManagerCommand extends BaseCommand
 
 				$rental->emailSent = TRUE;
 				$this->rentalDao->save($rental);
+
+				$user = $rental->getUser();
+				$environment->resetTo($user->getPrimaryLocation(), $user->getLanguage());
 
 				$this->notificationEmailListener->onSuccess($rental);
 				$this->log($output, 'sent', 'email_manager');

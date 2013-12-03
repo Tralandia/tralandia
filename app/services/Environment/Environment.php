@@ -48,9 +48,21 @@ class Environment extends Nette\Object
 	 */
 	public function __construct(Location $primaryLocation, Language $language, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
 	{
+		$this->resetTo($primaryLocation, $language);
+		$this->translatorFactory = $translatorFactory;
+	}
+
+
+	/**
+	 * @param Location $primaryLocation
+	 * @param Language $language
+	 */
+	public function resetTo(Location $primaryLocation, Language $language)
+	{
 		$this->primaryLocation = $primaryLocation;
 		$this->language = $language;
-		$this->translatorFactory = $translatorFactory;
+		$this->translator = NULL;
+		$this->locale = NULL;
 	}
 
 
