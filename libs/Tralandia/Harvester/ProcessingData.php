@@ -123,7 +123,7 @@ class ProcessingData {
 			throw new InvalidArgumentsException('Chýba email aj tel. cislo');
 		}
 
-		if(!count($images)) {
+		if(!is_array($images) || !count($images)) {
 			throw new InvalidArgumentsException('Chýbaju obrazky');
 		}
 
