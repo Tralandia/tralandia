@@ -54,6 +54,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		$params['bcc_email'] = $bccEmail;
 
 		$params['subject'] = $mail->getSubject();
+		\Nette\Diagnostics\Debugger::log('P'.$params['subject'], 'subject');
 		$params['body'] = $mail->getBody();
 		$params['body_html'] = $mail->getHtmlBody();
 
@@ -77,6 +78,8 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 				$t[] = '"' . $val['to_name'] . '"';
 				$t[] = '"' . $val['bcc_email'] . '"';
 				$t[] = '"' . $val['subject'] . '"';
+				$ts = end($t);
+				\Nette\Diagnostics\Debugger::log('Q'.$ts, 'subject');
 				$t[] = '"' . addslashes(gzcompress($val['body'])) . '"';
 				$t[] = '"' . addslashes(gzcompress($val['body_html'])) . '"';
 				$t[] = '""'; //'"'.$val['attachments'].'"';
@@ -112,7 +115,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		}
 		//if(Invoicing::$testMode) pr($query);
 
-		\Nette\Diagnostics\Debugger::log($query, 'emailer_query');
+		//\Nette\Diagnostics\Debugger::log($query, 'emailer_query');
 
 		if ($r = @mysql_query($query, $emailerConnection)) {
 			if (stripos($query, "insert into emailer") !== FALSE) {
