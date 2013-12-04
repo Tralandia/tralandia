@@ -46,6 +46,11 @@ class ProcessingData {
 	{
 		$latitude = Arrays::get($objectData, ['gps', 'latitude'], NULL);
 		$longitude = Arrays::get($objectData, ['gps', 'longitude'], NULL);
+		$latitudeTemp = abs($latitude);
+		$longitudeTemp = abs($longitude);
+		if(!$latitudeTemp || !$longitudeTemp) {
+			$latitude = $longitude = NULL;
+		}
 
 
 		$this->requiredParameter($objectData['email'], $objectData['phone'], $objectData['images'], $objectData['name'], $latitude, $longitude, $objectData['address']);
