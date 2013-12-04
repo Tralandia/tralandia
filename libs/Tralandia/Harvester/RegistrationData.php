@@ -178,6 +178,7 @@ class RegistrationData extends Object {
 				$i = 1;
 				foreach ($data['images'] as $path) {
 					$imageString = $this->getImageDataSource($path);
+					if(!$imageString) continue;
 					$image = $this->rm->saveFromString($imageString);
 					$this->em->persist($rental->addImage($image));
 					if($i == 10) break;
