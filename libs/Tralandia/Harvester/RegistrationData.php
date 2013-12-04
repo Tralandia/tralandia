@@ -183,7 +183,7 @@ class RegistrationData extends Object {
 			if (isset($data['images'])) {
 				$i = 1;
 				foreach ($data['images'] as $path) {
-					try{
+					try {
 						$image = $this->rm->saveFromFile($path);
 						$this->em->persist($rental->addImage($image));
 						if($i == 10) break;
@@ -192,6 +192,13 @@ class RegistrationData extends Object {
 						continue;
 					}
 				}
+			}
+
+
+			if(!isset($i) || $i == 1) {
+				$return['success'] = FALSE;
+				$return['message'] = 'fotky sa nedali stiahnut';
+				return $return;
 			}
 
 			// @todo zatial to neukladame kvoli SEO
