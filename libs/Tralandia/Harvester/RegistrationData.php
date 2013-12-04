@@ -11,6 +11,7 @@ use Entity\HarvestedContact;
 use Entity\User\Role;
 use Environment\Environment;
 use Extras\Books\Phone;
+use Extras\Models\Service\Exception;
 use Image\RentalImageManager;
 use Nette\Object;
 use Nette\UnknownImageFileException;
@@ -126,6 +127,10 @@ class RegistrationData extends Object {
 				$rental = $this->harvestedContacts->findRentalByPhone($phone);
 				if($rental) break;
 			}
+		}
+
+		if($mainUser && !$rental) {
+			throw new Exception('nasiel som usera ale nie objekt');
 		}
 
 		if($rental){
