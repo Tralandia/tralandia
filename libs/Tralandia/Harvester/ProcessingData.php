@@ -14,6 +14,7 @@ use Extras\Types\Latlong;
 use Kdyby\Doctrine\EntityManager;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Arrays;
+use Nette\Utils\Validators;
 use Service\Contact\AddressNormalizer;
 
 
@@ -124,7 +125,7 @@ class ProcessingData {
 
     protected function requiredParameter($email, $phone, $images, $name, $latitude, $longitude, $address)
 	{
-		if(!$email && !$phone) {
+		if(!Validators::isEmail($email) && !$phone) {
 			throw new InvalidArgumentsException('Chýba email aj tel. cislo');
 		}
 
