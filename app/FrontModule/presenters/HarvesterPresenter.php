@@ -42,6 +42,7 @@ class HarvesterPresenter extends BasePresenter
 				$data = $this->harvesterDataValidator->process($data);
 				$response = $this->harvesterRegistrator->registration($data);
 				$this->payload->success = $response['success'];
+				isset($response['message']) && $this->payload->message = $response['message'];
 				isset($response['registered']) && $this->payload->registered = $response['registered'];
 				isset($response['merged']) && $this->payload->registered = $response['merged'];
 				isset($response['already_registered']) && $this->payload->alreadyRegistered = $response['already_registered'];
