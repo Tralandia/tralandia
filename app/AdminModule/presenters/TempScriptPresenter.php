@@ -3,11 +3,15 @@
 namespace AdminModule;
 
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Types\Json;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Environment\Environment;
+use Nette\UnknownImageFileException;
+use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
 class TempScriptPresenter extends BasePresenter {
@@ -432,6 +436,50 @@ class TempScriptPresenter extends BasePresenter {
 
 			$this->userDao->delete($user);
 			break;
+		}
+	}
+
+
+	public function actionImportImages($limit = 10)
+	{
+		/** @var $rm \Image\RentalImageManager */
+		$rm = $this->getContext()->getByType('\Image\RentalImageManager');
+
+		$query = $this->em->getConnection()->query('select r.id as r, i.id as i
+from rental r
+left join rental_image as i on i.rental_id = r.id
+where r.harvested = 1 and i.id is null
+group by r.id');
+
+		$rental = $query->fetchAll();
+
+		$allImages = require_once(__DIR__ . '/images.php');
+
+		foreach($rental as $rentalData) {
+
+			/** @var $rental \Entity\Rental\Rental */
+			$rental =$this->rentalDao->find($rentalData['r']);
+
+			$images = Arrays::get($allImages, $rental->getId(), NULL);
+			if(!$images) continue;
+
+			$images = Strings::matchAll($images, '/https?\:\/\/[^\" ]+/i');
+
+			$i = 1;
+			foreach ($images as $path) {
+				try {
+					$path = $path[0];
+					$image = $rm->saveFromFile($path);
+					$this->em->persist($rental->addImage($image));
+					if($i == 10) break;
+					$i++;
+				} catch(UnknownImageFileException $e) {
+					continue;
+				}
+			}
+
+			$this->em->persist($rental);
+			$this->em->flush();
 		}
 	}
 
