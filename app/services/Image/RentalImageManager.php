@@ -65,6 +65,17 @@ class RentalImageManager {
 	}
 
 
+	/**
+	 * @param $string
+	 *
+	 * @return Image
+	 */
+	public function saveFromString($string) {
+		$image = Nette\Image::fromString($string);
+		return $this->save($image);
+	}
+
+
 	public function delete(\Entity\Rental\Image $image)
 	{
 		$this->storage->delete($image->getFilePath());
