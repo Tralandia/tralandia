@@ -13,6 +13,7 @@ use Environment\Environment;
 use Extras\Books\Phone;
 use Image\RentalImageManager;
 use Nette\Object;
+use Nette\UnknownImageFileException;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
 use Tralandia\Localization\ITranslatorFactory;
@@ -177,12 +178,14 @@ class RegistrationData extends Object {
 			if (isset($data['images'])) {
 				$i = 1;
 				foreach ($data['images'] as $path) {
-					$imageString = $this->getImageDataSource($path);
-					if(!$imageString) continue;
-					$image = $this->rm->saveFromString($imageString);
-					$this->em->persist($rental->addImage($image));
-					if($i == 10) break;
-					$i++;
+					try{
+						$image = $this->rm->saveFromFile($path);
+						$this->em->persist($rental->addImage($image));
+						if($i == 10) break;
+						$i++;
+					} catch(UnknownImageFileException $e) {
+						continue;
+					}
 				}
 			}
 
