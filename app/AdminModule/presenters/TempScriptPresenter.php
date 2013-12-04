@@ -449,7 +449,7 @@ class TempScriptPresenter extends BasePresenter {
 from rental r
 left join rental_image as i on i.rental_id = r.id
 where r.harvested = 1 and i.id is null
-group by r.id');
+group by r.id limit ' . $limit);
 
 		$rental = $query->fetchAll();
 
