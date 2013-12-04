@@ -177,7 +177,8 @@ class RegistrationData extends Object {
 			if (isset($data['images'])) {
 				$i = 1;
 				foreach ($data['images'] as $path) {
-					$image = $this->rm->saveFromFile($path);
+					$imageString = $this->getImageDataSource($path);
+					$image = $this->rm->saveFromString($imageString);
 					$this->em->persist($rental->addImage($image));
 					if($i == 10) break;
 					$i++;
@@ -212,4 +213,16 @@ class RegistrationData extends Object {
 
 	}
 
+
+	public function getImageDataSource($url, $referrer = NULL){
+		$ch = curl_init ($url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+		$referrer && curl_setopt($ch, CURLOPT_REFERER, $referrer);
+		$raw = curl_exec($ch);
+		curl_close ($ch);
+
+		return $raw;
+	}
 }
