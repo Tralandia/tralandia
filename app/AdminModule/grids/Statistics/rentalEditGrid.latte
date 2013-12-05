@@ -1,41 +1,48 @@
 
 {define #col-total}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 
 {define #col-today}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 
 {define #col-yesterday}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 
 {define #col-thisWeek}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 
 {define #col-lastWeek}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 {define #col-thisMonth}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 {define #col-lastMonth}
 	<td>
-		{$cell}
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->harvested} / {$cell->harvested}{/ifset}
 	</td>
 {/define}
 
