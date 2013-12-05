@@ -3,34 +3,34 @@
 namespace AdminModule\Grids\Statistics;
 
 use AdminModule\Components\AdminGridControl;
+use Nette\ArrayHash;
 use Nette\Utils\Paginator;
-use Tralandia\BaseDao;
 
 class RentalEditGrid extends AdminGridControl
 {
 
 	/**
-	 * @var \Tralandia\BaseDao
+	 * @var \Statistics\RentalEdit
 	 */
-	private $editLogDao;
+	protected $dataSource;
 
-
-	public function __construct(BaseDao $editLogDao) {
-		$this->editLogDao = $editLogDao;
+	public function __construct(\Statistics\RentalEdit $dataSource) {
+		$this->dataSource = $dataSource;
 	}
 
 	public function render() {
+		$this->template->hideActions = false;
 		$this->template->render();
 	}
 
 	public function createComponentGrid()
 	{
-		$this->showActions = FALSE;
+		$this->showActions = false;
 
 		$grid = $this->getGrid();
-		$grid->setRowPrimaryKey('iso');
+		$grid->setRowPrimaryKey('key');
 
-		$grid->addColumn('iso', 'Country');
+		$grid->addColumn('key', 'Country');
 		$grid->addColumn('today', 'Today');
 		$grid->addColumn('yesterday', 'Yesterday');
 		$grid->addColumn('thisWeek', 'This week');
@@ -45,41 +45,8 @@ class RentalEditGrid extends AdminGridControl
 
 	public function getDataSource($filter, $order, Paginator $paginator = NULL)
 	{
-		$data = [];
-		$defaultRowData = ['iso' => '','today' => '','yesterday' => '','thisWeek' => '','lastWeek' => '','thisMonth' => '','lastMonth' => '','total' => ''];
-		$periods = \Tools::getPeriods();
-		foreach($periods as $key => $value) {
-			$qb = $this->editLogDao->createQueryBuilder('e');
-			$qb->select('pl.iso AS iso, count(e) AS c')
-				->andWhere('e.created >= ?2')->setParameter('2', $value['from'])
-				->andWhere('e.created < ?1')->setParameter('1', $value['to'])
-				->innerJoin('e.rental', 'r')
-				->innerJoin('r.address', 'a')
-				->innerJoin('a.primaryLocation', 'pl')
-				->groupBy('a.primaryLocation');
-
-			$result = $qb->getQuery()->getResult();
-			foreach($result as $row) {
-				$data[$row['iso']][$key] = $row['c'];
-			}
-		}
-
-		$total = $defaultRowData;
-		$total['iso'] = 'total';
-		foreach($data as $country => $rowData) {
-			$data[$country] = array_merge($defaultRowData, $data[$country]);
-			$data[$country]['iso'] = $country;
-			foreach($data[$country] as $key => $cell) {
-				if($key == 'iso') continue;
-				$total[$key] += $cell;
-			}
-		}
-
-		ksort($data);
-
-		$data = ['total' => $total] + $data;
-
-		return \Nette\ArrayHash::from($data);
+		$data = $this->dataSource->getData($filter, $order, $paginator);
+		return $data;
 	}
 
 }
