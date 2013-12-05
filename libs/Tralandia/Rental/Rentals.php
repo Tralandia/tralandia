@@ -10,6 +10,7 @@ namespace Tralandia\Rental;
 
 use Entity\Location\Location;
 use Entity\Rental\Rental;
+use Entity\Rental\EditLog;
 use Nette;
 use Tralandia\BaseDao;
 
@@ -26,15 +27,22 @@ class Rentals {
 	 */
 	private $rentalDao;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $editLogDao;
+
 
 	/**
 	 * @param \Tralandia\BaseDao $rentalDao
 	 * @param BaseDao $locationsDao
+	 * @param \Tralandia\BaseDao $editlogDao
 	 */
-	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao)
+	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao)
 	{
 		$this->locationsDao = $locationsDao;
 		$this->rentalDao = $rentalDao;
+		$this->editLogDao = $editLogDao;
 	}
 
 
@@ -224,6 +232,36 @@ class Rentals {
 		return $qb->getQuery()->getResult();
 	}
 
+	/**
+	 * @param Location $primaryLocation
+	 * @param null $harvested
+	 * @param \DateTime $dateFrom
+	 * @param \DateTime $dateTo
+	 *
+	 * @return array
+	 */
+	public function getEditCounts(Location $primaryLocation = NULL, $harvested = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL)
+	{
+		$qb = $this->editLogDao->createQueryBuilder('e');
 
+		$qb->select('pl.iso AS iso, count(e) AS c')
+			->andWhere('e.created >= ?2')->setParameter('2', $dateFrom)
+			->andWhere('e.created < ?1')->setParameter('1', $dateTo)
+			->innerJoin('e.rental', 'r');
+		if ($harvested) {
+			$qb->andWhere('r.harvested = ?3')->setParameter('3', 1);
+		}
+
+		$qb->innerJoin('r.address', 'a')
+			->innerJoin('a.primaryLocation', 'pl')
+			->groupBy('a.primaryLocation');
+
+		$result = $qb->getQuery()->getResult();
+		$myResult = array();
+		foreach ($result as $key => $value) {
+			$myResult[$value['iso']] = $value['c'];
+		}
+		return $myResult;
+	}
 
 }
