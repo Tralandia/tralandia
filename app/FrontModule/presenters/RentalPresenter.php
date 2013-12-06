@@ -67,7 +67,8 @@ class RentalPresenter extends BasePresenter {
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
 
-		$this->template->teaser = $rental->getTeaser()->getTranslation($this->language);
+		$teaser = $rental->getTeaser()->getTranslation($this->language);
+		$this->template->teaser = $teaser->hasTranslation() ? $teaser->getTranslation() : NULL;
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer && $firstAnswerTranslation = $firstAnswer->getAnswer()->getTranslation($this->language)) {

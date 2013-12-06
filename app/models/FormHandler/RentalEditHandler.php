@@ -163,9 +163,10 @@ class RentalEditHandler extends FormHandler
 			$this->phraseManager->updateTranslations($phrase, $translationsVariations);
 		}
 
-		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom', 'nearBy', 'rentalServices', 'onFacility', 'sportsFun'];
-		foreach ($amenities as $amenityName) {
-			$value = $values[$amenityName];
+		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom', 'nearBy' => 'near-by', 'rentalServices' => 'rental-services', 'onFacility' => 'on-premises', 'sportsFun' => 'sports-fun'];
+		foreach ($amenities as $valueName => $amenityName) {
+			if(is_numeric($valueName)) $valueName = $amenityName;
+			$value = $values[$valueName];
 			$amenities = $rental->getAmenitiesByType($amenityName);
 			foreach ($amenities as $amenity) {
 				$rental->removeAmenity($amenity);
