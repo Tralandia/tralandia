@@ -155,7 +155,7 @@ class ProcessingData {
 		$address = $addressDao->createNew();
 		$address->setGps($latLong);
 
-		$key = (new DateTime())->format('d-m-Y');
+		$key = (new \DateTime())->format('d-m-Y');
 		$limit = $this->googleGeocodeLimitCache->load($key);
 		if($limit > 2000) {
 			throw new InvalidArgumentsException('GoogleGeocode: over query limit 2000');
