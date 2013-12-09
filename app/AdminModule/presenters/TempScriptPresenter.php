@@ -483,5 +483,11 @@ group by r.id limit ' . $limit);
 		}
 	}
 
+
+	public function actionClearDescription($limit = 10, $chunk = 0)
+	{
+		$rentals = $this->rentalDao->findBy(['harvested' => TRUE], NULL, $limit, $chunk * $limit);
+	}
+
 }
 
