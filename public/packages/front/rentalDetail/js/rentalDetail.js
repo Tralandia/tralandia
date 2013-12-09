@@ -487,6 +487,7 @@ function onChangeCalendar(self){
 
 		var my = $('.ui-datepicker-calendar td:not(.ui-state-disabled):first');
 
+
 		var m = my.data('month')+1; 
 		var y = my.data('year');
 
@@ -496,22 +497,44 @@ function onChangeCalendar(self){
 			stop: 'stat2'
 		};
 
+		if(m < 9){
+			m = '0'+m;
+		}
+
 			my = '-'+m+'-'+y;
+
+		// console.log(my);
+
 
 			var status = 0;
 
+			// console.log(reservations);
+
 			$('.ui-datepicker-calendar td:not(.ui-datepicker-other-month)').each(function(index){
+
 				var realDate = (index+1)+my;
 				var nextDate = (index+2)+my;
+
+				if(index <9){
+					realDate = '0'+realDate;
+				}
 
 					// console.log(realDate);
 
 					// console.log(jQuery.inArray(realDate, reservations));
 
+
+					if(status == 2){
+						datepickerSetClass(this,statusClass.stop);
+						status = 0;
+					}
+
 					if(jQuery.inArray(realDate, reservations) != -1){
 						
-
+						// console.log(realDate);
 						// console.log(status);
+						// console.log('--');
+
 
 						switch(status){
 							case 0 :
@@ -524,12 +547,15 @@ function onChangeCalendar(self){
 									datepickerSetClass(this,statusClass.middle);
 									status = 1;
 								} else {
-									datepickerSetClass(this,statusClass.stop);
-									status = 0;
+									// datepickerSetClass(this,statusClass.stop);
+									datepickerSetClass(this,statusClass.middle);
+									status = 2;
 								}
 									
 						}
 					}
+
+
 				
 			});
 
