@@ -66,6 +66,8 @@
 
 			base._updateFavoritesStatusCount();
 			base._animate();
+
+			base.$el.blur();
 			// console.log($.cookie(base.options.cookieListKey));
 		};
 		
