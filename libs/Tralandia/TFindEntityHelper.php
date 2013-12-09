@@ -52,6 +52,19 @@ trait TFindEntityHelper {
 	 * @param bool $need
 	 * @param string $by
 	 *
+	 * @return \Entity\Rental\Pricelist|null
+	 */
+	public function findPricelist($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(RENTAL_PRICELIST_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
 	 * @return \Entity\Rental\Amenity|null
 	 */
 	public function findAmenity($id, $need = TRUE, $by = 'id')
