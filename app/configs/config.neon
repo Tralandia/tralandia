@@ -181,6 +181,7 @@ services:
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 	rentalSearchCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalOrderCache')
+	googleGeocodeLimitCache: Nette\Caching\Cache(@googleGeocodeLimitCacheStorage, 'limit')
 
 
 	cacheStorage:
@@ -209,6 +210,14 @@ services:
 
 	searchCacheStorage:
 		class: \Tralandia\Caching\Database\DatabaseStorage(@serchCacheClient)
+		autowired: false
+
+	googleGeocodeLimitCacheClient:
+		class: \Tralandia\Caching\Database\DatabaseClient(@dibiConnection, 'googleGeocodeLimit')
+		autowired: false
+
+	googleGeocodeLimitCacheStorage:
+		class: \Tralandia\Caching\Database\DatabaseStorage(@googleGeocodeLimitCacheClient)
 		autowired: false
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
@@ -305,7 +314,7 @@ services:
 	userCreator: User\UserCreator
 	findOrCreateUser: User\FindOrCreateUser(@doctrine.dao(Entity\User\User))
 
-	addressNormalizer: Service\Contact\AddressNormalizer
+	addressNormalizer: Service\Contact\AddressNormalizer(@googleGeocodeLimitCache, ...)
 
 
 	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
@@ -398,7 +407,7 @@ services:
 	# ==============================
 	# ==================== Components/Registrator
 	# ==============================
-	- \Tralandia\Harvester\ProcessingData
+	- \Tralandia\Harvester\ProcessingData(@googleGeocodeLimitCache, ...)
 	- \Tralandia\Harvester\RegistrationData
 	- \Tralandia\Harvester\MergeData
 	- \Tralandia\Harvester\HarvestedContacts(@doctrine.dao(Entity\HarvestedContact))

@@ -5,6 +5,8 @@ namespace Service\Contact;
 use Entity\Contact\Address;
 use Entity\Language;
 use Environment\Environment;
+use Nette\Caching\Cache;
+use Nette\DateTime;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Tralandia\Location\Locations;
@@ -32,13 +34,18 @@ class AddressNormalizer extends \Nette\Object {
 	 */
 	private $locations;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $googleGeocodeLimitCache;
+
 
 	/**
 	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
 	 * @param \Environment\Environment $environment
 	 * @param \Tralandia\Location\Locations $locations
 	 */
-	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, Locations $locations) {
+	public function __construct(Cache $googleGeocodeLimitCache, \GoogleGeocodeServiceV3 $googleGeocodeService, Environment $environment, Locations $locations) {
 		$this->geocodeService = $googleGeocodeService;
 		$this->environment = $environment;
 		$this->geocodeService->setRequestDefaults(array(
@@ -46,6 +53,7 @@ class AddressNormalizer extends \Nette\Object {
 			'language' => $environment->getPrimaryLocation()->getDefaultLanguage()->getIso(),
 		));
 		$this->locations = $locations;
+		$this->googleGeocodeLimitCache = $googleGeocodeLimitCache;
 	}
 
 
@@ -99,6 +107,7 @@ class AddressNormalizer extends \Nette\Object {
 		$longitude = $latLong->getLongitude();
 
 		$response = $this->geocodeService->reverseGeocode($latitude, $longitude);
+		$this->incrementLimitCounter();
 
 		if($response->getStatus() == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
 			return \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT;
@@ -125,6 +134,7 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		$response = $this->geocodeService->geocode($address);
+		$this->incrementLimitCounter();
 
 		if($response->getStatus() == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
 			return \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT;
@@ -137,6 +147,14 @@ class AddressNormalizer extends \Nette\Object {
 		return $this->parseResponse($response);
 	}
 
+
+	protected function incrementLimitCounter()
+	{
+		$key = (new DateTime())->format('d-m-Y');
+		$limit = $this->googleGeocodeLimitCache->load($key);
+		$limit++;
+		$this->googleGeocodeLimitCache->save($key, $limit);
+	}
 
 	/**
 	 * @param \Entity\Contact\Address $address

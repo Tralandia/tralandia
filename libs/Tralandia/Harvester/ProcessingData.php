@@ -12,6 +12,7 @@ use Entity\Location\Location;
 use Extras\Books\Phone;
 use Extras\Types\Latlong;
 use Kdyby\Doctrine\EntityManager;
+use Nette\Caching\Cache;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Validators;
@@ -34,12 +35,18 @@ class ProcessingData {
      */
     private $em;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $googleGeocodeLimitCache;
 
-	public function __construct(AddressNormalizer $addressNormalizer, Phone $phone, EntityManager $em)
+
+	public function __construct(Cache $googleGeocodeLimitCache, AddressNormalizer $addressNormalizer, Phone $phone, EntityManager $em)
     {
         $this->addressNormalizer = $addressNormalizer;
         $this->phone = $phone;
         $this->em = $em;
+		$this->googleGeocodeLimitCache = $googleGeocodeLimitCache;
 	}
 
 
@@ -147,6 +154,12 @@ class ProcessingData {
 		/** @var $address \Entity\Contact\Address */
 		$address = $addressDao->createNew();
 		$address->setGps($latLong);
+
+		$key = (new \DateTime())->format('d-m-Y');
+		$limit = $this->googleGeocodeLimitCache->load($key);
+		if($limit > 2000) {
+			throw new InvalidArgumentsException('GoogleGeocode: over query limit 2000');
+		}
 
 		$response = $this->addressNormalizer->update($address, TRUE, $language);
 
