@@ -11,9 +11,17 @@ class DownloadPresenter extends BasePresenter
 	 */
 	protected $pricelistManager;
 
+	/**
+	 * @autowire
+	 * @var \Image\RentalPriceListPipe
+	 */
+	protected $pricelistPipe;
+
 	public function actionPricelist($id)
 	{
 		$pricelist = $this->findPricelist($id);
+
+		$this->redirectUrl($this->pricelistPipe->request($pricelist));
 
 		$fileName = $this->pricelistManager->getAbsolutePath($pricelist);
 
