@@ -487,6 +487,7 @@ function onChangeCalendar(self){
 
 		var my = $('.ui-datepicker-calendar td:not(.ui-state-disabled):first');
 
+
 		var m = my.data('month')+1; 
 		var y = my.data('year');
 
@@ -498,7 +499,12 @@ function onChangeCalendar(self){
 
 			my = '-'+m+'-'+y;
 
+		// console.log(my);
+
+
 			var status = 0;
+
+			// console.log(reservations);
 
 			$('.ui-datepicker-calendar td:not(.ui-datepicker-other-month)').each(function(index){
 				var realDate = (index+1)+my;
