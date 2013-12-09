@@ -57,6 +57,7 @@ class MainTest extends TestCase
 	protected $harvestedContacts;
 
 	protected $mergeData;
+	protected $processingData;
 
 
 	protected function setUp()
@@ -66,6 +67,7 @@ class MainTest extends TestCase
 		$this->phone = $this->getContext()->getByType('\Extras\Books\Phone');
 		$this->rm = $this->getContext()->getByType('\Image\RentalImageManager');
 		$this->translatorFactory = $this->getContext()->getByType('\Tralandia\Localization\ITranslatorFactory');
+		$this->processingData = $this->getContext()->getByType('\Tralandia\Harvester\ProcessingData');
 
 
 		$this->rentalCreator = $this->getContext()->rentalCreator;
@@ -92,7 +94,7 @@ class MainTest extends TestCase
 	}
 	public function testBase()
 	{
-		$processingData = new Harvester\ProcessingData($this->addressNormalizer, $this->phone, $this->em);
+		$processingData = $this->processingData;
 		$process = $processingData->process($this->objectData);
 		$registrationData = new Harvester\RegistrationData($this->rentalCreator, $this->harvestedContacts, $this->em, $this->rm, $this->mergeData, $this->userCreator, $this->translatorFactory);
 		$outputData = $registrationData->registration($process);

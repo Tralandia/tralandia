@@ -313,7 +313,7 @@ services:
 	userCreator: User\UserCreator
 	findOrCreateUser: User\FindOrCreateUser(@doctrine.dao(Entity\User\User))
 
-	addressNormalizer: Service\Contact\AddressNormalizer
+	addressNormalizer: Service\Contact\AddressNormalizer(@googleGeocodeLimitCache, ...)
 
 
 	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
