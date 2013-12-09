@@ -514,27 +514,32 @@ function onChangeCalendar(self){
 
 				var realDate = (index+1)+my;
 				var nextDate = (index+2)+my;
+				var prevDate = (index)+my;	
+
+				var mmm = m-1;
+				var ddd = index+1;
+				var expert = new Date(y,mmm,ddd);
+					expert.setDate(expert.getDate()-1);
+
+				var pm = expert.getMonth()+1;
+				var pd = expert.getDate();
+				var py = expert.getFullYear();
+
+				if(pm <9){
+					pm = '0'+pm;
+				}
+
+				if(pd <9){
+					pd = '0'+pd;
+				}				
+
+				prevDate = pd+'-'+pm+'-'+py;
 
 				if(index <9){
 					realDate = '0'+realDate;
 				}
 
-					// console.log(realDate);
-
-					// console.log(jQuery.inArray(realDate, reservations));
-
-
-					if(status == 2){
-						datepickerSetClass(this,statusClass.stop);
-						status = 0;
-					}
-
 					if(jQuery.inArray(realDate, reservations) != -1){
-						
-						// console.log(realDate);
-						// console.log(status);
-						// console.log('--');
-
 
 						switch(status){
 							case 0 :
@@ -547,12 +552,15 @@ function onChangeCalendar(self){
 									datepickerSetClass(this,statusClass.middle);
 									status = 1;
 								} else {
-									// datepickerSetClass(this,statusClass.stop);
 									datepickerSetClass(this,statusClass.middle);
-									status = 2;
+									status = 0;
 								}
 									
 						}
+					} else {
+						if(jQuery.inArray(prevDate, reservations) != -1){
+							datepickerSetClass(this,statusClass.stop);
+						}						
 					}
 
 
