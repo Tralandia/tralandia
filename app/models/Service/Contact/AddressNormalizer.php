@@ -75,6 +75,11 @@ class AddressNormalizer extends \Nette\Object {
 		} else {
 			$info = $this->getInfoUsingAddress($address);
 		}
+
+		if($info == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
+			return \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT;
+		}
+
 		if (is_array($info)){
 			$this->updateAddressData($address, $info, TRUE);
 			return $address->status;
@@ -94,6 +99,10 @@ class AddressNormalizer extends \Nette\Object {
 		$longitude = $latLong->getLongitude();
 
 		$response = $this->geocodeService->reverseGeocode($latitude, $longitude);
+
+		if($response->getStatus() == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
+			return \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT;
+		}
 
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
@@ -116,6 +125,11 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		$response = $this->geocodeService->geocode($address);
+
+		if($response->getStatus() == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
+			return \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT;
+		}
+
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
 		}

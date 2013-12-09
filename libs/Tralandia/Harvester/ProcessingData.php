@@ -149,6 +149,11 @@ class ProcessingData {
 		$address->setGps($latLong);
 
 		$response = $this->addressNormalizer->update($address, TRUE, $language);
+
+		if($response == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) {
+			throw new InvalidArgumentsException('GoogleGeocode: over query limit');
+		}
+
 		if ($response == FALSE){
 			throw new InvalidArgumentsException('Chýba GPS');
 		}

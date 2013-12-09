@@ -515,6 +515,7 @@ abstract class BasePresenter extends Presenter {
 			$gps = new \Extras\Types\Latlong($latitude, $longitude);
 			if($gps->isValid()) {
 				$info = $addressNormalizer->getInfoUsingGps($gps);
+				if($info == \GoogleGeocodeResponseV3::STATUS_OVER_QUERY_LIMIT) $info = [];
 			}
 		} else {
 			$primaryLocation = $this->locationDao->find($primaryLocation);
