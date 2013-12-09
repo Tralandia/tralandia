@@ -233,11 +233,18 @@ $(function() {
 });
 
 $(function(){
-	
 	var $textareas = $('.phraseEditForm').find('textarea');
 
 	$textareas.each(function(){
 		var scH = $(this)[0].scrollHeight;
-		$(this).height(scH);
+
+			scH = parseInt(scH);
+
+		if(scH < 10){
+			$(this).height(60);
+		} else {
+			$(this).height(scH);	
+		}
+		
 	});
 });
