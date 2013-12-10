@@ -127,22 +127,34 @@ class Rentals {
 	 *
 	 * @return \Entity\Rental\Rental[]
 	 */
-	public function getFeaturedRentals($limit=99)
+	public function getFeaturedRentals($limit=60)
 	{
-		$qb = $this->rentalDao->createQueryBuilder('r');
+		$now = new \Nette\DateTime();
+		$query = "SELECT (
+SELECT r0_.id
+FROM rental r0_
+left JOIN rental_service r1_ ON r0_.id = r1_.rental_id
+INNER JOIN contact_address c2_ ON r0_.address_id = c2_.id
+WHERE r0_.status = 6 AND
+c2_.primaryLocation_id = l3_.id
+ORDER BY if(r1_.serviceType = 'featured' AND r1_.dateFrom <= '$now' AND r1_.dateTo > '$now', 1, 0) DESC, r0_.rank DESC limit 1) AS rId
+FROM location l3_
+ORDER BY l3_.rentalCount DESC
+LIMIT $limit";
+		$query = $this->rentalDao->getEntityManager()->getConnection()->query($query);
 
-		$qb->innerJoin('r.services', 's')
-			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
-			->andWhere($qb->expr()->eq('s.serviceType', '?1'))
-			->andWhere($qb->expr()->lte('s.dateFrom', '?2'))
-			->andWhere($qb->expr()->gt('s.dateTo', '?2'))
-			->setParameter(1, 'featured')
-			->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
-			->orderBy('r.rank', 'DESC')
-			->setMaxResults($limit)
-		;
+		$data = $query->fetchAll();
 
-		return $qb->getQuery()->getResult();
+		$rentalIds = [];
+		foreach($data as $value) {
+			$rentalIds[] = $value['rId'];
+		}
+
+		$rentals = $this->rentalDao->findBy(['id' => $rentalIds]);
+
+		$rentals = \Tools::sortArrayByArray($rentals, $rentalIds, function($entity){return $entity->getId();});
+
+		return $rentals;
 	}
 
 

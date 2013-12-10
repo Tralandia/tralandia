@@ -73,7 +73,7 @@ class RentalPresenter extends BasePresenter
 		$rentalEditHandler->attach($form);
 
 		$form->onSuccess[] = function($form) {
-			$form->getPresenter()->redirect('this');
+			$form->getPresenter()->redirect(':Front:Rental:detail', ['rental' => $this->rental]);
 		};
 
 		return $form;

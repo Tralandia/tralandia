@@ -292,9 +292,7 @@
 											{else}
 												{$rental->address->address}, {$rental->address->postalCode} {_$rental->address->locality->name}
 											{/if}
-											{$rental->address->formattedAddress}<br/>
 										</a>
-
 										{if $rental->url}
 											<a target="_blank" class="websiteUrl" rel="nofollow" href="{$rental->url}"><span>{$rental->getUrlObject()->getHost()}</span> <i class="icon-external-link-sign"></i></a>
 										{/if}
