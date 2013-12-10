@@ -5,11 +5,11 @@
 <variables n:syntax="asp" name="homeInfo" data-info='{"rentalCount":"<%$locationRentalsCount%>","listTitle":"<%$pageH1%>"}'></variables>
 
 <h1 n:class="isset($isRootHome) ? rootHome , home">
-{if  !isset($isRootHome)}
+{if !isset($isRootHome)}
 	<img src="/images/flags/{$environmentPrimaryLocation->getFlagName()}" />
 {/if}
-	{$pageH1}
-	<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
+{$pageH1}
+<span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span>
 
 </h1>
 
@@ -22,17 +22,23 @@
 		{var $featured = $isRentalFeatured($rental); }
 
 			<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
-				<a n:href=":Front:Rental:detail $rental" title="{_$rental->name}" >
-					<div class="position">TOP</div>
-					{if $mainImage = $rental->getMainImage()}
-						<img alt="{_$rental->name}" n:image="$mainImage"/>
-					{/if}
-					{ifset $isRootHome}
-						<div class="label">{_$rental->address->locality->name}, {_$rental->address->primaryLocation->name}</div>
-					{else}
+				{ifset $isRootHome}
+					<a n:href="//:Front:Home:default Routers\BaseRoute::PRIMARY_LOCATION => $rental->address->primaryLocation" title="{_$rental->address->primaryLocation->name}" >
+						<div class="flag"><img src="/images/flags/{$rental->address->primaryLocation->getIso()}.png" /></div>
+						{if $mainImage = $rental->getMainImage()}
+							<img alt="{_$rental->name}" n:image="$mainImage"/>
+						{/if}
+						<div class="label">{_$rental->address->primaryLocation->name}</div>
+					</a>
+				{else}
+					<a n:href=":Front:Rental:detail $rental" title="{_$rental->name}" >
+						<div class="position">TOP</div>
+						{if $mainImage = $rental->getMainImage()}
+							<img alt="{_$rental->name}" n:image="$mainImage"/>
+						{/if}
 						<div class="label">{_$rental->address->locality->name} – {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}</div>
-					{/ifset}
-				</a>
+					</a>
+				{/ifset}
 			</li>
 		</ul>
 
