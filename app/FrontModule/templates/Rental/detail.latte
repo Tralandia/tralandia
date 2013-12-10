@@ -149,11 +149,18 @@
 									{_571}
 								{/if}
 
+								{dump $rental}
+
 								<span n:if="$rental->price->getSourceAmount()">{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
 
 								</h3>
 								{if count($rental->pricelistRows) > 0}
 								<ul>
+									<li>
+										{if $rental->bedroomCount} {_o100075} <span>{$rental->bedroomCount} </span>{/if}
+										{if $rental->rooms} {_o100190} <span>{$rental->rooms}</span>{/if}
+									</li>
+
 									{foreach $rental->pricelistRows as $pricelistRow}
 									<li tooltip="true" title="{_$pricelistRow->roomType->textPriceFor}">
 										{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
