@@ -121,6 +121,8 @@ class EmailManagerCommand extends BaseCommand
 //			->andWhere($qb->expr()->eq('r.harvested', ':harvestedOnly'))->setParameter('harvestedOnly', TRUE)
 			->setMaxResults(1);
 
+		// select count(*) from rental where emailSent = 0 and rank < 75
+
 		$rental = $qb->getQuery()->getOneOrNullResult();
 
 		return $rental;

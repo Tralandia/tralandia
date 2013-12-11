@@ -181,7 +181,7 @@ services:
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 	rentalSearchCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@searchCacheStorage, 'RentalOrderCache')
-	googleGeocodeLimitCache: Nette\Caching\Cache(@googleGeocodeLimitCacheStorage, 'limit')
+	googleGeocodeLimitCache: Extras\Cache\Cache(@googleGeocodeLimitCacheStorage, 'limit')
 
 
 	cacheStorage:
