@@ -24,7 +24,7 @@
 			<li n:class="$featured ? top, 'span4 ', ($iterator->counter%3 == 0) ? nthChild" data-cache="{$rand}">
 				{ifset $isRootHome}
 					<a n:href="//:Front:Home:default Routers\BaseRoute::PRIMARY_LOCATION => $rental->address->primaryLocation" title="{_$rental->address->primaryLocation->name}" >
-						<div class="flag"><img src="/images/flags/{$rental->address->primaryLocation->getIso()}.png" /></div>
+						<div class="flag"><img src="/images/flags/{$rental->address->primaryLocation->getFlagName()}" /></div>
 						{if $mainImage = $rental->getMainImage()}
 							<img alt="{_$rental->name}" n:image="$mainImage"/>
 						{/if}
