@@ -52,7 +52,11 @@ trait TMailer {
 		}
 
 		$domain = $this->environment->getPrimaryLocation()->getFirstDomain();
-		$message->setFrom('info@' . $domain->getDomain(), ucfirst($domain->getDomain()));
+		$domainHost = $domain->getDomain();
+		if(Nette\Utils\Strings::endsWith($domain->getDomain(), '.com')) {
+			$domainHost = 'tralandia.com';
+		}
+		$message->setFrom('info@' . $domainHost, ucfirst($domainHost));
 
 		$message->addBcc('tralandia.testing@gmail.com');
 
