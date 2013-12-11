@@ -117,6 +117,7 @@ class EmailManagerCommand extends BaseCommand
 	{
 		$qb = $this->rentalDao->createQueryBuilder('r');
 		$qb->where($qb->expr()->eq('r.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
+			->andWhere($qb->expr()->lt('r.rank', ':requiredRank'))->setParameter('requiredRank', 75)
 //			->andWhere($qb->expr()->eq('r.harvested', ':harvestedOnly'))->setParameter('harvestedOnly', TRUE)
 			->setMaxResults(1);
 
