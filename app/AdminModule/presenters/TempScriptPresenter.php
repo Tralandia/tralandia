@@ -486,7 +486,35 @@ group by r.id limit ' . $limit);
 
 	public function actionClearDescription($limit = 10, $chunk = 0)
 	{
-		$rentals = $this->rentalDao->findBy(['harvested' => TRUE], NULL, $limit, $chunk * $limit);
+		$editLogQb = $this->em->getRepository(EDIT_LOG_ENTITY)->createQueryBuilder('e');
+
+		$editLogQb->select('IDENTITY(e.rental) AS rId')->groupBy('e.rental');
+
+		$editedRentals = $editLogQb->getQuery()->getScalarResult();
+
+		$editedRentalsIds = [];
+		foreach($editedRentals as $editedRental) {
+			$editedRentalsIds[] = $editedRental['rId'];
+		}
+
+		$rentalsQb = $this->rentalDao->createQueryBuilder('r');
+		$rentalsQb->where($rentalsQb->expr()->notIn('r.id', $editedRentalsIds))
+			->andWhere($rentalsQb->expr()->eq('r.harvested', ':harvested'))->setParameter('harvested', TRUE)
+			->setMaxResults($limit)
+			->setFirstResult($chunk * $limit);
+
+		$rentals = $rentalsQb->getQuery()->getResult();
+
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($rentals as $rental) {
+			$firstAnswer = $rental->getFirstInterviewAnswer();
+			$phrase = $firstAnswer->getAnswer();
+			foreach($phrase->getTranslations() as $translation) {
+				$translation->setTranslation('');
+			}
+		}
+
+		$this->em->flush();
 	}
 
 }
