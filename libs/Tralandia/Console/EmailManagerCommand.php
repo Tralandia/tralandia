@@ -66,6 +66,8 @@ class EmailManagerCommand extends BaseCommand
 		foreach($message as $line) {
 			$output->writeLn($line);
 		}
+
+		\Nette\Diagnostics\Debugger::log(implode(' ', $message), 'email_manager');
 	}
 
 
