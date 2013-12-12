@@ -195,6 +195,14 @@ parameters:
 					- jqueryPlaceholder/lib/jquery.placeholder.min.js
 					- jqueryPlaceholder/custom/js/jqueryPlaceholderInit.js
 
+			rootHomeMap:
+				js:
+					- front/rootHomeMap/js/rootHomeMap.js
+					- front/rootHomeMap/js/googleAutocomplete.js
+				css:
+					- front/rootHomeMap/less/clickMapMain.less
+					- front/rootHomeMap/less/rootHomeMapNew.less
+
 			calendarIframe:
 				css:
 					- front/_base/less/calendar.less
@@ -389,6 +397,7 @@ parameters:
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.rootHomeMap%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.historyPlugin%
 				-  %webloader.packages.nette%
