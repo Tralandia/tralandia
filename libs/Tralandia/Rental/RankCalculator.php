@@ -284,7 +284,7 @@ class RankCalculator {
 		}
 
 		$rental->status = $rank['status'];
-		$rental->rank = ($rank['points'] / 155) * 100;
+		$rental->rank = round(($rank['points'] / 155) * 100);
 	}
 
 }
