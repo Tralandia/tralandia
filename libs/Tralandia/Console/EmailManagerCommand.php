@@ -43,6 +43,7 @@ class EmailManagerCommand extends BaseCommand
 
 
 		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
+		$this->addOption('reset', NULL, InputOption::VALUE_NONE);
 	}
 
 
@@ -74,8 +75,15 @@ class EmailManagerCommand extends BaseCommand
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 
-
 		try {
+
+			if($input->getOption('reset')) {
+				$this->log($output, '-------- resetting --------', 'email_manager');
+				$this->resetManager();
+				$this->log($output, '-------- done --------', 'email_manager');
+				return 0;
+			}
+
 			/** @var $environment \Environment\Environment */
 			$environment = $this->getHelper('dic')->getByType('\Environment\Environment');
 
@@ -101,7 +109,7 @@ class EmailManagerCommand extends BaseCommand
 				sleep(1);
 			}
 
-			$output->writeLn('------------- THE END -------------');
+			$this->log($output, '------------- THE END -------------', 'email_manager');
 			return 0;
 		} catch(\Exception $e) {
 			\Nette\Diagnostics\Debugger::log('error: ' . $e->getMessage(), 'email_manager');
@@ -126,6 +134,16 @@ class EmailManagerCommand extends BaseCommand
 		$rental = $qb->getQuery()->getOneOrNullResult();
 
 		return $rental;
+	}
+
+	protected function resetManager()
+	{
+		$qb = $this->rentalDao->createQueryBuilder();
+
+		$qb->update(RENTAL_ENTITY, 'r')
+			->set('r.emailSent', ':emailSent')->setParameter('emailSent', FALSE);
+
+		$qb->getQuery()->execute();
 	}
 
 

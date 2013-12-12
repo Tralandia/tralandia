@@ -71,15 +71,10 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
 
+		$template->slogan = $template->translate('282111');
 		if ($primaryLocation->slug == 'world') {
-			$template->slogan = $template->translate('o100163');
 			$template->isRootHome = TRUE;
 		} else {
-			$template->slogan = $template->translate('o21083').' '.$template->translate(
-				$primaryLocation->getName(),
-				NULL,
-				array(\Tralandia\Localization\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
-			);
 			$template->showFlag = TRUE;
 		}
 		$world = $this->em->getRepository(LOCATION_ENTITY)->findOneBySlug('world');
