@@ -1,0 +1,381 @@
+/* ľšč*/
+div.clickMap {
+    margin-bottom: 10px;
+    position: relative;
+    padding-top: 1px;
+}
+div.clickMapRegion {
+    position: absolute;
+    display: none;
+}
+table.clickMapLabel {
+    position: absolute;
+    max-width: 120px;
+    display: none;
+}
+table.clickMapLabel tr:first-child td {
+    background: #fff;
+    border: 1px solid #e0d6cc;
+    border-bottom: 0;
+    padding: 0 3px 3px;
+    margin: 0;
+}
+table.clickMapLabel tr:last-child td {
+    height: 13px;
+    background: url(../images/matrix_main.png) 50% -2403px;
+}
+div.clickMapSmallRegion {
+    position: absolute;
+    display: none;
+    width: 12px;
+    height: 12px;
+    background: url(../images/matrix_main.png) -890px -2245px;
+}
+a.clickMapBox {
+    position: absolute;
+    width: 119px;
+    height: 118px;
+    text-decoration: none;
+}
+a.clickMapBox div {
+    color: #fff;
+    margin: 10px 10px 0 12px;
+    text-align: center;
+    height: 17px;
+    overflow: hidden;
+}
+a.clickMapBox.rid200 {
+    background: url(../images/matrix_no.clickMapCountry.png) -480px 0px;
+    top: 40px;
+    left: 10px;
+}
+a.clickMapBox.rid200:hover {
+    background-position: -480px -130px;
+}
+a.clickMapBox.rid201 {
+    background: url(../images/matrix_no.clickMapCountry.png) -130px -410px;
+    top: 265px;
+    left: 10px;
+}
+a.clickMapBox.rid201:hover {
+    background-position: -130px -540px;
+}
+div.clickMap.no {
+    height: 515px; /* padding-top 1px */
+    background: url(../images/sk.clickmap.png) no-repeat;
+}
+div.clickMap.no div.clickMapCountry {
+    position: absolute;
+    width: 360px;
+    height: 400px;
+    background: url(../images/matrix_no.clickMapCountry.png);
+    top: 0px;
+    left: 160px;
+}
+div.clickMap.no img.clickMapImgmap {
+    position: absolute;
+    width: 360px;
+    height: 400px;
+}
+div.clickMap.no div.clickMapRegion {
+    background: url(../images/matrix_no.clickMapCountry.png);
+}
+div.clickMap.no div.rid1 {
+    width: 28px;
+    height: 38px;
+    background-position: -20px -420px;
+    left: 116px;
+    top: 305px;
+}
+div.clickMap.no div.rid2 {
+    width: 27px;
+    height: 33px;
+    background-position: -60px -420px;
+    left: 117px;
+    top: 335px;
+}
+div.clickMap.no div.rid3 {
+    width: 16px;
+    height: 26px;
+    background-position: -100px -420px;
+    left: 100px;
+    top: 333px;
+}
+div.clickMap.no div.rid4 {
+    width: 55px;
+    height: 65px;
+    background-position: -130px -420px;
+    left: 67px;
+    top: 278px;
+}
+div.clickMap.no div.rid5 {
+    width: 46px;
+    height: 56px;
+    background-position: -200px -420px;
+    left: 57px;
+    top: 309px;
+}
+div.clickMap.no div.rid6 {
+    width: 41px;
+    height: 59px;
+    background-position: -260px -420px;
+    left: 47px;
+    top: 323px;
+}
+div.clickMap.no div.rid7 {
+    width: 33px;
+    height: 44px;
+    background-position: -310px -420px;
+    left: 32px;
+    top: 339px;
+}
+div.clickMap.no div.rid8 {
+    width: 39px;
+    height: 55px;
+    background-position: -360px -420px;
+    left: 18px;
+    top: 313px;
+}
+div.clickMap.no div.rid9 {
+    width: 55px;
+    height: 54px;
+    background-position: -410px -420px;
+    left: 21px;
+    top: 269px;
+}
+div.clickMap.no div.rid10 {
+    width: 67px;
+    height: 64px;
+    background-position: -480px -420px;
+    left: 26px;
+    top: 225px;
+}
+div.clickMap.no div.rid11 {
+    width: 75px;
+    height: 49px;
+    background-position: 0px -500px;
+    left: 50px;
+    top: 193px;
+}
+div.clickMap.no div.rid12 {
+    width: 55px;
+    height: 88px;
+    background-position: -100px -500px;
+    left: 80px;
+    top: 234px;
+}
+div.clickMap.no div.rid13 {
+    width: 51px;
+    height: 108px;
+    background-position: -170px -500px;
+    left: 119px;
+    top: 227px;
+}
+div.clickMap.no div.rid14 {
+    width: 60px;
+    height: 80px;
+    background-position: -240px -500px;
+    left: 108px;
+    top: 168px;
+}
+div.clickMap.no div.rid15 {
+    width: 76px;
+    height: 69px;
+    background-position: -310px -500px;
+    left: 137px;
+    top: 146px;
+}
+div.clickMap.no div.rid16 {
+    width: 69px;
+    height: 100px;
+    background-position: -400px -500px;
+    left: 174px;
+    top: 56px;
+}
+div.clickMap.no div.rid17 {
+    width: 63px;
+    height: 48px;
+    background-position: -480px -500px;
+    left: 220px;
+    top: 33px;
+}
+div.clickMap.no div.rid18 {
+    width: 65px;
+    height: 51px;
+    background-position: 0px -620px;
+    left: 270px;
+    top: 17px;
+}
+div.clickMap.no div.rid19 {
+    width: 86px;
+    height: 57px;
+    background-position: -120px -600px;
+    left: 126px;
+    top: 320px;
+}
+div.clickMap.no div.rid20 {
+    width: 44px;
+    height: 81px;
+    background-position: -220px -600px;
+    left: 25px;
+    top: 203px;
+}
+div.clickMap.no div.rid21 {
+    width: 100px;
+    height: 55px;
+    background-position: -90px -695px;
+    left: 373px;
+    top: 115px;
+}
+div.clickMap.no div.rid22 {
+    width: 105px;
+    height: 100px;
+    background-position: -200px -695px;
+    left: 392px;
+    top: 26px;
+}
+div.clickMap.no div.rid23 {
+    width: 115px;
+    height: 165px;
+    background-position: -310px -695px;
+    left: 455px;
+    top: 30px;
+}
+
+
+div.clickMapTabs {
+    margin-top: 382px;
+    margin-left: 17px;
+    padding-top: 1px;
+}
+
+div.clickMapTabs .tabBar {
+    height: 32px;
+    overflow: hidden;
+    margin-left: 3px;
+}
+div.clickMapTabs .tabBar a, div.clickMapTabs .tabBar a * {
+    text-decoration: none;
+    color: #663300;
+    font-size: 14px;
+    font-weight: bold;
+}
+div.clickMapTabs .tabBar a * {
+    background: url(../images/matrix_bt.png);
+    height: 24px;
+    overflow: hidden;
+    padding-top: 8px;
+}
+div.clickMapTabs .tabBar a h3 {
+    float: left;
+    background-position: -2px -445px;
+    padding-left: 7px;
+}
+div.clickMapTabs .tabBar a span {
+    display: block;
+    float: left;
+    background-position: right -445px;
+    padding-right: 3px;
+}
+div.clickMapTabs .tabBar a.active h3 {
+    background-position: -2px -407px;
+}
+div.clickMapTabs .tabBar a.active span {
+    background-position: right -407px;
+}
+
+div.clickMapTabs div.tabContent {
+    height: 74px;
+    background: url(../images/matrix_main.png) 0px -2255px;
+}
+
+div.clickMapTabs div.tabContent ul {
+    display: block;
+    width: 130px;
+    float: left;
+    margin: 9px 0px 0px 10px;
+}
+div.clickMapTabs div.tabContent ul span {
+    background: url(../images/matrix_main.png) -320px -1028px;
+    padding: 0px 0px 0px 11px;
+    position: absolute;
+}
+div.clickMapTabs div.tabContent a {
+    display: block;
+    padding: 0px 0px 5px 16px;
+}
+div.clickMapTabs div.tabContent a:hover {
+    color: #f30808;
+}
+
+div.clickMapNavigator {
+    position: absolute;
+    width: 120px;
+    height: 369px;
+    /*overflow: hidden;*/
+    background: url(../images/matrix_main.png) -762px -2226px;
+    top: 10px;
+    left: 613px;
+    padding-top: 10px;
+    text-align: center;
+}
+div.clickMapNavigator .holder {
+    height: 334px;
+    margin-bottom: 0px;
+    /*overflow: hidden;*/
+}
+div.clickMapNavigator .holder a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    margin: 0px 9px 0px 9px;
+    padding: 7px 0px 7px 0px;
+}
+div.clickMapNavigator .holder a:hover {
+    background: url(../images/matrix_main.png) 0 -2355px;
+}
+div.clickMapNavigator a.top {
+    font-weight: bold;
+    border-bottom: 1px solid #878f93;
+}
+div.clickMapNavigator .iconHolder {
+    position: relative;
+}
+div.clickMapNavigator .icon {
+    display: none;
+    width: 107px;
+    height: 75px;
+    position: absolute;
+    background: url(../images/matrix_main.png) -121px -2346px;
+    top: -24px;
+    left: -90px;
+    text-align: left;
+}
+div.clickMapNavigator .icon img {
+    margin: 12px 0px 0px 13px;
+}
+div.clickMapNavigator .more {
+    display: block;
+    height: 21px;
+    color: #fff;
+    text-decoration: none;
+    margin: 5px 9px 0px 8px;
+    padding: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+div.clickMapNavigator .more:hover {
+    background: url(../images/matrix_main.png) -769px -2645px;
+}
+div.clickMapNavigator .more span {
+    background: url(../images/matrix_main.png) -318px -1168px;
+    padding-left: 10px;
+}
+div.clickMapNavigator .more:hover span {
+    background-position: -316px -1168px;
+}
+img.clickMapTitle {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+}
