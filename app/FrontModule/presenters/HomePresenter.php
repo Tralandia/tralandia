@@ -50,7 +50,7 @@ class HomePresenter extends BasePresenter {
 
 	public function createComponentCountryMap() {
 
-		return new \FrontModule\Components\CountryMap\CountryMap($this->locationRepository, $this->locationTypeRepository);
+		return new \FrontModule\Components\CountryMap\CountryMap($this->locationDao, $this->em->getRepository(LOCATION_TYPE_ENTITY));
 
 	}
 
