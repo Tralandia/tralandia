@@ -1,0 +1,126 @@
+
+
+<div class="clickMap sk">
+	
+<link rel="stylesheet" type="text/css" href="http://www.sk.tra.com/packages/front/rootHomeMap/less/clickMap.world.css" />
+
+	<a href="#" class="clickMapBox rid{$box->id}" n:foreach="$mapBox as $box"><div>{_$box->name}</div></a>
+
+<div class="rootHomeForm">
+  <div class="inner"><input type="text" placeholder="Zadaj lokalitu alebo daco" id="tags"><button class="btn btn-orange" type="submit"><i class="icon-search"></i> hladaj</button></div>
+</div>
+
+	<div class="clickMapCountry">
+		{* <div n:foreach="$regions as $region" class="clickMapRegion rid{$region->id} tempShow"></div> *}
+
+		<div class="clickMapRegion rid1 tempShow"></div>
+		<div class="clickMapRegion rid2 tempShow"></div>
+		<div class="clickMapRegion rid3 tempShow"></div>
+		<div class="clickMapRegion rid4 tempShow"></div>
+		<div class="clickMapRegion rid5 tempShow"></div>
+		<div class="clickMapRegion rid6 tempShow"></div>
+		<div class="clickMapRegion rid7 tempShow"></div>
+		<div class="clickMapRegion rid8 tempShow"></div>
+		<div class="clickMapRegion rid9 tempShow"></div>
+		<div class="clickMapRegion rid10 tempShow"></div>
+		<div class="clickMapRegion rid11 tempShow"></div>
+		<div class="clickMapRegion rid12 tempShow"></div>
+		<div class="clickMapRegion rid13 tempShow"></div>
+		<div class="clickMapRegion rid14"></div>
+		<div class="clickMapRegion rid15"></div>
+		<div class="clickMapRegion rid16"></div>
+		<div class="clickMapRegion rid17"></div>
+		<div class="clickMapRegion rid18"></div>
+		<div class="clickMapRegion rid19"></div>
+		<div class="clickMapRegion rid20"></div>
+		<div class="clickMapRegion rid21"></div>
+		<div class="clickMapRegion rid22"></div>
+		<div class="clickMapRegion rid23"></div>
+
+		<img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="720" height="460" alt="" />
+
+		<map name="regions">
+			<area rid="1" shape="poly" coords="20,120,60,40,100,70,75,110,90,140,80,160,90,165,230,185,170,230,80,210,80,130" href="#" />
+			<area rid="2" shape="poly" coords="100,70,120,70,167,30,220,10,270,20,210,70,230,120,235,170,220,190,80,160,80,120" href="#" />
+			<area rid="3" shape="poly" coords="140,224,161,251,168,257,169,279,120,250,87,210" href="#" />
+			<area rid="4" shape="poly" coords="150,235,170,230,175,220,210,249,170,249" href="#" />
+			<area rid="5" shape="poly" coords="170,270,190,250,270,300,210,440,179,400,180,340,150,300" href="#" />
+			<area rid="6" shape="poly" coords="315,210,358,205,405,215,430,260,455,255,425,310,455,310,435,360,370,380,350,290,280,270" href="#" />
+			<area rid="7" shape="poly" coords="315,210,290,110,350,50,430,20,450,100,460,160,430,170,440,190" href="#" />
+			<area rid="8" shape="poly" coords="580,330,620,310,640,310,640,280,660,280,690,310,710,330,710,395,680,430,620,400,570,370" href="#" />
+			<area rid="9" shape="poly" coords="385,195,418,190,436,195,425,200,445,235,455,225,464,242,432,260" href="#" />
+			<area rid="10" shape="poly" coords="425,195,490,200,520,225,545,220,530,240,510,280,460,230,445,230" href="#" />
+			<area rid="11" shape="poly" coords="430,162,455,162,463,152,490,150,515,163,490,203,450,203" href="#" />
+			<area rid="12" shape="poly" coords="490,200,520,155,590,140,610,160,605,180,615,180,625,160,640,160,630,200,590,240,550,240,545,225,525,225" href="#" />
+			<area rid="13" shape="poly" coords="545,225,550,240,600,240,620,280,643,295,643,310,560,310,524,260" href="#" />
+		</map>
+
+{* 		<map name="regions" n:inner-foreach="$regions as $region">
+			<area rid="{$region->id}" shape="poly" coords="{$region->clickMapData['coords']}" href="{$region->slug}" title="{_$region->name}" />
+		</map> *}
+		<style type="text/css" n:inner-foreach="$regions as $region">{!$region->clickMapData['css']}</style>
+	</div>
+
+	<div class="clickMapNavigator">
+		<div class="holder">
+			<a class="top">Maps title</a>
+			<div class="iconHolder"><div class="icon"><img src="temp/maps/africa.png" /></div><a href="#">Africa</a></div>			
+
+			<div class="iconHolder"><div class="icon"><img src="temp/maps/europe.png" /></div><a href="#">Europe</a></div>
+
+
+		</div>
+		<a class="more" href="#">dalsie<span>&nbsp;</span></a>
+	</div>
+
+	<div class="clickMapTabs">
+		<div class="tabBar">
+{* 			<table class="holder">
+				<tr>
+					<td><a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a></td>
+					<td><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a></td>
+					<td><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a></td>
+				</tr>
+			</table> *}
+		</div>
+		<!--<div class="tabBar">
+			&nbsp;<br />
+			<a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a>
+		</div>-->
+		<div class="tabContent">
+			<ul>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Branovo :P</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Detva</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Komarno</span></a></li>
+			</ul>
+
+			<ul>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Sahy</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Terchova</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Trnovec</span></a></li>
+			</ul>			
+
+			<ul>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Branovo :P</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Detva</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Komarno</span></a></li>
+			</ul>
+
+			<ul>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Sahy</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Terchova</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Trnovec</span></a></li>
+			</ul>
+			<ul>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Sahy</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Terchova</span></a></li>
+				<li><a href="#"><i class="icon-angle-right"></i> <span>Trnovec</span></a></li>
+			</ul>
+		
+
+
+			{*@TODO: Zalozky budu platene sekcie, v kazdej zalozke budu tie locations ktore obsahuju najviac platenych objektov*}
+			{*$regions|ulList , 5, '<li><span>&nbsp;</span><a href="%slug%" rid="%id%">%_name%</a></li>', 3*}
+		</div>
+	</div>
+</div>
