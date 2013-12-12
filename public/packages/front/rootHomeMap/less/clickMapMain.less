@@ -1,0 +1,280 @@
+@import '../../_base/less/lessFunctions.less';
+@import '../../../bootstrap/lib/less/mixins.less';
+
+
+/* map search form UI design */
+
+.rootHomeForm {
+
+    padding: 10px;
+    background: rgba(0,0,0,0.6);
+    width: 682px;
+    margin: 10px;
+    .border-radius(6px);
+    position: relative;
+
+
+    .inner {
+        
+        background: #fff;
+        .border-radius(4px);
+        border:none;
+    }
+
+    input[type=text] {
+        height: 31px;
+        width: 584px;
+        margin: 0;
+        .border-radius(4px 0 0 4px);
+        border:1px solid rgb(85, 102, 21);
+        border:1px solid #fff;
+        border-right: 0;
+        font-size: 16px;
+    }
+
+    button.btn-orange {
+        .border-radius(0 3px 3px 0);
+        height: 41px;
+        border:none;
+        border-left: 1px solid #f68703;
+        position: absolute;
+        top: 10px;
+        font-size: 18px;
+        font-weight: normal;        
+        right: 10px;
+
+        i {
+            top: 2px;
+            position: relative;
+            margin-right: 4px;            
+        }
+    }
+}
+
+
+
+/* map tab content  */
+
+div.clickMapTabs div.tabContent {
+    height: 77px;
+    width: 683px;
+    padding: 10px;
+    margin:auto 10px 10px 10px ; 
+    background: rgba(255, 255, 255, 0.9);
+    .basic-border-radius(5px);
+    color: @lightGreen;
+    position: relative;
+    z-index: 5; 
+     
+    ul {
+        display: block;
+        width: 136px;
+        float: left;
+        margin: 0;    
+
+        li {
+            font-size: 13px;
+            height: 20px;
+
+            a {
+                color: @darkGreen;
+
+                &.active {                
+                    text-decoration: underline;
+                }
+
+                &.current {
+                    span {
+                        text-decoration: underline;
+                    }
+                }
+
+                i {
+                    color: @brown;
+                    /*font-size: 13px;*/
+                }           
+            }
+
+
+        }    
+    }
+}
+
+
+div.clickMapTabs div.tabContent a {
+    display: block;
+    padding: 0px 0px 5px 16px;
+
+    &:hover {
+        text-decoration:none;
+
+        span {
+            text-decoration: underline;
+        }
+    }
+}
+
+
+
+/* states location points design */
+.clickMapCountry .mapPoint {
+    font-size: 22px;
+    color: @brown;
+    width: 22px;
+    cursor: pointer;
+
+
+
+    &.current {
+       color: @orangeBtn;
+       font-size: 26px;
+       margin-top: -2px;
+       margin-left: -2px;
+    }
+}
+
+
+
+/* map global design */
+
+.clickMapCountry {
+    position: relative;
+}
+div.clickMap {
+    margin-bottom: 10px;
+    position: relative;
+    padding-top: 1px;
+}
+div.clickMapRegion {
+    position: absolute;    
+    background-image: url(../../../../images/maps/matrix_world.clickMapCountry.png);
+}
+div.clickMapRegion.tempShow {
+    display: none;
+}
+
+a.clickMapBox {
+    position: absolute;
+    width: 119px;
+    height: 118px;
+    text-decoration: none;
+}
+a.clickMapBox div {
+    color: #fff;
+    margin: 10px 10px 0 12px;
+    text-align: center;
+    height: 17px;
+    overflow: hidden;
+}
+
+
+
+div.clickMap {
+    background-size: cover;
+    .border-radius(6px);
+    overflow: hidden;
+    margin: 1px;
+}
+
+div.clickMapNavigator {
+    width: 100px;
+    
+    /*overflow: hidden;*/
+    background: rgba(0, 0, 0, 0.6);
+    top: 10px;
+    float: right;
+    margin-right: 10px;
+    margin-top: -70px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    .border-radius(5px);
+    position: absolute;
+    right: 1px;
+    top: 152px;    
+}
+div.clickMapNavigator .holder {
+    
+    margin-bottom: 0px;
+    
+}
+div.clickMapNavigator .holder a {
+    display: block;
+    line-height: 15px;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    padding: 6px 0;
+    line-height: 12px;
+    font-size: 12px;
+}
+
+
+div.clickMapNavigator .holder .separator {
+    margin-bottom: 15px;
+}
+
+div.clickMapNavigator .holder a.rootTree {
+    font-size: 13px;
+    padding: 7px 1px;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+
+div.clickMapNavigator .holder a:hover {
+    background: rgba(255, 255, 255, 0.5);
+    
+}
+div.clickMapNavigator a.top {
+    font-weight: bold;
+    border-bottom: 1px solid #878f93;
+}
+
+div.clickMapNavigator a.top:last-child {
+    border: none;
+}
+div.clickMapNavigator .iconHolder {
+    position: relative;
+}
+div.clickMapNavigator .icon {
+    width: 107px;
+    background: url(../images/matrix_main.png) -121px -2346px;
+    top: -24px;
+    left: -90px;
+    text-align: left;
+}
+div.clickMapNavigator .icon img {
+    margin: 12px 0px 0px 13px;
+}
+div.clickMapNavigator .more {
+    display: block;
+    height: 22px;
+    text-decoration: none;
+    margin: 5px 9px 0px 8px;
+    padding: 0px 0px 0px 0px;
+    .border-radius(4px);
+    overflow: hidden;
+    line-height: 22px;
+    font-size: 12px;
+
+    background: @orangeBtn;
+
+    &:hover {
+        background:#f66403;
+    }
+
+    border: none;
+    color: #fff;    
+}
+div.clickMapNavigator .more:hover {
+}
+div.clickMapNavigator .more span {
+}
+div.clickMapNavigator .more:hover span {
+}
+img.clickMapTitle {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+}

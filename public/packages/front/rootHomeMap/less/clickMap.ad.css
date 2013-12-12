@@ -1,0 +1,62 @@
+/* ľšč*/
+div.clickMap {
+    margin-bottom: 10px;
+    position: relative;
+    padding-top: 1px;
+}
+div.clickMapRegion {
+    position: absolute;
+    display: none;
+}
+table.clickMapLabel {
+    position: absolute;
+    max-width: 120px;
+    display: none;
+}
+table.clickMapLabel tr:first-child td {
+    background: #fff;
+    border: 1px solid #e0d6cc;
+    border-bottom: 0;
+    padding: 0 3px 3px;
+    margin: 0;
+}
+table.clickMapLabel tr:last-child td {
+    height: 13px;
+    background: url(../images/matrix_main.png) 50% -2403px;
+}
+div.clickMapSmallRegion {
+    position: absolute;
+    display: none;
+    width: 12px;
+    height: 12px;
+    background: url(../images/matrix_main.png) -890px -2245px;
+}
+a.clickMapBox {
+    position: absolute;
+    width: 119px;
+    height: 118px;
+    text-decoration: none;
+}
+a.clickMapBox div {
+    color: #fff;
+    margin: 10px 10px 0 12px;
+    text-align: center;
+    height: 17px;
+    overflow: hidden;
+}
+a.clickMapBox.rid200 {
+    background: url(../images/matrix_se.clickMapCountry.png) 0px -410px;
+    top: 40px;
+    left: 10px;
+}
+a.clickMapBox.rid200:hover {
+    background-position: 0px -540px;
+}
+a.clickMapBox.rid201 {
+    background: url(../images/matrix_se.clickMapCountry.png) -130px -410px;
+    top: 265px;
+    left: 10px;
+}
+a.clickMapBox.rid201:hover {
+    background-position: -130px -540px;
+}
