@@ -241,7 +241,7 @@ abstract class BasePresenter extends Presenter {
 
 		$this->template->gaCode = $parameters['googleAnalytics']['code'];
 
-		$this->template->isSK = $this->primaryLocation->getIso() == 'sk';
+		$this->template->isSK = $this->primaryLocation->getIso() == 'sk' && $parameters['googleAnalytics']['code'];
 
 		$this->template->environmentPrimaryLocation = $this->primaryLocation;
 
