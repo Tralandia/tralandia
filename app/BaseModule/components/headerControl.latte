@@ -57,11 +57,19 @@
 						</li>
 						<li>
 							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="countryMenuOptionsOpen">
+									{_$environment->getPrimaryLocation()->name}<i class="icon-angle-down"></i>
+								</a>
+							</div>
+						</li>							
+						<li>
+							<div class="dropdown lang">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
 									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
 								</a>
 							</div>
 						</li>
+					
 					{else}
 
 						<li class="headerIcon">
@@ -87,11 +95,20 @@
 						</li>
 						<li>
 							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="countryMenuOptionsOpen">
+									{_$environment->getPrimaryLocation()->name}
+									<i class="icon-angle-down"></i>
+								</a>
+							</div>
+						</li>							
+						<li>
+							<div class="dropdown lang">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
 									{_$environment->getLanguage()->name} <i class="icon-angle-down"></i>
 								</a>
 							</div>
 						</li>
+					
 
 					{/if}
 
@@ -99,8 +116,8 @@
 
 				<ul class="dropdown-menu" id="countryMenuOptions" n:inner-foreach="$topCountries as $column">
 					<li>
-						<ul n:inner-foreach="$column as $country">
-							<li>
+						<ul>
+							<li n:foreach="$column as $country">
 								{if array_key_exists($country->getId(), $importantCountries)}
 									{var $rel = NULL}
 								{else}
@@ -112,6 +129,7 @@
 									<a href="{plink this, primaryLocation => $country}" n:attr="rel => $rel"><i class="icon-angle-right"></i> <small>{_$country->getName()}</small></a>
 								{/if}
 							</li>
+							<li><a href="{$worldLink}"><i class="icon-angle-right"></i> <small>#show all</small></a></li>
 						</ul>
 					</li>
 				</ul>

@@ -294,6 +294,12 @@
 
 		z-index: 9000000;
 
+		&#countryMenuOptions {
+			&:before , &:after {
+				left: 70%;
+			}
+		}
+
 		li {
 
 			float: left;
@@ -629,6 +635,15 @@
 					height: 23px;
 					overflow: hidden;
 					display: block;
+
+					&#countryMenuOptionsOpen {
+						border-right: 1px solid #bbbbbb;
+						height: 14px;
+						padding-top: 0;
+						display: block;
+						top: 6px;
+						line-height: 10px;						
+					}
 				}
 
 				&:hover {
