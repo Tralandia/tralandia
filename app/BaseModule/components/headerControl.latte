@@ -97,6 +97,24 @@
 
 				</ul>
 
+				<ul class="dropdown-menu" id="countryMenuOptions" n:inner-foreach="$topCountries as $column">
+					<li>
+						<ul n:inner-foreach="$column as $country">
+							<li>
+								{if array_key_exists($country->getId(), $importantCountries)}
+									{var $rel = NULL}
+								{else}
+									{var $rel = 'nofollow'}
+								{/if}
+								{if $country->getId() == $environment->getPrimaryLocation()->getId()}
+									<span><i class="icon-ok"></i> <small>{_$country->getName()}</small></span>
+								{else}
+									<a href="{plink this, primaryLocation => $country}" n:attr="rel => $rel"><i class="icon-angle-right"></i> <small>{_$country->getName()}</small></a>
+								{/if}
+							</li>
+						</ul>
+					</li>
+				</ul>
 				<ul class="dropdown-menu" id="langMenuOptions" n:inner-foreach="$liveLanguages as $column">
 					<li>
 						<ul n:inner-foreach="$column as $language">

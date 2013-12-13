@@ -10,6 +10,7 @@ use Routers\FrontRoute;
 use Service\Seo\ISeoServiceFactory;
 use Service\Seo\SeoService;
 use Tralandia\Language\Languages;
+use Tralandia\Location\Countries;
 
 class HeaderControl extends \BaseModule\Components\BaseControl {
 
@@ -48,9 +49,14 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 	 */
 	private $languages;
 
+	/**
+	 * @var \Tralandia\Location\Countries
+	 */
+	private $countries;
+
 
 	public function __construct(SeoService $pageSeo, User $user = NULL, Environment $environment, EntityManager $em,
-								Languages $languages, ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
+								Languages $languages, Countries $countries, ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
 		parent::__construct();
 		$this->pageSeo = $pageSeo;
 		$this->user = $user;
@@ -59,6 +65,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$this->seoFactory = $seoFactory;
 		$this->shareLinks = $shareLinks;
 		$this->languages = $languages;
+		$this->countries = $countries;
 	}
 
 	public function render() {
@@ -66,6 +73,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 
 		$liveLanguages = $this->languages->findLive($this->environment->getLanguage());
+		$topCountries = $this->countries->findTop(30);
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
@@ -96,7 +104,9 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template->liveLanguages = array_chunk($liveLanguages, round(count($liveLanguages)/3));
 		$centralLanguage = $this->languages->findCentral();
-		$template->importantLanguages = $importantLanguagesIsos = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
+		$template->importantLanguages = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
+		$template->topCountries = array_chunk($topCountries, round(count($topCountries)/3));
+		$template->importantCountries = $this->environment->getLanguage()->getImportantLocations();
 
 		$template->environment = $this->environment;
 		$template->pageSeo = $this->pageSeo;

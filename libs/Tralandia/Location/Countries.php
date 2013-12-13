@@ -70,6 +70,25 @@ class Countries {
 
 
 	/**
+	 * @param int $limit
+	 *
+	 * @return \Entity\Location\Location[]
+	 */
+	public function findTop($limit)
+	{
+		$qb = $this->locationDao->createQueryBuilder('l');
+
+		$qb->innerJoin('l.type', 't');
+
+		$qb->where($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country')
+			->orderBy('l.rentalCount', 'DESC')
+			->setMaxResults($limit);
+
+		return $qb->getQuery()->getResult();
+	}
+
+
+	/**
 	 * @param Presenter $presenter
 	 * @param string $destination
 	 *

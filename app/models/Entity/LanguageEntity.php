@@ -101,6 +101,14 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $translationPrice;
 
+	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection|\Entity\ImportantLanguageForLocation[]
+	 * @ORM\OneToMany(targetEntity="\Entity\ImportantLanguageForLocation", mappedBy="language", cascade={"persist", "remove"})
+	 * @ORM\OrderBy({"dailyPhraseSearches" = "DESC"})
+	 */
+	protected $importantLocationsFroLanguage;
+
+
 	public function getPluralsNames()
 	{
 		if(isset($this->plurals['names'])) {
@@ -168,6 +176,23 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		return array('id');
 	}
+
+
+	/**
+	 * @return array|\Entity\Location\Location[]
+	 */
+	public function getImportantLocations()
+	{
+		$return = [];
+		foreach($this->importantLocationsFroLanguage as $value) {
+			$location = $value->getLocation();
+			$return[$location->getId()] = $location;
+		}
+
+		return $return;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
