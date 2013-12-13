@@ -110,6 +110,12 @@ class User extends \Entity\BaseEntityDetails {
 		return count($rental) ? $rental[0] : NULL;
 	}
 
+
+	public function isOwnerOf(Rental\Rental $rental)
+	{
+		return $this->getId() == $rental->getOwner()->getId();
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */

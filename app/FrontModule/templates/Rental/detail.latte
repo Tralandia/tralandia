@@ -21,7 +21,7 @@
 	<div class="span12 rentalDetailPage" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 
-			<a class="editButton btn btn-orange tooltipElem" href="#" target="_blank" data-placement="left" title="{_1370}"><i class="icon-edit"></i></a>
+			<a n:if="$loggedUser && $loggedUser->isOwnerOf($rental)" class="editButton btn btn-orange tooltipElem" n:href=":Owner:Rental:edit $rental->getId()" target="_blank" data-placement="left" title="{_1370}"><i class="icon-edit"></i></a>
 
 			<div id="content" class="noPadding">
 
