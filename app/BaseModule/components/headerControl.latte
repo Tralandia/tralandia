@@ -127,7 +127,7 @@
 								{if $country->getId() == $environment->getPrimaryLocation()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$country->getName()}</small></span>
 								{else}
-									<a href="{plink this, primaryLocation => $country}" n:attr="rel => $rel"><i class="icon-angle-right"></i> <small>{_$country->getName()}</small></a>
+									<a href="{plink this, primaryLocation => $country}" n:attr="rel => $rel"><i class="icon-angle-right"></i> <small>{_$country->getName()} ({$country->rentalCount})</small></a>
 								{/if}
 							</li>
 							<li n:if="$topIterator->isLast()"><a href="{$worldLink}"><i class="icon-angle-right"></i> <small>{_297353}</small></a></li>
