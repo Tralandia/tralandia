@@ -20,6 +20,9 @@
 
 	<div class="span12 rentalDetailPage" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
+
+			<a class="editButton btn btn-orange tooltipElem" href="#" target="_blank" data-placement="left" title="{_1370}"><i class="icon-edit"></i></a>
+
 			<div id="content" class="noPadding">
 
 				<div class="row-fluid objectDetailContent">
@@ -140,7 +143,7 @@
 								{/if}
 
 
-							<ul class="detailPriceList" n:if="count($rental->pricelistRows) > 0 || $rental->price->getSourceAmount()">
+							<ul class="detailPriceList" n:if="count($rental->pricelistRows) > 0 || $rental->price->getSourceAmount() || $rental->bedroomCount || $rental->rooms">
 								<li><h3 n:class="$pricesAvailable ? full : small">
 
 								{if $rental->maxCapacity > 0}
