@@ -84,7 +84,16 @@ class Countries {
 			->orderBy('l.rentalCount', 'DESC')
 			->setMaxResults($limit);
 
-		return $qb->getQuery()->getResult();
+		$result = $qb->getQuery()->getResult();
+
+		$return = array();
+		foreach ($result as $key => $value) {
+			$return[$this->translator->translate($value->getName())] = $value;
+		}
+
+		$this->collator->ksort($return);
+
+		return $return;
 	}
 
 
