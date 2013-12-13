@@ -9,6 +9,7 @@ namespace Tralandia\Security;
 
 
 use Doctrine\ORM\EntityManager;
+use Entity\Rental\Rental;
 use Nette;
 
 class LoggedUser {
