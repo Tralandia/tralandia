@@ -402,6 +402,13 @@ $(document).ready(function(){
 	// nahrada pre zobrazenie lang menu
 	var langmenuOpen = false;
 	$('#langMenuOptionsOpen').click(function(){
+
+		if(countryMenuOpen){
+			$('#countryMenuOptions').hide();
+			$('#countryMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
+			countryMenuOpen = false;
+		}
+
 		if(!langmenuOpen){
 			$('#langMenuOptions').show();
 			$(this).find('i.entypo-chevron-down').removeClass('entypo-chevron-down').addClass('entypo-chevron-up');
@@ -415,6 +422,28 @@ $(document).ready(function(){
 		return false;
 	});
 
+	// nahrada pre zobrazenie lang menu
+	var countryMenuOpen = false;
+	$('#countryMenuOptionsOpen').click(function(){
+
+		if(langmenuOpen){
+			$('#langMenuOptions').hide();
+			$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
+			langmenuOpen = false;
+		}
+
+		if(!countryMenuOpen){
+			$('#countryMenuOptions').show();
+			$(this).find('i.entypo-chevron-down').removeClass('entypo-chevron-down').addClass('entypo-chevron-up');
+			countryMenuOpen = true;
+		} else {
+			$('#countryMenuOptions').hide();
+			$(this).find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
+			countryMenuOpen = false;
+		}
+
+		return false;
+	});
 	
 
 	$('#socialIcons').socialShareMenu();
@@ -472,6 +501,12 @@ $('body').click(function(event){
 		$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 		langmenuOpen = false;
 	}
+
+	if(countryMenuOpen){
+		$('#countryMenuOptions').hide();
+		$('#countryMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
+		countryMenuOpen = false;
+	}	
 
 
 });
