@@ -73,7 +73,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 
 		$liveLanguages = $this->languages->findLive($this->environment->getLanguage());
-		$topCountries = $this->countries->findTop(30);
+		$topCountries = $this->countries->findTop(32);
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
