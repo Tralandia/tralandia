@@ -111,7 +111,7 @@ class ProcessingData {
 			'primaryLocation' => $primaryLocation,
 			'maxCapacity' => $objectData['maxCapacity'],
 			'type' => $rentalTypeDao->findOneBy(['slug' => $objectData['type']]),
-			'classification' => $objectData['classification'],
+			'classification' => $objectData['classification'] ? $objectData['classification'] : NULL,
 			'address' => $address,
 			'contactName' => $objectData['contactName'],
 			'url' => $objectData['url'],
@@ -155,8 +155,7 @@ class ProcessingData {
 		$address = $addressDao->createNew();
 		$address->setGps($latLong);
 
-		$key = (new \DateTime())->format('d-m-Y');
-		$limit = $this->googleGeocodeLimitCache->load($key);
+		$limit = $this->getGeocodeLimit();
 		if($limit > 2000) {
 			throw new InvalidArgumentsException('GoogleGeocode: over query limit 2000');
 		}
@@ -173,6 +172,13 @@ class ProcessingData {
 
         return $address;
     }
+
+
+	protected function getGeocodeLimit()
+	{
+		$key = (new \DateTime())->format('d-m-Y');
+		return $this->googleGeocodeLimitCache->load($key);
+	}
 
 	protected function getGps($address){
 		if(!isset($address)){

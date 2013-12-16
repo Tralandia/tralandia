@@ -20,6 +20,7 @@ class EditLog extends \Entity\BaseEntity
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", cascade={"persist"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 

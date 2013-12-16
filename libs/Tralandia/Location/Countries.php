@@ -71,18 +71,18 @@ class Countries {
 
 	/**
 	 * @param int $limit
+	 * @param int $minRentalCount
 	 *
 	 * @return \Entity\Location\Location[]
 	 */
-	public function findTop($limit)
+	public function findTop($minRentalCount = 100)
 	{
 		$qb = $this->locationDao->createQueryBuilder('l');
 
-		$qb->innerJoin('l.type', 't');
-
-		$qb->where($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country')
-			->orderBy('l.rentalCount', 'DESC')
-			->setMaxResults($limit);
+		$qb->innerJoin('l.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country')
+			->andWhere($qb->expr()->gte('l.rentalCount', ':minRentalCount'))->setParameter('minRentalCount', $minRentalCount)
+			->orderBy('l.rentalCount', 'DESC');
 
 		$result = $qb->getQuery()->getResult();
 
