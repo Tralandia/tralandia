@@ -36,7 +36,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$this->template->navigatorData = $this->getNavigatorData($country, $clickMapData);
 
 	    $template = $this->template;
-	    $template->setFile(dirname(__FILE__) . '/newLayout.latte');
+	    $template->setFile(dirname(__FILE__) . '/world.latte');
 	    $template->setTranslator($this->presenter->getService('translator'));
 	    $template->render();
 

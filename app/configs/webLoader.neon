@@ -200,8 +200,35 @@ parameters:
 					- front/rootHomeMap/js/rootHomeMap.js
 					- front/rootHomeMap/js/googleAutocomplete.js
 				css:
-					- front/rootHomeMap/less/clickMapMain.less
-					- front/rootHomeMap/less/rootHomeMapNew.less
+					- front/rootHomeMap/less/clickMapMain.less					
+					- front/rootHomeMap/less/clickMap.ad.less				
+					- front/rootHomeMap/less/clickMap.usa.less				
+					- front/rootHomeMap/less/clickMap.usak.less
+					- front/rootHomeMap/less/clickMap.usal.less				
+					- front/rootHomeMap/less/clickMap.usaz.less				
+					- front/rootHomeMap/less/clickMap.usca.less				
+					- front/rootHomeMap/less/clickMap.usco.less				
+					- front/rootHomeMap/less/clickMap.usct.less				
+					- front/rootHomeMap/less/clickMap.usde.less				
+					- front/rootHomeMap/less/clickMap.usfl.less				
+					- front/rootHomeMap/less/clickMap.usga.less				
+					- front/rootHomeMap/less/clickMap.ushi.less				
+					- front/rootHomeMap/less/clickMap.usid.less				
+					- front/rootHomeMap/less/clickMap.usma.less				
+					- front/rootHomeMap/less/clickMap.usme.less				
+					- front/rootHomeMap/less/clickMap.usmi.less				
+					- front/rootHomeMap/less/clickMap.usnc.less				
+					- front/rootHomeMap/less/clickMap.usnh.less				
+					- front/rootHomeMap/less/clickMap.usnv.less				
+					- front/rootHomeMap/less/clickMap.usny.less				
+					- front/rootHomeMap/less/clickMap.usor.less				
+					- front/rootHomeMap/less/clickMap.uspa.less				
+					- front/rootHomeMap/less/clickMap.usri.less				
+					- front/rootHomeMap/less/clickMap.ussc.less				
+					- front/rootHomeMap/less/clickMap.ustx.less				
+					- front/rootHomeMap/less/clickMap.usva.less				
+					- front/rootHomeMap/less/clickMap.europe.less				
+					- front/rootHomeMap/less/clickMap.canada.less				
 
 			calendarIframe:
 				css:
@@ -246,7 +273,6 @@ parameters:
 					- front/rentalList/less/rentalList.less
 					#home
 					- front/home/less/home.less
-					- front/home/less/clickMap.less
 					# rental registration
 					- front/rentalRegistration/less/rentalRegistration.less
 
