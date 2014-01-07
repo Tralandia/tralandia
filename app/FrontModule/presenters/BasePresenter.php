@@ -278,6 +278,20 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->sendJson($json);
 	}
 
+	public function actionUnsubscribe($email)
+	{
+		if($email) {
+			$potentialMemberDao = $this->em->getRepository(POTENTIAL_MEMBER);
+			$potentialMember = $potentialMemberDao->findOneBy(['email' => $email]);
+			$potentialMember->unsubscribed = TRUE;
+			$potentialMemberDao->save($potentialMember);
+
+			$this->flashMessage(315392, self::FLASH_INFO);
+		}
+
+		$this->redirect('Home:');
+	}
+
 	public function createComponentFooter($name) {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
 	}

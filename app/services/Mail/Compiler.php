@@ -2,6 +2,7 @@
 
 namespace Mail;
 
+use Entity\Contact\PotentialMemberEntity;
 use Entity\Email;
 use Entity\Language;
 use Entity\Location\Location;
@@ -201,6 +202,19 @@ class Compiler {
 	public function addTranslator($variableName, \Entity\User\User $user)
 	{
 		$this->variables[$variableName] = new Variables\TranslatorVariables($user, $this->authenticator);
+		return $this;
+	}
+
+
+	/**
+	 * @param $variableName
+	 * @param \Entity\Contact\PotentialMemberEntity $pm
+	 *
+	 * @return $this
+	 */
+	public function addPotentialMember($variableName, PotentialMemberEntity $pm)
+	{
+		$this->variables[$variableName] = new Variables\PotentialMemberVariables($pm);
 		return $this;
 	}
 

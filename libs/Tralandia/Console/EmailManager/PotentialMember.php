@@ -1,0 +1,99 @@
+<?php
+/**
+ * This file is part of the tralandia.
+ * User: macbook
+ * Created at: 16/12/13 16:27
+ */
+
+namespace Tralandia\Console\EmailManager;
+
+
+use Environment\Environment;
+use Listener\NotificationEmailListener;
+use Listener\PotentialMemberEmailListener;
+use Nette;
+use Tralandia\BaseDao;
+
+class PotentialMember extends EmailManager
+{
+
+	const NAME = 'em_potential-member';
+
+	/**
+	 * @var \Entity\Contact\PotentialMemberEntity
+	 */
+	private $potentialMember;
+
+	/**
+	 * @var \Listener\PotentialMemberEmailListener
+	 */
+	private $emailListener;
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $potentialMemberDao;
+
+
+	/**
+	 * @param BaseDao $rentalDao
+	 */
+	public function __construct(BaseDao $potentialMemberDao, PotentialMemberEmailListener $emailListener)
+	{
+		$this->potentialMemberDao = $potentialMemberDao;
+		$this->emailListener = $emailListener;
+	}
+
+
+	public function next()
+	{
+		$qb = $this->potentialMemberDao->createQueryBuilder('m');
+		$qb->where($qb->expr()->eq('m.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
+			->andWhere($qb->expr()->eq('m.unsubscribed', ':unsubscribed'))->setParameter('unsubscribed', FALSE)
+			->setMaxResults(1);
+
+		$this->potentialMember = $qb->getQuery()->getOneOrNullResult();
+	}
+
+	public function getEmail()
+	{
+		return $this->potentialMember->getEmail();
+	}
+
+	public function getRowId()
+	{
+		return $this->potentialMember->getId();
+	}
+
+	public function resetEnvironment(Environment $environment)
+	{
+		$environment->resetTo($this->potentialMember->getPrimaryLocation(), $this->potentialMember->getLanguage());
+	}
+
+	public function send()
+	{
+		$this->emailListener->onSuccess($this->potentialMember);
+		$this->markAsSent();
+	}
+
+	public function wrongEmail()
+	{
+		$this->markAsSent();
+	}
+
+	private function markAsSent()
+	{
+		$this->potentialMember->emailSent = TRUE;
+		$this->potentialMemberDao->save($this->potentialMember);
+	}
+
+	public function resetManager()
+	{
+		$qb = $this->potentialMemberDao->createQueryBuilder();
+
+		$qb->update(POTENTIAL_MEMBER, 'm')
+			->set('m.emailSent', ':emailSent')->setParameter('emailSent', FALSE);
+
+		$qb->getQuery()->execute();
+	}
+}

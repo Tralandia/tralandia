@@ -4,6 +4,7 @@ namespace Listener;
 use Entity\Language;
 use Entity\Location\Location;
 use Environment\IEnvironmentFactory;
+use Mail\Compiler;
 use Mail\ICompilerFactory;
 use Nette;
 use Nette\Mail\IMailer;
@@ -68,6 +69,21 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 		$environment = $this->environmentFactory->create($location, $language);
 		$emailCompiler = $this->emailCompilerFactory->create($environment);
 		return $emailCompiler;
+	}
+
+
+	protected function send(Compiler $emailCompiler, $email)
+	{
+		$message = new \Nette\Mail\Message();
+
+		$body = $emailCompiler->compileBody();
+
+		$message->setSubject($emailCompiler->compileSubject());
+		$message->setHtmlBody($body);
+
+		$message->addTo($email);
+
+		$this->mailer->send($message);
 	}
 
 }

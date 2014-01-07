@@ -9,6 +9,7 @@ namespace Tralandia\Console;
 
 
 use Nette;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,20 +28,16 @@ class EmailManagerCommand extends BaseCommand
 	private $endsAt;
 
 	/**
-	 * @var \Tralandia\BaseDao
+	 * @var \Tralandia\Console\EmailManager\EmailManager
 	 */
-	private $rentalDao;
-
-	/**
-	 * @var \Listener\NotificationEmailListener
-	 */
-	private $notificationEmailListener;
+	private $emailManager;
 
 
 	protected function configure()
 	{
 		$this->setName('email:manager');
 
+		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat');
 
 		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
 		$this->addOption('reset', NULL, InputOption::VALUE_NONE);
@@ -49,8 +46,17 @@ class EmailManagerCommand extends BaseCommand
 
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
-		$this->rentalDao = $this->getHelper('dic')->getByType('\Doctrine\ORM\EntityManager')->getRepository(RENTAL_ENTITY);
-		$this->notificationEmailListener = $this->getHelper('dic')->getByType('\Listener\NotificationEmailListener');
+		$emailType = $input->getArgument('emailType');
+
+		if($emailType == 'updateYourRental') {
+			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\UpdateYourRental');
+		} else if($emailType == 'potentialMember') {
+			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\PotentialMember');
+		} else {
+			return 1;
+		}
+
+		$emailManager = $this->emailManager;
 
 		$this->time = $input->getOption('time');
 		$this->endsAt = time() + $this->time - 10;
@@ -59,6 +65,7 @@ class EmailManagerCommand extends BaseCommand
 		$message[] = '';
 		$message[] = 'Email Manager';
 		$message[] = '-----------------';
+		$message[] = 'type: ' . $emailManager::NAME;
 		$message[] = 'time: -t ' . $this->time;
 		$message[] = 'ends at: ' . strftime('%T %F', $this->endsAt);
 		$message[] = '---------------------------';
@@ -68,19 +75,24 @@ class EmailManagerCommand extends BaseCommand
 			$output->writeLn($line);
 		}
 
-		\Nette\Diagnostics\Debugger::log(implode(' ', $message), 'email_manager');
+		\Nette\Diagnostics\Debugger::log(implode(' ', $message), $emailManager::NAME);
 	}
 
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 
+		$emailManager = $this->emailManager;
 		try {
 
+			if(!$emailManager) {
+				return 1;
+			}
+
 			if($input->getOption('reset')) {
-				$this->log($output, '-------- resetting --------', 'email_manager');
-				$this->resetManager();
-				$this->log($output, '-------- done --------', 'email_manager');
+				$this->log($output, '-------- resetting --------', $emailManager::NAME);
+				$emailManager->resetManager();
+				$this->log($output, '-------- done --------', $emailManager::NAME);
 				return 0;
 			}
 
@@ -88,62 +100,34 @@ class EmailManagerCommand extends BaseCommand
 			$environment = $this->getHelper('dic')->getByType('\Environment\Environment');
 
 			while($this->endsAt > time()) {
-				$this->log($output, '--------', 'email_manager');
+				$this->log($output, '--------', $emailManager::NAME);
 
-				$rental = $this->getNextRental();
-				if(!$rental) break;
+				$emailManager->next();
+				$email = $emailManager->getEmail();
+				if(!$email) break;
 
-				$this->log($output, 'rental: ' . $rental->id . ', email: ' . $rental->getContactEmail(), 'email_manager');
+				if(Nette\Utils\Validators::isEmail($email)) {
+					$this->log($output, 'id: ' . $emailManager->getRowId() . ', email: ' . $email, $emailManager::NAME);
+					$emailManager->resetEnvironment($environment);
 
-				$user = $rental->getUser();
-				$environment->resetTo($user->getPrimaryLocation(), $user->getLanguage());
-
-				$this->notificationEmailListener->onSuccess($rental);
-
-				$rental->emailSent = TRUE;
-				$this->rentalDao->save($rental);
-
-				$this->log($output, 'sent', 'email_manager');
+					$emailManager->send();
+				} else {
+					$this->log($output, 'WRONG email: ' . $email, $emailManager::NAME);
+					$emailManager->wrongEmail();
+				}
 
 
+				$this->log($output, 'sent', $emailManager::NAME);
 				sleep(1);
 			}
 
-			$this->log($output, '------------- THE END -------------', 'email_manager');
+			$this->log($output, '------------- THE END -------------', $emailManager::NAME);
 			return 0;
 		} catch(\Exception $e) {
-			\Nette\Diagnostics\Debugger::log('error: ' . $e->getMessage(), 'email_manager');
+			\Nette\Diagnostics\Debugger::log('error: ' . $e->getMessage(), $emailManager::NAME);
+			\Nette\Diagnostics\Debugger::log($e);
 			return 1;
 		}
-	}
-
-
-	/**
-	 * @return \Entity\Rental\Rental|null
-	 */
-	protected function getNextRental()
-	{
-		$qb = $this->rentalDao->createQueryBuilder('r');
-		$qb->where($qb->expr()->eq('r.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
-			->andWhere($qb->expr()->lt('r.rank', ':requiredRank'))->setParameter('requiredRank', 75)
-//			->andWhere($qb->expr()->eq('r.harvested', ':harvestedOnly'))->setParameter('harvestedOnly', TRUE)
-			->setMaxResults(1);
-
-		// select count(*) from rental where emailSent = 0 and rank < 75
-
-		$rental = $qb->getQuery()->getOneOrNullResult();
-
-		return $rental;
-	}
-
-	protected function resetManager()
-	{
-		$qb = $this->rentalDao->createQueryBuilder();
-
-		$qb->update(RENTAL_ENTITY, 'r')
-			->set('r.emailSent', ':emailSent')->setParameter('emailSent', FALSE);
-
-		$qb->getQuery()->execute();
 	}
 
 

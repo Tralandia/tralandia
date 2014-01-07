@@ -20,6 +20,7 @@ define('USER_ROLE_ENTITY', '\Entity\User\Role');
 define('BLACK_LIST_ENTITY', '\Entity\User\BlackList');
 define('RESERVATION_ENTITY', '\Entity\User\RentalReservation');
 define('CONTACT_EMAIL_ENTITY', '\Entity\Contact\Email');
+define('POTENTIAL_MEMBER', '\Entity\Contact\PotentialMember');
 define('PATH_SEGMENT_ENTITY', '\Entity\Routing\PathSegment');
 define('PATH_SEGMENT_OLD_ENTITY', '\Entity\Routing\PathSegmentOld');
 define('CURRENCY_ENTITY', '\Entity\Currency');
