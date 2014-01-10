@@ -31,6 +31,7 @@ define('VENDOR_DIR', ROOT_DIR . '/vendor');
 // absolute filesystem path to the libraries
 define('TEMP_DIR', ROOT_DIR . '/temp');
 
+define('STATIC_DOMAIN', 'http://tralandiastatic.com/');
 require APP_DIR . '/entityConstants.php';
 
 

@@ -11,6 +11,7 @@ namespace Tralandia\Rental;
 use Entity\Location\Location;
 use Entity\Rental\Rental;
 use Entity\Rental\EditLog;
+use Kdyby\Doctrine\QueryBuilder;
 use Nette;
 use Tralandia\BaseDao;
 
@@ -32,17 +33,23 @@ class Rentals {
 	 */
 	private $editLogDao;
 
+	/**
+	 * @var \Environment\Environment
+	 */
+	private $environment;
+
 
 	/**
 	 * @param \Tralandia\BaseDao $rentalDao
 	 * @param BaseDao $locationsDao
 	 * @param \Tralandia\BaseDao $editlogDao
 	 */
-	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao)
+	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao, \Environment\Environment $environment)
 	{
 		$this->locationsDao = $locationsDao;
 		$this->rentalDao = $rentalDao;
 		$this->editLogDao = $editLogDao;
+		$this->environment = $environment;
 	}
 
 
@@ -275,5 +282,171 @@ LIMIT $limit";
 		}
 		return $myResult;
 	}
+
+
+	public function getCountsInCountries($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	{
+		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+
+		$qb->select('l.id AS lId');
+
+		$qb->innerJoin('a.primaryLocation', 'l')
+			->groupBy('l.id');
+
+		$result = $qb->getQuery()->getArrayResult();
+
+		$counts = [];
+		foreach($result as $row) {
+			$counts[$row['lId']] = $row;
+		}
+		$locations = $this->locationsDao->findBy(['id' => array_keys($counts)]);
+
+
+		$return = [];
+		/** @var $location \Entity\Location\Location */
+		foreach($locations as $location) {
+			$return[] = $this->getCountryInfo($location);
+		}
+
+		$this->environment->getLocale()->getCollator()->asortByKey($return, 'name');
+
+		return $return;
+
+	}
+
+
+	protected function getCountryInfo(Location $location)
+	{
+		$translator = $this->environment->getTranslator();
+
+		$center = $location->getGps();
+		return [
+			'id' => $location->getId(),
+			'iso' => $location->getIso(),
+			'name' => $translator->translate($location->getName()),
+			'flag' => STATIC_DOMAIN . 'flags/' . $location->getIso() . '.png',
+			'latitude' => $center->getLatitude(),
+			'longitude' => $center->getLongitude(),
+			'rentalCount' => $location->getRentalCount(),
+		];
+	}
+
+
+	public function getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	{
+		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+
+		$qb->select('count(a.locality) AS c, l.id AS lId, AVG(a.longitude) AS longitude, AVG(a.latitude) AS latitude');
+
+		$qb->innerJoin('a.locality', 'l')
+			->groupBy('l.id')
+			->orderBy('c', 'DESC');
+
+		$result = $qb->getQuery()->getArrayResult();
+
+
+		$counts = [];
+		foreach($result as $row) {
+			$counts[$row['lId']] = $row;
+		}
+		$locations = $this->locationsDao->findBy(['id' => array_keys($counts)]);
+
+		$translator = $this->environment->getTranslator();
+		$return = [];
+		/** @var $location \Entity\Location\Location */
+		foreach($locations as $location) {
+			$id = $location->getId();
+			$return[] = [
+				'id' => $id,
+				'iso' => $location->getIso(),
+				'name' => $translator->translate($location->getName()),
+				'country' => $this->getCountryInfo($location->getPrimaryParent()),
+				'latitude' => $counts[$id]['latitude'],
+				'longitude' => $counts[$id]['longitude'],
+			];
+		}
+
+		return $return;
+	}
+
+
+	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	{
+		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+
+		$rentals = $qb->getQuery()->getResult();
+
+		$data = [];
+		$translator = $this->environment->getTranslator();
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($rentals as $rental) {
+			$type = $translator->translate($rental->type->name);
+			$locality = $translator->translate($rental->address->locality->name, null, ['case' => 'locative']);
+
+			$amenities = [];
+			foreach($rental->getImportantAmenities() as $amenity) {
+				$amenities[] = $translator->translate($amenity->name);
+			}
+
+			$images = [];
+			foreach($rental->getSortedImages(2) as $image) {
+				$images[] = [
+					'sort' => $image->getSort(),
+					'filePath' => STATIC_DOMAIN . 'rental_images' . $image->getFilePath() . '/medium.jpeg',
+				];
+			}
+
+			if(!count($images)) {
+				$images[] = [
+					'sort' => 0,
+					'filePath' => STATIC_DOMAIN . 'no-rental-image.png',
+				];
+
+			}
+
+			$data[] = [
+				'id' => $rental->id,
+				'name' => $translator->translate($rental->name),
+				'subTitle' => ucfirst($type) . ' ' . $locality,
+				'price' => $rental->getPrice(),
+				'maxCapacity' => $rental->getMaxCapacity(),
+				'amenities' => implode(', ', $amenities),
+				'isPetAllowed' => $rental->getPetAmenity() ? TRUE : FALSE,
+				// jedlo ?
+				'email' => $rental->getContactEmail(),
+				'phone' => $rental->getPhone()->getInternational(),
+				'photos' => $images,
+			];
+		}
+
+		return $data;
+	}
+
+
+	protected function findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	{
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb->innerJoin('r.address', 'a');
+
+		$qb = $this->findBetween($qb, $latitudeA, $longitudeA, $latitudeB, $longitudeB);
+
+		return $qb;
+	}
+
+
+	protected function findBetween(QueryBuilder $qb, $latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	{
+		$qb->andWhere('a.latitude < ?1')->setParameter('1', $latitudeA)
+			->andWhere('a.longitude > ?2')->setParameter('2', $longitudeA)
+			->andWhere('a.latitude < ?3')->setParameter('3', $latitudeB)
+			->andWhere('a.longitude > ?4')->setParameter('4', $longitudeB);
+
+		$qb->setMaxResults(200);
+
+		return $qb;
+	}
+
+
 
 }
