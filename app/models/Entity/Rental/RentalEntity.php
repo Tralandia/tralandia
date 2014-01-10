@@ -317,6 +317,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @param null $limit
+	 * @param int $offset
+	 *
+	 * @return Image[]
+	 */
 	public function getSortedImages($limit = NULL, $offset = 0)
 	{
 		if(!$this->sortedImages) {
