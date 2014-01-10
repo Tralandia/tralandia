@@ -410,7 +410,7 @@ LIMIT $limit";
 				'id' => $rental->id,
 				'name' => $translator->translate($rental->name),
 				'subTitle' => ucfirst($type) . ' ' . $locality,
-				'price' => $rental->getPrice(),
+				'price' => (string) $rental->getPrice(),
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'amenities' => implode(', ', $amenities),
 				'isPetAllowed' => $rental->getPetAmenity() ? TRUE : FALSE,
