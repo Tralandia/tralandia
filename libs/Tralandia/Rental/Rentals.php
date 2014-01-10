@@ -438,8 +438,8 @@ LIMIT $limit";
 	protected function findBetween(QueryBuilder $qb, $latitudeA, $longitudeA, $latitudeB, $longitudeB)
 	{
 		$qb->andWhere('a.latitude < ?1')->setParameter('1', $latitudeA)
-			->andWhere('a.longitude > ?2')->setParameter('2', $longitudeA)
-			->andWhere('a.latitude < ?3')->setParameter('3', $latitudeB)
+			->andWhere('a.longitude < ?2')->setParameter('2', $longitudeA)
+			->andWhere('a.latitude > ?3')->setParameter('3', $latitudeB)
 			->andWhere('a.longitude > ?4')->setParameter('4', $longitudeB);
 
 		$qb->setMaxResults(200);
