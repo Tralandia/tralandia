@@ -407,9 +407,14 @@ LIMIT $limit";
 
 			$addressGps = $rental->getAddress()->getGps();
 			$phone = $rental->getPhone();
+			$pet = $rental->getPetAmenity();
 			$board = $rental->getBoardAmenities();
-			foreach($board as $key => $value) {
-				Nette\Utils\Arrays::renameKey($board, $key, $value->getSlug());
+			if(count($board)) {
+				foreach($board as $key => $value) {
+					Nette\Utils\Arrays::renameKey($board, $key, $value->getSlug());
+				}
+			} else {
+				$board = FALSE;
 			}
 			$data[] = [
 				'id' => $rental->id,
@@ -418,10 +423,10 @@ LIMIT $limit";
 				'price' => (string) $rental->getPrice(),
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'amenities' => implode(', ', $amenities),
-				'isPetAllowed' => $rental->getPetAmenity() ? TRUE : FALSE,
-				'isBreakfast' => isset($board['breakfast']),
-				'isLunch' => isset($board['lunch']),
-				'isDinner' => isset($board['dinner']),
+				'isPetAllowed' => $pet ? $pet->getId() != 298 : NULL,
+				'isBreakfast' => $board ? array_key_exists('breakfast', $board) : NULL,
+				'isLunch' => $board ? array_key_exists('lunch', $board) : NULL,
+				'isDinner' => $board ? array_key_exists('dinner', $board) : NULL,
 				'contactName' => $rental->getContactName(),
 				'email' => $rental->getContactEmail(),
 				'phone' => $phone ? $phone->getInternational() : NULL,
