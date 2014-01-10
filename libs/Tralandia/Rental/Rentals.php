@@ -406,6 +406,11 @@ LIMIT $limit";
 			}
 
 			$addressGps = $rental->getAddress()->getGps();
+			$phone = $rental->getPhone();
+			$board = $rental->getBoardAmenities();
+			foreach($board as $key => $value) {
+				Nette\Utils\Arrays::renameKey($board, $key, $value->getSlug());
+			}
 			$data[] = [
 				'id' => $rental->id,
 				'name' => $translator->translate($rental->name),
@@ -414,10 +419,12 @@ LIMIT $limit";
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'amenities' => implode(', ', $amenities),
 				'isPetAllowed' => $rental->getPetAmenity() ? TRUE : FALSE,
-				// jedlo ?
+				'isBreakfast' => isset($board['breakfast']),
+				'isLunch' => isset($board['lunch']),
+				'isDinner' => isset($board['dinner']),
 				'contactName' => $rental->getContactName(),
 				'email' => $rental->getContactEmail(),
-				'phone' => $rental->getPhone()->getInternational(),
+				'phone' => $phone ? $phone->getInternational() : NULL,
 				'photos' => $images,
 				'latitude' => $addressGps->getLatitude(),
 				'longitude' => $addressGps->getLongitude(),
