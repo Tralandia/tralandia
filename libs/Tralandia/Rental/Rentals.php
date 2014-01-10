@@ -363,6 +363,7 @@ LIMIT $limit";
 				'country' => $this->getCountryInfo($location->getPrimaryParent()),
 				'latitude' => $counts[$id]['latitude'],
 				'longitude' => $counts[$id]['longitude'],
+				'rentalCount' => $counts[$id]['c'],
 			];
 		}
 
@@ -404,6 +405,7 @@ LIMIT $limit";
 
 			}
 
+			$addressGps = $rental->getAddress()->getGps();
 			$data[] = [
 				'id' => $rental->id,
 				'name' => $translator->translate($rental->name),
@@ -413,9 +415,12 @@ LIMIT $limit";
 				'amenities' => implode(', ', $amenities),
 				'isPetAllowed' => $rental->getPetAmenity() ? TRUE : FALSE,
 				// jedlo ?
+				'contactName' => $rental->getContactName(),
 				'email' => $rental->getContactEmail(),
 				'phone' => $rental->getPhone()->getInternational(),
 				'photos' => $images,
+				'latitude' => $addressGps->getLatitude(),
+				'longitude' => $addressGps->getLongitude(),
 			];
 		}
 
