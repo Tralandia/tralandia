@@ -32,7 +32,7 @@ class SearchPresenter extends \BasePresenter
 		} else if($isIn($zoomBorder1, $zoomBorder2, $zoom)) {
 			$this->payload->localities = $this->rentals->getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 		} else if($isIn($zoomBorder2, 20, $zoom)) {
-			$this->payload->rentals = $this->rentals->getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+			$this->payload->rentals = $this->rentals->getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, $this);
 		}
 
 		$this->sendPayload();

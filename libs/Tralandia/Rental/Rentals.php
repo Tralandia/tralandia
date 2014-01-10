@@ -371,7 +371,7 @@ LIMIT $limit";
 	}
 
 
-	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, Nette\Application\UI\Presenter $presenter)
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 
@@ -433,6 +433,7 @@ LIMIT $limit";
 				'photos' => $images,
 				'latitude' => $addressGps->getLatitude(),
 				'longitude' => $addressGps->getLongitude(),
+				'detailLink' => $presenter->link('//:Front:Rental:detail', ['rental' => $rental]),
 			];
 		}
 
