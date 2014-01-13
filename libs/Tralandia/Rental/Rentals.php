@@ -434,6 +434,7 @@ LIMIT $limit";
 				'latitude' => $addressGps->getLatitude(),
 				'longitude' => $addressGps->getLongitude(),
 				'detailLink' => $presenter->link('//:Front:Rental:detail', ['rental' => $rental]),
+				'gravatar' => \Tools::getGravatar($rental->getContactEmail()),
 			];
 		}
 
