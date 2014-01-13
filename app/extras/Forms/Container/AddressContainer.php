@@ -124,8 +124,9 @@ class AddressContainer extends BaseContainer
 	public function setDefaultValues($address = NULL)
 	{
 		if($this->address) {
+			$locality = $this->address->getLocality();
 			$defaults = [
-				'city' => $this->translator->translate($this->address->getLocality()->getName()),
+				'city' => $locality ? $this->translator->translate($locality->getName()) : NULL,
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
@@ -147,9 +148,10 @@ class AddressContainer extends BaseContainer
 		if(!$values) return NULL;
 
 		if($values instanceof Address) {
+			$locality = $this->address->getLocality();
 			$valuesTemp = [
 				'address' => $values->getFormattedAddress(),
-				'city' => $this->translator->translate($values->getLocality()->getName()),
+				'city' => $locality ? $this->translator->translate($locality->getName()) : NULL,
 				'latitude' => $values->getGps()->getLatitude(),
 				'longitude' => $values->getGps()->getLongitude(),
 			];

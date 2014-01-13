@@ -27,18 +27,24 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	 */
 	private $templateCache;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $translatorCache;
 
-	public function __construct(Cache $templateCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
+
+	public function __construct(Cache $templateCache, Cache $translatorCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
 	{
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->templateCache = $templateCache;
+		$this->translatorCache = $translatorCache;
 	}
 
 	public function getSubscribedEvents()
 	{
 		return [
-			'\FormHandler\RegistrationHandler::onSuccess',
-			'\FormHandler\RentalEditHandler::onSuccess',
+			'FormHandler\RegistrationHandler::onSuccess',
+			'FormHandler\RentalEditHandler::onSuccess',
 		];
 	}
 
@@ -51,6 +57,12 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 		$this->templateCache->clean([
 			Cache::TAGS => ['rental/' . $rental->getId()],
 		]);
+
+		$this->translatorCache->remove($rental->getName()->getId());
+		$this->translatorCache->remove($rental->getTeaser()->getId());
+		foreach($rental->getInterviewAnswers() as $answer) {
+			$this->translatorCache->remove($answer->getAnswer()->getId());
+		}
 	}
 
 

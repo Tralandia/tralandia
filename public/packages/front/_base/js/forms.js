@@ -367,7 +367,7 @@ $(function(){
 
 			var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
 
-			
+
 				/*
 				var lat = parseFloat(coordinates[0]);
 				var lng = parseFloat(coordinates[1]);
@@ -890,9 +890,9 @@ $(function(){
 
 		if(realName.length > 0){
 			$addressCityInput.val(realName);
-			$addressCityInput.attr('readonly',true);
+			//$addressCityInput.attr('readonly',true);
 		} else {
-			$addressCityInput.attr('readonly',false);
+			//$addressCityInput.attr('readonly',false);
 			$addressCityInput.val('');
 		}
 
@@ -923,8 +923,8 @@ $(function(){
 			var $addressInput = $('.addressInput input');
 
 			if(disabledInputs){
-				$addressCityInput.attr('readonly',true);
-				$addressInput.attr('readonly',true);
+				//$addressCityInput.attr('readonly',true);
+				//$addressInput.attr('readonly',true);
 			}
 
 			zoom = parseInt(zoom);
@@ -950,7 +950,7 @@ $(function(){
 
 			var infowindow = new google.maps.InfoWindow();
 
-			var marker = false;			
+			var marker = false;
 
 			if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
 
