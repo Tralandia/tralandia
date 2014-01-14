@@ -418,7 +418,8 @@ LIMIT $limit";
 			}
 			$data[] = [
 				'id' => $rental->id,
-				'name' => $translator->translate($rental->name),
+				'name' => $translator->translate($rental->getName()),
+				'rentalType' => $rental->getType()->getSlug(),
 				'subTitle' => ucfirst($type) . ' ' . $locality,
 				'price' => (string) $rental->getPrice(),
 				'maxCapacity' => $rental->getMaxCapacity(),
