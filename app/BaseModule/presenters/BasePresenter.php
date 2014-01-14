@@ -340,7 +340,7 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function flashMessage($message, $type = self::FLASH_WARNING) {
-		if(is_string($message)) {
+		if(is_scalar($message)) {
 			$message = $this->translate($message);
 		} else if(is_array($message)) {
 			$message = call_user_func_array([$this, 'translate'], $message);
