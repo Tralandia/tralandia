@@ -20,10 +20,13 @@ use Nette\Utils\Strings;
  * 			@ORM\Index(name="slug", columns={"slug"}),
  * 			@ORM\Index(name="rank", columns={"rank"}),
  * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"}),
+ * 			@ORM\Index(name="harvested", columns={"harvested"}),
+ * 			@ORM\Index(name="registeredFromEmail", columns={"registeredFromEmail"}),
  * 			@ORM\Index(name="emailSent", columns={"emailSent"})
  * 		})
  *
  *
+ * @method setRegisteredFromEmail()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -276,6 +279,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $harvested = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $registeredFromEmail;
 
 	/**
 	 * @var boolean

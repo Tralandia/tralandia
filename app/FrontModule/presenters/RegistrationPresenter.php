@@ -4,6 +4,7 @@ namespace FrontModule;
 
 
 use Nette\Utils\Html;
+use Routers\BaseRoute;
 
 class RegistrationPresenter extends BasePresenter
 {
@@ -37,11 +38,21 @@ class RegistrationPresenter extends BasePresenter
 	public function createComponentRegistrationForm()
 	{
 		$form = $this->registrationFormFactory->create($this->environment, $this);
+
+		$linkSource = $this->getParameter(BaseRoute::LINK_SOURCE, NULL);
+		$args = [];
+		$linkSource && $args[BaseRoute::LINK_SOURCE] = $linkSource;
+
+		$form->setAction($this->link('this', $args));
 		$this->registrationHandler->attach($form);
 
 		$self = $this;
-		$form->onSuccess[] = function ($form) use ($self) {
+		$form->onSuccess[] = function ($form) use ($self, $linkSource) {
 			$rental = $self->registrationHandler->getRental();
+
+			$rental->setRegisteredFromEmail($linkSource);
+
+			$self->rentalDao->save($rental);
 
 //			$self->flashMessage('o100193', RegistrationPresenter::FLASH_ERROR);
 //			$self->redirect('Home:default');

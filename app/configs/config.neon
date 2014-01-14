@@ -222,7 +222,7 @@ services:
 
 #	nette.mailer: EmailerMailer(@environment::getPrimaryLocation(), ...)
 #	nette.mailer: \Mail\SendmailMailer(@environment::getPrimaryLocation(), ...)
-	nette.mailer: \Mail\SmtpMailer(%smtp%, @environment::getPrimaryLocation(), ...)
+	nette.mailer: \Mail\SmtpMailer(%smtp%, ...)
 
 	tester: Tester\Options(%testerEmail%, ...)
 #	tester: Tester\NoTester
