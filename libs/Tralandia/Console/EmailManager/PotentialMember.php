@@ -20,7 +20,7 @@ class PotentialMember extends EmailManager
 	const NAME = 'em_potential-member';
 
 	/**
-	 * @var \Entity\Contact\PotentialMemberEntity
+	 * @var \Entity\Contact\PotentialMember
 	 */
 	private $potentialMember;
 
@@ -36,7 +36,8 @@ class PotentialMember extends EmailManager
 
 
 	/**
-	 * @param BaseDao $rentalDao
+	 * @param \Tralandia\BaseDao $potentialMemberDao
+	 * @param \Listener\PotentialMemberEmailListener $emailListener
 	 */
 	public function __construct(BaseDao $potentialMemberDao, PotentialMemberEmailListener $emailListener)
 	{

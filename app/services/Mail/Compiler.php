@@ -2,6 +2,7 @@
 
 namespace Mail;
 
+use Entity\Contact\PotentialMember;
 use Entity\Contact\PotentialMemberEntity;
 use Entity\Email;
 use Entity\Language;
@@ -208,11 +209,11 @@ class Compiler {
 
 	/**
 	 * @param $variableName
-	 * @param \Entity\Contact\PotentialMemberEntity $pm
+	 * @param \Entity\Contact\PotentialMember $pm
 	 *
 	 * @return $this
 	 */
-	public function addPotentialMember($variableName, PotentialMemberEntity $pm)
+	public function addPotentialMember($variableName, PotentialMember $pm)
 	{
 		$this->variables[$variableName] = new Variables\PotentialMemberVariables($pm);
 		return $this;

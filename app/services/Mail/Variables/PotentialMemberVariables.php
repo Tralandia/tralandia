@@ -1,6 +1,7 @@
 <?php
 namespace Mail\Variables;
 
+use Entity\Contact\PotentialMember;
 use Entity\Contact\PotentialMemberEntity;
 use Nette;
 
@@ -14,15 +15,15 @@ class PotentialMemberVariables extends Nette\Object
 
 
 	/**
-	 * @var \Entity\Contact\PotentialMemberEntity
+	 * @var \Entity\Contact\PotentialMember
 	 */
 	private $potentialMember;
 
 
 	/**
-	 * @param \Entity\Contact\PotentialMemberEntity $potentialMember
+	 * @param \Entity\Contact\PotentialMember $potentialMember
 	 */
-	public function __construct(PotentialMemberEntity $potentialMember)
+	public function __construct(PotentialMember $potentialMember)
 	{
 		$this->potentialMember = $potentialMember;
 	}

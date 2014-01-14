@@ -37,7 +37,7 @@ class EmailManagerCommand extends BaseCommand
 	{
 		$this->setName('email:manager');
 
-		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat');
+		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember]');
 
 		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
 		$this->addOption('reset', NULL, InputOption::VALUE_NONE);

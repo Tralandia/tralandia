@@ -1,8 +1,8 @@
 <?php
 namespace Listener;
 
-use Entity\Contact\PotentialMemberEntity;
 use Nette;
+use \Entity\Contact\PotentialMember;
 
 class PotentialMemberEmailListener extends BaseEmailListener implements \Kdyby\Events\Subscriber
 {
@@ -14,7 +14,7 @@ class PotentialMemberEmailListener extends BaseEmailListener implements \Kdyby\E
 	}
 
 
-	public function onSuccess(PotentialMemberEntity $potentialEntity)
+	public function onSuccess(PotentialMember $potentialEntity)
 	{
 		$emailCompiler = $this->prepareCompiler($potentialEntity);
 
@@ -25,11 +25,11 @@ class PotentialMemberEmailListener extends BaseEmailListener implements \Kdyby\E
 
 
 	/**
-	 * @param \Entity\Contact\PotentialMemberEntity $potentialEntity
+	 * @param \Entity\Contact\PotentialMember $potentialEntity
 	 *
 	 * @return \Mail\Compiler
 	 */
-	private function prepareCompiler(PotentialMemberEntity $potentialEntity)
+	private function prepareCompiler(PotentialMember $potentialEntity)
 	{
 		$emailCompiler = $this->createCompiler($potentialEntity->getPrimaryLocation(), $potentialEntity->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('potental-member'));
