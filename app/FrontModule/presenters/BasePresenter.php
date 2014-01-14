@@ -286,7 +286,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$potentialMember->unsubscribed = TRUE;
 			$potentialMemberDao->save($potentialMember);
 
-			$this->flashMessage(315392, self::FLASH_INFO);
+			$this->flashMessage(315392, self::FLASH_ERROR);
 		}
 
 		$this->redirect('Home:');
