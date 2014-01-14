@@ -15,18 +15,11 @@ class NotificationEmailListener extends BaseEmailListener implements \Kdyby\Even
 
 	public function onSuccess(\Entity\Rental\Rental $rental)
 	{
-		$message = new \Nette\Mail\Message();
-
 		$emailCompiler = $this->prepareCompiler($rental);
-		$body = $emailCompiler->compileBody();
-
-		$message->setSubject($emailCompiler->compileSubject());
-		$message->setHtmlBody($body);
 
 		$email = $rental->getContactEmail();
-		$message->addTo($email);
 
-		$this->mailer->send($message);
+		$this->send($emailCompiler, $email);
 	}
 
 

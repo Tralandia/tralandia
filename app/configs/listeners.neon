@@ -15,4 +15,5 @@ services:
 	- [class: Tralandia\Doctrine\TablePrefixListener, tags: [kdyby.subscriber]]
 	- [class: Listener\RentalEditLogListener, tags: [kdyby.subscriber]]
 	- [class: Listener\NotificationEmailListener, tags: [kdyby.subscriber]]
+	- [class: Listener\PotentialMemberEmailListener, tags: [kdyby.subscriber]]
 

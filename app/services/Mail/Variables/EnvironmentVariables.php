@@ -105,6 +105,14 @@ class EnvironmentVariables extends Nette\Object {
 	/**
 	 * @return string
 	 */
+	public function getVariableRegistrationLink() {
+		return $this->link('//:Front:Registration:');
+	}
+
+
+	/**
+	 * @return string
+	 */
 	public function getVariableSupportLink()
 	{
 		return $this->link('//:Front:SupportUs:default');

@@ -19,7 +19,8 @@ use Nette\Utils\Strings;
  * 			@ORM\Index(name="status", columns={"status"}),
  * 			@ORM\Index(name="slug", columns={"slug"}),
  * 			@ORM\Index(name="rank", columns={"rank"}),
- * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"})
+ * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"}),
+ * 			@ORM\Index(name="emailSent", columns={"emailSent"})
  * 		})
  *
  *
