@@ -207,7 +207,7 @@ class RentalSearchService extends Nette\Object
 		}
 
 		if ($limit !== NULL && count($return) < $limit) {
-			$order = $this->rentalOrderCaching->getOrderList();
+			$order = $this->rentalOrderCaching->getOrderListByLastUpdate();
 			$order = array_flip($order);
 			$return = array_slice(array_unique(array_merge($return, $order)), 0, $limit);
 		}

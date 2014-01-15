@@ -27,6 +27,7 @@ use Nette\Utils\Strings;
  *
  *
  * @method setRegisteredFromEmail()
+ * @method setLastUpdate()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -267,7 +268,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	private $formattedCalendar;
 
-
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
 	 * @var array
@@ -292,6 +292,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	protected $emailSent = FALSE;
 
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $lastUpdate;
 
 	/**
 	 * @return string|NULL

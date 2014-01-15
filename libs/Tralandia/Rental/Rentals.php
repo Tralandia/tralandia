@@ -199,6 +199,18 @@ LIMIT $limit";
 	}
 
 
+	public function findLastUpdated($limit = 20)
+	{
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb->andWhere($qb->expr()->gt('r.rank', '?1'))->setParameter('1', 70)
+			->orderBy('r.lastUpdate', 'DESC')
+			->setMaxResults($limit);
+
+		return $qb->getQuery()->getResult();
+	}
+
+
 
 
 	/**

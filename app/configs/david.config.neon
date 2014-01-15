@@ -17,8 +17,8 @@ parameters:
 	storagePath: /storage
 
 	maxReservationCountPerDay: 100
-	rentalCountOnHome: 9
-	rentalCountOnRootHome: 9
+	rentalCountOnHome: 15
+	rentalCountOnRootHome: 15
 
 	testerEmail: 'durika.d@gmail.com'
 
