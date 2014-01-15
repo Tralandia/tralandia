@@ -13,6 +13,7 @@ use Entity\Rental\Rental;
 use Entity\Rental\EditLog;
 use Kdyby\Doctrine\QueryBuilder;
 use Nette;
+use Nette\Caching\Cache;
 use Tralandia\BaseDao;
 
 class Rentals {
@@ -38,18 +39,27 @@ class Rentals {
 	 */
 	private $environment;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $mapSearchCache;
+
 
 	/**
 	 * @param \Tralandia\BaseDao $rentalDao
 	 * @param BaseDao $locationsDao
-	 * @param \Tralandia\BaseDao $editlogDao
+	 * @param \Tralandia\BaseDao $editLogDao
+	 * @param \Nette\Caching\Cache $mapSearchCache
+	 * @param \Environment\Environment $environment
 	 */
-	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao, \Environment\Environment $environment)
+	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao,
+								Nette\Caching\Cache $mapSearchCache, \Environment\Environment $environment)
 	{
 		$this->locationsDao = $locationsDao;
 		$this->rentalDao = $rentalDao;
 		$this->editLogDao = $editLogDao;
 		$this->environment = $environment;
+		$this->mapSearchCache = $mapSearchCache;
 	}
 
 
@@ -374,13 +384,29 @@ LIMIT $limit";
 	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, Nette\Application\UI\Presenter $presenter)
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+		$qb->select('r.id');
 
-		$rentals = $qb->getQuery()->getResult();
+		$rentals = $qb->getQuery()->getScalarResult();
 
 		$data = [];
+		$notCached = [];
 		$translator = $this->environment->getTranslator();
+		$language = $this->environment->getLanguage();
 		/** @var $rental \Entity\Rental\Rental */
+		foreach($rentals as $rentalRow) {
+			$rentalId = $rentalRow['id'];
+			$cacheKey = $rentalId . '_' . $language->getId();
+			if($info = $this->mapSearchCache->load($cacheKey)) {
+				$data[] = $info;
+			} else {
+				$notCached[] = $rentalId;
+			}
+		}
+
+		$rentals = $this->rentalDao->findBy(['id' => array_values($notCached)]);
+
 		foreach($rentals as $rental) {
+
 			$type = $translator->translate($rental->type->name);
 			$locality = $translator->translate($rental->address->locality->name, null, ['case' => 'locative']);
 
@@ -416,7 +442,8 @@ LIMIT $limit";
 			} else {
 				$board = FALSE;
 			}
-			$data[] = [
+
+			$info = [
 				'id' => $rental->id,
 				'name' => $translator->translate($rental->getName()),
 				'rentalType' => $rental->getType()->getSlug(),
@@ -437,6 +464,14 @@ LIMIT $limit";
 				'detailLink' => $presenter->link('//:Front:Rental:detail', ['rental' => $rental]),
 				'gravatar' => \Tools::getGravatar($rental->getContactEmail()),
 			];
+
+			$cacheKey = $rental->getId() . '_' . $language->getId();
+
+			$this->mapSearchCache->save($cacheKey, $info, [
+				Cache::TAGS => ['rental/' . $rental->getId(), 'language/' . $language->getId()],
+			]);
+
+			$data[] = $info;
 		}
 
 		return $data;
@@ -462,7 +497,7 @@ LIMIT $limit";
 			->andWhere('a.latitude > ?3')->setParameter('3', $latitudeB)
 			->andWhere('a.longitude > ?4')->setParameter('4', $longitudeB);
 
-		$qb->setMaxResults(200);
+		$qb->setMaxResults(100);
 
 		return $qb;
 	}
