@@ -60,6 +60,16 @@ class RentalOrderCaching extends \Nette\Object {
 		return $order;
 	}
 
+	public function getOrderListByLastUpdate() {
+		if (!isset($this->cacheContent['orderByLastUpdate']) || $this->cacheContent['orderByLastUpdate'] === NULL) {
+			$order = $this->createOrderListByLastUpdate();
+		} else {
+			$order = $this->cacheContent['orderByLastUpdate'];
+		}
+
+		return $order;
+	}
+
 	public function getFeaturedList() {
 		if ($this->cacheContent['featured'] === NULL) {
 			$featured = $this->createFeaturedList();
@@ -111,6 +121,30 @@ class RentalOrderCaching extends \Nette\Object {
 
 		$this->location->rentalCount = count($order);
 		$this->locationDao->save($this->location);
+
+		$this->save();
+		return $order;
+	}
+
+	protected function createOrderListByLastUpdate() {
+		$this->createFeaturedList();
+
+		$featured = $this->cacheContent['featured'];
+
+		$notFeatured = array();
+		$rentals = $this->rentals->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.lastUpdate' => 'DESC']);
+		foreach ($rentals as $key => $value) {
+			$notFeatured[$value->id] = $value->id;
+		}
+
+		foreach ($featured as $key => $value) {
+			unset($notFeatured[$key]);
+		}
+
+		$order = array_merge($featured, $notFeatured);
+
+		$order = array_flip(array_values($order));
+		$this->cacheContent['orderByLastUpdate'] = $order;
 
 		$this->save();
 		return $order;

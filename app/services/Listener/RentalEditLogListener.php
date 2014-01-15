@@ -60,6 +60,9 @@ class RentalEditLogListener extends Nette\Object implements \Kdyby\Events\Subscr
 
 			$this->em->persist($log);
 			$this->em->flush($log);
+
+			$rental->setLastUpdate(new \DateTime());
+			$this->em->flush($rental);
 		}
 	}
 
