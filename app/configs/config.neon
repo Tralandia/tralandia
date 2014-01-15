@@ -176,6 +176,7 @@ services:
 	# CACHE
 	frontRouteCache: Nette\Caching\Cache(@cacheStorage, 'FrontRoute')
 	templateCache: Nette\Caching\Cache(@templateCacheStorage, 'Nette.Templating.Cache')
+	mapSearchCache: Nette\Caching\Cache(@mapSearchCacheStorage, 'mapSearch')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
@@ -202,6 +203,14 @@ services:
 
 	templateCacheStorage:
 		class: \Tralandia\Caching\Database\DatabaseStorage(@templateCacheClient)
+		autowired: false
+
+	mapSearchCacheClient:
+		class: \Tralandia\Caching\Database\DatabaseClient(@dibiConnection, 'mapSearch')
+		autowired: false
+
+	mapSearchCacheStorage:
+		class: \Tralandia\Caching\Database\DatabaseStorage(@mapSearchCacheClient)
 		autowired: false
 
 	serchCacheClient:
@@ -428,7 +437,7 @@ services:
 	- \Tralandia\Phrase\Phrases(@doctrine.dao(Entity\Phrase\Phrase))
 	- \Tralandia\Phrase\Translations(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
-	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Rental\EditLog))
+	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Rental\EditLog), @mapSearchCache)
 	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
 	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
