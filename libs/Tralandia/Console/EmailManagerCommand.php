@@ -104,7 +104,6 @@ class EmailManagerCommand extends BaseCommand
 
 				$emailManager->next();
 				$email = $emailManager->getEmail();
-				if(!$email) break;
 
 				if(Nette\Utils\Validators::isEmail($email)) {
 					$this->log($output, 'id: ' . $emailManager->getRowId() . ', email: ' . $email, $emailManager::NAME);
