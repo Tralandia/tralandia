@@ -2,8 +2,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 		<span style="font-size: 10px;">
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
 			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-			/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -13,8 +13,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -24,8 +24,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -35,8 +35,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -45,8 +45,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -55,8 +55,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
@@ -67,8 +67,8 @@
 	<td>
 		{ifset $cell->total}{$cell->total}
 			<span style="font-size: 10px;">
-			/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
-				/ {ifset $cell->harvested}{$cell->harvested}{else}0{/ifset}
+			/ {ifset $cell->organic}{$cell->organic}{else}0{/ifset}
+				/ {ifset $cell->fromEmail}{$cell->fromEmail}{else}0{/ifset}
 		</span>
 		{else}-{/ifset}
 	</td>
