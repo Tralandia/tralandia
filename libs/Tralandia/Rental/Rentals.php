@@ -428,7 +428,7 @@ LIMIT $limit";
 			}
 
 			$images = [];
-			foreach($rental->getSortedImages(2) as $image) {
+			foreach($rental->getSortedImages(6) as $image) {
 				$images[] = [
 					'sort' => $image->getSort(),
 					'filePath' => STATIC_DOMAIN . 'rental_images' . $image->getFilePath() . '/medium.jpeg',
