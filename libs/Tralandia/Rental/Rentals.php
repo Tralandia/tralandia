@@ -106,7 +106,7 @@ class Rentals {
 			if($registeredBy == 'harvester') {
 				$qb->andWhere($qb->expr()->eq('r.harvested', TRUE));
 			} else if($registeredBy == 'email') {
-				$qb->andWhere($qb->expr()->eq('r.registeredFromEmail', TRUE));
+				$qb->andWhere($qb->expr()->isNotNull('r.registeredFromEmail'));
 			}
 		}
 
