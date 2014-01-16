@@ -346,7 +346,7 @@ LIMIT $limit";
 			'id' => $location->getId(),
 			'iso' => $location->getIso(),
 			'name' => $translator->translate($location->getName()),
-			'flag' => STATIC_DOMAIN . 'flags/' . $location->getIso() . '.png',
+			'flag' => STATIC_DOMAIN . 'flags/' . $location->getFlagName(),
 			'latitude' => $center->getLatitude(),
 			'longitude' => $center->getLongitude(),
 			'rentalCount' => $location->getRentalCount(),
