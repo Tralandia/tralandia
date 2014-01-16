@@ -107,6 +107,9 @@ class Rentals {
 				$qb->andWhere($qb->expr()->eq('r.harvested', TRUE));
 			} else if($registeredBy == 'email') {
 				$qb->andWhere($qb->expr()->isNotNull('r.registeredFromEmail'));
+			} else if($registeredBy == 'organic') {
+				$qb->andWhere($qb->expr()->eq('r.harvested', ':harvested'))->setParameter('harvested', FALSE);
+				$qb->andWhere($qb->expr()->isNull('r.registeredFromEmail'));
 			}
 		}
 

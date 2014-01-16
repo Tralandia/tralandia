@@ -1,7 +1,7 @@
 entity: Entity\Rental\Rental
 
 parameters:
-	title: "Registrations statistics (total / from email / harvested)"
+	title: "Registrations statistics (total / organic / from email)"
 	h1: 'Registration -> %name%'
 	hideAddNewButton: true
 

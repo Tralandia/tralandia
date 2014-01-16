@@ -44,16 +44,18 @@ class RentalRegistrations {
 
 			$total = $this->rentals->getCounts(NULL, NULL, NULL, $from, $to);
 //			$live = $this->rentals->getCounts(NULL, \Entity\Rental\Rental::STATUS_LIVE, NULL, $from, $to);
-			$harvested = $this->rentals->getCounts(NULL, NULL, 'harvester', $from, $to);
+//			$harvested = $this->rentals->getCounts(NULL, NULL, 'harvester', $from, $to);
+			$organic = $this->rentals->getCounts(NULL, NULL, 'organic', $from, $to);
 			$fromEmail = $this->rentals->getCounts(NULL, NULL, 'email', $from, $to);
 			$results[$key]['total'] = $total;
 //			$results[$key]['live'] = $live;
-			$results[$key]['harvested'] = $harvested;
+//			$results[$key]['harvested'] = $harvested;
+			$results[$key]['organic'] = $organic;
 			$results[$key]['fromEmail'] = $fromEmail;
 		}
 
 		$finalResults = array();
-		$keys = ['total', /*'live',*/ 'harvested', 'fromEmail'/*, 'organic'*/];
+		$keys = ['total', /*'live', 'harvested',*/ 'fromEmail', 'organic'];
 		foreach ($periods as $period => $value) {
 			$finalResults['total']['key'] = $period;
 			foreach($keys as $keyName) {
