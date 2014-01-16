@@ -444,6 +444,7 @@ LIMIT $limit";
 			}
 
 			$addressGps = $rental->getAddress()->getGps();
+			$price = $rental->getPrice();
 			$phone = $rental->getPhone();
 			$pet = $rental->getPetAmenity();
 			$board = $rental->getBoardAmenities();
@@ -460,7 +461,8 @@ LIMIT $limit";
 				'name' => $translator->translate($rental->getName()),
 				'rentalType' => $rental->getType()->getSlug(),
 				'subTitle' => ucfirst($type) . ' ' . $locality,
-				'price' => (string) $rental->getPrice(),
+				'priceAmount' => $price->getSourceAmount(),
+				'priceCurrency' => $price->getSourceCurrency()->getSymbol(),
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'amenities' => implode(', ', $amenities),
 				'isPetAllowed' => $pet ? $pet->getId() != 298 : NULL,

@@ -10,7 +10,6 @@ use	Extras\Annotation as EA;
  * @ORM\Entity
  * @ORM\Table(name="currency", indexes={@ORM\Index(name="name", columns={"name_id"}), @ORM\Index(name="iso", columns={"iso"})})
  *
- *
 */
 class Currency extends \Entity\BaseEntity {
 
@@ -25,6 +24,12 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $iso;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $symbol;
 
 	/**
 	 * @var float
@@ -44,6 +49,23 @@ class Currency extends \Entity\BaseEntity {
 	 */
 	protected $searchInterval = 10;
 
+
+	/**
+	 * @return string
+	 */
+	public function getSymbol()
+	{
+		return $this->hasSymbol() ? $this->symbol : $this->getIso();
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function hasSymbol()
+	{
+		return (bool) $this->symbol;
+	}
 
 	/**
 	 * @param float
