@@ -84,7 +84,7 @@ class Rentals {
 	 *
 	 * @return array
 	 */
-	public function getCounts(Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL)
+	public function getCounts(Location $primaryLocation = NULL, $status = NULL, $registeredBy = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL)
 	{
 		$qb = $this->rentalDao->createQueryBuilder('r');
 
@@ -98,8 +98,16 @@ class Rentals {
 			$qb->groupBy('a.primaryLocation');
 		}
 
-		if ($live) {
-			$qb->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE));
+		if ($status !== NULL) {
+			$qb->andWhere($qb->expr()->eq('r.status', $status));
+		}
+
+		if ($registeredBy !== NULL) {
+			if($registeredBy == 'harvester') {
+				$qb->andWhere($qb->expr()->eq('r.harvested', TRUE));
+			} else if($registeredBy == 'email') {
+				$qb->andWhere($qb->expr()->eq('r.registeredFromEmail', TRUE));
+			}
 		}
 
 		if ($dateFrom && $dateTo) {

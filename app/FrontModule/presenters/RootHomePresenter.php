@@ -29,7 +29,7 @@ class RootHomePresenter extends BasePresenter {
 
 	public function getLocationRentalsCount()
 	{
-		$counts = $this->rentals->getCounts(NULL, TRUE);
+		$counts = $this->rentals->getCounts(NULL, \Entity\Rental\Rental::STATUS_LIVE);
 		return array_sum($counts);
 	}
 
