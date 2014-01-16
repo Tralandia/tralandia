@@ -1,7 +1,7 @@
 entity: Entity\Rental\EditLog
 
 parameters:
-	title: Rental edit statistics
+	title: "Rental edit statistics (total / harvested)"
 	h1: 'Rental edit -> %name%'
 	hideAddNewButton: true
 

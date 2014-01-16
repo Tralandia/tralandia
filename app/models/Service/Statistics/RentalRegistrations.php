@@ -42,31 +42,35 @@ class RentalRegistrations {
 			$from = $value['from'];
 			$to = $value['to'];
 
-			$total = $this->rentals->getCounts(NULL, NULL, $from, $to);
-			$live = $this->rentals->getCounts(NULL, TRUE, $from, $to);
+			$total = $this->rentals->getCounts(NULL, NULL, NULL, $from, $to);
+//			$live = $this->rentals->getCounts(NULL, \Entity\Rental\Rental::STATUS_LIVE, NULL, $from, $to);
+			$harvested = $this->rentals->getCounts(NULL, NULL, 'harvester', $from, $to);
+			$fromEmail = $this->rentals->getCounts(NULL, NULL, 'email', $from, $to);
 			$results[$key]['total'] = $total;
-			$results[$key]['live'] = $live;
-
+//			$results[$key]['live'] = $live;
+			$results[$key]['harvested'] = $harvested;
+			$results[$key]['fromEmail'] = $fromEmail;
 		}
 
 		$finalResults = array();
+		$keys = ['total', /*'live',*/ 'harvested', 'fromEmail'/*, 'organic'*/];
 		foreach ($periods as $period => $value) {
 			$finalResults['total']['key'] = $period;
-			$finalResults['total'][$period]['total'] = 0;
-			$finalResults['total'][$period]['live'] = 0;
+			foreach($keys as $keyName) {
+				$finalResults['total'][$period][$keyName] = 0;
+			}
 		}
 		foreach ($results as $period => $value) {
-			foreach ($value['total'] as $country => $countInCountry) {
-				$iso = $countries[$country]->getIso();
-				$finalResults[$iso]['key'] = $iso;
-				$finalResults[$iso][$period]['total'] = $countInCountry;
-				$finalResults['total'][$period]['total'] += $countInCountry;
-			}
-			foreach ($value['live'] as $country => $countInCountry) {
-				$iso = $countries[$country]->getIso();
-				$finalResults[$iso]['key'] = $iso;
-				$finalResults[$iso][$period]['live'] = $countInCountry;
-				$finalResults['total'][$period]['live'] += $countInCountry;
+			foreach($keys as $keyName) {
+				foreach ($value[$keyName] as $country => $countInCountry) {
+					$iso = $countries[$country]->getIso();
+					$finalResults[$iso]['key'] = $iso;
+//					if($keyName == 'total') {
+//						$finalResults[$iso][$period][$keyName] = $value['total'][$country] - $value['harvested'][$country] - $value['fromEmail'][$country];
+//					}
+					$finalResults[$iso][$period][$keyName] = $countInCountry;
+					$finalResults['total'][$period][$keyName] += $countInCountry;
+				}
 			}
 		}
 
