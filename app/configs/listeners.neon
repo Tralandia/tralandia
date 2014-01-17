@@ -16,4 +16,5 @@ services:
 	- [class: Listener\RentalEditLogListener, tags: [kdyby.subscriber]]
 	- [class: Listener\NotificationEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\PotentialMemberEmailListener, tags: [kdyby.subscriber]]
+	- [class: Listener\BacklinkEmailListener, tags: [kdyby.subscriber]]
 

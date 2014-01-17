@@ -37,7 +37,7 @@ class EmailManagerCommand extends BaseCommand
 	{
 		$this->setName('email:manager');
 
-		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember]');
+		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember|backlink]');
 
 		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
 		$this->addOption('reset', NULL, InputOption::VALUE_NONE);
@@ -52,6 +52,8 @@ class EmailManagerCommand extends BaseCommand
 			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\UpdateYourRental');
 		} else if($emailType == 'potentialMember') {
 			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\PotentialMember');
+		} else if($emailType == 'backlink') {
+			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\Backlink');
 		} else {
 			return 1;
 		}

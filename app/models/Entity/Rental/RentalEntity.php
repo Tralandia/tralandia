@@ -22,6 +22,7 @@ use Nette\Utils\Strings;
  * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"}),
  * 			@ORM\Index(name="harvested", columns={"harvested"}),
  * 			@ORM\Index(name="registeredFromEmail", columns={"registeredFromEmail"}),
+ * 			@ORM\Index(name="backlinkEmailSent", columns={"backlinkEmailSent"}),
  * 			@ORM\Index(name="emailSent", columns={"emailSent"})
  * 		})
  *
@@ -291,6 +292,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $emailSent = FALSE;
+
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $backlinkEmailSent = FALSE;
 
 
 	/**
