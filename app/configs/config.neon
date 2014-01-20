@@ -119,7 +119,7 @@ parameters:
 		home:
 			enabled: TRUE
 			key: '[language]_[primaryLocation]'
-			expiration: 'tomorrow'
+			expiration: '+1 hour'
 			tags: ['[name]']
 		rootHome:
 			enabled: TRUE
