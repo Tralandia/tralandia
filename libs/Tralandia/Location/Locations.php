@@ -62,6 +62,10 @@ class Locations
 			throw new InvalidArgumentException('$primaryLocation nie je primarna krajina!');
 		}
 
+		if(!\Tools::isFirstUpper($locality)) {
+			$locality = Strings::capitalize($locality);
+		}
+
 		$locationType = $this->typeDao->findOneBySlug('locality');
 		$webalizedName = Strings::webalize($locality);
 		$localityEntity = $this->locationDao->findOneBy(array(

@@ -452,4 +452,10 @@ class Tools {
 		return $url;
 	}
 
+
+	public static function isFirstUpper($string)
+	{
+		return \Nette\Utils\Strings::firstUpper($string) == $string;
+	}
+
 }
