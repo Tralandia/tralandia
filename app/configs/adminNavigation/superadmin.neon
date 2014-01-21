@@ -79,6 +79,9 @@ common:
 				edit:
 					label: Edit
 					link: ':Admin:StatisticsRentalEdit:list'
+				unsubscribed:
+					label: Unsubscribed
+					link: ':Admin:StatisticsUnsubscribed:list'
 
 		cache:
 			label: Cache

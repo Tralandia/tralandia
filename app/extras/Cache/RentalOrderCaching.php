@@ -133,8 +133,18 @@ class RentalOrderCaching extends \Nette\Object {
 
 		$notFeatured = array();
 		$rentalsQb = $this->rentals->findByPrimaryLocationQB($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.lastUpdate' => 'DESC']);
-		$rentalsQb->andWhere($rentalsQb->expr()->gt('r.rank', ':rank'))->setParameter('rank', 60);
+
+		$rentalsQb->andWhere($rentalsQb->expr()->gt('r.rank', ':rank'))->setParameter('rank', 60)
+			->setMaxResults(100);
+
 		$rentals = $rentalsQb->getQuery()->getResult();
+
+		if(count($rentals) < 100) {
+			$rentalsQb = $this->rentals->findByPrimaryLocationQB($this->location, \Entity\Rental\Rental::STATUS_LIVE, ['r.rank' => 'DESC'])
+				->setMaxResults(100 - count($rentals));
+
+			$rentals += $rentalsQb->getQuery()->getResult();
+		}
 
 		foreach ($rentals as $key => $value) {
 			$notFeatured[$value->id] = $value->id;
