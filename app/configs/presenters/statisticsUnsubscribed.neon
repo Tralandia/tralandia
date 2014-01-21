@@ -1,0 +1,11 @@
+entity: Entity\Contact\PotentialMember
+
+parameters:
+	title: Unsubscribed statistics
+	h1: 'Unsubscribe statistics'
+	hideAddNewButton: true
+
+gridFactory: @statisticsUnsubscribedGridFactory
+
+form:
+	fields:

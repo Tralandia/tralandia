@@ -12,10 +12,10 @@ $(function(){
 	});
 
 	$('select.selectRedirect').on('change',function(){
-		
+
 		var id = $(this).attr('id');
 		var locationRedirect = $('#'+id+' option[value="'+$(this).val()+'"]').attr('data-redirect');
-		
+
 		if(window.location.href.toString() != locationRedirect){
 			window.location = locationRedirect;
 		}
@@ -35,11 +35,11 @@ function _rentalTypeClassification(elem){
 	// console.log($(elem).val());
 
 
-	if(typeof classification != 'undefined'){
-		$('.classification').show();
-	} else {
-		$('.classification').hide();
-	}		
+//	if(typeof classification != 'undefined'){
+//		$('.classification').show();
+//	} else {
+//		$('.classification').hide();
+//	}
 }
 
 function rentalTypeOnLoad(){
@@ -53,7 +53,7 @@ function rentalTypeOnLoad(){
 function resetSelectRedirect(elem){
 	var id = '#'+$(elem).attr('id');
 	var val = $('select'+id+' option[selected]').val();
-	$('select'+id).select2('val',val);	
+	$('select'+id).select2('val',val);
 }
 
 

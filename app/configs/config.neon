@@ -694,6 +694,10 @@ factories:
 		class: AdminModule\Grids\Statistics\ReservationsGrid
 		implement: AdminModule\Grids\Statistics\IReservationsGridFactory
 
+	statisticsUnsubscribedGridFactory:
+		class: AdminModule\Grids\Statistics\UnsubscribedGrid(@doctrine.dao(Entity\Contact\PotentialMember), ...)
+		implement: AdminModule\Grids\Statistics\IUnsubscribedGridFactory
+
 	statisticsRentalEditGridFactory:
 		class: AdminModule\Grids\Statistics\RentalEditGrid
 		implement: AdminModule\Grids\Statistics\IRentalEditGridFactory
