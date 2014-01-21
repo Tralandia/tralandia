@@ -4,6 +4,7 @@ namespace AdminModule\Grids\Statistics;
 
 use AdminModule\Components\AdminGridControl;
 use Nette\ArrayHash;
+use Nette\Utils\Arrays;
 use Nette\Utils\Paginator;
 use Tralandia\BaseDao;
 use Tralandia\Location\Countries;
@@ -44,7 +45,8 @@ class UnsubscribedGrid extends AdminGridControl {
 		$grid->setRowPrimaryKey('key');
 
 		$grid->addColumn('key', 'Country');
-		$grid->addColumn('total', 'Total');
+		$grid->addColumn('pot', 'pot.');
+		$grid->addColumn('unsubscribed');
 
 		return $grid;
 	}
@@ -65,14 +67,28 @@ class UnsubscribedGrid extends AdminGridControl {
 
 		$unsubscribedCount = $qb->getQuery()->getArrayResult();
 
+		$potQb = $this->potentialMemberDao->createQueryBuilder('pm');
+		$potQb->select('l.id locationId', 'COUNT(pm.id) as c')
+			->innerJoin('pm.primaryLocation', 'l')
+			->andWhere($qb->expr()->eq('pm.unsubscribed', ':unsubscribed'))->setParameter('unsubscribed', FALSE)
+			->groupBy('l.id');
+
+		$potCount = $potQb->getQuery()->getArrayResult();
+
+		foreach($unsubscribedCount as $key => $row) {
+			Arrays::renameKey($unsubscribedCount, $key, $row['locationId']);
+		}
+
 		$finalResults = ['total' => ['key' => 'total']];
-		foreach($unsubscribedCount as $row) {
+		foreach($potCount as $row) {
 			$count = $row['c'];
 			$locationId = $row['locationId'];
 			$iso = $countries[$locationId]->getIso();
 			$finalResults[$iso]['key'] = $iso;
-			$finalResults[$iso]['total'] = $count;
-			$finalResults['total']['total'] += $count;
+			$finalResults[$iso]['pot'] = $count;
+			$finalResults[$iso]['unsubscribed'] = $unsubscribedCount[$locationId]['c'];
+			$finalResults['total']['pot'] += $count;
+			$finalResults['total']['unsubscribed'] += $unsubscribedCount[$locationId]['c'];
 		}
 
 		$total = $finalResults['total'];
