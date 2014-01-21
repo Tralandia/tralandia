@@ -48,9 +48,12 @@ class Backlink extends EmailManager
 	public function next()
 	{
 		$qb = $this->rentalDao->createQueryBuilder('r');
-		$qb->leftJoin('\Entity\Seo\BackLink', 'bl')
+		$qb->leftJoin('r.backLinks', 'bl')
 			->where($qb->expr()->eq('r.backlinkEmailSent', ':backlinkEmailSent'))->setParameter('backlinkEmailSent', FALSE)
 			->andWhere($qb->expr()->isNull('bl.id'))
+			->andWhere($qb->expr()->isNotNull('r.lastUpdate'))
+			->andWhere($qb->expr()->isNotNull('r.url'))
+			->andWhere($qb->expr()->gte('r.rank', ':minRank'))->setParameter('minRank', 50)
 			->setMaxResults(1);
 
 		/** @var $rental \Entity\Rental\Rental */
