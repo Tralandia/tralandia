@@ -99,19 +99,19 @@ class Phone extends Nette\Object {
 	 * @return \Nette\ArrayHash|null
 	 */
 	private function serviceRequest($number,Entity\Location\Location $defaultCountry = NULL) {
-		$defaultCountry && $defaultCountryIso = strtoupper(substr($defaultCountry->getIso(), 0, 2));
+		$defaultCountryIso = $defaultCountry ? $defaultCountryIso = strtoupper(substr($defaultCountry->getIso(), 0, 2)) : 'EN';
 
-		$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
 		try {
 			$response = new Nette\ArrayHash();
-			if($defaultCountry == 'AT') {
+			if($defaultCountryIso == 'AT') {
 				$response->isValid = TRUE;
-				$response->regionCode = $defaultCountry;
+				$response->regionCode = $defaultCountryIso;
 				$response->E164 = $number;
-				$response->international = $number;
-				$response->national = $number;
+				$response->international = '+' . $number;
+				$response->national = str_replace('+43', '', '+' . $number);
 			} else {
-				$phoneNumber = $phoneUtil->parse($number, isset($defaultCountryIso) ? $defaultCountryIso : 'EN');
+				$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+				$phoneNumber = $phoneUtil->parse($number, $defaultCountryIso);
 				$response->isValid = $phoneUtil->isValidNumber($phoneNumber);
 				$response->regionCode = $phoneUtil->getRegionCodeForNumber($phoneNumber);
 				$response->E164 = $phoneUtil->format($phoneNumber, PhoneNumberFormat::E164);
