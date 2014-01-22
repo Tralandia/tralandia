@@ -103,13 +103,22 @@ class Phone extends Nette\Object {
 
 		$phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
 		try {
-			$phoneNumber = $phoneUtil->parse($number, isset($defaultCountryIso) ? $defaultCountryIso : 'EN');
 			$response = new Nette\ArrayHash();
-			$response->isValid = $phoneUtil->isValidNumber($phoneNumber);
-			$response->regionCode = $phoneUtil->getRegionCodeForNumber($phoneNumber);
-			$response->E164 = $phoneUtil->format($phoneNumber, PhoneNumberFormat::E164);
-			$response->international = $phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
-			$response->national = $phoneUtil->format($phoneNumber, PhoneNumberFormat::NATIONAL);
+			if($defaultCountry == 'AT') {
+				$response->isValid = TRUE;
+				$response->regionCode = $defaultCountry;
+				$response->E164 = $number;
+				$response->international = $number;
+				$response->national = $number;
+			} else {
+				$phoneNumber = $phoneUtil->parse($number, isset($defaultCountryIso) ? $defaultCountryIso : 'EN');
+				$response->isValid = $phoneUtil->isValidNumber($phoneNumber);
+				$response->regionCode = $phoneUtil->getRegionCodeForNumber($phoneNumber);
+				$response->E164 = $phoneUtil->format($phoneNumber, PhoneNumberFormat::E164);
+				$response->international = $phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
+				$response->national = $phoneUtil->format($phoneNumber, PhoneNumberFormat::NATIONAL);
+			}
+
 			return $response;
 		} catch(\libphonenumber\NumberParseException $e) {
 			return NULL;
