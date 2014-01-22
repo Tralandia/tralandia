@@ -408,7 +408,7 @@ LIMIT $limit";
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 		$qb->select('r.id');
-		$qb->orderBy('r.rank DESC');
+		$qb->orderBy('r.rank', 'DESC');
 
 		$rentals = $qb->getQuery()->getScalarResult();
 
