@@ -21,9 +21,12 @@ class SearchPresenter extends \BasePresenter
 			$this->terminate();
 		}
 
-		$skipIds = $this->getParameter('skipids', []);
-		Nette\Diagnostics\Debugger::log(Json::encode($skipIds), 'map');
-		Nette\Diagnostics\Debugger::log(new Exception());
+		try {
+			$skipIds = $this->getParameter('skipids', []);
+			if(is_scalar($skipIds)) $skipIds = Json::decode($skipIds, Json::FORCE_ARRAY);
+		} catch(\Nette\Utils\JsonException $e) {
+			$skipIds = [];
+		}
 
 		$zoom = (int) $zoom;
 		$zoomBorder1 = 7; // countries
