@@ -176,7 +176,7 @@ services:
 	# CACHE
 	frontRouteCache: Nette\Caching\Cache(@cacheStorage, 'FrontRoute')
 	templateCache: Nette\Caching\Cache(@templateCacheStorage, 'Nette.Templating.Cache')
-	mapSearchCache: Nette\Caching\Cache(@mapSearchCacheStorage, 'mapSearch')
+	mapSearchCache: Extras\Cache\Cache(@mapSearchCacheStorage, 'mapSearch')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')

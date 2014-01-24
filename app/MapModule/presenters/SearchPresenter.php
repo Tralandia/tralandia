@@ -19,6 +19,8 @@ class SearchPresenter extends \BasePresenter
 			$this->terminate();
 		}
 
+		$skipIds = $this->getParameter('skipids', []);
+
 		$zoom = (int) $zoom;
 		$zoomBorder1 = 7; // countries
 		$zoomBorder2 = 11; // locations
@@ -32,7 +34,7 @@ class SearchPresenter extends \BasePresenter
 		} else if($isIn($zoomBorder1, $zoomBorder2, $zoom)) {
 			$this->payload->localities = $this->rentals->getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 		} else if($isIn($zoomBorder2, 20, $zoom)) {
-			$this->payload->rentals = $this->rentals->getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, $this);
+			$this->payload->rentals = $this->rentals->getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, $skipIds, $this);
 		}
 
 		$this->sendPayload();

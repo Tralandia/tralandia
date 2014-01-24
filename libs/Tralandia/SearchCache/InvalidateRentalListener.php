@@ -32,11 +32,17 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	 */
 	private $translatorCache;
 
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
+	private $mapSearchCache;
 
-	public function __construct(Cache $templateCache, Cache $translatorCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
+
+	public function __construct(Cache $templateCache, Cache $translatorCache, Cache $mapSearchCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
 	{
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->templateCache = $templateCache;
+		$this->mapSearchCache = $mapSearchCache;
 		$this->translatorCache = $translatorCache;
 	}
 
@@ -63,6 +69,8 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 		foreach($rental->getInterviewAnswers() as $answer) {
 			$this->translatorCache->remove($answer->getAnswer()->getId());
 		}
+
+		$this->mapSearchCache->remove($rental->getId());
 	}
 
 
