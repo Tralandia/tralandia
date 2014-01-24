@@ -10,10 +10,8 @@ namespace Tralandia\Rental;
 
 use Entity\Location\Location;
 use Entity\Rental\Rental;
-use Entity\Rental\EditLog;
 use Kdyby\Doctrine\QueryBuilder;
 use Nette;
-use Nette\Caching\Cache;
 use Tralandia\BaseDao;
 
 class Rentals {
@@ -404,120 +402,175 @@ LIMIT $limit";
 	}
 
 
-	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, Nette\Application\UI\Presenter $presenter)
+	/**
+	 * @param $latitudeA
+	 * @param $longitudeA
+	 * @param $latitudeB
+	 * @param $longitudeB
+	 * @param array $skipIds
+	 * @param Nette\Application\UI\Presenter $presenter
+	 *
+	 * @return array
+	 */
+	public function getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, array $skipIds, Nette\Application\UI\Presenter $presenter)
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
-		$qb->select('r.id');
-		$qb->orderBy('r.rank', 'DESC');
+
+		if(count($skipIds)) {
+			$qb->andWhere($qb->expr()->notIn('r.id', $skipIds));
+		}
+
+		return $this->getRentalsForMap($qb, $presenter);
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 * @param Nette\Application\UI\Presenter $presenter
+	 *
+	 * @return array
+	 */
+	public function getRentalsForMap(QueryBuilder $qb, Nette\Application\UI\Presenter $presenter)
+	{
+		$qb->select('r.id')
+			->orderBy('r.rank', 'DESC');
 
 		$rentals = $qb->getQuery()->getScalarResult();
 
 		$data = [];
 		$notCached = [];
-		$translator = $this->environment->getTranslator();
 		$language = $this->environment->getLanguage();
 		/** @var $rental \Entity\Rental\Rental */
 		foreach($rentals as $rentalRow) {
 			$rentalId = $rentalRow['id'];
-			$cacheKey = $rentalId . '_' . $language->getId();
-			if($info = $this->mapSearchCache->load($cacheKey)) {
-				$data[] = $info;
-			} else {
-				$notCached[] = $rentalId;
-			}
-		}
 
-		$rentals = $this->rentalDao->findBy(['id' => array_values($notCached)]);
-
-		foreach($rentals as $rental) {
-
-			$type = $translator->translate($rental->type->name);
-			$locality = $translator->translate($rental->address->locality->name, null, ['case' => 'locative']);
-
-			$amenities = [];
-			foreach($rental->getImportantAmenities() as $amenity) {
-				$amenities[] = $translator->translate($amenity->name);
-			}
-
-			$images = [];
-			foreach($rental->getSortedImages(6) as $image) {
-				$images[] = [
-					'sort' => $image->getSort(),
-					'filePath' => STATIC_DOMAIN . 'rental_images' . $image->getFilePath() . '/medium.jpeg',
-				];
-			}
-
-			if(!count($images)) {
-				$images[] = [
-					'sort' => 0,
-					'filePath' => STATIC_DOMAIN . 'no-rental-image.png',
-				];
-
-			}
-
-			$addressGps = $rental->getAddress()->getGps();
-			$price = $rental->getPrice();
-			$phone = $rental->getPhone();
-			$pet = $rental->getPetAmenity();
-			$board = $rental->getBoardAmenities();
-			if(count($board)) {
-				foreach($board as $key => $value) {
-					Nette\Utils\Arrays::renameKey($board, $key, $value->getSlug());
+			if($cacheData = $this->mapSearchCache->load($rentalId)) {
+				if(array_key_exists($language->getId(), $cacheData)) {
+					$data[$rentalId] = $cacheData[$language->getId()];
+					continue;
 				}
 			} else {
-				$board = FALSE;
+				$cacheData = [];
 			}
 
-			$info = [
-				'id' => $rental->id,
-				'name' => $translator->translate($rental->getName()),
-				'rentalType' => $rental->getType()->getSlug(),
-				'subTitle' => ucfirst($type) . ' ' . $locality,
-				'priceAmount' => $price->getSourceAmount(),
-				'priceCurrency' => $price->getSourceCurrency()->getSymbol(),
-				'maxCapacity' => $rental->getMaxCapacity(),
-				'amenities' => implode(', ', $amenities),
-				'isPetAllowed' => $pet ? $pet->getId() != 298 : NULL,
-				'isBreakfast' => $board ? array_key_exists('breakfast', $board) : NULL,
-				'isLunch' => $board ? array_key_exists('lunch', $board) : NULL,
-				'isDinner' => $board ? array_key_exists('dinner', $board) : NULL,
-				'contactName' => $rental->getContactName(),
-				'email' => $rental->getContactEmail(),
-				'phone' => $phone ? $phone->getInternational() : NULL,
-				'photos' => $images,
-				'latitude' => $addressGps->getLatitude(),
-				'longitude' => $addressGps->getLongitude(),
-				'detailLink' => $presenter->link('//:Front:Rental:detail', ['rental' => $rental]),
-				'gravatar' => \Tools::getGravatar($rental->getContactEmail()),
-			];
-
-			$cacheKey = $rental->getId() . '_' . $language->getId();
-
-			$this->mapSearchCache->save($cacheKey, $info, [
-				Cache::TAGS => ['rental/' . $rental->getId(), 'language/' . $language->getId()],
-			]);
-
-			$data[] = $info;
+			$notCached[$rentalId] = $cacheData;
+			$data[$rentalId] = NULL;
 		}
 
-		return $data;
+		$rentals = $this->rentalDao->findBy(['id' => array_keys($notCached)]);
+
+		foreach($rentals as $rental) {
+			$rentalId = $rental->getId();
+			$cacheData = $notCached[$rentalId];
+
+			$cacheData[$language->getId()] = $this->prepareRentalToMapSearchCache($rental, $presenter);
+
+			$this->mapSearchCache->save($rentalId, $cacheData);
+
+			$data[$rentalId] = $cacheData[$language->getId()];
+		}
+
+		return array_values($data);
 	}
 
 
+	/**
+	 * @param Rental $rental
+	 * @param Nette\Application\UI\Presenter $presenter
+	 *
+	 * @return array
+	 */
+	protected function prepareRentalToMapSearchCache(Rental $rental, Nette\Application\UI\Presenter $presenter)
+	{
+		$translator = $this->environment->getTranslator();
+
+		$type = $translator->translate($rental->getType()->getName());
+		$localityEntity = $rental->getAddress()->getLocality();
+		if($localityEntity) {
+			$locality = $translator->translate($localityEntity->getName(), null, ['case' => 'locative']);
+		} else {
+			$locality = NULL;
+		}
+
+		$amenities = [];
+		foreach($rental->getImportantAmenities() as $amenity) {
+			$amenities[] = $translator->translate($amenity->name);
+		}
+
+		$images = [];
+		foreach($rental->getSortedImages(6) as $image) {
+			$images[] = [
+				'sort' => $image->getSort(),
+				'filePath' => STATIC_DOMAIN . 'rental_images' . $image->getFilePath() . '/medium.jpeg',
+			];
+		}
+
+		if(!count($images)) {
+			$images[] = [
+				'sort' => 0,
+				'filePath' => STATIC_DOMAIN . 'no-rental-image.png',
+			];
+
+		}
+
+		$addressGps = $rental->getAddress()->getGps();
+		$price = $rental->getPrice();
+		$phone = $rental->getPhone();
+		$pet = $rental->getPetAmenity();
+		$board = $rental->getBoardAmenities();
+		if(count($board)) {
+			foreach($board as $key => $value) {
+				Nette\Utils\Arrays::renameKey($board, $key, $value->getSlug());
+			}
+		} else {
+			$board = FALSE;
+		}
+
+		$info = [
+			'id' => $rental->id,
+			'name' => $translator->translate($rental->getName()),
+			'rentalType' => $rental->getType()->getSlug(),
+			'subTitle' => ucfirst($type) . ' ' . $locality,
+			'priceAmount' => $price->getSourceAmount(),
+			'priceCurrency' => $price->getSourceCurrency()->getSymbol(),
+			'maxCapacity' => $rental->getMaxCapacity(),
+			'amenities' => implode(', ', $amenities),
+			'isPetAllowed' => $pet ? $pet->getId() != 298 : NULL,
+			'isBreakfast' => $board ? array_key_exists('breakfast', $board) : NULL,
+			'isLunch' => $board ? array_key_exists('lunch', $board) : NULL,
+			'isDinner' => $board ? array_key_exists('dinner', $board) : NULL,
+			'contactName' => $rental->getContactName(),
+			'email' => $rental->getContactEmail(),
+			'phone' => $phone ? $phone->getInternational() : NULL,
+			'photos' => $images,
+			'latitude' => $addressGps->getLatitude(),
+			'longitude' => $addressGps->getLongitude(),
+			'detailLink' => $presenter->link('//:Front:Rental:detail', ['rental' => $rental]),
+			'gravatar' => \Tools::getGravatar($rental->getContactEmail()),
+		];
+
+
+
+		return $info;
+	}
+
+
+	/**
+	 * @param $latitudeA
+	 * @param $longitudeA
+	 * @param $latitudeB
+	 * @param $longitudeB
+	 *
+	 * @return QueryBuilder
+	 */
 	protected function findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB)
 	{
 		$qb = $this->rentalDao->createQueryBuilder('r');
 
 		$qb->innerJoin('r.address', 'a');
 
-		$qb = $this->findBetween($qb, $latitudeA, $longitudeA, $latitudeB, $longitudeB);
+		$qb = $this->filterRentalsForMap($qb);
 
-		return $qb;
-	}
-
-
-	protected function findBetween(QueryBuilder $qb, $latitudeA, $longitudeA, $latitudeB, $longitudeB)
-	{
 		$qb->andWhere('a.latitude < ?1')->setParameter('1', $latitudeA)
 			->andWhere('a.longitude < ?2')->setParameter('2', $longitudeA)
 			->andWhere('a.latitude > ?3')->setParameter('3', $latitudeB)
@@ -525,6 +578,18 @@ LIMIT $limit";
 
 		$qb->setMaxResults(100);
 
+		return $qb;
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 *
+	 * @return QueryBuilder
+	 */
+	public function filterRentalsForMap(QueryBuilder $qb)
+	{
+		$qb->andWhere($qb->expr()->gte('r.price', ':minPrice'))->setParameter('minPrice', 1);
 		return $qb;
 	}
 

@@ -28,7 +28,6 @@ class TempScriptPresenter extends BasePresenter {
 	 */
 	protected $variationUpdater;
 
-
 	/**
 	 * @autowire
 	 * @var \Robot\CreateMissingTranslationsRobot
@@ -52,6 +51,12 @@ class TempScriptPresenter extends BasePresenter {
 	 * @var \User\UserCreator
 	 */
 	protected $userCreator;
+
+	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\Rentals
+	 */
+	protected $rentals;
 
 	public function actionCreateMissingTranslationsForLocations()
 	{
@@ -515,6 +520,24 @@ group by r.id limit ' . $limit);
 		}
 
 		$this->em->flush();
+	}
+
+
+	public function actionBuildCacheForMapSearch($chunk = 0, $limit = 1000)
+	{
+		$start = time();
+		$qb = $this->rentalDao->createQueryBuilder('r');
+
+		$qb = $this->rentals->filterRentalsForMap($qb);
+
+		$qb->setMaxResults($limit);
+		$qb->setFirstResult($chunk * $limit);
+
+		$this->rentals->getRentalsForMap($qb, $this);
+
+		$this->payload->start = $start;
+		$this->payload->duration = time() - $start;
+		$this->sendPayload();
 	}
 
 }
