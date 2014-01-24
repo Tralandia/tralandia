@@ -2,6 +2,7 @@
 
 namespace MapModule;
 
+use Extras\Models\Service\Exception;
 use Nette;
 use Nette\Utils\Json;
 
@@ -22,6 +23,7 @@ class SearchPresenter extends \BasePresenter
 
 		$skipIds = $this->getParameter('skipids', []);
 		Nette\Diagnostics\Debugger::log(Json::encode($skipIds), 'map');
+		Nette\Diagnostics\Debugger::log(new Exception());
 
 		$zoom = (int) $zoom;
 		$zoomBorder1 = 7; // countries
