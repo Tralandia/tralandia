@@ -3,6 +3,7 @@
 namespace MapModule;
 
 use Nette;
+use Nette\Utils\Json;
 
 class SearchPresenter extends \BasePresenter
 {
@@ -20,6 +21,7 @@ class SearchPresenter extends \BasePresenter
 		}
 
 		$skipIds = $this->getParameter('skipids', []);
+		Nette\Diagnostics\Debugger::log(Json::encode($skipIds), 'map');
 
 		$zoom = (int) $zoom;
 		$zoomBorder1 = 7; // countries
