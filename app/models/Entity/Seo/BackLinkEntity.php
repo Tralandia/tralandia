@@ -32,10 +32,6 @@ class BackLink extends \Entity\BaseEntity {
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 	/**
 	 * @param \Entity\Rental\Rental
