@@ -458,4 +458,11 @@ class Tools {
 		return \Nette\Utils\Strings::firstUpper($string) == $string;
 	}
 
+
+	public static function transliterate($string)
+	{
+		$transliterator = \Transliterator::create("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
+		return $transliterator->transliterate($string);
+	}
+
 }

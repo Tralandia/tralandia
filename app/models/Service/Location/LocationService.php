@@ -2,6 +2,7 @@
 
 namespace Service\Location;
 
+use Nette\Diagnostics\Debugger;
 use Service, Doctrine, Entity;
 use Nette\Utils\Strings;
 
@@ -10,10 +11,6 @@ use Nette\Utils\Strings;
  */
 class LocationService extends Service\BaseService {
 
-	/**
-	 * @var \Transliterator
-	 */
-	public $transliterator;
 
 	protected $routingPathSegmentDao;
 	protected $routingPathSegmentOldDao;
@@ -28,9 +25,8 @@ class LocationService extends Service\BaseService {
 	}
 
 
-	public function inject(\Service\PolygonService $service, \Transliterator $transliterator) {
+	public function inject(\Service\PolygonService $service) {
 		$this->polygonService = $service;
-		$this->transliterator = $transliterator;
 	}
 
 	public function setName(\Entity\Phrase\Phrase $name) {
@@ -58,7 +54,7 @@ class LocationService extends Service\BaseService {
 		if(!$translation) {
 			throw new \Exception('Nenasiel som zdrojovy preklad pre frazu!');
 		}
-		$newSlug = $this->transliterator->transliterate($translation->translation);
+		$newSlug = \Tools::transliterate($translation->translation);
 		$newSlug = Strings::webalize($newSlug);
 
 		$oldSlug = $this->getEntity()->slug;
@@ -67,11 +63,12 @@ class LocationService extends Service\BaseService {
 			$existingLocation = 1;
 			while ($existingLocation) {
 				$existingLocation = $this->locationDao->findOneBy(array(
-					'parent' => $this->getEntity()->parent,
+					'parent' => $this->getEntity()->getParent()->getId(),
 					'slug' => $newSlug,
 				));
 				if ($existingLocation) {
 					$newSlug .= 1;
+					Debugger::log(new \Exception('Slug kde dal 1-ku'));
 				}
 			}
 			// Set the slug attribute for the location

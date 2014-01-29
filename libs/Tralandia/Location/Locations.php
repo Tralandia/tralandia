@@ -67,7 +67,8 @@ class Locations
 		}
 
 		$locationType = $this->typeDao->findOneBySlug('locality');
-		$webalizedName = Strings::webalize($locality);
+		$webalizedName = \Tools::transliterate($locality);
+		$webalizedName = Strings::webalize($webalizedName);
 		$localityEntity = $this->locationDao->findOneBy(array(
 			'type' => $locationType,
 			'parent' => $primaryLocation,

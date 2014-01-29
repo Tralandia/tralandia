@@ -50,19 +50,18 @@ class LocationRepository extends \Repository\BaseRepository {
 	/**
 	 * @param string $locality
 	 * @param Location $primaryLocation
-	 * @param \Transliterator $transliterator
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 * @return Location
 	 */
-	public function findOrCreateLocality($locality, Location $primaryLocation, \Transliterator $transliterator)
+	public function findOrCreateLocality($locality, Location $primaryLocation)
 	{
 		if(!$primaryLocation->isPrimary()) {
 			throw new InvalidArgumentException('$primaryLocation nie je primarna krajina!');
 		}
 
 		$locationType = $this->related('type')->findOneBySlug('locality');
-		$webalizedName = $transliterator->transliterate($locality);
+		$webalizedName = \Tools::transliterate($locality);
 		$webalizedName = Strings::webalize($webalizedName);
 
 		$localityEntity = $this->findOneBy(array(

@@ -36,12 +36,6 @@ class TempScriptPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Transliterator
-	 */
-	protected $transliterator;
-
-	/**
-	 * @autowire
 	 * @var \Service\PolygonService
 	 */
 	protected $polygonCalculator;
@@ -292,7 +286,7 @@ class TempScriptPresenter extends BasePresenter {
 		foreach($locations as $location) {
 			$name = $location->getName()->getSourceTranslationText();
 
-			$newSlug = $this->transliterator->transliterate($name);
+			$newSlug = \Tools::transliterate($name);
 			$newSlug = Strings::webalize($newSlug);
 
 			$existingLocation = $this->locationDao->findOneBy(array(

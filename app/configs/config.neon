@@ -308,10 +308,6 @@ services:
 	# ==============================
 	# ==================== SERVICES
 	# ==============================
-	transliterator:
-		class: \Transliterator
-		factory: Transliterator::create("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC")
-
 	googleGeocodeService: GoogleGeocodeServiceV3(@googleServiceCommunicator)
 	googleServiceCommunicator: CurlCommunicator
 
