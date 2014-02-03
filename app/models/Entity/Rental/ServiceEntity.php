@@ -16,6 +16,13 @@ use Extras\FileStorage;
 class Service extends \Entity\BaseEntity
 {
 
+	const GIVEN_FOR_SHARE = 'Share';
+	const GIVEN_FOR_BACKLINK = 'Backlink';
+	const GIVEN_FOR_PAID_INVOICE = 'Paid Invoice';
+
+
+	const TYPE_FEATURED = 'featured';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="services")

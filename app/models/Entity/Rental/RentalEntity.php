@@ -260,6 +260,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Service", mappedBy="rental")
+	 * @ORM\OrderBy({"dateTo" = "ASC"})
 	 */
 	protected $services;
 
@@ -313,6 +314,15 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getContactEmail()
 	{
 		return $this->email ? $this->email : $this->getOwner()->getLogin();
+	}
+
+
+	/**
+	 * @return \Entity\Rental\Service
+	 */
+	public function getLastService()
+	{
+		return $this->services->last();
 	}
 
 

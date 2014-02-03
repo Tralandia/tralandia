@@ -10,7 +10,7 @@ namespace Tralandia\SearchCache;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
-use Extras\Cache\IRentalSearchCachingFactory;
+use Robot\IUpdateRentalSearchCacheRobotFactory;
 use Nette;
 use Nette\Caching\Cache;
 
@@ -18,9 +18,10 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 
 
 	/**
-	 * @var \Extras\Cache\IRentalSearchCachingFactory
+	 * @autowire
+	 * @var \Robot\IUpdateRentalSearchCacheRobotFactory
 	 */
-	private $rentalSearchCachingFactory;
+	protected $updateRentalSearchCacheRobotFactory;
 
 	/**
 	 * @var \Nette\Caching\Cache
@@ -38,12 +39,12 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	private $mapSearchCache;
 
 
-	public function __construct(Cache $templateCache, Cache $translatorCache, Cache $mapSearchCache, IRentalSearchCachingFactory $rentalSearchCachingFactory)
+	public function __construct(Cache $templateCache, Cache $translatorCache, Cache $mapSearchCache, IUpdateRentalSearchCacheRobotFactory $updateRentalSearchCacheRobotFactory)
 	{
-		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->templateCache = $templateCache;
 		$this->mapSearchCache = $mapSearchCache;
 		$this->translatorCache = $translatorCache;
+		$this->updateRentalSearchCacheRobotFactory = $updateRentalSearchCacheRobotFactory;
 	}
 
 	public function getSubscribedEvents()
@@ -57,8 +58,7 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 
 	public function onSuccess(Rental $rental)
 	{
-		$rentalSearchCaching = $this->rentalSearchCachingFactory->create($rental->getPrimaryLocation());
-		$rentalSearchCaching->updateRental($rental);
+		$this->updateRentalSearchCacheRobotFactory->create($rental->getPrimaryLocation())->runForRental($rental);
 
 		$this->templateCache->clean([
 			Cache::TAGS => ['rental/' . $rental->getId()],

@@ -42,4 +42,5 @@ define('FAVORITELIST_ENTITY', '\Entity\FavoriteList');
 define('FAQ_CATEGORY_ENTITY', '\Entity\Faq\Category');
 define('TICKET_ENTITY', '\Entity\Ticket\Ticket');
 define('EDIT_LOG_ENTITY', '\Entity\Rental\EditLog');
+define('SEO_BACKLINK_ENTITY', '\Entity\Seo\BackLink');
 
