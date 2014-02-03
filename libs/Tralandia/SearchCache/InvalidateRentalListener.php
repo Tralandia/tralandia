@@ -14,8 +14,13 @@ use Robot\IUpdateRentalSearchCacheRobotFactory;
 use Nette;
 use Nette\Caching\Cache;
 
-class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
-
+class InvalidateRentalListener implements \Kdyby\Events\Subscriber
+{
+	const CLEAR_SEARCH = 'CLEAR_SEARCH';
+	const CLEAR_HOMEPAGE = 'CLEAR_HOMEPAGE';
+	const CLEAR_DICTIONARY = 'CLEAR_DICTIONARY';
+	const CLEAR_TEMPLATE = 'CLEAR_TEMPLATE';
+	const CLEAR_RENTALPICKER = 'CLEAR_RENTALPICKER';
 
 	/**
 	 * @autowire
@@ -56,24 +61,37 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber {
 	}
 
 
-	public function onSuccess(Rental $rental)
+	public function onSuccess(Rental $rental, array $options = NULL)
 	{
-		$this->updateRentalSearchCacheRobotFactory->create($rental->getPrimaryLocation())->runForRental($rental);
-
-		$this->templateCache->clean([
-			Cache::TAGS => ['rental/' . $rental->getId()],
-		]);
-
-		$this->translatorCache->remove($rental->getName()->getId());
-		$this->translatorCache->remove($rental->getTeaser()->getId());
-		foreach($rental->getInterviewAnswers() as $answer) {
-			$this->translatorCache->remove($answer->getAnswer()->getId());
+		if(!$options || in_array(self::CLEAR_SEARCH, $options)) {
+			$this->updateRentalSearchCacheRobotFactory->create($rental->getPrimaryLocation())->runForRental($rental);
 		}
 
-		$this->mapSearchCache->remove($rental->getId());
+		if(!$options || in_array(self::CLEAR_TEMPLATE, $options)) {
+			$this->templateCache->clean([
+				Cache::TAGS => ['rental/' . $rental->getId()],
+			]);
+		}
+
+		if(!$options || in_array(self::CLEAR_DICTIONARY, $options)) {
+			$this->translatorCache->remove($rental->getName()->getId());
+			$this->translatorCache->remove($rental->getTeaser()->getId());
+			foreach($rental->getInterviewAnswers() as $answer) {
+				$this->translatorCache->remove($answer->getAnswer()->getId());
+			}
+		}
+
+		if(!$options || in_array(self::CLEAR_RENTALPICKER, $options)) {
+			$this->mapSearchCache->remove($rental->getId());
+		}
+
+		if($options && in_array(self::CLEAR_HOMEPAGE, $options)) { // pozor tu je vinimka !!!
+			$this->templateCache->clean([
+				Cache::TAGS => ['primaryLocation/' . $rental->getPrimaryLocation()->getIso(), 'home'],
+			]);
+		}
+
 	}
-
-
 
 
 }
