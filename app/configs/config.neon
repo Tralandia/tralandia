@@ -330,6 +330,7 @@ services:
 	- Tralandia\Rental\RankCalculator
 	- Tralandia\Rental\Discarder
 	- Tralandia\Rental\BanListManager
+	- Tralandia\Rental\ServiceManager(@doctrine.dao(Entity\Rental\Service), @doctrine.dao(Entity\Rental\Rental))
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())

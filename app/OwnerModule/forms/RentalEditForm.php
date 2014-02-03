@@ -239,6 +239,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = callback($rentalContainer, 'validation');
+
 	}
 
 	public function setDefaultsValues()
