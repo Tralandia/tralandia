@@ -125,15 +125,14 @@ class DatabaseClient {
 
 	public function findCacheIdsByTags(array $tags)
 	{
-		$ids = $this->connection->select('c.id AS cId, count(c.id) AS count')
+		$selection = $this->connection->select('c.id AS cId, count(c.id) AS count')
 			->from($this->table . ' AS c')
 			->innerJoin($this->tagsTable . ' AS t')->on('t.cache_id = c.id')
 			->where('[tag] IN %in', $tags)
 			->groupBy('c.id')
-			->having('count = %i', count($tags))
-			->fetchPairs('cId', 'cId');
+			->having('count = %i', count($tags));
 
-		return $ids;
+		return $selection->fetchPairs('cId', 'cId');
 	}
 
 

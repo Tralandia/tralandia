@@ -76,7 +76,7 @@ class RentalPresenter extends BasePresenter
 			$form->getPresenter()->redirect(':Front:Rental:detail', ['rental' => $this->rental]);
 		};
 
-		$form->validate();
+		//if(!$form->isSubmitted()) $form->validate();
 
 		return $form;
 	}

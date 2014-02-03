@@ -84,7 +84,11 @@ class RentalPresenter extends AdminPresenter {
 	public function prolongService(Rental $rental, $serviceFor)
 	{
 		$this->serviceManager->prolong($rental, $serviceFor);
-		$this->invalidateRentalListener->onSuccess($rental);
+		$invalidateOption = [
+			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_SEARCH,
+			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_HOMEPAGE,
+		];
+		$this->invalidateRentalListener->onSuccess($rental, $invalidateOption);
 		$this->flashMessage('done', self::FLASH_SUCCESS);
 		$this->redirect('list');
 	}
