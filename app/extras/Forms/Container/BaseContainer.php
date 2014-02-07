@@ -27,20 +27,16 @@ abstract class BaseContainer extends Nette\Forms\Container
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		foreach ($this->getComponents() as $name => $control) {
 			if ($control instanceof IControl && !$control->isDisabled() && !$control->isOmitted() && !$control instanceof ISubmitterControl) {
-				if(!$control->hasErrors()) {
-					if (method_exists($control, 'getValidFormattedValues')) {
-						$values[$name] = $control->getValidFormattedValues();
-					} else {
-						$values[$name] = $control->getValue();
-					}
+				if (method_exists($control, 'getValidFormattedValues')) {
+					$values[$name] = $control->getValidFormattedValues();
+				} else {
+					$values[$name] = $control->getValue();
 				}
 			} elseif ($control instanceof Container) {
-				if($control->isValid()) {
-					if (method_exists($control, 'getValidFormattedValues')) {
-						$values[$name] = $control->getValidFormattedValues($asArray);
-					} else {
-						$values[$name] = $control->getValues($asArray);
-					}
+				if (method_exists($control, 'getValidFormattedValues')) {
+					$values[$name] = $control->getValidFormattedValues($asArray);
+				} else {
+					$values[$name] = $control->getValues($asArray);
 				}
 			}
 		}

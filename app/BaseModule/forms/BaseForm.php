@@ -78,7 +78,7 @@ abstract class BaseForm extends \CoolForm {
 			return;
 		}
 
-		$this->setTranslator($this->presenter->context->getByType('Nette\Localization\ITranslator'));
+		//$this->setTranslator($this->presenter->context->getByType('Nette\Localization\ITranslator'));
 
 		$this->onAttached($this, $parent);
 	}

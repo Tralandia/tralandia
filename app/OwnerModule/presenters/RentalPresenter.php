@@ -67,6 +67,23 @@ class RentalPresenter extends BasePresenter
 		$rentalEditHandler = $this->rentalEditHandlerFactory->create($this->rental);
 		$rentalEditHandler->attach($form);
 
+		$form->onValidate[] = function($form) {
+			$name = $form['rental']['name']->getValues();
+			$nameIsFilled = FALSE;
+			foreach($name as $key => $value) {
+				if(strlen($value)) {
+					$nameIsFilled = TRUE;
+					break;
+				}
+			}
+
+
+			if(!$nameIsFilled) {
+				$form['rental']['name']['en']->addError($form->translate('o100071'));
+			}
+
+		};
+
 		$form->onError[] = function($form) {
 			$this->flashMessage(791, $this::FLASH_ERROR);
 		};
@@ -82,6 +99,7 @@ class RentalPresenter extends BasePresenter
 		};
 
 		$form->onSubmit[] = function($form) {
+			$form->validate();
 			if($form->isValid()) {
 				$form->getPresenter()->redirect(':Front:Rental:detail', ['rental' => $this->rental]);
 			}

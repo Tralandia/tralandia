@@ -20,7 +20,8 @@
 	{default $text = ''}
 	{default $required = false}
 	{default $id = ''}
-	<tr>
+	{default $trClass = ''}
+	<tr n:class="$trClass">
 		<td colspan="3" id="{$id}" class="fieldset"><div class="separator"></div>{_$text}<i n:if="$required" class="icon-asterisk"></i></td>
 	</tr>
 	{/define #fieldset}
@@ -32,7 +33,8 @@
 	*}
 	{define #infobox}
 	{default $text = ''}
-	<tr class="simpleInput">
+	{default $trClass = ''}
+	<tr class="simpleInput {$trClass}">
 		<td colspan=3>
 			<div class="formHelpText info">{_$text}</div>
 		</td>
@@ -416,11 +418,10 @@
 }
 {?unset($control)}
 
-{capture $datalink}
-{plink validateAddress}
-{/capture}
+{capture $datalink}{plink validateAddress}{/capture}
+{default $trClass = ''}
 
-{include #opentag , class => 'mapControl' , dataLink => $datalink , control => $container}
+{include #opentag , class => 'mapControl ' . $trClass , dataLink => $datalink , control => $container}
 
 	<td colspan="3">
 
@@ -471,8 +472,8 @@
 	</td>
 </tr>
 
-		{include #text, control => $container['city'], class => 'addressCityInput'}
-		{include #text, control => $container['address'], class => 'addressInput'}
+		{include #text, control => $container['city'], class => 'addressCityInput ' . $trClass}
+		{include #text, control => $container['address'], class => 'addressInput ' . $trClass}
 
 {/define #address}
 
@@ -624,7 +625,8 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-{include #opentag , class => 'control-photo' , control => $container}
+{default $trClass = ''}
+{include #opentag , class => 'control-photo ' . $trClass , control => $container}
 <!-- control photo start -->
 
 	<td colspan="3" class="photoControlParams" data-small-image-message="{_'o100199'}" data-wrong-file-message="{_'o100200'}" data-upload-fail-message="{_'o100201'}">
@@ -679,7 +681,8 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-{include #opentag , class => 'rentalPriceUpload' , control => $container}
+{default trClass = ''}
+{include #opentag , class => 'rentalPriceUpload ' . $trClass , control => $container}
 <!-- control photo start -->
 
 	<td colspan="3">
@@ -726,7 +729,8 @@
 	$container = $control;
 }
 {?unset($control)}
-{include #opentag , class => '' , control => $container}
+{default $trClass = ''}
+{include #opentag , class => $trClass , control => $container}
 
 	<td class="pricelistControl" colspan="3">
 		{var $replicator = $container->getComponent('list')}
@@ -751,7 +755,7 @@
 		{/foreach}
 	</td>
 </tr>
-<tr class="pricelistControlButton">
+<tr class="pricelistControlButton {$trClass}">
 	<td colspan="3"><a href="#" class="btn-green btn createNewLine"><i class="icon-plus"></i> {_o100168}</a></td>
 </tr>
 {/define #rentalPriceList}
@@ -837,8 +841,8 @@
 		$container = $control;
 	}
 	{?unset($control)}
-	{include #select, control => $container['type'] , class => 'rentalType' , controlClass => 'select2 notFulltext rentalType'}
-	{include #select, control => $container['classification'] , class => 'classification' , controlClass => 'select2 notFulltext classification' }
+	{include #select, control => $container['type'] , class => 'rentalType rentalTypeGroup' , controlClass => 'select2 notFulltext rentalType'}
+	{include #select, control => $container['classification'] , class => 'classification rentalTypeGroup' , controlClass => 'select2 notFulltext classification' }
 {/define #rentalType}
 
 

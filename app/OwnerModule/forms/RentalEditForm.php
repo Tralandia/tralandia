@@ -237,7 +237,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$this->addSubmit('submit', 'o100083');
 
-		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = callback($rentalContainer, 'validation');
 
 	}
@@ -247,24 +246,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		return $this['rental']->setDefaultsValues();
 	}
 
-
-	public function validation(Nette\Application\UI\Form $form)
-	{
-
-		$name = $this['rental']['name']->getValues();
-		$nameIsFilled = FALSE;
-		foreach($name as $key => $value) {
-			if(strlen($value)) {
-				$nameIsFilled = TRUE;
-				break;
-			}
-		}
-
-		if(!$nameIsFilled) {
-			$this['rental']['name']['en']->addError($this->translate('o100071'));
-		}
-
-	}
 
 }
 
