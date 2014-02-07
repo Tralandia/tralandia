@@ -20,7 +20,7 @@ parameters:
 
 
 	templateCache:
-		enabled: false
+		enabled: true
 
 	staticDomain: NULL
 	storageDir: /storage
