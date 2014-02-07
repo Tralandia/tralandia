@@ -10,10 +10,10 @@ namespace Tralandia\Location;
 
 use Entity\Language;
 use Entity\Location\Location;
-use Entity\Rental\Rental;
 use InvalidArgumentException;
 use Model\Location\ILocationDecoratorFactory;
 use Nette;
+use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 use Tralandia\BaseDao;
 
@@ -91,6 +91,7 @@ class Locations
 			$localityEntity->parent = $primaryLocation;
 			$localityEntity->type = $locationType;
 
+			Debugger::log(new \Exception('Vytvorila sa nova lokalita: ' . $locality));
 			// We must save the new location to be able to work on it's slug
 			$this->locationDao->save($localityEntity);
 

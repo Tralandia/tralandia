@@ -237,6 +237,13 @@ class RentalContainer extends BaseContainer
 	}
 
 
+	public function isValid()
+	{
+		// @todo @hack
+		return true;
+	}
+
+
 	public function getMainControl()
 	{
 		return $this['type'];

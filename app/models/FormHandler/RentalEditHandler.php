@@ -58,18 +58,18 @@ class RentalEditHandler extends FormHandler
 	}
 
 
-	public function handleSuccess($values)
+	public function handleSubmit($validValues, $allValues)
 	{
-		$values = $values->rental;
+		$validValues = $validValues->rental;
 		$rental = $this->rental;
 
 
-		if($value = $values['spokenLanguages']) {
+		if($value = $validValues['spokenLanguages']) {
 			$spokenLanguages = $this->languages->findByIds($value);
 			$rental->setSpokenLanguages($spokenLanguages);
 		}
 
-		if ($value = $values['address']) {
+		if ($value = $validValues['address']) {
 			$address = $value;
 			if ($address['addressEntity']) {
 				/** @var $newGps \Extras\Types\Latlong */
@@ -83,18 +83,18 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['placement']) {
+		if ($value = $validValues['placement']) {
 			$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 			$placementEntity = $placementRepository->find($value);
 			$rental->setPlacement($placementEntity);
 		}
 
-		if ($value = $values['type']) {
+		if ($value = $validValues['type']) {
 			$rental->type = $value->type;
 			$rental->classification = $value->classification;
 		}
 
-		if ($value = $values['photos']) {
+		if ($value = $validValues['photos']) {
 			$i = 0;
 			/** @var $imageEntity \Entity\Rental\Image */
 			foreach ($value->images as $imageEntity) {
@@ -104,7 +104,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['priceList']) {
+		if ($value = $validValues['priceList']) {
 			$pricelistRows = $rental->getPricelistRows();
 			foreach ($pricelistRows as $pricelistRow) {
 				$rental->removePricelistRow($pricelistRow);
@@ -116,7 +116,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['priceUpload']) {
+		if ($value = $validValues['priceUpload']) {
 			$priceLists = $rental->getPricelists();
 			foreach ($priceLists as $priceList) {
 				$rental->removePricelist($priceList);
@@ -128,17 +128,17 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['phone']) {
-			if ($phoneEntity = $values['phone']->entity) {
+		if ($value = $validValues['phone']) {
+			if ($phoneEntity = $validValues['phone']->entity) {
 				$rental->setPhone($phoneEntity);
 			}
 		}
 
-		if ($value = $values['price']) {
+		if ($value = $validValues['price']) {
 			$rental->setFloatPrice($value);
 		}
 
-		if ($value = $values['interview']) {
+		if ($value = $validValues['interview']) {
 			$answers = $rental->getInterviewAnswers();
 			foreach ($answers as $answer) {
 				if (isset($value->{$answer->getQuestion()->getId()})) {
@@ -154,32 +154,34 @@ class RentalEditHandler extends FormHandler
 
 		$rentalInfo = ['name', 'teaser'];
 		foreach ($rentalInfo as $infoName) {
-			$value = $values[$infoName];
-			$phrase = $rental->{$infoName};
-			$translationsVariations = [];
-			foreach ($value as $languageIso => $val) {
-				$translationsVariations[$languageIso] = $val;
+			if($value = $validValues[$infoName]) {
+				$phrase = $rental->{$infoName};
+				$translationsVariations = [];
+				foreach ($value as $languageIso => $val) {
+					$translationsVariations[$languageIso] = $val;
+				}
+				$this->phraseManager->updateTranslations($phrase, $translationsVariations);
 			}
-			$this->phraseManager->updateTranslations($phrase, $translationsVariations);
 		}
 
 		$amenities = ['board', 'children', 'service', 'wellness', 'kitchen', 'bathroom', 'nearBy' => 'near-by', 'rentalServices' => 'rental-services', 'onFacility' => 'on-premises', 'sportsFun' => 'sports-fun'];
 		foreach ($amenities as $valueName => $amenityName) {
 			if(is_numeric($valueName)) $valueName = $amenityName;
-			$value = $values[$valueName];
-			$amenities = $rental->getAmenitiesByType($amenityName);
-			foreach ($amenities as $amenity) {
-				$rental->removeAmenity($amenity);
-			}
+			if($value = $validValues[$valueName]) {
+				$amenities = $rental->getAmenitiesByType($amenityName);
+				foreach ($amenities as $amenity) {
+					$rental->removeAmenity($amenity);
+				}
 
-			$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
-			foreach ($value as $amenityId) {
-				$amenityEntity = $amenityRepository->find($amenityId);
-				$rental->addAmenity($amenityEntity);
+				$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
+				foreach ($value as $amenityId) {
+					$amenityEntity = $amenityRepository->find($amenityId);
+					$rental->addAmenity($amenityEntity);
+				}
 			}
 		}
 
-		if ($value = $values['pet']) {
+		if ($value = $validValues['pet']) {
 			$petAmenity = $this->amenities->findByPetType();
 
 			foreach ($petAmenity as $amenity) {
@@ -191,7 +193,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $values['ownerAvailability']) {
+		if ($value = $validValues['ownerAvailability']) {
 			$availabilityAmenities = $this->amenities->findByOwnerAvailabilityType();
 			foreach ($availabilityAmenities as $amenity) {
 				if ($amenity->getId() == $value) {
@@ -202,21 +204,21 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$value = $values['url'];
+		$value = $validValues['url'];
 		$rental->setUrl($value);
 
-		if ($value = $values['bedroomCount']) {
+		if ($value = $validValues['bedroomCount']) {
 			$rental->bedroomCount = $value;
 		}
 
 		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'contactName', 'email'];
 		foreach ($simpleValues as $valueName) {
-			if ($value = $values[$valueName]) {
+			if ($value = $validValues[$valueName]) {
 				$rental->{$valueName} = $value;
 			}
 		}
 
-		$rental->rooms = $values['roomsLayout'];
+		$rental->rooms = $validValues['roomsLayout'];
 
 		$this->em->persist($rental);
 		$this->em->flush();

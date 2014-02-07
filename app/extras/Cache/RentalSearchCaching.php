@@ -137,7 +137,8 @@ class RentalSearchCaching extends \Nette\Object {
 
 		if(!$rental->isLive()) {
 			$this->save(); // aby sa ulozili to vyhodenie objektu
-			throw new RentalMustByLiveException('Len live rental mozes ulozit do cache');
+			//throw new RentalMustByLiveException('Len live rental mozes ulozit do cache');
+			return null;
 		}
 
 		$this->regenerateData($rental);

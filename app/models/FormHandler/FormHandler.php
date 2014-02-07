@@ -31,6 +31,21 @@ abstract class FormHandler extends Nette\Object
 				$self->handleError($form->getValues());
 			};
 		}
+		if (method_exists($this, 'handleSubmit')) {
+			$form->onSubmit[] = function (Form $form) use ($self) {
+				try {
+					$validValues = $form->getValidFormattedValues();
+					$values = $form->getFormattedValues();
+					$self->handleSubmit($validValues, $values);
+
+				} catch (ValidationError $e) {
+					foreach ($e->errors as $error) {
+						$control = $error['control'] ? $form->getComponent($error['control']) : $form;
+						$control->addError($error['message']);
+					}
+				}
+			};
+		}
 	}
 
 	public function attachButton(SubmitButton $button)

@@ -66,7 +66,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		return $navigation;
 	}
 
-	public function actionFakeLogin($id)
+	public function actionFakeLogin($id, $redirect = NULL)
 	{
 		$user = $this->userDao->find($id);
 		if(!$user) {
@@ -74,7 +74,12 @@ abstract class BasePresenter extends \SecuredPresenter {
 		}
 
 		$this->fakeLogin($user);
-		$this->actionAfterLogin();
+
+		if($redirect) {
+			$this->redirectUrl($redirect);
+		} else {
+			$this->actionAfterLogin();
+		}
 	}
 
 	public function fakeLogin(\Entity\User\User $user)

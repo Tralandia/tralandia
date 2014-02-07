@@ -49,12 +49,6 @@ class RentalPresenter extends BasePresenter
 
 		$this->checkPermission($this->rental, 'edit');
 
-		$rentalEditForm = $this->getComponent('rentalEditForm');
-		if(!$rentalEditForm->isSubmitted()){
-			$rentalEditForm['rental']['priceList']->setDefaultsValues();
-			$rentalEditForm['rental']['priceUpload']->setDefaultsValues();
-		}
-
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
 		$this->template->rental = $this->rental;
@@ -68,15 +62,50 @@ class RentalPresenter extends BasePresenter
 	protected function createComponentRentalEditForm()
 	{
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
+		$form->getElementPrototype()->addClass('traform dashboard leaveChangeControl');
 
 		$rentalEditHandler = $this->rentalEditHandlerFactory->create($this->rental);
 		$rentalEditHandler->attach($form);
 
-		$form->onSuccess[] = function($form) {
-			$form->getPresenter()->redirect(':Front:Rental:detail', ['rental' => $this->rental]);
+		$form->onValidate[] = function($form) {
+			$name = $form['rental']['name']->getValues();
+			$nameIsFilled = FALSE;
+			foreach($name as $key => $value) {
+				if(strlen($value)) {
+					$nameIsFilled = TRUE;
+					break;
+				}
+			}
+
+
+			if(!$nameIsFilled) {
+				$form['rental']['name']['en']->addError($form->translate('o100071'));
+			}
+
 		};
 
-		//if(!$form->isSubmitted()) $form->validate();
+		$form->onError[] = function($form) {
+			$this->flashMessage(791, $this::FLASH_ERROR);
+		};
+
+		$form->onAttached[] = function(\Nette\Application\UI\Form $form, $presenter) {
+			$form['rental']['priceList']->setDefaultsValues();
+			$form['rental']['priceUpload']->setDefaultsValues();
+			if(!$form->isSubmitted()) {
+				$form->validate();
+			} else {
+				$form->getElementPrototype()->addClass('submitted');
+			}
+		};
+
+		$form->onSubmit[] = function($form) {
+			$form->validate();
+			if($form->isValid()) {
+				$form->getPresenter()->redirect(':Front:Rental:detail', ['rental' => $this->rental]);
+			}
+		};
+
+
 
 		return $form;
 	}
