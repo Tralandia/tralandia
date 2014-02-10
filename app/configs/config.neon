@@ -11,7 +11,7 @@ nette:
 		autoStart: true
 		expiration: '+1 year'
 		cookie_path: '/'
-		cookie_domain: '.tra.com'
+		cookie_domain: NULL
 
 	latte:
 		macros:

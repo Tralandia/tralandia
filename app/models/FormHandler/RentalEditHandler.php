@@ -17,8 +17,6 @@ class RentalEditHandler extends FormHandler
 	 * @var array
 	 */
 	public $onSuccess = [];
-	public $onGpsChange = [];
-
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -58,9 +56,21 @@ class RentalEditHandler extends FormHandler
 	}
 
 
+	public function handleSuccess($values)
+	{
+		$rental = $this->rental;
+
+		$this->onSuccess($rental);
+
+		return $rental;
+	}
+
+
 	public function handleSubmit($validValues, $allValues)
 	{
-		$validValues = $validValues->rental;
+		if(isset($validValues->rental)) {
+			$validValues = $validValues->rental;
+		}
 		$rental = $this->rental;
 
 
@@ -222,11 +232,6 @@ class RentalEditHandler extends FormHandler
 
 		$this->em->persist($rental);
 		$this->em->flush();
-
-		if(isset($gpsIsChanged)) {
-			$this->onGpsChange($rental);
-		}
-		$this->onSuccess($rental);
 
 		return $rental;
 	}

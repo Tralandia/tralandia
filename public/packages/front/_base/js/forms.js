@@ -153,7 +153,7 @@ $(function(){
 
 						invalid.attr('id',invalidGenerateId);
 
-					$.scrollTo('#'+invalidGenerateId,1200);
+					//$.scrollTo('#'+invalidGenerateId,1200);
 					return false;
 
 				}

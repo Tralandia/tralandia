@@ -203,7 +203,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('spokenLanguages', $this->translate('13137'), $importantLanguagesForSelect);
 
 		$rentalContainer->addText('bedroomCount', $this->translate('o100075'))
-			->setRequired($this->translate('1257'));
+			->setRequired($this->translate('1257'))
+			->addRule(self::NUMERIC, $this->translate('1257'));
 
 		$rentalContainer->addText('roomsLayout', $this->translate('o100190'))
 						->setOption('help', $this->translate('152269'));
