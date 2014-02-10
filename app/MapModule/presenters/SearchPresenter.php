@@ -22,8 +22,9 @@ class SearchPresenter extends \BasePresenter
 		}
 
 		try {
-			$skipIds = $this->getParameter('skipids', []);
+			$skipIds = $this->getHttpRequest()->getPost('skipids', []);
 			if(is_scalar($skipIds)) $skipIds = Json::decode($skipIds, Json::FORCE_ARRAY);
+			if(!is_array($skipIds)) $skipIds = [];
 		} catch(\Nette\Utils\JsonException $e) {
 			$skipIds = [];
 		}
@@ -37,9 +38,9 @@ class SearchPresenter extends \BasePresenter
 		};
 
 		if($isIn(0, $zoomBorder1, $zoom)) {
-			$this->payload->countries = $this->rentals->getCountsInCountries($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+			$this->payload->countries = $this->rentals->getCountsInCountries($latitudeA, $longitudeA, $latitudeB, $longitudeB, $skipIds);
 		} else if($isIn($zoomBorder1, $zoomBorder2, $zoom)) {
-			$this->payload->localities = $this->rentals->getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB);
+			$this->payload->localities = $this->rentals->getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB, $skipIds);
 		} else if($isIn($zoomBorder2, 20, $zoom)) {
 			$this->payload->rentals = $this->rentals->getRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB, $skipIds, $this);
 		}

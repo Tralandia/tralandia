@@ -16,6 +16,7 @@ use Tralandia\BaseDao;
 
 class Rentals {
 
+	const MAP_MAX_RESULTS = 100;
 
 	/**
 	 * @var \Tralandia\BaseDao
@@ -315,7 +316,7 @@ LIMIT $limit";
 	}
 
 
-	public function getCountsInCountries($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	public function getCountsInCountries($latitudeA, $longitudeA, $latitudeB, $longitudeB, array $skipIds)
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 
@@ -323,6 +324,11 @@ LIMIT $limit";
 
 		$qb->innerJoin('a.primaryLocation', 'l')
 			->groupBy('l.id');
+
+		if(count($skipIds)) {
+			$qb->andWhere($qb->expr()->notIn('l.id', $skipIds));
+			$qb->setMaxResults(abs(self::MAP_MAX_RESULTS - count($skipIds)));
+		}
 
 		$result = $qb->getQuery()->getArrayResult();
 
@@ -363,7 +369,7 @@ LIMIT $limit";
 	}
 
 
-	public function getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+	public function getCountsInLocalities($latitudeA, $longitudeA, $latitudeB, $longitudeB, array $skipIds)
 	{
 		$qb = $this->findRentalsBetween($latitudeA, $longitudeA, $latitudeB, $longitudeB);
 
@@ -372,6 +378,11 @@ LIMIT $limit";
 		$qb->innerJoin('a.locality', 'l')
 			->groupBy('l.id')
 			->orderBy('c', 'DESC');
+
+		if(count($skipIds)) {
+			$qb->andWhere($qb->expr()->notIn('l.id', $skipIds));
+			$qb->setMaxResults(abs(self::MAP_MAX_RESULTS - count($skipIds)));
+		}
 
 		$result = $qb->getQuery()->getArrayResult();
 
@@ -418,6 +429,7 @@ LIMIT $limit";
 
 		if(count($skipIds)) {
 			$qb->andWhere($qb->expr()->notIn('r.id', $skipIds));
+			$qb->setMaxResults(abs(self::MAP_MAX_RESULTS - count($skipIds)));
 		}
 
 		return $this->getRentalsForMap($qb, $presenter);
@@ -576,7 +588,7 @@ LIMIT $limit";
 			->andWhere('a.latitude > ?3')->setParameter('3', $latitudeB)
 			->andWhere('a.longitude > ?4')->setParameter('4', $longitudeB);
 
-		$qb->setMaxResults(100);
+		$qb->setMaxResults(self::MAP_MAX_RESULTS);
 
 		return $qb;
 	}
