@@ -350,23 +350,6 @@
 						</div>
 
 
-						{if count($interviewAnswers) > 0}
-						<div class="metaObjectInfo" id="interviewAnswers">
-							<h3>{_o25231}</h3>
-							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
-							<ul class="interviewList">
-								{foreach $interviewAnswers as $interviewAnswer}
-								<li>
-									<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
-
-									<p>{_$interviewAnswer->answer|firstUpper}</p>
-								</li>
-								{/foreach}
-							</ul>
-							<div class="clearfix"></div>
-						</div>
-						{/if}
-
 						<div class="row-fluid">
 							<div class="span12">
 
@@ -394,6 +377,25 @@
 
 							<div class="metaObjectInfo" id="priceTable">
 						</div>
+
+
+						{if count($interviewAnswers) > 0}
+							<div class="metaObjectInfo" id="interviewAnswers">
+								<h3>{_o25231}</h3>
+								<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
+								<ul class="interviewList">
+									{foreach $interviewAnswers as $interviewAnswer}
+										<li>
+											<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
+
+											<p>{_$interviewAnswer->answer|firstUpper}</p>
+										</li>
+									{/foreach}
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+						{/if}
+
 
 
 

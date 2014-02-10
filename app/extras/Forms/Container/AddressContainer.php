@@ -32,6 +32,11 @@ class AddressContainer extends BaseContainer
 	 */
 	protected $translator;
 
+	/**
+	 * @var Address
+	 */
+	protected $addressEntity;
+
 
 	/**
 	 * @param Address|Location $addressOrLocation
@@ -166,15 +171,19 @@ class AddressContainer extends BaseContainer
 	{
 		$return = $asArray ? array() : new \Nette\ArrayHash;
 
-		$address = $this['address']->getValue();
-		$city = $this['city']->getValue();
-		$latitude = $this['latitude']->getValue();
-		$longitude = $this['longitude']->getValue();
-		if($address) {
-			$address = $this->addressCreator->create($address, $city, $this->primaryLocation, new Latlong($latitude, $longitude));
-			$return['addressEntity'] = $address;
+		if(!$this->addressEntity) {
+			$address = $this['address']->getValue();
+			$city = $this['city']->getValue();
+			$latitude = $this['latitude']->getValue();
+			$longitude = $this['longitude']->getValue();
+			if($address) {
+				$this->addressEntity = $address = $this->addressCreator->create($address, $city, $this->primaryLocation, new Latlong($latitude, $longitude));
+				$return['addressEntity'] = $address;
+			} else {
+				$return['addressEntity'] = NULL;
+			}
 		} else {
-			$return['addressEntity'] = NULL;
+			$return['addressEntity'] = $this->addressEntity;
 		}
 
 		return $return;

@@ -19,6 +19,18 @@
 	{if count($rentalContainer['name']->getAllErrors())}
 		{var $invalidGroups[] = 'nameSloganGroup'}
 	{/if}
+	{if count($rentalContainer['address']->getAllErrors())}
+		{var $invalidGroups[] = 'addressGroup'}
+	{/if}
+	{if count($rentalContainer['photos']->getAllErrors())}
+		{var $invalidGroups[] = 'photosGroup'}
+	{/if}
+	{if count($rentalContainer['priceList']->getAllErrors())}
+		{var $invalidGroups[] = 'priceListGroup'}
+	{/if}
+	{if count($rentalContainer['priceUpload']->getAllErrors())}
+		{var $invalidGroups[] = 'priceUploadGroup'}
+	{/if}
 
 
 	<style n:syntax="double">

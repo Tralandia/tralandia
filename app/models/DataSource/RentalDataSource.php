@@ -11,6 +11,7 @@ use Nette\ArrayHash;
 use Nette\Utils\Arrays;
 use Nette\Utils\Paginator;
 use Nette\Utils\Validators;
+use Routers\BaseRoute;
 use Routers\FrontRoute;
 use Security\Authenticator;
 use Tralandia\Rental\Rentals;
@@ -84,18 +85,21 @@ class RentalDataSource extends BaseDataSource {
 		$return = new ArrayHash();
 		/** @var $row \Entity\Rental\Rental */
 		foreach($result as $key => $row) {
-//			$hash = $this->authenticator->calculateAutoLoginHash($row->getOwner());
+			$hash = $this->authenticator->calculateAutoLoginHash($row->getOwner());
 			$newRow['id'] = $row->getId();
 			$newRow['entity'] = $row;
-			$redirect = $presenter->link(':Owner:Rental:edit', [
+
+			$newRow['editLink'] = $presenter->link(':Owner:Rental:edit', [
 					'id' => $row->getId(),
 					FrontRoute::PRIMARY_LOCATION => $row->getPrimaryLocation(),
-					FrontRoute::LANGUAGE => $row->getPrimaryLocation()->getDefaultLanguage()]
+					FrontRoute::LANGUAGE => $row->getPrimaryLocation()->getDefaultLanguage(),
+					BaseRoute::AUTOLOGIN => $hash,
+				]
 			);
-			$newRow['editLink'] = $presenter->link(':Admin:Rental:fakeLogin', [
-				'id' => $row->getOwnerId(),
-				'redirect' => $redirect
-			]);
+//			$newRow['editLink'] = $presenter->link(':Admin:Rental:fakeLogin', [
+//				'id' => $row->getOwnerId(),
+//				'redirect' => $redirect
+//			]);
 			$return[$key] = ArrayHash::from($newRow);
 		}
 

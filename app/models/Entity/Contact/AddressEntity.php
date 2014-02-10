@@ -113,9 +113,9 @@ class Address extends \Entity\BaseEntity {
 	 */
 	public function clearLocations()
 	{
-		foreach ($this->locations as $value) {
-			$value->removeAddress($this);
-		}
+//		foreach ($this->locations as $value) {
+//			$value->removeAddress($this);
+//		}
 		$this->locations->clear();
 
 		return $this;

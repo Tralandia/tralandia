@@ -2,22 +2,11 @@
 
 namespace Extras\Forms\Container;
 
-use Nette;
-
 use \Nette\ComponentModel\Container;
 use \Nette\Forms\IControl;
 use \Nette\Forms\ISubmitterControl;
 
-
-abstract class BaseContainer extends Nette\Forms\Container
-{
-
-	abstract public function getMainControl();
-
-	public function getDescription()
-	{
-		return $this->getMainControl()->getOption('description');
-	}
+trait TGetValues {
 
 	/**
 	 * Returns the formatted values submitted by the form.
@@ -51,7 +40,9 @@ abstract class BaseContainer extends Nette\Forms\Container
 		foreach ($this->getComponents() as $name => $control) {
 			if ($control instanceof IControl && !$control->isDisabled() && !$control->isOmitted() && !$control instanceof ISubmitterControl) {
 				if(!$control->hasErrors()) {
-					if(method_exists($control, 'getFormattedValue')) {
+					if (method_exists($control, 'getValidFormattedValues')) {
+						$values[$name] = $control->getValidFormattedValues();
+					} else if(method_exists($control, 'getFormattedValue')) {
 						$values[$name] = $control->getFormattedValue();
 					} else {
 						$values[$name] = $control->getValue();
@@ -59,7 +50,9 @@ abstract class BaseContainer extends Nette\Forms\Container
 				}
 			} elseif ($control instanceof Container) {
 				if($control->isValid()) {
-					if(method_exists($control, 'getFormattedValues')) {
+					if (method_exists($control, 'getValidFormattedValues')) {
+						$values[$name] = $control->getValidFormattedValues($asArray);
+					} else if(method_exists($control, 'getFormattedValues')) {
 						$values[$name] = $control->getFormattedValues($asArray);
 					} else {
 						$values[$name] = $control->getValues($asArray);
@@ -69,5 +62,6 @@ abstract class BaseContainer extends Nette\Forms\Container
 		}
 		return $values;
 	}
+
 
 }
