@@ -8,6 +8,7 @@ use Entity\Location\Location;
 use Entity\Rental\Type;
 use Environment\Environment;
 use Extras\FormMask\Items\Base;
+use FrontModule\Components\SearchBar\SearchHistoryControl;
 use FrontModule\Forms\ISearchFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
@@ -102,6 +103,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	private $pathSegments;
 
+	/**
+	 * @var SearchHistoryControl
+	 */
+	private $searchHistory;
+
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
@@ -113,7 +119,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, PathSegments $pathSegments,
-								OptionGenerator $searchOptionGenerator, \Device $device)
+								OptionGenerator $searchOptionGenerator, \Device $device, SearchHistoryControl $searchHistory)
 	{
 		parent::__construct();
 		$this->search = $search;
@@ -123,6 +129,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->searchFormFactory = $searchFormFactory;
 		$this->searchOptionGenerator = $searchOptionGenerator;
 		$this->pathSegments = $pathSegments;
+		$this->searchHistory = $searchHistory;
 	}
 
 	public function render()
@@ -455,6 +462,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		};
 
 		return $form;
+	}
+
+	protected function createComponentSearchHistory()
+	{
+		$component = $this->searchHistory;
+
+		return $component;
 	}
 
 }

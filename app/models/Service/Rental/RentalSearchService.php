@@ -160,6 +160,20 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
+
+	public function getCriteriaData()
+	{
+		$data = [];
+		foreach($this->criteria as $key => $value) {
+			if($value instanceof Entity\BaseEntity) {
+				$value = $value->getId();
+			}
+			$data[$key] = $value;
+		}
+		return $data;
+	}
+
+
 	public function getRentalsIds($page = NULL)
 	{
 		$this->getResults();

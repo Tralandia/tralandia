@@ -241,7 +241,7 @@ services:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
 
 	favoriteList: FavoriteList(@doctrine.dao(Entity\Rental\Rental))
-	lastSearch: LastSearch(@session::getSection('lastSearch'))
+	lastSearch: SearchHistory(@session::getSection('searchHistory'))
 	lastSeen: LastSeen(@doctrine.dao(Entity\Rental\Rental))
 
 	# ROUTER
@@ -406,6 +406,7 @@ services:
 	calendarControl: BaseModule\Components\CalendarControl
 
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
+	- FrontModule\Components\SearchBar\SearchHistoryControl
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 

@@ -18,9 +18,9 @@ class RentalListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSearch
+	 * @var \SearchHistory
 	 */
-	protected $lastSearch;
+	protected $searchHistory;
 
 	/**
 	 * @autowire
@@ -52,10 +52,8 @@ class RentalListPresenter extends BasePresenter {
 
 			$itemCount = $search->getRentalsCount();
 
-			$lastSearch = $this->lastSearch;
-			$lastSearch->setRentals($search->getRentalsIds(NULL));
-			$lastSearch->setUrl($this->pageSeo->getUrl());
-			$lastSearch->setHeading($this->pageSeo->getH1());
+			$lastSearch = $this->searchHistory;
+			$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
 		}
 
 		$vp = $this['p'];
