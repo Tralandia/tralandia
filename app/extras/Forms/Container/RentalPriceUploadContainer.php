@@ -34,6 +34,8 @@ class RentalPriceUploadContainer extends BaseContainer
 	 */
 	private $translator;
 
+	protected $formattedValues;
+
 
 	public function __construct(\Entity\Rental\Rental $rental = NULL, \RentalPriceListManager $manager,
 								\AllLanguages $allLanguages, Translator $translator, EntityManager $em)
@@ -64,42 +66,46 @@ class RentalPriceUploadContainer extends BaseContainer
 
 	public function getFormattedValues($asArray = FALSE)
 	{
-		$values = $asArray
-			? ['list'=>[]]
-			: \Nette\ArrayHash::from(['list'=>[]]);
-		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-		/** @var $pricelist \Entity\Rental\PriceList */
-		$pricelistRepository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
+		if(!$this->formattedValues) {
+			$values = $asArray
+				? ['list'=>[]]
+				: \Nette\ArrayHash::from(['list'=>[]]);
+			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+			/** @var $pricelist \Entity\Rental\PriceList */
+			$pricelistRepository = $this->em->getRepository(RENTAL_PRICELIST_ENTITY);
 
 
-		$oldIds = $this->getComponent('oldIds')->getValue();
+			$oldIds = $this->getComponent('oldIds')->getValue();
 
-		$oldIds = array_flip(array_filter(explode(',', $oldIds)));
-		$list = $this->getComponent('list')->getValues();
+			$oldIds = array_flip(array_filter(explode(',', $oldIds)));
+			$list = $this->getComponent('list')->getValues();
 
-		foreach($list as $key => $row) {
-			if (isset($row['file']) && $row['file']->isOk()) {
-				/** @var $pricelist \Entity\Rental\PriceList */
-				$pricelist = $this->manager->upload($row['file']);
-				$pricelist->name = $row['name'];
-				$pricelist->language = $languageRepository->find($row['language']);
-			} else if ($row['entity']) {
-				$pricelist = $pricelistRepository->find($row['entity']);
-			} else {
-				continue;
+			foreach($list as $key => $row) {
+				if (isset($row['file']) && $row['file']->isOk()) {
+					/** @var $pricelist \Entity\Rental\PriceList */
+					$pricelist = $this->manager->upload($row['file']);
+					$pricelist->name = $row['name'];
+					$pricelist->language = $languageRepository->find($row['language']);
+				} else if ($row['entity']) {
+					$pricelist = $pricelistRepository->find($row['entity']);
+				} else {
+					continue;
+				}
+				$row['entity'] = $pricelist;
+				$values['list'][$key] = $row;
+
+				unset($oldIds[$pricelist->getId()]);
 			}
-			$row['entity'] = $pricelist;
-			$values['list'][$key] = $row;
 
-			unset($oldIds[$pricelist->getId()]);
+			foreach($oldIds as $pricelistId => $value) {
+				$pricelist = $pricelistRepository->find($pricelistId);
+				$this->manager->delete($pricelist);
+			}
+
+			$this->formattedValues = $values;
 		}
 
-		foreach($oldIds as $pricelistId => $value) {
-			$pricelist = $pricelistRepository->find($pricelistId);
-			$this->manager->delete($pricelist);
-		}
-
-		return $values;
+		return $this->formattedValues;
 	}
 
 	public function setDefaultsValues()
