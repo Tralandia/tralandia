@@ -91,7 +91,7 @@ class Locations
 			$localityEntity->parent = $primaryLocation;
 			$localityEntity->type = $locationType;
 
-			Debugger::log(new \Exception('Vytvorila sa nova lokalita: ' . $locality));
+			//Debugger::log(new \Exception('Vytvorila sa nova lokalita: ' . $locality));
 			// We must save the new location to be able to work on it's slug
 			$this->locationDao->save($localityEntity);
 
