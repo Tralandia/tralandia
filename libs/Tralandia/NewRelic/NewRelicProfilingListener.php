@@ -31,9 +31,7 @@ class NewRelicProfilingListener extends Nette\Object implements Kdyby\Events\Sub
 	}
 	public function onRequest(Application $app, Request $request)
 	{
-		Debugger::log('\NewRelic\NewRelicProfilingListener::onRequest');
 		if (!extension_loaded('newrelic')) {
-			Debugger::log('Nemam newrelic :(');
 			return;
 		}
 		if (PHP_SAPI === 'cli') {
@@ -46,7 +44,6 @@ class NewRelicProfilingListener extends Nette\Object implements Kdyby\Events\Sub
 		// pojmenování požadavku podle presenteru a akce
 		$params = $request->getParameters();
 		newrelic_name_transaction($request->getPresenterName() . (isset($params['action']) ? ':' . $params['action'] : ''));
-		Debugger::log('transaction: ' . $request->getPresenterName() . (isset($params['action']) ? ':' . $params['action'] : ''));
 	}
 	public function onError(Application $app, \Exception $e)
 	{
