@@ -45,3 +45,7 @@ services:
 	nette.mailer: \Mail\SmtpMailer(%smtp%, ...)
 
 	tester: Tester\NoTester
+
+	newRelicListener:
+		class: NewRelic\NewRelicProfilingListener
+		tags: [kdyby.subscriber]

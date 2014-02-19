@@ -1,8 +1,5 @@
 <?php
 
-use Nette\Diagnostics\Debugger;
-use Nette\Environment;
-use Nette\Application\Routers\Route;
 use Nette\Forms\Container as FormContainer;
 
 
@@ -20,7 +17,7 @@ require_once VENDOR_DIR . '/autoload.php';
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 // Configure application
-$configurator = new Nette\Config\Configurator;
+$configurator = new \Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->addParameters([
 	'centralLanguage' => CENTRAL_LANGUAGE,
