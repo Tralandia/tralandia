@@ -20,12 +20,6 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSeen
-	 */
-	protected $lastSeen;
-
-	/**
-	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
@@ -46,6 +40,7 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	public function desktopDetail($rental) {
+//		d('detail', t('detail'));
 		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -117,10 +112,11 @@ class RentalPresenter extends BasePresenter {
 		$this->template->lastSearchResults = $lastSearchResults;
 		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
 
-		$this->lastSeen->visit($rental);
+		$this->visitedRentals->visit($rental);
 
 
 		$this->setLayout('detailLayout');
+//		d('detail', t('detail'));
 	}
 
 

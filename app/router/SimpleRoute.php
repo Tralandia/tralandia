@@ -3,6 +3,9 @@
 namespace Routers;
 
 use Nette;
+use Nette\Application\Routers\Route;
+use Nette\Utils\Strings;
+use Nette\Utils\Arrays;
 use Tralandia\BaseDao;
 
 class SimpleRoute extends BaseRoute
@@ -108,7 +111,6 @@ class SimpleRoute extends BaseRoute
 				$this->pagesDestinations[$destination['destination']] = $destination['id'];
 			}
 		}
-		
 		return $this->pagesDestinations;
 	}
 

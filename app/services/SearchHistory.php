@@ -2,7 +2,7 @@
 
 class SearchHistory {
 
-	const MAX_COUNT = 20;
+	const MAX_COUNT = 10;
 	const KEY_CRITERIA = 'criteria';
 	const KEY_RENTALS = 'rentals';
 	const KEY_URL = 'url';

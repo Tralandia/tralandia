@@ -1,5 +1,5 @@
 <?php
-namespace FrontModule\Components\SearchBar;
+namespace FrontModule\Components\SearchHistory;
 
 use Environment\Environment;
 use Service\Rental\RentalSearchService;

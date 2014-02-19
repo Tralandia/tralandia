@@ -111,6 +111,11 @@ parameters:
 			key: '[language]_rental/[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
+		visitedRentalBrick:
+			enabled: true
+			key: '[language]_rental/[rental]'
+			expiration: '+1 month'
+			tags: ['[name]']
 		rentalDetail:
 			enabled: ture
 			key: '[language]_rental/[rental]'
@@ -241,8 +246,8 @@ services:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
 
 	favoriteList: FavoriteList(@doctrine.dao(Entity\Rental\Rental))
-	lastSearch: SearchHistory(@session::getSection('searchHistory'))
-	lastSeen: LastSeen(@doctrine.dao(Entity\Rental\Rental))
+	- SearchHistory(@session::getSection('searchHistory'))
+	- VisitedRentals(@doctrine.dao(Entity\Rental\Rental))
 
 	# ROUTER
 	routerFactory:
@@ -406,7 +411,8 @@ services:
 	calendarControl: BaseModule\Components\CalendarControl
 
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
-	- FrontModule\Components\SearchBar\SearchHistoryControl
+	- \FrontModule\Components\SearchHistory\SearchHistoryControl
+	- \FrontModule\Components\VisitedRentals\VisitedRentalsControl
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
@@ -563,7 +569,7 @@ factories:
 			- $pageDao(@doctrine.dao(Entity\Page))
 			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
 			- $pageDao(@doctrine.dao(Entity\Page))
-#			- setCache(@frontRouteCache)
+			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
 

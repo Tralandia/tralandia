@@ -8,9 +8,9 @@ class HomePresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSeen
+	 * @var \VisitedRentals
 	 */
-	protected $lastSeen;
+	protected $visitedRentals;
 
 	/**
 	 * @autowire

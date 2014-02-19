@@ -128,34 +128,6 @@ class RentalListPresenter extends BasePresenter {
 		}
 	}
 
-	public function findRentalData($id)
-	{
-		//d($id);
-		if($id instanceof \Entity\Rental\Rental) {
-			$rental = $id;
-		} else {
-			$rental = $this->rentalDao->find($id);
-			if(!$rental) {
-				throw new \Exception('ID: ' . $id);
-			}
-		}
-
-		$firstInterviewAnswerText = NULL;
-		if($rental->hasFirstInterviewAnswer()) {
-			$answer = $rental->getFirstInterviewAnswer();
-			$answerText = $this->translate($answer->getAnswer());
-			if(strlen($answerText) > 2) {
-				$firstInterviewAnswerText = $answerText;
-			}
-		}
-
-
-
-		return [
-			'entity' => $rental,
-			'firstInterviewAnswerText' => $firstInterviewAnswerText,
-		];
-	}
 
 	protected function createComponentP() {
 		$vp = new \VisualPaginator();

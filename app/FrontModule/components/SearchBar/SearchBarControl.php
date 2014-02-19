@@ -7,8 +7,8 @@ use Entity\FavoriteList;
 use Entity\Location\Location;
 use Entity\Rental\Type;
 use Environment\Environment;
-use Extras\FormMask\Items\Base;
-use FrontModule\Components\SearchBar\SearchHistoryControl;
+use FrontModule\Components\SearchHistory\SearchHistoryControl;
+use FrontModule\Components\VisitedRentals\VisitedRentalsControl;
 use FrontModule\Forms\ISearchFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
@@ -108,18 +108,27 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	private $searchHistory;
 
+	/**
+	 * @var VisitedRentalsControl
+	 */
+	private $visitedRentals;
+
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
 	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param ISearchFormFactory $searchFormFactory
+	 * @param \Tralandia\Routing\PathSegments $pathSegments
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 * @param \Device $device
+	 * @param SearchHistoryControl $searchHistory
+	 * @param VisitedRentalsControl $visitedRentals
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, PathSegments $pathSegments,
-								OptionGenerator $searchOptionGenerator, \Device $device, SearchHistoryControl $searchHistory)
+								OptionGenerator $searchOptionGenerator, \Device $device,
+								SearchHistoryControl $searchHistory, VisitedRentalsControl $visitedRentals)
 	{
 		parent::__construct();
 		$this->search = $search;
@@ -130,6 +139,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->searchOptionGenerator = $searchOptionGenerator;
 		$this->pathSegments = $pathSegments;
 		$this->searchHistory = $searchHistory;
+		$this->visitedRentals = $visitedRentals;
 	}
 
 	public function render()
@@ -467,6 +477,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected function createComponentSearchHistory()
 	{
 		$component = $this->searchHistory;
+
+		return $component;
+	}
+
+	protected function createComponentVisitedRentals()
+	{
+		$component = $this->visitedRentals;
 
 		return $component;
 	}
