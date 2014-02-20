@@ -72,7 +72,7 @@ class Languages {
 
 		}
 
-		return $qb->getQuery()->useResultCache(TRUE, (24 * 3600))->getResult();
+		return $qb->getQuery()->getResult();
 	}
 
 

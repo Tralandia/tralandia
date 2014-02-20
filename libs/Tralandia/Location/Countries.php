@@ -84,7 +84,7 @@ class Countries {
 			->andWhere($qb->expr()->gte('l.rentalCount', ':minRentalCount'))->setParameter('minRentalCount', $minRentalCount)
 			->orderBy('l.rentalCount', 'DESC');
 
-		$result = $qb->getQuery()->useResultCache(TRUE, (24 * 3600))->getResult();
+		$result = $qb->getQuery()->getResult();
 
 		$return = array();
 		foreach ($result as $key => $value) {
