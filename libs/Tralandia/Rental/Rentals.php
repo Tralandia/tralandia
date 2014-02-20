@@ -71,7 +71,7 @@ class Rentals {
 
 		$qb->select('sum(l.rentalCount) as total');
 
-		return $qb->getQuery()->useResultCache(TRUE, (24 * 3600))->getSingleScalarResult();
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 
 

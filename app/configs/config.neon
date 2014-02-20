@@ -159,7 +159,6 @@ doctrine:
 	driver: pdo_mysql
 	debugger: false
 	autoGenerateProxyClasses: true
-	queryCache: Kdyby\DoctrineCache\MemcacheCache(@doctrineMamcache)
 	metadata:
 		Entity: %appDir%/models
 
@@ -190,10 +189,6 @@ services:
 #		class: Nette\Caching\Storages\FileStorage(%tempDir%)
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', %memcachePrefix%)
 
-	doctrineMamcache:
-		class: \Memcache
-		setup:
-			- connect('127.0.0.1', '11211')
 
 	nullStorage:
 		class: \Nette\Caching\Storages\DevNullStorage
@@ -564,7 +559,7 @@ factories:
 			- $pageDao(@doctrine.dao(Entity\Page))
 			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
 			- $pageDao(@doctrine.dao(Entity\Page))
-			- setCache(@frontRouteCache)
+#			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
 
