@@ -103,12 +103,14 @@ class SimpleRoute extends BaseRoute
 		if(!$this->pagesDestinations) {
 			$qb = $this->pageDao->createQueryBuilder('p');
 			$qb->select('p.id, p.destination');
-			$destinations = $qb->getQuery()->getArrayResult();
+			$query = $qb->getQuery();
+			$query->useResultCache(TRUE, (24 * 3600));
+			$destinations = $query->getArrayResult();
 			foreach($destinations as $destination) {
 				$this->pagesDestinations[$destination['destination']] = $destination['id'];
 			}
 		}
-		
+
 		return $this->pagesDestinations;
 	}
 
