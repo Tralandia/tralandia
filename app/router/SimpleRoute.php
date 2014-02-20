@@ -3,14 +3,20 @@
 namespace Routers;
 
 use Nette;
-use Nette\Application\Routers\Route;
-use Nette\Utils\Strings;
-use Nette\Utils\Arrays;
+use Tralandia\BaseDao;
 
 class SimpleRoute extends BaseRoute
 {
 
+	/**
+	 * @var BaseDao
+	 */
 	public $pageDao;
+
+	/**
+	 * @var array
+	 */
+	protected $pagesDestinations;
 
 
 	/**
@@ -87,9 +93,23 @@ class SimpleRoute extends BaseRoute
 			return TRUE;
 		}
 
-		$page = $this->pageDao->findOneByDestination($destination);
+		$destinations = $this->getPagesDestinations();
 
-		return $page != NULL;
+		return array_key_exists($destination, $destinations);
+	}
+
+	protected function getPagesDestinations()
+	{
+		if(!$this->pagesDestinations) {
+			$qb = $this->pageDao->createQueryBuilder('p');
+			$qb->select('p.id, p.destination');
+			$destinations = $qb->getQuery()->getArrayResult();
+			foreach($destinations as $destination) {
+				$this->pagesDestinations[$destination['destination']] = $destination['id'];
+			}
+		}
+		
+		return $this->pagesDestinations;
 	}
 
 
