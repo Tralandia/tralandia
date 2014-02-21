@@ -48,6 +48,18 @@ class TempScriptPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Tralandia\SearchCache\InvalidateRentalListener
+	 */
+	protected $invalidateRentalListener;
+
+	/**
+	 * @autowire
+	 * @var \Service\Rental\RentalSearchService
+	 */
+	protected $rentalSearch;
+
+	/**
+	 * @autowire
 	 * @var \Tralandia\Rental\Rentals
 	 */
 	protected $rentals;
@@ -356,9 +368,34 @@ class TempScriptPresenter extends BasePresenter {
 	{
 		$location = $this->findLocation($id);
 
+		$this->rentalSearch->setLocationCriterion($location);
+
+		$qb = $this->rentalDao->createQueryBuilder('r');
+		$qb->select('r.id')
+			->leftJoin('r.address', 'a')
+			->leftJoin('a.locations', 'l')
+			->where($qb->expr()->eq('l.id', ':location'))->setParameter('location', $location);
+
+		$rentalsIds = $qb->getQuery()->getResult();
+
+		$rentalsIds = \Tools::arrayMap($rentalsIds, 'id');
+
 		$this->polygonCalculator->setRentalsForLocation($location);
 
 		$this->em->flush();
+
+		$qb = $this->rentalDao->createQueryBuilder('r');
+		$qb->leftJoin('r.address', 'a')
+			->leftJoin('a.locations', 'l')
+			->where($qb->expr()->eq('l.id', ':location'))->setParameter('location', $location)
+			->andWhere($qb->expr()->notIn('r.id', $rentalsIds));
+
+		$rentals = $qb->getQuery()->getResult();
+
+		foreach($rentals as $rental) {
+			$this->invalidateRentalListener->onSuccess($rental);
+		}
+
 
 		$this->sendJson(['success' => true]);
 	}
