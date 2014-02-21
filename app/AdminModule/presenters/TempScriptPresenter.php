@@ -359,6 +359,8 @@ class TempScriptPresenter extends BasePresenter {
 		$this->polygonCalculator->setRentalsForLocation($location);
 
 		$this->em->flush();
+
+		$this->sendJson(['success' => true]);
 	}
 
 
