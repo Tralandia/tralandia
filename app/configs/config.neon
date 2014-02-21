@@ -409,6 +409,9 @@ services:
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 
+	- \BaseModule\Components\LiveChatControl()
+
+
 
 	# ==============================
 	# ==================== Components/Registrator
