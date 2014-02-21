@@ -15,6 +15,7 @@ use Routers\BaseRoute;
 abstract class BasePresenter extends Presenter {
 
 	use \Kdyby\Autowired\AutowireProperties;
+	use \Kdyby\Autowired\AutowireComponentFactories;
 	use \TFindEntityHelper;
 
 	const FLASH_INFO = 'info';
@@ -633,5 +634,9 @@ abstract class BasePresenter extends Presenter {
 	}
 
 
+	public function createComponentLiveChat(\BaseModule\Components\LiveChatControl $component)
+	{
+		return $component;
+	}
 
 }
