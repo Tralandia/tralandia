@@ -352,6 +352,15 @@ class TempScriptPresenter extends BasePresenter {
 		$this->em->flush();
 	}
 
+	public function actionUpdatePolygon($id)
+	{
+		$location = $this->findLocation($id);
+
+		$this->polygonCalculator->setRentalsForLocation($location);
+
+		$this->em->flush();
+	}
+
 
 	public function actionUpdateTranslationsUnpaidAmount($id)
 	{
