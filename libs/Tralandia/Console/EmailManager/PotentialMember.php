@@ -48,9 +48,15 @@ class PotentialMember extends EmailManager
 
 	public function next()
 	{
+		$excludedCountries = [
+			193, // DE
+			232, // AT
+		];
+		
 		$qb = $this->potentialMemberDao->createQueryBuilder('m');
 		$qb->where($qb->expr()->eq('m.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
 			->andWhere($qb->expr()->eq('m.unsubscribed', ':unsubscribed'))->setParameter('unsubscribed', FALSE)
+			->andWhere($qb->expr()->notIn('m.primaryLocation', $excludedCountries))
 			->setMaxResults(1);
 
 		$this->potentialMember = $qb->getQuery()->getOneOrNullResult();
