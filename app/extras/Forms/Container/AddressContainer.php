@@ -91,7 +91,7 @@ class AddressContainer extends BaseContainer
 	public function getZoom()
 	{
 		$address = $this->getAddressEntity();
-		if($address) {
+		if($address->isValid()) {
 			$zoom = 14;
 			$locality = $address->getLocality();
 			if($locality) {
@@ -109,7 +109,8 @@ class AddressContainer extends BaseContainer
 	 */
 	public function shouldShowMarker()
 	{
-		return (int) ($this->getAddressEntity() instanceof Address || $this->getForm()->isSubmitted());
+		$address = $this->getAddressEntity();
+		return (int) (($address instanceof Address && $address->isValid()) || $this->getForm()->isSubmitted());
 	}
 
 
@@ -128,6 +129,7 @@ class AddressContainer extends BaseContainer
 	 */
 	public function setDefaultValues($address = NULL)
 	{
+		$defaults = [];
 		if($this->address) {
 			$locality = $this->address->getLocality();
 			$defaults = [
@@ -137,13 +139,10 @@ class AddressContainer extends BaseContainer
 			];
 			$formattedAddress = $this->address->getFormattedAddress();
 			$defaults['address'] = $formattedAddress;
-		} else {
-			$defaults = [
-				//'city' => $this->translator->translate($this->primaryLocation->getName()),
-				'latitude' => $this->primaryLocation->getGps()->getLatitude(),
-				'longitude' => $this->primaryLocation->getGps()->getLongitude(),
-			];
 		}
+
+		if(!$defaults['latitude']) $defaults['latitude'] = $this->primaryLocation->getGps()->getLatitude();
+		if(!$defaults['longitude']) $defaults['longitude'] = $this->primaryLocation->getGps()->getLongitude();
 		$this->setDefaults($defaults);
 	}
 

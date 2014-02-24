@@ -86,6 +86,10 @@ class Address extends \Entity\BaseEntity {
 	protected $subLocality;
 
 
+	public function isValid()
+	{
+		return $this->latitude && $this->longitude;
+	}
 
 	/**
 	 * @param \Extras\Types\Latlong

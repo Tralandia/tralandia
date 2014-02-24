@@ -3,6 +3,7 @@
 namespace Service\Rental;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Contact\Address;
 use Nette;
 use Entity\User\User;
 use Entity\Location\Location;
@@ -23,13 +24,19 @@ class RentalCreator
 	protected $rentalRepository;
 
 	/**
-	 * @var \Repository\BaseRepository
+	 * @var \Tralandia\BaseDao
 	 */
 	protected $interviewQuestionRepository;
+
 	/**
-	 * @var \Repository\BaseRepository
+	 * @var \Tralandia\BaseDao
 	 */
 	protected $interviewAnswerRepository;
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	protected $addressRepository;
 
 	/**
 	 * @var \Service\Contact\AddressNormalizer
@@ -48,6 +55,7 @@ class RentalCreator
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		$this->interviewAnswerRepository = $em->getRepository(INTERVIEW_ANSWER_ENTITY);
+		$this->addressRepository = $em->getRepository(ADDRESS_ENTITY);
 		$this->addressNormalizer = $addressNormalizer;
 	}
 
@@ -59,6 +67,39 @@ class RentalCreator
 			$language = $userOrPrimaryLocation;
 		}
 
+		$this->addressNormalizer->update($address, TRUE);
+
+		$user = NULL;
+		if ($userOrPrimaryLocation instanceof User){
+			$user = $userOrPrimaryLocation;
+		}
+
+		$rental = $this->createRental($user, $address, $rentalName, $language);
+
+		return $rental;
+	}
+
+
+	/**
+	 * @param User $user
+	 * @param Location $primaryLocation
+	 * @param $rentalName
+	 *
+	 * @return \Entity\Rental\Rental
+	 */
+	public function simpleCreate(User $user, Location $primaryLocation, $rentalName)
+	{
+		/** @var $address Address */
+		$address = $this->addressRepository->createNew();
+
+		$address->setPrimaryLocation($primaryLocation);
+
+		return $this->createRental($user, $address, $rentalName, $user->getLanguage());
+	}
+
+
+	public function createRental(User $user = NULL, Address $address, $rentalName, $language)
+	{
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
 
@@ -67,6 +108,12 @@ class RentalCreator
 
 		$rental->getName()->setSourceLanguage($language);
 		$rental->getTeaser()->setSourceLanguage($language);
+
+		if($translation = $rental->getName()->getTranslation($language)) {
+			$translation->setTranslation($rentalName);
+		} else {
+			$rental->getName()->createTranslation($language, $rentalName);
+		}
 
 		$questions = $this->interviewQuestionRepository->findAll();
 		/** @var $question \Entity\Rental\InterviewQuestion */
@@ -78,18 +125,9 @@ class RentalCreator
 			$rental->addInterviewAnswer($answer);
 		}
 
-		$this->addressNormalizer->update($address, TRUE);
 		$rental->setAddress($address);
-		if ($userOrPrimaryLocation instanceof User){
-			$userOrPrimaryLocation->addRental($rental);
-		}
 
-
-		if($translation = $rental->getName()->getTranslation($language)) {
-			$translation->setTranslation($rentalName);
-		} else {
-			$rental->getName()->createTranslation($language, $rentalName);
-		}
+		$user->addRental($rental);
 
 		return $rental;
 	}
