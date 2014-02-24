@@ -1,0 +1,18 @@
+{block content}
+
+<h1>{_450058}</h1>
+
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form addForm}
+<table class="formTable innerPadding">
+
+	{include #text, control => $form['name']}
+
+	{include #select, control => $form['country'] , controlClass => 'select2 country notFulltext'}
+
+	{include #submit, control => $form['submit'], icon => 'icon-plus' , controlClass => 'pull-right', class => 'submitControl'}
+
+</table>
+{/form}

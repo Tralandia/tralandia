@@ -4,6 +4,7 @@ namespace OwnerModule;
 
 
 use Nette\Application\BadRequestException;
+use Nette\Application\UI\Form;
 use Nette\Environment;
 
 class RentalPresenter extends BasePresenter
@@ -26,6 +27,18 @@ class RentalPresenter extends BasePresenter
 	 */
 	protected $rentalEditHandlerFactory;
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\Location\Countries
+	 */
+	protected $countries;
+
+	/**
+	 * @autowire
+	 * @var \Service\Rental\RentalCreator
+	 */
+	protected $rentalCreator;
+
 
 	public function actionFirstRental()
 	{
@@ -40,6 +53,39 @@ class RentalPresenter extends BasePresenter
 	public function actionAdd()
 	{
 
+	}
+
+
+	public function createComponentAddForm()
+	{
+		$form = $this->simpleFormFactory->create();
+		$form->addText('name', $this->translate(152275))
+			->setRequired(TRUE);
+
+		$countries = $this->countries->getForSelect();
+		$form->addSelect('country', 'o1094', $countries)
+			->setDefaultValue($this->loggedUser->getPrimaryLocation()->getId());
+
+		$form->addSubmit('submit', '450090');
+
+		$form->onSuccess[] = $this->addFormSuccess;
+
+		return $form;
+	}
+
+
+	public function addFormSuccess(Form $form)
+	{
+		$values = $form->getValues();
+
+		$primaryLocation = $this->findLocation($values->country);
+
+		$rental = $this->rentalCreator->simpleCreate($this->loggedUser, $primaryLocation, $values->name);
+
+		$this->rentalDao->add($rental);
+		$this->em->flush();
+
+		$this->redirect('edit', ['id' => $rental->getId()]);
 	}
 
 
