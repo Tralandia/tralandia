@@ -91,7 +91,7 @@ class AddressContainer extends BaseContainer
 	public function getZoom()
 	{
 		$address = $this->getAddressEntity();
-		if($address->isValid()) {
+		if($address instanceof Address && $address->isValid()) {
 			$zoom = 14;
 			$locality = $address->getLocality();
 			if($locality) {
