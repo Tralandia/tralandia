@@ -582,7 +582,7 @@ abstract class BasePresenter extends Presenter {
 			$hash = $this->authenticator->calculateAutoLoginHash($user);
 			$parameters = [
 				\Routers\BaseRoute::PRIMARY_LOCATION => $user->getPrimaryLocation(),
-				\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
+				//\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
 				BaseRoute::AUTOLOGIN => $hash,
 				FrontRoute::PAGE => NULL,
 			];
@@ -596,14 +596,14 @@ abstract class BasePresenter extends Presenter {
 	public function actionAfterLogin()
 	{
 		$this->actionRedirectToDefaultPage();
-		$this->redirect('this');
+		$this->redirect(':Front:Home:default');
 	}
 
 
 	public function actionRedirectToDefaultPage()
 	{
-		$user = $this->getUser();
-		if ($homepage = $user->getIdentity()->homepage){
+		$identity = $this->getUser()->getIdentity();
+		if ($homepage = $identity->homepage){
 			$this->redirect($homepage);
 		}
 	}
