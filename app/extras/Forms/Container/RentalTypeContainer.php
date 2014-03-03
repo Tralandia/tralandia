@@ -79,7 +79,7 @@ class RentalTypeContainer extends BaseContainer
 	public function getFormattedValues($asArray = FALSE)
 	{
 		$values = $this->getValues($asArray);
-		$values['type'] = $this->rentalTypeDao->find($values['type']);
+		if($values['type'])$values['type'] = $this->rentalTypeDao->find($values['type']);
 		return $values;
 	}
 

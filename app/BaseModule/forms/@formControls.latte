@@ -4,8 +4,10 @@
 
 	{if $control instanceof \Nette\Forms\Container}
 		{var $hasErrors = count($control->getAllErrors())}
+		{*{dump [$control->getName(), $class, $hasErrors]}*}
 	{else}
 		{var $hasErrors = $control->hasErrors()}
+		{*{dump [$control->getName(), $class, $hasErrors]}*}
 	{/if}
 
 	<tr n:attr="data-link => $dataLink" n:class="$hasErrors ? 'invalid '.$class : $class">
@@ -305,7 +307,7 @@
 	</tr>
 	{else}
 	{var $countPerCol = ceil(count($control->items)/$colCount)}
-	<tr>
+	{include #opentag, control => $control}
 		<td colspan="3">
 			<table class="checkboxes">
 				<tr>
@@ -371,18 +373,15 @@
 {/define #price}
 
 
-{*
-	Phone Container -------------------------------------------
-	@param $control \Extras\Forms\Container\PhoneContainer
-	*}
-	{define #phone}
-	{var
+{* Phone Container ------------------------------------------- *}
+{define #phone}
+{var
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
 
-{include #opentag , class => 'simpleInput ' , control => $container}
+{include #opentag, class => 'simpleInput ' , control => $container}
 	<td>
 		{_$mainControl->caption}
 		{if $mainControl->isRequired()}
