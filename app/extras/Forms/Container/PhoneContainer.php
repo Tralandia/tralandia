@@ -95,7 +95,7 @@ class PhoneContainer extends BaseContainer
 
 	public function validate(array $controls = NULL) {
 		$values = $this->getFormattedValues();
-		if ($values->entity === FALSE) {
+		if ($values->entity === FALSE || !$values->number) {
 			$this->getMainControl()->addError($this->translator->translate('151882'));
 		}
 	}
