@@ -63,7 +63,7 @@ class VisitedRentals {
 			$seen = array_chunk($seen, $limit, TRUE)[0];
 		}
 
-		return $seen;
+		return array_reverse($seen);
 	}
 
 	public function setSeen(array $seen = array())

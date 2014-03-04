@@ -13,7 +13,7 @@
 		{var $rental = $rentalData['entity'] }
 
 		<li data-cache="{$rand}">
-			<a href="#" title="{_$rental->getName()}" class="tooltipElem">
+			<a href="{plink Rental:detail $rental}" title="{_$rental->getName()}" class="tooltipElem">
 				{if $mainImage = $rental->getMainImage()}
 					<img alt="{_$rental->name}" n:image="$mainImage"/>
 				{/if}
