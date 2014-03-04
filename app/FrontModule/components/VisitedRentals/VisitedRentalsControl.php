@@ -30,6 +30,7 @@ class VisitedRentalsControl extends \BaseModule\Components\BaseControl {
 
 		$template->rentals = $rentalsIds;
 		$template->findRental = $this->presenter->findRentalData;
+		$template->totalCount = $this->visitedRentals->getCount();
 
 		$template->render();
 	}

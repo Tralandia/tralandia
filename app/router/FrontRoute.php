@@ -204,7 +204,6 @@ class FrontRoute extends BaseRoute
 					$presenter = 'RentalList';
 					$params['action'] = 'default';
 					$params[self::LAST_SEEN_RENTALS] = true;
-
 				}
 			}
 

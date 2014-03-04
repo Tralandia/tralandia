@@ -66,6 +66,12 @@ class VisitedRentals {
 		return array_reverse($seen);
 	}
 
+
+	/**
+	 * @param array $seen
+	 *
+	 * @return $this
+	 */
 	public function setSeen(array $seen = array())
 	{
 		if(count($seen) > self::MAX_COUNT) {
@@ -75,6 +81,15 @@ class VisitedRentals {
 		$this->httpResponse->setCookie(self::COOKIE_VAR_NAME, $seen, strtotime(self::COOKIE_EXPIRATION));
 
 		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getCount()
+	{
+		return count($this->getSeen());
 	}
 
 }

@@ -36,7 +36,7 @@ class RentalListPresenter extends BasePresenter {
 		}
 
 		if($lastSeen) {
-			$this->template->pageH1 = $this->translate('1219');
+			$this->template->pageH1 = $this->translate('456422');
 
 			$rentals = $this->visitedRentals->getSeen();
 			$this->prepareListTemplate($rentals, count($rentals));
