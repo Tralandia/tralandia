@@ -22,6 +22,7 @@ class FrontRoute extends BaseRoute
 	const RENTAL = 'rental';
 	const FAVORITE_LIST = 'favoriteList';
 	const REDIRECT_TO_FAVORITE = 'redirectToFavorites';
+	const LAST_SEEN_RENTALS = 'lastSeen';
 
 	const SPOKEN_LANGUAGE = 'spokenLanguage';
 	const CAPACITY = 'capacity';
@@ -199,6 +200,11 @@ class FrontRoute extends BaseRoute
 						$presenter = 'RentalList';
 						$params['action'] = 'redirectToFavorites';
 					}
+				} else if ($pathSegment == 'last-seen') {
+					$presenter = 'RentalList';
+					$params['action'] = 'default';
+					$params[self::LAST_SEEN_RENTALS] = true;
+
 				}
 			}
 
@@ -360,6 +366,10 @@ class FrontRoute extends BaseRoute
 		switch (TRUE) {
 			case $presenter == 'RentalList' && $action == 'redirectToFavorites':
 				$params[self::REDIRECT_TO_FAVORITE] = self::REDIRECT_TO_FAVORITE;
+				break;
+			case $presenter == 'RentalList' && $action == self::LAST_SEEN_RENTALS:
+				$params[self::LAST_SEEN_RENTALS] = self::LAST_SEEN_RENTALS;
+				break;
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'RootHome' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
@@ -389,8 +399,13 @@ class FrontRoute extends BaseRoute
 			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
 		}
 
-		if(array_key_exists(self::REDIRECT_TO_FAVORITE, $params)) {
+		if(array_key_exists(self::LAST_SEEN_RENTALS, $params)) {
+			$params[self::HASH] = 'last-seen';
+			$params = $this->removeSearchParams($params);
+			unset($params[self::LAST_SEEN_RENTALS]);
+		} else if(array_key_exists(self::REDIRECT_TO_FAVORITE, $params)) {
 			$params[self::HASH] = 'f';
+			$params = $this->removeSearchParams($params);
 			unset($params[self::REDIRECT_TO_FAVORITE]);
 		} else if(!count($params[self::HASH])) {
 			$params[self::HASH] = '';
@@ -544,6 +559,16 @@ class FrontRoute extends BaseRoute
 		}
 
 		return $segment;
+	}
+
+
+	public function removeSearchParams($params)
+	{
+		foreach(self::$pathParametersMapper as $key => $value) {
+			unset($params[$key]);
+		}
+
+		return $params;
 	}
 
 

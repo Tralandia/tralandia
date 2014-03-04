@@ -92,7 +92,7 @@ class SimpleRoute extends BaseRoute
 	protected function skipLink($presenter, $action)
 	{
 		$destination = ':'.$presenter.':'.$action;
-		if(in_array($destination, [':Front:RentalList:redirectToFavorites'])) {
+		if(in_array($destination, [':Front:RentalList:redirectToFavorites', ':Front:RentalList:lastSeen'])) {
 			return TRUE;
 		}
 

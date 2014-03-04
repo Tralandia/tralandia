@@ -569,7 +569,7 @@ factories:
 			- $pageDao(@doctrine.dao(Entity\Page))
 			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
 			- $pageDao(@doctrine.dao(Entity\Page))
-			- setCache(@frontRouteCache)
+#			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
 
