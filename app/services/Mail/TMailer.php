@@ -58,7 +58,7 @@ trait TMailer {
 		}
 		$message->setFrom('info@' . $domainHost, ucfirst($domainHost));
 
-		$message->addBcc('tralandia.testing@gmail.com');
+		//$message->addBcc('tralandia.testing@gmail.com');
 
 
 		return $message;
