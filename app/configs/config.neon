@@ -111,6 +111,11 @@ parameters:
 			key: '[language]_rental/[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
+		visitedRentalBrick:
+			enabled: true
+			key: '[language]_rental/[rental]'
+			expiration: '+1 month'
+			tags: ['[name]']
 		rentalDetail:
 			enabled: ture
 			key: '[language]_rental/[rental]'
@@ -241,8 +246,8 @@ services:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
 
 	favoriteList: FavoriteList(@doctrine.dao(Entity\Rental\Rental))
-	lastSearch: LastSearch(@session::getSection('lastSearch'))
-	lastSeen: LastSeen(@doctrine.dao(Entity\Rental\Rental))
+	- SearchHistory(@session::getSection('searchHistory'))
+	- VisitedRentals(@doctrine.dao(Entity\Rental\Rental))
 
 	# ROUTER
 	routerFactory:
@@ -406,6 +411,8 @@ services:
 	calendarControl: BaseModule\Components\CalendarControl
 
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
+	- \FrontModule\Components\SearchHistory\SearchHistoryControl
+	- \FrontModule\Components\VisitedRentals\VisitedRentalsControl
 
 	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
 

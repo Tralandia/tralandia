@@ -37,9 +37,14 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(TEMP_DIR . '/proxies')
 	->register();
 
+
+
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 
 require_once LIBS_DIR . '/tools.php';
+
+//d('app', t('app'));
+
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
 
@@ -148,3 +153,5 @@ require_once APP_DIR . '/extras/EntityAnnotation.php';
 
 // Run the application!
 $container->application->run();
+//d('app', t('app'));
+

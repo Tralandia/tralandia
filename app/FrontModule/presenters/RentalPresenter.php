@@ -14,15 +14,9 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSearch
+	 * @var \SearchHistory
 	 */
-	protected $lastSearch;
-
-	/**
-	 * @autowire
-	 * @var \LastSeen
-	 */
-	protected $lastSeen;
+	protected $searchHistory;
 
 	/**
 	 * @autowire
@@ -46,6 +40,7 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	public function desktopDetail($rental) {
+//		d('detail', t('detail'));
 		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -117,10 +112,11 @@ class RentalPresenter extends BasePresenter {
 		$this->template->lastSearchResults = $lastSearchResults;
 		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
 
-		$this->lastSeen->visit($rental);
+		$this->visitedRentals->visit($rental);
 
 
 		$this->setLayout('detailLayout');
+//		d('detail', t('detail'));
 	}
 
 
@@ -133,14 +129,16 @@ class RentalPresenter extends BasePresenter {
 
 
 	protected function getLastSearchResults($rental) {
-		$lastSearch = $this->lastSearch;
+		$searchHistory = $this->searchHistory;
 
-		if (!$lastSearch->exists()) {
+		if (!$searchHistory->exists()) {
 			return FALSE;
 		}
 
+		$lastSearch = $searchHistory->getLast();
+
 		$bar = array();
-		$bar['all'] = $lastSearch->getRentals();
+		$bar['all'] = $lastSearch[\SearchHistory::KEY_RENTALS];
 		$bar['totalCount'] = count($bar['all']);
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
 
@@ -160,8 +158,8 @@ class RentalPresenter extends BasePresenter {
 		$lastSearchResults = array();
 		$lastSearchResults['rentals'] = $barRentals;
 		$lastSearchResults['currentKey'] = $bar['currentKey']-($start > 0 ? $start : 0);
-		$lastSearchResults['searchLink'] = $lastSearch->getUrl();
-		$lastSearchResults['heading'] = $lastSearch->getHeading();
+		$lastSearchResults['searchLink'] = $lastSearch[\SearchHistory::KEY_URL];
+		$lastSearchResults['heading'] = $lastSearch[\SearchHistory::KEY_HEADING];
 		$lastSearchResults['totalCount'] = $bar['totalCount'];
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']-1])) {

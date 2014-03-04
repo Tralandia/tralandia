@@ -1,0 +1,29 @@
+<div class="innerPadding baseRadius lastSeen baseBorder innerPaddingLeft marginTop">
+	<h4><i class="icon-eye-open"></i> {_456408} </h4>
+	<ul class="lastSeenRentals" n:inner-foreach="$rentals as $rentalId">
+		{var $tempCacheOptions = $getCacheOptions('visitedRentalBrick', ['rental' => $rentalId])}
+
+		{cache $tempCacheOptions['key'],
+			if => $tempCacheOptions['enabled'],
+			expire => $tempCacheOptions['expiration'],
+			tags => $tempCacheOptions['tags']}
+
+
+		{var $rentalData = $findRental($rentalId); }
+		{var $rental = $rentalData['entity'] }
+
+		<li data-cache="{$rand}">
+			<a href="{plink Rental:detail $rental}" title="{_$rental->getName()}" class="tooltipElem">
+				{if $mainImage = $rental->getMainImage()}
+					<img alt="{_$rental->name}" n:image="$mainImage"/>
+				{/if}
+			</a>
+		</li>
+
+		{/cache}
+	</ul>
+	<div class="clearfix"></div>
+	<ul>
+		<li><a href="{plink :Front:RentalList:lastSeen}"><i class="icon-angle-right"></i> {_456409} <span class="counter">{$totalCount}</span></a></li>
+	</ul>
+</div>

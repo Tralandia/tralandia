@@ -1,0 +1,11 @@
+<div class="innerPadding baseRadius lastSearch baseBorder innerPaddingLeft marginTop">
+	<h4><i class="icon-search"></i> {_456407}</h4>
+	<ul n:inner-foreach="$history as $row">
+		<li>
+			<a href="{$row['url']}">
+				<i class="icon-angle-right"></i> {$row['heading']} <span class="counter">{count($row['rentals'])}</span>
+				<div style="font-size: 10px; color:#7d3300">{$row['formattedCriteria']}</div>
+			</a>
+		</li>
+	</ul>
+</div>

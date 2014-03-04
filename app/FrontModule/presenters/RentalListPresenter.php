@@ -18,9 +18,9 @@ class RentalListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSearch
+	 * @var \SearchHistory
 	 */
-	protected $lastSearch;
+	protected $searchHistory;
 
 	/**
 	 * @autowire
@@ -28,22 +28,29 @@ class RentalListPresenter extends BasePresenter {
 	 */
 	protected $findOrCreateUser;
 
-	public function actionDefault($favoriteList, $email, $getDataForBreadcrumb)
+	public function actionDefault($favoriteList, $email, $getDataForBreadcrumb, $lastSeen)
 	{
 		if($this->device->isMobile()) {
 			$this->setLayout("layoutMobile");
 			$this->setView('mobileDefault');
 		}
 
-		if($favoriteList) {
+		if($lastSeen) {
+			$this->template->pageH1 = $this->translate('456422');
+
+			$rentals = $this->visitedRentals->getSeen();
+			$this->prepareListTemplate($rentals, count($rentals));
+		} else if($favoriteList) {
 			if(isset($email)) {
 				$receiver = $this->findOrCreateUser->getUser($email, $this->environment);
 				$this->onSendFavoriteList($favoriteList, $receiver);
 				$this->sendJson(['success' => TRUE]);
 			}
+
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
 			$this->template->pageH1 = $this->translate('1219');
+			$this->prepareListTemplate($rentals, $itemCount);
 		} else if ($getDataForBreadcrumb) {
 			$this->getDataForBreadcrumb();
 		} else {
@@ -52,17 +59,21 @@ class RentalListPresenter extends BasePresenter {
 
 			$itemCount = $search->getRentalsCount();
 
-			$lastSearch = $this->lastSearch;
-			$lastSearch->setRentals($search->getRentalsIds(NULL));
-			$lastSearch->setUrl($this->pageSeo->getUrl());
-			$lastSearch->setHeading($this->pageSeo->getH1());
+			$lastSearch = $this->searchHistory;
+			$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
+			$this->prepareListTemplate($search, $itemCount);
 		}
 
+	}
+
+
+	public function prepareListTemplate($rentals, $rentalCount)
+	{
 		$vp = $this['p'];
 		/** @var $paginator \Nette\Utils\Paginator */
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
-		$paginator->itemCount = $itemCount;
+		$paginator->itemCount = $rentalCount;
 
 
 		/** @var $head \HeaderControl */
@@ -87,8 +98,8 @@ class RentalListPresenter extends BasePresenter {
 
 		$this->template->totalResultsCount = $paginator->itemCount;
 
-		if(isset($search)) {
-			$rentals = $search->getRentalsIds($paginator->getPage());
+		if($rentals instanceof \Service\Rental\RentalSearchService) {
+			$rentals = $rentals->getRentalsIds($paginator->getPage());
 		}
 
 		$this->template->language = $this->language;
@@ -96,6 +107,7 @@ class RentalListPresenter extends BasePresenter {
 		$this->template->findRental = $this->findRentalData;
 		$this->template->paginatorPage = $paginator->getPage();
 		$this->template->isRentalFeatured = $this->isRentalFeatured;
+
 	}
 
 
@@ -130,34 +142,6 @@ class RentalListPresenter extends BasePresenter {
 		}
 	}
 
-	public function findRentalData($id)
-	{
-		//d($id);
-		if($id instanceof \Entity\Rental\Rental) {
-			$rental = $id;
-		} else {
-			$rental = $this->rentalDao->find($id);
-			if(!$rental) {
-				throw new \Exception('ID: ' . $id);
-			}
-		}
-
-		$firstInterviewAnswerText = NULL;
-		if($rental->hasFirstInterviewAnswer()) {
-			$answer = $rental->getFirstInterviewAnswer();
-			$answerText = $this->translate($answer->getAnswer());
-			if(strlen($answerText) > 2) {
-				$firstInterviewAnswerText = $answerText;
-			}
-		}
-
-
-
-		return [
-			'entity' => $rental,
-			'firstInterviewAnswerText' => $firstInterviewAnswerText,
-		];
-	}
 
 	protected function createComponentP() {
 		$vp = new \VisualPaginator();

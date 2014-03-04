@@ -21,9 +21,9 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSeen
+	 * @var \VisitedRentals
 	 */
-	protected $lastSeen;
+	protected $visitedRentals;
 
 	/**
 	 * @autowire
@@ -89,8 +89,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
-		$this->template->worldwideCount = $this->rentals->worldwideCount();
-
 		$this->template->homeCacheId = 'home' . $this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
 
@@ -99,8 +97,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = $this->environment->getLanguage();
 
 		$this->template->navigationBarLastActive = $this->getActiveNavbarTab();
-		$this->template->seenRentals = $this->lastSeen->getSeen();
-		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
@@ -140,6 +136,41 @@ abstract class BasePresenter extends \BasePresenter {
 	{
 		return $this->rentals->isFeatured($rental);
 	}
+
+
+	/**
+	 * @param $id
+	 *
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function findRentalData($id)
+	{
+		//d($id);
+		if($id instanceof \Entity\Rental\Rental) {
+			$rental = $id;
+		} else {
+			$rental = $this->rentalDao->find($id);
+			if(!$rental) {
+				throw new \Exception('ID: ' . $id);
+			}
+		}
+
+		$firstInterviewAnswerText = NULL;
+		if($rental->hasFirstInterviewAnswer()) {
+			$answer = $rental->getFirstInterviewAnswer();
+			$answerText = $this->translate($answer->getAnswer());
+			if(strlen($answerText) > 2) {
+				$firstInterviewAnswerText = $answerText;
+			}
+		}
+
+		return [
+			'entity' => $rental,
+			'firstInterviewAnswerText' => $firstInterviewAnswerText,
+		];
+	}
+
 
 
 	public function actionLocationSuggestion($string)

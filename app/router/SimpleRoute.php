@@ -3,6 +3,9 @@
 namespace Routers;
 
 use Nette;
+use Nette\Application\Routers\Route;
+use Nette\Utils\Strings;
+use Nette\Utils\Arrays;
 use Tralandia\BaseDao;
 
 class SimpleRoute extends BaseRoute
@@ -89,7 +92,7 @@ class SimpleRoute extends BaseRoute
 	protected function skipLink($presenter, $action)
 	{
 		$destination = ':'.$presenter.':'.$action;
-		if(in_array($destination, [':Front:RentalList:redirectToFavorites'])) {
+		if(in_array($destination, [':Front:RentalList:redirectToFavorites', ':Front:RentalList:lastSeen'])) {
 			return TRUE;
 		}
 
@@ -108,7 +111,6 @@ class SimpleRoute extends BaseRoute
 				$this->pagesDestinations[$destination['destination']] = $destination['id'];
 			}
 		}
-		
 		return $this->pagesDestinations;
 	}
 

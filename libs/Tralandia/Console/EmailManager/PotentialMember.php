@@ -52,7 +52,8 @@ class PotentialMember extends EmailManager
 			193, // DE
 			232, // AT
 		];
-		
+
+		// select count(*) from contact_potentialMember where unsubscribed = 0 and (emailSent = 0 or emailSent is null)
 		$qb = $this->potentialMemberDao->createQueryBuilder('m');
 		$qb->where($qb->expr()->eq('m.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
 			->andWhere($qb->expr()->eq('m.unsubscribed', ':unsubscribed'))->setParameter('unsubscribed', FALSE)
