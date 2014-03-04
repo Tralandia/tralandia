@@ -3,6 +3,7 @@ namespace Tests\Router;
 
 use Nette, Extras;
 use Routers\BaseRoute;
+use Routers\FrontRoute;
 
 
 /**
@@ -35,18 +36,26 @@ class SimpleRouterTest extends BaseRouterTest
 //		));
 
 
+		$this->routeIn($route, 'http://www.tralandia.com.hr/owner/rental/edit/1?l=hash', 'Owner:Rental', array(
+			'action' => 'edit',
+			'id' => '1',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+			BaseRoute::AUTOLOGIN => 'hash',
+		));
+
 		$this->routeIn($route, 'http://www.usal.tralandia.com/admin/foo/bar', 'Admin:Foo', array(
 			'action' => 'bar',
 			'id' => NULL,
-			'primaryLocation' => $this->findLocation(269),
+			'primaryLocation' => $this->findLocation(256),
 			'language' => $this->findLanguage(38),
 		));
 
-		$this->routeIn($route, 'http://www.sk.tra.com/owner/rental/first-rental', 'Owner:Rental', array(
+		$this->routeIn($route, 'http://www.tralandia.com/owner/rental/first-rental', 'Owner:Rental', array(
 			'action' => 'firstRental',
 			'id' => NULL,
-			'primaryLocation' => $this->findLocation(56),
-			'language' => $this->findLanguage(144),
+			'primaryLocation' => $this->findLocation(1),
+			'language' => $this->findLanguage(38),
 		));
 
 		$this->routeOut($route, 'Front:Registration', array(
