@@ -2,6 +2,7 @@
 namespace Tests\Router;
 
 use Nette, Extras;
+use Routers\BaseRoute;
 use Routers\FrontRoute;
 
 

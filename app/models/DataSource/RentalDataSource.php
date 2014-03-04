@@ -85,14 +85,15 @@ class RentalDataSource extends BaseDataSource {
 		$return = new ArrayHash();
 		/** @var $row \Entity\Rental\Rental */
 		foreach($result as $key => $row) {
-			$hash = $this->authenticator->calculateAutoLoginHash($row->getOwner());
+			$owner = $row->getOwner();
+			$hash = $this->authenticator->calculateAutoLoginHash($owner);
 			$newRow['id'] = $row->getId();
 			$newRow['entity'] = $row;
 
 			$newRow['editLink'] = $presenter->link(':Owner:Rental:edit', [
 					'id' => $row->getId(),
-					FrontRoute::PRIMARY_LOCATION => $row->getPrimaryLocation(),
-					FrontRoute::LANGUAGE => $row->getPrimaryLocation()->getDefaultLanguage(),
+					FrontRoute::PRIMARY_LOCATION => $owner->getPrimaryLocation(),
+					FrontRoute::LANGUAGE => $owner->getLanguage(),
 					BaseRoute::AUTOLOGIN => $hash,
 				]
 			);
