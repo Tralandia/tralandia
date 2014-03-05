@@ -15,12 +15,13 @@ class SimpleRouterTest extends BaseRouterTest
 
 	protected function setUp() {
 		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner)>/<presenter>[/<action>[/<id>]]';
-		$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
+		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
+		$mask = '//[![!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>/]<module (front|owner|admin|map)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'www',
 			'presenter' => 'Home',
-			'action' => 'default',
+			'action' => 'list',
 		];
 
 		$this->route = $this->getContext()->simpleRouteFactory->create($mask, $metadata);
@@ -35,6 +36,20 @@ class SimpleRouterTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
+
+		$this->routeOut(
+			$route,
+			'Owner:Rental',
+			array(
+				'action' => 'edit',
+				'id' => '1',
+				FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+				FrontRoute::LANGUAGE => $this->findLanguage(60),
+				BaseRoute::AUTOLOGIN => 'hash',
+			),
+			'http://www.tralandia.com.hr/owner/rental/edit/1?l=hash',
+			'http://www.tralandia.com/admin/rental?dataGrid-grid-filter%5Bsearch%5D=jasminakostovic%40yahoo.com'
+		);
 
 		$this->routeIn($route, 'http://www.tralandia.com.hr/owner/rental/edit/1?l=hash', 'Owner:Rental', array(
 			'action' => 'edit',
