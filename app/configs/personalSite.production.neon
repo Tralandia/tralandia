@@ -1,0 +1,13 @@
+parameters:
+
+	cacheDatabase:
+		user: uns_live
+		password: 31208245523
+		host: 127.0.0.1
+		database: uns_live
+		charset: utf8
+		lazy: TRUE
+		profiler: false
+
+services:
+

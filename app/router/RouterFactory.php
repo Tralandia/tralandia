@@ -56,6 +56,14 @@ class RouterFactory
 
 		$router = new RouteList();
 
+		$router[] = new Route('//<rentalSlug>.<domainName (uns.sk|uns.local)>/', [
+			BaseRoute::PRIMARY_LOCATION => 'sk',
+			BaseRoute::LANGUAGE => 'sk',
+			'module' => 'PersonalSite',
+			'presenter' => 'Default',
+			'action' => 'default',
+		]);
+
 		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin|map)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
@@ -69,11 +77,6 @@ class RouterFactory
 		$router[] = $frontRouter = new RouteList('Front');
 
 		$frontRouter[] = $this->frontRouteFactory->create();
-
-
-		//$frontRouter[] = $this->frontRouteFactory->create();
-
-
 
 
 		return $router;

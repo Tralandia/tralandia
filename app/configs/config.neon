@@ -274,7 +274,7 @@ services:
 
 	environment:
 		class: Environment\Environment
-		factory: Environment\Environment::createFromRequest(@application::getRequests())
+		factory: Environment\Environment::createFromRequest(@application::getRequests(),...)
 
 	locale:
 		class: Environment\Locale
@@ -717,3 +717,4 @@ includes:
 	- webLoader.neon
 	- modelServices.neon
 	- listeners.neon
+	- personalSite.neon

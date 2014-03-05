@@ -1,0 +1,28 @@
+nette:
+	database:
+		default:
+			dsn:        "mysql:host=127.0.0.1;dbname=uns"
+			user:       "root"
+			password:   "root"
+			options:    [PDO::MYSQL_ATTR_COMPRESS = true]
+			debugger:   true        # debugger bar panel
+			explain:    true        # explain queries in debugger bar
+			reflection: discovered  # or conventional or classname, default is discovered
+			autowired:  true
+
+parameters:
+
+services:
+
+factories:
+	rentalDataFactory:
+		class: \Tralandia\PersonalSite\RentalData
+		arguments: [%slug%, ...]
+		parameters: [slug]
+		implement: \Tralandia\PersonalSite\IRentalDataFactory
+
+	welcomeScreenControlFactory:
+		class: PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
+		arguments: [%rentalData%]
+		parameters: [Tralandia\PersonalSite\RentalData rentalData]
+		implement: PersonalSiteModule\WelcomeScreen\IWelcomeScreenControlFactory
