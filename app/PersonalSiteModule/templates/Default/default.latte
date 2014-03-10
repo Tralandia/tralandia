@@ -1,3 +1,15 @@
 {block content}
 
+{define #headerTitle}
+	<a href="#slideshow" id="logo" title="{$heading}">
+		<span class="img">
+			<img src="{$mainPhoto->path}">
+		</span>
+		<strong>{$heading|upper}</strong>
+	</a>
+{/define}
+
 {control welcomeScreen}
+{control amenities}
+{control gallery}
+{control prices}

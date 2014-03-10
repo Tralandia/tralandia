@@ -1,0 +1,52 @@
+<!-- BEGIN #services -->
+<section id="services" class="section-block content-section">
+	<div class="inner-section">
+		<h2 class="main-title">Vitajte!</h2>
+		<div class="entry-content">
+			<div class="grids">
+				<div class="grid-8">{!$rental->getDescription()|nl2br}</div>
+				<div class="grid-4">
+					<div class="grids overview">
+						<figure class="grid-6">
+							<div class="inner-bg active">
+								<i class="icon icon-group"></i>
+								<h3 class="service-title">Max. {$rental->getMaxCapacity()} osob</h3>
+							</div>
+						</figure>
+						<figure class="grid-6">
+							<div n:class="$rental->hasBoard() ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-cutlery"></i>
+								<h3 class="service-title">{$rental->getBoard()}</h3>
+							</div>
+						</figure>
+						<figure class="grid-6">
+							<div n:class="$rental->hasWifi() ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-rss rotate-45-left"></i>
+								<h3 class="service-title">WiFi</h3>
+							</div>
+						</figure>
+						<figure class="grid-6">
+							<div n:class="$rental->isPetAllowed() ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-bug"></i>
+								<h3 class="service-title">{$rental->getAllowedPet()}</h3>
+							</div>
+						</figure>
+					</div>
+					<div class="more-equipment">
+						<table>
+							<tr>
+								<td width="100">Vybavenie izieb:</td>
+								<td>{$rental->getRoomAmenities()}</td>
+							</tr>
+							<tr>
+								<td>Vybavenie objektu:</td>
+								<td>{$rental->getRentalAmenities()}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END #services -->
+</section>

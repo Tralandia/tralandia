@@ -5,14 +5,14 @@
  * Created at: 05/03/14 14:06
  */
 
-namespace PersonalSiteModule\WelcomeScreen;
+namespace PersonalSiteModule\Gallery;
 
 
 use Nette;
 use PersonalSiteModule\BaseControl;
 use PersonalSite\RentalData;
 
-class WelcomeScreenControl extends BaseControl
+class GalleryControl extends BaseControl
 {
 
 	/**
@@ -31,22 +31,14 @@ class WelcomeScreenControl extends BaseControl
 	{
 		$rental = $this->rentalData;
 
-		$this->template->name = $rental->getName();
-		$this->template->teaser = $rental->getTeaser();
-		$this->template->mainPhoto = $rental->getMainPhoto();
+		$this->template->rental = $rental;
 
 		$this->template->render();
 	}
 
 }
 
-interface IWelcomeScreenControlFactory
+interface IGalleryControlFactory
 {
-
-	/**
-	 * @param \PersonalSite\RentalData $rentalData
-	 *
-	 * @return \PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
-	 */
 	public function create(RentalData $rentalData);
 }
