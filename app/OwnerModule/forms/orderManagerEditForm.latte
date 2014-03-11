@@ -1,0 +1,34 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form orderManagerEditForm}
+	<h1>Nova objednavka</h1>
+	<table class="formTable innerPadding">
+		{include #text, control => $form['name']}
+		{include #text, control => $form['surname']}
+		{include #email, control => $form['email']}
+		{include #phone, control => $form['phone']}
+
+		{include #text, control => $form['peopleCount']}
+		{include #text, control => $form['childrenCount']}
+		{include #text, control => $form['childrenAge']}
+		{include #text, control => $form['bedOccupyCount']}
+
+		{include #text, control => $form['dateFrom'], class => 'datepicker'}
+		{include #text, control => $form['dateTo'], class => 'datepicker'}
+
+		{include #textArea, control => $form['message']}
+		{include #textArea, control => $form['ownerNotes']}
+
+		{include #checkbox, control => $form['confirmed']}
+		{include #text, control => $form['referer']}
+		{include #text, control => $form['price']}
+		{include #text, control => $form['price_paid']}
+
+		<tr class="simpleInput">
+			<td>Zostava na uhradu</td>
+			<td><table><tr><td><input type="text" name="price_unpaid" value="" disabled="disabled"></td></tr></table></td>
+			<td><span class="help">Vypocita sa automaticky po vyplneni konecnej ceny a uhradenej sumy</span></td>
+		</tr>
+
+		{include #submit, control => $form['submit']}
+	</table>
+{/form}

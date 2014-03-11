@@ -53,6 +53,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Owner:CalendarWidget';
 		$resources[] = 'Owner:Calendar';
 		$resources[] = 'Owner:PricesEdit';
+		$resources[] = 'Owner:OrderManager';
 
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';
@@ -100,6 +101,7 @@ class SimpleAcl extends Permission
 		$this->allow(RoleEntity::OWNER, 'Owner:CalendarWidget', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:Calendar', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:PricesEdit', self::ALL);
+		$this->allow(RoleEntity::OWNER, 'Owner:OrderManager', self::ALL);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
 
 		$this->allow(RoleEntity::TRANSLATOR, $adminModule);

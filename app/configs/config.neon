@@ -504,6 +504,11 @@ factories:
 		parameters: [Entity\User\User user]
 		implement: OwnerModule\Forms\IUserEditFormFactory
 
+	orderManagerEditFormFactory:
+		class: OwnerModule\Forms\OrderManagerEditForm(%user%, ...)
+		parameters: [Entity\User\User user, Tralandia\Location\Countries countries]
+		implement: OwnerModule\Forms\IOrderManagerEditFormFactory
+
 	signInFormFactory:
 		class: BaseModule\Forms\Sign\InForm
 		implement: BaseModule\Forms\Sign\IInFormFactory
