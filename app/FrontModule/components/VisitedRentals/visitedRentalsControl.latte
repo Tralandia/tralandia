@@ -9,16 +9,18 @@
 			tags => $tempCacheOptions['tags']}
 
 
-		{var $rentalData = $findRental($rentalId); }
-		{var $rental = $rentalData['entity'] }
+		{var $rentalData = $findRental($rentalId, false); }
+		{if $rentalData}
+			{var $rental = $rentalData['entity'] }
 
-		<li data-cache="{$rand}">
-			<a href="{plink Rental:detail $rental}" title="{_$rental->getName()}" class="tooltipElem">
-				{if $mainImage = $rental->getMainImage()}
-					<img alt="{_$rental->name}" n:image="$mainImage"/>
-				{/if}
-			</a>
-		</li>
+			<li data-cache="{$rand}">
+				<a href="{plink Rental:detail $rental}" title="{_$rental->getName()}" class="tooltipElem">
+					{if $mainImage = $rental->getMainImage()}
+						<img alt="{_$rental->name}" n:image="$mainImage"/>
+					{/if}
+				</a>
+			</li>
+		{/if}
 
 		{/cache}
 	</ul>

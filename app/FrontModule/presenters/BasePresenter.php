@@ -140,17 +140,23 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @param $id
+	 * @param bool $need
 	 *
-	 * @return array
 	 * @throws \Exception
+	 * @return array
 	 */
-	public function findRentalData($id)
+	public function findRentalData($id, $need = true)
 	{
 		//d($id);
 		if($id instanceof \Entity\Rental\Rental) {
 			$rental = $id;
 		} else {
 			$rental = $this->rentalDao->find($id);
+
+			if(!$rental && $need === false) {
+				return null;
+			}
+
 			if(!$rental) {
 				throw new \Exception('ID: ' . $id);
 			}
