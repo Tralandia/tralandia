@@ -77,6 +77,15 @@ class SearchHistory {
 
 
 	/**
+	 * @return int
+	 */
+	public function getCount()
+	{
+		return count($this->getHistoryData());
+	}
+
+
+	/**
 	 * @return array
 	 */
 	protected function getHistoryData()

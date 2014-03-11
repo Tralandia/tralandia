@@ -80,6 +80,7 @@ class SearchHistoryControl extends \BaseModule\Components\BaseControl {
 		}
 
 		$template->history = $history;
+		$template->historyCount = $this->searchHistory->getCount();
 
 		$template->render();
 	}

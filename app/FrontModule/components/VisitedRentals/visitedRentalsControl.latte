@@ -1,4 +1,4 @@
-<div class="innerPadding baseRadius lastSeen baseBorder innerPaddingLeft marginTop">
+<div class="innerPadding baseRadius lastSeen baseBorder innerPaddingLeft marginTop" n:if="$totalCount">
 	<h4><i class="icon-eye-open"></i> {_456408} </h4>
 	<ul class="lastSeenRentals" n:inner-foreach="$rentals as $rentalId">
 		{var $tempCacheOptions = $getCacheOptions('visitedRentalBrick', ['rental' => $rentalId])}
