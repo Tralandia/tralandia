@@ -49,6 +49,8 @@ trait TMailer {
 			$fromName = reset($from);
 
 			$message->addReplyTo($fromEmail, $fromName);
+		} else {
+			$message->addReplyTo('info@tralandia.com', 'Tralandia.com');
 		}
 
 		$domain = $this->environment->getPrimaryLocation()->getFirstDomain();
@@ -56,6 +58,7 @@ trait TMailer {
 		if(Nette\Utils\Strings::endsWith($domain->getDomain(), '.com')) {
 			$domainHost = 'tralandia.com';
 		}
+
 		$message->setFrom('info@' . $domainHost, ucfirst($domainHost));
 
 		//$message->addBcc('tralandia.testing@gmail.com');
