@@ -2,6 +2,14 @@ nette:
 
 
 parameters:
+	leanConnectionInfo:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: tralandia
+		charset: utf8
+		lazy: TRUE
+		profiler: true
 
 services:
 

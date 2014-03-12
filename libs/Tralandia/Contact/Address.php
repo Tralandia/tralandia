@@ -5,7 +5,7 @@
  * Created at: 6/14/13 8:48 AM
  */
 
-namespace Tralandia\Rental;
+namespace Tralandia\Contact;
 
 use Nette;
 
@@ -14,12 +14,8 @@ use Nette;
  * @property int $id
  * @property int $maxCapacity
  * @property \Tralandia\Rental\Type $type m:hasOne
- * @property \Tralandia\Contcat\Address $address m:hasOne
- *
- * @property \Tralandia\Rental\InterviewAnswer[] $interviewAnswers m:belongsToMany
- * @property \Tralandia\Rental\Image[] $images m:belongsToMany
  */
-class Rental extends \Tralandia\Lean\BaseEntity
+class Address extends \Tralandia\Lean\BaseEntity
 {
 
 	/**

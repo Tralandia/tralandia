@@ -9,7 +9,6 @@ namespace Tralandia\Rental;
 
 
 use Entity\Location\Location;
-use Entity\Rental\Rental;
 use Kdyby\Doctrine\QueryBuilder;
 use Nette;
 use Tralandia\BaseDao;
@@ -487,7 +486,7 @@ LIMIT $limit";
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 * @param Nette\Application\UI\Presenter $presenter
 	 *
 	 * @return array

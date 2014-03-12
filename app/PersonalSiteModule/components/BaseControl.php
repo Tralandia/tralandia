@@ -19,6 +19,8 @@ abstract class BaseControl extends Control {
 
 		$path = dirname(ClassType::from($this)->getFileName()) . '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
 
+		$template->setTranslator($this->presenter->getContext()->getService('translator'));
+
 		if(is_file($path)) {
 			$template->setFile($path); // automatické nastavení šablony
 		}

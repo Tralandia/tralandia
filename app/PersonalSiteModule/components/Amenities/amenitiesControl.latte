@@ -4,7 +4,17 @@
 		<h2 class="main-title">Vitajte!</h2>
 		<div class="entry-content">
 			<div class="grids">
-				<div class="grid-8">{!$rental->getDescription()|nl2br}</div>
+				<div class="grid-8">
+					<div class="metaObjectInfo" id="interviewAnswers">
+						<ul class="interviewList">
+							<li n:foreach="$rental->getInterview() as $row">
+								<h4>{_$row->question}</h4>
+								<p>{_$row->answer}</p>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+				</div>
 				<div class="grid-4">
 					<div class="grids overview">
 						<figure class="grid-6">

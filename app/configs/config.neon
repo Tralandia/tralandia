@@ -461,7 +461,7 @@ services:
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
-	- \LeanMapper\Connection(%database%)
+	- \LeanMapper\Connection(%leanConnectionInfo%)
 	- \LeanMapper\DefaultEntityFactory
 	- \Tralandia\Lean\Mapper
 

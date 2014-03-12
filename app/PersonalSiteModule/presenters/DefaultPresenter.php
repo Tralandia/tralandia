@@ -24,16 +24,22 @@ class DefaultPresenter extends BasePresenter
 	protected $rentalDataFactory;
 
 	/**
-	 * @var \PersonalSite\RentalData
+	 * @autowire
+	 * @var \Tralandia\Rental\RentalDao
+	 */
+	protected $rentalDao;
+
+	/**
+	 * @var \Tralandia\Rental\Rental
 	 */
 	protected $currentRental;
 
 
 	public function actionDefault($rentalSlug)
 	{
-		$rental = $this->getRentalData();
-		$this->template->heading = $rental->getType() . ' ' . $rental->getLocation();
-		$this->template->mainPhoto = $rental->getMainPhoto();
+		$rental = $this->getRental();
+		$this->template->heading = $this->translate($rental->type->getNameId()) . ' ' . $rental;
+		$this->template->rental = $rental;
 	}
 
 
@@ -57,10 +63,15 @@ class DefaultPresenter extends BasePresenter
 		return $controlFactory->create($this->getRentalData());
 	}
 
-	protected function getRentalData()
+
+	/**
+	 * @return \Tralandia\Rental\Rental
+	 */
+	protected function getRental()
 	{
 		if(!$this->currentRental) {
-			$this->currentRental = $this->rentalDataFactory->create($this->getParameter('rentalSlug'));
+			//$this->currentRental = $rentalDao->findOneBy(['slug', $this->getParameter('rentalSlug')]);
+			$this->currentRental = $this->rentalDao->findOneBy(['id' => 21933]);
 		}
 
 		return $this->currentRental;

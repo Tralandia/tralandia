@@ -18,7 +18,7 @@ class RentalData
 	/**
 	 * @var \Tralandia\Rental\Rental
 	 */
-	private $rentalRow;
+	private $rental;
 
 	/**
 	 * @var PricesData
@@ -34,8 +34,8 @@ class RentalData
 	public function __construct($slug, RentalDao $rentalDao)
 	{
 		//$this->rentalRow = $rentalDao->findOneBy(['slug', $slug]);
-		$this->rentalRow = $rentalDao->findOneBy(['slug', $slug]);
-		$this->prices = new PricesData($this->rentalRow);
+		$this->rental = $rentalDao->findOneBy(['id' => 21933]);
+		$this->prices = new PricesData($this->rental);
 	}
 
 
@@ -50,7 +50,7 @@ class RentalData
 
 	public function getName()
 	{
-		return $this->rentalRow->name;
+		return $this->rental->getNameId();
 	}
 
 	public function getTeaser()
@@ -58,18 +58,23 @@ class RentalData
 		return 'mock';
 	}
 
-	public function getDescription()
+
+	/**
+	 * return array[answer, question]
+	 * @return array
+	 */
+	public function getInterview()
 	{
-		return $this->rentalRow->description;
+		return $this->rental->getInterview();
 	}
 
 	public function getPhotos($limit = NULL, $offset = 0)
 	{
 		if(!$this->_photos) {
 			$photos = [];
-			foreach(array_filter(explode(',,', $this->rentalRow->photos)) as $path) {
+			foreach($this->rental->images as $image) {
 				$photos[] = Nette\ArrayHash::from([
-					'path' => 'http://www.ubytovanienaslovensku.eu/u/' . $path,
+					'path' => 'http://tralandiastatic.com/rental_images' . $image->filePath . '/medium.jpeg',
 				]);
 			}
 			$this->_photos = $photos;
@@ -111,7 +116,7 @@ class RentalData
 
 	public function getMaxCapacity()
 	{
-		return $this->rentalRow->max_capacity;
+		return $this->rental->maxCapacity;
 	}
 
 
@@ -152,7 +157,7 @@ class RentalData
 
 	public function getMinRoost()
 	{
-		return $this->rentalRow->prices_min_length;
+		return 'mock';
 	}
 
 }
