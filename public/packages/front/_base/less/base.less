@@ -55,6 +55,19 @@ ul {
 	list-style: none;
 }
 
+form.quickSearch {
+	padding: 0 10px 20px;
+	margin-bottom: 0;
+}
+form.quickSearch input[name="query"] {
+	width: 300px;
+	padding: 2px 8px;
+	border: 1px solid #CCC;
+}
+form.quickSearch button[type="submit"] {
+	background: #fff;
+}
+
 .brown {
 	color: @brown;
 
@@ -751,7 +764,41 @@ ul.arrows {
 
 }
 
+.order-manager-item {
+	position: relative;
+	padding: 15px 0 10px 10px;
+	border-top: 1px solid #DDD;
+}
 
+.order-manager-item .details {
+	position: absolute;
+	right: 10px;
+	top: 0;
+	padding: 10px 15px;
+	background: #FFF;
+	color: #333;
+	border: 1px solid #CCC;
+	border-top: none;
+	border-right: none;
+	.border-radius(0 0 0 8px);
+}
+.order-manager-item button {
+	margin-right: 20px;
+}
+.order-manager-item .answer {
+	color: #777;
+}
+.order-manager-item h2 .status {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.order-manager-item h2 .status i {
+	color: #777;
+}
+.order-manager-item h2 .status.ok i {
+	color: @darkGreen;
+}
 
 /* footer */
 #footer {

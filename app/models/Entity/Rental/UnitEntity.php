@@ -4,7 +4,7 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use    Extras\Annotation as EA;
+use Extras\Annotation as EA;
 
 /**
  * @ORM\Entity
@@ -29,7 +29,7 @@ class Unit extends \Entity\BaseEntity
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Rental")
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="services")
 	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
