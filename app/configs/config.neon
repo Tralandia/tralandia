@@ -458,6 +458,17 @@ services:
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
 
 
+	# ==============================
+	# ==================== LeanMapper
+	# ==============================
+	- \LeanMapper\Connection(%database%)
+	- \LeanMapper\DefaultEntityFactory
+	- \Tralandia\Lean\Mapper
+
+	- \Tralandia\Rental\RentalDao
+
+
+
 factories:
 	# ==============================
 	# ==================== FORMS

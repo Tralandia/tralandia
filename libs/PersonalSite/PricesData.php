@@ -14,14 +14,9 @@ class PricesData
 {
 
 	/**
-	 * @var \Nette\Database\Row
+	 * @var \Tralandia\Rental\Rental
 	 */
 	private $rentalRow;
-
-	/**
-	 * @var \Nette\Database\Connection
-	 */
-	private $db;
 
 	/**
 	 * @var array
@@ -39,10 +34,9 @@ class PricesData
 	private $_files;
 
 
-	public function __construct(\Nette\Database\Row $rentalRow, Nette\Database\Connection $db)
+	public function __construct(\Tralandia\Rental\Rental $rental)
 	{
-		$this->rentalRow = $rentalRow;
-		$this->db = $db;
+		$this->rentalRow = $rental;
 	}
 
 	public function getList()

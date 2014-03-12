@@ -9,17 +9,14 @@ namespace PersonalSite;
 
 
 use Nette;
+use Tralandia\Rental\Rental;
+use Tralandia\Rental\RentalDao;
 
 class RentalData
 {
 
 	/**
-	 * @var \Nette\Database\Connection
-	 */
-	private $db;
-
-	/**
-	 * @var bool|\Nette\Database\IRow|\Nette\Database\Row
+	 * @var \Tralandia\Rental\Rental
 	 */
 	private $rentalRow;
 
@@ -34,12 +31,11 @@ class RentalData
 	private $_photos;
 
 
-	public function __construct($slug, Nette\Database\Connection $db)
+	public function __construct($slug, RentalDao $rentalDao)
 	{
-		$this->db = $db;
-		//$this->rentalRow = $db->query('SELECT * FROM supply WHERE slug = ? LIMIT 1', $slug)->fetch();
-		$this->rentalRow = $db->query('SELECT * FROM supply WHERE id = ? LIMIT 1', 3842)->fetch();
-		$this->prices = new PricesData($this->rentalRow, $db);
+		//$this->rentalRow = $rentalDao->findOneBy(['slug', $slug]);
+		$this->rentalRow = $rentalDao->findOneBy(['slug', $slug]);
+		$this->prices = new PricesData($this->rentalRow);
 	}
 
 
