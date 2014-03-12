@@ -404,8 +404,8 @@ $(function(){
 
 					marker.setPosition(event.latLng);
 
-					var lat = event.latLng.gb;
-					var lng = event.latLng.hb;
+					var lat = event.latLng.lat();
+					var lng = event.latLng.lng();
 					$inputLat.val(lat);
 					$inputLng.val(lng);
 
