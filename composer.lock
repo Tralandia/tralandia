@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "37d51601397d79ec1dea4700f9f9a273",
+    "hash": "fc68115c0ae629b82f83c7cb6da00022",
     "packages": [
         {
             "name": "dg/dibi",
@@ -58,6 +58,57 @@
                 "sqlite"
             ],
             "time": "2013-10-16 23:20:44"
+        },
+        {
+            "name": "dibi/dibi",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/dibi.git",
+                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/dc4fe8b398f05549c1b19bc5743038023eb432fb",
+                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "dibi/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPLv2",
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "Dibi is Database Abstraction Library for PHP 5.",
+            "homepage": "http://dibiphp.com/",
+            "keywords": [
+                "access",
+                "database",
+                "dbal",
+                "mssql",
+                "mysql",
+                "odbc",
+                "oracle",
+                "pdo",
+                "postgresql",
+                "sqlite"
+            ],
+            "time": "2013-06-23 00:34:14"
         },
         {
             "name": "doctrine/annotations",
@@ -1280,7 +1331,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextras/forms/zipball/625010b42d96c05240124d9c78ebf73e53cef929",
+                "url": "https://api.github.com/repos/nextras/forms/zipball/6157b9786532682f73691b71f2e27aea04f06003",
                 "reference": "d04287f506318cd135d7b3e1cd3247d110464057",
                 "shasum": ""
             },
@@ -1444,12 +1495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/texy.git",
-                "reference": "79d0e1517363ab32edf2db8ec515e3dc84f50f0a"
+                "reference": "f34526905312e691328e9cc8c217a82f4b1854e6"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dg/texy/zipball/79d0e1517363ab32edf2db8ec515e3dc84f50f0a",
-                "reference": "79d0e1517363ab32edf2db8ec515e3dc84f50f0a",
+                "reference": "f34526905312e691328e9cc8c217a82f4b1854e6",
                 "shasum": ""
             },
             "require": {
@@ -1492,7 +1543,46 @@
                 "wiki",
                 "xhtml"
             ],
-            "time": "2013-10-16 20:01:41"
+            "time": "2013-07-19 22:05:03"
+        },
+        {
+            "name": "tharos/leanmapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Tharos/LeanMapper.git",
+                "reference": "2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7",
+                "reference": "2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7",
+                "shasum": ""
+            },
+            "require": {
+                "dibi/dibi": "~2.0"
+            },
+            "require-dev": {
+                "nette/tester": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LeanMapper": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vojtěch Kohout"
+                }
+            ],
+            "description": "Tiny ORM based on powerful dibi database abstraction library for PHP 5.",
+            "homepage": "http://www.leanmapper.com",
+            "time": "2013-12-13 09:29:14"
         }
     ],
     "packages-dev": [
@@ -1513,6 +1603,7 @@
         "kdyby/events": 20,
         "kdyby/autowired": 20,
         "kdyby/forms-replicator": 20,
+        "tharos/leanmapper": 20,
         "nextras/forms": 20,
         "nextras/datagrid": 20,
         "mobiledetect/mobiledetectlib": 20,

@@ -19,6 +19,7 @@
         "kdyby/events": "@dev",
         "kdyby/autowired": "@dev",
         "kdyby/forms-replicator": "@dev",
+        "tharos/leanmapper": "dev-master",
         "nextras/forms": "dev-master#d04287f506318cd135d7b3e1cd3247d110464057 as @dev",
         "nextras/datagrid": "@dev",
 		"mobiledetect/mobiledetectlib": "@dev",
