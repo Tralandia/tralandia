@@ -55,7 +55,7 @@ class OrderManagerEditForm extends BaseForm {
 
 		$this->addText('childrenAge', 'Vek deti');
 
-		$this->addText('bedOccupyCount', 'Pocet obsadenych lozok')
+		$this->addText('exceedingBedsCount', 'Pocet obsadenych lozok')
 			->setRequired('Povinne policko');
 
 		$this->addText('dateFrom', 'Datum od')
