@@ -774,38 +774,41 @@ ul.arrows {
 
 .order-manager-item {
 	position: relative;
-	padding: 15px 0 10px 10px;
+	padding: 15px 0 10px 0px;
 	border-top: 1px solid #DDD;
 }
 
 .order-manager-item .details {
 	position: absolute;
 	right: 10px;
-	top: 0;
-	padding: 10px 15px;
-	background: #FFF;
+	top: 10px;
+	padding: 5px 10px;
+	background: #eee;
 	color: #333;
-	border: 1px solid #CCC;
 	border-top: none;
 	border-right: none;
-	.border-radius(0 0 0 8px);
+	.border-radius(8px);
 }
 .order-manager-item button {
-	margin-right: 20px;
+	margin-right: 10px;
 }
 .order-manager-item .answer {
 	color: #777;
 }
 .order-manager-item h2 .status {
-	position: absolute;
-	left: 0;
-	top: 0;
+	float: left;
+	background: #EEE;
+	padding: 4px 8px 3px 5px;
+	margin: -5px 10px 10px 0px;
 }
 .order-manager-item h2 .status i {
 	color: #777;
 }
+.order-manager-item h2 .status.ok {
+	background: @darkGreen;
+}
 .order-manager-item h2 .status.ok i {
-	color: @darkGreen;
+	color: #fff;
 }
 
 /* footer */
