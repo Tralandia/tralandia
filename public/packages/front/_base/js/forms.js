@@ -972,20 +972,21 @@ $(function(){
 					});
 				}
 
-			// set geocoder
-			var geocoder = new google.maps.Geocoder();
-			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
-				if(status == 'OK'){
-					$.fn.loadAddress(r[0]);
-					$.fn.updateFormGeo(r[0].geometry.location.lat(),r[0].geometry.location.lng());
-					// console.log(r[0]);
-					$(currentId).val(r[0].formatted_address);
-				} else {
-					alert('address error');
-				}
-			});
+                // set geocoder
+                var geocoder = new google.maps.Geocoder();
+                $.fn.updateFormGeo(event.latLng.lat(), event.latLng.lng());
+                geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+                    if(status == 'OK'){
+                        $.fn.loadAddress(r[0]);
+                        $.fn.updateFormGeo(r[0].geometry.location.lat(),r[0].geometry.location.lng());
+                        // console.log(r[0]);
+                        $(currentId).val(r[0].formatted_address);
+                    } else {
+                        alert('address error');
+                    }
+                });
 
-		});
+            });
 
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 			infowindow.close();
