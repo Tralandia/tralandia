@@ -4,7 +4,7 @@
 	<a n:href=":Owner:OrderManager:edit" class="btn short btn-mini marginTop marginRight btn-blue pull-right">Pridat objednavku</a>
 	<h1 class="rentalEditHeader">Manazer objednavok</h1>
 </div>
-<form class="quickSearch">
+<form class="quick-search">
     <select class="select2" style="width:290px;">
         <option>- Vyberte objekt -</option>
         <option>Štýlová villa Flora pri aquaparku Tatralandia</option>
@@ -13,6 +13,17 @@
 	<input name="query" placeholder="vyhladat podla emailu, mena alebo telefonu...">
 	<button type="submit" class="btn btn-small"><i class="icon-search"></i> Hladat</button>
 </form>
+
+<div class="quick-toggle">
+    <i class="icon-time"></i>
+    <div class="btn-group" data-toggle="buttons-radio">
+      <button type="button" class="btn active">Všetky (3)</button>
+      <button type="button" class="btn">Minulé (2)</button>
+      <button type="button" class="btn">Aktuálne (1)</button>
+      <button type="button" class="btn">Budúce (0)</button>
+    </div>
+</div>
+
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
@@ -23,57 +34,73 @@
     	</a>
     </h2>
     <div class="details">
-    	<i><b>21.03.2014 - 27.03.2014</b></i><br/>
+    	<i><b>Po 21.03.2014 - Pi 27.03.2014</b></i><br/>
         10 dospelych<br/> 
-        5 deti
+        5 deti (2-9 rokov)
     </div>
     <div class="clearfix"></div>
     <p class="teaser"><a href="#">jan@czibula.com</a>, +421 919 396 336</p>
     <p class="answer">Toto je poznamka ubytovatela k tomuto danemu pobytu.</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-angle-right"></i></button>
-    <p class="prices">Zaplatene: <b>80/100 EUR</b></p>
+    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
   </div>
 </div>
 
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
-		<span class="status"><i class="icon-ok"></i></span>
+		<span class="status"><i class="icon-arrow-right"></i></span>
     	<a href="#">
     		David Durika
             <small>(Chata Flora pri Donovaloch)</small>
     	</a>
     </h2>
     <div class="details">
-    	<i><b>21.03.2014 - 27.03.2014</b></i></br>
+    	<i><b>Po 21.03.2014 - So 27.03.2014</b></i></br>
         2 dospeli
     </div>
     <div class="clearfix"></div>
     <p class="teaser"><a href="#">durika@tralandia.com</a>, +421 919 356 899</p>
     <p class="answer">Toto je dalsia poznamka ubytovatela a tato je uz na dva riadky. Teda este jednu vetu napisem a bude na dva riadky uz urcite</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-angle-right"></i></button>
-    <p class="prices">Zaplatene: <b>80/100 EUR</b></p>
+    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
   </div>
 </div>
 
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
-		<span class="status"><i class="icon-ok"></i></span>
+		<span class="status"><i class="icon-arrow-right"></i></span>
     	<a href="#">
     		Radoslav Toth
             <small>(Chata Flora pri Donovaloch)</small>
     	</a>
     </h2>
     <div class="details">
-    	<i><b>29.04.2014 - 03.05.2014</b></i><br/>
+    	<i><b>Ut 29.04.2014 - Pi 03.05.2014</b></i><br/>
         2 dospeli<br/>
-        2 deti
+        2 deti (5-6 rokov)
     </div>
     <div class="clearfix"></div>
     <p class="teaser"><a href="#">toth@tralandia.com</a>, +421 919 396 336</p>
     <p class="answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-angle-right"></i></button>
-    <p class="prices">Zaplatene: <b>80/100 EUR</b></p>
+    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
   </div>
+</div>
+
+<div class="rentalListHr"></div>
+
+<div class="grid-paginator pagination">
+    <ul>
+        <li class="disabled"><a href="#"><i class="icon-chevron-left"></i></a></li>
+        <li class="disabled current"><a href="#"><span class="grid-current">1</span></a></li>
+        <li><a href="/liptov?p-p=2">2</a></li>
+        <li><a href="/liptov?p-p=3">3</a></li>
+        <li><a href="/liptov?p-p=4">4</a></li>
+        <li><a href="/liptov?p-p=6">6</a></li>
+        <li><a href="/liptov?p-p=9">9</a></li>
+        <li><a href="/liptov?p-p=11">11</a></li>
+        <li><a href="/liptov?p-p=2"><i class="icon-chevron-right"></i></a></li>
+    </ul>
 </div>
