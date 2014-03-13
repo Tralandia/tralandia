@@ -56,16 +56,22 @@ ul {
 }
 
 form.quickSearch {
-	padding: 0 10px 20px;
+	padding: 10px 10px 10px;
 	margin-bottom: 0;
+	border-top: 1px solid #DDD;
+	background: #FFF;
 }
 form.quickSearch input[name="query"] {
 	width: 300px;
-	padding: 2px 8px;
-	border: 1px solid #CCC;
+	padding: 3px 8px;
+	border: 1px solid @lightGreen;
+	margin: 0 10px;
+	border-radius: 4px;
 }
 form.quickSearch button[type="submit"] {
-	background: #fff;
+	background: @lightGreen;
+	color: #FFF;
+	margin-left: -5px;
 }
 
 .brown {
@@ -780,6 +786,7 @@ ul.arrows {
 	border-top: none;
 	border-right: none;
 	.border-radius(8px);
+	text-align: right;
 }
 .order-manager-item button {
 	margin-right: 10px;
@@ -801,6 +808,9 @@ ul.arrows {
 }
 .order-manager-item h2 .status.ok i {
 	color: #fff;
+}
+.order-manager-item h2 small {
+	font-size: 12px;
 }
 
 /* footer */
