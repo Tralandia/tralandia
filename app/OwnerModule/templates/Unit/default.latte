@@ -1,0 +1,37 @@
+{block content}
+
+<div class="clearfix">
+	<h1>Ubytovacie jednotky <small>({_$thisRental->getName()})</small></h1>
+</div>
+
+<div class="rentalListHr"></div>
+
+<table class="formTable innerPadding">
+	<tr class="rentalPriceUpload priceUploadGroup">
+		<td>
+			<div class="row-fluid">
+				<div class="priceListRowsContainer">
+					<div class="rentalPriceRow rentalUnit">
+						<input type="text" name="rentalUnit[][name]" placeholder="Názov ubytovacej jednotky">
+						<input type="text" name="rentalUnit[][capacity]" placeholder="Maximálna kapacita ubytovacej jednotky">
+						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+					</div>
+				</div>
+				<a class="btn addLine btn-green"><i class="icon-plus"></i> Pridať riadok</a>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class="rentalListHr"></div>
+		</td>
+	</tr>
+	<tr class="submitControl">
+		<td>
+			<button type="submit" class="btn btn-green pull-right">
+				<i class="entypo-ok"></i> <i class="icon-spinner icon-spin"></i> <small>Uložiť zmeny</small>
+			</button>
+			<small class="sublitLoadingText"></small>
+		</td>
+	</tr>
+</table>

@@ -324,7 +324,7 @@ parameters:
 			bootstrap:
 				js:
 					#- bootstrap/lib/js/bootstrap-alert.js
-					#- bootstrap/lib/js/bootstrap-button.js
+					- bootstrap/lib/js/bootstrap-button.js
 					#- bootstrap/lib/js/bootstrap-carousel.js
 					#- bootstrap/lib/js/bootstrap-collapse.js
 					- bootstrap/lib/js/bootstrap-dropdown.js
