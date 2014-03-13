@@ -1,7 +1,11 @@
+
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
 {form orderManagerEditForm}
 	<h1>Nova objednavka</h1>
 	<table class="formTable innerPadding">
+		{include #select, control => $form['rental'] , controlClass => 'select2 notFulltext' }
+
 		{include #text, control => $form['name']}
 		{include #text, control => $form['surname']}
 		{include #email, control => $form['email']}
@@ -10,7 +14,6 @@
 		{include #text, control => $form['peopleCount']}
 		{include #text, control => $form['childrenCount']}
 		{include #text, control => $form['childrenAge']}
-		{include #text, control => $form['exceedingBedsCount']}
 
 		{include #text, control => $form['dateFrom'], class => 'datepicker'}
 		{include #text, control => $form['dateTo'], class => 'datepicker'}

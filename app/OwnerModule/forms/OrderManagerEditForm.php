@@ -34,6 +34,14 @@ class OrderManagerEditForm extends BaseForm {
 
 
 	public function buildForm() {
+		$rentalOptions = array();
+		foreach ($this->user->getRentals() as $rental) {
+			$rentalOptions[] = $this->translate($rental->getName());
+		}
+		$this->addSelect('rental', 'Rental', $rentalOptions)
+			->setRequired($this->translate('152270'))
+			->setPrompt('o854');
+
 		$this->addText('name', 'Meno')
 			->setRequired('Povinne policko');
 
@@ -54,9 +62,6 @@ class OrderManagerEditForm extends BaseForm {
 			->addRule(self::NUMERIC, 'Musi byt cislo');
 
 		$this->addText('childrenAge', 'Vek deti');
-
-		$this->addText('exceedingBedsCount', 'Pocet obsadenych lozok')
-			->setRequired('Povinne policko');
 
 		$this->addText('dateFrom', 'Datum od')
 			->setRequired('Povinne policko');
