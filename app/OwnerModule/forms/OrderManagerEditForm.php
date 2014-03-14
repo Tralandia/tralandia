@@ -34,13 +34,7 @@ class OrderManagerEditForm extends BaseForm {
 
 
 	public function buildForm() {
-		$rentalOptions = array();
-		foreach ($this->user->getRentals() as $rental) {
-			$rentalOptions[] = $this->translate($rental->getName());
-		}
-		$this->addSelect('rental', 'Rental', $rentalOptions)
-			->setRequired($this->translate('152270'))
-			->setPrompt('o854');
+		$this->addRentalUnitContainer('units', 'Ubytovacie jednotky', $this->user);
 
 		$this->addText('name', 'Meno')
 			->setRequired('Povinne policko');

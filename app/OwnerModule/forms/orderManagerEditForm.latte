@@ -4,7 +4,7 @@
 {form orderManagerEditForm}
 	<h1>Nova objednavka</h1>
 	<table class="formTable innerPadding">
-		{include #select, control => $form['rental'] , controlClass => 'select2 notFulltext' }
+		{include #rentalUnit, control => $form['units'] }
 
 		{include #text, control => $form['name']}
 		{include #text, control => $form['surname']}

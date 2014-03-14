@@ -97,6 +97,12 @@ FormContainer::extensionMethod('addPhoneContainer',
 		return $container[$name] = new \Extras\Forms\Container\PhoneContainer($label, $phonePrefixes, $phoneBook, $translator);
 	});
 
+FormContainer::extensionMethod('addRentalUnitContainer',
+	function (FormContainer $container, $name, $label, $rentals) use ($dic) {
+		$translator = $dic->getService('translator');
+		return $container[$name] = new \Extras\Forms\Container\RentalUnitContainer($label, $rentals, $translator);
+	});
+
 FormContainer::extensionMethod('addRentalTypeContainer',
 	function (FormContainer $container, $name, $rental, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
