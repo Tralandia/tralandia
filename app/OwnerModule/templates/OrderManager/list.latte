@@ -5,17 +5,22 @@
 	<h1 class="rentalEditHeader">Manazer objednavok</h1>
 </div>
 <form class="quick-search">
-    <select class="select2" style="width:290px;">
+    <select class="select2" style="width:200px;">
         <option>- Vyberte objekt -</option>
         <option>Štýlová villa Flora pri aquaparku Tatralandia</option>
         <option>Chata Flora pri Donovaloch</option>
     </select>
-	<input name="query" placeholder="vyhladat podla emailu, mena alebo telefonu...">
+    <input name="query" placeholder="vyhladat podla emailu, mena alebo telefonu...">
+    <select class="select2" style="width:100px;">
+        <option>Všetky (3)</option>
+        <option>Minulé (2)</option>
+        <option>Aktuálne (1)</option>
+        <option>Budúce (0)</option>
+    </select>
 	<button type="submit" class="btn btn-small"><i class="icon-search"></i> Hladat</button>
 </form>
-
+{* 
 <div class="quick-toggle">
-    <i class="icon-time"></i>
     <div class="btn-group" data-toggle="buttons-radio">
       <button type="button" class="btn active">Všetky (3)</button>
       <button type="button" class="btn">Minulé (2)</button>
@@ -23,73 +28,73 @@
       <button type="button" class="btn">Budúce (0)</button>
     </div>
 </div>
-
+ *}
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
-		<span class="status ok"><i class="icon-ok"></i></span>
-    	<a href="#">
-    		Jan Czibula
-            <small>(Štýlová villa Flora pri aquaparku Tatralandia)</small>
-    	</a>
+        <span class="img" style="background-image: url(http://tralandiastatic.com/rental_images/2013_06/06/1l/qn/medium.jpeg);"></span>
+        <span class="status ok"><i class="icon-ok"></i></span>
+        <a href="#">Jan Czibula</a>
     </h2>
     <div class="details">
-    	<i><b>Po 21.03.2014 - Pi 27.03.2014</b></i><br/>
-        10 dospelych<br/> 
-        5 deti (2-9 rokov)
+        <i><b>Po 21.03.2014 - Pi 27.03.2014</b></i><br/>
+        10 dospelych, 5 deti (2-9 rokov)
     </div>
     <div class="clearfix"></div>
-    <p class="teaser"><a href="#">jan@czibula.com</a>, +421 919 396 336</p>
-    <p class="answer">Toto je poznamka ubytovatela k tomuto danemu pobytu.</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
-    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
+    <div class="detail-box">
+        <p><a href="#" class="email">jan@czibula.com</a>, +421 919 396 336</p>
+        <p class="answer">Toto je poznamka ubytovatela k tomuto danemu pobytu.</p>
+        <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+        <a href="#" class="pull-right remove"><i class="icon-trash"></i></a>
+        <p class="prices">Total: 100 EUR, <strong>Due: 80 EUR</strong></p>
+    </div>
   </div>
 </div>
 
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
-		<span class="status"><i class="icon-arrow-right"></i></span>
-    	<a href="#">
-    		David Durika
-            <small>(Chata Flora pri Donovaloch)</small>
-    	</a>
+        <span class="img" style="background-image: url(http://tralandiastatic.com/rental_images/2013_06/06/1l/qn/medium.jpeg);"></span>
+        <span class="status"><i class="icon-question"></i></span>
+        <a href="#">David Durika</a>
     </h2>
     <div class="details">
-    	<i><b>Po 21.03.2014 - So 27.03.2014</b></i></br>
+        <i><b>Po 21.03.2014 - So 27.03.2014</b></i></br>
         2 dospeli
     </div>
     <div class="clearfix"></div>
-    <p class="teaser"><a href="#">durika@tralandia.com</a>, +421 919 356 899</p>
-    <p class="answer">Toto je dalsia poznamka ubytovatela a tato je uz na dva riadky. Teda este jednu vetu napisem a bude na dva riadky uz urcite</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
-    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
+    <div class="detail-box">
+        <p><a href="#" class="email">durika@tralandia.com</a>, +421 919 356 899</p>
+        <p class="answer">Toto je dalsia poznamka ubytovatela a tato je uz na dva riadky. Teda este jednu vetu napisem a bude na dva riadky uz urcite</p>
+        <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+        <a href="#" class="pull-right remove"><i class="icon-trash"></i></a>
+        <p class="prices">Total: 100 EUR, <strong>Due: 80 EUR</strong></p>
+    </div>
   </div>
 </div>
 
 <div class="row-fluid">
   <div class="order-manager-item span12">
     <h2>
-		<span class="status"><i class="icon-arrow-right"></i></span>
-    	<a href="#">
-    		Radoslav Toth
-            <small>(Chata Flora pri Donovaloch)</small>
-    	</a>
+        <span class="img" style="background-image: url(http://tralandiastatic.com/rental_images/2013_06/06/1l/qn/medium.jpeg);"></span>
+        <span class="status"><i class="icon-question"></i></span>
+        <a href="#">Radoslav Toth</a>
     </h2>
     <div class="details">
-    	<i><b>Ut 29.04.2014 - Pi 03.05.2014</b></i><br/>
-        2 dospeli<br/>
-        2 deti (5-6 rokov)
+        <i><b>Ut 29.04.2014 - Pi 03.05.2014</b></i><br/>
+        2 dospeli, 2 deti (5-6 rokov)
     </div>
     <div class="clearfix"></div>
-    <p class="teaser"><a href="#">toth@tralandia.com</a>, +421 919 396 336</p>
-    <p class="answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
-    <p class="prices">Zaplatene 80 EUR, Zostava uhradit 20 EUR, Celkova cena 100 EUR</p>
+    <div class="detail-box">
+        <p><a href="#" class="email">toth@tralandia.com</a>, +421 919 396 336</p>
+        <p class="answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button class="btn btn-small btn-orange pull-right">detaily <i class="icon-arrow-right"></i></button>
+        <a href="#" class="pull-right remove"><i class="icon-trash"></i></a>
+        <p class="prices">Total: 100 EUR, <strong>Due: 80 EUR</strong></p>
+    </div>
   </div>
 </div>
 
-<div class="rentalListHr"></div>
 
 <div class="grid-paginator pagination">
     <ul>
