@@ -520,6 +520,17 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	public function getUnits()
+	{
+		$return = array();
+		$cnt = rand(3, 9);
+		for ($i=0; $i < $cnt; $i++) { 
+			$return[$i] = "Unit " . $i;
+		}
+		return $return;
+	}
+
+
 	/**
 	 * @param $types
 	 * @param null $limit

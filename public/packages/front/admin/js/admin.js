@@ -248,3 +248,11 @@ $(function(){
 		
 	});
 });
+
+function setUnits(obj) {
+	var $select = $(obj);
+	var rentalId = $select.val();
+
+	$('tr.units').find('.units-container').addClass('hide');
+	$('tr.units').find('#unit'+rentalId).removeClass('hide');
+}
