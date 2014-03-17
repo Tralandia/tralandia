@@ -34,11 +34,11 @@ define('TEMP_DIR', ROOT_DIR . '/temp');
 define('STATIC_DOMAIN', 'http://tralandiastatic.com/');
 require APP_DIR . '/entityConstants.php';
 
-MyTimer::start();
+//MyTimer::start();
 // load bootstrap file
 require APP_DIR . '/bootstrap.php';
 
-MyTimer::end();
+//MyTimer::end();
 
 
 class MyTimer {

@@ -22,6 +22,7 @@ class Service extends \Entity\BaseEntity
 
 
 	const TYPE_FEATURED = 'featured';
+	const TYPE_PERSONAL_SITE = 'personalSite';
 
 	/**
 	 * @var Collection

@@ -145,8 +145,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$this->addSubmit('submit', 'o100017');
 
-		$this->onSuccess[] = callback($this, 'process');
 		$this->onValidate[] = callback($this, 'validation');
+		$this->onSuccess[] = callback($this, 'process');
 
 	}
 

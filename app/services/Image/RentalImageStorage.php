@@ -32,7 +32,13 @@ class RentalImageStorage extends FileStorage
 			'width' => 467,
 			'height' => 276,
 			'flag' => Nette\Image::FIT
-		]
+		],
+		Image::FULL_HD => [
+			'method' => self::CROP,
+			'width' => 1920,
+			'height' => 1080,
+			'flag' => Nette\Image::FIT
+		],
 	];
 
 	/**
@@ -77,7 +83,7 @@ class RentalImageStorage extends FileStorage
 			$folders = implode(DIRECTORY_SEPARATOR, str_split(Strings::random(4), 2));
 			$path = $this->filesDir . DIRECTORY_SEPARATOR . date('Y_m/d') . DIRECTORY_SEPARATOR .  $folders;
 		} while (is_dir($path));
-		
+
 
 		@mkdir($path, 0777, TRUE);
 

@@ -44,17 +44,19 @@ class ServiceManager
 	 * @throws \InvalidArgumentException
 	 * @return \Entity\Rental\Service
 	 */
-	public function prolong(\Entity\Rental\Rental $rental, $givenFor)
+	public function prolong(\Entity\Rental\Rental $rental, $givenFor, $serviceType = Service::TYPE_FEATURED)
 	{
 		if($givenFor == Service::GIVEN_FOR_SHARE) {
 			$prolongBy = '+6 months';
 		} else if($givenFor == Service::GIVEN_FOR_BACKLINK) {
 			$prolongBy = '+12 months';
+		} else if($givenFor == Service::GIVEN_FOR_PAID_INVOICE && $serviceType == Service::TYPE_PERSONAL_SITE) {
+			$prolongBy = '+12 months';
 		} else {
 			throw new \InvalidArgumentException();
 		}
 
-		$lastService = $rental->getLastService();
+		$lastService = $rental->getLastService($serviceType);
 
 		if($lastService) $dateFrom = $lastService->getDateTo();
 		else $dateFrom = new \DateTime();
@@ -66,7 +68,7 @@ class ServiceManager
 		/** @var $newService Service */
 		$newService = $this->serviceDao->createNew();
 		$newService->setGivenFor($givenFor)
-				->setServiceType(Service::TYPE_FEATURED)
+				->setServiceType($serviceType)
 				->setDateFrom($dateFrom)
 				->setDateTo($dateTo);
 

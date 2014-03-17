@@ -23,7 +23,6 @@ class GalleryControl extends BaseControl
 
 	public function __construct(Rental $rental)
 	{
-		\MyTimer::log('gallery');
 		parent::__construct();
 		$this->rental = $rental;
 	}
@@ -35,7 +34,6 @@ class GalleryControl extends BaseControl
 		$this->template->rental = $rental;
 
 		$this->template->render();
-		\MyTimer::log('gallery');
 	}
 
 }

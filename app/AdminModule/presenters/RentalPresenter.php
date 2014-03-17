@@ -9,6 +9,7 @@ namespace AdminModule;
 
 
 use Entity\Rental\Rental;
+use Entity\Rental\Service;
 use Entity\Seo\BackLink;
 use Nette;
 use Nette\Application\UI\Form;
@@ -71,19 +72,49 @@ class RentalPresenter extends AdminPresenter {
 
 		$this->rentalDao->save($rental, $backlink);
 
-		$this->prolongService($rental, \Entity\Rental\Service::GIVEN_FOR_BACKLINK);
+		$this->prolongService($rental, Service::GIVEN_FOR_BACKLINK);
 	}
 
 	public function actionProlongService($id)
 	{
 		$rental = $this->findRental($id);
-		$this->prolongService($rental, \Entity\Rental\Service::GIVEN_FOR_SHARE);
+		$this->prolongService($rental, Service::GIVEN_FOR_SHARE);
+	}
+
+	public function actionActivatePersonalSite($id)
+	{
+		$this->template->rentalId = $id;
+	}
+
+	public function createComponentPersonalSiteSetupForm()
+	{
+		$form = new Form;
+
+		$form->addText('url', 'Personal site url: http://');
+		$form->addSubmit('submit');
+
+		$form->onSuccess[] = $this->personalSiteSetupFormOnSuccess;
+
+		return $form;
+	}
+
+	public function personalSiteSetupFormOnSuccess(Form $form)
+	{
+		$values = $form->getValues();
+
+		$rental = $this->findRental($this->getParameter('id'));
+		$rental->personalSiteUrl = $values->url;
+
+		$this->rentalDao->save($rental);
+
+		$this->prolongService($rental, Service::GIVEN_FOR_PAID_INVOICE, Service::TYPE_PERSONAL_SITE);
 	}
 
 
-	public function prolongService(Rental $rental, $serviceFor)
+
+	public function prolongService(Rental $rental, $serviceFor, $serviceType = Service::TYPE_FEATURED)
 	{
-		$this->serviceManager->prolong($rental, $serviceFor);
+		$this->serviceManager->prolong($rental, $serviceFor, $serviceType);
 		$invalidateOption = [
 			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_SEARCH,
 			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_HOMEPAGE,

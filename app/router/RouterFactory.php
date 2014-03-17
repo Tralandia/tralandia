@@ -16,10 +16,6 @@ class RouterFactory
 	protected $defaultPrimaryLocation;
 
 	/**
-	 * @var IBaseRouteFactory
-	 */
-	protected $baseRouteFactory;
-	/**
 	 * @var ISimpleRouteFactory
 	 */
 	protected $simpleRouteFactory;
@@ -33,16 +29,20 @@ class RouterFactory
 
 	private $domainMask;
 
+	/**
+	 * @var IPersonalSiteRouteFactory
+	 */
+	private $personalSiteRouteFactory;
+
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
-								IBaseRouteFactory $baseRouteFactory,
-								IFrontRouteFactory $frontRouteFactory)
+								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
-		$this->baseRouteFactory = $baseRouteFactory;
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
+		$this->personalSiteRouteFactory = $personalSiteRouteFactory;
 		$this->domainMask = $domainMask;
 	}
 
@@ -56,26 +56,10 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$locationDao = $this->locationDao;
-		$languageDao = $this->languageDao;
-		$router[] = new Route('//<rentalSlug>.<domainName (uns.sk|uns.local)>/', [
-			BaseRoute::PRIMARY_LOCATION => 'sk',
-			BaseRoute::LANGUAGE => 'sk',
+		$router[] = $this->personalSiteRouteFactory->create('//<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
-			'action' => 'default',
-			NULL => [
-				Route::FILTER_IN => function(array $params) use ($locationDao, $languageDao) {
-					$params[BaseRoute::PRIMARY_LOCATION] = $locationDao->findOneByIso($params[BaseRoute::PRIMARY_LOCATION]);
-					$params[BaseRoute::LANGUAGE] = $languageDao->findOneByIso($params[BaseRoute::LANGUAGE]);
-					return $params;
-				},
-				Route::FILTER_OUT => function(array $params) use ($locationDao, $languageDao) {
-					$params[BaseRoute::PRIMARY_LOCATION] = $params[BaseRoute::PRIMARY_LOCATION]->getIso();
-					$params[BaseRoute::LANGUAGE] = $params[BaseRoute::LANGUAGE]->getIso();
-					return $params;
-				},
-			]
+			'action' => 'default'
 		]);
 
 		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin|map)>/<presenter>[/<action>[/<id>]]';
