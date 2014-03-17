@@ -23,6 +23,7 @@ class WelcomeScreenControl extends BaseControl
 
 	public function __construct(Rental $rental)
 	{
+		\MyTimer::log('welcome');
 		parent::__construct();
 		$this->rental = $rental;
 	}
@@ -34,6 +35,7 @@ class WelcomeScreenControl extends BaseControl
 		$this->template->rental = $rental;
 
 		$this->template->render();
+		\MyTimer::log('welcome');
 	}
 
 }

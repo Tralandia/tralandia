@@ -43,37 +43,38 @@ MyTimer::end();
 
 class MyTimer {
 
-	public static $lastStamp = ['__' => 0];
+	public static $lastStamp = ['__start__' => 0, '__' => 0];
 	public static $log = [];
 
 	public static function start()
 	{
-		self::$lastStamp['__'] = microtime(true);
+		self::$lastStamp['__start__'] = self::$lastStamp['__'] = microtime(true);
 	}
 
 	public static function log($label)
 	{
 		$now = microtime(true);
 		if(array_key_exists($label, self::$lastStamp)) {
-			self::$log[$label] = $now - self::$lastStamp[$label];
+			self::$log[] = ['label' => $label, 'time' => $now - self::$lastStamp[$label]];
 			self::$lastStamp[$label] = $now;
 		} else {
-			self::$log[$label] = $now - self::$lastStamp['__'];
+			self::$log[] = ['label' => $label, 'time' => $now - self::$lastStamp['__']];
 			self::$lastStamp['__'] = $now;
 		}
 	}
 
 	public static function end()
 	{
-		self::log('end');
+		self::log('__end__');
+		self::$log[] = ['label' => '__total__', 'time' => microtime(true) - self::$lastStamp['__start__']];
 		self::report();
 	}
 
 	public function report()
 	{
 		echo '<table style="position: fixed; top:100px; left:0; z-index: 1000000; width: 300px;">';
-		foreach(self::$log as $key => $value) {
-			echo '<tr><td>'.$key.'</td><td>'.$value.'</td></tr>';
+		foreach(self::$log as $value) {
+			echo '<tr><td>'.$value['label'].'</td><td>'.$value['time'].'</td></tr>';
 		}
 		echo '</table>';
 
