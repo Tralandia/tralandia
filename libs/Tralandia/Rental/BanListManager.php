@@ -10,7 +10,6 @@ namespace Tralandia\Rental;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Contact\Phone;
-use Entity\Rental\Rental;
 use Nette;
 
 class BanListManager
@@ -38,11 +37,11 @@ class BanListManager
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 *
 	 * @return $this
 	 */
-	public function banRental(Rental $rental)
+	public function banRental(\Entity\Rental\Rental $rental)
 	{
 		$rental->getEmail() && $this->banEmail($rental->getEmail());
 		$rental->getPhone() && $this->banPhone($rental->getPhone());
@@ -52,11 +51,11 @@ class BanListManager
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 *
 	 * @return $this
 	 */
-	public function unbanRental(Rental $rental)
+	public function unbanRental(\Entity\Rental\Rental $rental)
 	{
 		$this->unbanEmail($rental->getEmail());
 		$rental->getPhone() && $this->unbanPhone($rental->getPhone());

@@ -1,0 +1,52 @@
+nette:
+
+
+parameters:
+	leanConnectionInfo:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: tralandia
+		charset: utf8
+		lazy: TRUE
+		profiler: true
+
+services:
+
+factories:
+
+	welcomeScreenControlFactory:
+		class: PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: PersonalSiteModule\WelcomeScreen\IWelcomeScreenControlFactory
+
+	amenitiesControlFactory:
+		class: \PersonalSiteModule\Amenities\AmenitiesControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Amenities\IAmenitiesControlFactory
+
+	galleryControlFactory:
+		class: \PersonalSiteModule\Gallery\GalleryControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Gallery\IGalleryControlFactory
+
+	pricesControlFactory:
+		class: \PersonalSiteModule\Prices\PricesControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Prices\IPricesControlFactory
+
+	calendarControlFactory:
+		class: \PersonalSiteModule\Calendar\CalendarControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Calendar\ICalendarControlFactory
+
+	contactControlFactory:
+		class: \PersonalSiteModule\Contact\ContactControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Contact\IContactControlFactory

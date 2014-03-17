@@ -5,16 +5,12 @@ nette:
 
 parameters:
 
-	database:
-		dbname: tralandia_test
-		debugger: false
-
 	templateCache:
 		enabled: true
 
-	staticDomain: NULL
-	storageDir: /storage
-	storagePath: /storage
+#	staticDomain: NULL
+#	storageDir: /storage
+#	storagePath: /storage
 
 	maxReservationCountPerDay: 100
 	rentalCountOnHome: 15

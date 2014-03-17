@@ -8,7 +8,6 @@
 namespace Tralandia\Rental;
 
 
-use Entity\Rental\Rental;
 use Nette;
 
 class UnbanRentalListener implements \Kdyby\Events\Subscriber {
@@ -32,7 +31,7 @@ class UnbanRentalListener implements \Kdyby\Events\Subscriber {
 	}
 
 
-	public function onSuccess(Rental $rental)
+	public function onSuccess(\Entity\Rental\Rental $rental)
 	{
 		$this->banListManager->unbanRental($rental);
 	}

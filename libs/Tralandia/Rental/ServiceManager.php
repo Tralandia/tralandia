@@ -8,7 +8,6 @@
 namespace Tralandia\Rental;
 
 
-use Entity\Rental\Rental;
 use Entity\Rental\Service;
 use Nette;
 use Tralandia\BaseDao;
@@ -39,13 +38,13 @@ class ServiceManager
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 * @param $givenFor
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return \Entity\Rental\Service
 	 */
-	public function prolong(Rental $rental, $givenFor)
+	public function prolong(\Entity\Rental\Rental $rental, $givenFor)
 	{
 		if($givenFor == Service::GIVEN_FOR_SHARE) {
 			$prolongBy = '+6 months';

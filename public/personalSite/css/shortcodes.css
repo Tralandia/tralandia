@@ -1,0 +1,267 @@
+.inner-content { max-width: 1210px; padding-left: 20px; padding-right: 20px; margin: 0 auto; }
+
+/*-----------------------------------------------------------------------------------*/
+/*  Column Styles
+/*-----------------------------------------------------------------------------------*/
+.stag-one-half { width: 48%; }
+
+.stag-one-third { width: 30.66%; }
+
+.stag-two-third { width: 65.33%; }
+
+.stag-one-fourth { width: 22%; }
+
+.stag-three-fourth { width: 74%; }
+
+.stag-one-fifth { width: 16.8%; }
+
+.stag-two-fifth { width: 37.6%; }
+
+.stag-three-fifth { width: 58.4%; }
+
+.stag-four-fifth { width: 67.2%; }
+
+.stag-one-sixth { width: 13.33%; }
+
+.stag-five-sixth { width: 82.67%; }
+
+.stag-one-half, .stag-one-third, .stag-two-third, .stag-three-fourth, .stag-one-fourth, .stag-one-fifth, .stag-two-fifth, .stag-three-fifth, .stag-four-fifth, .stag-one-sixth, .stag-five-sixth { position: relative; margin-right: 4%; margin-bottom: 2em; float: left; }
+
+.stag-column-last { margin-right: 0!important; clear: right; }
+
+@media (max-width: 768px) { .stag-one-half, .stag-one-third, .stag-two-third, .stag-one-fourth, .stag-three-fourth, .stag-one-fifth, .stag-two-fifth, .stag-three-fifth, .stag-four-fifth, .stag-one-sixth, .stag-five-sixth { width: 100%; } }
+/*-----------------------------------------------------------------------------------*/
+/*  Button Styles
+/*-----------------------------------------------------------------------------------*/
+a.stag-button, a.stag-button:visited { display: inline-block; color: #fff!important; text-decoration: none!important; text-align: center; font-family: "Novecentowide-Bold", Helvetica, sans-serif; font-weight: normal; font-size: 16px; outline: none; line-height: 1em; padding: 10px 20px; cursor: pointer; -webkit-border-radius: 40px; -moz-border-radius: 40px; -ms-border-radius: 40px; -o-border-radius: 40px; border-radius: 40px; margin: 5px 10px; position: relative; behavior: url(PIE.php); vertical-align: middle; background: #0c6fb1; }
+
+a.stag-button.square { -webkit-border-radius: 4px !important; -moz-border-radius: 4px !important; -ms-border-radius: 4px !important; -o-border-radius: 4px !important; border-radius: 4px !important; }
+
+a.stag-button.medium { padding: 13px 35px; font-size: 19px; }
+
+a.stag-button.large { padding: 15px 40px; font-size: 20px; }
+
+a.stag-button:hover { text-decoration: none; }
+
+a.stag-button:active { position: relative; top: 1px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+
+a.stag-button.green { background: #14aa07; }
+
+a.stag-button.light-blue { background: #2694c3; }
+a.stag-button.light-blue:hover { background: #2284ae; }
+
+a.stag-button.blue { background-color: #2682d1; }
+a.stag-button.blue:hover { background-color: #1e67a6; }
+
+a.stag-button.red { background-color: #a41919; }
+a.stag-button.red:hover { background: #781212; }
+
+a.stag-button.orange { background: #eea754; }
+a.stag-button.orange:hover { background: #e98f26; }
+
+a.stag-button.purple { background-color: #6c1355; }
+a.stag-button.purple:hover { background: #410b33; }
+
+a.stag-button.grey { color: #ffffff; background: #d7d7d7; }
+a.stag-button.grey:hover { background: #bebebe; }
+
+a.stag-button.black { color: #fff; background: #1f2329; }
+a.stag-button.black:hover { background: #090a0c; }
+
+/*-----------------------------------------------------------------------------------*/
+/*  Alert Styles
+/*-----------------------------------------------------------------------------------*/
+.stag-alert { padding: 25px 0px; margin: 1.5em 0; margin-left: -115px; padding-left: 130px; line-height: 1.6em; position: relative; behavior: url(PIE.php); font-size: 18px; font-family: "Novecentowide-Bold", Helvetica, sans-serif; font-weight: normal; position: relative; }
+.stag-alert:before { content: ''; position: absolute; top: 0px; left: 0px; bottom: 0px; background-color: transparent; background: url(../img/icon-alert.png) no-repeat rgba(0, 0, 0, 0.2); background-position: center -78px; width: 115px; display: inline-block; height: 100%; }
+.stag-alert .icon { position: absolute; top: 0px; left: 0px; bottom: 0px; background-color: transparent; background: url(../img/icon-alert.png) no-repeat rgba(0, 0, 0, 0.2); background-position: center -78px; width: 115px; display: inline-block; height: 100%; }
+.stag-alert .icon.icon-red { background-position: center 25px; }
+
+.stag-alert.white { background: #fff; border: 1px solid whitesmoke; }
+
+.stag-alert.red { background: #e78b8b; color: #fff; }
+
+.stag-alert.yellow { background: #fff7d6; color: #956433; }
+
+.stag-alert.green { background: #adc767; color: #fff; }
+
+.stag-alert.grey { background: #f5f5f5; }
+
+.stag-alert.blue { background: #2694C3; color: white; }
+
+/*--------------------*/
+/*  Tab Styles
+/*--------------------*/
+.stag-tabs.ui-tabs .ui-tabs-hide { position: absolute; left: -10000px; }
+
+.stag-tabs *:focus { outline: 0; }
+
+.stag-tabs .ui-state-active a { background-color: white !important; }
+
+.stag-tabs { background: none; margin: 0 0 2em 0; }
+
+.stag-tabs ul.stag-nav { list-style: none!important; margin: 0!important; padding: 0; background: none; border: 0; float: none; }
+
+.stag-tabs ul.stag-nav li { float: left; position: relative; margin: 0 4px 10px 0 !important; z-index: 10; list-style: none!important; }
+
+.stag-tabs ul.stag-nav li a { border: 1px solid #dfdfdf !important; display: block; overflow: hidden; padding: 10px 20px; line-height: 1; font-family: "Novecentowide-Bold", Helvetica, sans-serif; font-weight: normal; margin: 0!important; text-decoration: none; color: #919191; }
+
+.stag-tabs ul.stag-nav li a:hover { background: #fff!important; margin: 0!important; }
+
+.stag-tabs ul.stag-nav li.ui-tabs-selected a { background: #fff; }
+
+.stag-tabs .stag-tab { background: #fff; padding: 20px 0px; }
+
+/*-----------------------------------------------------------------------------------*/
+/*  Toggle Styles
+/*-----------------------------------------------------------------------------------*/
+.stag-toggle { margin: 0 0 1em 0; }
+
+.stag-toggle .stag-toggle-title { display: block; padding: 10px 30px 10px 10px; border: 1px solid #dfdfdf; cursor: pointer; outline: none; position: relative; }
+
+.stag-toggle-inner { padding: 20px 0px; border-top: none; }
+
+.stag-toggle span.ui-icon { background: url(../img/bg-toggle.png) no-repeat; width: 20px; height: 20px; position: absolute; top: 40%; right: 10px; margin: -4px 0 0 0; }
+
+.stag-toggle .ui-state-active .ui-icon { background: url(../img/bg-toggle.png) no-repeat; background-position: 0px -62px; }
+
+.stag-toggle .ui-state-active { color: #1c93c5; }
+
+/* Clearfix */
+.stag-clearfix:before, .stag-clearfix:after { content: ""; display: table; }
+
+.stag-clearfix:after { clear: both; }
+
+.stag-clearfix { zoom: 1; /* For IE 6/7 (trigger hasLayout) */ }
+
+/* Author Box Styles */
+.stag_author_wrap { max-width: 600px; padding: 25px 0; }
+
+.stag_author_wrap .stag_author_gravatar { float: left; display: block; width: 120px; }
+
+.stag_author_wrap .stag_author_info { float: right; display: block; width: 470px; }
+
+/* Divider */
+.stag-divider { border: 0; height: 1px; margin: 20px 0px; }
+
+.stag-divider.plain { background: #333; }
+
+.stag-divider.horizontal_gradient { background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); }
+
+.stag-divider.soft_blur { background: #333; background-image: -webkit-linear-gradient(left, #cccccc, #333333, #cccccc); background-image: -moz-linear-gradient(left, #cccccc, #333333, #cccccc); background-image: -ms-linear-gradient(left, #cccccc, #333333, #cccccc); background-image: -o-linear-gradient(left, #cccccc, #333333, #cccccc); }
+
+.stag-divider.dashed_double { border: 0; border-bottom: 1px dashed #cccccc; background: #999; }
+
+.stag-divider.dashed { border-bottom: 1px dashed #cccccc; }
+
+.stag-divider.single_direction_drop_shadow { height: 12px; border: 0; box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5); }
+
+.stag-divider.inset { border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+
+.stag-divider.flaired_edges { height: 30px; border-style: solid; border-color: black; border-width: 1px 0 0 0; border-radius: 20px; margin-top: 40px; }
+
+.stag-divider.flaired_edges:before { /* Not really supposed to work, but does */ display: block; content: ""; height: 30px; margin-top: -31px; border-style: solid; border-color: black; border-width: 0 0 1px 0; border-radius: 20px; }
+
+.stag-divider.glyph { padding: 0; border: none; border-top: medium double #333333; color: #333; text-align: center; }
+
+.stag-divider.glyph:after { content: "§"; display: inline-block; position: relative; top: -0.7em; font-size: 1.5em; padding: 0 0.25em; background: white; }
+
+/* Code Styles */
+pre, code, var, kbd, samp { -ms-word-break: break-word; word-break: break-word; background: #f8f8ff; font: 15px/18px Consolas, "Andale Mono", Courier, "Courier New", monospace !important; }
+
+pre code { display: block; padding: 0.5em; color: #333; }
+
+pre .comment, pre .template_comment, pre .diff .header, pre .javadoc { color: #998; font-style: italic; }
+
+pre .keyword, pre .css .rule .keyword, pre .winutils, pre .javascript .title, pre .nginx .title, pre .subst, pre .request, pre .status { color: #333; font-weight: bold; }
+
+pre .number, pre .hexcolor, pre .ruby .constant { color: #099; }
+
+pre .string, pre .tag .value, pre .phpdoc, pre .tex .formula { color: #dd1144; }
+
+pre .title, pre .id { color: #900; font-weight: bold; }
+
+pre .javascript .title, pre .lisp .title, pre .clojure .title, pre .subst { font-weight: normal; }
+
+pre .class .title, pre .haskell .type, pre .vhdl .literal, pre .tex .command { color: #458; font-weight: bold; }
+
+pre .tag, pre .tag .title, pre .rules .property, pre .django .tag .keyword { color: #000080; font-weight: normal; }
+
+pre .attribute, pre .variable, pre .lisp .body { color: teal; }
+
+pre .regexp { color: #009926; }
+
+pre .class { color: #458; font-weight: bold; }
+
+pre .symbol, pre .ruby .symbol .string, pre .lisp .keyword, pre .tex .special, pre .input_number { color: #990073; }
+
+pre .built_in, pre .lisp .title, pre .clojure .built_in { color: #0086b3; }
+
+pre .preprocessor, pre .pi, pre .doctype, pre .shebang, pre .cdata { color: #999; font-weight: bold; }
+
+pre .deletion { background: #ffdddd; }
+
+pre .addition { background: #ddffdd; }
+
+pre .diff .change { background: #0086b3; }
+
+pre .chunk { color: #aaaaaa; }
+
+pre .tex .formula { opacity: 0.5; }
+
+pre code { display: block; padding: .5em; background: #f0f0f0; }
+
+pre code, pre .ruby .subst, pre .tag .title, pre .lisp .title, pre .clojure .built_in, pre .nginx .title { color: black; }
+
+pre .string, pre .title, pre .constant, pre .parent, pre .tag .value, pre .rules .value, pre .rules .value .number, pre .preprocessor, pre .ruby .symbol, pre .ruby .symbol .string, pre .aggregate, pre .template_tag, pre .django .variable, pre .smalltalk .class, pre .addition, pre .flow, pre .stream, pre .bash .variable, pre .apache .tag, pre .apache .cbracket, pre .tex .command, pre .tex .special, pre .erlang_repl .function_or_atom, pre .markdown .header { color: #800; }
+
+pre .comment, pre .annotation, pre .template_comment, pre .diff .header, pre .chunk, pre .markdown .blockquote { color: #888; }
+
+pre .number, pre .date, pre .regexp, pre .literal, pre .smalltalk .symbol, pre .smalltalk .char, pre .go .constant, pre .change, pre .markdown .bullet, pre .markdown .link_url { color: #080; }
+
+pre .label, pre .javadoc, pre .ruby .string, pre .decorator, pre .filter .argument, pre .localvars, pre .array, pre .attr_selector, pre .important, pre .pseudo, pre .pi, pre .doctype, pre .deletion, pre .envvar, pre .shebang, pre .apache .sqbracket, pre .nginx .built_in, pre .tex .formula, pre .erlang_repl .reserved, pre .input_number, pre .markdown .link_label, pre .vhdl .attribute, pre .clojure .attribute { color: #88F; }
+
+pre .keyword, pre .id, pre .phpdoc, pre .title, pre .built_in, pre .aggregate, pre .css .tag, pre .javadoctag, pre .phpdoc, pre .yardoctag, pre .smalltalk .class, pre .winutils, pre .bash .variable, pre .apache .tag, pre .go .typename, pre .tex .command, pre .markdown .strong, pre .request, pre .status { font-weight: bold; }
+
+pre .markdown .emphasis { font-style: italic; }
+
+pre .nginx .built_in { font-weight: normal; }
+
+pre .coffeescript .javascript, pre .xml .css, pre .xml .javascript, pre .xml .vbscript, pre .tex .formula { opacity: .5; }
+
+.stag-tabs ul.stag-nav .ui-state-active a { color: #1c93c5; }
+.stag-tabs ul.stag-nav li { margin-right: 10px !important; }
+.stag-tabs ul.stag-nav li a { -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
+
+.stag-toggle .stag-toggle-title { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; padding-top: 8px; padding-bottom: 8px; font-family: "Novecentowide-Bold", Helvetica, sans-serif; font-weight: normal; }
+
+.stag-toggle .stag-toggle-inner { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; }
+
+pre { margin: 1em 0 !important; }
+
+.pln { color: #000; }
+
+@media screen { .str { color: #080; }
+  .kwd { color: #008; }
+  .com { color: #800; }
+  .typ { color: #606; }
+  .lit { color: #066; }
+  .pun, .opn, .clo { color: #660; }
+  .tag { color: #008; }
+  .atn { color: #606; }
+  .atv { color: #080; }
+  .dec, .var { color: #606; }
+  .fun { color: red; } }
+@media print, projection { .str { color: #060; }
+  .kwd { color: #006; font-weight: bold; }
+  .com { color: #600; font-style: italic; }
+  .typ { color: #404; font-weight: bold; }
+  .lit { color: #044; }
+  .pun, .opn, .clo { color: #440; }
+  .tag { color: #006; font-weight: bold; }
+  .atn { color: #404; }
+  .atv { color: #060; } }
+ol.linenums { margin-top: 0; margin-bottom: 0; }
+
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 { list-style-type: none; }
+
+li.L1, li.L3, li.L5, li.L7, li.L9 { background: #eee; }
