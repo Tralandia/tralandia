@@ -101,17 +101,20 @@
 				minimumResultsForSearch: -1
 			});
 
-			$(".datepicker").datepicker();
+			$(".datepicker").datepicker({
+				dateFormat: "yy-mm-dd"
+			});
 			$(".datepickerto").datepicker({
 				maxDate: "+12M +10D" ,
+				dateFormat: "yy-mm-dd",
 				firstDay: 1,
 				beforeShow: function(textbox, instance){
-					var fromValues = $('.datepicker').val().split('/');
+					var fromValues = $('.datepicker').val().split('-');
 
 					if ( fromValues.length > 1 ) {
-						fromDateOrigin.year = parseInt(fromValues[2]);
-						fromDateOrigin.month = parseInt(fromValues[0])-1;
-						fromDateOrigin.day = parseInt(fromValues[1]);
+						fromDateOrigin.year = parseInt(fromValues[0]);
+						fromDateOrigin.month = parseInt(fromValues[1])-1;
+						fromDateOrigin.day = parseInt(fromValues[2]);
 						
 						fromDateOrigin.date.setYear(fromDateOrigin.year);
 						fromDateOrigin.date.setMonth(fromDateOrigin.month);

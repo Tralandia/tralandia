@@ -11,12 +11,13 @@ License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 /*! $CSS Reset & Clearfix */
-div {
+/*div {
   -webkit-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -moz-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -o-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0; 
 }
+*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
