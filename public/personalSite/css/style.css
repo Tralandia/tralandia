@@ -11,12 +11,13 @@ License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 /*! $CSS Reset & Clearfix */
-div {
+/*div {
   -webkit-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -moz-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -o-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0; 
 }
+*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -340,8 +341,8 @@ em {
 }
 
 .prices-download {
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 0;
+  padding: 0 20px;
 }
 
 @media screen and (max-width: 700px) {
@@ -496,17 +497,20 @@ sup {
   text-align: center;
 }
 
-#backToTop {
-  background: #111 url(../img/top-arrow.png) no-repeat center center;
+a#backToTop {
+  background: transparent url(../img/top-arrow.png) no-repeat center center;
   display: inline-block;
   padding-top: 20px;
-  margin-left: 20px;
+  margin-left: 10px;
   width: 60px;
   height: 60px;
   line-height: 1;
   text-align: center;
   vertical-align: middle;
-    font-weight: normal;
+  font-weight: normal;
+}
+a#backToTop:hover {
+  background-color: #333;
 }
 
 body {
@@ -534,7 +538,7 @@ body.gateway-open {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10001;
+  z-index: 1000;
   height: auto;
 }
 #header .header-inner, .inner-section {
@@ -638,14 +642,27 @@ body.gateway-open {
   border-radius: 3px;
 }
 #primary-nav li.active > a {
-  background: #444 !important;
+  background: #A0B325 !important;
 }
 #primary-nav li a:hover {
   background: #1c93c5;
 }
-#primary-nav li:last-child a {
-  color: #A0B325 !important;
+#primary-nav li.reservation a {
   font-weight: bold;
+}
+#primary-nav li.language {
+}
+#primary-nav li.language a.select2-choice {
+    padding: 5px 5px 5px 15px;
+    color: #eee;
+    background: #444;
+    margin-bottom: -12px;
+    border: none;
+}
+#primary-nav li.language a.select2-choice .select2-arrow {
+    background: none;
+    border-left: none;
+    padding: 5px 5px;
 }
 
 .gateway-open #container {
@@ -925,7 +942,8 @@ body.gateway-open {
   margin-top: 30px;
 }
 #contact button {
-    font-weight: normal;
+  font-weight: normal;
+  float: right;
 }
 #contact .row {
   margin-bottom: 20px;
@@ -1075,6 +1093,7 @@ body.gateway-open {
 }
 #slideshow .slider-content-extra .fb_iframe_widget span {
   top: -5px;
+  overflow: hidden;
 }
 #slideshow .slider-content h2 {
   background: #1f2329;
@@ -1294,7 +1313,7 @@ h3#pings {
 
 .entry-content ul, .comment-body ul {
   list-style: disc;
-  margin: 10px 0px 10px 40px;
+  margin: 10px 0px 10px 30px;
 }
 .entry-content ol, .comment-body ol {
   list-style: decimal;
@@ -1583,7 +1602,7 @@ h3#pings {
 .portfolio-details {
     font-weight: normal;
   position: relative;
-  z-index: 10000;
+  
   border: 1px solid #dfdfdf;
   width: 470px;
   max-width: 100%;
@@ -2022,7 +2041,6 @@ h1.incoming-gateway, .loader {
 }
 #gallery .btn-more {
   padding: 10px 0;
-  background: #eee;
   margin: 0 -10px;
 }
 #gallery .inner-section, #gallery .grids {
@@ -2257,7 +2275,7 @@ blockquote,
 button:hover,
 input[type=submit]:hover,
 #primary-nav li a:hover
-{ background-color:#a0b325 !important; color: #FFF !important;}
+{ background-color: #A0B325 !important; color: #FFF !important;}
 }
 .recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}
 
@@ -2353,4 +2371,24 @@ form.review-form .stars-result label {
 .stars-result .stars i.icon {
   padding-right: 5px;
   color: #fff;
+}
+
+/* Interview
+*/
+ul.interviewList {
+    list-style: none;
+    margin: 0;
+}
+ul.interviewList li {}
+ul.interviewList li h4 {
+    margin-bottom: 10px;
+    color: #A0B325;
+}
+ul.interviewList li p {
+    margin-top: 0;
+    color: #666;
+}
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  color: #777;
 }

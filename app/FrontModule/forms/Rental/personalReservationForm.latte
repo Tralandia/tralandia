@@ -1,0 +1,71 @@
+{form reservationForm , class => 'reservationform cache ajax' }
+
+	{* add class invalid to input *}
+	{foreach $form->getErrors() as $error}{$error}{/foreach}
+
+	<div n:class="$form['email']->hasErrors() ? 'row error' : 'row' ">
+	{input email , data-validation-message => "error-msg-reservation-email"}
+	<span class="control-error" id="error-msg-reservation-email">
+		{foreach $form['email']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div>
+
+	{var $phoneContainer = $form['phone']}
+	<div n:class="$phoneContainer['number']->hasErrors() ? 'row grids error' : 'row grids' ">
+		<div class="grid-3">
+			{input $phoneContainer['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
+		</div>
+		<div class="grid-9">
+			{input $phoneContainer['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
+		</div>
+	<div class="clearfix"></div>
+	<span class="control-error" id="error-msg-reservation-tel">
+		{foreach $phoneContainer['number']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div>
+
+	<div class="row grids">
+		<div class="grid-6">
+			{input parents , class => 'counter first select2'}
+		</div>
+		<div class="grid-6">
+			{input children , class => 'counter select2'}
+		</div>
+	</div>
+
+	{var $dateContainer = $form['date']}
+	<div n:class="$dateContainer['to']->hasErrors() ? 'row grids error' : 'row grids' ">
+		<div class="grid-6">
+			{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" , data-reservations => $formatedCalendar }
+		</div>
+		<div class="grid-6">
+			{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to" , data-reservations => $formatedCalendar}
+		</div>
+		<span class="control-error" id="error-msg-reservation-to">
+			{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
+			{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
+		</span>
+	</div>
+
+	<div n:class="$form['message']->hasErrors() ? 'row message error' : 'row message' ">
+	{input message , data-validation-message => "error-msg-reservation"}
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div>
+
+	{if $form->hasErrors()}
+		<div>{_"o100136"}</div>
+	{/if}
+
+	{ifset $fromSuccessMessage}
+		<div class="reservationSuccessInfo">{_$fromSuccessMessage}
+			<span class="iconPlaceholder"><i class="icon-ok"></i></span>
+		</div>
+	{/ifset}
+
+	{if !isset($fromSuccessMessage)}
+		<button type="submit" name="contact_submit">Poslať rezerváciu <i class="icon icon-arrow-right"></i></button>
+	{/if}
+
+{/form}

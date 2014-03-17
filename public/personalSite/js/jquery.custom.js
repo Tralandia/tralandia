@@ -350,7 +350,7 @@ jQuery(document).ready(function($){
 
     }
 
-    $("#container").fitVids();
+    // $("#container").fitVids();
 
 });
 
@@ -358,17 +358,17 @@ jQuery(document).ready(function($){
 /*------------------------------------------------------------------------------*/
 /* The Awesome FlexSlider
 /*------------------------------------------------------------------------------*/
-jQuery(window).load(function(){
+// jQuery(window).load(function(){
 
-    jQuery("#container").css('padding-top', jQuery("#header").outerHeight());
+//     jQuery("#container").css('padding-top', jQuery("#header").outerHeight());
 
-    jQuery('#blog-post-slider').flexslider({
-        directionNav: true,
-        controlNav: false,
-        multipleKeyboard: false,
-        animation: "slide",
-        animationLoop: false,
-        slideshow: false
-    });
+//     jQuery('#blog-post-slider').flexslider({
+//         directionNav: true,
+//         controlNav: false,
+//         multipleKeyboard: false,
+//         animation: "slide",
+//         animationLoop: false,
+//         slideshow: false
+//     });
 
-});
+// });

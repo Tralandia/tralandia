@@ -9,9 +9,11 @@
 			{/for}
 			<!-- END #portfolio-slider -->
 		</div>
+		{if ($i-4) > 0}
 		<div class="btn-more">
-			<button class="btn-toggle" data-toggle="portfolio-slider"><i class="icon icon-chevron-down"></i> Zobraz všetky fotografie</button>
+			<button class="btn-toggle" data-toggle="portfolio-slider"><i class="icon icon-chevron-down"></i> Zobraz všetky fotografie (+{$i-4})</button>
 		</div>
+		{/if}
 	</div>
 	<!-- END #gallery -->
 </section>
