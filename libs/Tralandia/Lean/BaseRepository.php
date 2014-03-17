@@ -11,7 +11,7 @@ namespace Tralandia\Lean;
 use LeanMapper\Repository;
 use Nette;
 
-class BaseDao extends Repository
+class BaseRepository extends Repository
 {
 
 	public function createNew()

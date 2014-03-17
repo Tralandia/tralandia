@@ -435,7 +435,7 @@ services:
 	#==========================================================#
 	############################################################
 
-	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
+	- \Tralandia\Rental\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
 	- \Tralandia\Dictionary\FulltextSearch(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 	- \Tralandia\Language\SupportedLanguages
@@ -465,7 +465,7 @@ services:
 	- \LeanMapper\DefaultEntityFactory
 	- \Tralandia\Lean\Mapper
 
-	- \Tralandia\Rental\RentalDao
+	- \Tralandia\Rental\RentalRepository
 
 
 

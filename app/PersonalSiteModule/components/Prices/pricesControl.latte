@@ -2,41 +2,24 @@
 	<div class="inner-section">
 		<h2 class="main-title">Cenník</h2>
 		<div class="grids">
-			<div class="grid-8">
+			<div class="grid-12">
 				<div class="prices">
-					<div class="grids" n:foreach="$prices->getList() as $row">
-						<div class="grid-6">{$row->season}
+					<div class="grids" n:foreach="$rental->getPriceList() as $row">
+						<div class="grid-6">
+							{$row->roomCount}x {_$row->roomType->nameId}
 							<small>
-								<span n:if="$row->from">{$row->from} &#8211; {$row->to} </span>
-								<span n:if="$row->minPersons">(min. počet osôb: {$row->minPersons})</span>
+								<span>({$row->bedCount} {_1191, $row->bedCount}{if $row->extraBedCount} + {$row->extraBedCount} {_1185, $row->extraBedCount}{/if})</span>
 							</small>
 						</div>
-						<div class="grid-6"><strong>{$row->price} EUR</strong> {$row->type}</div>
+						<div class="grid-6"><strong>{$row->price} EUR</strong> osoba/noc</div>
 					</div>
-				</div>
-				<div class="prices-download">
-					<p><b>Cenníky na stiahnutie:</b></p>
-					<p n:foreach="$prices->getFiles() as $file">
-						<a href="{$file->url}" class="">{$file->name} <i class="icon icon-download"></i></a>
-					</p>
-				</div>
-			</div>
-			<div class="grid-4">
-				<div class="portfolio-details">
-					<div class="row">
-						<h3 class="main-title"><i class="icon icon-gavel"></i> Zľavy a podmineky</h3>
-					</div>
-					<div class="row" n:inner-foreach="$prices->getDiscounts() as $discount">
-						{$discount->text} <span>zľava {$discount->discount}%</span>
-					</div>
-					<div class="row" n:if="$prices->hasRecreationFee()">
-						Rekreačný poplatok <span>{$prices->getRecreationFee()} EUR</span>
-					</div>
-					<div class="row" n:if="$prices->hasRefundableDeposit()">
-						Vratná kaucia <span>{$prices->getRefundableDeposit()} EUR</span>
-					</div>
-					<div class="row">
-						Minimálna dĺžka pobytu <span>{$rental->getMinRoost()} nocí</span>
+					<div class="grids" n:foreach="$rental->getPriceListFiles() as $file">
+						<div class="grid-6">
+							{$file->name} <small>{$file->fileSize|bytes}</small>
+						</div>
+						<div class="grid-6">
+							<a href="{plink :Front:Download:pricelist $file->id}" class="">_stiahni<i class="icon icon-download"></i></a>
+						</div>
 					</div>
 				</div>
 			</div>

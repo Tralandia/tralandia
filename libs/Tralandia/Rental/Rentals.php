@@ -237,7 +237,7 @@ LIMIT $limit";
 			->andWhere($qb->expr()->eq('a.primaryLocation', $location->getId()));
 
 		if ($status != NULL) {
-			$qb->andWhere($qb->expr()->eq('r.status', $status ? Rental::STATUS_LIVE : Rental::STATUS_DRAFT));
+			$qb->andWhere($qb->expr()->eq('r.status', $status ? \Entity\Rental\Rental::STATUS_LIVE : \Entity\Rental\Rental::STATUS_DRAFT));
 		}
 
 		if($order) {

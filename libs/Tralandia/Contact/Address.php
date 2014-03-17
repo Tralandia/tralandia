@@ -12,44 +12,47 @@ use Nette;
 
 /**
  * @property int $id
- * @property int $maxCapacity
- * @property \Tralandia\Rental\Type $type m:hasOne
+ * @property string $formattedAddress
+ * @property string $address
+ * @property string $postalCode
+ * @property float $latitude
+ * @property float $longitude
+ * @property \Tralandia\Location\Location $locality m:hasOne(locality_id:)
+ * @property \Tralandia\Location\Location $primaryLocation m:hasOne(primaryLocation_id:)
  */
 class Address extends \Tralandia\Lean\BaseEntity
 {
 
-	/**
-	 * @var array
-	 */
-	private $_interview;
-
-	/**
-	 * @return int
-	 */
-	public function getNameId()
+	public function __toString()
 	{
-		return $this->row->name_id;
-	}
-
-
-	/**
-	 * @return array
-	 */
-	public function getInterview()
-	{
-		if(!$this->_interview) {
-			$interview = [];
-			foreach($this->interviewAnswers as $answer) {
-				$interview[] = Nette\ArrayHash::from([
-					'answer' => $answer->getAnswerId(),
-					'question' => $answer->question->getQuestionId(),
-				]);
-			}
-			$this->_interview = $interview;
+		if($this->formattedAddress) {
+			return "{$this->formattedAddress}";
+		} else {
+			return "{$this->address}, {$this->postalCode} {$this->locality->name}";
 		}
-
-		return $this->_interview;
 	}
+
+
+	/**
+	 * @param \Extras\Types\Latlong
+	 * @return \Entity\Contact\Address
+	 */
+	public function setGps(\Extras\Types\Latlong $latlong)
+	{
+		$this->latitude = $latlong->getLatitude();
+		$this->longitude = $latlong->getLongitude();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Latlong
+	 */
+	public function getGps()
+	{
+		return new \Extras\Types\Latlong($this->latitude, $this->longitude);
+	}
+
 
 
 }

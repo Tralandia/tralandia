@@ -14,32 +14,39 @@ parameters:
 services:
 
 factories:
-	rentalDataFactory:
-		class: \PersonalSite\RentalData
-		arguments: [%slug%, ...]
-		parameters: [slug]
-		implement: \PersonalSite\IRentalDataFactory
 
 	welcomeScreenControlFactory:
 		class: PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
-		arguments: [%rentalData%]
-		parameters: [PersonalSite\RentalData rentalData]
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
 		implement: PersonalSiteModule\WelcomeScreen\IWelcomeScreenControlFactory
 
 	amenitiesControlFactory:
 		class: \PersonalSiteModule\Amenities\AmenitiesControl
-		arguments: [%rentalData%]
-		parameters: [PersonalSite\RentalData rentalData]
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
 		implement: \PersonalSiteModule\Amenities\IAmenitiesControlFactory
 
 	galleryControlFactory:
 		class: \PersonalSiteModule\Gallery\GalleryControl
-		arguments: [%rentalData%]
-		parameters: [PersonalSite\RentalData rentalData]
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
 		implement: \PersonalSiteModule\Gallery\IGalleryControlFactory
 
 	pricesControlFactory:
 		class: \PersonalSiteModule\Prices\PricesControl
-		arguments: [%rentalData%]
-		parameters: [PersonalSite\RentalData rentalData]
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
 		implement: \PersonalSiteModule\Prices\IPricesControlFactory
+
+	calendarControlFactory:
+		class: \PersonalSiteModule\Calendar\CalendarControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Calendar\ICalendarControlFactory
+
+	contactControlFactory:
+		class: \PersonalSiteModule\Contact\ContactControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Contact\IContactControlFactory

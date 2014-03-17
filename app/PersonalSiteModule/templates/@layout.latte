@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-	<title>ŠTÝLOVÉ CHATY V RÁZTOKE V PEKNOM PROSTREDÍ</title>
+	<title>{#title|striptags|firstUpper}{/#}</title>
 
 	<meta name="viewport" content="width=device-width" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,12 +36,16 @@
 			<nav id="navigation" role="navigation">
 				<div id="primary-nav" class="primary-menu">
 					<ul id="menu-main-menu" class="menu">
-						<li id="menu-item-63" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-63"><a href="#services">Vybavenie</a></li>
-						<li id="menu-item-33" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-33"><a href="#gallery">Galéria</a></li>
-						<li id="menu-item-46" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-46"><a href="#prices">Ceny</a></li>
-						<li id="menu-item-35" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-35"><a href="#reviews">Hodnotenia</a></li>
-						<li id="menu-item-34" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-34"><a href="#calendar">Obsadenosť</a></li>
-						<li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
+						<li><a href="#services">Vybavenie</a></li>
+						<li><a href="#gallery">Galéria</a></li>
+						<li><a href="#prices">Ceny</a></li>
+						<li><a href="#calendar">Obsadenosť</a></li>
+						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
+						<li class="language">
+							<select class="select2" n:inner-foreach="$usedLanguages as $language">
+								<option value="sk" n:attr="selected => $language->id == $currentLanguage->id">{_$language->nameId}</option>
+							</select>
+						</li>
 					</ul>
 				</div>
 				<!-- END #primary-nav -->

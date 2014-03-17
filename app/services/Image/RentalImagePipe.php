@@ -48,13 +48,26 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 		if (!$image instanceof \Entity\Rental\Image) {
 			return NULL;
 		}
-		$targetPath = $image->getFilePath() . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
+		return $this->requestForPath($image->getFilePath(), $size);
+	}
+
+
+	/**
+	 * @param $path
+	 * @param string $size
+	 *
+	 * @return string
+	 */
+	public function requestForPath($path, $size = Image::MEDIUM)
+	{
+		$targetPath = $path . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
 		$defaultImage = '/default.jpg';
 		$path = $this->publicPath($targetPath);
 		if ($this->isUrlExists($path) == FALSE) {
 			$path = $this->publicPath($defaultImage);
 		}
 		return $path;
+
 	}
 
 

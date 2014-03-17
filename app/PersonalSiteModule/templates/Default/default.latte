@@ -1,9 +1,13 @@
 {block content}
 
+{define #title}
+	{_$rental->nameId}
+{/define}
+
 {define #headerTitle}
 	<a href="#slideshow" id="logo" title="{$heading}">
 		<span class="img">
-			<img src="{$mainPhoto->path}">
+			<img n:photo="$rental->mainPhoto->path">
 		</span>
 		<strong>{$heading|upper}</strong>
 	</a>
@@ -13,3 +17,7 @@
 {control amenities}
 {control gallery}
 {control prices}
+{if $rental->calendarUpdated && !$rental->isCalendarEmpty()}
+	{control calendar}
+{/if}
+{control contact}

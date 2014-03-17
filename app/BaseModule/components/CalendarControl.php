@@ -26,27 +26,25 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 
 	public function renderIframe($monthsCount, array $selectedDays = NULL){
 		$template = $this->template;
-		$template->containerClass = 'iframe';
-		$this->render($monthsCount,$selectedDays);
+		$this->render($monthsCount,$selectedDays, 'iframe');
 	}
 
 	public function renderEditable($monthsCount, array $selectedDays = NULL){
 		$template = $this->template;
-		$template->containerClass = 'editable';
-		$this->render($monthsCount,$selectedDays);
+		$this->render($monthsCount,$selectedDays, 'editable');
 	}
 
-	public function render($monthsCount, array $selectedDays = NULL)
+	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0)
 	{
 		$selectedDays = $selectedDays ? $selectedDays : $this->selectedDays;
 
 		$template = $this->template;
-		if(!isset($template->containerClass)){
-			$template->containerClass = 'rentalDetail';
-		}
-
+		$template->containerClass = $class;
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
+		if($monthsOffset) {
+			$fromDate->modify('+'.$monthsOffset.' month');
+		}
 		$months = [];
 		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];

@@ -12,9 +12,11 @@ use Nette;
 
 /**
  * @property int $id
+ * @property string $name
  * @property string $filePath
+ * @property string $fileSize
  */
-class Image extends \Tralandia\Lean\BaseEntity
+class PriceListFile extends \Tralandia\Lean\BaseEntity
 {
 
 	/**

@@ -12,17 +12,16 @@ use Nette;
 
 /**
  * @property int $id
- * @property string $filePath
  */
-class Image extends \Tralandia\Lean\BaseEntity
+class RoomType extends \Tralandia\Lean\BaseEntity
 {
 
 	/**
-	 * @return string
+	 * @return int
 	 */
-	public function getPath()
+	public function getNameId()
 	{
-		return $this->filePath;
+		return $this->row->name_id;
 	}
 
 }

@@ -10,26 +10,26 @@ namespace PersonalSiteModule\WelcomeScreen;
 
 use Nette;
 use PersonalSiteModule\BaseControl;
-use PersonalSite\RentalData;
+use Tralandia\Rental\Rental;
 
 class WelcomeScreenControl extends BaseControl
 {
 
 	/**
-	 * @var \PersonalSite\RentalData
+	 * @var \Tralandia\Rental\Rental
 	 */
-	private $rentalData;
+	private $rental;
 
 
-	public function __construct(RentalData $rentalData)
+	public function __construct(Rental $rental)
 	{
 		parent::__construct();
-		$this->rentalData = $rentalData;
+		$this->rental = $rental;
 	}
 
 	public function render()
 	{
-		$rental = $this->rentalData;
+		$rental = $this->rental;
 
 		$this->template->rental = $rental;
 
@@ -41,10 +41,5 @@ class WelcomeScreenControl extends BaseControl
 interface IWelcomeScreenControlFactory
 {
 
-	/**
-	 * @param \PersonalSite\RentalData $rentalData
-	 *
-	 * @return \PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
-	 */
-	public function create(RentalData $rentalData);
+	public function create(Rental $rental);
 }

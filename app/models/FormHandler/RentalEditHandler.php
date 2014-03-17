@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
 use Entity\Rental\Pricelist;
 use \Nette\DI\Container;
-use Tralandia\Amenity\Amenities;
+use Tralandia\Rental\Amenities;
 use Tralandia\Dictionary\PhraseManager;
 use Tralandia\Language\Languages;
 
@@ -34,7 +34,7 @@ class RentalEditHandler extends FormHandler
 	private $phraseManager;
 
 	/**
-	 * @var \Tralandia\Amenity\Amenities
+	 * @var \Tralandia\Rental\Amenities
 	 */
 	private $amenities;
 

@@ -9,9 +9,9 @@ namespace Tralandia\Rental;
 
 
 use Nette;
-use Tralandia\Lean\BaseDao;
+use Tralandia\Lean\BaseRepository;
 
-class RentalDao extends BaseDao
+class RentalRepository extends BaseRepository
 {
 
 

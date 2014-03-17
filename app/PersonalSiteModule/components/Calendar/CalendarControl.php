@@ -5,14 +5,14 @@
  * Created at: 05/03/14 14:06
  */
 
-namespace PersonalSiteModule\Amenities;
+namespace PersonalSiteModule\Calendar;
 
 
 use Nette;
 use PersonalSiteModule\BaseControl;
 use Tralandia\Rental\Rental;
 
-class AmenitiesControl extends BaseControl
+class CalendarControl extends BaseControl
 {
 
 	/**
@@ -20,11 +20,17 @@ class AmenitiesControl extends BaseControl
 	 */
 	private $rental;
 
+	/**
+	 * @var \BaseModule\Components\CalendarControl
+	 */
+	protected $calendarControl;
 
-	public function __construct(Rental $rental)
+
+	public function __construct(Rental $rental, \BaseModule\Components\CalendarControl $calendarControl)
 	{
 		parent::__construct();
 		$this->rental = $rental;
+		$this->calendarControl = $calendarControl;
 	}
 
 	public function render()
@@ -36,10 +42,17 @@ class AmenitiesControl extends BaseControl
 		$this->template->render();
 	}
 
+	protected function createComponentCalendar()
+	{
+		$comp = $this->calendarControl;
+
+		return $comp;
+	}
+
+
 }
 
-interface IAmenitiesControlFactory
+interface ICalendarControlFactory
 {
-
 	public function create(Rental $rental);
 }

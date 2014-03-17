@@ -5,7 +5,7 @@
  * Created at: 9/30/13 9:55 AM
  */
 
-namespace Tralandia\Amenity;
+namespace Tralandia\Rental;
 
 
 use Environment\Collator;

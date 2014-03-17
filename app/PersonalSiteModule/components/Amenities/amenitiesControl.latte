@@ -1,16 +1,20 @@
 <!-- BEGIN #services -->
 <section id="services" class="section-block content-section">
 	<div class="inner-section">
-		<h2 class="main-title">Vitajte!</h2>
 		<div class="entry-content">
 			<div class="grids">
 				<div class="grid-8">
 					<div class="metaObjectInfo" id="interviewAnswers">
-						<ul class="interviewList">
-							<li n:foreach="$rental->getInterview() as $row">
+						<div>
+							{_$rental->getFirstAnswer()->answerId}
+						</div>
+						<ul class="interviewList" n:inner-foreach="$rental->getInterview() as $row">
+							{if !$iterator->first}
+							<li>
 								<h4>{_$row->question}</h4>
 								<p>{_$row->answer}</p>
 							</li>
+							{/if}
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -26,7 +30,9 @@
 						<figure class="grid-6">
 							<div n:class="$rental->hasBoard() ? 'inner-bg active' : 'inner-bg' ">
 								<i class="icon icon-cutlery"></i>
-								<h3 class="service-title">{$rental->getBoard()}</h3>
+								<h3 class="service-title" n:inner-foreach="$rental->getBoard() as $row">
+									{_$row->nameId}{if !$iterator->last}, {/if}
+								</h3>
 							</div>
 						</figure>
 						<figure class="grid-6">
@@ -36,9 +42,16 @@
 							</div>
 						</figure>
 						<figure class="grid-6">
-							<div n:class="$rental->isPetAllowed() ? 'inner-bg active' : 'inner-bg' ">
+							{var $isPetAllowed = $rental->isPetAllowed()}
+							<div n:class="$isPetAllowed ? 'inner-bg active' : 'inner-bg' ">
 								<i class="icon icon-bug"></i>
-								<h3 class="service-title">{$rental->getAllowedPet()}</h3>
+								<h3 class="service-title">
+									{if $isPetAllowed}
+										{_$rental->getAllowedPet()->nameId}
+									{else}
+										I donno :(
+									{/if}
+								</h3>
 							</div>
 						</figure>
 					</div>
@@ -46,11 +59,11 @@
 						<table>
 							<tr>
 								<td width="100">Vybavenie izieb:</td>
-								<td>{$rental->getRoomAmenities()}</td>
-							</tr>
-							<tr>
-								<td>Vybavenie objektu:</td>
-								<td>{$rental->getRentalAmenities()}</td>
+								<td>
+									{foreach $rental->getImportantAmenities() as $amenity}
+										{_$amenity->nameId}{if !$iterator->last}, {/if}
+									{/foreach}
+								</td>
 							</tr>
 						</table>
 					</div>

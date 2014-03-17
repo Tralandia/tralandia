@@ -56,12 +56,26 @@ class RouterFactory
 
 		$router = new RouteList();
 
+		$locationDao = $this->locationDao;
+		$languageDao = $this->languageDao;
 		$router[] = new Route('//<rentalSlug>.<domainName (uns.sk|uns.local)>/', [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'sk',
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default',
+			NULL => [
+				Route::FILTER_IN => function(array $params) use ($locationDao, $languageDao) {
+					$params[BaseRoute::PRIMARY_LOCATION] = $locationDao->findOneByIso($params[BaseRoute::PRIMARY_LOCATION]);
+					$params[BaseRoute::LANGUAGE] = $languageDao->findOneByIso($params[BaseRoute::LANGUAGE]);
+					return $params;
+				},
+				Route::FILTER_OUT => function(array $params) use ($locationDao, $languageDao) {
+					$params[BaseRoute::PRIMARY_LOCATION] = $params[BaseRoute::PRIMARY_LOCATION]->getIso();
+					$params[BaseRoute::LANGUAGE] = $params[BaseRoute::LANGUAGE]->getIso();
+					return $params;
+				},
+			]
 		]);
 
 		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin|map)>/<presenter>[/<action>[/<id>]]';
