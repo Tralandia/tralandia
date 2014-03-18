@@ -126,28 +126,28 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
 
-		if(isset($params['host'])) {
-			list($host, $tld) = explode('.', $params['host'], 2);
-			if($host == 'tra-local') {
-				$host = 'tralandia';
-			}
-			$params['www'] = substr($params['www'], 0, -1);
-			$domain = $params[self::LANGUAGE] . '.' . $host . '.' . $tld;
-			if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain)) {
-				$params['www'] && $domain = $params['www'] . '.' . $domain;
-				if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain, TRUE)) {
-					if(!$primaryLocation = $this->getPrimaryLocationByDomain($host . '.' . $tld)) {
-						$primaryLocation = $this->locationRepository->findOneByIso('com');
-					}
-				}
-			} else {
-				$params[self::LANGUAGE] = $params['www'];
-			}
-
-			unset($params['host']);
+		if(array_key_exists('hostLocal', $params)) {
+			list($host, $tld) = explode('.', $params['hostLocal'], 2);
+			$host = 'tralandia';
 		} else {
-			$primaryLocation = $this->locationRepository->findOneByIso($primaryLocation);
+			list($host, $tld) = explode('.', $params['host'], 2);
 		}
+
+		$params['www'] = substr($params['www'], 0, -1);
+		$domain = $params[self::LANGUAGE] . '.' . $host . '.' . $tld;
+		if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain)) {
+			$params['www'] && $domain = $params['www'] . '.' . $domain;
+			if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain, TRUE)) {
+				if(!$primaryLocation = $this->getPrimaryLocationByDomain($host . '.' . $tld)) {
+					$primaryLocation = $this->locationRepository->findOneByIso('com');
+				}
+			}
+		} else {
+			$params[self::LANGUAGE] = $params['www'];
+		}
+
+		unset($params['host'], $params['hostLocal']);
+
 
 		$params[self::PRIMARY_LOCATION] = $primaryLocation;
 
@@ -184,11 +184,12 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 
 		$defaults = $this->route->getDefaults();
 
-		if(array_key_exists('host', $defaults)) {
-			$params['host'] = $primaryLocation->getDomain()->getDomain();
-			unset($params[self::PRIMARY_LOCATION]);
-		} else {
-			$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
+		$params['host'] = $primaryLocation->getDomain()->getDomain();
+		unset($params[self::PRIMARY_LOCATION]);
+
+		if(array_key_exists('hostLocal', $defaults)) {
+			$params['hostLocal'] = str_replace('tralandia.', 'tra-local.', $params['host']);
+			unset($params['host']);
 		}
 
 

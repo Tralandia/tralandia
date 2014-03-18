@@ -39,12 +39,19 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
-		$this->routeIn($route, 'www.tra-local.al/?capacity=11', 'RentalList', array(
+		$this->routeIn($route, 'www.tralandia.al/?capacity=11', 'RentalList', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(236),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 			FrontRoute::$pathParametersMapper[FrontRoute::CAPACITY] => '11',
-		), 'http://www.tra-local.al/?capacity=11');
+		), 'http://www.tralandia.al/?capacity=11');
+
+//		$this->routeIn($route, 'www.tra-local.al/?capacity=11', 'RentalList', array(
+//			'action' => 'default',
+//			FrontRoute::PRIMARY_LOCATION => $this->findLocation(236),
+//			FrontRoute::LANGUAGE => $this->findLanguage(38),
+//			FrontRoute::$pathParametersMapper[FrontRoute::CAPACITY] => '11',
+//		), 'http://www.tra-local.al/?capacity=11');
 
 		$this->routeIn($route, 'http://et.al.tralandia.com/?capacity=17&board=288', 'RentalList', array(
 			'action' => 'default',
