@@ -87,6 +87,7 @@
 			date: new Date(),
 			dayPlus:0,
 		}
+		var reservedDates = [];
 
 		jQuery(document).ready(function($){
 			$(".btn-toggle").click(function(event) {
@@ -101,10 +102,19 @@
 				minimumResultsForSearch: -1
 			});
 
+			var reservedDatesVal = $(".datepicker").attr('data-reservations').split(',');
+			for(n in reservedDatesVal) {
+				var d = reservedDatesVal[n].split('-');
+				reservedDates.push(new Date(d[2], (d[1]-1), d[0]));
+			}
+
 			$(".datepicker").datepicker({
-				dateFormat: "yy-mm-dd"
+				minDate: new Date(),
+				dateFormat: "yy-mm-dd",
+				beforeShowDay: getreservedDates
 			});
 			$(".datepickerto").datepicker({
+				minDate: new Date(),
 				maxDate: "+12M +10D" ,
 				dateFormat: "yy-mm-dd",
 				firstDay: 1,
@@ -122,19 +132,19 @@
 
 						fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
 
-						$(this).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });
-
+						$(this).datepicker("option", {
+							minDate: fromDateOrigin.dayPlus, 
+							maxDate: "+12M +10D"
+						});	
 					} else {
-						$(this).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
+						$(this).datepicker("option", {
+							minDate: 1, 
+							maxDate: "+12M +10D"
+						});
 					}
-
-					// onChangeCalendar(this);
-
 				},
-				onChangeMonthYear: function(){
-					// onChangeCalendar(this);
-				}
-			});
+				beforeShowDay: getreservedDates
+			});		
 
 			$("a.review-button, a.cancel-review").click(function(event) {
 				event.preventDefault();
@@ -187,6 +197,16 @@
 			});
 
 		});
+
+
+		function getreservedDates(date) {
+		    for (var i = 0; i < reservedDates.length; i++) {
+	            if (date.getTime() == reservedDates[i].getTime()) {
+	                  return [true, 'blackout'];
+	            }
+		    }
+		    return [true, ''];
+		}
 
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
