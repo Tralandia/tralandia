@@ -155,8 +155,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	{
 		$values = $form->getFormattedValues();
 
-		$from = $values->date->from;
-		$to = $values->date->to;
+		$from = clone $values->date->from;
+		$to = clone $values->date->to;
 
 		if(($from || $to) && !($to > $from)) {
 			$form['date']['to']->addError($this->translate('o100160'));
