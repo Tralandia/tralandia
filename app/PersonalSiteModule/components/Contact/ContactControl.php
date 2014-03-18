@@ -53,7 +53,7 @@ class ContactControl extends BaseControl
 	{
 		$rental = $this->presenter->findRental($this->rental->id);
 		$form = $this->reservationFormFactory->create($rental);
-		//$form->buildForm();
+		$form->setMethod("GET");
 
 		$form->onSuccess[] = function ($form) {
 			//$form->presenter->redirect('this');

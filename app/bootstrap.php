@@ -24,7 +24,7 @@ $configurator->addParameters([
 ]);
 
 
-$configurator->setDebugMode(false);
+// $configurator->setDebugMode(false);
 
 
 $logEmail = 'durika.d@gmail.com';
