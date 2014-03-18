@@ -87,8 +87,7 @@ class DefaultPresenter extends BasePresenter
 	protected function getRental()
 	{
 		if(!$this->currentRental) {
-			//$this->currentRental = $rentalDao->findOneBy(['slug', $this->getParameter('rentalSlug')]);
-			$this->currentRental = $this->rentalRepository->findOneBy(['id' => 15729]);
+			$this->currentRental = $this->rentalRepository->findOneBy(['id' => $this->rental->getId()]);
 		}
 
 		return $this->currentRental;
