@@ -78,7 +78,6 @@
 		<!-- END .footer -->
 	</footer>
 
-
 	<script n:syntax="double">
 		var fromDateOrigin = {
 			year: 0,
@@ -162,12 +161,12 @@
 				$selected.removeClass('hide-selection');
 				rating = $selected.size() ? ('<b>'+(5 - $selected.index())+'/5</b>') : '0/5';
 			}).click(function() {
-						$parent.find('.icon').removeClass('selected');
-						$this.addClass('selected');
+				$parent.find('.icon').removeClass('selected');
+				$this.addClass('selected');
 
-						rating = 5 - $this.index();
-						$parent.find('input').val(rating);
-					});
+				rating = 5 - $this.index();
+				$parent.find('input').val(rating);
+			});
 
 			var $window = $(window);
 			var $slideshow = $("section#slideshow");
@@ -196,6 +195,11 @@
 				window.location.href = '#section=' + $(this).attr('href');
 			});
 
+			$('input[name=nospam]').each(function(e){
+		        $('input[name=nospam]').val('no'+'spam');
+		    });
+
+			$.nette.init();
 		});
 
 
@@ -225,7 +229,7 @@
 	<script type="text/javascript" src="{$basePath}/personalSite/js/retina.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/prettify.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/libs/select2-master/select2.js"></script>
-
+	<script type="text/javascript" src="{$basePath}/packages/nette/lib/nette.ajax.js"></script>
 </body>
 
 </html>
