@@ -13,13 +13,9 @@ class UnitPresenter extends BasePresenter
 	 */
 	protected $currentRental;
 
-	public function actionDefault($id)
+	public function actionDefault()
 	{
-		$this->currentRental = $this->findRental($id);
-		// $this->template->environment = $this->environment;
-		$this->template->thisRental = $this->currentRental;
-		
-		// $this->template->rentals = $this->loggedUser->getRentals();
+		$this->template->rentals = $this->loggedUser->getRentals();
 	}
 
 	public function createComponentUnitForm()
