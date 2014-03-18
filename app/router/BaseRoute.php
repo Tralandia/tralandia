@@ -16,6 +16,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	const DEVICE = 'device';
 	const LINK_SOURCE = 'ls';
 	const AUTOLOGIN = 'l';
+	const NEW_PASSWORD = 'np';
 	const LANGUAGE = 'language';
 	const PRIMARY_LOCATION = 'primaryLocation';
 	const USE_ROOT_DOMAIN = 'useRootDomain';

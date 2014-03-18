@@ -21,6 +21,11 @@ class Authenticator extends Object implements NS\IAuthenticator
 	protected static $autoLoginDelimiter = '-';
 
 	/**
+	 * @var string
+	 */
+	protected static $passwordSalt = 'salt45hfhd34lp';
+
+	/**
 	 * @var \Tralandia\BaseDao
 	 */
 	private $userDao;
@@ -71,6 +76,12 @@ class Authenticator extends Object implements NS\IAuthenticator
 	}
 
 
+	/**
+	 * @param User $user
+	 * @param User $originalUser
+	 *
+	 * @return FakeIdentity
+	 */
 	public function fakeAuthenticate(User $user, User $originalUser)
 	{
 		return FakeIdentity::createFakeIdentity($user, $originalUser);
@@ -86,7 +97,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	 */
 	public static function calculatePasswordHash($password)
 	{
-		return $password;
+		return sha1($password . self::$passwordSalt);
 	}
 
 
@@ -97,7 +108,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	 */
 	public static function calculateAutoLoginHash(\Entity\User\User $user)
 	{
-		return $user->getId() . self::$autoLoginDelimiter . substr(sha1($user->getPassword() . 'dkh43k5h3k2o9'), 0, 16);
+		return $user->getId() . self::$autoLoginDelimiter . substr(sha1($user->getPassword() . 'dh3k2f5hu43k5'), 0, 6);
 	}
 
 
@@ -109,16 +120,49 @@ class Authenticator extends Object implements NS\IAuthenticator
 	 */
 	public function autologin($autologin)
 	{
-		list($userId,) = explode(self::$autoLoginDelimiter, $autologin, 2);
-		if (!$user = $this->userDao->find($userId)) {
-			throw new NS\AuthenticationException("Invalid autologin link.");
-		}
-		$autologinHash = $this->calculateAutoLoginHash($user);
-		if ($autologin != $autologinHash) {
+		$user = $this->getUserFromHash($autologin);
+		if ($user && $autologin != $this->calculateAutoLoginHash($user)) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 
 		return $this->getIdentity($user);
+	}
+
+
+	/**
+	 * @param User $user
+	 *
+	 * @return string
+	 */
+	public static function calculateNewPasswordHash(\Entity\User\User $user)
+	{
+		return $user->getId() . self::$autoLoginDelimiter . substr(sha1($user->getPassword() . 'salt77fh5dk30s92'), 0, 6);
+	}
+
+
+	/**
+	 * @param $hash
+	 *
+	 * @throws \Nette\Security\AuthenticationException
+	 */
+	public function checkNewPasswordHash($hash)
+	{
+		$user = $this->getUserFromHash($hash);
+		if ($user && $hash != $this->calculateNewPasswordHash($user)) {
+			throw new NS\AuthenticationException("Invalid autologin link.");
+		}
+	}
+
+
+	/**
+	 * @param $hash
+	 *
+	 * @return mixed
+	 */
+	public function getUserFromHash($hash)
+	{
+		list($userId,) = explode(self::$autoLoginDelimiter, $hash, 2);
+		return $this->userDao->find($userId);
 	}
 }
 
