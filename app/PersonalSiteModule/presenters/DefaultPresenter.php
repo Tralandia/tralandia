@@ -41,7 +41,6 @@ class DefaultPresenter extends BasePresenter
 
 	public function actionDefault($rentalSlug)
 	{
-		\MyTimer::log('startup');
 		$rental = $this->getRental();
 		$rentalNameId = $rental->type->getNameId();
 		$locationNameId = $rental->address->locality->getNameId();

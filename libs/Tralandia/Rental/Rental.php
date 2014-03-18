@@ -16,6 +16,7 @@ use Nette;
  * @property string $calendar
  * @property string $contactName
  * @property string $email
+ * @property string $personalSiteUrl
  * @property \DateTime|null $calendarUpdated
  *
  * @property \Tralandia\User\User $user m:hasOne

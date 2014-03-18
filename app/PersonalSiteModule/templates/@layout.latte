@@ -43,7 +43,7 @@
 						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
 						<li class="language">
 							<select class="select2" n:inner-foreach="$usedLanguages as $language">
-								<option value="sk" n:attr="selected => $language->id == $currentLanguage->id">{_$language->nameId}</option>
+								<option value="{$language->iso}" n:attr="selected => $language->id == $currentLanguage->id">{_$language->nameId}</option>
 							</select>
 						</li>
 					</ul>

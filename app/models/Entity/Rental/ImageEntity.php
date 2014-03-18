@@ -21,6 +21,7 @@ class Image extends \Entity\BaseEntity
 	const ORIGINAL = 'original';
 
 	const MEDIUM = 'medium';
+	const FULL_HD = 'full_hd';
 
 	const EXTENSION = 'jpeg';
 

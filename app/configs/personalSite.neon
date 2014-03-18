@@ -15,6 +15,13 @@ services:
 
 factories:
 
+	personalSiteRouteFactory:
+		class: \Routers\PersonalSiteRoute
+		arguments: [%mask%, %metadata%, ... ]
+		parameters: [mask, metadata]
+		implement: \Routers\IPersonalSiteRouteFactory
+
+
 	welcomeScreenControlFactory:
 		class: PersonalSiteModule\WelcomeScreen\WelcomeScreenControl
 		arguments: [%rental%]
