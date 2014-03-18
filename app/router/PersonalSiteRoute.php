@@ -83,9 +83,19 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 		$appRequest = clone $appRequest;
 		$params = $appRequest->getParameters();
 
+		$rental = $params['rental'];
+		if(!$rental) return NULL;
+
 		$domain = $params['rental']->personalSiteUrl;
 		$params['rentalSlug'] = strstr($domain, '.', true);
 
+		$params[BaseRoute::LANGUAGE] = $params[BaseRoute::LANGUAGE]->getIso();
+
+		if($rental->getPrimaryLocation()->getDefaultLanguage()->getIso() == $params[BaseRoute::LANGUAGE]) {
+			unset($params[BaseRoute::LANGUAGE]);
+		}
+
+		unset($params['rental'], $params[BaseRoute::PRIMARY_LOCATION]);
 		$appRequest->setParameters($params);
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
