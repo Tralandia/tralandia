@@ -127,12 +127,16 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
 
 		if(isset($params['host'])) {
+			list($host, $tld) = explode('.', $params['host'], 2);
+			if($host == 'tra-local') {
+				$host = 'tralandia';
+			}
 			$params['www'] = substr($params['www'], 0, -1);
-			$domain = $params[self::LANGUAGE] . '.' . $params['host'];
+			$domain = $params[self::LANGUAGE] . '.' . $host . '.' . $tld;
 			if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain)) {
 				$params['www'] && $domain = $params['www'] . '.' . $domain;
 				if(!$primaryLocation = $this->getPrimaryLocationByDomain($domain, TRUE)) {
-					if(!$primaryLocation = $this->getPrimaryLocationByDomain($params['host'])) {
+					if(!$primaryLocation = $this->getPrimaryLocationByDomain($host . '.' . $tld)) {
 						$primaryLocation = $this->locationRepository->findOneByIso('com');
 					}
 				}

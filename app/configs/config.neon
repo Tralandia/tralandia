@@ -38,8 +38,8 @@ parameters:
 	envOptions:
 		sendEmail: TRUE
 
-	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%%domain%%"
-#	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
+#	domainMask: "<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%%domain%%"
+	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 
 	googleAnalytics:
 		code: false
