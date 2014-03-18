@@ -1,37 +1,48 @@
 {block content}
 
-<div class="clearfix">
-	<h1>Ubytovacie jednotky <small>({_$thisRental->getName()})</small></h1>
-</div>
+<h1>Ubytovacie jednotky</h1>
+<form>
+	{foreach $rentals as $rental}
+		<div class="clearfix">
+		</div>
 
-<div class="rentalListHr"></div>
-
-<table class="formTable innerPadding">
-	<tr class="rentalPriceUpload priceUploadGroup">
-		<td>
-			<div class="row-fluid">
-				<div class="priceListRowsContainer">
-					<div class="rentalPriceRow rentalUnit">
-						<input type="text" name="rentalUnit[][name]" placeholder="Názov ubytovacej jednotky">
-						<input type="text" name="rentalUnit[][capacity]" placeholder="Maximálna kapacita ubytovacej jednotky">
-						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+		<table class="formTable innerPadding unitsTable">
+			<tr>
+				<td colspan="3">
+					<h2>{_$rental->getName()}</h2>
+				</td>
+			</tr>
+			<tr>
+				<th align="left" width="500">
+					Názov ubytovacej jednotky
+				</th>
+				<th align="left" width="130">
+					Max. kapacita
+				</th>
+				<th align="left">
+					Zmazať
+				</th>
+			</tr>
+			<tr class="rentalPriceUpload priceUploadGroup">
+				<td colspan="3">
+					<div class="row-fluid">
+						<div class="priceListRowsContainer">
+							<div class="rentalPriceRow rentalUnit">
+								<input type="text" name="rentalUnit[][name]">
+								<input type="text" name="rentalUnit[][capacity]">
+								<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+							</div>
+						</div>
+						<a class="btn addLine btn-green"><i class="icon-plus"></i> Pridať riadok</a>
 					</div>
-				</div>
-				<a class="btn addLine btn-green"><i class="icon-plus"></i> Pridať riadok</a>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div class="rentalListHr"></div>
-		</td>
-	</tr>
-	<tr class="submitControl">
-		<td>
-			<button type="submit" class="btn btn-green pull-right">
-				<i class="entypo-ok"></i> <i class="icon-spinner icon-spin"></i> <small>Uložiť zmeny</small>
-			</button>
-			<small class="sublitLoadingText"></small>
-		</td>
-	</tr>
-</table>
+				</td>
+			</tr>
+		</table>
+	{/foreach}
+	 
+
+	<button type="submit" class="btn btn-green pull-right">
+		<i class="entypo-ok"></i> <i class="icon-spinner icon-spin"></i> <small>Uložiť zmeny</small>
+	</button>
+	<small class="sublitLoadingText"></small>
+</form>
