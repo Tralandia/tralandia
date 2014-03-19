@@ -13,6 +13,7 @@ use Environment\Environment;
 use Nette\UnknownImageFileException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
+use Tralandia\BaseDao;
 
 class TempScriptPresenter extends BasePresenter {
 
@@ -580,6 +581,21 @@ group by r.id limit ' . $limit);
 		$this->payload->start = $start;
 		$this->payload->duration = time() - $start;
 		$this->sendPayload();
+	}
+
+
+	public function actionCreateMissingAnswers()
+	{
+		/** @var $questionDao BaseDao */
+		$questionDao = $this->em->getRepository(INTERVIEW_QUESTION_ENTITY);
+		$answersDao = $this->em->getRepository(INTERVIEW_ANSWER_ENTITY);
+
+		$allQuestion = $questionDao->findAll();
+
+//select r.id from rental r
+//left join rental_interviewanswer a on r.id = a.rental_id
+//where a.id is null
+//limit 10
 	}
 
 }
