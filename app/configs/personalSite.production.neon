@@ -1,4 +1,12 @@
 parameters:
+	leanConnectionInfo:
+		user: tralandia
+		password: 986269962525
+		host: 192.168.4.72
+		database: tralandia
+		charset: utf8
+		lazy: TRUE
+		profiler: false
 
 
 services:
