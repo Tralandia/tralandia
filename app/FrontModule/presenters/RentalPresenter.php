@@ -4,7 +4,7 @@ namespace FrontModule;
 
 use Entity\Rental\Image;
 use Entity\Rental\Rental;
-use FrontModule\Forms\Rental\IReservationFormFactory;
+use FrontModule\Forms\Rental\IformatedCalendarFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;

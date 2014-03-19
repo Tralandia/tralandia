@@ -145,9 +145,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$this->addSubmit('submit', 'o100017');
 
-		$this->onSuccess[] = callback($this, 'process');
 		$this->onValidate[] = callback($this, 'validation');
-
+		$this->onSuccess[] = callback($this, 'process');
 
 	}
 
@@ -156,8 +155,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	{
 		$values = $form->getFormattedValues();
 
-		$from = $values->date->from;
-		$to = $values->date->to;
+		$from = $values->date->from instanceof \DateTime ? clone $values->date->from : NULL;
+		$to = $values->date->to instanceof \DateTime ? clone $values->date->to : NULL;
 
 		if(($from || $to) && !($to > $from)) {
 			$form['date']['to']->addError($this->translate('o100160'));

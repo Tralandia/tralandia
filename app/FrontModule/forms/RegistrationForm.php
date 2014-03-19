@@ -10,7 +10,7 @@ use Nette;
 use Nette\Localization\ITranslator;
 use Entity\Location\Location;
 use OwnerModule\BasePresenter;
-use Tralandia\Amenity\Amenities;
+use Tralandia\Rental\Amenities;
 use Tralandia\Language\Languages;
 use Tralandia\Location\Countries;
 
@@ -68,7 +68,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	private $languages;
 
 	/**
-	 * @var \Tralandia\Amenity\Amenities
+	 * @var \Tralandia\Rental\Amenities
 	 */
 	private $amenities;
 
@@ -78,7 +78,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	 * @param Nette\Application\UI\Presenter $presenter
 	 * @param \Tralandia\Location\Countries $countries
 	 * @param \Tralandia\Language\Languages $languages
-	 * @param \Tralandia\Amenity\Amenities $amenities
+	 * @param \Tralandia\Rental\Amenities $amenities
 	 * @param \Extras\Forms\Container\IRentalContainerFactory $rentalContainerFactory
 	 * @param EntityManager $em
 	 * @param ITranslator $translator

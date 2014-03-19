@@ -274,7 +274,7 @@ services:
 
 	environment:
 		class: Environment\Environment
-		factory: Environment\Environment::createFromRequest(@application::getRequests())
+		factory: Environment\Environment::createFromRequest(@application::getRequests(),...)
 
 	locale:
 		class: Environment\Locale
@@ -435,7 +435,7 @@ services:
 	#==========================================================#
 	############################################################
 
-	- \Tralandia\Amenity\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
+	- \Tralandia\Rental\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
 	- \Tralandia\Dictionary\FulltextSearch(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))
 	- \Tralandia\Language\SupportedLanguages
@@ -456,6 +456,17 @@ services:
 	- \Tralandia\Console\EmailManager\UpdateYourRental(@doctrine.dao(Entity\Rental\Rental), ...)
 	- \Tralandia\Console\EmailManager\Backlink(@doctrine.dao(Entity\Rental\Rental), ...)
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
+
+
+	# ==============================
+	# ==================== LeanMapper
+	# ==============================
+	- \LeanMapper\Connection(%leanConnectionInfo%)
+	- \LeanMapper\DefaultEntityFactory
+	- \Tralandia\Lean\Mapper
+
+	- \Tralandia\Rental\RentalRepository
+
 
 
 factories:
@@ -717,3 +728,4 @@ includes:
 	- webLoader.neon
 	- modelServices.neon
 	- listeners.neon
+	- personalSite.neon

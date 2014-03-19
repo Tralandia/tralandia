@@ -9,7 +9,6 @@ namespace Tralandia\Rental;
 
 
 use Entity\Location\Location;
-use Entity\Rental\Rental;
 use Kdyby\Doctrine\QueryBuilder;
 use Nette;
 use Tralandia\BaseDao;
@@ -238,7 +237,7 @@ LIMIT $limit";
 			->andWhere($qb->expr()->eq('a.primaryLocation', $location->getId()));
 
 		if ($status != NULL) {
-			$qb->andWhere($qb->expr()->eq('r.status', $status ? Rental::STATUS_LIVE : Rental::STATUS_DRAFT));
+			$qb->andWhere($qb->expr()->eq('r.status', $status ? \Entity\Rental\Rental::STATUS_LIVE : \Entity\Rental\Rental::STATUS_DRAFT));
 		}
 
 		if($order) {
@@ -487,7 +486,7 @@ LIMIT $limit";
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 * @param Nette\Application\UI\Presenter $presenter
 	 *
 	 * @return array

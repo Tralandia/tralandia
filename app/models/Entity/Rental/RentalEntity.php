@@ -18,6 +18,7 @@ use Nette\Utils\Strings;
  * 		indexes={
  * 			@ORM\Index(name="status", columns={"status"}),
  * 			@ORM\Index(name="slug", columns={"slug"}),
+ * 			@ORM\Index(name="personalSiteUrl", columns={"personalSiteUrl"}),
  * 			@ORM\Index(name="rank", columns={"rank"}),
  * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"}),
  * 			@ORM\Index(name="harvested", columns={"harvested"}),
@@ -138,6 +139,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $url;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $personalSiteUrl;
 
 	/**
 	 * @var string
@@ -320,12 +327,23 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \Entity\Rental\Service
 	 */
-	public function getLastService()
+	public function getLastService($type = \Entity\Rental\Service::TYPE_FEATURED)
 	{
-		return $this->services->last();
+		return $this->getServiceByType($type)->last();
 	}
 
 
+	/**
+	 * @param $type
+	 *
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getServiceByType($type)
+	{
+		return $this->services->filter(function($value) use ($type) {
+			return $value->type == $type;
+		});
+	}
 
 
 	public function getMainImage()

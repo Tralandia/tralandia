@@ -238,11 +238,11 @@ abstract class BasePresenter extends Presenter {
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 		$this->template->rand = rand(1, 1000);
-		$this->template->isWorld = $this->primaryLocation->isWorld();
+		$this->template->isWorld = function() {
+			return $this->primaryLocation->isWorld();
+		};
 
 		$this->template->gaCode = $parameters['googleAnalytics']['code'];
-
-		$this->template->isSK = $this->primaryLocation->getIso() == 'sk' && $parameters['googleAnalytics']['code'];
 
 		$this->template->environmentPrimaryLocation = $this->primaryLocation;
 

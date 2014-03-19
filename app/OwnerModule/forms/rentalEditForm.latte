@@ -1,5 +1,6 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 <a target="_blank" href="{link :Front:Rental:detail $rental}" class="btn short btn-mini marginTop marginRight btn-blue pull-right">{_152320}</a>
+<a n:if="$rental->personalSiteUrl" target="_blank" href="{plink :PersonalSite:Default:default rental => $rental}" class="btn short btn-mini marginTop marginRight btn-blue pull-right">{$rental->personalSiteUrl}</a>
 <h1 class="rentalEditHeader">{_$rental->name}</h1>
 {* <a data-alert-first="#First alert text" data-alert-last="#last alert text" href="google" class="btn btn-mini btn-danger pull-right rentalRemoveLink">#Remove link</a> *}
 <div class="clearfix"></div>

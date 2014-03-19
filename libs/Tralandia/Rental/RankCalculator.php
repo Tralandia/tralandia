@@ -9,7 +9,6 @@ namespace Tralandia\Rental;
 
 
 use Doctrine\ORM\EntityManager;
-use Entity\Rental\Rental;
 use Nette;
 use Nette\Utils\Strings;
 
@@ -28,11 +27,11 @@ class RankCalculator {
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 *
 	 * @throws \Exception
 	 */
-	public function updateRank(Rental $rental){
+	public function updateRank(\Entity\Rental\Rental $rental){
 
 //		$conditionalCompulsoryInformation = array('price');
 //		$pricesCompulsory = !$rental->pricesUponRequest;

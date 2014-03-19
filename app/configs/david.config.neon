@@ -5,10 +5,6 @@ nette:
 
 parameters:
 
-	database:
-		dbname: tralandia_test
-		debugger: false
-
 	templateCache:
 		enabled: true
 

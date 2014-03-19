@@ -16,10 +16,6 @@ class RouterFactory
 	protected $defaultPrimaryLocation;
 
 	/**
-	 * @var IBaseRouteFactory
-	 */
-	protected $baseRouteFactory;
-	/**
 	 * @var ISimpleRouteFactory
 	 */
 	protected $simpleRouteFactory;
@@ -33,16 +29,20 @@ class RouterFactory
 
 	private $domainMask;
 
+	/**
+	 * @var IPersonalSiteRouteFactory
+	 */
+	private $personalSiteRouteFactory;
+
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
-								IBaseRouteFactory $baseRouteFactory,
-								IFrontRouteFactory $frontRouteFactory)
+								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
-		$this->baseRouteFactory = $baseRouteFactory;
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
+		$this->personalSiteRouteFactory = $personalSiteRouteFactory;
 		$this->domainMask = $domainMask;
 	}
 
@@ -55,6 +55,12 @@ class RouterFactory
 		$this->defaultPrimaryLocation = $this->locationDao->findOneByOldId($this->defaultPrimaryLocation);
 
 		$router = new RouteList();
+
+		$router[] = $this->personalSiteRouteFactory->create('//<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
+			'module' => 'PersonalSite',
+			'presenter' => 'Default',
+			'action' => 'default'
+		]);
 
 		$mask = '//[!' . $this->domainMask . '/]<module (front|owner|admin|map)>/<presenter>[/<action>[/<id>]]';
 		$metadata = [
@@ -69,11 +75,6 @@ class RouterFactory
 		$router[] = $frontRouter = new RouteList('Front');
 
 		$frontRouter[] = $this->frontRouteFactory->create();
-
-
-		//$frontRouter[] = $this->frontRouteFactory->create();
-
-
 
 
 		return $router;

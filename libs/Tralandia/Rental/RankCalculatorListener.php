@@ -9,7 +9,6 @@ namespace Tralandia\Rental;
 
 
 use Doctrine\ORM\EntityManager;
-use Entity\Rental\Rental;
 use Nette;
 
 class RankCalculatorListener implements \Kdyby\Events\Subscriber {
@@ -41,7 +40,7 @@ class RankCalculatorListener implements \Kdyby\Events\Subscriber {
 	}
 
 
-	public function onSuccess(Rental $rental)
+	public function onSuccess(\Entity\Rental\Rental $rental)
 	{
 		$this->rankCalculator->updateRank($rental);
 		$this->em->flush($rental);

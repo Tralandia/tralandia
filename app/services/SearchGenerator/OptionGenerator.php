@@ -7,7 +7,7 @@ use Entity\Currency;
 use Entity\Language;
 use Entity\Location\Location;
 use Environment\Environment;
-use Tralandia\Amenity\Amenities;
+use Tralandia\Rental\Amenities;
 use Tralandia\Localization\Translator;
 use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
@@ -63,7 +63,7 @@ class OptionGenerator
 	private $pathSegments;
 
 	/**
-	 * @var \Tralandia\Amenity\Amenities
+	 * @var \Tralandia\Rental\Amenities
 	 */
 	private $amenities;
 
