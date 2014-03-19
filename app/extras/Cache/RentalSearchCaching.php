@@ -152,7 +152,7 @@ class RentalSearchCaching extends \Nette\Object {
 	 */
 	public function regenerateData(Rental $rental = NULL)
 	{
-		$baseQb = $this->rentals->findByPrimaryLocationQB($this->location, TRUE);
+		$baseQb = $this->rentals->rentalsInSearchBaseQb($this->location);
 
 		if($rental) {
 			$baseQb->andWhere('r.id = :onlyForRental')->setParameter('onlyForRental', $rental->getId());

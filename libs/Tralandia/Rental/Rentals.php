@@ -252,6 +252,26 @@ LIMIT $limit";
 
 	/**
 	 * @param Location $location
+	 * @param array $order
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function rentalsInSearchBaseQb(Location $location, array $order = NULL)
+	{
+		$qb = $this->findByPrimaryLocationQB($location, \Entity\Rental\Rental::STATUS_LIVE, $order);
+		$qb->andWhere($qb->expr()->orX(
+			$qb->expr()->andX($qb->expr()->eq('r.harvested', ':true'), $qb->expr()->isNotNull('r.lastUpdate')),
+			$qb->expr()->eq('r.harvested', ':false')
+		))
+			->setParameter('true', TRUE)
+			->setParameter('false', FALSE);
+
+
+		return $qb;
+	}
+
+	/**
+	 * @param Location $location
 	 * @param null $status
 	 * @param array $order
 	 *
