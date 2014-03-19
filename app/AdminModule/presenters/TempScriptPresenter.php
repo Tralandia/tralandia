@@ -10,6 +10,7 @@ use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
 use Entity\User\Role;
 use Environment\Environment;
+use Nette\Application\Responses\TextResponse;
 use Nette\UnknownImageFileException;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
@@ -584,18 +585,57 @@ group by r.id limit ' . $limit);
 	}
 
 
-	public function actionCreateMissingAnswers()
+	public function actionCreateMissingAnswers($limit = 100)
 	{
 		/** @var $questionDao BaseDao */
 		$questionDao = $this->em->getRepository(INTERVIEW_QUESTION_ENTITY);
+		/** @var $answersDao BaseDao */
 		$answersDao = $this->em->getRepository(INTERVIEW_ANSWER_ENTITY);
+		/** @var $lm \LeanMapper\Connection */
+		$lm = $this->getContext()->getByType('\LeanMapper\Connection');
 
-		$allQuestion = $questionDao->findAll();
+		$allQuestion = [];
+		foreach($questionDao->findAll() as $question) {
+			$allQuestion[$question->getId()] = $question;
+		}
 
-//select r.id from rental r
-//left join rental_interviewanswer a on r.id = a.rental_id
-//where a.id is null
-//limit 10
+		$query = 'select y.rid, group_concat(y.qid) qids
+from (select r.id rid, q.id qid from rental r, rental_interviewquestion q ) y
+left join rental_interviewanswer a on a.rental_id = y.rid and a.question_id = y.qid
+where a.id is null
+group by y.rid
+limit ' . $limit;
+		$result = $lm->query($query);
+
+		$rentalsIds = [];
+		$missingQuestionsIds = [];
+		foreach($result as $row) {
+			$rentalId = $row->rid;
+			$missingQuestionsIds[$rentalId] = explode(',', $row->qids);
+			$rentalsIds[] = $rentalId;
+		}
+
+		unset($result);
+
+		$rentals = $this->rentalDao->findBy(['id' => $rentalsIds]);
+
+		$questionsCount = 0;
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($rentals as $rental) {
+			$rentalId = $rental->getId();
+			foreach($missingQuestionsIds[$rentalId] as $missingQuestionId) {
+				$answer = $answersDao->createNew();
+				$answer->getAnswer()->setSourceLanguage($rental->getPrimaryLocation()->getDefaultLanguage());
+				$answer->setQuestion($allQuestion[$missingQuestionId]);
+				$rental->addInterviewAnswer($answer);
+
+				$this->em->persist($answer);
+				$questionsCount++;
+			}
+		}
+		$this->em->flush();
+
+		$this->sendResponse(new TextResponse("Added $questionsCount questions to ". count($rentals) . ' rentals'));
 	}
 
 }
