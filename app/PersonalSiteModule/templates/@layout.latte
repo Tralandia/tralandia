@@ -26,6 +26,10 @@
 <!-- BEGIN body -->
 <body class="home blog">
 
+	<div n:if="$loggedUser" style="position: fixed; top: 100px; right: 50px; z-index: 100000">
+		<a n:href="//:Owner:Rental:edit $rental->id" target="_blank">Edit</a>
+	</div>
+
 	<div id="fb-root"></div>
 	<!-- BEGIN #header -->
 	<header id="header" role="banner">
@@ -132,18 +136,18 @@
 						fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
 
 						$(this).datepicker("option", {
-							minDate: fromDateOrigin.dayPlus, 
+							minDate: fromDateOrigin.dayPlus,
 							maxDate: "+12M +10D"
-						});	
+						});
 					} else {
 						$(this).datepicker("option", {
-							minDate: 1, 
+							minDate: 1,
 							maxDate: "+12M +10D"
 						});
 					}
 				},
 				beforeShowDay: getreservedDates
-			});		
+			});
 
 			$("a.review-button, a.cancel-review").click(function(event) {
 				event.preventDefault();
