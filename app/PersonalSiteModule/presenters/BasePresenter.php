@@ -17,6 +17,7 @@ abstract class BasePresenter extends \BasePresenter
 		parent::beforeRender();
 
 		$this->template->currentLanguage = $this->language;
+		$this->template->loggedUser = $this->loggedUser;
 	}
 
 

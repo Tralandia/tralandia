@@ -17,11 +17,12 @@
 
 				<li>
 
-					 {if $currentRental === $rental}
-					 	<a class="current" href="#"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
-					 {else}
-					 	<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()} <small>({$rental->getRank()}%)</small></a>
-					 {/if}
+					{if $currentRental === $rental}
+						<a class="current" href="#"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
+					{else}
+						<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()} <small>({$rental->getRank()}%)</small></a>
+					{/if}
+
 					{if $currentRental === $rental}
 					<ul n:if="$currentRental">
 						<li ><a href="{link :Front:Rental:detail $rental}" target="_blank"><i class="icon icon-angle-right"></i>{_152320}</a></li>
@@ -41,6 +42,7 @@
 						<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" href="#rentalPriceUpload"><i class="icon icon-angle-right"></i>{_o100166}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalAmenities" href="#rentalAmenities"><i class="icon icon-angle-right"></i>{_573}</a></li>
 						<li><a class="scrollTo" data-scroll-to="#rentalInterview" href="#rentalInterview"><i class="icon icon-angle-right"></i>{_1125}</a></li>
+						<li n:if="$rental->personalSiteUrl"><a href="{plink :PersonalSite:Default:default rental => $rental}"><i class="icon icon-angle-right"></i>!Subdomain</a></li>
 
 
 					</ul>

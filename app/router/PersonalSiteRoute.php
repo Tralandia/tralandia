@@ -84,7 +84,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 		$params = $appRequest->getParameters();
 
 		$rental = \Nette\Utils\Arrays::get($params, 'rental', NULL);
-		if(!$rental) return NULL;
+		if(!$rental instanceof \Entity\Rental\Rental) return NULL;
 
 		$domain = $params['rental']->personalSiteUrl;
 		$params['rentalSlug'] = strstr($domain, '.', true);
