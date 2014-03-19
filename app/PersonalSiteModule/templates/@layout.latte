@@ -69,9 +69,11 @@
 		<div class="inner-section">
 			<div class="grids">
 				<div class="grid-6">
+					{*
 					<ul class="social-links">
 						<li><a href="//facebook.com/https://www.facebook.com/ubytovanienaslovensku" title="UNS on facebook" class="facebook"></a></li>
 					</ul>
+					*}
 				</div>
 				<div class="grid-6 copyright">
 					<span>created by <a href="#">Tralandia</a></span>
@@ -102,7 +104,9 @@
 			});
 
 			$(".select2").select2({
-				minimumResultsForSearch: -1
+				minimumResultsForSearch: -1,
+			}).on('change', function(event) {
+				return window.location.href = $(this).find('option[value="'+event.val+'"]').data('redirect-url');
 			});
 
 			var reservedDatesVal = $(".datepicker").attr('data-reservations').split(',');
@@ -172,6 +176,7 @@
 				$parent.find('input').val(rating);
 			});
 
+			/*
 			var $window = $(window);
 			var $slideshow = $("section#slideshow");
 			var $logoImage = $("#logo .img");
@@ -193,6 +198,7 @@
 					}
 				}
 			})
+			*/
 
 			$('#menu-main-menu a').click(function(event) {
 				event.preventDefault();
