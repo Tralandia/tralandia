@@ -132,7 +132,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		}
 		$supportedLanguagesForSelect = $this->languages->getSupportedSortedByName();
 		$questions = $this->interviewQuestionRepository->findAll();
-		$currency = $this->country->getDefaultCurrency();
+		$currency = $this->rental->getPrimaryLocation()->getDefaultCurrency();
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
