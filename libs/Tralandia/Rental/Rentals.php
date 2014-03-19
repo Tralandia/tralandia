@@ -491,7 +491,7 @@ LIMIT $limit";
 	 *
 	 * @return array
 	 */
-	protected function prepareRentalToMapSearchCache(Rental $rental, Nette\Application\UI\Presenter $presenter)
+	protected function prepareRentalToMapSearchCache(\Entity\Rental\Rental $rental, Nette\Application\UI\Presenter $presenter)
 	{
 		$translator = $this->environment->getTranslator();
 
