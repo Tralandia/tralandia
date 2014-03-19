@@ -210,6 +210,7 @@ textarea {
   width: 100%;
   padding: 15px 20px;
   font-size: 14px;
+  margin: 0;
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -555,10 +556,10 @@ body.gateway-open {
 }
 
 #logo {
-  font-size: 40px;
-    font-weight: normal;
+  font-size: 30px;
+  line-height: 40px;
+  font-weight: normal;
   font-weight: bold;
-  line-height: 1;
   float: left;
   -webkit-transition: all 0.25s;
   -moz-transition: all 0.25s;
@@ -947,6 +948,7 @@ body.gateway-open {
 }
 #contact .row {
   margin-bottom: 20px;
+  color: #555;
 }
 #contact textarea {
   resize: none;
@@ -2292,6 +2294,9 @@ input[type=submit]:hover,
     font-size: 14px;
   font-weight: bold;
   color: #76787c;
+}
+.select2-results {
+  width: auto !important;
 }
 .select2-results div.stars, .select2-container .select2-choice div.stars {
   font-size: 22px;

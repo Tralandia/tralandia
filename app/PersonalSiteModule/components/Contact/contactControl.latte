@@ -10,7 +10,7 @@
 				<div class="row contact-row"><i class="icon icon-envelope"></i> {$rental->email}</div>
 				<div class="row contact-row"><i class="icon icon-phone"></i> {$rental->phone->international}</div>
 				<div class="row contact-row">
-					<i class="icon icon-ellipsis-h"></i>
+					<i class="icon icon-bullhorn"></i>
 					{foreach $rental->spokenLanguages as $language}
 						{_$language->nameId}{if !$iterator->last}, {/if}
 					{/foreach}
