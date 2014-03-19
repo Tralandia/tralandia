@@ -35,7 +35,6 @@ class DefaultPresenter extends BasePresenter
 	{
 		parent::startup();
 
-		\MyTimer::log('startup');
 	}
 
 
