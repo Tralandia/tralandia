@@ -751,7 +751,7 @@ Checkbox List -------------------------------------------
 					</div>
 				{/foreach}
 			</div>
-			<a class="btn btn-default addLine"><i class="icon-plus"></i> {_o100168}</a>
+			<a class="btn addLine btn-green"><i class="icon-plus"></i> {_o100168}</a>
 
 		</div>
 	</td>
@@ -776,9 +776,9 @@ Checkbox List -------------------------------------------
 	<td class="pricelistControl" colspan="3">
 		<table class="pricelistTable sortable">
 			<tr>
-				<th>{_713758}</th>
-				<th>{_713759}</th>
-				<th>{_713760}</th>
+				<th>Sezóna</th>
+				<th>Cena</th>
+				<th>Typ ceny</th>
 				<th>
 					<div class="langTabs">
 						<div class="header">
@@ -839,7 +839,7 @@ Checkbox List -------------------------------------------
 	</td>
 </tr>
 <tr class="pricelistControlButton {$trClass}">
-	<td colspan="3"><a href="#" class="btn btn-default createNewLine"><i class="icon-plus"></i> {_o100168}</a></td>
+	<td colspan="3"><a href="#" class="btn-green btn createNewLine"><i class="icon-plus"></i> {_o100168}</a></td>
 </tr>
 {/define #rentalPriceList}
 
@@ -869,15 +869,17 @@ Checkbox List -------------------------------------------
 	@param $dataLoadingText string
 	*}
 	{define #submit}
-	{default $class = 'simpleImput'}
+	{default $class = 'submitImput'}
 	{default $icon = 'icon-ok'}
 	{include #opentag , class => $class , control => $control}
-		<td colspan="3">
-			<div class="form-actions">
-				<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-					<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
-				</button>
-			</div>
+		<td>
+
+		</td>
+		<td colspan="2">
+			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green btn-main {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
+			</button>
+			<small class="sublitLoadingText"></small>
 		</td>
 	</tr>
 	{/define #submit}
