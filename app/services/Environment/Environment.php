@@ -147,14 +147,18 @@ class Environment extends Nette\Object
 	 *
 	 * @return \Environment\Environment
 	 */
-	public static function createFromRequest(array $request, \Tralandia\Localization\ITranslatorFactory $translatorFactory)
+	public static function createFromRequest(array $request, \Tralandia\Localization\ITranslatorFactory $translatorFactory, EntityManager $em)
 	{
 		$request = reset($request);
 		$parameters = $request->getParameters();
 		$primaryLocation = $parameters['primaryLocation'];
 		$language = $parameters['language'];
 
-		return new self($primaryLocation, $language, $translatorFactory);
+		if(is_string($primaryLocation)) {
+			return self::createFromIso($primaryLocation, $language, $em, $translatorFactory);
+		} else {
+			return new self($primaryLocation, $language, $translatorFactory);
+		}
 	}
 
 

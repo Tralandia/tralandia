@@ -10,7 +10,7 @@ use Environment\Environment;
 use FrontModule\Forms\RegistrationForm;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
-use Tralandia\Amenity\Amenities;
+use Tralandia\Rental\Amenities;
 use Tralandia\Placement\Placements;
 use Tralandia\Rental\Types;
 
@@ -48,7 +48,7 @@ class RentalContainer extends BaseContainer
 	private $rentalTypes;
 
 	/**
-	 * @var \Tralandia\Amenity\Amenities
+	 * @var \Tralandia\Rental\Amenities
 	 */
 	private $amenities;
 

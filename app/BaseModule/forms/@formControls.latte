@@ -792,7 +792,7 @@
 
 		</td>
 		<td colspan="2">
-			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green {$controlClass}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 				<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
 			</button>
 			<small class="sublitLoadingText"></small>

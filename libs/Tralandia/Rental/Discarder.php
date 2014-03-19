@@ -9,7 +9,6 @@ namespace Tralandia\Rental;
 
 
 use Doctrine\ORM\EntityManager;
-use Entity\Rental\Rental;
 use Extras\Cache\IRentalSearchCachingFactory;
 use Image\RentalImageManager;
 use Nette;
@@ -63,9 +62,9 @@ class Discarder {
 
 
 	/**
-	 * @param Rental $rental
+	 * @param \Entity\Rental\Rental $rental
 	 */
-	public function discard(Rental $rental)
+	public function discard(\Entity\Rental\Rental $rental)
 	{
 
 		$this->banListManager->banRental($rental);

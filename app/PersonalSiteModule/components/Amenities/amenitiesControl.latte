@@ -1,0 +1,98 @@
+{var $interviewList = $rental->getInterview()}
+{var $interviewListCount = count($interviewList)}
+
+<!-- BEGIN #services -->
+<section id="services" class="section-block content-section">
+	<div class="inner-section">
+		<div class="entry-content">
+			<div class="grids">
+				{if $interviewListCount > 0}
+				<div class="grid-8">
+					<div class="metaObjectInfo" id="interviewAnswers">
+						<div>
+							{_$rental->getFirstAnswer()->answerId}
+						</div>
+						<div class="btn-more">
+							<button class="btn-toggle" data-toggle="interviewAnswers"><i class="icon icon-chevron-down"></i> Read full interview</button>
+						</div>
+						<ul class="interviewList hidden" n:inner-foreach="$interviewList as $row">
+							{if !$iterator->first}
+							<li>
+								<h4>{_$row->question}</h4>
+								<p>{_$row->answer}</p>
+							</li>
+							{/if}
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				{/if}
+				<div n:class="$interviewListCount>0 ? grid-4 : grid-12">
+					<div class="grids overview">
+						<figure n:class="$interviewListCount > 0 ? grid-6 : grid-3">
+							<div class="inner-bg active">
+								<i class="icon icon-group"></i>
+								<h3 class="service-title">Max. {$rental->getMaxCapacity()} osob</h3>
+							</div>
+						</figure>
+						<figure n:class="$interviewListCount > 0 ? grid-6 : grid-3">
+							<div n:class="$rental->hasBoard() ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-cutlery"></i>
+								<h3 class="service-title" n:inner-foreach="$rental->getBoard() as $row">
+									{_$row->nameId}{if !$iterator->last}, {/if}
+								</h3>
+							</div>
+						</figure>
+						<figure n:class="$interviewListCount > 0 ? grid-6 : grid-3">
+							<div n:class="$rental->hasWifi() ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-rss rotate-45-left"></i>
+								<h3 class="service-title">WiFi</h3>
+							</div>
+						</figure>
+						<figure n:class="$interviewListCount > 0 ? grid-6 : grid-3">
+							{var $isPetAllowed = $rental->isPetAllowed()}
+							<div n:class="$isPetAllowed ? 'inner-bg active' : 'inner-bg' ">
+								<i class="icon icon-github-alt"></i>
+								<h3 class="service-title">
+									{if $isPetAllowed}
+										{_$rental->getAllowedPet()->nameId}
+									{else}
+										I donno :(
+									{/if}
+								</h3>
+							</div>
+						</figure>
+					</div>
+					{if $interviewListCount > 0}
+					<div class="more-equipment">
+						<table>
+							<tr>
+								<td width="100">Vybavenie izieb:</td>
+								<td>
+									{foreach $rental->getImportantAmenities() as $amenity}
+										{_$amenity->nameId}{if !$iterator->last}, {/if}
+									{/foreach}
+								</td>
+							</tr>
+						</table>
+					</div>
+					{else}
+					<div class="more-equipment">
+						<table>
+							<tr>
+								<td width="150">Vybavenie izieb:</td>
+								<td>
+									{foreach $rental->getImportantAmenities() as $amenity}
+										{_$amenity->nameId}{if !$iterator->last}, {/if}
+									{/foreach}
+								</td>
+							</tr>
+						</table>
+					</div>
+					{/if}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END #services -->
+</section>

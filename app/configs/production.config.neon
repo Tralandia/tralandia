@@ -49,3 +49,7 @@ services:
 	newRelicListener:
 		class: NewRelic\NewRelicProfilingListener
 		tags: [kdyby.subscriber]
+
+
+includes:
+	- personalSite.production.neon
