@@ -8,6 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Types\Json;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
+use Entity\Routing\PathSegment;
 use Entity\User\Role;
 use Environment\Environment;
 use Nette\Application\Responses\TextResponse;
@@ -641,7 +642,39 @@ limit ' . $limit;
 
 	public function actionNewRentalType()
 	{
+		$name = 'Bed & Breakfast';
+		$slug = 'bed-and-breakfast';
 
+		/** @var $rentalType \Entity\Rental\Type */
+		$rentalType = $this->em->getRepository(RENTAL_TYPE_ENTITY)->creteNew();
+		$rentalType->setSlug($slug);
+		$rentalType->getName()->getCentralTranslation()->setTranslation($name);
+
+		$this->em->persist($rentalType);
+		$this->em->flush();
+
+		$languageList = $this->languageDao->findBySupported(TRUE);
+
+		foreach ($languageList as $languageId => $language) {
+			$entity = $this->routingPathSegmentDao->createNew();
+			$entity->primaryLocation = NULL;
+			$entity->language = $language;
+			$entity->pathSegment = $this->translate($rentalType->getName(), $language, 1, 0, 'nominative');
+			$entity->type = PathSegment::RENTAL_TYPE;
+			$entity->entityId = $rentalType->getId();
+
+			$this->em->persist($entity);
+		}
+
+		$this->em->flush();
+	}
+
+
+	public function actionSessionStorage()
+	{
+		$storage = $this->getContext()->getByType('\Nette\Http\ISessionStorage');
+
+		$this->sendPayload();
 	}
 
 }
