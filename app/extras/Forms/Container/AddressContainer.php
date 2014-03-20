@@ -141,8 +141,8 @@ class AddressContainer extends BaseContainer
 			$defaults['address'] = $formattedAddress;
 		}
 
-		if(!$defaults['latitude']) $defaults['latitude'] = $this->primaryLocation->getGps()->getLatitude();
-		if(!$defaults['longitude']) $defaults['longitude'] = $this->primaryLocation->getGps()->getLongitude();
+		if(!isset($defaults['latitude'])) $defaults['latitude'] = $this->primaryLocation->getGps()->getLatitude();
+		if(!isset($defaults['longitude'])) $defaults['longitude'] = $this->primaryLocation->getGps()->getLongitude();
 		$this->setDefaults($defaults);
 	}
 
