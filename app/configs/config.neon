@@ -462,7 +462,12 @@ services:
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
-	- \LeanMapper\Connection(%leanConnectionInfo%)
+	commonFilter: \Tralandia\Lean\CommonFilter
+	connection:
+		class: \LeanMapper\Connection(%leanConnectionInfo%)
+		setup:
+			- registerFilter('sort', [@commonFilter, 'sort'])
+
 	- \LeanMapper\DefaultEntityFactory
 	- \Tralandia\Lean\Mapper
 
