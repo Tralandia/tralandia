@@ -34,7 +34,7 @@ class RankCalculatorListener implements \Kdyby\Events\Subscriber {
 	{
 		return [
 			'FormHandler\RegistrationHandler::onSuccess',
-			'FormHandler\RentalEditHandler::onSuccess',
+			'FormHandler\RentalEditHandler::onSubmit' => 'onSuccess',
 			'\Tralandia\Harvester\RegistrationData::onSuccess',
 		];
 	}

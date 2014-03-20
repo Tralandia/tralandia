@@ -642,24 +642,29 @@ limit ' . $limit;
 
 	public function actionNewRentalType()
 	{
-		$name = 'Bed & Breakfast';
+		$name = 'bed & breakfast';
+		$namePlural = $name;
 		$slug = 'bed-and-breakfast';
 
 		/** @var $rentalType \Entity\Rental\Type */
-		$rentalType = $this->em->getRepository(RENTAL_TYPE_ENTITY)->creteNew();
+		$rentalType = $this->em->getRepository(RENTAL_TYPE_ENTITY)->createNew();
 		$rentalType->setSlug($slug);
-		$rentalType->getName()->getCentralTranslation()->setTranslation($name);
+		$rentalType->getName()->getCentralTranslation()->updateVariations([
+			[[\Entity\Language::NOMINATIVE => $name]],
+			[[\Entity\Language::NOMINATIVE => $namePlural]],
+		]);
 
 		$this->em->persist($rentalType);
 		$this->em->flush();
 
 		$languageList = $this->languageDao->findBySupported(TRUE);
 
-		foreach ($languageList as $languageId => $language) {
-			$entity = $this->routingPathSegmentDao->createNew();
+		$pathSegmentDao = $this->em->getRepository(PATH_SEGMENT_ENTITY);
+		foreach ($languageList as $language) {
+			$entity = $pathSegmentDao->createNew();
 			$entity->primaryLocation = NULL;
 			$entity->language = $language;
-			$entity->pathSegment = $this->translate($rentalType->getName(), $language, 1, 0, 'nominative');
+			$entity->pathSegment = $this->translateRentalType($rentalType->getName(), $language, 1, 0, 'nominative');
 			$entity->type = PathSegment::RENTAL_TYPE;
 			$entity->entityId = $rentalType->getId();
 
@@ -667,15 +672,22 @@ limit ' . $limit;
 		}
 
 		$this->em->flush();
-	}
-
-
-	public function actionSessionStorage()
-	{
-		$storage = $this->getContext()->getByType('\Nette\Http\ISessionStorage');
 
 		$this->sendPayload();
 	}
+
+
+	protected function translateRentalType($phrase, $language, $plural = NULL, $gender = NULL, $case = NULL)
+	{
+		$text = $this->translate($phrase, null, [
+			\Tralandia\Localization\Translator::VARIATION_PLURAL => $plural,
+			\Tralandia\Localization\Translator::VARIATION_GENDER => $gender,
+			\Tralandia\Localization\Translator::VARIATION_CASE => $case
+		], null, $language);
+
+		return Strings::webalize($text);
+	}
+
 
 }
 

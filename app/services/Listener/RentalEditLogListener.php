@@ -72,7 +72,7 @@ class RentalEditLogListener extends Nette\Object implements \Kdyby\Events\Subscr
 	public function getSubscribedEvents()
 	{
 		return [
-			'FormHandler\RentalEditHandler::onSuccess' => 'createLog',
+			'FormHandler\RentalEditHandler::onSubmit' => 'createLog',
 		];
 	}
 }
