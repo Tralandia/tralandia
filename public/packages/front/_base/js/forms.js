@@ -1100,8 +1100,9 @@ function createNewLineInPriceList(){
 
 		pattern.find('select,input').each(function(){
 			var originName = $(this).attr('name');
-				$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));
-		})
+			$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));
+            if(originName.match(/\[entityId\]$/)) $(this).val('');
+        })
 
 
 
