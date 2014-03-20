@@ -10,7 +10,7 @@ nette:
 	session:
 		autoStart: true
 		expiration: '+1 year'
-		name: PHPSESSIONID1
+		name: PHPSESSIONID2
 		cookie_path: '/'
 		cookie_domain: NULL
 

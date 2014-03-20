@@ -50,6 +50,7 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 		$this->updateOrderCache();
 	}
 
+
 	private function updateOrderCache()
 	{
 		$cache = $this->rentalOrderFactory->create($this->primaryLocation);

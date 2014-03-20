@@ -31,7 +31,7 @@ class PolygonCalculatorListener implements \Kdyby\Events\Subscriber
 	{
 		return [
 			'FormHandler\RegistrationHandler::onSuccess',
-			'FormHandler\RentalEditHandler::onSuccess' => 'onSuccess',
+			'FormHandler\RentalEditHandler::onSubmit' => 'onSuccess',
 			'Tralandia\Harvester\RegistrationData::onRegister' => 'onSuccess',
 		];
 	}

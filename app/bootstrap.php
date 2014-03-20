@@ -11,6 +11,11 @@ if(array_key_exists('useCache', $_GET)) {
 }
 
 
+if(array_key_exists('HTTP_HOST', $_SERVER)) {
+	list($subDomain, $domain, $tld) = explode('.', $_SERVER['HTTP_HOST'], 3);
+	ini_set('session.cookie_domain', '.' . $domain . '.' . $tld);
+}
+
 // Load Nette Framework
 require_once VENDOR_DIR . '/autoload.php';
 

@@ -19,6 +19,11 @@ class RentalEditHandler extends FormHandler
 	public $onSuccess = [];
 
 	/**
+	 * @var array
+	 */
+	public $onSubmit = [];
+
+	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
@@ -232,6 +237,8 @@ class RentalEditHandler extends FormHandler
 
 		$this->em->persist($rental);
 		$this->em->flush();
+
+		$this->onSubmit($rental);
 
 		return $rental;
 	}
