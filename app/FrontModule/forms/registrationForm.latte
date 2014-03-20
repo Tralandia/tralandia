@@ -18,7 +18,7 @@
 
 		{include #select, control => $form['country'] , controlClass => 'select2 country selectRedirect notFulltext'}
 
-		{if !$isWorld}
+		{if !$isWorld()}
 
 
 			{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}

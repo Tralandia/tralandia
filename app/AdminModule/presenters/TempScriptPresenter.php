@@ -638,5 +638,11 @@ limit ' . $limit;
 		$this->sendResponse(new TextResponse("Added $questionsCount questions to ". count($rentals) . ' rentals'));
 	}
 
+
+	public function actionNewRentalType()
+	{
+
+	}
+
 }
 
