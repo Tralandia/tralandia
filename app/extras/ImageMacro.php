@@ -52,7 +52,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('echo %escape($_imagePipe->request(%node.word))');
+		return $writer->write('echo %escape($_imagePipe->request(%node.word, %node.args))');
 	}
 
 
@@ -65,7 +65,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroAttrImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('?> src="<?php echo %escape($_imagePipe->request(%node.word))?>" <?php');
+		return $writer->write('?> src="<?php echo %escape($_imagePipe->request(%node.word, %node.args))?>" <?php');
 	}
 
 	/**
@@ -76,7 +76,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroPhoto(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('echo %escape($_imagePipe->requestForPath(%node.word))');
+		return $writer->write('echo %escape($_imagePipe->requestForPath(%node.word, %node.args))');
 	}
 
 
@@ -89,7 +89,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroAttrPhoto(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('?> src="<?php echo %escape($_imagePipe->requestForPath(%node.word))?>" <?php');
+		return $writer->write('?> src="<?php echo %escape($_imagePipe->requestForPath(%node.word, %node.args))?>" <?php');
 	}
 
 
