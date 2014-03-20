@@ -7,7 +7,7 @@
 {define #headerTitle}
 	<a href="#slideshow" id="logo" title="{$heading}">
 		<span class="img">
-			<img n:photo="$rental->mainPhoto->path">
+			<img n:photo="$rental->mainPhoto->path, medium">
 		</span>
 		<strong>{$heading|upper}</strong>
 	</a>
