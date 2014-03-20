@@ -20,7 +20,7 @@ class Rentals {
 	/**
 	 * @var \Tralandia\BaseDao
 	 */
-	private $locationsDao;
+	private $locationDao;
 
 	/**
 	 * @var \Tralandia\BaseDao
@@ -45,15 +45,15 @@ class Rentals {
 
 	/**
 	 * @param \Tralandia\BaseDao $rentalDao
-	 * @param BaseDao $locationsDao
+	 * @param BaseDao $locationDao
 	 * @param \Tralandia\BaseDao $editLogDao
 	 * @param \Nette\Caching\Cache $mapSearchCache
 	 * @param \Environment\Environment $environment
 	 */
-	public function __construct(BaseDao $rentalDao, BaseDao $locationsDao, BaseDao $editLogDao,
+	public function __construct(BaseDao $rentalDao, BaseDao $locationDao, BaseDao $editLogDao,
 								Nette\Caching\Cache $mapSearchCache, \Environment\Environment $environment)
 	{
-		$this->locationsDao = $locationsDao;
+		$this->locationDao = $locationDao;
 		$this->rentalDao = $rentalDao;
 		$this->editLogDao = $editLogDao;
 		$this->environment = $environment;
@@ -66,7 +66,7 @@ class Rentals {
 	 */
 	public function worldwideCount()
 	{
-		$qb = $this->locationsDao->createQueryBuilder('l');
+		$qb = $this->locationDao->createQueryBuilder('l');
 
 		$qb->select('sum(l.rentalCount) as total');
 
@@ -122,6 +122,23 @@ class Rentals {
 		$myResult = array();
 		foreach ($result as $key => $value) {
 			$myResult[$value['locationId']] = $value['c'];
+		}
+		return $myResult;
+	}
+
+
+	public function getCountsInSearch(Location $primaryLocation = NULL)
+	{
+		$qb = $this->locationDao->createQueryBuilder('l');
+		$qb->select('l.id', 'l.rentalCount as c');
+		if($primaryLocation) {
+			$qb->andWhere('l.id = :locationId')->setParameter('locationId', $primaryLocation->getId());
+		}
+
+		$result = $qb->getQuery()->getResult();
+		$myResult = array();
+		foreach ($result as $key => $value) {
+			$myResult[$value['id']] = $value['c'];
 		}
 		return $myResult;
 	}
@@ -355,7 +372,7 @@ LIMIT $limit";
 		foreach($result as $row) {
 			$counts[$row['lId']] = $row;
 		}
-		$locations = $this->locationsDao->findBy(['id' => array_keys($counts)]);
+		$locations = $this->locationDao->findBy(['id' => array_keys($counts)]);
 
 
 		$return = [];
@@ -410,7 +427,7 @@ LIMIT $limit";
 		foreach($result as $row) {
 			$counts[$row['lId']] = $row;
 		}
-		$locations = $this->locationsDao->findBy(['id' => array_keys($counts)]);
+		$locations = $this->locationDao->findBy(['id' => array_keys($counts)]);
 
 		$translator = $this->environment->getTranslator();
 		$return = [];

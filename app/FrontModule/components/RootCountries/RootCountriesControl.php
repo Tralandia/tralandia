@@ -57,7 +57,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	{
 		$template = $this->template;
 
-		$template->rentalCounts = $rentalCounts = $this->rentals->getCounts(NULL, \Entity\Rental\Rental::STATUS_LIVE);
+		$template->rentalCounts = $rentalCounts = $this->rentals->getCountsInSearch();
 		$template->countries = $this->getCountries();
 
 		$template->render();
