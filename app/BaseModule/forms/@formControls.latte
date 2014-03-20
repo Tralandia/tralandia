@@ -279,12 +279,12 @@
 	{/define #controlErrors}
 
 
-	{*
-	Checkbox List -------------------------------------------
-	@param $control \Nextras\Forms\Container\MultiOptionList
-	*}
+{*
+Checkbox List -------------------------------------------
+@param $control \Nextras\Forms\Container\MultiOptionList
+*}
 
-	{define #checkboxList}
+{define #checkboxList}
 	{default $colCount = 1}
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
@@ -310,6 +310,7 @@
 	{include #opentag, control => $control}
 		<td colspan="3">
 			<table class="checkboxes">
+				{if $control->caption}
 				<tr>
 					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
 					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}
@@ -322,6 +323,7 @@
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 					</td>
 				</tr>
+				{/if}
 				<tr>
 					<td width="{(int)(100/$colCount)}%">
 						{var $i = 1}
@@ -404,6 +406,44 @@
 </tr>
 
 {/define #phone}
+
+
+{* Rental Unit Container ------------------------------------------- *}
+{define #rentalUnit}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+
+{include #opentag, class => 'simpleInput ' , control => $container}
+	<td>
+		{_$mainControl->caption}
+		{if $mainControl->isRequired()}
+			<i class="icon-asterisk"></i>
+		{/if}
+	</td>
+	<td>{input $container['rental'], class => 'select2 notFulltext', onchange => 'setUnits(this)'}</td>
+</tr>
+<tr class="units">
+	<td></td>
+	<td>
+		{foreach $container->getUnitsControl() as $rentalId => $unit}
+			<div class="units-container hide clearfix" id="unit{$rentalId}">
+				{foreach $unit as $key => $label}
+					<label>{$unit->getControlItem($key)}{_$label}</label>
+				{/foreach}
+			</div>
+		{/foreach}
+	</td>
+
+	<td>
+		<span class="help">{$mainControl->getOption('help')}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+	</td>
+</tr>
+
+{/define #rentalUnit}
 
 
 {*
@@ -785,14 +825,14 @@
 	@param $dataLoadingText string
 	*}
 	{define #submit}
-	{default $class = 'simpleImput'}
+	{default $class = 'submitImput'}
 	{default $icon = 'icon-ok'}
 	{include #opentag , class => $class , control => $control}
 		<td>
 
 		</td>
 		<td colspan="2">
-			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green btn-main {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 				<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
 			</button>
 			<small class="sublitLoadingText"></small>
