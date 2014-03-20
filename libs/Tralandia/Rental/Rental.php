@@ -27,8 +27,8 @@ use Nette;
  * @property \Tralandia\Rental\Amenity[] $amenities m:hasMany
  * @property \Tralandia\Language\Language[] $spokenLanguages m:hasMany
  *
- * @property \Tralandia\Rental\InterviewAnswer[] $interviewAnswers m:belongsToMany
- * @property \Tralandia\Rental\Image[] $images m:belongsToMany
+ * @property \Tralandia\Rental\InterviewAnswer[] $interviewAnswers m:belongsToMany m:filter(sort#question_id)
+ * @property \Tralandia\Rental\Image[] $images m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListRow[] $priceList m:belongsToMany
  * @property \Tralandia\Rental\PriceListFile[] $priceListFiles m:belongsToMany(rental_id:rental_pricelist)
  */
