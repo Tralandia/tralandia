@@ -259,12 +259,12 @@ LIMIT $limit";
 	public function rentalsInSearchBaseQb(Location $location, array $order = NULL)
 	{
 		$qb = $this->findByPrimaryLocationQB($location, \Entity\Rental\Rental::STATUS_LIVE, $order);
-//		$qb->andWhere($qb->expr()->orX(
-//			$qb->expr()->andX($qb->expr()->eq('r.harvested', ':true'), $qb->expr()->isNotNull('r.lastUpdate')),
-//			$qb->expr()->eq('r.harvested', ':false')
-//		))
-//			->setParameter('true', TRUE)
-//			->setParameter('false', FALSE);
+		$qb->andWhere($qb->expr()->orX(
+			$qb->expr()->andX($qb->expr()->eq('r.harvested', ':true'), $qb->expr()->isNotNull('r.lastUpdate')),
+			$qb->expr()->eq('r.harvested', ':false')
+		))
+			->setParameter('true', TRUE)
+			->setParameter('false', FALSE);
 
 
 		return $qb;
