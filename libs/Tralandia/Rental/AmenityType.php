@@ -12,9 +12,21 @@ use Nette;
 
 /**
  * @property int $id
+ * @property string $slug
+ * @property int $sorting
  */
 class AmenityType extends \Tralandia\Lean\BaseEntity
 {
+
+	/**
+	 * @return int
+	 */
+	public function getNameId()
+	{
+		return $this->row->name_id;
+	}
+
+
 
 	public static $slugToId = [
 		'children' => 2,

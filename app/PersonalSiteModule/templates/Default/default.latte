@@ -17,7 +17,7 @@
 {control amenities}
 {control gallery}
 {control prices}
-{if $rental->calendarUpdated && !$rental->isCalendarEmpty()}
+{if $showCalendar}
 	{control calendar}
 {/if}
 {control contact}

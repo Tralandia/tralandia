@@ -165,6 +165,19 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	}
 
 
+	/**
+	 * @return bool
+	 */
+	public function isAnyQuestionAnswered()
+	{
+		foreach($this->interviewAnswers as $answer) {
+			if($answer->answer->getTranslationsCount()) return true;
+		}
+
+		return false;
+	}
+
+
 	/********************* PHOTOS / IMAGES *********************/
 
 
@@ -243,6 +256,31 @@ class Rental extends \Tralandia\Lean\BaseEntity
 		return $return;
 	}
 
+
+	/**
+	 * @param null $excluded
+	 *
+	 * @return array
+	 */
+	public function getAmenitiesGroupByType($excluded = NULL)
+	{
+		$return = [];
+		$sort = [];
+		foreach ($this->amenities as $amenity) {
+			$type = $amenity->type;
+			if(is_array($excluded) && in_array($type->slug, $excluded)) continue;
+
+			$sort[$type->id] = $type->sorting;
+			$return[$type->id][$amenity->id] = $amenity;
+		}
+		asort($sort);
+
+		foreach($sort as $key => $value) {
+			$sort[$key] = $return[$key];
+		}
+
+		return $sort;
+	}
 
 	/**
 	 * @param $slug
