@@ -9,6 +9,7 @@ use Entity\Rental\Rental;
 use Environment\Collator;
 use Nette\Forms\Container;
 use Nette\Localization\ITranslator;
+use Nette\DateTime;
 
 class RentalPriceListContainer extends BaseContainer
 {
@@ -38,7 +39,11 @@ class RentalPriceListContainer extends BaseContainer
 	protected $currency;
 	protected $roomTypes;
 
-	protected $roomCount = [];
+	protected $date;
+	protected $notes;
+
+	protected $minPeople = [1,2,3,4,5,6,7,8,9,10];
+	protected $minNights = [];
 	protected $bedCount = [];
 	protected $extraBedCount = [];
 
@@ -67,8 +72,8 @@ class RentalPriceListContainer extends BaseContainer
 		$this->extraBedCount[0] = "0 ".$translator->translate('o100000',0);
 		for($i=1;$i<$maxCount;$i++) {
 			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
-			$this->roomCount[$i] = "{$i}x";
-			$this->bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
+			// $this->roomCount[$i] = "{$i}x";
+			// $this->bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
 		}
 
 		$this->addDynamic('list', $this->containerBuilder, 1);
@@ -77,13 +82,32 @@ class RentalPriceListContainer extends BaseContainer
 
 	public function containerBuilder(Container $container)
 	{
-		$container->addSelect('roomCount', '', $this->roomCount);
+		$date = $container->addContainer('date');
+		$today = (new DateTime)->modify('today');
+		$dateFromControl = $date->addAdvancedDatePicker('from')
+			->getControlPrototype()
+			->setPlaceholder($this->translator->translate('o1043'));
+
+		$dateFromControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
+			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+
+		$dateToControl = $date->addAdvancedDatePicker('to')
+			->getControlPrototype()
+			->setPlaceholder($this->translator->translate('o1044'));
+
+		$dateToControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
+			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+
+
+		$container->addSelect('minPeople', '', $this->minPeople);
+		$container->addSelect('minNights', '', $this->minNights);
 		$container->addSelect('roomType', '', $this->roomTypes);
 		$container->addSelect('bedCount', '', $this->bedCount);
 		$container->addSelect('extraBedCount', '', $this->extraBedCount);
+		$container->addText('notes', '', $this->notes);
 
 		$container->addText('price', 'o100078')
-			->setOption('append', $this->currency->getIso() . ' ' . $this->translator->translate('o100004'))
+			->setOption('append', $this->currency->getIso())
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
 
 		$container->addHidden('entityId', '');
@@ -129,9 +153,7 @@ class RentalPriceListContainer extends BaseContainer
 		$priceLists = [];
 		foreach($this->pricelistRows as $pricelistRow) {
 			$priceLists[] = [
-				'roomCount' => $pricelistRow->getRoomCount(),
-				'roomType' => $pricelistRow->getRoomType()->getId(),
-				'bedCount' => $pricelistRow->getBedCount(),
+				// 'minPeople' => $pricelistRow->getMinPeople(),
 				'extraBedCount' => $pricelistRow->getExtraBedCount(),
 				'price' => $pricelistRow->getPrice()->getSourceAmount(),
 				'entityId' => $pricelistRow->id

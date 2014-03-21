@@ -64,6 +64,42 @@ form.dashboard {
 
 #content.noPadding {
 
+table.pricelistTable {
+	tr {
+		th {
+			text-align: left;
+		}
+		td {
+			vertical-align: top;
+			input[type="text"], select {
+				margin: 0 10px 10px 0;
+			}
+			&:nth-child(1) input, &:nth-child(2) input {
+				width: 70px;
+			}
+			.select2-container .select2-choice, .select2-container .select2-choice div, .select2-container.select2-dropdown-open .select2-choice {
+				width: 60px;
+				margin: 0 10px 10px 0;
+			}
+			.input-append {
+				position: relative;
+				input[type="text"].price {
+					margin-right: 47px;
+				}
+				.add-on {
+					right: 10px;
+				}
+			}
+			&:nth-child(6) input {
+				width: 180px;
+			}
+			.btn.btn-cancel {
+				margin-left: 0;
+			}
+		}
+	}
+}
+
 table.formTable {
 	// border: 1px solid black;
 	// td {
@@ -109,18 +145,12 @@ table.formTable {
 
 	tr td.pricelistControl {
 		.priceList {
-			margin-bottom: 10px;
 			height: 30px;
 		}
 
 		select {
-			margin: 0;
 			margin-right: 10px;
 			width: 70px;
-
-			&.string {
-				width: 127px;
-			}
 		}
 
 		input[type=text].price {
@@ -143,7 +173,6 @@ table.formTable {
 
 		.add-on {
 			position: absolute;
-			width: 100px;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
