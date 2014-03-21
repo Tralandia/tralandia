@@ -43,11 +43,11 @@
 						<li><a href="#services">Vybavenie</a></li>
 						<li><a href="#gallery">Galéria</a></li>
 						<li><a href="#prices">Ceny</a></li>
-						<li><a href="#calendar">Obsadenosť</a></li>
+						<li n:if="$showCalendar"><a href="#calendar">Obsadenosť</a></li>
 						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
 						<li class="language">
 							<select class="select2" n:inner-foreach="$usedLanguages as $language">
-								<option value="{$language->iso}" data-redirect-url="{link //Default:default, language => $language}" n:attr="selected => $language->id == $currentLanguage->id">{_$language->nameId}</option>
+								<option value="{$language->iso}" data-redirect-url="{link //Default:default, language => $language}" n:attr="selected => $language->id == $currentLanguage->id">{_$language->name}</option>
 							</select>
 						</li>
 					</ul>

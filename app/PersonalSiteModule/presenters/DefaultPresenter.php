@@ -46,6 +46,7 @@ class DefaultPresenter extends BasePresenter
 		$this->template->usedLanguages = $this->getUsedLanguages($rental);
 		$this->template->heading = $this->translate($rentalNameId) . ' ' . $this->translate($locationNameId);
 		$this->template->rental = $rental;
+		$this->template->showCalendar = $rental->calendarUpdated && !$rental->isCalendarEmpty();
 	}
 
 
@@ -105,6 +106,8 @@ class DefaultPresenter extends BasePresenter
 				$usedLanguages[$translation->language->id] = $translation->language;
 			}
 		}
+
+		return $this->primaryLocation->getImportantLanguages($this->findLanguage(CENTRAL_LANGUAGE));
 
 		return $usedLanguages;
 	}

@@ -234,18 +234,19 @@
 											{/if}
 											{if $iterator->last}{var $lastAmenity = true}{/if}
 
+											<div class="content">
 											{foreach $amenities as $amenity}
 
 												{if $iterator->first}
-												<div class="content">
 													<strong>{_$amenity->type->name|firstUpper}:</strong>
-														{_$amenity->name|lower}{if !$iterator->last}, {/if}
-													{else}
-														{_$amenity->name|lower}{if !$iterator->last}, {/if}
+													{_$amenity->name|lower}{if !$iterator->last}, {/if}
+												{else}
+													{_$amenity->name|lower}{if !$iterator->last}, {/if}
 												{/if}
 
 											{/foreach}
 											</div>
+
 											{* <div class="more">...</div> *}
 										</li>
 										{/foreach}
