@@ -177,28 +177,35 @@
 			});
 
 			/*
-			var $window = $(window);
 			var $slideshow = $("section#slideshow");
 			var $logoImage = $("#logo .img");
-			$window.scroll(function(event) {
-				if ($window.scrollTop() > $slideshow.height()) {
-					if (!$logoImage.is(":visible")) {
-						$logoImage.finish();
-						$logoImage.css('display', 'block').animate({
-							width: 149
-						}, 200);
-					}
-				} else {
-					if ($logoImage.is(":visible")) {
-						$logoImage.finish();
-						$logoImage.css({
-							width: 0,
-							display: 'none'
-						});
-					}
-				}
-			})
 			*/
+			var $window = $(window);
+			var $mapImage = $('#map img');
+			var mapShown = false;
+			$window.scroll(function(event) {
+				if ($mapImage.is(':in-viewport') && !mapShown) {
+					{{var $gps = $rental->address->getGps()}}
+					$mapImage.parent().html('<iframe width="570" height="340" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{$gps->getLatitude()}},{{$gps->getLongitude()}}&key=AIzaSyCiKBItRcP8_iSzxbiLB4_iqc6nxTMk3Ms"></iframe>');
+					mapShown = true;
+				}
+				// if ($window.scrollTop() > $slideshow.height()) {
+				// 	if (!$logoImage.is(":visible")) {
+				// 		$logoImage.finish();
+				// 		$logoImage.css('display', 'block').animate({
+				// 			width: 149
+				// 		}, 200);
+				// 	}
+				// } else {
+				// 	if ($logoImage.is(":visible")) {
+				// 		$logoImage.finish();
+				// 		$logoImage.css({
+				// 			width: 0,
+				// 			display: 'none'
+				// 		});
+				// 	}
+				// }
+			})
 
 			$('#menu-main-menu a').click(function(event) {
 				event.preventDefault();
@@ -233,9 +240,9 @@
 
 	<script type="text/javascript" src="{$basePath}/personalSite/js/superfish.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/supersubs.js?ver=3.8.1"></script>
-	<script type="text/javascript" src="{$basePath}/personalSite/js/jquery.custom.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/jquery/ui/jquery.ui.core.min.js?ver=1.10.3"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/jquery.viewport.js?ver=3.8.1"></script>
+	<script type="text/javascript" src="{$basePath}/personalSite/js/jquery.custom.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/retina.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/prettify.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/libs/select2-master/select2.js"></script>

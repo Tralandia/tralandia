@@ -136,6 +136,7 @@ class Rental extends \Tralandia\Lean\BaseEntity
 				$interview[] = Nette\ArrayHash::from([
 					'answer' => $answer->getAnswerId(),
 					'question' => $answer->question->getQuestionId(),
+					'questionFe' => $answer->question->getQuestionFeId(),
 				]);
 			}
 			$this->_interview = $interview;

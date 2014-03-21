@@ -24,4 +24,12 @@ class InterviewQuestion extends \Tralandia\Lean\BaseEntity
 		return $this->row->question_id;
 	}
 
+	/**
+	 * @return int
+	 */
+	public function getQuestionFeId()
+	{
+		return $this->row->questionFe_id;
+	}
+
 }

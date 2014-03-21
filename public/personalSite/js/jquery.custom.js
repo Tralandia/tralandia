@@ -109,7 +109,7 @@ jQuery(document).ready(function($){
     /* Animated back to top navigation
     /*------------------------------------------------------------------------------*/
 
-    $("#backToTop").click(function(e){
+    $("#backToTop, #logo").click(function(e){
         $('body, html').animate({ scrollTop: "0" }, 800);
         e.preventDefault();
     });

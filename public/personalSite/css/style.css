@@ -714,6 +714,7 @@ body.gateway-open {
 }
 #prices {
   color: #222;
+  background-color: #eee;
 }
 #prices h3.main-title {
     font-size: 24px;
@@ -775,8 +776,12 @@ body.gateway-open {
 #services .more-equipment table tr td:last-child {
     font-size: 14px;
 }
+#services .grids.overview .inner-bg {
+  text-decoration: line-through;
+}
 #services .grids.overview .inner-bg.active {
   color: #A0B325;
+  text-decoration: none;
 }
 #services .service-title {
   font-size: 18px;
@@ -899,7 +904,6 @@ body.gateway-open {
 }
 #contact iframe {
   width: 100%;
-  margin: 70px 0 -6px;
 }
 #contact .sub-heading {
   font-size: 40px;
@@ -2388,6 +2392,8 @@ ul.interviewList li {}
 ul.interviewList li h4 {
     margin-bottom: 10px;
     color: #A0B325;
+    font-size: 20px;
+    font-weight: bold;
 }
 ul.interviewList li p {
     margin-top: 0;
