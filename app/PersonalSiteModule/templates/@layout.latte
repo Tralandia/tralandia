@@ -27,7 +27,7 @@
 <body class="home blog">
 
 	<div n:if="$loggedUser" style="position: fixed; top: 100px; right: 50px; z-index: 100000">
-		<a n:href="//:Owner:Rental:edit $rental->id" target="_blank">Edit</a>
+		<a n:href="//:Owner:Rental:edit $rental->id" target="_blank">{_544}</a>
 	</div>
 
 	<div id="fb-root"></div>
@@ -40,11 +40,11 @@
 			<nav id="navigation" role="navigation">
 				<div id="primary-nav" class="primary-menu">
 					<ul id="menu-main-menu" class="menu">
-						<li><a href="#services">Vybavenie</a></li>
-						<li><a href="#gallery">Galéria</a></li>
-						<li><a href="#prices">Ceny</a></li>
-						<li n:if="$showCalendar"><a href="#calendar">Obsadenosť</a></li>
-						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
+						<li><a href="#services">{_1198}</a></li>
+						<li><a href="#gallery">{_537}</a></li>
+						<li><a href="#prices">{_1197}</a></li>
+						<li n:if="$showCalendar"><a href="#calendar">{_1223}</a></li>
+						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> {_151873}</a></li>
 						<li class="language">
 							<select class="select2" n:inner-foreach="$usedLanguages as $language">
 								<option value="{$language->iso}"
