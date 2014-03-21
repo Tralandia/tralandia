@@ -16,6 +16,8 @@ abstract class EmailManager {
 
 	abstract public function next();
 
+	abstract public function isEnd();
+
 	abstract public function getEmail();
 
 	abstract public function getRowId();

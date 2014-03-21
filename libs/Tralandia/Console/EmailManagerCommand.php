@@ -105,8 +105,9 @@ class EmailManagerCommand extends BaseCommand
 				$this->log($output, '--------', $emailManager::NAME);
 
 				$emailManager->next();
-				$email = $emailManager->getEmail();
+				if($emailManager->isEnd()) break;
 
+				$email = $emailManager->getEmail();
 				if(Nette\Utils\Validators::isEmail($email)) {
 					$this->log($output, 'id: ' . $emailManager->getRowId() . ', email: ' . $email, $emailManager::NAME);
 					$emailManager->resetEnvironment($environment);

@@ -63,6 +63,14 @@ class PotentialMember extends EmailManager
 		$this->potentialMember = $qb->getQuery()->getOneOrNullResult();
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isEnd()
+	{
+		return !(bool) $this->potentialMember;
+	}
+
 	public function getEmail()
 	{
 		return $this->potentialMember->getEmail();

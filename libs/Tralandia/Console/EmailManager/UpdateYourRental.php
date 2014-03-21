@@ -59,6 +59,14 @@ class UpdateYourRental extends EmailManager
 		$this->rental = $rental;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isEnd()
+	{
+		return !(bool) $this->rental;
+	}
+
 	public function getEmail()
 	{
 		return $this->rental->getContactEmail();
