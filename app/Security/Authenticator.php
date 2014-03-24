@@ -6,6 +6,7 @@ use Entity\User\User;
 use Nette\Object,
 	Nette\Security as NS,
 	Nette\Environment;
+use Nette\Utils\Strings;
 use Tralandia\BaseDao;
 
 /**
@@ -18,7 +19,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	/**
 	 * @var string
 	 */
-	protected static $autoLoginDelimiter = '-';
+	protected static $autoLoginDelimiter = '_';
 
 	/**
 	 * @var string
@@ -121,7 +122,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	public function autologin($autologin)
 	{
 		$user = $this->getUserFromHash($autologin);
-		if ($user && $autologin != $this->calculateAutoLoginHash($user)) {
+		if ($user && !$this->isHashEqual($autologin, $this->calculateAutoLoginHash($user))) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 
@@ -148,7 +149,7 @@ class Authenticator extends Object implements NS\IAuthenticator
 	public function checkNewPasswordHash($hash)
 	{
 		$user = $this->getUserFromHash($hash);
-		if ($user && $hash != $this->calculateNewPasswordHash($user)) {
+		if ($user && !$this->isHashEqual($hash, $this->calculateNewPasswordHash($user))) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 	}
@@ -163,6 +164,20 @@ class Authenticator extends Object implements NS\IAuthenticator
 	{
 		list($userId,) = explode(self::$autoLoginDelimiter, $hash, 2);
 		return $this->userDao->find($userId);
+	}
+
+
+	/**
+	 * @param $hash1
+	 * @param $hash2
+	 *
+	 * @return bool
+	 */
+	protected function isHashEqual($hash1, $hash2)
+	{
+		list($a1, $a2) = explode(self::$autoLoginDelimiter, $hash1, 2);
+		list($b1, $b2) = explode(self::$autoLoginDelimiter, $hash2, 2);
+		return (int) $a1 === (int) $b1 && (int) $a2 === (int) $b2;
 	}
 }
 
