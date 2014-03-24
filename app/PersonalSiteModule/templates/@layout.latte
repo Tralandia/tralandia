@@ -47,7 +47,11 @@
 						<li class="reservation"><a href="#contact"><i class="icon icon-envelope-o"></i> Kontakty / Rezervácia</a></li>
 						<li class="language">
 							<select class="select2" n:inner-foreach="$usedLanguages as $language">
-								<option value="{$language->iso}" data-redirect-url="{link //Default:default, language => $language}" n:attr="selected => $language->id == $currentLanguage->id">{_$language->name}</option>
+								<option value="{$language->iso}"
+										data-redirect-url="{link //Default:default, language => $language}"
+										n:attr="selected => $language->id == $currentLanguage->id">
+									{_$language->name, null, null, null, $language}
+								</option>
 							</select>
 						</li>
 					</ul>

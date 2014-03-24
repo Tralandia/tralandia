@@ -10,6 +10,13 @@ namespace Tralandia\Lean;
 
 use Nette;
 
+/**
+ * Class BaseEntity
+ * @package Tralandia\Lean
+ *
+ * @property \DateTime $created
+ * @property \DateTime $updated
+ */
 class BaseEntity extends \LeanMapper\Entity
 {
 

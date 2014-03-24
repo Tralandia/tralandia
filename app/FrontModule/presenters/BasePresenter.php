@@ -320,10 +320,12 @@ abstract class BasePresenter extends \BasePresenter {
 		if($email) {
 			$potentialMemberDao = $this->em->getRepository(POTENTIAL_MEMBER);
 			$potentialMember = $potentialMemberDao->findOneBy(['email' => $email]);
-			$potentialMember->unsubscribed = TRUE;
-			$potentialMemberDao->save($potentialMember);
+			if($potentialMember) {
+				$potentialMember->unsubscribed = TRUE;
+				$potentialMemberDao->save($potentialMember);
 
-			$this->flashMessage(315392, self::FLASH_ERROR);
+				$this->flashMessage(315392, self::FLASH_ERROR);
+			}
 		}
 
 		$this->redirect('Home:');
