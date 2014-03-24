@@ -31,12 +31,14 @@
 					<div class="grids overview">
 						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
 							<div class="inner-bg active">
+								<div class="line-through"></div>
 								<i class="icon icon-group"></i>
 								<h3 class="service-title">Max. {$rental->getMaxCapacity()} osob</h3>
 							</div>
 						</figure>
 						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
 							<div n:class="$rental->hasBoard() ? 'inner-bg active' : 'inner-bg' ">
+								<div class="line-through"></div>
 								<i class="icon icon-cutlery"></i>
 								<h3 class="service-title" n:inner-foreach="$rental->getBoard() as $row">
 									{_$row->nameId}{if !$iterator->last}, {/if}
@@ -45,6 +47,7 @@
 						</figure>
 						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
 							<div n:class="$rental->hasWifi() ? 'inner-bg active' : 'inner-bg' ">
+								<div class="line-through"></div>
 								<i class="icon icon-rss rotate-45-left"></i>
 								<h3 class="service-title">WiFi</h3>
 							</div>
@@ -52,6 +55,7 @@
 						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
 							{var $isPetAllowed = $rental->isPetAllowed()}
 							<div n:class="$isPetAllowed ? 'inner-bg active' : 'inner-bg' ">
+								<div class="line-through"></div>
 								<i class="icon icon-github-alt"></i>
 								<h3 class="service-title">
 									{if $isPetAllowed}
