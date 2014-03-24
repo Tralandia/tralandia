@@ -132,7 +132,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		}
 		$supportedLanguagesForSelect = $this->languages->getSupportedSortedByName();
 		$questions = $this->interviewQuestionRepository->findAll();
-		$currency = $this->rental->getPrimaryLocation()->getDefaultCurrency();
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
@@ -143,8 +142,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
-		$rentalContainer->addRentalPriceListContainer('priceList', $currency, $rental);
-		$pricelistUpload = $rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
@@ -163,12 +160,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o3095'))
 			->addRule(self::EMAIL, $this->translate('o3095'));
 
-
-		$rentalContainer->addText('price', 'o100078')
-			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
-			->setOption('help', $this->translate('o100073'))
-			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
-			->setRequired('151883');
 
 		$languages = array($this->translate('153133'));
 
