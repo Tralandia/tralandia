@@ -40,6 +40,9 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $page;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
 	public $userDao;
 
 

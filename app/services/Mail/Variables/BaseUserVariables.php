@@ -53,7 +53,7 @@ abstract class BaseUserVariables extends Nette\Object {
 	 */
 	public function getVariablePassword()
 	{
-		return $this->user->getPassword();
+		return '****';
 	}
 
 
@@ -61,6 +61,12 @@ abstract class BaseUserVariables extends Nette\Object {
 	{
 		$hash = $this->authenticator->calculateAutoLoginHash($this->getUser());
 		return $environment->link('//:Front:Sign:afterLogin', [BaseRoute::AUTOLOGIN => $hash]);
+	}
+
+	public function getVariableNewPasswordLink(EnvironmentVariables $environment)
+	{
+		$hash = $this->authenticator->calculateNewPasswordHash($this->getUser());
+		return $environment->link('//:Front:Sign:newPassword', [BaseRoute::NEW_PASSWORD => $hash]);
 	}
 
 }
