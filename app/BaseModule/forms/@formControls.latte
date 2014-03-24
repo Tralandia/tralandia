@@ -691,6 +691,7 @@
 			<div class="priceListRowsContainer">
 				{foreach $replicator->getComponents() as $component}
 					<div class="rentalPriceRow">
+						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 						{input $component['name']}
 						{input $component['language'] , class => 'notFulltext'}
 						{if $component['filePath']->getValue()}
@@ -703,7 +704,6 @@
 							</span>
 						{/if}
 						{*{input $component['remove'] , class => 'btn btn-cancel remove ajax'}*}
-						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 						{input $component['fileSize']}
 						{input $component['filePath']}
 						{input $component['entity']}
@@ -729,29 +729,78 @@
 }
 {?unset($control)}
 {default $trClass = ''}
+
+<tr class="priceListGroup">
+	<td colspan="3" id="rentalPriceList" class="fieldset">
+		<div class="separator"></div>
+		<div class="extra pull-right">
+			Mena: 
+			<select class="select2">
+				<option>EUR</option>
+				<option>CZK</option>
+				<option>HUF</option>
+			</select>
+		</div>
+		Cenníky <i class="icon-asterisk"></i>
+	</td>
+</tr>
+
 {include #opentag , class => $trClass , control => $container}
 
 	<td class="pricelistControl" colspan="3">
-		{var $replicator = $container->getComponent('list')}
-		{foreach $replicator->getComponents() as $component}
-			<div class="priceList">
-				{input $component['roomCount'] , class => ' pull-left'}
-				{input $component['roomType'] , class => 'string pull-left'}
-				{input $component['bedCount'] , class => 'string pull-left'}
-				{input $component['extraBedCount'] , class => 'string pull-left'}
-
-				{* {input $component['price']['currency'] , class => 'select2'} *}
-				<div class="input-append pull-left">
-					{input $component['price'] , class => 'price' }<span class="add-on">
-						{$component['price']->getOption('append')}
-					</span>
-				</div>
-				{input $component['entityId']}
-
-				<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
-			</div>
-
-		{/foreach}
+		<table class="pricelistTable">
+			<tr>
+				<th>Sezóna</th>
+				<th>Cena</th>
+				<th>Typ ceny</th>
+				<th>
+					<div class="langTabs">
+						<div class="header">
+							<a class="tabPane cs current" data-iso="cs" href="#">CS</a>
+							<a class="tabPane en" data-iso="en" href="#">EN</a>
+							<a class="tabPane de" data-iso="de" href="#">DE</a>
+							<a class="tabPane pl" data-iso="pl" href="#">PL</a>
+							<a class="tabPane pl" data-iso="pl" href="#">HU</a>
+							<a class="tabPane pl" data-iso="pl" href="#">ES</a>
+						</div>
+					</div>
+				</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td class="notes"></td>
+				<td></td>
+			</tr>
+				{var $replicator = $container->getComponent('list')}
+				{foreach $replicator->getComponents() as $component}
+				<tr>
+					<td >
+						{input $component['date']['from'] , class => ' datepicker pull-left' , data-reservations => ''}
+						{input $component['date']['to'] , class => ' datepickerto pull-left' , data-reservations => ''}
+					</td>
+					<td>
+						<div class="input-append pull-left">
+							{input $component['price'] , class => 'price' }<span class="add-on">
+								{$component['price']->getOption('append')}
+							</span>
+						</div>
+						{input $component['entityId']}
+					</td>
+					<td>
+						{input $component['priceType'] , class => ' select2'}
+					</td>
+					<td class="notes">
+						{input $component['notes'] , class => 'string pull-left' , placeholder => "poznamky"}
+					</td>
+					<td>
+						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+					</td>
+				</tr>
+				{/foreach}
+		<table>
 	</td>
 </tr>
 <tr class="pricelistControlButton {$trClass}">

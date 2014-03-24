@@ -64,6 +64,98 @@ form.dashboard {
 
 #content.noPadding {
 
+table.pricelistTable {
+	margin-bottom: 10px;
+	tr {
+		border-bottom: 1px solid #DDD;
+		&:first-child {
+			border-bottom: none;
+		}
+		th {
+			text-align: left;
+
+			.langTabs {
+				font-weight: normal;
+				height: 32px;
+				.header {
+					a.tabPane {
+						padding: 4px 5px;
+						position: relative;
+						top: 4px;
+						float: left;
+						margin: 0 4px 0 -1px;
+						.border-radius(4px 4px 0 0);
+						border: 1px solid #B0C13B;
+						border-bottom: none;
+						&.current {
+							background: #F8FAE9;
+							border-color: #B0C13B;
+							padding-bottom: 5px;
+						}
+					}
+				}
+			}
+		}
+		td {
+			vertical-align: top;
+			input[type="text"], select {
+				margin: 5px 0;
+			}
+			&:nth-child(1) input {
+				width: 65px;
+			}
+			&:nth-child(1) input:nth-child(1) {
+				margin-left: 0;
+				margin-right: 0;
+				.border-radius(3px 0 0 3px);
+			}
+			&:nth-child(1) input:nth-child(2) {
+				margin-left: 0px;
+				margin-right: 8px;
+				.border-radius(0 3px 3px 0);
+				border-left: none;
+			}
+			&:nth-child(3) {
+				.select2-container .select2-choice {
+					width: 115px;
+					margin: 5px 10px 5px 0;
+					padding: 1px 7px;
+				}
+			}
+			.input-append {
+				position: relative;
+				input[type="text"].price {
+					margin-right: 43px;
+				}
+				.add-on {
+					right: 7px;
+					top: 5px;
+				}
+			}
+			.btn.btn-cancel {
+				margin: 5px 0 0 10px;
+			}
+		}
+		td.notes {
+			background: #F8FAE9;
+			border-left: 1px solid #b0c13b;
+			padding-left: 5px;
+			border-right: 1px solid #b0c13b;
+			input {
+				width: 218px;
+				margin-right: 5px;
+			}
+		}
+		&:last-child td.notes {
+			border-bottom: 1px solid #b0c13b; 
+		}
+		&:nth-child(2) td.notes {
+			border-top: 1px solid #b0c13b;
+			height: 5px;
+		}
+	}
+}
+
 table.formTable {
 	// border: 1px solid black;
 	// td {
@@ -84,6 +176,20 @@ table.formTable {
 			color: @red;
 			padding-left: 1px;
 		}
+
+		.extra {
+			font-size: 14px;
+			color: #4A6E85;
+			background: #ECF5F7;
+			padding: 5px 5px 5px 10px;
+			.border-radius(5px);
+			border: 1px solid #739EB9;
+			.select2-container {
+				font-size: 14px;
+				margin-left: 5px;
+			}
+		}
+
 	}
 
 	.separator {
@@ -109,18 +215,12 @@ table.formTable {
 
 	tr td.pricelistControl {
 		.priceList {
-			margin-bottom: 10px;
 			height: 30px;
 		}
 
 		select {
-			margin: 0;
 			margin-right: 10px;
 			width: 70px;
-
-			&.string {
-				width: 127px;
-			}
 		}
 
 		input[type=text].price {
@@ -143,7 +243,6 @@ table.formTable {
 
 		.add-on {
 			position: absolute;
-			width: 100px;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
