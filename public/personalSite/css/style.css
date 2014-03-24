@@ -777,11 +777,26 @@ body.gateway-open {
     font-size: 14px;
 }
 #services .grids.overview .inner-bg {
-  text-decoration: line-through;
+  position: relative;
+}
+#services .grids.overview .inner-bg .line-through {
+  height: 7px;
+  background: #DDD;
+  position: absolute;
+  border: 2px solid #FFF;
+  width: 100px;
+  top: 40px;
+  left: 30px;
+  z-index: 9;
+  transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 #services .grids.overview .inner-bg.active {
   color: #A0B325;
-  text-decoration: none;
+}
+#services .grids.overview .inner-bg.active .line-through {
+  display: none;
 }
 #services .service-title {
   font-size: 18px;
@@ -2307,6 +2322,9 @@ input[type=submit]:hover,
   float: none;
   margin: 0;
   display: inline;
+}
+.select2-results .select2-result-label {
+  min-width: 100px;
 }
 .select2-container .select2-choice .select2-arrow {
   background: #f6f6f6;
