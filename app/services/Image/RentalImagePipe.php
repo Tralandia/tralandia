@@ -23,6 +23,9 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	private $baseUrl;
 
 
+	protected $minDateForFullHd;
+
+
 	/**
 	 * @param $imagePath
 	 * @param $staticDomain
@@ -35,6 +38,7 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 		} else {
 			$this->baseUrl = rtrim($httpRequest->url->baseUrl, '/') . $imagePath;
 		}
+		$this->minDateForFullHd = new \DateTime('2014-03-20');
 	}
 
 
@@ -56,11 +60,16 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	/**
 	 * @param $path
 	 * @param string $size
+	 * @param \DateTime|null $date
 	 *
 	 * @return string
 	 */
-	public function requestForPath($path, $size = Image::MEDIUM)
+	public function requestForPath($path, $size = Image::MEDIUM,\DateTime $date = NULL)
 	{
+		if($size == Image::FULL_HD && $date && $this->minDateForFullHd > $date) {
+			$size = Image::MEDIUM;
+		}
+
 		$targetPath = $path . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
 
 //		$defaultImage = '/default.jpg';
