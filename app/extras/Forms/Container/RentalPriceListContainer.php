@@ -42,8 +42,8 @@ class RentalPriceListContainer extends BaseContainer
 	protected $date;
 	protected $notes;
 
-	protected $minPeople = [1,2,3,4,5,6,7,8,9,10];
-	protected $minNights = [];
+	protected $minPeople;
+	protected $minNights;
 	protected $bedCount = [];
 	protected $extraBedCount = [];
 
@@ -99,11 +99,11 @@ class RentalPriceListContainer extends BaseContainer
 			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
 
-		$container->addSelect('minPeople', '', $this->minPeople);
-		$container->addSelect('minNights', '', $this->minNights);
-		$container->addSelect('roomType', '', $this->roomTypes);
-		$container->addSelect('bedCount', '', $this->bedCount);
-		$container->addSelect('extraBedCount', '', $this->extraBedCount);
+		$container->addText('minPeople', '', $this->minPeople);
+		$container->addText('minNights', '', $this->minNights);
+		$container->addSelect('priceType', '', $this->roomTypes);
+		// $container->addSelect('bedCount', '', $this->bedCount);
+		// $container->addSelect('extraBedCount', '', $this->extraBedCount);
 		$container->addText('notes', '', $this->notes);
 
 		$container->addText('price', 'o100078')
