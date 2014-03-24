@@ -18,7 +18,7 @@
 						<ul class="interviewList hidden" n:inner-foreach="$interviewList as $row">
 							{if !$iterator->first}
 							<li>
-								<h4>{_$row->question}</h4>
+								<h4>{_$row->questionFe|firstUpper}</h4>
 								<p>{_$row->answer}</p>
 							</li>
 							{/if}
