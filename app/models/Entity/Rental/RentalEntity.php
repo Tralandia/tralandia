@@ -341,7 +341,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getServiceByType($type)
 	{
 		return $this->services->filter(function($value) use ($type) {
-			return $value->type == $type;
+			return $value->serviceType == $type;
 		});
 	}
 
