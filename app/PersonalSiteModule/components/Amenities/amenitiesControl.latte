@@ -77,20 +77,20 @@
 						{var $width = 100;}
 					{/if}
 
-					<div class="more-equipment">
-						<table>
-							<tr n:foreach="$rental->getAmenitiesGroupByType(['contact-person-availability','animal']) as $amenities">
-								{var $firstAmenity = reset($amenities)}
-								<td width="$width">{_$firstAmenity->type->nameId|firstUpper}</td>
-								<td>
-									{foreach $amenities as $amenity}
-										{_$amenity->nameId|lower}{if !$iterator->last}, {/if}
-									{/foreach}
-								</td>
+				</div>
+				<div class="grid-12 more-equipment">
+					<table>
+						<tr n:foreach="$rental->getAmenitiesGroupByType(['contact-person-availability','animal']) as $amenities">
+							{var $firstAmenity = reset($amenities)}
+							<td width="$width">{_$firstAmenity->type->nameId|firstUpper}</td>
+							<td>
+								{foreach $amenities as $amenity}
+									{_$amenity->nameId|lower}{if !$iterator->last}, {/if}
+								{/foreach}
+							</td>
 
-							</tr>
-						</table>
-					</div>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
