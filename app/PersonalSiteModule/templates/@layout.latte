@@ -13,6 +13,7 @@
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="{$basePath}/personalSite/libs/select2-master/select2.css" type="text/css" />
@@ -72,14 +73,14 @@
 	<footer class="footer" role="contentinfo">
 		<div class="inner-section">
 			<div class="grids">
+				{*
 				<div class="grid-6">
-					{*
 					<ul class="social-links">
 						<li><a href="//facebook.com/https://www.facebook.com/ubytovanienaslovensku" title="UNS on facebook" class="facebook"></a></li>
 					</ul>
-					*}
 				</div>
-				<div class="grid-6 copyright">
+				*}
+				<div class="grid-12 copyright">
 					<span>created by <a n:href=":Front:Home:default">Tralandia</a></span>
 					<a href="#" id="backToTop"></a>
 				</div>
@@ -90,13 +91,31 @@
 
 	<script n:syntax="double">
 		var fromDateOrigin = {
-			year: 0,
-			month: 0,
-			day:0,
-			date: new Date(),
-			dayPlus:0,
+				year: 0,
+				month: 0,
+				day:0,
+				date: new Date(),
+				dayPlus:0,
+			},
+			reservedDates = [],
+			map;
+
+		function initializeMap(lat, lng) {
+			var latLng = new google.maps.LatLng(lat, lng);
+			var mapOptions = {
+				zoom: 10,
+				center: latLng,
+				scrollwheel: false
+			};
+
+		  	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+		  	var marker = new google.maps.Marker({
+			    position: latLng,
+			    map: map
+			});
 		}
-		var reservedDates = [];
+
 
 		jQuery(document).ready(function($){
 			$(".btn-toggle").click(function(event) {
@@ -110,7 +129,12 @@
 			$(".select2").select2({
 				minimumResultsForSearch: -1,
 			}).on('change', function(event) {
-				return window.location.href = $(this).find('option[value="'+event.val+'"]').data('redirect-url');
+				var redirectUrl = $(this).find('option[value="'+event.val+'"]').data('redirect-url');
+				if (redirectUrl) {
+					return window.location.href = redirectUrl;
+				} else {
+					return;
+				}
 			});
 
 			var reservedDatesVal = $(".datepicker").attr('data-reservations').split(',');
@@ -185,12 +209,12 @@
 			var $logoImage = $("#logo .img");
 			*/
 			var $window = $(window);
-			var $mapImage = $('#map img');
+			var $map = $('#map');
 			var mapShown = false;
 			$window.scroll(function(event) {
-				if ($mapImage.is(':in-viewport') && !mapShown) {
+				if ($map.is(':in-viewport') && !mapShown) {
 					{{var $gps = $rental->address->getGps()}}
-					$mapImage.parent().html('<iframe width="570" height="340" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{$gps->getLatitude()}},{{$gps->getLongitude()}}&key=AIzaSyCiKBItRcP8_iSzxbiLB4_iqc6nxTMk3Ms"></iframe>');
+					initializeMap({{$gps->getLatitude()}}, {{$gps->getLongitude()}});
 					mapShown = true;
 				}
 				// if ($window.scrollTop() > $slideshow.height()) {
@@ -240,7 +264,8 @@
 			js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1&appId=223816517744809";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
-	</script>
+
+    </script>
 
 	<script type="text/javascript" src="{$basePath}/personalSite/js/superfish.js?ver=3.8.1"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/js/supersubs.js?ver=3.8.1"></script>
