@@ -6,10 +6,11 @@
 			<td colspan="3">{_o100147}</td>
 		</tr>
 
+		{include #select, control => $form['currency'] , controlClass => 'select2'}
+
 		{include #text, control => $form['price']}
 
 		{include #fieldset, text => 'o933' , id => 'rentalPriceList', trClass => 'priceListGroup' , required => true}
-
 		{include #rentalPriceList, control => $form['priceList'], trClass => 'priceListGroup'}
 
 		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload', trClass => 'priceUploadGroup'}

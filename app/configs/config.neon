@@ -436,6 +436,7 @@ services:
 	#==========================================================#
 	############################################################
 
+	- \Tralandia\Currency\Currencies(@doctrine.dao(Entity\Currency))
 	- \Tralandia\Rental\Amenities(@doctrine.dao(Entity\Rental\Amenity), @doctrine.dao(Entity\Rental\Amenity))
 	- \Tralandia\Dictionary\FulltextSearch(@doctrine.dao(Entity\Phrase\Translation))
 	- \Tralandia\Language\Languages(@doctrine.dao(Entity\Language))

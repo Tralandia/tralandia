@@ -192,10 +192,22 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $pricesUponRequest = FALSE;
 
 	/**
+	 * @var \Entity\Currency
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
+
+	/**
 	 * @var price
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $price;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="CustomPricelistRow", mappedBy="rental", cascade={"persist", "remove"})
+	 */
+	protected $customPricelistRows;
 
 	/**
 	 * @var Collection
@@ -627,9 +639,20 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 
+	/**
+	 * @param \Entity\Currency $currency
+	 */
+	public function setCurrency(\Entity\Currency $currency)
+	{
+		$this->currency = $currency;
+	}
+
+	/**
+	 * @return \Entity\Currency
+	 */
 	public function getCurrency()
 	{
-		return $this->getAddress()->getPrimaryLocation()->getDefaultCurrency();
+		return $this->currency ? : $this->getAddress()->getPrimaryLocation()->getDefaultCurrency();
 	}
 
 
@@ -907,6 +930,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->placements = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->customPricelistRows = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelistRows = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;

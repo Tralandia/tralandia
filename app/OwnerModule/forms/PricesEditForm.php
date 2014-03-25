@@ -5,6 +5,7 @@ namespace OwnerModule\Forms;
 use Entity\Rental\Rental;
 use Environment\Environment;
 use Nette\Localization\ITranslator;
+use Tralandia\Currency\Currencies;
 
 class PricesEditForm extends BaseForm {
 
@@ -18,21 +19,30 @@ class PricesEditForm extends BaseForm {
 	 */
 	private $environment;
 
+	/**
+	 * @var \Tralandia\Currency\Currencies
+	 */
+	private $currencies;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Environment\Environment $environment
+	 * @param \Tralandia\Currency\Currencies $currencies
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Rental $rental, Environment $environment, ITranslator $translator){
+	public function __construct(Rental $rental, Environment $environment, Currencies $currencies, ITranslator $translator){
 		$this->rental = $rental;
 		$this->environment = $environment;
+		$this->currencies = $currencies;
 		parent::__construct($translator);
 	}
 
 
 	public function buildForm() {
 		$currency = $this->rental->getPrimaryLocation()->getDefaultCurrency();
+
+		$this->addSelect('currency', '!mena', $this->currencies->getForSelect());
 
 		$this->addText('price', 'o100078')
 			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))

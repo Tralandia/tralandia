@@ -730,21 +730,6 @@
 {?unset($control)}
 {default $trClass = ''}
 
-<tr class="priceListGroup">
-	<td colspan="3" id="rentalPriceList" class="fieldset">
-		<div class="separator"></div>
-		<div class="extra pull-right">
-			Mena: 
-			<select class="select2">
-				<option>EUR</option>
-				<option>CZK</option>
-				<option>HUF</option>
-			</select>
-		</div>
-		Cenníky <i class="icon-asterisk"></i>
-	</td>
-</tr>
-
 {include #opentag , class => $trClass , control => $container}
 
 	<td class="pricelistControl" colspan="3">
