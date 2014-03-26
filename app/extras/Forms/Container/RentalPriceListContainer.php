@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\Currency;
 use Entity\Rental\Rental;
 use Environment\Collator;
+use Environment\Environment;
 use Nette\Forms\Container;
 use Nette\Localization\ITranslator;
 use Nette\DateTime;
@@ -33,82 +34,89 @@ class RentalPriceListContainer extends BaseContainer
 	 */
 	protected $translator;
 
+	protected $priceForOptions;
+	protected $importantLanguages;
+
 	/**
-	 * @var \Entity\Currency
+	 * @var \Environment\Environment
 	 */
-	protected $currency;
-	protected $roomTypes;
-
-	protected $date;
-	protected $notes;
-
-	protected $minPeople;
-	protected $minNights;
-	protected $bedCount = [];
-	protected $extraBedCount = [];
+	private $environment;
 
 
-	public function __construct(Currency $currency, EntityManager $em, Rental $rental = NULL, ITranslator $translator, Collator $collator)
+	public function __construct(Rental $rental, EntityManager $em, Environment $environment)
 	{
 		parent::__construct();
 		$this->em = $em;
 
+		$this->environment = $environment;
 		$this->rental = $rental;
-		$this->translator = $translator;
-		$this->currency = $currency;
+		$this->translator = $environment->getTranslator();
+		$languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$centralLanguage = $languageRepository->find(CENTRAL_LANGUAGE);
+		$this->importantLanguages = $this->rental->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 
-		$rows = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->findAll();
-		$roomTypes = [];
-		foreach($rows as $row) {
-			$roomTypes[$row->id] = $translator->translate($row->name);
-		}
-		$collator->asort($roomTypes);
-		$this->roomTypes = $roomTypes;
 
-		$this->pricelistRows = $this->rental->getPricelistRows();
-
-		$maxCount = 51;
-
-		$this->extraBedCount[0] = "0 ".$translator->translate('o100000',0);
-		for($i=1;$i<$maxCount;$i++) {
-			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
-			// $this->roomCount[$i] = "{$i}x";
-			// $this->bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
-		}
+//		$rows = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->findAll();
+		$this->priceForOptions = [
+			'foo', 'bar', 'baz'
+		];
 
 		$this->addDynamic('list', $this->containerBuilder, 1);
 	}
 
 
+	/**
+	 * @return \Entity\Language
+	 */
+	public function getEnvironmentLanguage()
+	{
+		return $this->environment->getLanguage();
+	}
+
+
+	/**
+	 * @return array|\Entity\Language[]
+	 */
+	public function getImportantLanguages()
+	{
+		return $this->importantLanguages;
+	}
+
+
 	public function containerBuilder(Container $container)
 	{
-		$date = $container->addContainer('date');
 		$today = (new DateTime)->modify('today');
-		$dateFromControl = $date->addAdvancedDatePicker('from')
+
+		$dateFromControl = $container->addAdvancedDatePicker('seasonFrom')
 			->getControlPrototype()
 			->setPlaceholder($this->translator->translate('o1043'));
 
 		$dateFromControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
 			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
-		$dateToControl = $date->addAdvancedDatePicker('to')
+		$dateToControl = $container->addAdvancedDatePicker('seasonTo')
 			->getControlPrototype()
 			->setPlaceholder($this->translator->translate('o1044'));
 
 		$dateToControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
 			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
-
-		$container->addText('minPeople', '', $this->minPeople);
-		$container->addText('minNights', '', $this->minNights);
-		$container->addSelect('priceType', '', $this->roomTypes);
-		// $container->addSelect('bedCount', '', $this->bedCount);
-		// $container->addSelect('extraBedCount', '', $this->extraBedCount);
-		$container->addText('notes', '', $this->notes);
-
 		$container->addText('price', 'o100078')
-			->setOption('append', $this->currency->getIso())
+			->setOption('append', $this->rental->getCurrency()->getIso())
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
+
+		$container->addSelect('priceFor', '', $this->priceForOptions);
+
+		$noteContainer = $container->addContainer('note');
+
+		foreach($this->importantLanguages as $language) {
+			$iso = $language->getIso();
+
+			$noteContainer->addText($iso, '');
+//				->setOption('help', $this->translator->translate('o100071', null, null, null, $language))
+//				->addRule(\FrontModule\Forms\BaseForm::MAX_LENGTH, $this->translator->translate('o100101'), 70);
+
+		}
 
 		$container->addHidden('entityId', '');
 	}
@@ -119,30 +127,39 @@ class RentalPriceListContainer extends BaseContainer
 			? ['list'=>[]]
 			: \Nette\ArrayHash::from(['list'=>[]]);
 
-		$pricelistRowRepository = $this->em->getRepository(RENTAL_PRICELIST_ROW_ENTITY);
-		$roomTypeRepository = $this->em->getRepository(RENTAL_ROOM_TYPE_ENTITY);
+		$customPricelistRowRepository = $this->em->getRepository(RENTAL_CUSTOM_PRICELIST_ROW_ENTITY);
 
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
+			$i = 0;
 			foreach($list as $key => $row) {
-				if (!$row['price']) continue;
+				$hasNote = FALSE;
+				foreach($row['note'] as $text) {
+					if(strlen($text)) $hasNote = TRUE;
+				}
+				if (!$row['seasonFrom'] && !$row['seasonTo'] && !$row['price'] && !$row['priceFor'] && !$hasNote) continue;
 
 				$rowEntity = NULL;
 				if (isset($row->entityId)) {
-					$rowEntity = $pricelistRowRepository->find($row->entityId);
+					$rowEntity = $customPricelistRowRepository->find($row->entityId);
 				}
 				if (!$rowEntity) {
-					$rowEntity = $pricelistRowRepository->createNew();
+					$rowEntity = $customPricelistRowRepository->createNew();
 				}
-				$rowEntity->rental = $this->rental;
-				$rowEntity->roomCount = $row['roomCount'];
-				$rowEntity->roomType = $roomTypeRepository->find($row['roomType']);
-				$rowEntity->bedCount = $row['bedCount'];
-				$rowEntity->extraBedCount = $row['extraBedCount'];
-				$rowEntity->price = new \Extras\Types\Price($row['price'], $this->currency);
+				/** @var $rowEntity \Entity\Rental\CustomPricelistRow */
+
+				$rowEntity->setSort($i);
+				$rowEntity->setSeasonFrom($row['seasonFrom']);
+				$rowEntity->setSeasonTo($row['seasonTo']);
+				$rowEntity->setFloatPrice($row['price']);
+				$note = $rowEntity->getNote();
+				foreach($this->importantLanguages as $language) {
+					$note->setOrCreateTranslationText($language, $row['note'][$language->getIso()]);
+				}
 
 				$row['entity'] = $rowEntity;
 				$values['list'][$key] = $row;
+				$i++;
 			}
 		}
 		return $values;
@@ -151,12 +168,20 @@ class RentalPriceListContainer extends BaseContainer
 	public function setDefaultsValues()
 	{
 		$priceLists = [];
-		foreach($this->pricelistRows as $pricelistRow) {
+		foreach($this->rental->getCustomPricelistRows() as $row) {
+			$note = [];
+			foreach ($row->getNote()->getTranslations() as $translation) {
+				$language = $translation->getLanguage();
+				$note[$language->getIso()] = $translation->getTranslation();
+			}
+
 			$priceLists[] = [
-				// 'minPeople' => $pricelistRow->getMinPeople(),
-				'extraBedCount' => $pricelistRow->getExtraBedCount(),
-				'price' => $pricelistRow->getPrice()->getSourceAmount(),
-				'entityId' => $pricelistRow->id
+				'seasonFrom' => $row->getSeasonFrom(),
+				'seasonTo' => $row->getSeasonTo(),
+				'price' => $row->getPrice()->getSourceAmount(),
+				//'priceFor' => $row->getPriceFor(),
+				'entityId' => $row->getId(),
+				'note' => $note,
 			];
 		}
 
