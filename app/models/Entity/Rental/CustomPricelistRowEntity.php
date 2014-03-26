@@ -11,6 +11,14 @@ use Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="rental_custompricelistrow")
  *
+ * @method \DateTime getSeasonFrom()
+ * @method setSeasonFrom(\DateTime $from)
+ * @method \DateTime getSeasonTo()
+ * @method setSeasonTo(\DateTime $to)
+ * @method \Entity\Phrase\Phrase getNote()
+ * @method setRental(\Entity\Rental\Rental $rental)
+ * @method setSort($int)
+ * @method int getSort()
  *
  */
 class CustomPricelistRow extends \Entity\BaseEntity
@@ -84,13 +92,23 @@ class CustomPricelistRow extends \Entity\BaseEntity
 
 	public function setFloatPrice($price)
 	{
-		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+		$this->price = $price;
 	}
 
 
 	public function getCurrency()
 	{
 		return $this->getRental()->getCurrency();
+	}
+
+	public function getPriceFor()
+	{
+		return $this->priceFro1 . '/' . $this->priceFro2;
+	}
+
+	public function unsetRental()
+	{
+		$this->rental = NULL;
 	}
 
 }

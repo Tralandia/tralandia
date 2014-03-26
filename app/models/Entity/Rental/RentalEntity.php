@@ -30,6 +30,7 @@ use Nette\Utils\Strings;
  *
  * @method setRegisteredFromEmail()
  * @method setLastUpdate()
+ * @method \Entity\Rental\CustomPricelistRow[] getCustomPricelistRows()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -1508,6 +1509,33 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
+
+	/**
+	 * @param \Entity\Rental\CustomPricelistRow
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addCustomPricelistRow(\Entity\Rental\CustomPricelistRow $pricelistRow)
+	{
+		if(!$this->customPricelistRows->contains($pricelistRow)) {
+			$this->customPricelistRows->add($pricelistRow);
+		}
+		$pricelistRow->setRental($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entity\Rental\CustomPricelistRow
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeCustomPricelistRow(\Entity\Rental\CustomPricelistRow $pricelistRow)
+	{
+		$this->customPricelistRows->removeElement($pricelistRow);
+		$pricelistRow->unsetRental();
+
+		return $this;
+	}
+
 
 	/**
 	 * @param \Entity\Rental\PricelistRow

@@ -27,7 +27,11 @@ class PricesEditPresenter extends BasePresenter
 
 	protected function createComponentPricesEditForm(\OwnerModule\Forms\IPricesEditFormFactory $factory)
 	{
-		return $factory->create($this->rental, $this->environment);
+		$form = $factory->create($this->rental, $this->environment);
+		$form->onSuccess[] = function($form) {
+			$this->redirect('this');
+		};
+		return $form;
 	}
 
 }

@@ -11,10 +11,11 @@
 		{include #text, control => $form['price']}
 
 		{include #fieldset, text => 'o933' , id => 'rentalPriceList', trClass => 'priceListGroup' , required => true}
-		{include #rentalPriceList, control => $form['priceList'], trClass => 'priceListGroup'}
+		{include #rentalPriceList, control => $form['customPriceList'], trClass => 'priceListGroup'}
 
 		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload', trClass => 'priceUploadGroup'}
 		{include #rentalPriceUpload, control => $form['priceUpload'], trClass => 'priceUploadGroup'}
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
 
 	</table>
 {/form}

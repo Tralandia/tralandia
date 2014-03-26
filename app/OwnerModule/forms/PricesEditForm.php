@@ -2,6 +2,9 @@
 
 namespace OwnerModule\Forms;
 
+use Doctrine\ORM\EntityManager;
+use Entity\Rental\CustomPricelistRow;
+use Entity\Rental\Pricelist;
 use Entity\Rental\Rental;
 use Environment\Environment;
 use Nette\Localization\ITranslator;
@@ -24,23 +27,30 @@ class PricesEditForm extends BaseForm {
 	 */
 	private $currencies;
 
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	private $em;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
+	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Environment\Environment $environment
 	 * @param \Tralandia\Currency\Currencies $currencies
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Rental $rental, Environment $environment, Currencies $currencies, ITranslator $translator){
+	public function __construct(Rental $rental, Environment $environment, EntityManager $em, Currencies $currencies, ITranslator $translator){
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->currencies = $currencies;
 		parent::__construct($translator);
+		$this->em = $em;
 	}
 
 
 	public function buildForm() {
-		$currency = $this->rental->getPrimaryLocation()->getDefaultCurrency();
+		$currency = $this->rental->getCurrency();
 
 		$this->addSelect('currency', '!mena', $this->currencies->getForSelect());
 
@@ -50,7 +60,7 @@ class PricesEditForm extends BaseForm {
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
 
-		$this->addRentalPriceListContainer('priceList', $currency, $this->rental);
+		$this->addRentalPriceListContainer('customPriceList', $this->rental);
 
 		$this->addRentalPriceUploadContainer('priceUpload', $this->rental);
 
@@ -59,7 +69,7 @@ class PricesEditForm extends BaseForm {
 		$this->onSuccess[] = [$this, 'process'];
 
 		$this->onAttached[] = function(\Nette\Application\UI\Form $form) {
-			$form['priceList']->setDefaultsValues();
+			$form['customPriceList']->setDefaultsValues();
 			$form['priceUpload']->setDefaultsValues();
 		};
 
@@ -67,13 +77,50 @@ class PricesEditForm extends BaseForm {
 
 	public function setDefaultsValues()
 	{
-
+		$rental = $this->rental;
+		$defaults = [
+			'currency' => $rental->getCurrency()->getId(),
+			'price' => $rental->getPrice()->getSourceAmount(),
+		];
+		$this->setDefaults($defaults);
 	}
 
-	public function process(UserEditForm $form)
+	public function process(PricesEditForm $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getFormattedValues();
 
+		$rental = $this->rental;
+
+		$currency = $this->em->getRepository(CURRENCY_ENTITY)->find($values['currency']);
+		$rental->setCurrency($currency);
+
+		$rental->setFloatPrice($values['price']);
+
+		if ($value = $values['customPriceList']) {
+			$pricelistRows = $rental->getCustomPricelistRows();
+			foreach ($pricelistRows as $pricelistRow) {
+				$rental->removeCustomPricelistRow($pricelistRow);
+			}
+			foreach ($value['list'] as $pricelistRow) {
+				if ($pricelistRow->entity instanceof CustomPricelistRow) {
+					$rental->addCustomPricelistRow($pricelistRow->entity);
+				}
+			}
+		}
+
+		if ($value = $values['priceUpload']) {
+			$priceLists = $rental->getPricelists();
+			foreach ($priceLists as $priceList) {
+				$rental->removePricelist($priceList);
+			}
+			foreach ($value['list'] as $priceList) {
+				if ($priceList->entity instanceof Pricelist) {
+					$rental->addPricelist($priceList->entity);
+				}
+			}
+		}
+
+		$this->em->flush();
 	}
 
 }

@@ -741,12 +741,14 @@
 				<th>
 					<div class="langTabs">
 						<div class="header">
-							<a class="tabPane cs current" data-iso="cs" href="#">CS</a>
-							<a class="tabPane en" data-iso="en" href="#">EN</a>
-							<a class="tabPane de" data-iso="de" href="#">DE</a>
-							<a class="tabPane pl" data-iso="pl" href="#">PL</a>
-							<a class="tabPane pl" data-iso="pl" href="#">HU</a>
-							<a class="tabPane pl" data-iso="pl" href="#">ES</a>
+							{foreach $container->getImportantLanguages() as $language}
+								{if $language->getIso() == $container->getEnvironmentLanguage()->getIso()}
+									{var $current = 'current'}
+								{else}
+									{var $current = ''}
+								{/if}
+								<a class="tabPane {$current} {$language->getIso()}" data-iso="{$language->getIso()}" href="#">{$language->getIso()|upper}</a>
+							{/foreach}
 						</div>
 					</div>
 				</th>
@@ -763,8 +765,8 @@
 				{foreach $replicator->getComponents() as $component}
 				<tr>
 					<td >
-						{input $component['date']['from'] , class => ' datepicker pull-left' , data-reservations => ''}
-						{input $component['date']['to'] , class => ' datepickerto pull-left' , data-reservations => ''}
+						{input $component['seasonFrom'] , class => ' datepicker pull-left' , data-reservations => ''}
+						{input $component['seasonTo'] , class => ' datepickerto pull-left' , data-reservations => ''}
 					</td>
 					<td>
 						<div class="input-append pull-left">
@@ -772,20 +774,28 @@
 								{$component['price']->getOption('append')}
 							</span>
 						</div>
-						{input $component['entityId']}
+
 					</td>
 					<td>
-						{input $component['priceType'] , class => ' select2'}
+						{input $component['priceFor'] , class => ' select2'}
 					</td>
 					<td class="notes">
-						{input $component['notes'] , class => 'string pull-left' , placeholder => "poznamky"}
+						{foreach $component['note']->getControls() as $control}
+							{if $control->getName() == $container->getEnvironmentLanguage()->getIso()}
+								{var $hide = ''}
+							{else}
+								{var $hide = 'hide'}
+							{/if}
+							{input $control , class => $control->getName().' selectLanguageBasicInformation toggleLanguage string pull-left '.$hide}
+						{/foreach}
 					</td>
 					<td>
 						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 					</td>
+					{input $component['entityId']}
 				</tr>
 				{/foreach}
-		<table>
+		</table>
 	</td>
 </tr>
 <tr class="pricelistControlButton {$trClass}">

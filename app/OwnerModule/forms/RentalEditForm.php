@@ -125,7 +125,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	{
 		$phonePrefixes = $this->countries->getPhonePrefixes();
 		$centralLanguage = $this->languageRepository->find(CENTRAL_LANGUAGE);
-		$importantLanguages = $this->environment->getPrimaryLocation()->getImportantLanguages($centralLanguage);
+		$importantLanguages = $this->rental->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 		$importantLanguagesForSelect = [];
 		foreach($importantLanguages as $language) {
 			$importantLanguagesForSelect[$language->getId()] = $this->translate($language->getName());
