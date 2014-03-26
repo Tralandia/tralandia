@@ -5,7 +5,7 @@
 				<h3 class="sub-heading">{_575}</h3>
 				<div class="row contact-row"><i class="icon icon-user"></i> {$rental->contactName}</div>
 				<address>
-					<div class="row contact-row"><i class="icon icon-home"></i> {$rental->address}</div>
+					<div class="row contact-row"><i class="icon icon-home"></i> {$rental->address->toString()}</div>
 				</address>
 				<div class="row contact-row"><i class="icon icon-envelope"></i> {$rental->email}</div>
 				<div class="row contact-row"><i class="icon icon-phone"></i> {$rental->phone->international}</div>

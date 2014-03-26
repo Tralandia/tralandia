@@ -12,7 +12,7 @@ use Nette;
 
 /**
  * @property int $id
- * @property string $formattedAddress
+ * @property string|null $formattedAddress
  * @property string $address
  * @property string $postalCode
  * @property float $latitude
@@ -28,10 +28,18 @@ class Address extends \Tralandia\Lean\BaseEntity
 		if($this->formattedAddress) {
 			return "{$this->formattedAddress}";
 		} else {
-			return "{$this->address}, {$this->postalCode} {$this->locality->name}";
+			return "{$this->address}, {$this->postalCode}" . (isset($this->locality) ? ' ' . $this->locality->localName : NULL);
 		}
 	}
 
+	public function toString()
+	{
+		if($this->formattedAddress) {
+			return "{$this->formattedAddress}";
+		} else {
+			return "{$this->address}, {$this->postalCode}" . (isset($this->locality) ? ' ' . $this->locality->localName : NULL);
+		}
+	}
 
 	/**
 	 * @param \Extras\Types\Latlong
