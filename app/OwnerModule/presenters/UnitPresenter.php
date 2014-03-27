@@ -4,6 +4,7 @@ namespace OwnerModule;
 
 
 use BaseModule\Forms\SimpleForm;
+use Nette\Application\UI\Multiplier;
 
 class UnitPresenter extends BasePresenter
 {
@@ -13,21 +14,41 @@ class UnitPresenter extends BasePresenter
 	 */
 	protected $currentRental;
 
+	protected $rentals;
+
 	public function actionDefault()
 	{
-		$this->template->rentals = $this->loggedUser->getRentals();
+		$this->template->rentals = $this->rentals = $this->loggedUser->getRentals();
 	}
 
 	public function createComponentUnitForm()
 	{
 		$form = $this->simpleFormFactory->create();
-		// $form->addUnitContainer('units', 'Unit', $this->currentRental->getUnits());
+		foreach($this->rentals as $rental) {
+			$form->addDynamic($rental->getId(), $this->rentalUnitsBuilder, 1);
+		}
 
-		// $form->addSubmit('submit', 'o100083');
+		$form->addSubmit('submit', '!!!ulozit');
 
-		$form->onSuccess[] = $this->processUnitForm;
+		$this->setDefaults($form);
 
-		// return $form;
+		return $form;
+	}
+
+	public function rentalUnitsBuilder(\Nette\Forms\Container $container)
+	{
+		$container->addText('name', '');
+		$container->addText('maxCapacity', '');
+		$container->addHidden('entityId', '');
+	}
+
+	protected function setDefaults(\BaseModule\Forms\SimpleForm $form)
+	{
+		$defaults = [];
+		foreach($this->rentals as $rental) {
+
+		}
+		$form->setDefaults($defaults);
 	}
 
 	public function processUnitForm(SimpleForm $form)
