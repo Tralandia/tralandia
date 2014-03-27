@@ -10,7 +10,7 @@
 	{var $tempCacheOptions = $getCacheOptions('rentalDetail', ['rental' => $rental->getId()])}
 
 	{cache $tempCacheOptions['key'],
-		if => $tempCacheOptions['enabled'],
+		if => $tempCacheOptions['enabled'] && !($loggedUser && $loggedUser->getId() == $rental->getOwner()->getId()),
 		expire => $tempCacheOptions['expiration'],
 		tags => $tempCacheOptions['tags']}
 
