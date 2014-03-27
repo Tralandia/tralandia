@@ -124,6 +124,14 @@
 								{/if}
 								{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
 							{/foreach}
+							{foreach $rentalContainer['description']->getControls() as $control}
+								{if $control->getName() == $environmentLanguage->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #textArea, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
 						</table>
 					</div>
 				</div>

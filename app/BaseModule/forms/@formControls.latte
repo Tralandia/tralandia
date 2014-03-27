@@ -57,7 +57,8 @@
 	@param $control \Nette\Forms\Controls\BaseControl
 	*}
 	{define #textArea}
-	{include #baseControl, control => $control}
+	{default $class = ''}
+	{include #baseControl, control => $control, class => $class}
 	{/define #textArea}
 
 

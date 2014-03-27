@@ -1,41 +1,46 @@
-{var $interviewList = $rental->getInterview()}
-{var $isAnyQuestionAnswered = $rental->isAnyQuestionAnswered()}
+{var $twoColumnLaytou = $rental->isAnyQuestionAnswered() || $rental->hasDescription()}
 
 <!-- BEGIN #services -->
 <section id="services" class="section-block content-section">
 	<div class="inner-section">
 		<div class="entry-content">
 			<div class="grids">
-				{if $isAnyQuestionAnswered}
+				{if $twoColumnLaytou}
 				<div class="grid-8">
 					<div class="metaObjectInfo" id="interviewAnswers">
+						{if $rental->hasDescription()}
+							{var $descriptionPhraseIdTemp = $rental->descriptionId}
+						{else}
+							{var $descriptionPhraseIdTemp = $rental->getFirstAnswer()->answerId}
+						{/if}
 						<div>
-							{_$rental->getFirstAnswer()->answerId}
+							{_$descriptionPhraseIdTemp}
 						</div>
 						<div class="btn-more">
 							<button class="btn-toggle" data-toggle="interviewAnswers"><i class="icon icon-chevron-down"></i> Read full interview</button>
 						</div>
-						<ul class="interviewList hidden" n:inner-foreach="$interviewList as $row">
-							{if !$iterator->first}
+						<ul class="interviewList hidden" n:inner-foreach="$rental->getInterview() as $row">
+							{if $iterator->first && !$rental->hasDescription()}
+								{?contunue}
+							{/if}
 							<li>
 								<h4>{_$row->questionFe|firstUpper}</h4>
 								<p>{_$row->answer}</p>
 							</li>
-							{/if}
 						</ul>
 						<div class="clearfix"></div>
 					</div>
 				</div>
 				{/if}
-				<div n:class="$isAnyQuestionAnswered ? grid-4 : grid-12">
+				<div n:class="$twoColumnLaytou ? grid-4 : grid-12">
 					<div class="grids overview">
-						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
+						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
 							<div class="inner-bg active">
 								<i class="icon icon-group"></i>
 								<h3 class="service-title">Max. {$rental->getMaxCapacity()} osob</h3>
 							</div>
 						</figure>
-						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
+						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
 							<div n:class="$rental->hasBoard() ? 'inner-bg active' : 'inner-bg' ">
 								<i class="icon icon-cutlery"></i>
 								<h3 class="service-title" n:inner-foreach="$rental->getBoard() as $row">
@@ -43,13 +48,13 @@
 								</h3>
 							</div>
 						</figure>
-						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
+						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
 							<div n:class="$rental->hasWifi() ? 'inner-bg active' : 'inner-bg' ">
 								<i class="icon icon-rss rotate-45-left"></i>
 								<h3 class="service-title">WiFi</h3>
 							</div>
 						</figure>
-						<figure n:class="$isAnyQuestionAnswered ? grid-6 : grid-3">
+						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
 							{var $isPetAllowed = $rental->isPetAllowed()}
 							<div n:class="$isPetAllowed ? 'inner-bg active' : 'inner-bg' ">
 								<i class="icon icon-github-alt"></i>
@@ -64,7 +69,7 @@
 						</figure>
 					</div>
 					{var $width = 150;}
-					{if $isAnyQuestionAnswered}
+					{if $twoColumnLaytou}
 						{var $width = 100;}
 					{/if}
 

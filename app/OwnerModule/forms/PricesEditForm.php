@@ -13,6 +13,12 @@ use Tralandia\Currency\Currencies;
 class PricesEditForm extends BaseForm {
 
 	/**
+	 * @var array
+	 */
+	public $onSave = [];
+
+
+	/**
 	 * @var \Entity\Rental\Rental
 	 */
 	private $rental;
@@ -121,6 +127,7 @@ class PricesEditForm extends BaseForm {
 		}
 
 		$this->em->flush();
+		$this->onSave($rental);
 	}
 
 }
