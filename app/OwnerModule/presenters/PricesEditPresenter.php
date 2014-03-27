@@ -21,6 +21,7 @@ class PricesEditPresenter extends BasePresenter
 	public function actionDefault($id)
 	{
 		$this->rental = $this->findRental($id, TRUE);
+		$this->template->rental = $this->rental;
 		$this->checkPermission($this->rental, 'edit');
 
 	}

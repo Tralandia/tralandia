@@ -688,6 +688,26 @@ limit ' . $limit;
 		return Strings::webalize($text);
 	}
 
+	public function actionCreatePhraseForRentalDescription($limit = 100)
+	{
+		$query = 'SELECT r FROM \Entity\Rental\Rental r WHERE r.description IS NULL';
+		$query = $this->rentalDao->createQuery($query);
+		$query->setMaxResults($limit);
+
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($this->em);
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($query->getResult() as $rental) {
+			$phraseTypeName = '\Entity\Rental\Rental:description';
+			$rental->setDescription($phraseCreator->create($phraseTypeName));
+		}
+
+		$this->em->flush();
+
+		$this->payload->success = true;
+		$this->payload->time = time();
+		$this->sendPayload();
+	}
 
 }
 

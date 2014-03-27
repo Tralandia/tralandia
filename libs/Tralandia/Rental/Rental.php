@@ -12,6 +12,7 @@ use Nette;
 
 /**
  * @property int $id
+ * @property \Tralandia\Phrase\Phrase $description m:hasOne(description_id:)
  * @property int $maxCapacity
  * @property string $calendar
  * @property string $contactName
@@ -30,6 +31,7 @@ use Nette;
  * @property \Tralandia\Rental\InterviewAnswer[] $interviewAnswers m:belongsToMany m:filter(sort#question_id)
  * @property \Tralandia\Rental\Image[] $images m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListRow[] $priceList m:belongsToMany
+ * @property \Tralandia\Rental\CustomPriceListRow[] $customPriceList m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListFile[] $priceListFiles m:belongsToMany(rental_id:rental_pricelist)
  */
 class Rental extends \Tralandia\Lean\BaseEntity
@@ -60,6 +62,23 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	public function getTeaserId()
 	{
 		return $this->row->teaser_id;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDescriptionId()
+	{
+		return $this->row->description_id;
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function hasDescription()
+	{
+		return (bool) $this->description->getTranslationsCount();
 	}
 
 	/**

@@ -57,6 +57,7 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 		return [
 			'FormHandler\RegistrationHandler::onSuccess',
 			'FormHandler\RentalEditHandler::onSubmit' => 'onSuccess',
+			'OwnerModule\Forms\PricesEditForm::onSave' => 'onSuccess',
 		];
 	}
 
@@ -76,6 +77,7 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 		if(!$options || in_array(self::CLEAR_DICTIONARY, $options)) {
 			$this->translatorCache->remove($rental->getName()->getId());
 			$this->translatorCache->remove($rental->getTeaser()->getId());
+			$this->translatorCache->remove($rental->getDescription()->getId());
 			foreach($rental->getInterviewAnswers() as $answer) {
 				$this->translatorCache->remove($answer->getAnswer()->getId());
 			}

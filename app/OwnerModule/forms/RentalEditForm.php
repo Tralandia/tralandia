@@ -169,6 +169,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
+		$descriptionContainer = $rentalContainer->addContainer('description');
 		$interviewContainer = $rentalContainer->addContainer('interview');
 
 		foreach($questions as $question) {
@@ -184,6 +185,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
 				->setOption('help', $this->translate('726', null, null, null, $language));
+
+			$descriptionContainer->addTextArea($iso, $this->translate('!!!opis', null, null, null, $language))
+				->setOption('help', $this->translate('!!!help', null, null, null, $language));
+
 			$i = 1;
 			foreach($questions as $question) {
 				$interviewContainer[$question->getId()]->addTextArea($iso, $i.'. '.$question->getQuestion()->getTranslationText($language));

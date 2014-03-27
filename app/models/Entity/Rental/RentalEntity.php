@@ -31,6 +31,8 @@ use Nette\Utils\Strings;
  * @method setRegisteredFromEmail()
  * @method setLastUpdate()
  * @method \Entity\Rental\CustomPricelistRow[] getCustomPricelistRows()
+ * @method setDescription(\Entity\Phrase\Phrase $phrase)
+ * @method \Entity\Phrase\Phrase getDescription()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -122,6 +124,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $teaser;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $description;
 
 	/**
 	 * @var string

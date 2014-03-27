@@ -138,7 +138,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$rentalInfo = ['name', 'teaser'];
+		$rentalInfo = ['name', 'teaser', 'description'];
 		foreach ($rentalInfo as $infoName) {
 			if($value = $validValues[$infoName]) {
 				$phrase = $rental->{$infoName};
