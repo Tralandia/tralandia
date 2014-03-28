@@ -734,7 +734,7 @@
 {include #opentag , class => $trClass , control => $container}
 
 	<td class="pricelistControl" colspan="3">
-		<table class="pricelistTable">
+		<table class="pricelistTable sortable">
 			<tr>
 				<th>Sezóna</th>
 				<th>Cena</th>
@@ -764,8 +764,9 @@
 			</tr>
 				{var $replicator = $container->getComponent('list')}
 				{foreach $replicator->getComponents() as $component}
-				<tr>
+				<tr class="priceList">
 					<td >
+						<div class="dragger"><i class="icon-list-ul"></i></div>
 						{input $component['seasonFrom'] , class => ' datepicker pull-left' , data-reservations => ''}
 						{input $component['seasonTo'] , class => ' datepickerto pull-left' , data-reservations => ''}
 					</td>
@@ -775,7 +776,6 @@
 								{$component['price']->getOption('append')}
 							</span>
 						</div>
-
 					</td>
 					<td>
 						{input $component['priceFor'] , class => ' select2'}
