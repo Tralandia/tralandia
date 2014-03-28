@@ -56,10 +56,12 @@ class RentalPriceListContainer extends BaseContainer
 		$this->importantLanguages = $this->rental->getPrimaryLocation()->getImportantLanguages($centralLanguage);
 
 
-//		$rows = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->findAll();
-		$this->priceForOptions = [
-			'foo', 'bar', 'baz'
-		];
+		$rows = $em->getRepository(RENTAL_PRICE_FOR_ENTITY)->findAll();
+		foreach($rows as $row) {
+			$firstPart = $this->translator->translate($row->firstPart);
+			$secondPart = $row->secondPart ? ' / ' . $this->translator->translate($row->secondPart) : NULL;
+			$this->priceForOptions[$row->id] = $firstPart . $secondPart;
+		}
 
 		$this->addDynamic('list', $this->containerBuilder, 1);
 	}
@@ -128,6 +130,7 @@ class RentalPriceListContainer extends BaseContainer
 			: \Nette\ArrayHash::from(['list'=>[]]);
 
 		$customPricelistRowRepository = $this->em->getRepository(RENTAL_CUSTOM_PRICELIST_ROW_ENTITY);
+		$priceForRepository = $this->em->getRepository(RENTAL_PRICE_FOR_ENTITY);
 
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
@@ -152,6 +155,7 @@ class RentalPriceListContainer extends BaseContainer
 				$rowEntity->setSeasonFrom($row['seasonFrom']);
 				$rowEntity->setSeasonTo($row['seasonTo']);
 				$rowEntity->setFloatPrice($row['price']);
+				$rowEntity->setPriceFor($priceForRepository->find($row['priceFor']));
 				$note = $rowEntity->getNote();
 				foreach($this->importantLanguages as $language) {
 					$note->setOrCreateTranslationText($language, $row['note'][$language->getIso()]);
@@ -179,7 +183,7 @@ class RentalPriceListContainer extends BaseContainer
 				'seasonFrom' => $row->getSeasonFrom(),
 				'seasonTo' => $row->getSeasonTo(),
 				'price' => $row->getPrice()->getSourceAmount(),
-				//'priceFor' => $row->getPriceFor(),
+				'priceFor' => $row->getPriceFor()->getId(),
 				'entityId' => $row->getId(),
 				'note' => $note,
 			];

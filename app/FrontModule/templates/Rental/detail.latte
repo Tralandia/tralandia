@@ -171,7 +171,7 @@
 													<span class="small">{_$row->note}</span>
 
 													<span class="price">
-														{$row->price} {$row->priceFor}
+														{$row->price} {_$row->priceFor->firstPart}{if $row->priceFor->secondPart} / {_$row->priceFor->secondPart}{/if}
 													</span>
 												</li>
 											{/foreach}

@@ -11,6 +11,7 @@ define('RENTAL_INFORMATION_ENTITY', '\Entity\Rental\Information');
 define('RENTAL_PLACEMENT_ENTITY', '\Entity\Rental\Placement');
 define('RENTAL_PRICELIST_ROW_ENTITY', '\Entity\Rental\PricelistRow');
 define('RENTAL_CUSTOM_PRICELIST_ROW_ENTITY', '\Entity\Rental\CustomPricelistRow');
+define('RENTAL_PRICE_FOR_ENTITY', '\Entity\Rental\PriceFor');
 define('RENTAL_PRICELIST_ENTITY', '\Entity\Rental\Pricelist');
 define('RENTAL_ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
 define('RENTAL_IMAGE_ENTITY', '\Entity\Rental\Image');

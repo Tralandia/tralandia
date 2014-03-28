@@ -29,14 +29,16 @@ class BaseDao extends EntityDao {
 
 		$newEntity = new $class;
 
-		$associationMappings = $this->getClassMetadata()->getAssociationMappings();
-		foreach($associationMappings as $mapping) {
-			if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
-				$fieldName = $mapping['fieldName'];
-				# @todo hack, porusenie DI
-				$phraseCreator = new \Service\Phrase\PhraseCreator($this->getEntityManager());
-				$phraseTypeName = '\\'.$class.':'.$fieldName;
-				$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
+		if($class != 'Entity\Rental\PriceFor') {
+			$associationMappings = $this->getClassMetadata()->getAssociationMappings();
+			foreach($associationMappings as $mapping) {
+				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
+					$fieldName = $mapping['fieldName'];
+					# @todo hack, porusenie DI
+					$phraseCreator = new \Service\Phrase\PhraseCreator($this->getEntityManager());
+					$phraseTypeName = '\\'.$class.':'.$fieldName;
+					$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
+				}
 			}
 		}
 
