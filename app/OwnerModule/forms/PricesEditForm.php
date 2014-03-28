@@ -103,12 +103,8 @@ class PricesEditForm extends BaseForm {
 		$rental->setFloatPrice($values['price']);
 
 		if ($value = $values['customPriceList']) {
-			$pricelistRows = $rental->getCustomPricelistRows();
-			foreach ($pricelistRows as $pricelistRow) {
-				$rental->removeCustomPricelistRow($pricelistRow);
-			}
 			foreach ($value['list'] as $pricelistRow) {
-				if ($pricelistRow->entity instanceof CustomPricelistRow) {
+				if ($pricelistRow->entity instanceof CustomPricelistRow && !$pricelistRow->entity->getRental()) {
 					$rental->addCustomPricelistRow($pricelistRow->entity);
 				}
 			}

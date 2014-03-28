@@ -215,6 +215,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="CustomPricelistRow", mappedBy="rental", cascade={"persist", "remove"})
+	 * @ORM\OrderBy({"sort" = "ASC"})
 	 */
 	protected $customPricelistRows;
 

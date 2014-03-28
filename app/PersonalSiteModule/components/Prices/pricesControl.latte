@@ -11,7 +11,7 @@
 								<span n:if="$row->seasonTo">{$row->seasonTo|date}</span>
 								<span class="small">{_$row->noteId}</span>
 							</div>
-							<div class="grid-6"><strong>{$row->price}</strong> {$row->priceFor}</div>
+							<div class="grid-6"><strong>{$row->price}</strong> {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
 						</div>
 					{else}
 						<div class="grids" n:foreach="$rental->getPriceList() as $row">

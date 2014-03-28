@@ -16,8 +16,7 @@ use Nette;
  * @property \DateTime $seasonFrom
  * @property \DateTime $seasonTo
  * @property int $price
- * @property int $priceFor1
- * @property int $priceFor2
+ * @property \Tralandia\Rental\PriceFor $priceFor m:hasOne(priceFor_id:)
  */
 class CustomPriceListRow extends \Tralandia\Lean\BaseEntity
 {
@@ -28,11 +27,6 @@ class CustomPriceListRow extends \Tralandia\Lean\BaseEntity
 	public function getNoteId()
 	{
 		return $this->row->note_id;
-	}
-
-	public function getPriceFor()
-	{
-		return 'priceFor';
 	}
 
 }

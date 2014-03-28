@@ -17,6 +17,9 @@ use Extras\Annotation as EA;
  * @method setSeasonTo(\DateTime $to)
  * @method \Entity\Phrase\Phrase getNote()
  * @method setRental(\Entity\Rental\Rental $rental)
+ * @method null|\Entity\Rental\Rental getRental()
+ * @method setPriceFor(\Entity\Rental\PriceFor $priceFor)
+ * @method \Entity\Rental\PriceFor getPriceFor()
  * @method setSort($int)
  * @method int getSort()
  *
@@ -55,16 +58,11 @@ class CustomPricelistRow extends \Entity\BaseEntity
 	protected $price;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var \Entity\Phrase\Phrase
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\PriceFor")
 	 */
-	protected $priceFro1;
+	protected $priceFor;
 
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $priceFro2;
 
 	/**
 	 * @var \Entity\Phrase\Phrase
@@ -99,11 +97,6 @@ class CustomPricelistRow extends \Entity\BaseEntity
 	public function getCurrency()
 	{
 		return $this->getRental()->getCurrency();
-	}
-
-	public function getPriceFor()
-	{
-		return $this->priceFro1 . '/' . $this->priceFro2;
 	}
 
 	public function unsetRental()
