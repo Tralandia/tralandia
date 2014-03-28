@@ -146,15 +146,21 @@ class RentalContainer extends BaseContainer
 		$pet = $rental->getPetAmenity();
 
 		$name = [];
-		foreach ($rental->name->getTranslations() as $translation) {
+		foreach ($rental->getName()->getTranslations() as $translation) {
 			$language = $translation->getLanguage();
-			$name[$language->iso] = $translation->translation;
+			$name[$language->getIso()] = $translation->getTranslation();
 		}
 
 		$teaser = [];
-		foreach ($rental->teaser->getTranslations() as $translation) {
+		foreach ($rental->getTeaser()->getTranslations() as $translation) {
 			$language = $translation->getLanguage();
-			$teaser[$language->iso] = $translation->translation;
+			$teaser[$language->getIso()] = $translation->getTranslation();
+		}
+
+		$description = [];
+		foreach ($rental->getDescription()->getTranslations() as $translation) {
+			$language = $translation->getLanguage();
+			$description[$language->getIso()] = $translation->getTranslation();
 		}
 
 		$interview = [];
@@ -179,6 +185,7 @@ class RentalContainer extends BaseContainer
 			'email' => $this->rental->getEmail(),
 			'name' => $name,
 			'teaser' => $teaser,
+			'description' => $description,
 			'price' => $rental->getPrice()->getAmount($this->country->getDefaultCurrency()),
 			'maxCapacity' => $rental->getMaxCapacity(),
 			'interview' => $interview,

@@ -32,16 +32,17 @@
 
 
 						<li><a href="{link :Owner:Calendar:default $rental->id}"><i class="icon icon-angle-right"></i> {_151834}</a></li>
+						<li><a href="{link :Owner:PricesEdit:default $rental->id}"><i class="icon icon-angle-right"></i>{_o933}</a></li>
 
-						<li><a class="scrollTo" data-scroll-to="#rentalContactInformation" href="#rentalContactInformation"><i class="icon icon-angle-right"></i>{_o960}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalNameSlogan" href="#rentalNameSlogan"><i class="icon icon-angle-right"></i>{_o100137}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalBasicInformation" href="#rentalBasicInformation"><i class="icon icon-angle-right"></i>{_o100085}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalAddress" href="#rentalAddress"><i class="icon icon-angle-right"></i>{_o100086}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalPhotoGalllery" href="#rentalPhotoGalllery"><i class="icon icon-angle-right"></i>{_o980}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalPriceList" href="#rentalPriceList"><i class="icon icon-angle-right"></i>{_o933}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" href="#rentalPriceUpload"><i class="icon icon-angle-right"></i>{_o100166}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalAmenities" href="#rentalAmenities"><i class="icon icon-angle-right"></i>{_573}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalInterview" href="#rentalInterview"><i class="icon icon-angle-right"></i>{_1125}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalContactInformation" n:href="//Rental:edit#rentalContactInformation $rental->id"><i class="icon icon-angle-right"></i>{_o960}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalNameSlogan" n:href="//Rental:edit#rentalNameSlogan $rental->id"><i class="icon icon-angle-right"></i>{_o100137}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalBasicInformation" n:href="//Rental:edit#rentalBasicInformation $rental->id"><i class="icon icon-angle-right"></i>{_o100085}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalAddress" n:href="//Rental:edit#rentalAddress $rental->id"><i class="icon icon-angle-right"></i>{_o100086}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalPhotoGalllery" n:href="//Rental:edit#rentalPhotoGalllery $rental->id"><i class="icon icon-angle-right"></i>{_o980}</a></li>
+						{*<li><a class="scrollTo" data-scroll-to="#rentalPriceList" n:href="//Rental:edit#rentalPriceList $rental->id"><i class="icon icon-angle-right"></i>{_o933}</a></li>*}
+						<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" n:href="//Rental:edit#rentalPriceUpload $rental->id"><i class="icon icon-angle-right"></i>{_o100166}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalAmenities" n:href="//Rental:edit#rentalAmenities $rental->id"><i class="icon icon-angle-right"></i>{_573}</a></li>
+						<li><a class="scrollTo" data-scroll-to="#rentalInterview" n:href="//Rental:edit#rentalInterview $rental->id"><i class="icon icon-angle-right"></i>{_1125}</a></li>
 
 					</ul>
 					{/if}

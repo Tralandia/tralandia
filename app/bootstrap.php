@@ -130,11 +130,10 @@ FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	});
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
-	function (FormContainer $container, $name, $currency, $rental) use ($dic) {
+	function (FormContainer $container, $name, $rental) use ($dic) {
 		$em = $dic->getService('doctrine.default.entityManager');
-		$translator = $dic->getService('translator');
-		$collator = $dic->getService('environment')->getLocale()->getCollator();
-		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $rental, $translator, $collator);
+		$environment = $dic->getService('environment');
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($rental, $em, $environment);
 	});
 
 FormContainer::extensionMethod('addCalendarContainer',

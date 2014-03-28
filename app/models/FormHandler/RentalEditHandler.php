@@ -4,8 +4,6 @@ namespace FormHandler;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
-use Entity\Rental\Pricelist;
-use \Nette\DI\Container;
 use Tralandia\Rental\Amenities;
 use Tralandia\Dictionary\PhraseManager;
 use Tralandia\Language\Languages;
@@ -119,38 +117,11 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		if ($value = $validValues['priceList']) {
-			$pricelistRows = $rental->getPricelistRows();
-			foreach ($pricelistRows as $pricelistRow) {
-				$rental->removePricelistRow($pricelistRow);
-			}
-			foreach ($value->list as $pricelistRow) {
-				if ($pricelistRow->entity) {
-					$rental->addPricelistRow($pricelistRow->entity);
-				}
-			}
-		}
-
-		if ($value = $validValues['priceUpload']) {
-			$priceLists = $rental->getPricelists();
-			foreach ($priceLists as $priceList) {
-				$rental->removePricelist($priceList);
-			}
-			foreach ($value->list as $priceList) {
-				if ($priceList->entity instanceof Pricelist) {
-					$rental->addPricelist($priceList->entity);
-				}
-			}
-		}
 
 		if ($value = $validValues['phone']) {
 			if ($phoneEntity = $validValues['phone']->entity) {
 				$rental->setPhone($phoneEntity);
 			}
-		}
-
-		if ($value = $validValues['price']) {
-			$rental->setFloatPrice($value);
 		}
 
 		if ($value = $validValues['interview']) {
@@ -167,7 +138,7 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$rentalInfo = ['name', 'teaser'];
+		$rentalInfo = ['name', 'teaser', 'description'];
 		foreach ($rentalInfo as $infoName) {
 			if($value = $validValues[$infoName]) {
 				$phrase = $rental->{$infoName};

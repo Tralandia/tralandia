@@ -4,6 +4,7 @@ namespace OwnerModule;
 
 
 use BaseModule\Forms\SimpleForm;
+use Nette\Application\BadRequestException;
 
 class CalendarPresenter extends BasePresenter
 {
@@ -56,6 +57,7 @@ class CalendarPresenter extends BasePresenter
 	public function actionDefault($id)
 	{
 		$this->currentRental = $this->findRental($id);
+		$this->template->rental = $this->currentRental;
 		$this->template->environment = $this->environment;
 		$this->template->thisRental = $this->currentRental;
 		$this->template->languages = $this->languages->getSupportedForSelect();

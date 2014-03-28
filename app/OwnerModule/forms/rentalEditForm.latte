@@ -26,12 +26,6 @@
 	{if count($rentalContainer['photos']->getAllErrors())}
 		{var $invalidGroups[] = 'photosGroup'}
 	{/if}
-	{if count($rentalContainer['priceList']->getAllErrors())}
-		{var $invalidGroups[] = 'priceListGroup'}
-	{/if}
-	{if count($rentalContainer['priceUpload']->getAllErrors())}
-		{var $invalidGroups[] = 'priceUploadGroup'}
-	{/if}
 
 
 	<style n:syntax="double">
@@ -130,6 +124,14 @@
 								{/if}
 								{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
 							{/foreach}
+							{foreach $rentalContainer['description']->getControls() as $control}
+								{if $control->getName() == $environmentLanguage->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #textArea, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
 						</table>
 					</div>
 				</div>
@@ -139,7 +141,6 @@
 
 		{include #fieldset, text => 'o100085' , id => 'rentalBasicInformation'}
 		{include #rentalType, control => $rentalContainer['type']}
-		{include #text, control => $rentalContainer['price']}
 		{include #text, control => $rentalContainer['maxCapacity']}
 		{include #text, control => $rentalContainer['bedroomCount']}
 		{include #text, control => $rentalContainer['roomsLayout']}
@@ -161,12 +162,6 @@
 
 		{include #rentalPhotos, control => $rentalContainer['photos'], trClass => 'photosGroup'}
 
-		{include #fieldset, text => 'o933' , id => 'rentalPriceList', trClass => 'priceListGroup' , required => true}
-
-		{include #rentalPriceList, control => $rentalContainer['priceList'], trClass => 'priceListGroup'}
-
-		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload', trClass => 'priceUploadGroup'}
-		{include #rentalPriceUpload, control => $rentalContainer['priceUpload'], trClass => 'priceUploadGroup'}
 		<tr><td colspan="3"><div id="rentalAmenities"></div></td></tr>
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
@@ -239,6 +234,5 @@
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
 	</table>
-{dump $form->getAllErrors()}
 
 {/form}
