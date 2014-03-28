@@ -23,6 +23,7 @@ class FavoriteListEmailListener extends BaseEmailListener
 
 		$message->setHtmlBody($body);
 		$message->addTo($receiver->getLogin());
+		$message->addBcc('tralandia.testing@gmail.com');
 
 		$this->mailer->send($message);
 	}

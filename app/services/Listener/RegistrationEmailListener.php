@@ -23,6 +23,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 		$message->setHtmlBody($body);
 
 		$message->addTo($rental->getOwner()->getLogin());
+		$message->addBcc('tralandia.testing@gmail.com');
 
 		$this->mailer->send($message);
 	}

@@ -24,6 +24,7 @@ class ReservationSenderEmailListener extends BaseEmailListener
 
 		$message->setFrom($reservation->getRental()->getEmail());
 		$message->addTo($reservation->getSenderEmail(), $reservation->getSenderName());
+		$message->addBcc('tralandia.testing@gmail.com');
 
 		$this->mailer->send($message);
 	}
