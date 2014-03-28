@@ -132,6 +132,7 @@ class RentalPriceListContainer extends BaseContainer
 		$customPricelistRowRepository = $this->em->getRepository(RENTAL_CUSTOM_PRICELIST_ROW_ENTITY);
 		$priceForRepository = $this->em->getRepository(RENTAL_PRICE_FOR_ENTITY);
 
+		$oldIds = [];
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
 			$i = 0;
@@ -143,8 +144,9 @@ class RentalPriceListContainer extends BaseContainer
 				if (!$row['seasonFrom'] && !$row['seasonTo'] && !$row['price'] && !$row['priceFor'] && !$hasNote) continue;
 
 				$rowEntity = NULL;
-				if (isset($row->entityId)) {
-					$rowEntity = $customPricelistRowRepository->find($row->entityId);
+				if ($row['entityId']) {
+					$rowEntity = $customPricelistRowRepository->find($row['entityId']);
+					$oldIds[$row['entityId']] = true;
 				}
 				if (!$rowEntity) {
 					$rowEntity = $customPricelistRowRepository->createNew();
@@ -166,6 +168,14 @@ class RentalPriceListContainer extends BaseContainer
 				$i++;
 			}
 		}
+
+		foreach($this->rental->getCustomPricelistRows() as $row) {
+			if(array_key_exists($row->getId(), $oldIds)) continue;
+
+			$this->rental->removeCustomPricelistRow($row);
+			$this->em->remove($row);
+		}
+
 		return $values;
 	}
 

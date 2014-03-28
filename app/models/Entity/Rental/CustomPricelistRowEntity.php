@@ -17,6 +17,7 @@ use Extras\Annotation as EA;
  * @method setSeasonTo(\DateTime $to)
  * @method \Entity\Phrase\Phrase getNote()
  * @method setRental(\Entity\Rental\Rental $rental)
+ * @method null|\Entity\Rental\Rental getRental()
  * @method setPriceFor(\Entity\Rental\PriceFor $priceFor)
  * @method \Entity\Rental\PriceFor getPriceFor()
  * @method setSort($int)
@@ -58,7 +59,7 @@ class CustomPricelistRow extends \Entity\BaseEntity
 
 	/**
 	 * @var \Entity\Phrase\Phrase
-	 * @ORM\OneToOne(targetEntity="Entity\Rental\PriceFor")
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\PriceFor")
 	 */
 	protected $priceFor;
 
