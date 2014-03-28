@@ -34,6 +34,7 @@ use Nette;
  * @property \Tralandia\Rental\PriceListRow[] $priceList m:belongsToMany
  * @property \Tralandia\Rental\CustomPriceListRow[] $customPriceList m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListFile[] $priceListFiles m:belongsToMany(rental_id:rental_pricelist)
+ * @property \Tralandia\Rental\Unit[] $units m:belongsToMany(rental_id:rental_unit)
  */
 class Rental extends \Tralandia\Lean\BaseEntity
 {
