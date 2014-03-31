@@ -293,6 +293,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	protected $services;
 
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Unit", mappedBy="rental", cascade={"persist"})
+	 */
+	protected $units;
+
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
 	 * @var array
@@ -524,7 +531,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		$return = array();
 		$cnt = rand(3, 9);
-		for ($i=0; $i < $cnt; $i++) { 
+		for ($i=0; $i < $cnt; $i++) {
 			$return[$i] = "Unit " . $i;
 		}
 		return $return;
