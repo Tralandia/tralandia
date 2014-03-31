@@ -135,7 +135,7 @@ h2 {
   position: relative;
 }
 h2 time {
-  right: 0;
+  right: 20px;
   font-size: 24px;
   top: 0;
   color: rgba(0, 0, 0, 0.2);
@@ -346,16 +346,53 @@ em {
   padding: 0 20px;
 }
 
-@media screen and (max-width: 700px) {
+#map {
+  width: 570px;
+  height: 340px;
+}
+
+@media screen and (max-width: 768px) {
   .grids {
     margin: 0;
     width: auto;
   }
-
-  .grids [class*="grid-"] {
+  :not(#prices) .grids [class*="grid-"] {
     display: block;
     width: auto;
     margin: 0 0 40px 0;
+  }
+  #contact form .grids [class*="grid-"], #prices .grids [class*="grid-"] {
+    float: left;
+    width: inherit;
+    margin: 0 0 0 0;
+  }
+  #contact form .grids {
+    margin: 0 0 20px 0;
+  }
+  #contact form .grids .grid-12, #prices .grids .grid-12 {
+    width: 100%;
+  }
+  #contact form .grids .grid-6, #prices .grids .grid-6 {
+    width: 47.917%;
+  }
+  #contact form .grids .grid-6:nth-child(2), #contact form .grids .grid-9:nth-child(2) {
+    margin-left: 4%;
+  }
+  #contact form .grids .grid-3 {
+    width: 22.917%;
+  }
+  #contact form .grids .grid-9 {
+    width: 72.917%;
+  }
+  #gallery #portfolio-slider .grid-6 {
+    margin: 0;
+  }
+  .section-block {
+    padding: 40px 0 !important;
+  }
+  #services .grids.overview .grid-6 {
+    width: 50%;
+    float: left;
   }
 }
 /*! $Document Setup (body, common classes, vertical rhythm, structure etc) */
@@ -721,9 +758,7 @@ body.gateway-open {
     margin-bottom: 0;
     color: #fff;
 }
-#prices .inner-section {
-  padding: 0;
-}
+#prices .inner-section {}
 #reviews.section-block {
   background: #eee;
 }
@@ -749,7 +784,6 @@ body.gateway-open {
   text-align: center;
 }
 #services .more-equipment {
-    padding: 10px;
     margin: 0 10px;
     background: #eee;
     border-radius: 3px;
@@ -764,8 +798,11 @@ body.gateway-open {
 #services .more-equipment table tr:last-child {
   border-bottom: none;
 }
+#services .more-equipment table tr:nth-child(2n) td {
+  background: #f6f6f6;
+}
 #services .more-equipment table tr td {
-    padding: 10px 0;
+    padding: 15px 0;
 }
 #services .more-equipment table tr td:first-child {
     text-align: right;
@@ -777,11 +814,26 @@ body.gateway-open {
     font-size: 14px;
 }
 #services .grids.overview .inner-bg {
-  text-decoration: line-through;
+  position: relative;
+}
+#services .grids.overview .inner-bg .line-through {
+  height: 7px;
+  background: #DDD;
+  position: absolute;
+  border: 2px solid #FFF;
+  width: 100px;
+  top: 40px;
+  left: 30px;
+  z-index: 9;
+  transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 #services .grids.overview .inner-bg.active {
   color: #A0B325;
-  text-decoration: none;
+}
+#services .grids.overview .inner-bg.active .line-through {
+  display: none;
 }
 #services .service-title {
   font-size: 18px;
@@ -1662,10 +1714,6 @@ h3#pings {
   #slideshow .slider-content h3 {
     font-size: 25px;
   }
-
-  #slideshow .slider-content {
-    top: 25%;
-  }
 }
 /*------------------------------------------------------------------------*/
 /*  Tiny Screens and up
@@ -1676,6 +1724,10 @@ h3#pings {
   }
 }
 @media only screen and (max-width: 992px) {
+  #slideshow .slider-content-extra {
+    top: 20px;
+    left: 10px;
+  }
   #primary-nav > ul {
     display: none;
   }
@@ -1700,13 +1752,20 @@ h3#pings {
 
   #mobile-nav {
     position: absolute;
-    top: 25px;
+    top: 10px;
     right: 30px;
     margin-top: 0;
   }
 
   #mobile-primary-nav {
     width: 100%;
+    margin: 10px 0;
+    background: #333;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
   }
   #mobile-primary-nav ul {
     margin-left: 0;
@@ -1720,17 +1779,20 @@ h3#pings {
     padding: 8px 15px;
   }
   #mobile-primary-nav li a:hover {
-    background: #1c93c5;
+    background: #A0B325;
   }
   #mobile-primary-nav .sub-menu {
     margin-left: 20px;
   }
+  #mobile-primary-nav li .select2-container a {
+    color: #333;
+  }
+  #portfolio-slider ul li {
+    display: block;
+  }
 }
 /* 768 ============================================= */
 @media only screen and (max-width: 768px) {
-  #portfolio-slider {
-    margin-top: 100px;
-  }
 
   #blog .featured-post {
     margin-bottom: 70px;
@@ -1739,7 +1801,7 @@ h3#pings {
   .footer .copyright {
     display: block;
     text-align: left;
-    padding: 50px 0px 0 0;
+    padding: 10px 0px 0 0;
     width: 100%;
   }
   .footer .copyright #backToTop {
@@ -1784,10 +1846,41 @@ h3#pings {
   #gateway-navigation-2 a {
     width: 100px;
   }
+  #primary-nav li.active > a {
+    padding: 10px 5px;
+  }
+  #calendar .section-block .entry-content .clearfix:before, #calendar .section-block .entry-content .clearfix:after {
+    clear: none;
+  }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   #team .team-members .member {
     width: 46%;
+  }
+  #primary-nav li.active > a {
+    padding: 10px 5px;
+  }
+  #portfolio-slider ul li {
+    display: block;
+  }
+  #calendar div.calendar {
+    width: 33%;
+    height: 235px;
+  }
+  #primary-nav li a {
+    padding: 15px 5px;
+  }
+  #logo strong {
+    font-size: 26px;
+  }
+  #map {
+    width: 100%;
+  }
+  #calendar .entry-content .clearfix:before, #calendar .entry-content .clearfix:after {
+    clear: none;
+  }
+  h2 time {
+    font-size: 14px;
   }
 }
 @media only screen and (max-device-width: 1024px) {
@@ -1796,9 +1889,9 @@ h3#pings {
   }
 }
 @media only screen and (max-width: 1024px) {
-  #header {
+  /*#header {
     position: static;
-  }
+  }*/
 
   #container {
     padding-top: 0 !important;
@@ -1830,9 +1923,9 @@ h3#pings {
     font-size: 30px;
   }
 
-  #header {
+  /*#header {
     position: static;
-  }
+  }*/
 
   #container {
     padding-top: 0 !important;
@@ -1855,6 +1948,17 @@ h3#pings {
 
   #blog .entry-content img {
     display: none;
+  }
+  #calendar div.calendar {
+    width: 50%;
+    height: 235px;
+  }
+  h2 time {
+    font-size: 14px;
+  }
+  #logo strong {
+    font-size: 26px;
+    padding: 8px 10px 5px 0;
   }
 }
 @media only screen and (max-width: 480px) {
@@ -1900,6 +2004,16 @@ h3#pings {
   #portfolio-slider a[data-through="gateway"] .icon-open {
     display: none;
   }
+
+  #logo strong {
+    padding: 4px 0 0;
+    font-size: 22px;
+    line-height: 22px;
+  }
+  #mobile-nav {
+    top: -3px;
+    right: 20px;
+  }
 }
 @media only screen and (max-width: 550px) {
   #portfolio-slider .icon-open {
@@ -1918,6 +2032,10 @@ h3#pings {
 
   #respond-wrap form textarea {
     margin-top: 15px;
+  }
+
+  h2 time {
+    font-size: 14px;
   }
 }
 @media only screen and (max-width: 420px) {
@@ -2307,6 +2425,9 @@ input[type=submit]:hover,
   float: none;
   margin: 0;
   display: inline;
+}
+.select2-results .select2-result-label {
+  min-width: 100px;
 }
 .select2-container .select2-choice .select2-arrow {
   background: #f6f6f6;

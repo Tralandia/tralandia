@@ -155,10 +155,10 @@ jQuery(document).ready(function($){
     /*------------------------------------------------------------------------------*/
 
     $(window).scroll(function () {
-        var inview = $('.homepage-sections > section:in-viewport:first').attr('id');
+        var inview = $('section:in-viewport:first').attr('id');
         var menu_item = $('#navigation li a');
         var link = menu_item.filter('[href=#' + inview + ']');
-
+        
         if (link.length && !link.is('.active')) {
             menu_item.parent().removeClass('active');
             menu_item.parent().removeClass('sfHover');
