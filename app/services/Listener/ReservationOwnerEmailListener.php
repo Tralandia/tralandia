@@ -23,6 +23,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 		$message->setHtmlBody($body);
 		$message->setFrom($reservation->getSenderEmail(), $reservation->getSenderName());
 		$message->addTo($reservation->getRental()->getOwner()->getLogin());
+		$message->addBcc('tralandia.testing@gmail.com');
 
 		$this->mailer->send($message);
 	}
