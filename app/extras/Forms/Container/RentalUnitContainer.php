@@ -44,7 +44,7 @@ class RentalUnitContainer extends BaseContainer
 		}
 
 		$this->addSelect('rental', $label, $rentalOptions)
-			->setPrompt()
+			->setPrompt('')
 			->setRequired('Povinne policko');
 
 		foreach ($units as $rentalId => $options) {
