@@ -1,3 +1,4 @@
+{block content}
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
@@ -35,3 +36,19 @@
 		{include #submit, control => $form['submit']}
 	</table>
 {/form}
+
+<script type="text/javascript" n:syntax="double">
+	$(function() {
+		$('.datepicker input').datepicker();
+		$('[name="price"], [name="price_paid"]').keyup(function() {
+			calculateUnpaid();
+		})
+		calculateUnpaid();
+	});
+	function calculateUnpaid() {
+		var price = $('[name="price"]').val();
+		var pricePaid = $('[name="price_paid"]').val();
+		var priceUnpaid = price - pricePaid;
+		$('[name="price_unpaid"]').val(priceUnpaid);
+	}
+</script>

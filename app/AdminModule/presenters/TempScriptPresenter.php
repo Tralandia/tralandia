@@ -829,5 +829,23 @@ limit ' . $limit;
 	}
 
 
+	public function actionAttacheReservationsToUnits()
+	{
+		$query = 'select r.id rId, u.id uId from \Entity\User\RentalReservation r
+					inner join r.rental rental
+					inner join rental.units u';
+		$result = $this->em->createQuery($query)->getArrayResult();
+
+		$print = [];
+		foreach($result as $row) {
+			$print[] = "({$row['rId']}, {$row['rId']})";
+		}
+		$print = 'INSERT INTO `_reservation_unit` (`reservation_id`, `unit_id`) VALUES ' . implode(', ', $print);
+
+		$response = new \Nette\Application\Responses\TextResponse($print);
+		$this->sendResponse($response);
+	}
+
+
 }
 
