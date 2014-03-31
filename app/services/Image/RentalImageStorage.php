@@ -37,7 +37,7 @@ class RentalImageStorage extends FileStorage
 			'method' => self::CROP,
 			'width' => 1920,
 			'height' => 1080,
-			'flag' => Nette\Image::FIT
+			'flag' => Nette\Image::SHRINK_ONLY
 		],
 	];
 

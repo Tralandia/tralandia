@@ -688,6 +688,110 @@ limit ' . $limit;
 		return Strings::webalize($text);
 	}
 
+	public function actionCreatePhraseForRentalDescription($limit = 100)
+	{
+		$query = 'SELECT r FROM \Entity\Rental\Rental r WHERE r.description IS NULL';
+		$query = $this->rentalDao->createQuery($query);
+		$query->setMaxResults($limit);
+
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($this->em);
+		/** @var $rental \Entity\Rental\Rental */
+		foreach($query->getResult() as $rental) {
+			$phraseTypeName = '\Entity\Rental\Rental:description';
+			$rental->setDescription($phraseCreator->create($phraseTypeName));
+		}
+
+		$this->em->flush();
+
+		$this->payload->success = true;
+		$this->payload->time = time();
+		$this->sendPayload();
+	}
+
+
+	public function actionFillPriceForTable()
+	{
+		$combinations = [
+			[645219, NULL, 13],
+			[645219, 645271, 1],
+			[645219, 645272, 11],
+			[645219, 645273, 12],
+			[645220, 645271, 3],
+			[645220, 645272, 43],
+			[645220, 645273, 46],
+			[645221, 645271, 8],
+			[645221, 645272, 44],
+			[645221, 645273, 45],
+			[645222, 645271, 2],
+			[645222, 645272, 14],
+			[645222, 645291, 15],
+			[645222, 645273, 16],
+			[645223, 645271, 7],
+			[645223, 645272, 17],
+			[645226, 645271, 18],
+			[645227, 645271, 9],
+			[645228, 645271, 10],
+			[645229, 645271, 19],
+			[645230, 645271, 41],
+			[645231, 645271, 42],
+			[645232, 645271, 28],
+			[645233, 645271, 29],
+			[645234, 645271, 30],
+			[645235, 645271, 31],
+			[645237, 645271, 32],
+			[645242, 645271, 33],
+			[645243, 645271, 36],
+			[645244, 645271, 37],
+			[645245, 645271, 38],
+			[645246, 645271, 39],
+			[645247, 645271, 40],
+			[645224, 645219, 35],
+			[645224, 645271, 20],
+			[645224, 645273, 47],
+			[645225, 645271, 34],
+			[645248, NULL, 21],
+			[645249, NULL, 22],
+			[645250, NULL, 23],
+			[645251, NULL, 24],
+			[645252, NULL, 25],
+			[645269, 645271, 26],
+			[645254, NULL, 27],
+			[645255, 645271, 4],
+			[645255, 645272, 48],
+			[645253, NULL, 5],
+			[645270, NULL, 6],
+		];
+
+		$phrasesIds = [];
+		foreach($combinations as $value) {
+			$phrasesIds[] = $value[0];
+			$phrasesIds[] = $value[1];
+		}
+
+		$phrasesIds = array_unique($phrasesIds);
+		$phrases = $this->em->getRepository(PHRASE_ENTITY)->findBy(['id' => $phrasesIds]);
+
+		$phrasesById = [];
+		foreach($phrases as $phrase) {
+			$phrasesById[$phrase->id] = $phrase;
+		}
+
+		$priceForDao = $this->em->getRepository(RENTAL_PRICE_FOR_ENTITY);
+		$i = 0;
+		foreach($combinations as $value) {
+			/** @var $priceFor \Entity\Rental\PriceFor */
+			$priceFor = $priceForDao->createNew();
+			$priceFor->setFirstPart($phrasesById[$value[0]]);
+			$value[1] && $priceFor->setSecondPart($phrasesById[$value[1]]);
+			$priceFor->setOldId($value[2]);
+			$priceFor->setSort($i);
+
+			$this->em->persist($priceFor);
+			$i++;
+		}
+		$this->em->flush();
+	}
 
 }
 

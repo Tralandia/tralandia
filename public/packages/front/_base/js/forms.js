@@ -10,13 +10,43 @@ $(function(){
         $('input[name=nospam]').val('no'+'spam');
     });
 
-
+    $('select.currency-select').currencySelect();
 });
 
 
 
 // phrase form
 (function($){
+	$.currencySelect = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.$form = base.$el.parents('form');
+		base.el = el;
+
+		base.init = function()
+		{
+			base.$el.on('change', base.change);
+			base.$el.trigger('change');
+		};
+
+		base.change = function()
+		{
+			var selected = $(this).find('option:selected').html().substr(0,3);
+			base.$form.find('span[for="currency"]').html(selected);
+		}
+
+		base.init();
+	};
+
+	$.fn.currencySelect = function(options){
+		return this.each(function(){
+			(new $.currencySelect(this, options));
+		});
+	};
+
+
 	$.fileInputUi = function(el, options){
 
 		var base = this;
@@ -1057,23 +1087,34 @@ $(function() {
 		}
 	});
 
+	$('button[type=submit]').click(function(){
+		$(this).addClass('active');
+	});
+	$('button[type=submit]').live('click',function(){
+		$(this).addClass('active');
+	});
 
-
-
-
-
-
-$('button[type=submit]').click(function(){
-	$(this).addClass('active');
-});
-$('button[type=submit]').live('click',function(){
-	$(this).addClass('active');
-});
+	$('.pricelistTable.sortable').sortable({
+		placeholder: {
+			element: function(currentItem) {
+	            return $('<tr class="placeholder"><td colspan="5"></td></tr>')[0];
+	        },
+	        update: function(container, p) {
+	            return;
+	        }
+		},
+		forcePlaceholderSize: true,
+		forceHelperSize: true,
+		handle: '.dragger',
+		items: 'tr.priceList'
+		// start: app.sortStart,
+		// update: app.saveTasksSort
+	});
 
 	$('.priceList .remove').on('click',removePriceLine);
 	$('.priceList .remove').live('click',removePriceLine);
 
-	$('.pricelistControlButton a.createNewLine').on('click',createNewLineInPriceList);
+	$('.pricelistControlButton a.createNewLine').on('click', createNewLineInPriceList);
 
 });
 
@@ -1089,24 +1130,24 @@ function removePriceLine(){
 }
 
 function createNewLineInPriceList(){
+	var pattern = $('.priceList:first').clone();
 
-	 var pattern = $('.priceList:first').clone();
+	pattern.find('select,input').removeAttr('id').removeClass('hasDatepicker');
+	pattern.find('select').removeClass('select2-offscreen');
+	pattern.find('.select2-container').remove();
 
-		pattern.find('select,input').removeAttr('id');
-		pattern.find('select').removeClass('select2').removeClass('select2-offscreen');
-		pattern.find('.select2-container').remove();
+	var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price').length;
 
-		var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price').length;
+	pattern.find('select,input').each(function(){
+		var originName = $(this).attr('name');
+		$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));
+        if(originName.match(/\[entityId\]$/)) $(this).val('');
+    });
 
-		pattern.find('select,input').each(function(){
-			var originName = $(this).attr('name');
-			$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));
-            if(originName.match(/\[entityId\]$/)) $(this).val('');
-        })
+	pattern.find('.select2:not(select2-offscreen)').select2();
+	$('.pricelistControl table').append(pattern);
 
-
-
-		$('.pricelistControl').append(pattern);
+	rentalDetailDatepickerInit();
 
 	return false;
 }

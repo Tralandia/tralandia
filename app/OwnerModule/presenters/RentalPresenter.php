@@ -135,8 +135,6 @@ class RentalPresenter extends BasePresenter
 		};
 
 		$form->onAttached[] = function(\Nette\Application\UI\Form $form, $presenter) {
-			$form['rental']['priceList']->setDefaultsValues();
-			$form['rental']['priceUpload']->setDefaultsValues();
 			if(!$form->isSubmitted()) {
 				$form->validate();
 			} else {

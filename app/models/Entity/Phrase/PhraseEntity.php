@@ -64,6 +64,18 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 
 	/**
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		foreach($this->getTranslations() as $translation)
+		{
+			if(strlen($translation->getTranslation())) return FALSE;
+		}
+		return TRUE;
+	}
+
+	/**
 	 * @param \Entity\Language $language
 	 * @param string|null $translationText
 	 *

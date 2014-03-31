@@ -1,0 +1,21 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form pricesEditForm}
+	<h1>{_o100146}</h1>
+	<table class="formTable innerPadding">
+		<tr class="formHeading	">
+			<td colspan="3">{_o100147}</td>
+		</tr>
+
+		{include #select, control => $form['currency'] , controlClass => 'select2 currency-select'}
+
+		{include #text, control => $form['price']}
+
+		{include #fieldset, text => 'o933' , id => 'rentalPriceList', trClass => 'priceListGroup' , required => true}
+		{include #rentalPriceList, control => $form['customPriceList'], trClass => 'priceListGroup'}
+
+		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload', trClass => 'priceUploadGroup'}
+		{include #rentalPriceUpload, control => $form['priceUpload'], trClass => 'priceUploadGroup'}
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
+
+	</table>
+{/form}
