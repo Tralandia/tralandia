@@ -823,11 +823,12 @@ body.gateway-open {
   border: 2px solid #FFF;
   width: 100px;
   top: 40px;
-  left: 30px;
+  left: 50%;
+  margin-left: -50px;
   z-index: 9;
   transform: rotate(135deg);
-    -ms-transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 #services .grids.overview .inner-bg.active {
   color: #A0B325;
