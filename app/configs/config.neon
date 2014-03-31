@@ -478,6 +478,7 @@ services:
 	- \Tralandia\Lean\Mapper
 
 	- \Tralandia\Rental\RentalRepository
+	- \Tralandia\Rental\UnitRepository
 
 
 

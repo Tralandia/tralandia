@@ -1,7 +1,10 @@
 {block content}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
 <h1>Ubytovacie jednotky</h1>
-<form class="dashboard">
+
+{form unitForm}
+
 	{foreach $rentals as $rental}
 		<div class="clearfix">
 		</div>
@@ -12,33 +15,38 @@
 					<h2>{_$rental->getName()}</h2>
 				</td>
 			</tr>
-			<tr class="rentalPriceUpload priceUploadGroup">
-				<td>
-					<div class="row-fluid">
-						<div class="priceListRowsContainer">
-							<div class="rentalPriceRow rentalUnit">
-								<input type="text" name="rentalUnit[][name]" placeholder="Názov ubytovacej jednotky">
-								<input type="text" name="rentalUnit[][capacity]" placeholder="Max. kapacita">
-								<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+			{var $replicator = $form->getComponent($rental->getId())}
+			{foreach $replicator->getComponents() as $component}
+				<tr class="rentalPriceUpload priceUploadGroup">
+					<td>
+						<div class="row-fluid">
+							<div class="priceListRowsContainer">
+								<div class="rentalPriceRow rentalUnit">
+									{input $component['name']}
+									{input $component['maxCapacity']}
+									<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+									{input $component['entityId']}
+								</div>
 							</div>
 						</div>
-						<a class="btn addLine btn-green"><i class="icon-plus"></i> Pridať riadok</a>
-					</div>
+					</td>
+				</tr>
+			{/foreach}
+			<tr>
+				<td>
+					<a class="btn addLine btn-green"><i class="icon-plus"></i> !!!Pridať riadok</a>
 				</td>
 			</tr>
+
 		</table>
 
+
 	{/foreach}
-	{control unitForm}
 
 	<table class="formTable innerPadding">
-		<tr class="submitControl">
-			<td>
-				<button type="submit" class="btn btn-green btn-main pull-right">
-					<i class="entypo-ok"></i> <i class="icon-spinner icon-spin"></i> <small>Uložiť zmeny</small>
-				</button>
-				<small class="sublitLoadingText"></small>
-			</td>
-		</tr>
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
 	</table>
-</form>
+
+
+{/form}
+

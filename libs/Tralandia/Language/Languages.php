@@ -8,7 +8,6 @@
 namespace Tralandia\Language;
 
 
-use Entity\Language;
 use Environment\Environment;
 use Nette;
 use Nette\Application\UI\Presenter;
@@ -58,11 +57,11 @@ class Languages {
 	 *
 	 * @return \Entity\Language[]
 	 */
-	public function findLive(Language $sortFor = NULL)
+	public function findLive(\Entity\Language $sortFor = NULL)
 	{
 		$qb = $this->languageDao->createQueryBuilder('l');
 
-		$qb->andWhere('l.live = ?1')->setParameter(1, Language::LIVE);
+		$qb->andWhere('l.live = ?1')->setParameter(1, \Entity\Language::LIVE);
 
 		if($sortFor) {
 			$qb->innerJoin('l.name', 'p');
@@ -82,7 +81,7 @@ class Languages {
 	 * @return \Entity\Language[]
 	 */
 	public function findSupported($order = NULL) {
-		return $this->languageDao->findBySupported(Language::SUPPORTED, $order);
+		return $this->languageDao->findBySupported(\Entity\Language::SUPPORTED, $order);
 	}
 
 

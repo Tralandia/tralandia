@@ -20,7 +20,6 @@ class Mapper extends DefaultMapper {
 
 	protected $tableToClass = [
 		'rental_pricelist' => '\Tralandia\Rental\PriceListFile',
-		'currency' => '\Tralandia\Currency',
 	];
 
 	protected $classToTable;
@@ -94,9 +93,9 @@ class Mapper extends DefaultMapper {
 			return $classToTable;
 		}
 
-		$name = NULL;
+		$name = null;
 		list(,$namespace, $name) = explode('\\', $class);
-		if($namespace == $name || !$name) {
+		if($namespace == $name) {
 			return strtolower($namespace);
 		} else {
 			return strtolower($namespace) . '_' . strtolower($name);
