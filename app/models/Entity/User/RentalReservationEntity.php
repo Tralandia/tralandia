@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RentalReservation extends \Entity\BaseEntity {
 
+	const STATUS_CONFIRMED = 'confirmed';
+	const STATUS_OPENED = 'opened';
+	const STATUS_CANCELED = 'canceled';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Language")
@@ -24,6 +28,22 @@ class RentalReservation extends \Entity\BaseEntity {
 	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Unit")
+	 * @ORM\JoinTable(name="_reservation_unit",
+	 *      joinColumns={@ORM\JoinColumn(name="reservation_id", referencedColumnName="id", onDelete="CASCADE")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="unit_id", referencedColumnName="id", onDelete="CASCADE")}
+	 *      )
+	 */
+	protected $units;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $status = self::STATUS_OPENED;
 
 	/**
 	 * @var string
@@ -74,10 +94,41 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $childrenCount;
 
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $childrenAge;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $message;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $ownersNote;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $referrer;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
+	 */
+	protected $totalPrice;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
+	 */
+	protected $paidPrice;
+
 
 
 	//@entity-generator-code --- NEMAZAT !!!

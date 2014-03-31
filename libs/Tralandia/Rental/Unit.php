@@ -9,7 +9,6 @@ use Nette;
  * @property int $id
  * @property string $name
  * @property int $maxCapacity
- * @property int $foo
  * @property \Tralandia\Rental\Rental $rental m:hasOne
  *
  * @method setRental(\Tralandia\Rental\Rental $rental)
