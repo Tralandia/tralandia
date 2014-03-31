@@ -166,13 +166,19 @@
 										{if count($rental->customPricelistRows) > 0}
 											{foreach $rental->customPricelistRows as $row}
 												<li tooltip="true">
-													<span n:if="$row->seasonFrom">{$row->seasonFrom|date}</span>
-													<span n:if="$row->seasonTo">{$row->seasonTo|date}</span>
-													<span class="small">{_$row->note}</span>
-
-													<span class="price">
-														{$row->price} {_$row->priceFor->firstPart}{if $row->priceFor->secondPart} / {_$row->priceFor->secondPart}{/if}
-													</span>
+													<div class="row-fluid">
+														<div class="span6">
+															<span class="dateFrom" n:if="$row->seasonFrom">{$row->seasonFrom|date}</span> - <span class="dateTo" n:if="$row->seasonTo">{$row->seasonTo|date}</span>
+															{if $row->note}
+															<br><span class="small">{_$row->note}</span>
+															{/if}
+														</div>
+														<div class="span6 align-right">
+															<span class="price">
+																{$row->price} {_$row->priceFor->firstPart}{if $row->priceFor->secondPart} / {_$row->priceFor->secondPart}{/if}
+															</span>
+														</div>
+													</div>
 												</li>
 											{/foreach}
 										{else}
@@ -207,9 +213,11 @@
 							</li>
 						</ul>
 
-
-
-
+{* 
+						{if $rental->hasDescription()}
+							{$rental->getDescription()}
+						{/if}
+ *}
 
 
 

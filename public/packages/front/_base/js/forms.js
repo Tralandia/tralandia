@@ -10,13 +10,43 @@ $(function(){
         $('input[name=nospam]').val('no'+'spam');
     });
 
-
+    $('select.currency-select').currencySelect();
 });
 
 
 
 // phrase form
 (function($){
+	$.currencySelect = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.$form = base.$el.parents('form');
+		base.el = el;
+
+		base.init = function()
+		{
+			base.$el.on('change', base.change);
+			base.$el.trigger('change');
+		};
+
+		base.change = function()
+		{
+			var selected = $(this).find('option:selected').html().substr(0,3);
+			base.$form.find('span[for="currency"]').html(selected);
+		}
+
+		base.init();
+	};
+
+	$.fn.currencySelect = function(options){
+		return this.each(function(){
+			(new $.currencySelect(this, options));
+		});
+	};
+
+
 	$.fileInputUi = function(el, options){
 
 		var base = this;

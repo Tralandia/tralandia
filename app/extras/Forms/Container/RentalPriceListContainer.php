@@ -114,7 +114,9 @@ class RentalPriceListContainer extends BaseContainer
 		foreach($this->importantLanguages as $language) {
 			$iso = $language->getIso();
 
-			$noteContainer->addText($iso, '');
+			$noteContainer->addText($iso, '')
+				->getControlPrototype()
+				->setPlaceholder($this->translator->translate('974'));
 //				->setOption('help', $this->translator->translate('o100071', null, null, null, $language))
 //				->addRule(\FrontModule\Forms\BaseForm::MAX_LENGTH, $this->translator->translate('o100101'), 70);
 
