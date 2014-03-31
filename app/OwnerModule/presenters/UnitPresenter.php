@@ -4,21 +4,30 @@ namespace OwnerModule;
 
 
 use BaseModule\Forms\SimpleForm;
-use Nette\Application\UI\Multiplier;
 
 class UnitPresenter extends BasePresenter
 {
 
 	/**
-	 * @var \Entity\Rental\Rental
+	 * @autowire
+	 * @var \Tralandia\Rental\RentalRepository
 	 */
-	protected $currentRental;
+	protected $rentalRepository;
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\UnitRepository
+	 */
+	protected $unitRepository;
+
+	/**
+	 * @var \Tralandia\Rental\Rental[]
+	 */
 	protected $rentals;
 
 	public function actionDefault()
 	{
-		$this->template->rentals = $this->rentals = $this->loggedUser->getRentals();
+		$this->template->rentals = $this->rentals = $this->rentalRepository->findBy(['user_id' => $this->loggedUser->getId()]);
 	}
 
 	public function createComponentUnitForm()
@@ -30,7 +39,15 @@ class UnitPresenter extends BasePresenter
 
 		$form->addSubmit('submit', '!!!ulozit');
 
-		$this->setDefaults($form);
+
+		$form->onAttached[] = function($form) {
+			$this->setDefaults($form);
+		};
+
+		$form->onSuccess[] = $this->processUnitForm;
+		$form->onSuccess[] = function($form) {
+			$this->redirect('this');
+		};
 
 		return $form;
 	}
@@ -46,6 +63,13 @@ class UnitPresenter extends BasePresenter
 	{
 		$defaults = [];
 		foreach($this->rentals as $rental) {
+			foreach($rental->units as $unit) {
+				$defaults[$rental->id][] = [
+					'name' => $unit->name,
+					'maxCapacity' => $unit->maxCapacity,
+					'entityId' => $unit->id,
+				];
+			}
 
 		}
 		$form->setDefaults($defaults);
@@ -53,18 +77,39 @@ class UnitPresenter extends BasePresenter
 
 	public function processUnitForm(SimpleForm $form)
 	{
-		// $values = $form->getFormattedValues(TRUE);
+		 $values = $form->getFormattedValues(TRUE);
 
-		// $rental = $this->currentRental;
+		foreach($this->rentals as $rental) {
+			$rentalValues = $values[$rental->getId()];
+			$oldUnits = $rental->units;
+			$currentIds = [];
+			foreach($rentalValues as $unitValue) {
+				if(!$unitValue['name'] && !$unitValue['maxCapacity']) continue;
+				unset($unit);
 
-		// $rental->updateCalendar($values['calendar']['data']);
+				if($unitValue['entityId']) {
+					$unit = $this->unitRepository->find($unitValue['entityId']);
+					$currentIds[$unitValue['entityId']] = TRUE;
+				}
 
-		// $this->em->flush($rental);
+				if(!isset($unit) || !$unit) {
+					$unit = $this->unitRepository->createNew();
+					$unit->setRental($rental);
+				}
 
-		// $this->invalidateRentalListener->onSuccess($rental);
+				$unit->setName($unitValue['name']);
+				$unit->setMaxCapacity($unitValue['maxCapacity']);
 
-		// $this->payload->success = TRUE;
-		// $this->sendPayload();
+				$this->unitRepository->save($unit);
+			}
+
+			foreach($oldUnits as $unit) {
+				if(array_key_exists($unit->id, $currentIds)) continue;
+
+				$this->unitRepository->delete($unit);
+			}
+		}
+
 	}
 
 }

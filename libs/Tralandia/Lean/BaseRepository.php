@@ -40,7 +40,7 @@ class BaseRepository extends Repository
 	 * @throws \Exception
 	 * @return mixed|null
 	 */
-	public function find($id, $need = TRUE)
+	public function find($id, $need = FALSE)
 	{
 		// first part
 		$row = $this->connection->select('*')
