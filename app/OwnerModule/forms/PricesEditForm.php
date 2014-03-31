@@ -9,6 +9,7 @@ use Entity\Rental\Rental;
 use Environment\Environment;
 use Nette\Localization\ITranslator;
 use Tralandia\Currency\Currencies;
+use Nette\Utils\Html;
 
 class PricesEditForm extends BaseForm {
 
@@ -60,8 +61,12 @@ class PricesEditForm extends BaseForm {
 
 		$this->addSelect('currency', '!mena', $this->currencies->getForSelect());
 
+		$currencySpan = Html::el('span', array(
+			'for' => 'currency'
+		));
+
 		$this->addText('price', 'o100078')
-			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
+			->setOption('append', $currencySpan . ' ' . $this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
