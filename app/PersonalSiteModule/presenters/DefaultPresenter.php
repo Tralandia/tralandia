@@ -43,7 +43,9 @@ class DefaultPresenter extends BasePresenter
 		$rentalNameId = $rental->type->getNameId();
 		$locationNameId = $rental->address->locality->getNameId();
 		$this->template->usedLanguages = $this->getUsedLanguages($rental);
-		$this->template->heading = $this->translate($rentalNameId) . ' ' . $this->translate($locationNameId);
+		$this->template->heading = $this->translate($rentalNameId) . ' ' . $this->translate($locationNameId, NULL, array(
+			\Tralandia\Localization\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE
+		));
 		$this->template->rental = $rental;
 		$this->template->showCalendar = $rental->calendarUpdated && !$rental->isCalendarEmpty();
 	}

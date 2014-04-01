@@ -76,7 +76,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public function macroPhoto(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('echo %escape($_imagePipe->requestForPath(%node.word, %node.args))');
+		return $writer->write('echo ($_imagePipe->requestForPath(%node.word, %node.args))');
 	}
 
 
