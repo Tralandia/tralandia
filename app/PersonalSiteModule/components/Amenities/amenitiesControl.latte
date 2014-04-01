@@ -14,19 +14,33 @@
 							{var $descriptionPhraseIdTemp = $rental->getFirstAnswer()->answerId}
 						{/if}
 						<div>
-							{_$descriptionPhraseIdTemp}
+							{!_$descriptionPhraseIdTemp|nl2br}
 						</div>
-						<div class="btn-more">
-							<button class="btn-toggle" data-toggle="interviewAnswers"><i class="icon icon-chevron-down"></i> Read full interview</button>
-						</div>
-						<ul class="interviewList hidden" n:inner-foreach="$rental->getInterview() as $row">
-							{if $iterator->first && !$rental->hasDescription()}
-								{?contunue}
+						{var $rentalInterviews = $rental->getInterview()}
+						{var $hasAnswer = false}
+						{foreach $rentalInterviews as $row}
+							{var $answer = $template->translate($row->answer)}
+							{if !$iterator->first && $answer}
+								{var $hasAnswer = true}
+								{?break}
 							{/if}
+						{/foreach}
+						{if $hasAnswer}
+						<div class="btn-more">
+							<button class="btn-toggle" data-toggle="interviewAnswers"><i class="icon icon-chevron-down"></i> {_696737}</button>
+						</div>
+						{/if}
+						<ul class="interviewList hidden" n:inner-foreach="$rentalInterviews as $row">
+							{if $iterator->first && !$rental->hasDescription()}
+								{?continue}
+							{/if}
+							{var $answer = $template->translate($row->answer)}
+							{if $answer}
 							<li>
 								<h4>{_$row->questionFe|firstUpper}</h4>
-								<p>{_$row->answer}</p>
+								<p>{$answer}</p>
 							</li>
+							{/if}
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -54,7 +68,7 @@
 							<div n:class="$rental->hasWifi() ? 'inner-bg active' : 'inner-bg' ">
 								<div class="line-through"></div>
 								<i class="icon icon-rss rotate-45-left"></i>
-								<h3 class="service-title">WiFi</h3>
+								<h3 class="service-title">{_1458}</h3>
 							</div>
 						</figure>
 						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
@@ -66,7 +80,7 @@
 									{if $isPetAllowed}
 										{_$rental->getAllowedPet()->nameId}
 									{else}
-										I donno :(
+										{_1203}
 									{/if}
 								</h3>
 							</div>
@@ -82,7 +96,7 @@
 					<table>
 						<tr n:foreach="$rental->getAmenitiesGroupByType(['contact-person-availability','animal']) as $amenities">
 							{var $firstAmenity = reset($amenities)}
-							<td width="$width">{_$firstAmenity->type->nameId|firstUpper}</td>
+							<td width="$width">{_$firstAmenity->type->nameId|firstUpper}:</td>
 							<td>
 								{foreach $amenities as $amenity}
 									{_$amenity->nameId|lower}{if !$iterator->last}, {/if}
