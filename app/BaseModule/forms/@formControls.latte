@@ -765,10 +765,10 @@
 				{var $replicator = $container->getComponent('list')}
 				{foreach $replicator->getComponents() as $component}
 				<tr class="priceList">
-					<td >
+					<td>
 						<div class="dragger"><i class="icon-list-ul"></i></div>
-						{input $component['seasonFrom'] , class => ' datepicker pull-left' , data-reservations => ''}
-						{input $component['seasonTo'] , class => ' datepickerto pull-left' , data-reservations => ''}
+						{input $component['seasonFrom'] , class => ' simpleDatepicker pull-left' , data-reservations => ''}
+						{input $component['seasonTo'] , class => ' simpleDatepicker pull-left' , data-reservations => ''}
 					</td>
 					<td>
 						<div class="input-append pull-left">

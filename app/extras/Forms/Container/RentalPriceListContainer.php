@@ -91,14 +91,14 @@ class RentalPriceListContainer extends BaseContainer
 
 		$dateFromControl = $container->addAdvancedDatePicker('seasonFrom')
 			->getControlPrototype()
-			->setPlaceholder($this->translator->translate('o1043'));
+			->setPlaceholder($this->translator->translate('505'));
 
 		$dateFromControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
 			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
 		$dateToControl = $container->addAdvancedDatePicker('seasonTo')
 			->getControlPrototype()
-			->setPlaceholder($this->translator->translate('o1044'));
+			->setPlaceholder($this->translator->translate('506'));
 
 		$dateToControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
 			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);

@@ -21,7 +21,7 @@
 	<div class="span12 rentalDetailPage" data-cache="{$rand}">
 		<div class="sitePadding baseRadius baseBorder marginBottom relative">
 
-			<a n:if="$loggedUser && $loggedUser->isOwnerOf($rental)" class="editButton btn btn-orange tooltipElem" n:href=":Owner:Rental:edit $rental->getId()" target="_blank" data-placement="left" title="{_1370}"><i class="icon-edit"></i></a>
+			<a n:if="$loggedUser && $loggedUser->isOwnerOf($rental)" class="editButton btn btn-orange tooltipElem" n:href=":Owner:Rental:edit $rental->getId()" data-placement="left" title="{_1370}"><i class="icon-edit"></i></a>
 
 			<div id="content" class="noPadding">
 
@@ -169,16 +169,19 @@
 													<div class="row-fluid">
 														<div class="span6">
 															<span class="dateFrom" n:if="$row->seasonFrom">{$row->seasonFrom|date}</span> - <span class="dateTo" n:if="$row->seasonTo">{$row->seasonTo|date}</span>
-															{if $row->note}
-															<br><span class="small">{_$row->note}</span>
-															{/if}
 														</div>
 														<div class="span6 align-right">
 															<span class="price">
-																{$row->price} {_$row->priceFor->firstPart}{if $row->priceFor->secondPart} / {_$row->priceFor->secondPart}{/if}
+																<b>{$row->price}</b> / {_$row->priceFor->firstPart}{if $row->priceFor->secondPart} / {_$row->priceFor->secondPart}{/if}
 															</span>
 														</div>
 													</div>
+													{var $note = $template->translate($row->note)}
+													{if $note}
+													<div class="row-fluid">
+														<div class="span12">{$note}</div>
+													</div>
+													{/if}
 												</li>
 											{/foreach}
 										{else}
@@ -213,11 +216,11 @@
 							</li>
 						</ul>
 
-{* 
-						{if $rental->hasDescription()}
-							{$rental->getDescription()}
+						{var $description = $template->translate($rental->getDescription())}
+						{if $description}
+							<p>{!$description|nl2br}</p>
 						{/if}
- *}
+
 
 
 

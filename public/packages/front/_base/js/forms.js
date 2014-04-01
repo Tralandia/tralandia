@@ -1116,17 +1116,22 @@ $(function() {
 
 	$('.pricelistControlButton a.createNewLine').on('click', createNewLineInPriceList);
 
+	$(".simpleDatepicker").datepicker({ 
+		dateFormat: "yy-mm-dd"
+	});	
+
+
 });
 
 
 //
 
 function removePriceLine(){
-		if($('.priceList').length > 1){
-			$(this).parents('.priceList').remove();
-		} else {
-			$(this).parents('.priceList').find('input,select').val('');
-		}
+	if($('.priceList').length > 1){
+		$(this).parents('.priceList').remove();
+	} else {
+		$(this).parents('.priceList').find('input,select').val('');
+	}
 }
 
 function createNewLineInPriceList(){
@@ -1147,7 +1152,9 @@ function createNewLineInPriceList(){
 	pattern.find('.select2:not(select2-offscreen)').select2();
 	$('.pricelistControl table').append(pattern);
 
-	rentalDetailDatepickerInit();
+	$(".simpleDatepicker").datepicker({ 
+		dateFormat: "yy-mm-dd"
+	});	
 
 	return false;
 }
