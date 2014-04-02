@@ -9,14 +9,14 @@ class RentalUnitContainer extends BaseContainer
 {
 
 	/**
-	 * @var \Entity\User\User
-	 */
-	protected $user;
-
-	/**
 	 * @var \Nette\Localization\ITranslator $translator
 	 */
 	protected $translator;
+
+	/**
+	 * @var array
+	 */
+	protected $rentals;
 
 	/**
 	 * @var array
@@ -26,28 +26,18 @@ class RentalUnitContainer extends BaseContainer
 
 	/**
 	 * @param \Nette\ComponentModel\IContainer $label
-	 * @param null $phonePrefixes
-	 * @param \Extras\Books\Phone $phoneBook
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct($label, $user, ITranslator $translator)
+	public function __construct($label, $rentals, ITranslator $translator)
 	{
 		$this->translator = $translator;
-		$this->user = $user;
 		parent::__construct();
 
-		$units = array();
-		$rentalOptions = array();
-		foreach ($this->user->getRentals() as $rental) {
-			$rentalOptions[$rental->id] = $this->translator->translate($rental->getName());
-			$units[$rental->id] = $rental->getUnits();
-		}
-
-		$this->addSelect('rental', $label, $rentalOptions)
-			->setPrompt('')
-			->setRequired('Povinne policko');
-
-		foreach ($units as $rentalId => $options) {
+		$this->addText('mainControl');
+		$this->rentals = $rentals;
+		foreach ($rentals as $rental) {
+			$rentalId = $rental->getId();
+			$options = \Tools::entitiesMap($rental->getUnits(), 'id', 'name');
 			$this->units[$rentalId] = $this->addMultiOptionList('unit'.$rentalId, NULL, $options);
 		}
 
@@ -60,56 +50,46 @@ class RentalUnitContainer extends BaseContainer
 	}
 
 
-	public function getRentalControl()
+	public function getRentals()
 	{
-		return $this['rental'];
+		return $this->rentals;
 	}
 
 
 	public function setValues($values, $erase = FALSE)
 	{
-		// if (!$values) return NULL;
+		 if (!$values) return NULL;
 
-		// if ($values instanceof \Entity\Contact\Phone) {
-		// 	$valuesTemp = [];
-		// 	$valuesTemp['prefix'] = $values->getPrimaryLocation()->getPhonePrefix();
-		// 	// $valuesTemp['number'] = trim(str_replace('+' . $valuesTemp['prefix'], '', $values->getInternational()));
-		// 	$values = $valuesTemp;
-		// }
-		// parent::setValues($values, $erase);
+		 if (is_array($values)) {
+			 $temp = [];
+			 foreach($values as $value) {
+				 if($value instanceof \Entity\Rental\Unit)
+				 $temp['unit' . $value->getRental()->getId()][] = $value->getId();
+			 }
+			 $values = $temp;
+		 }
+		 parent::setValues($values, $erase);
 	}
 
 
 	public function getFormattedValues($asArray = FALSE)
 	{
-		// $number = $this['number']->getValue();
+		$values = [];
 
-		// if($number) {
-		// 	// $phone = $this['prefix']->getValue() . $this['number']->getValue();
-		// 	$phone = $this->phoneBook->getOrCreate($phone, $this['prefix']->getValue());
-		// } else {
-		// 	$phone = NULL;
-		// }
+		foreach($this->getUnitsControl() as $unitControl) {
+			$unitValues = $unitControl->getValue($asArray);
+			if(count($unitValues)) {
+				$values = array_merge($values, $unitValues);
+			}
+		}
 
-		// $values = $asArray ? array() : new \Nette\ArrayHash;
-		// $values['prefix'] = $this['prefix']->getValue();
-		// // $values['number'] = $this['number']->getValue();
-		// $values['entity'] = $phone;
-
-		// return $values;
+		return $values;
 	}
 
 
 	public function getMainControl()
 	{
-		return $this->getRentalControl();
-	}
-
-	public function validate(array $controls = NULL) {
-		// $values = $this->getFormattedValues();
-		// if ($values->entity === FALSE || !$values->number) {
-		// 	$this->getMainControl()->addError($this->translator->translate('151882'));
-		// }
+		return $this['mainControl'];
 	}
 
 }

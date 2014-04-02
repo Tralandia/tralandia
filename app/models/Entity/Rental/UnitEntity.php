@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="rental_unit")
+ *
+ * @method \Entity\Rental\Rental getRental()
  */
 class Unit extends \Entity\BaseEntity
 {

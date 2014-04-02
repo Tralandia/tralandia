@@ -179,6 +179,20 @@ trait TFindEntityHelper {
 
 
 	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
+	 * @return \Entity\User\RentalReservation|null
+	 */
+	public function findReservation($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(RESERVATION_ENTITY, $id, $need, $by);
+	}
+
+
+
+	/**
 	 * @param $entityName
 	 * @param $id
 	 * @param bool $need
