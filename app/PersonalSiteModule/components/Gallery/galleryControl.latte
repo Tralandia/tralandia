@@ -1,18 +1,16 @@
+{var $photosCount = $rental->getPhotosCount()}
 <section id="gallery" class="work-section section-block">
 	<div class="inner-section">
 		<!-- BEGIN #portfolio-slider -->
 		<div id="portfolio-slider" class="">
-			{for $i = 0; $i < ($rental->getPhotosCount() / 2); $i++}
+			{for $i = 0; $i < $photosCount; $i++}
 				<ul n:class="$i >= 2 ? 'grids hidden' : 'grids'" n:inner-foreach="$rental->getPhotos(2, $i * 2) as $photo">
 					<li class="grid-6"><img width="600" height="400" n:photo="$photo->path, full_hd, $photo->created" class="attachment-portfolio-thumb wp-post-image" alt="13907408814693" /></li>
 				</ul>
-				{if $i==3}
-					{?break}
-				{/if}
 			{/for}
 			<!-- END #portfolio-slider -->
 		</div>
-		{if ($rental->getPhotosCount()-4) > 0}
+		{if ($photosCount-4) > 0}
 		<div class="btn-more">
 			<button class="btn-toggle" data-toggle="portfolio-slider"><i class="icon icon-chevron-down"></i> {_152659} (+{$rental->getPhotosCount()-4})</button>
 		</div>
