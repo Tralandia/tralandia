@@ -17,36 +17,36 @@ use Nette;
  * @property int $extraBedCount
  * @property int $price
  * @property \Tralandia\Rental\RoomType $roomType m:hasOne(roomType_id:)
+ * @property \Tralandia\Rental\Rental $rental m:hasOne(rental_id:)
  */
 class PriceListRow extends \Tralandia\Lean\BaseEntity
 {
-	
-	// /**
-	//  * @return \Extras\Types\Price
-	//  */
-	// public function getPrice()
-	// {
-	// 	return new \Extras\Types\Price($this->price, $this->getCurrency());
-	// }
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPrice()
+	{
+		return new \Extras\Types\Price($this->price, $this->getCurrency());
+	}
 
 
-	// public function setPrice(\Extras\Types\Price $price)
-	// {
-	// 	$this->price = $price->convertToFloat($this->getCurrency());
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		$this->price = $price->convertToFloat($this->getCurrency());
 
-	// 	return $this;
-	// }
-
-
-	// public function setFloatPrice($price)
-	// {
-	// 	$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
-	// }
+		return $this;
+	}
 
 
-	// public function getCurrency()
-	// {
-	// 	return $this->getRental()->getCurrency();
-	// }
+	public function setFloatPrice($price)
+	{
+		$this->row->price = $price;
+	}
 
+
+	public function getCurrency()
+	{
+		return $this->rental->getSomeCurrency();
+	}
 }

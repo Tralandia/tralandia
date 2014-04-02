@@ -186,8 +186,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$teaserContainer->addText($iso, $this->translate('152276', null, null, null, $language))
 				->setOption('help', $this->translate('726', null, null, null, $language));
 
-			$descriptionContainer->addTextArea($iso, $this->translate('!!!opis', null, null, null, $language))
-				->setOption('help', $this->translate('!!!help', null, null, null, $language));
+			$descriptionContainer->addTextArea($iso, $this->translate('696729', null, null, null, $language))
+				->setOption('help', '');
 
 			$i = 1;
 			foreach($questions as $question) {

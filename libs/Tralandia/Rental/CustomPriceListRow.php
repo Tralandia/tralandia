@@ -30,32 +30,31 @@ class CustomPriceListRow extends \Tralandia\Lean\BaseEntity
 		return $this->row->note_id;
 	}
 
-	// /**
-	//  * @return \Extras\Types\Price
-	//  */
-	// public function getPrice()
-	// {
-	// 	return new \Extras\Types\Price($this->row->price, $this->getCurrency());
-	// }
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPrice()
+	{
+		return new \Extras\Types\Price($this->price, $this->getCurrency());
+	}
 
 
-	// public function setPrice(\Extras\Types\Price $price)
-	// {
-	// 	$this->price = $price->convertToFloat($this->getCurrency());
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		$this->price = $price->convertToFloat($this->getCurrency());
 
-	// 	return $this;
-	// }
+		return $this;
+	}
+
+	public function setFloatPrice($price)
+	{
+		$this->row->price = $price;
+	}
 
 
-	// public function setFloatPrice($price)
-	// {
-	// 	$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
-	// }
-
-
-	// public function getCurrency()
-	// {
-	// 	return $this->getRental()->getSomeCurrency();
-	// }
+	public function getCurrency()
+	{
+		return $this->rental->getSomeCurrency();
+	}
 
 }

@@ -12,6 +12,10 @@ use Nette;
 
 /**
  * @property int $id
+ * @property string $iso
+ * @property float $exchangeRate
+ * @property float $searchInterval
+ * @property string $rounding
  */
 class Currency extends \Tralandia\Lean\BaseEntity
 {
