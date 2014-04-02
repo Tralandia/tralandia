@@ -454,6 +454,8 @@ services:
 	# ==========================================================
 	# ==========================================================
 
+	- [class: \Tralandia\Console\DevSetupCommand, tags: [kdyby.console.command]]
+
 	- [class: \Tralandia\Console\EmailManagerCommand, tags: [kdyby.console.command]]
 	- \Tralandia\Console\EmailManager\UpdateYourRental(@doctrine.dao(Entity\Rental\Rental), ...)
 	- \Tralandia\Console\EmailManager\Backlink(@doctrine.dao(Entity\Rental\Rental), ...)
