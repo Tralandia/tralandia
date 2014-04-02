@@ -1,5 +1,4 @@
 {var $twoColumnLaytou = $rental->isAnyQuestionAnswered() || $rental->hasDescription()}
-
 <!-- BEGIN #services -->
 <section id="services" class="section-block content-section">
 	<div class="inner-section">
@@ -8,6 +7,7 @@
 				{if $twoColumnLaytou}
 				<div class="grid-8">
 					<div class="metaObjectInfo" id="interviewAnswers">
+{$rental->hasDescription()}
 						{if $rental->hasDescription()}
 							{var $descriptionPhraseIdTemp = $rental->descriptionId}
 						{else}
@@ -17,15 +17,7 @@
 							{!_$descriptionPhraseIdTemp|nl2br}
 						</div>
 						{var $rentalInterviews = $rental->getInterview()}
-						{var $hasAnswer = false}
-						{foreach $rentalInterviews as $row}
-							{var $answer = $template->translate($row->answer)}
-							{if !$iterator->first && $answer}
-								{var $hasAnswer = true}
-								{?break}
-							{/if}
-						{/foreach}
-						{if $hasAnswer}
+						{if $rental->isAnyQuestionAnswered()}
 						<div class="btn-more">
 							<button class="btn-toggle" data-toggle="interviewAnswers"><i class="icon icon-chevron-down"></i> {_696737}</button>
 						</div>

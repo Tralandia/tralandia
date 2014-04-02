@@ -21,6 +21,7 @@ use Nette;
  * @property \DateTime|null $calendarUpdated
  *
  * @property \Tralandia\User\User $user m:hasOne
+ * @property \Tralandia\Currency $currency m:hasOne(currency_id)
  * @property \Tralandia\Rental\Type $type m:hasOne
  * @property \Tralandia\Contact\Address $address m:hasOne
  * @property \Tralandia\Contact\Phone $phone m:hasOne
@@ -195,6 +196,14 @@ class Rental extends \Tralandia\Lean\BaseEntity
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getSomeCurrency()
+	{
+		return $this->row->currency_id ? $this->currency : $this->getPrimaryLocation()->defaultCurrency;
 	}
 
 

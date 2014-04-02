@@ -17,6 +17,7 @@ use Nette;
  * @property \DateTime $seasonTo
  * @property int $price
  * @property \Tralandia\Rental\PriceFor $priceFor m:hasOne(priceFor_id:)
+ * @property \Tralandia\Rental\Rental $rental m:hasOne(rental_id:)
  */
 class CustomPriceListRow extends \Tralandia\Lean\BaseEntity
 {
@@ -28,5 +29,33 @@ class CustomPriceListRow extends \Tralandia\Lean\BaseEntity
 	{
 		return $this->row->note_id;
 	}
+
+	// /**
+	//  * @return \Extras\Types\Price
+	//  */
+	// public function getPrice()
+	// {
+	// 	return new \Extras\Types\Price($this->row->price, $this->getCurrency());
+	// }
+
+
+	// public function setPrice(\Extras\Types\Price $price)
+	// {
+	// 	$this->price = $price->convertToFloat($this->getCurrency());
+
+	// 	return $this;
+	// }
+
+
+	// public function setFloatPrice($price)
+	// {
+	// 	$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+	// }
+
+
+	// public function getCurrency()
+	// {
+	// 	return $this->getRental()->getSomeCurrency();
+	// }
 
 }

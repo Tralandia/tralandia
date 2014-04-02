@@ -20,6 +20,33 @@ use Nette;
  */
 class PriceListRow extends \Tralandia\Lean\BaseEntity
 {
+	
+	// /**
+	//  * @return \Extras\Types\Price
+	//  */
+	// public function getPrice()
+	// {
+	// 	return new \Extras\Types\Price($this->price, $this->getCurrency());
+	// }
 
+
+	// public function setPrice(\Extras\Types\Price $price)
+	// {
+	// 	$this->price = $price->convertToFloat($this->getCurrency());
+
+	// 	return $this;
+	// }
+
+
+	// public function setFloatPrice($price)
+	// {
+	// 	$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+	// }
+
+
+	// public function getCurrency()
+	// {
+	// 	return $this->getRental()->getCurrency();
+	// }
 
 }

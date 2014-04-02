@@ -17,11 +17,11 @@ class Price extends \Nette\Object {
 	protected $sourceAmount;
 	protected $sourceCurrency;
 
-	public function __construct($amount, Currency $currency) {
+	public function __construct($amount, $currency) {
 		$this->setAmount($amount, $currency);
 	}
 
-	public function setAmount($amount, Currency $currency) {
+	public function setAmount($amount, $currency) {
 		if ($amount === NULL) $amount = 0;
 
 		$this->amounts = array();
@@ -57,7 +57,7 @@ class Price extends \Nette\Object {
 	 *
 	 * @return string
 	 */
-	public function convertToFloat(Currency $currency) {
+	public function convertToFloat( $currency) {
 		return $this->convertTo($currency, self::FORMAT_FLOAT);
 	}
 
@@ -67,7 +67,7 @@ class Price extends \Nette\Object {
 	 *
 	 * @return string
 	 */
-	public function convertTo(Currency $currency, $format = '%f %s') {
+	public function convertTo( $currency, $format = '%f %s') {
 		$value = $this->getAmount($currency);
 
 		if ($format === self::FORMAT_FLOAT) {
@@ -83,7 +83,7 @@ class Price extends \Nette\Object {
 	 *
 	 * @return mixed
 	 */
-	public function getAmount(Currency $currency)
+	public function getAmount( $currency)
 	{
 		if(!isset($this->amounts[$currency->getId()])) {
 			if (!isset($this->amounts[1])) {
