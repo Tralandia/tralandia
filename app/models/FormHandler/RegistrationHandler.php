@@ -134,8 +134,11 @@ class RegistrationHandler extends FormHandler
 		}
 
 		if (isset($rentalValues->photos)) {
+			$i = 0;
 			foreach ($rentalValues->photos->images as $image) {
+				$image->setSort($i);
 				$rental->addImage($image);
+				$i++;
 			}
 		}
 

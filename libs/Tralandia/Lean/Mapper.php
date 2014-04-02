@@ -51,16 +51,7 @@ class Mapper extends DefaultMapper {
 	 */
 	public function getTable($entityClass)
 	{
-		if($classToTable = $this->classToTable($entityClass)) {
-			return $classToTable;
-		}
-
-		list(,$namespace, $name) = explode('\\', $entityClass);
-		if($namespace == $name) {
-			return strtolower($name);
-		} else {
-			return strtolower($namespace) . '_' . strtolower($name);
-		}
+		return $this->getTableFromClass($entityClass);
 	}
 
 	/**
@@ -78,11 +69,8 @@ class Mapper extends DefaultMapper {
 	 */
 	public function getTableByRepositoryClass($repositoryClass)
 	{
-		$matches = array();
-		if (preg_match('#([a-z0-9]+)Repository#i', $repositoryClass, $matches)) {
-			return strtolower($matches[1]);
-		}
-		throw new InvalidStateException('Cannot determine table name.');
+		$repositoryClass = str_replace('Repository', '', $repositoryClass);
+		return $this->getTable($repositoryClass);
 	}
 
 	/**
@@ -94,6 +82,26 @@ class Mapper extends DefaultMapper {
 		return $column . '_' . $this->getPrimaryKey($targetTable);
 	}
 
+
+	/**
+	 * @param $class
+	 *
+	 * @return null|string
+	 */
+	protected function getTableFromClass($class)
+	{
+		if($classToTable = $this->classToTable($class)) {
+			return $classToTable;
+		}
+
+		$name = NULL;
+		list(,$namespace, $name) = explode('\\', $class);
+		if($namespace == $name || !$name) {
+			return strtolower($namespace);
+		} else {
+			return strtolower($namespace) . '_' . strtolower($name);
+		}
+	}
 
 	/**
 	 * @param $table

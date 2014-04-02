@@ -14,7 +14,7 @@
 							<div class="grid-6">
 								<span n:if="$row->seasonFrom" class="date">{$row->seasonFrom|date}</span> - <span n:if="$row->seasonTo" class="date">{$row->seasonTo|date}</span>
 							</div>
-							<div class="grid-6"><strong>{$row->price} EUR</strong> / {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
+							<div class="grid-6"><strong>{$row->price}</strong> / {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
 							<div class="grid-12">
 								<span class="small">{_$row->noteId}</span>
 							</div>
@@ -27,7 +27,7 @@
 									<span>({$row->bedCount} {_1191, $row->bedCount}{if $row->extraBedCount} + {$row->extraBedCount} {_1185, $row->extraBedCount}{/if})</span>
 								</small>
 							</div>
-							<div class="grid-6"><strong>{$row->price} UER</strong> / {_1189}</div>
+							<div class="grid-6"><strong>{$row->price}</strong> / {_1189}</div>
 						</div>
 					{/if}
 					<div class="grids" n:foreach="$rental->getPriceListFiles() as $file">
