@@ -1,10 +1,15 @@
+{var $rentalPricelist = $rental->getPriceList()}
+{var $rentalPricelistCount = count($rentalPricelist)}
+{var $customPriceListCount = count($rental->customPriceList)}
+
+{if ($customPriceListCount > 0 || $rentalPricelistCount > 0)}
 <section id="prices" class="section-block content-section">
 	<div class="inner-section">
 		<h2 class="main-title">{_1197}</h2>
 		<div class="grids">
 			<div class="grid-12">
 				<div class="prices">
-					{if count($rental->customPriceList) > 0}
+					{if $customPriceListCount > 0}
 						<div class="grids" n:foreach="$rental->customPriceList as $row">
 							<div class="grid-6">
 								<span n:if="$row->seasonFrom">{$row->seasonFrom|date}</span>
@@ -14,7 +19,7 @@
 							<div class="grid-6"><strong>{$row->price}</strong> {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
 						</div>
 					{else}
-						<div class="grids" n:foreach="$rental->getPriceList() as $row">
+						<div class="grids" n:foreach="$rentalPricelist as $row">
 							<div class="grid-6">
 								{$row->roomCount}x {_$row->roomType->nameId}
 								<small>
@@ -38,3 +43,4 @@
 	</div>
 	<!-- END #prices -->
 </section>
+{/if}

@@ -1,7 +1,7 @@
 {block content}
 
 {define #title}
-	{_$rental->nameId}
+	{_$rental->nameId} - {_$rental->getAddress()->getLocality()->getNameId()}
 {/define}
 
 {define #headerTitle}
