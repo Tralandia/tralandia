@@ -418,21 +418,15 @@ Checkbox List -------------------------------------------
 {?unset($control)}
 
 {include #opentag, class => 'simpleInput ' , control => $container}
-	<td>
-		{_$mainControl->caption}
-		{if $mainControl->isRequired()}
-			<i class="icon-asterisk"></i>
-		{/if}
-	</td>
-	<td>{input $container['rental'], class => 'select2 notFulltext', onchange => 'setUnits(this)'}</td>
-</tr>
 <tr class="units">
 	<td></td>
 	<td>
-		{foreach $container->getUnitsControl() as $rentalId => $unit}
-			<div class="units-container hide clearfix" id="unit{$rentalId}">
-				{foreach $unit as $key => $label}
-					<label>{$unit->getControlItem($key)}{_$label}</label>
+		{foreach $container->getRentals() as $rental}
+			{var $unitsControl = $container->getUnitsControl()}
+			<h3>{_$rental->name}</h3>
+			<div class="units-container clearfix" id="unit{$rental->getId()}">
+				{foreach $unitsControl[$rental->getId()] as $key => $label}
+					<label>{$unitsControl[$rental->getId()]->getControlItem($key)}{_$label}</label>
 				{/foreach}
 			</div>
 		{/foreach}
@@ -440,7 +434,8 @@ Checkbox List -------------------------------------------
 
 	<td>
 		<span class="help">{$mainControl->getOption('help')}</span>
-		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+		{dump $mainControl}
+		<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
 	</td>
 </tr>
 

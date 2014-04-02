@@ -9,6 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_rentalreservation", indexes={@ORM\Index(name="senderEmail", columns={"senderEmail"})})
+ *
+ * @method \Entity\Rental\Unit[] getUnits()
+ * @method setStatus($status)
+ * @method string getStatus()
+ * @method setChildrenAge($age)
+ * @method int|null getChildrenAge()
+ * @method setOwnersNote($note)
+ * @method string getOwnersNote()
+ * @method setReferrer($referrer)
+ * @method string getReferrer()
+ * @method setTotalPrice($price)
+ * @method int|null getTotalPrice()
+ * @method setPaidPrice($price)
+ * @method int|null getPaidPrice()
  */
 class RentalReservation extends \Entity\BaseEntity {
 
@@ -94,8 +108,8 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $childrenCount;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $childrenAge;
 
@@ -130,12 +144,31 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $paidPrice = 0;
 
 
+	public function addUnit(\Entity\Rental\Unit $unit)
+	{
+		if(!$this->units->contains($unit)) {
+			$this->units->add($unit);
+		}
+
+		return $this;
+	}
+
+
+	public function removeUnit(\Entity\Rental\Unit $unit)
+	{
+		$this->units->removeElement($unit);
+
+		return $this;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
+		$this->units = new \Doctrine\Common\Collections\ArrayCollection;
 		parent::__construct();
 	}
 
@@ -187,14 +220,6 @@ class RentalReservation extends \Entity\BaseEntity {
 		$this->rental = NULL;
 
 		return $this;
-	}
-
-	/**
-	 * @return \Entity\Rental\Rental|NULL
-	 */
-	public function getRental()
-	{
-		return $this->rental;
 	}
 
 	/**

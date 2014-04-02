@@ -2,30 +2,29 @@
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
-{form orderManagerEditForm}
+{form editForm}
 	<h1>Nova objednavka</h1>
 	<table class="formTable innerPadding">
 		{include #rentalUnit, control => $form['units'] }
 
-		{include #text, control => $form['name']}
-		{include #text, control => $form['surname']}
-		{include #email, control => $form['email']}
-		{include #phone, control => $form['phone']}
+		{include #text, control => $form['senderName']}
+		{include #email, control => $form['senderEmail']}
+		{include #phone, control => $form['senderPhone']}
 
-		{include #text, control => $form['peopleCount']}
+		{include #text, control => $form['adultsCount']}
 		{include #text, control => $form['childrenCount']}
 		{include #text, control => $form['childrenAge']}
 
-		{include #text, control => $form['dateFrom'], class => 'datepicker'}
-		{include #text, control => $form['dateTo'], class => 'datepicker'}
+		{include #text, control => $form['arrivalDate'], class => 'datepicker'}
+		{include #text, control => $form['departureDate'], class => 'datepicker'}
 
 		{include #textArea, control => $form['message']}
-		{include #textArea, control => $form['ownerNotes']}
+		{include #textArea, control => $form['ownersNote']}
 
-		{include #checkbox, control => $form['confirmed']}
-		{include #text, control => $form['referer']}
-		{include #text, control => $form['price']}
-		{include #text, control => $form['price_paid']}
+		{include #select, control => $form['status']}
+		{include #text, control => $form['referrer']}
+		{include #text, control => $form['totalPrice']}
+		{include #text, control => $form['paidPrice']}
 
 		<tr class="simpleInput">
 			<td>Zostava na uhradu</td>
