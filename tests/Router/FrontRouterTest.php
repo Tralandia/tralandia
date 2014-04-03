@@ -39,6 +39,36 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+
+		$this->routeIn($route, 'http://sk.tralandia.hr', 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://sk.tralandia.hr/');
+
+		$this->routeIn($route, 'http://en.tralandia.hr/apartmani-antonita-smjestaj-sa-sarmom-r13496', 'Rental', array(
+			'action' => 'detail',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::RENTAL => $this->findRental(13496),
+		), 'http://en.tralandia.hr/apartmani-antonita-smjestaj-sa-sarmom-r13496');
+
+
+		$this->routeIn($route, 'http://en.tralandia.hr/vinjerac/apartments', 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://en.tralandia.hr/vinjerac/apartments');
+
+
+		$this->routeIn($route, 'http://www.tralandia.hr/vinjerac', 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://www.tralandia.hr/vinjerac');
+
+
+
 		$this->routeIn($route, 'www.tralandia.al/?capacity=11', 'RentalList', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(236),
@@ -102,12 +132,6 @@ class FrontRouterTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(48),
 			FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->findRentalType(6),
 		), 'http://fr.gh.tralandia.com/appartements');
-
-		$this->routeIn($route, 'http://sk.tralandia.com.hr', 'Home', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-		), 'http://sk.tralandia.com.hr/');
 
 		$this->routeIn($route, 'http://tralandia.hk', 'Home', array(
 			'action' => 'default',

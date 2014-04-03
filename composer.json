@@ -28,7 +28,10 @@
 		"texy/texy": "dev-release-2.x",
 		"janmarek/mockista": "@dev"
 	},
-	"repositories": [
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "repositories": [
 		{
 			"type": "vcs",
 			"url": "https://github.com/Achtan/datagrid.git"
