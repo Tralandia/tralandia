@@ -35,13 +35,17 @@ class SearchQuery extends QueryObject
 	 */
 	private $fulltext;
 
+	/**
+	 * @var null
+	 */
+	private $status;
 
-	public function __construct(array $rentals, $from = NULL, $to = NULL, $fulltext = NULL)
+
+	public function __construct(array $rentals, $status = NULL, $fulltext = NULL)
 	{
 		parent::__construct();
 		$this->rentals = $rentals;
-		$this->from = $from;
-		$this->to = $to;
+		$this->status = $status;
 		$this->fulltext = $fulltext;
 	}
 
@@ -62,6 +66,16 @@ class SearchQuery extends QueryObject
 			$qb->expr()->in('u.rental', ':rentals')
 		))
 			->setParameter('rentals', $this->rentals);
+
+		if($this->status) {
+			$qb->andWhere('e.status = :status')->setParameter('status', $this->status);
+		}
+
+		if($this->fulltext) {
+			$qb->andWhere($qb->expr()->like('e.senderEmail', ':containFulltext'));
+			$qb->andWhere($qb->expr()->like('e.senderName', ':containFulltext'));
+			$qb->setParameter('containFulltext', "%{$this->fulltext}%");
+		}
 
 		$qb->orderBy('e.created', 'DESC');
 

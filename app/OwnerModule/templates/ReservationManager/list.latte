@@ -4,31 +4,16 @@
 	<a n:href="add" class="btn short btn-mini marginTop marginRight btn-blue pull-right">Pridat objednavku</a>
 	<h1 class="rentalEditHeader">Manazer objednavok</h1>
 </div>
-<form class="quick-search">
-    <select class="select2" style="width:200px;">
-        <option>- Vyberte objekt -</option>
-        <option>Štýlová villa Flora pri aquaparku Tatralandia</option>
-        <option>Chata Flora pri Donovaloch</option>
-    </select>
-    <select class="select2" style="width:100px;">
-        <option>Všetky (3)</option>
-        <option>Minulé (2)</option>
-        <option>Aktuálne (1)</option>
-        <option>Budúce (0)</option>
-    </select>
-    <input name="query" placeholder="vyhladat podla emailu, mena alebo telefonu...">
-	<button type="submit" class="btn btn-small"><i class="icon-search"></i> Hladat</button>
-</form>
-{*
-<div class="quick-toggle">
-    <div class="btn-group" data-toggle="buttons-radio">
-      <button type="button" class="btn active">Všetky (3)</button>
-      <button type="button" class="btn">Minulé (2)</button>
-      <button type="button" class="btn">Aktuálne (1)</button>
-      <button type="button" class="btn">Budúce (0)</button>
-    </div>
-</div>
- *}
+{form searchForm, class => quick-search}
+	{if $form['rental']}
+		{input rental, class => select2, style => 'width:200px;'}
+	{/if}
+	{input status, class => select2, style => 'width:200px;'}
+	{input fulltext}
+	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
+		<i class="icon-search"></i> !!!Hladat
+	</button>
+{/form}
 
 {foreach $reservations as $reservation}
 	<div class="row-fluid">
@@ -38,14 +23,14 @@
 				<a href="#">{$reservation->senderName}</a>
 			</h2>
 			<div class="details">
-				<i><b>{$reservation->arrivalDate} - {$reservation->departureDate}</b></i><br/>
-				{$reservation->adultsCount} dospelych, {$reservation->childrenCount} deti ({$reservation->childrenAge})
+				<i><b>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</b></i><br/>
+				{$reservation->adultsCount} dospelych, {$reservation->childrenCount} deti {if $reservation->childrenAge}({$reservation->childrenAge}){/if}
 			</div>
 			<div class="clearfix"></div>
 			<div class="detail-box">
 				<p><a href="#" class="email">{$reservation->senderEmail}</a>, +421 919 396 336</p>
 				<p class="answer">{$reservation->ownersNote}</p>
-				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id">!!!detaily <i class="icon-arrow-right"></i></a>
+				<a class="btn btn-small btn-orange pull-right" target="_blank" n:href="ReservationEdit: $reservation->id">!!!detaily <i class="icon-arrow-right"></i></a>
 				<a href="#" class="pull-right remove"><i class="icon-trash"></i></a>
 				<p class="prices">!!!Total: {$reservation->totalPrice} !!!EUR, <strong>!!!Due: {($reservation->totalPrice - $reservation->paidPrice)} !!!EUR</strong></p>
 			</div>
