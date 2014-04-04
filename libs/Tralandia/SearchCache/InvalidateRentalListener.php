@@ -81,6 +81,10 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 			foreach($rental->getInterviewAnswers() as $answer) {
 				$this->translatorCache->remove($answer->getAnswer()->getId());
 			}
+
+			foreach($rental->getCustomPricelistRows() as $row) {
+				$this->translatorCache->remove($row->getNote()->getId());
+			}
 		}
 
 		if(!$options || in_array(self::CLEAR_RENTALPICKER, $options)) {
