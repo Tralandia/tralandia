@@ -33,7 +33,7 @@ class ReservationManagerPresenter extends BasePresenter
 	 * @persistent
 	 * @var string
 	 */
-	public $status;
+	public $period;
 
 	/**
 	 * @persistent
@@ -71,7 +71,7 @@ class ReservationManagerPresenter extends BasePresenter
 		} else {
 			$rentals = $this->loggedUser->getRentals()->toArray();
 		}
-		$query = new SearchQuery($rentals, $this->status, $this->fulltext);
+		$query = new SearchQuery($rentals, $this->period, $this->fulltext);
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
 	}
 
@@ -87,14 +87,11 @@ class ReservationManagerPresenter extends BasePresenter
 				->setPrompt('--!!!vsetny--');
 		}
 
-//		$timeOptions = [];
-//		foreach($this->timePeriods as $key => $value) $timeOptions[$key] = $value[0];
-//		$form->addSelect('time', '', $timeOptions);
 
-		$form->addSelect('status', '', [
-			RentalReservation::STATUS_OPENED => '!!!opened',
-			RentalReservation::STATUS_CONFIRMED => '!!!confirmed',
-			RentalReservation::STATUS_CANCELED => '!!!canceled',
+		$form->addSelect('period', '', [
+			SearchQuery::PERIOD_PAST => '!!!past',
+			SearchQuery::PERIOD_PRESENT => '!!!present',
+			SearchQuery::PERIOD_FUTURE => '!!!future',
 		])
 			->setPrompt('--!!!vsetny--');
 
@@ -104,7 +101,7 @@ class ReservationManagerPresenter extends BasePresenter
 
 		$form->onAttached[] = function($form) {
 			$form['rental']->setDefaultValue($this->rental);
-			$form['status']->setDefaultValue($this->status);
+			$form['period']->setDefaultValue($this->period);
 			$form['fulltext']->setDefaultValue($this->fulltext);
 		};
 
@@ -112,7 +109,7 @@ class ReservationManagerPresenter extends BasePresenter
 			$values = $form->getValues();
 
 			$this->rental = $values->rental;
-			$this->status = $values->status;
+			$this->period = $values->period;
 			$this->fulltext = $values->fulltext;
 
 			$this->redirect('this');

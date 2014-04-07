@@ -15,6 +15,10 @@ use Nette;
 class SearchQuery extends QueryObject
 {
 
+	const PERIOD_PAST = 'past';
+	const PERIOD_PRESENT = 'present';
+	const PERIOD_FUTURE = 'future';
+
 	/**
 	 * @var array
 	 */
@@ -38,14 +42,14 @@ class SearchQuery extends QueryObject
 	/**
 	 * @var null
 	 */
-	private $status;
+	private $period;
 
 
-	public function __construct(array $rentals, $status = NULL, $fulltext = NULL)
+	public function __construct(array $rentals, $period = NULL, $fulltext = NULL)
 	{
 		parent::__construct();
 		$this->rentals = $rentals;
-		$this->status = $status;
+		$this->period = $period;
 		$this->fulltext = $fulltext;
 	}
 
@@ -67,8 +71,16 @@ class SearchQuery extends QueryObject
 		))
 			->setParameter('rentals', $this->rentals);
 
-		if($this->status) {
-			$qb->andWhere('e.status = :status')->setParameter('status', $this->status);
+		if($this->period) {
+			$today = Nette\DateTime::from(strtotime('today'));
+			if($this->period == self::PERIOD_PAST) {
+				$qb->andWhere('e.departureDate < :departureDate')->setParameter('departureDate', $today);
+			} else if($this->period == self::PERIOD_PRESENT) {
+				$qb->andWhere('e.arrivalDate <= :arrivalDate')->setParameter('arrivalDate', $today);
+				$qb->andWhere('e.departureDate >= :departureDate')->setParameter('departureDate', $today);
+			} else if($this->period == self::PERIOD_FUTURE) {
+				$qb->andWhere('e.arrivalDate > :arrivalDate')->setParameter('arrivalDate', $today);
+			}
 		}
 
 		if($this->fulltext) {
@@ -77,7 +89,7 @@ class SearchQuery extends QueryObject
 			$qb->setParameter('containFulltext', "%{$this->fulltext}%");
 		}
 
-		$qb->orderBy('e.created', 'DESC');
+		$qb->orderBy('e.arrivalDate', 'ASC');
 
 		return $qb;
 
