@@ -23,6 +23,7 @@ class ReservationEditPresenter extends BasePresenter
 	public function actionDefault($id)
 	{
 		$this->reservation = $this->findReservation($id);
+		$this->checkPermission($this->reservation, 'edit');
 
 	}
 

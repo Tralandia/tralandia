@@ -8,15 +8,16 @@
 	{if $form['rental']}
 		{input rental, class => select2, style => 'width:200px;'}
 	{/if}
-	{input status, class => select2, style => 'width:200px;'}
+	{input period, class => select2, style => 'width:200px;'}
 	{input fulltext}
 	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
 		<i class="icon-search"></i> !!!Hladat
 	</button>
 {/form}
 
+{snippet allReservations}
 {foreach $reservations as $reservation}
-	<div class="row-fluid">
+	<div class="row-fluid" n:snippet="reservation-$reservation->id">
 		<div class="order-manager-item span12">
 			<h2>
 				<span class="status ok"><i class="icon-ok"></i></span>
@@ -28,14 +29,15 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="detail-box">
-				<p><a href="#" class="email">{$reservation->senderEmail}</a>, +421 919 396 336</p>
+				<p><a href="#" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
 				<p class="answer">{$reservation->ownersNote}</p>
 				<a class="btn btn-small btn-orange pull-right" target="_blank" n:href="ReservationEdit: $reservation->id">!!!detaily <i class="icon-arrow-right"></i></a>
-				<a href="#" class="pull-right remove"><i class="icon-trash"></i></a>
+				<a n:href="changeStatus $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
 				<p class="prices">!!!Total: {$reservation->totalPrice} !!!EUR, <strong>!!!Due: {($reservation->totalPrice - $reservation->paidPrice)} !!!EUR</strong></p>
 			</div>
 		</div>
 	</div>
 {/foreach}
+{/snippet}
 
 {control p}

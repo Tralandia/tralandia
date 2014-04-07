@@ -85,6 +85,7 @@ class SimpleAcl extends Permission
 
 		$resources[] = $userEntity = 'Entity\User\User';
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
+		$resources[] = $reservationEntity = 'Entity\User\RentalReservation';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
 
 		foreach ($resources as $resource) {
@@ -107,6 +108,7 @@ class SimpleAcl extends Permission
 		$this->allow(RoleEntity::OWNER, 'Owner:ReservationEdit', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:Unit', self::ALL);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
+		$this->allow(RoleEntity::OWNER, $reservationEntity, self::ALL, [$assertion, 'owner']);
 
 		$this->allow(RoleEntity::TRANSLATOR, $adminModule);
 		$this->allow(RoleEntity::TRANSLATOR, $phrasePresenter, 'editList');

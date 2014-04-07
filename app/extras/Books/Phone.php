@@ -35,7 +35,8 @@ class Phone extends Nette\Object {
 	 * @return Entity\Contact\Phone|false
 	 */
 	public function find($number) {
-		return $this->phoneDao->findOneByValue($this->prepareNumber($number));
+		$number = $this->prepareNumber($number);
+		return $this->phoneDao->findOneByValue($number);
 	}
 
 
