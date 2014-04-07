@@ -27,16 +27,6 @@ class SearchQuery extends QueryObject
 	/**
 	 * @var null
 	 */
-	private $from;
-
-	/**
-	 * @var null
-	 */
-	private $to;
-
-	/**
-	 * @var null
-	 */
 	private $fulltext;
 
 	/**
@@ -44,13 +34,19 @@ class SearchQuery extends QueryObject
 	 */
 	private $period;
 
+	/**
+	 * @var \Extras\Books\Phone
+	 */
+	private $phoneBook;
 
-	public function __construct(array $rentals, $period = NULL, $fulltext = NULL)
+
+	public function __construct(array $rentals, $period = NULL, $fulltext = NULL, \Extras\Books\Phone $phoneBook)
 	{
 		parent::__construct();
 		$this->rentals = $rentals;
 		$this->period = $period;
 		$this->fulltext = $fulltext;
+		$this->phoneBook = $phoneBook;
 	}
 
 
@@ -84,9 +80,23 @@ class SearchQuery extends QueryObject
 		}
 
 		if($this->fulltext) {
-			$qb->andWhere($qb->expr()->like('e.senderEmail', ':containFulltext'));
-			$qb->andWhere($qb->expr()->like('e.senderName', ':containFulltext'));
+			$fulltextOr = $qb->expr()->orX();
+			$fulltextOr->add($qb->expr()->like('e.senderEmail', ':containFulltext'));
+			$fulltextOr->add($qb->expr()->like('e.senderName', ':containFulltext'));
+			$fulltextOr->add($qb->expr()->like('e.message', ':containFulltext'));
+			$fulltextOr->add($qb->expr()->like('e.ownersNote', ':containFulltext'));
 			$qb->setParameter('containFulltext', "%{$this->fulltext}%");
+
+			$number = str_replace(['+', ' ', '(', ')', '/'], NULL, $this->fulltext);
+			if(is_numeric($number)) {
+				$phone = $this->phoneBook->find($number);
+				if($phone) {
+					$fulltextOr->add($qb->expr()->eq('e.senderPhone', ':senderPhone'));
+					$qb->setParameter('senderPhone', $phone);
+				}
+			}
+
+			$qb->andWhere($fulltextOr);
 		}
 
 		$qb->orderBy('e.arrivalDate', 'ASC');
@@ -95,4 +105,9 @@ class SearchQuery extends QueryObject
 
 	}
 
+}
+
+interface ISearchQueryFactory
+{
+	public function create(array $rentals, $period = NULL, $fulltext = NULL);
 }

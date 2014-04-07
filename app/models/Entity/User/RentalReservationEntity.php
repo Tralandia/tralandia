@@ -23,8 +23,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @method int|null getTotalPrice()
  * @method setPaidPrice($price)
  * @method int|null getPaidPrice()
+ * @method setCurrency(\Entity\Currency $currency)
+ * @method \Entity\Currency getCurrency()
  */
-class RentalReservation extends \Entity\BaseEntity {
+class RentalReservation extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 	const STATUS_CONFIRMED = 'confirmed';
 	const STATUS_OPENED = 'opened';
@@ -144,6 +146,26 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $paidPrice = 0;
 
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
+
+
+	public function getOwnerId()
+	{
+		$rental = $this->getRental();
+		if(!$rental) {
+			$unit = $this->units->first();
+			if($unit) $rental = $unit->getRental();
+		}
+		if($rental) return $rental->getOwnerId();
+
+		return NULL;
+	}
+
+
 	public function addUnit(\Entity\Rental\Unit $unit)
 	{
 		if(!$this->units->contains($unit)) {
@@ -199,6 +221,15 @@ class RentalReservation extends \Entity\BaseEntity {
 	public function getLanguage()
 	{
 		return $this->language;
+	}
+
+
+	/**
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function getRental()
+	{
+		return $this->rental;
 	}
 
 	/**

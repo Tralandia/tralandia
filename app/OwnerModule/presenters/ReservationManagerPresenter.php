@@ -18,6 +18,12 @@ class ReservationManagerPresenter extends BasePresenter
 	protected $reservations;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Reservation\ISearchQueryFactory
+	 */
+	protected $searchFactory;
+
+	/**
 	 * @var BaseDao
 	 */
 	protected $reservationDao;
@@ -63,6 +69,19 @@ class ReservationManagerPresenter extends BasePresenter
 		$this->redirect('ReservationEdit:', ['id' => $reservation->getId()]);
 	}
 
+	public function actionChangeStatus($id, $status)
+	{
+		$reservation = $this->findReservation($id);
+		$this->checkPermission($reservation, 'edit');
+
+		$reservation->setStatus(\Entity\User\RentalReservation::STATUS_CANCELED);
+
+		$this->em->flush($reservation);
+
+		$this->invalidateControl('reservation-'.$reservation->id);
+		$this->sendPayload();
+	}
+
 
 	public function actionList()
 	{
@@ -71,7 +90,7 @@ class ReservationManagerPresenter extends BasePresenter
 		} else {
 			$rentals = $this->loggedUser->getRentals()->toArray();
 		}
-		$query = new SearchQuery($rentals, $this->period, $this->fulltext);
+		$query = $this->searchFactory->create($rentals, $this->period, $this->fulltext);
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
 	}
 
