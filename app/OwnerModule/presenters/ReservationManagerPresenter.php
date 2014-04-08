@@ -5,6 +5,7 @@ namespace OwnerModule;
 
 
 use Entity\User\RentalReservation;
+use Nette\Utils\Arrays;
 use Tralandia\BaseDao;
 use Tralandia\Reservation\SearchQuery;
 
@@ -28,7 +29,6 @@ class ReservationManagerPresenter extends BasePresenter
 	 */
 	protected $reservationDao;
 
-
 	/**
 	 * @persistent
 	 * @var int
@@ -47,11 +47,6 @@ class ReservationManagerPresenter extends BasePresenter
 	 */
 	public $fulltext;
 
-
-	protected $timePeriods = [
-		1 => ['past', NULL, 'today'],
-		2 => ['future', 'today', NULL],
-	];
 
 	public function injectDependencies(\Nette\DI\Container $dic) {
 		$this->reservationDao = $dic->getService('doctrine.default.entityManager')->getDao(RESERVATION_ENTITY);
@@ -85,6 +80,9 @@ class ReservationManagerPresenter extends BasePresenter
 
 	public function actionList()
 	{
+		if($restoreSearch = $this->getParameter('restoreSearch')) {
+			$this->restoreSearch($restoreSearch);
+		}
 		if($this->rental) {
 			$rentals = [$this->findRental($this->rental)];
 		} else {
@@ -92,7 +90,36 @@ class ReservationManagerPresenter extends BasePresenter
 		}
 		$query = $this->searchFactory->create($rentals, $this->period, $this->fulltext);
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
+		$this->template->storedSearch = $this->storeSearch();
 	}
+
+	protected function storeSearch($expiration = '+ 10 minutes')
+	{
+		$session = $this->session->getSection('ReservationManager/storedSearch');
+		do {
+			$key = \Nette\Utils\Strings::random(5);
+		} while (isset($session[$key]));
+
+		$session[$key] = array($this->user->getId(), ['rental' => $this->rental, 'period' => $this->period, 'fulltext' => $this->fulltext]);
+		$session->setExpiration($expiration, $key);
+		return $key;
+	}
+
+	public function restoreSearch($key)
+	{
+		$session = $this->session->getSection('ReservationManager/storedSearch');
+		if (!isset($session[$key]) || ($session[$key][0] !== NULL && $session[$key][0] !== $this->user->getId())) {
+			return;
+		}
+		$search = $session[$key][1];
+		unset($session[$key]);
+
+		$this->rental = Arrays::get($search, 'rental', NULL);
+		$this->period = Arrays::get($search, 'period', NULL);
+		$this->fulltext = Arrays::get($search, 'fulltext', NULL);
+		$this->redirect('this');
+	}
+
 
 
 	protected function createComponentSearchForm()
@@ -148,3 +175,4 @@ class ReservationManagerPresenter extends BasePresenter
 
 
 }
+

@@ -155,14 +155,25 @@ class RentalReservation extends \Entity\BaseEntity implements \Security\IOwnerab
 
 	public function getOwnerId()
 	{
+		$rental = $this->getSomeRental();
+		if($rental) return $rental->getOwnerId();
+
+		return NULL;
+	}
+
+
+	/**
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function getSomeRental()
+	{
 		$rental = $this->getRental();
 		if(!$rental) {
 			$unit = $this->units->first();
 			if($unit) $rental = $unit->getRental();
 		}
-		if($rental) return $rental->getOwnerId();
 
-		return NULL;
+		return $rental;
 	}
 
 
@@ -183,6 +194,20 @@ class RentalReservation extends \Entity\BaseEntity implements \Security\IOwnerab
 		return $this;
 	}
 
+
+	/**
+	 * @return \Entity\Currency|null
+	 */
+	public function getSomeCurrency()
+	{
+		$currency = $this->getCurrency();
+		if(!$currency) {
+			$rental = $this->getSomeRental();
+			if($rental) $currency = $rental->getCurrency();
+		}
+
+		return $currency;
+	}
 
 
 	//@entity-generator-code --- NEMAZAT !!!

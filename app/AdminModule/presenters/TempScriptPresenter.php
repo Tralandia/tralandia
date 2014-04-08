@@ -831,6 +831,10 @@ limit ' . $limit;
 
 	public function actionAttacheReservationsToUnits()
 	{
+		$response = new \Nette\Application\Responses\TextResponse('Toto netreba spusatat.');
+		$this->sendResponse($response);
+		$this->terminate();
+
 		$query = 'select r.id rId, u.id uId from \Entity\User\RentalReservation r
 					inner join r.rental rental
 					inner join rental.units u';
@@ -838,7 +842,7 @@ limit ' . $limit;
 
 		$print = [];
 		foreach($result as $row) {
-			$print[] = "({$row['rId']}, {$row['rId']})";
+			$print[] = "({$row['rId']}, {$row['uId']})";
 		}
 		$print = 'INSERT INTO `_reservation_unit` (`reservation_id`, `unit_id`) VALUES ' . implode(', ', $print);
 

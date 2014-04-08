@@ -16,9 +16,23 @@ class ReservationEditPresenter extends BasePresenter
 	protected $countries;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Currency\Currencies
+	 */
+	protected $currencies;
+
+	/**
 	 * @var \Entity\User\RentalReservation
 	 */
 	protected $reservation;
+
+
+	/**
+	 * @persistent
+	 * @var string
+	 */
+	public $backlink;
+
 
 	public function actionDefault($id)
 	{
@@ -64,6 +78,8 @@ class ReservationEditPresenter extends BasePresenter
 
 		$form->addText('referrer', 'Zdroj rezervacie');
 
+		$form->addSelect('currency', '!mena', $this->currencies->getForSelect());
+
 		$form->addText('totalPrice', 'Konecna cena')
 			->addCondition(BaseForm::FILLED)
 			->addRule(BaseForm::FLOAT, 'Musi byt cislo');
@@ -82,7 +98,7 @@ class ReservationEditPresenter extends BasePresenter
 		$form->onValidate[] = $this->validate;
 		$form->onSuccess[] = $this->processEditForm;
 		$form->onSuccess[] = function($form) {
-			$this->redirect('this');
+			$this->redirect('ReservationManager:list', ['restoreSearch' => $this->backlink]);
 		};
 
 		return $form;
@@ -106,6 +122,7 @@ class ReservationEditPresenter extends BasePresenter
 			'referrer' => $reservation->getReferrer(),
 			'totalPrice' => $reservation->getTotalPrice(),
 			'paidPrice' => $reservation->getPaidPrice(),
+			'currency' => $reservation->getSomeCurrency()->id,
 			'units' => $reservation->getUnits(),
 		];
 
@@ -143,6 +160,9 @@ class ReservationEditPresenter extends BasePresenter
 		$reservation->setReferrer($values['referrer']);
 		$reservation->setTotalPrice((float)$values['totalPrice']);
 		$reservation->setPaidPrice((float)$values['paidPrice']);
+
+		$currency = $this->em->getRepository(CURRENCY_ENTITY)->find($values['currency']);
+		$reservation->setCurrency($currency);
 
 		$units = $this->em->getRepository(UNIT_ENTITY)->findBy(['id' => $values['units']]);
 		foreach($units as $unit) {

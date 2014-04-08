@@ -44,10 +44,13 @@ class UnitPresenter extends BasePresenter
 			$this->setDefaults($form);
 		};
 
+		$form->onValidate[] = $this->validateUnitForm;
 		$form->onSuccess[] = $this->processUnitForm;
 		$form->onSuccess[] = function($form) {
 			$this->redirect('this');
 		};
+
+		$form->addError('Cibi tu budu error hlasky, dorob design');
 
 		return $form;
 	}
@@ -75,9 +78,29 @@ class UnitPresenter extends BasePresenter
 		$form->setDefaults($defaults);
 	}
 
+	public function validateUnitForm(SimpleForm $form)
+	{
+		$values = $form->getFormattedValues(TRUE);
+		foreach($this->rentals as $rental) {
+			$rentalValues = $values[$rental->getId()];
+			$unitCount = 0;
+			foreach($rentalValues as $unitValue) {
+				if(!$unitValue['name'] && !$unitValue['maxCapacity']) continue;
+				unset($unit);
+
+				$unitCount++;
+			}
+
+			if($unitCount == 0) {
+				$form->addError('!!!Please set at leas one Unit to each Rental');
+			}
+		}
+
+	}
+
 	public function processUnitForm(SimpleForm $form)
 	{
-		 $values = $form->getFormattedValues(TRUE);
+		$values = $form->getFormattedValues(TRUE);
 
 		foreach($this->rentals as $rental) {
 			$rentalValues = $values[$rental->getId()];

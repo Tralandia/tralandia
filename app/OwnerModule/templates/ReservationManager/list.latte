@@ -31,9 +31,9 @@
 			<div class="detail-box">
 				<p><a href="#" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
 				<p class="answer">{$reservation->ownersNote}</p>
-				<a class="btn btn-small btn-orange pull-right" target="_blank" n:href="ReservationEdit: $reservation->id">!!!detaily <i class="icon-arrow-right"></i></a>
+				<a class="btn btn-small btn-orange pull-right" target="_blank" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">!!!detaily <i class="icon-arrow-right"></i></a>
 				<a n:href="changeStatus $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
-				<p class="prices">!!!Total: {$reservation->totalPrice} !!!EUR, <strong>!!!Due: {($reservation->totalPrice - $reservation->paidPrice)} !!!EUR</strong></p>
+				<p class="prices">!!!Total: {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>!!!Due: {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
 			</div>
 		</div>
 	</div>
