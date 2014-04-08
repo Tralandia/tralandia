@@ -59,7 +59,7 @@ class PricesEditForm extends BaseForm {
 	public function buildForm() {
 		$currency = $this->rental->getCurrency();
 
-		$this->addSelect('currency', '!mena', $this->currencies->getForSelect());
+		$this->addSelect('currency', '713', $this->currencies->getForSelect());
 
 		$currencySpan = Html::el('span', array(
 			'for' => 'currency'
