@@ -5,6 +5,7 @@
 
 {form unitForm}
 
+	{foreach $form->getAllErrors() as $error}{$error}{/foreach}
 	{foreach $rentals as $rental}
 		<div class="clearfix">
 		</div>
