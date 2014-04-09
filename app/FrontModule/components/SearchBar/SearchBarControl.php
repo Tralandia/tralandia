@@ -58,6 +58,18 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	/**
 	 * @persistent
+	 * @var float
+	 */
+	public $latitude;
+
+	/**
+	 * @persistent
+	 * @var float
+	 */
+	public $longitude;
+
+	/**
+	 * @persistent
 	 * @var \Entity\Language|NULL
 	 */
 	public $spokenLanguage;
@@ -424,6 +436,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		if ($this->board) {
 			$search->setBoardCriterion($this->board);
+		}
+
+		if ($this->latitude && $this->longitude) {
+			$search->setGpsCriterion($this->latitude, $this->longitude);
 		}
 
 		/*placement

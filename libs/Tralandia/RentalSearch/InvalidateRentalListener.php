@@ -5,7 +5,7 @@
  * Created at: 7/22/13 3:35 PM
  */
 
-namespace Tralandia\SearchCache;
+namespace Tralandia\RentalSearch;
 
 
 use Doctrine\ORM\EntityManager;
