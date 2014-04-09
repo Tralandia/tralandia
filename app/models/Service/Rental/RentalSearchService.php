@@ -8,6 +8,7 @@ use Nette\Utils\Arrays;
 use Robot\IUpdateRentalSearchCacheRobotFactory;
 use Tralandia\BaseDao;
 use Tralandia\Location\LocationRepository;
+use Tralandia\RentalSearch\GpsHelper;
 
 class RentalSearchService extends Nette\Object
 {
@@ -18,6 +19,7 @@ class RentalSearchService extends Nette\Object
 	const CRITERIA_LOCATION = 'location';
 	const CRITERIA_RENTAL_TYPE = 'rentalType';
 	const CRITERIA_PLACEMENT = 'placement';
+	const CRITERIA_GPS = 'gps';
 
 	const CRITERIA_CAPACITY = 'fcapacity';
 	const CRITERIA_SPOKEN_LANGUAGE = 'flanguage';
@@ -165,6 +167,13 @@ class RentalSearchService extends Nette\Object
 	public function setBoardCriterion(Entity\Rental\Amenity $board = NULL)
 	{
 		$this->criteria[self::CRITERIA_BOARD] = $board;
+		$this->resetResults();
+	}
+
+
+	public function setGpsCriterion($latitude, $longitude)
+	{
+		$this->criteria[self::CRITERIA_GPS] = ['latitude' => $latitude, 'longitude' => $longitude];
 		$this->resetResults();
 	}
 
@@ -324,6 +333,25 @@ class RentalSearchService extends Nette\Object
 						}
 					}
 					$results[$key] = $byPrice;
+				} else if ($key == self::CRITERIA_GPS) {
+					$getSquare = function($a, $b) {
+						return Arrays::get($this->searchCacheData, array(self::CRITERIA_GPS, $a, $b), []);
+					};
+					$latitudeKey = GpsHelper::coordinateToKey($value['latitude']);
+					$longitudeKey = GpsHelper::coordinateToKey($value['longitude']);
+
+					$byGps = [];
+					$c = 5;
+					$byGps += $getSquare($latitudeKey, $longitudeKey);
+					$byGps += $getSquare($latitudeKey, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey, $longitudeKey - $c);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey - $c);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey - $c);
+					$results[$key] = $byGps;
 				} else {
 					$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
 				}

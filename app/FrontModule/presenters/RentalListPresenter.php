@@ -66,8 +66,20 @@ class RentalListPresenter extends BasePresenter {
 			$this->prepareListTemplate($search, $itemCount);
 		}
 
+		$this->template->latitude = $this['searchBar']->latitude;
+		$this->template->longitude = $this['searchBar']->longitude;
+		$this->template->getDistance = $this->getDistance;
+
+
 	}
 
+
+	public function getDistance($lat, $lng, $olat, $olng)
+	{
+		$val2 = [$lat, $lng];
+		$objectData = ['latitude' => $olat, 'longitude' => $olng];
+		return (((acos(sin(($val2[0]*pi()/180))*sin(($objectData['latitude']*pi()/180))+cos(($val2[0]*pi()/180))*cos(($objectData['latitude']*pi()/180))*cos((($val2[1]-$objectData['longitude'])*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
+	}
 
 	public function prepareListTemplate($rentals, $rentalCount)
 	{

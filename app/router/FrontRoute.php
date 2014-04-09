@@ -30,6 +30,8 @@ class FrontRoute extends BaseRoute
 	const PRICE_TO = 'priceTo';
 	const BOARD = 'board';
 	const PLACEMENT = 'placement';
+	const LATITUDE = 'latitude';
+	const LONGITUDE = 'longitude';
 
 	const PAGE = 'page';
 	const LOCATION = 'location';
@@ -50,6 +52,8 @@ class FrontRoute extends BaseRoute
 		self::CAPACITY => 'searchBar-capacity',
 		self::SPOKEN_LANGUAGE => 'searchBar-spokenLanguage',
 		self::BOARD => 'searchBar-board',
+		self::LATITUDE => 'searchBar-latitude',
+		self::LONGITUDE => 'searchBar-longitude',
 	];
 
 	public $urlStampOptions = [
@@ -65,6 +69,8 @@ class FrontRoute extends BaseRoute
 		self::CAPACITY,
 		self::SPOKEN_LANGUAGE,
 		self::BOARD,
+		self::LATITUDE,
+		self::LONGITUDE,
 		self::PAGE,
 		self::FAVORITE_LIST,
 	];

@@ -19,7 +19,7 @@ class RentalPresenter extends AdminPresenter {
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\SearchCache\InvalidateRentalListener
+	 * @var \Tralandia\RentalSearch\InvalidateRentalListener
 	 */
 	protected $invalidateRentalListener;
 
@@ -141,8 +141,8 @@ class RentalPresenter extends AdminPresenter {
 		$this->serviceManager->prolong($rental, $serviceFor, $serviceType);
 		lt('prolong','personalSiteTL');
 		$invalidateOption = [
-			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_SEARCH,
-			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_HOMEPAGE,
+			\Tralandia\RentalSearch\InvalidateRentalListener::CLEAR_SEARCH,
+			\Tralandia\RentalSearch\InvalidateRentalListener::CLEAR_HOMEPAGE,
 		];
 		lt('invalidateCache','personalSiteTL');
 		$this->invalidateRentalListener->onSuccess($rental, $invalidateOption);

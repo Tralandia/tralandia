@@ -51,7 +51,7 @@ class TempScriptPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\SearchCache\InvalidateRentalListener
+	 * @var \Tralandia\RentalSearch\InvalidateRentalListener
 	 */
 	protected $invalidateRentalListener;
 
