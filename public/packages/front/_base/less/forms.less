@@ -80,9 +80,9 @@ table.pricelistTable {
 				max-width: 240px;
 				.header {
 					a.tabPane {
-						padding: 4px 5px;
+						padding: 3px;
 						position: relative;
-						top: 4px;
+						top: 6px;
 						float: left;
 						margin: 0 4px 0 -1px;
 						.border-radius(4px 4px 0 0);
@@ -91,7 +91,7 @@ table.pricelistTable {
 						&.current {
 							background: #F8FAE9;
 							border-color: #B0C13B;
-							padding-bottom: 5px;
+							padding-bottom: 4px;
 						}
 					}
 				}
@@ -861,23 +861,24 @@ table.formTable {
 			span.fileinput-button {
 				float: none;
 				margin: 0;
-				width: 128px;
+				width: 155px;
 				display: inline-block;
 				height: 30px;
 
 				i {
 					top: 8px;
 					margin: 0;
+					position: absolute;
 				}
 				span {
 					white-space: nowrap;
 					overflow: hidden;
-					width: 91px;
+					width: auto;
 					text-overflow: ellipsis;
-					top: -8px;
+					top: 5px;
 					margin-right: 0;
 					float: right;
-					padding-right: 10px;
+					padding-right: 15px;
 				}
 			}
 
@@ -893,7 +894,7 @@ table.formTable {
 
 			.file-placeholder {
 				display: inline-block;
-				width: 160px;
+				width: 155px;
 				height: 30px;
 
 				label {
@@ -1297,6 +1298,7 @@ table.formTable {
 }
 
 form {
+	margin: 0 0 6px;
 	button[type=submit] {
 		small {
 			font-size: 13px;
@@ -1455,10 +1457,26 @@ form {
 		}
 }
 
-
-
 .registrationForm {
 	button.btn.btn-greenDark {
 		margin-left: 65px;
+	}
+}
+
+.form-actions {
+	margin: 10px -10px -10px;
+	padding: 20px;
+	background: #F8FAE9;
+	.btn {
+		padding: 8px 16px 8px 35px;
+		position: relative;
+		i {
+			position: absolute;
+			left: 8px;
+			top: 10px;
+		}
+		small {
+			font-size: 14px;
+		}
 	}
 }
