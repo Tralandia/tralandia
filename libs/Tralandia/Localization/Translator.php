@@ -33,11 +33,21 @@ class Translator implements \Nette\Localization\ITranslator {
 	 */
 	private $phraseDao;
 
+	/**
+	 * @var bool
+	 */
+	protected $development;
+
 
 	public function __construct(Language $language, BaseDao $phraseDao, Cache $translatorCache) {
 		$this->language = $language;
 		$this->cache = $translatorCache;
 		$this->phraseDao = $phraseDao;
+	}
+
+	public function setDevelopment($development)
+	{
+		$this->development = $development;
 	}
 
 	public function setLanguage(Language $language)
@@ -50,10 +60,6 @@ class Translator implements \Nette\Localization\ITranslator {
 	{
 		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
 			$variation[self::VARIATION_COUNT] = $count;
-		}
-
-		if($phrase == 'o32989') {
-			$t = 1;
 		}
 
 		if(!$language) $language = $this->language;
@@ -154,7 +160,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			//if(!$translation) $translation = '{?'.$translationKey.'?}';
-			if(!$translation) $translation = FALSE;
+			if(!$translation) $translation = $this->development ? '{.'.$phraseId.'.}' : FALSE;
 
 			$this->saveTranslationToCache($phraseId, $language, $variation, $translation);
 		}

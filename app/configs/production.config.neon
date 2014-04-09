@@ -10,6 +10,8 @@ nette:
 
 parameters:
 
+	development: no
+
 	cacheDatabase:
 		user: tralandia
 		password: 986269962525
