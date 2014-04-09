@@ -34,6 +34,8 @@ extensions:
 
 parameters:
 
+	development: yes
+
 	security:
 		salt: '8723lks762ngknl90835bkd'
 		sender: 'noreply@tralandia.sk'
@@ -285,7 +287,10 @@ services:
 
 	collator: @locale::getCollator()
 
-	translator: @environment::getTranslator()
+	translator:
+		factory: @environment::getTranslator()
+		setup:
+			- setDevelopment(%development%)
 
 
 	# --------------------------------
