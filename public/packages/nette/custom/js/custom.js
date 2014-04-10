@@ -85,6 +85,7 @@ $('a.a.btn-warning').click(function (e) {
 });
 
 $.nette.init(function (netteAjaxHandler) {
+    $('a.ajax').click(netteAjaxHandler);
     $('form.ajax').submit(netteAjaxHandler);
     $('form.ajax').live('submit',netteAjaxHandler);
 });
