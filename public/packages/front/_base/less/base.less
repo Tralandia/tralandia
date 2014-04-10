@@ -803,7 +803,7 @@ ul.arrows {
 	position: absolute;
 	right: 10px;
 	top: 15px;
-	padding: 0 10px;
+	padding: 0;
 	border-top: none;
 	border-right: none;
 	.border-radius(8px);
@@ -838,16 +838,17 @@ ul.arrows {
 	color: #999;
 	font-weight: normal;
 }
+#content.noPadding .order-manager-item h2 {
+	margin-left: 50px;
+}
 .order-manager-item h2 .status {
 	position: absolute;
-	padding: 5px 8px 3px 5px;
+	padding: 5px 10px 5px 5px;
 	margin: -5px 5px 10px 10px;
 	.border-radius(4px);
 	left: 0;
-	top: 45px;
-}
-.order-manager-item h2 .status:hover {
-	background: #EEE;
+	top: 15px;
+	background: #eee;
 }
 .order-manager-item h2 .img {
 	float: left;
