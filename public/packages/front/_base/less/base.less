@@ -56,16 +56,16 @@ ul {
 }
 
 form.quick-search {
-	padding: 10px 10px 10px;
+	text-align: left;
+	padding: 0 10px 10px;
 	margin-bottom: 0;
-	border-top: 1px solid #DDD;
-	background: #FFF;
+	border-bottom: 1px solid #DDD;
 }
-form.quick-search input[name="query"] {
-	width: 300px;
+form.quick-search input[name="fulltext"] {
+	width: 169px;
 	padding: 3px 8px;
 	border: 1px solid @lightGreen;
-	margin: 0 10px;
+	margin: 0 10px 0 10px;
 	border-radius: 4px;
 }
 form.quick-search button[type="submit"] {
@@ -73,32 +73,12 @@ form.quick-search button[type="submit"] {
 	color: #FFF;
 	margin-left: -5px;
 }
-
-div.quick-toggle {
-	display: table;
-	padding: 10px;
-	border-top: 1px solid @lightGreen;
-	width: 100%;
-}
-div.quick-toggle i.icon-time {
+form.quick-search .select2-container {
 	float: left;
-	font-size: 26px;
-	margin: 8px 18px 0 2px;
-	color: #5D6B7E;
 }
-div.quick-toggle .btn-group {
-	float: left;
-	display: table-row;
+form.quick-search .select2-container:first-child {
+	margin-right: 10px;
 }
-div.quick-toggle .btn-group .btn {
-	background: #fff;
-	display: table-cell;
-}
-div.quick-toggle .btn-group .btn.active {
-	background: @darkBlue;
-	color: #fff;
-}
-
 .brown {
 	color: @brown;
 
@@ -805,50 +785,98 @@ ul.arrows {
 
 .order-manager-item {
 	position: relative;
-	padding: 15px 0 10px 0px;
-	border-top: 1px solid #DDD;
+	padding: 10px 0 10px 0px;
+	border-bottom: 1px solid #ddd;
+}
+#content.noPadding .order-manager-item p {
+	padding-left: 0px;
+}
+#content.noPadding .order-manager-item p.prices  strong {
+	color: @orange;
+}
+.order-manager-item .detail-box {
+	.border-radius(4px);
+    margin: 0 10px 0 48px;
 }
 
 .order-manager-item .details {
 	position: absolute;
 	right: 10px;
-	top: 10px;
-	padding: 5px 10px;
-	background: #FCFFF2;
-	color: #333;
+	top: 15px;
+	padding: 0 10px;
 	border-top: none;
 	border-right: none;
 	.border-radius(8px);
 	text-align: right;
-	border: 1px solid #88A031;
+	font-size: 12px;
+	line-height: 16px;
+}
+.order-manager-item .details b {
+	color: @brown;
+}
+.order-manager-item a.email {
+	color: #7D3300;
 }
 .order-manager-item button {
-	margin-right: 10px;
+	margin: 0 0px 0 10px;
+}
+.order-manager-item a.remove {
+	margin: 0;
+	color: #aaa;
+	padding: 3px 10px;
+}
+.order-manager-item a.remove:hover {
+	color: #fff;
+	text-decoration: none;
+	background: @orange;
+	.border-radius(4px);
 }
 .order-manager-item .answer {
 	color: #777;
 }
+.order-manager-item i:not([class*="icon-"]) {
+	color: #999;
+	font-weight: normal;
+}
 .order-manager-item h2 .status {
-	float: left;
-	padding: 4px 8px 3px 5px;
-	margin: -5px 10px 10px 0px;
+	position: absolute;
+	padding: 5px 8px 3px 5px;
+	margin: -5px 5px 10px 10px;
 	.border-radius(4px);
+	left: 0;
+	top: 45px;
 }
 .order-manager-item h2 .status:hover {
 	background: #EEE;
 }
+.order-manager-item h2 .img {
+	float: left;
+	width: 28px;
+	height: 28px;
+	margin-top: -5px;
+	margin-right: 10px;
+	background-size: cover;
+}
 .order-manager-item h2 .status i {
 	color: #777;
+	font-size: 25px;
+	line-height: 18px;
+}
+.order-manager-item h2 .status i.icon-question {
+	color: @orange;
 }
 .order-manager-item h2 .status.ok {
 	background: @darkGreen;
+	padding: 5px 8px 5px 5px;
 }
 .order-manager-item h2 .status.ok i {
 	color: #fff;
+	font-size: inherit;
 }
 .order-manager-item h2 small {
 	font-size: 12px;
 }
+
 
 /* footer */
 #footer {
@@ -1437,4 +1465,8 @@ form.donateForm {
 
 .align-right {
 	text-align: right;
+}
+
+.alert {
+	margin: 10px 10px 0;
 }

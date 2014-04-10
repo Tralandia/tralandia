@@ -5,12 +5,12 @@
 
 {form unitForm}
 
-	{foreach $form->getAllErrors() as $error}{$error}{/foreach}
+	{foreach $form->getAllErrors() as $error}<div class="alert alert-error">{$error}</div>{/foreach}
 	{foreach $rentals as $rental}
 		<div class="clearfix">
 		</div>
 
-		<table class="formTable innerPadding unitsTable">
+		<table class="formTable innerPadding unitsTable crudLines">
 			<tr>
 				<td>
 					<h2>{_$rental->getName()}</h2>
@@ -18,7 +18,7 @@
 			</tr>
 			{var $replicator = $form->getComponent($rental->getId())}
 			{foreach $replicator->getComponents() as $component}
-				<tr class="rentalPriceUpload priceUploadGroup">
+				<tr>
 					<td>
 						<div class="row-fluid">
 							<div class="priceListRowsContainer">
@@ -35,7 +35,7 @@
 			{/foreach}
 			<tr>
 				<td>
-					<a class="btn addLine btn-green"><i class="icon-plus"></i> !!!Pridať riadok</a>
+					<a class="btn addLine btn-default"><i class="icon-plus"></i> !!!Pridať riadok</a>
 				</td>
 			</tr>
 

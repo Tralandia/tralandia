@@ -7,6 +7,8 @@
 	<table class="formTable innerPadding">
 		{include #rentalUnit, control => $form['units'] }
 
+		{include #select, control => $form['status']}
+		
 		{include #text, control => $form['senderName']}
 		{include #email, control => $form['senderEmail']}
 		{include #phone, control => $form['senderPhone']}
@@ -21,7 +23,6 @@
 		{include #textArea, control => $form['message']}
 		{include #textArea, control => $form['ownersNote']}
 
-		{include #select, control => $form['status']}
 		{include #text, control => $form['referrer']}
 
 		{include #select, control => $form['currency']}
@@ -39,16 +40,21 @@
 {/form}
 
 <script type="text/javascript" n:syntax="double">
+	var totalPriceInput = '[name="totalPrice"]';
+	var paidPriceInput = '[name="paidPrice"]';
+
 	$(function() {
 		$('.datepicker input').datepicker();
-		$('[name="price"], [name="price_paid"]').keyup(function() {
+		$(totalPriceInput+','+paidPriceInput).keyup(function() {
+			console.log(this);
 			calculateUnpaid();
 		})
 		calculateUnpaid();
 	});
+
 	function calculateUnpaid() {
-		var price = $('[name="price"]').val();
-		var pricePaid = $('[name="price_paid"]').val();
+		var price = $(totalPriceInput).val();
+		var pricePaid = $(paidPriceInput).val();
 		var priceUnpaid = price - pricePaid;
 		$('[name="price_unpaid"]').val(priceUnpaid);
 	}
