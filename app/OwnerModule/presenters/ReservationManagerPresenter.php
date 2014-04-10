@@ -5,7 +5,9 @@ namespace OwnerModule;
 
 
 use Entity\User\RentalReservation;
+use Nette\InvalidArgumentException;
 use Nette\Utils\Arrays;
+use Nette\Utils\Validators;
 use Tralandia\BaseDao;
 use Tralandia\Reservation\SearchQuery;
 
@@ -58,23 +60,27 @@ class ReservationManagerPresenter extends BasePresenter
 		/** @var $reservation \Entity\User\RentalReservation */
 		$reservation = $this->reservationDao->createNew();
 
+		$reservation->setRental($this->loggedUser->getFirstRental());
+
 		$this->em->persist($reservation);
 		$this->em->flush();
 
 		$this->redirect('ReservationEdit:', ['id' => $reservation->getId()]);
 	}
 
-	public function actionChangeStatus($id, $status)
+	public function handleChangeStatus($id, $status)
 	{
 		$reservation = $this->findReservation($id);
 		$this->checkPermission($reservation, 'edit');
 
-		$reservation->setStatus(\Entity\User\RentalReservation::STATUS_CANCELED);
+		if(!in_array($status, [\Entity\User\RentalReservation::STATUS_CANCELED]))
+			throw new InvalidArgumentException;
+
+		$reservation->setStatus($status);
 
 		$this->em->flush($reservation);
 
 		$this->invalidateControl('reservation-'.$reservation->id);
-		$this->sendPayload();
 	}
 
 
