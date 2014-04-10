@@ -134,7 +134,7 @@ class Locale {
 	 */
 	public function getDateFormat()
 	{
-		return 'Y-m-d';
+		return $this->environment->getLanguage()->getIso() == 'sk' ? 'j. n. Y' : 'Y-m-d';
 	}
 
 	/**

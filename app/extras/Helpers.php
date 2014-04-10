@@ -65,6 +65,7 @@ class Helpers {
 	 */
 	public function date($time)
 	{
+
 		if ($time == NULL) { // intentionally ==
 			return NULL;
 		}
