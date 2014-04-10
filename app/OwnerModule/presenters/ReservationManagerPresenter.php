@@ -80,7 +80,8 @@ class ReservationManagerPresenter extends BasePresenter
 
 		$this->em->flush($reservation);
 
-		$this->invalidateControl('reservation-'.$reservation->id);
+//		$this->invalidateControl('reservation-'.$reservation->id);
+		$this->invalidateControl('allReservations');
 	}
 
 
