@@ -14,6 +14,15 @@ use Nette;
 class BaseRepository extends Repository
 {
 
+	protected function initEvents()
+	{
+		parent::initEvents();
+		$this->onBeforePersist[] = function($entity) {
+			$entity->updated = $entity->created = new \DateTime();
+		};
+	}
+
+
 	public function createNew()
 	{
 		$className = $this->mapper->getEntityClass($this->getTable());

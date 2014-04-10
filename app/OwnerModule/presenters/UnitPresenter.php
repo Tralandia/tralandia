@@ -50,8 +50,6 @@ class UnitPresenter extends BasePresenter
 			$this->redirect('this');
 		};
 
-		$form->addError('Cibi tu budu error hlasky, dorob design');
-
 		return $form;
 	}
 
