@@ -3,7 +3,7 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
 {form editForm}
-	<h1>Nova objednavka</h1>
+	<h1>{_719628} {$reservation->id}</h1>
 	<table class="formTable innerPadding">
 		{include #rentalUnit, control => $form['units'] }
 
@@ -46,7 +46,6 @@
 	$(function() {
 		$('.datepicker input').datepicker();
 		$(totalPriceInput+','+paidPriceInput).keyup(function() {
-			console.log(this);
 			calculateUnpaid();
 		})
 		calculateUnpaid();

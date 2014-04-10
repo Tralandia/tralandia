@@ -38,7 +38,7 @@ class ReservationEditPresenter extends BasePresenter
 	{
 		$this->reservation = $this->findReservation($id);
 		$this->checkPermission($this->reservation, 'edit');
-
+		$this->template->reservation = $this->reservation;
 	}
 
 	public function createComponentEditForm()
@@ -47,36 +47,36 @@ class ReservationEditPresenter extends BasePresenter
 
 		$form->addRentalUnitContainer('units', 'Ubytovacie jednotky', $this->loggedUser->getRentals());
 
-		$form->addText('senderName', '!!!Meno');
+		$form->addText('senderName', 719637);
 
-		$form->addText('senderEmail', 'Emailova adresa');
+		$form->addText('senderEmail', 522);
 
-		$form->addPhoneContainer('senderPhone', 'Telefon', $this->countries->getPhonePrefixes());
+		$form->addPhoneContainer('senderPhone', 581, $this->countries->getPhonePrefixes());
 
-		$form->addText('adultsCount', 'Pocet dospelych')
+		$form->addText('adultsCount', 596)
 			->addCondition(BaseForm::FILLED)
 			->addRule(BaseForm::INTEGER, 'Musi byt cislo');
 
-		$form->addText('childrenCount', 'Pocet deti')
+		$form->addText('childrenCount', 597)
 			->addCondition(BaseForm::FILLED)
 			->addRule(BaseForm::INTEGER, 'Musi byt cislo');
 
-		$form->addText('childrenAge', 'Vek deti');
+		$form->addText('childrenAge', 719638);
 
-		$form->addAdvancedDatePicker('arrivalDate', 'Datum od');
+		$form->addAdvancedDatePicker('arrivalDate', 599);
 
-		$form->addAdvancedDatePicker('departureDate', 'Datum do');
+		$form->addAdvancedDatePicker('departureDate', 600);
 
-		$form->addTextArea('message', 'Sprava');
-		$form->addTextArea('ownersNote', 'Poznamky', null, 5);
+		$form->addTextArea('message', 610);
+		$form->addTextArea('ownersNote', 719639, null, 5);
 
-		$form->addSelect('status', 'Rezervacia potvrdena', [
+		$form->addSelect('status', $this->translate(719636), [
 			\Entity\User\RentalReservation::STATUS_CONFIRMED => '!!!potvrdena',
 			\Entity\User\RentalReservation::STATUS_OPENED => '!!!otvorena',
 			\Entity\User\RentalReservation::STATUS_CANCELED => '!!!zrusena',
 		])->setPrompt('--!!!status--');
 
-		$form->addText('referrer', 'Zdroj rezervacie');
+		$form->addText('referrer', 719640);
 
 		$form->addSelect('currency', '!mena', $this->currencies->getForSelect());
 

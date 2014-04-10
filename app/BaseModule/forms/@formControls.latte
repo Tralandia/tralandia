@@ -421,7 +421,7 @@ Checkbox List -------------------------------------------
 	<td colspan="2">
 		{foreach $container->getRentals() as $rental}
 			{var $unitsControl = $container->getUnitsControl()}
-			<h3>{_$rental->name} (<a n:href=":Owner:Unit:default">!!upravit jednotky</a>)</h3>
+			<h3>{_$rental->name} (<a n:href=":Owner:Unit:default">{_719635}</a>)</h3>
 			<div class="units-container clearfix" id="unit{$rental->getId()}">
 				{foreach $unitsControl[$rental->getId()] as $key => $label}
 					<label>{$unitsControl[$rental->getId()]->getControlItem($key)}{_$label}</label>
