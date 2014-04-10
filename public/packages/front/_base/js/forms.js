@@ -1199,7 +1199,8 @@ function createNewLineInPriceList(){
 		}
 
 		base.removeRow = function(){
-			var count = $(base.listContainer).find(base.rowSelector).length;
+			var count = base.$el.find(base.rowSelector).length;
+			console.log(count);
 			if(count > 1){
 				$(this).parents(base.rowSelector).remove();
 			} else {
@@ -1283,7 +1284,7 @@ function createNewLineInPriceList(){
 
 $(function(){
 
-	$('.rentalPriceUpload').rentalPriceUpload();
+	$('.rentalPriceUpload, .crudLines').rentalPriceUpload();
 	$('form').invalidScroll();
 
 	$('.rentalRemoveLink').click(function(){
