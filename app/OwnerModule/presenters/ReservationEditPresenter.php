@@ -68,7 +68,7 @@ class ReservationEditPresenter extends BasePresenter
 		$form->addAdvancedDatePicker('departureDate', 'Datum do');
 
 		$form->addTextArea('message', 'Sprava');
-		$form->addTextArea('ownersNote', 'Poznamky');
+		$form->addTextArea('ownersNote', 'Poznamky', null, 5);
 
 		$form->addSelect('status', 'Rezervacia potvrdena', [
 			\Entity\User\RentalReservation::STATUS_CONFIRMED => '!!!potvrdena',
