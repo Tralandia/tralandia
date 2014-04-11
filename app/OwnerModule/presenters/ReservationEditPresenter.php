@@ -71,20 +71,20 @@ class ReservationEditPresenter extends BasePresenter
 		$form->addTextArea('ownersNote', 719639, null, 5);
 
 		$form->addSelect('status', $this->translate(719636), [
-			\Entity\User\RentalReservation::STATUS_CONFIRMED => '!!!potvrdena',
-			\Entity\User\RentalReservation::STATUS_OPENED => '!!!otvorena',
-			\Entity\User\RentalReservation::STATUS_CANCELED => '!!!zrusena',
-		])->setPrompt('--!!!status--');
+			\Entity\User\RentalReservation::STATUS_CONFIRMED => 720302,
+			\Entity\User\RentalReservation::STATUS_OPENED => 720304,
+			\Entity\User\RentalReservation::STATUS_CANCELED => 720303,
+		]);
 
 		$form->addText('referrer', 719640);
 
-		$form->addSelect('currency', '!mena', $this->currencies->getForSelect());
+		$form->addSelect('currency', 2116, $this->currencies->getForSelect());
 
-		$form->addText('totalPrice', 'Konecna cena')
+		$form->addText('totalPrice', 719607)
 			->addCondition(BaseForm::FILLED)
 			->addRule(BaseForm::FLOAT, 'Musi byt cislo');
 
-		$form->addText('paidPrice', 'Uhradena suma')
+		$form->addText('paidPrice', 721508)
 			->addCondition(BaseForm::FILLED)
 			->addRule(BaseForm::FLOAT, 'Musi byt cislo');
 

@@ -136,16 +136,16 @@ class ReservationManagerPresenter extends BasePresenter
 		if(count($rentals)) {
 			$rentals = \Tools::entitiesMap($rentals, 'id', 'name', $this->translator);
 			$form->addSelect('rental', '', $rentals)
-				->setPrompt('--!!!vsetny--');
+				->setPrompt('- ' . $this->translate(721502) . ' -');
 		}
 
 
 		$form->addSelect('period', '', [
-			SearchQuery::PERIOD_PAST => '!!!past',
-			SearchQuery::PERIOD_PRESENT => '!!!present',
-			SearchQuery::PERIOD_FUTURE => '!!!future',
+			SearchQuery::PERIOD_PAST => 720292,
+			SearchQuery::PERIOD_PRESENT => 720294,
+			SearchQuery::PERIOD_FUTURE => 720295,
 		])
-			->setPrompt('--!!!vsetny--');
+			->setPrompt('- ' . $this->translate(721502) . ' -');
 
 		$form->addText('fulltext', '');
 
