@@ -352,6 +352,21 @@ jQuery(document).ready(function($){
 
     // $("#container").fitVids();
 
+    $('.photoset-grid-custom').photosetGrid({
+      gutter: '5px',
+      layout: '21',
+      rel: 'print-gallery',
+
+      onInit: function(){},
+      onComplete: function(){
+        // Show the grid after it renders
+        $('.photoset-grid-custom').attr('style', '');
+        setTimeout(function() {
+            $('.photoset-grid-custom img.photo-hide').parents('.photoset-grid-custom').addClass('hidden');
+        }, 1);
+      }
+    });
+
 });
 
 
