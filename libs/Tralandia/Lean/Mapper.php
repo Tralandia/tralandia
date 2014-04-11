@@ -95,7 +95,7 @@ class Mapper extends DefaultMapper {
 		}
 
 		$name = NULL;
-		list(,$namespace, $name) = explode('\\', $class);
+		@list(,$namespace, $name) = explode('\\', $class);
 		if($namespace == $name || !$name) {
 			return strtolower($namespace);
 		} else {
