@@ -31,11 +31,6 @@ class DefaultPresenter extends BasePresenter
 	 */
 	protected $currentRental;
 
-	protected function startup()
-	{
-		parent::startup();
-	}
-
 
 	public function actionDefault($rentalSlug)
 	{

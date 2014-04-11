@@ -27,7 +27,7 @@ class PriceListRow extends \Tralandia\Lean\BaseEntity
 	 */
 	public function getPrice()
 	{
-		return new \Extras\Types\Price($this->price, $this->getCurrency());
+		return new \Extras\Types\Price($this->row->price, $this->getCurrency());
 	}
 
 

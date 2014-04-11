@@ -99,6 +99,7 @@ class RentalPhotosContainer extends BaseContainer
 			} else {
 				$payload[] = [
 					'error' => 'uploadFail',
+					'code' => $file->getError(),
 				];
 			}
 		}

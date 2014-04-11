@@ -793,5 +793,12 @@ limit ' . $limit;
 		$this->em->flush();
 	}
 
+
+	public function actionPhpinfo()
+	{
+		phpinfo();
+		$this->terminate();
+	}
+
 }
 
