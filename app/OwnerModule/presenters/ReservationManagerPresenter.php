@@ -141,9 +141,9 @@ class ReservationManagerPresenter extends BasePresenter
 
 
 		$form->addSelect('period', '', [
-			SearchQuery::PERIOD_PAST => '!!!past',
-			SearchQuery::PERIOD_PRESENT => '!!!present',
-			SearchQuery::PERIOD_FUTURE => '!!!future',
+			SearchQuery::PERIOD_PAST => 720292,
+			SearchQuery::PERIOD_PRESENT => 720294,
+			SearchQuery::PERIOD_FUTURE => 720295,
 		])
 			->setPrompt('--!!!vsetny--');
 
