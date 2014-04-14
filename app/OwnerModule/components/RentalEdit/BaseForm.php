@@ -10,7 +10,15 @@ namespace OwnerModule\RentalEdit;
 
 use Nette;
 
-class BaseFormControl extends \BaseModule\Components\BaseFormControl
+abstract class BaseFormControl extends \BaseModule\Components\BaseFormControl
 {
+
+	public function createTemplate($class = null)
+	{
+		$template = parent::createTemplate($class);
+		$template->onChangeConfirm = $this->translate('152851');
+
+		return $template;
+	}
 
 }

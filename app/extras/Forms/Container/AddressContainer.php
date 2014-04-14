@@ -9,6 +9,8 @@ use Extras\Types\Latlong;
 use Nette\InvalidArgumentException;
 use Service\Contact\AddressCreator;
 use Nette\Localization\ITranslator;
+use Tralandia\BaseDao;
+use Tralandia\Location\Locations;
 
 class AddressContainer extends BaseContainer
 {
@@ -37,14 +39,27 @@ class AddressContainer extends BaseContainer
 	 */
 	protected $addressEntity;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $addressDao;
+
+	/**
+	 * @var \Tralandia\Location\Locations
+	 */
+	private $locations;
+
 
 	/**
 	 * @param Address|Location $addressOrLocation
 	 * @param \Service\Contact\AddressCreator $addressCreator
+	 * @param \Tralandia\BaseDao $addressDao
+	 * @param \Tralandia\Location\Locations $locations
+	 * @param \Nette\Localization\ITranslator $translator
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function __construct($addressOrLocation, AddressCreator $addressCreator, ITranslator $translator)
+	public function __construct($addressOrLocation, AddressCreator $addressCreator, BaseDao $addressDao, Locations $locations, ITranslator $translator)
 	{
 		parent::__construct();
 		$this->addressCreator = $addressCreator;
@@ -74,9 +89,13 @@ class AddressContainer extends BaseContainer
 		$this->addHidden('longitude')
 					->setAttribute('class','rentalAddressLongitude');
 
+		$this->addHidden('entityId');
+
 		$this->setDefaultValues();
 
 		$this->onValidate[] = callback($this, 'validate');
+		$this->addressDao = $addressDao;
+		$this->locations = $locations;
 	}
 
 	public function getMainControl()
@@ -136,6 +155,7 @@ class AddressContainer extends BaseContainer
 				'city' => $locality ? $this->translator->translate($locality->getName()) : NULL,
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
+				'entityId' => $this->address->getId(),
 			];
 			$formattedAddress = $this->address->getFormattedAddress();
 			$defaults['address'] = $formattedAddress;
@@ -158,6 +178,7 @@ class AddressContainer extends BaseContainer
 				'city' => $locality ? $this->translator->translate($locality->getName()) : NULL,
 				'latitude' => $values->getGps()->getLatitude(),
 				'longitude' => $values->getGps()->getLongitude(),
+				'entityId' => $values->getId(),
 			];
 			$values = $valuesTemp;
 		}
@@ -171,13 +192,23 @@ class AddressContainer extends BaseContainer
 		$return = $asArray ? array() : new \Nette\ArrayHash;
 
 		if(!$this->addressEntity) {
-			$address = $this['address']->getValue();
+			$formattedAddress = $this['address']->getValue();
 			$city = $this['city']->getValue();
 			$latitude = $this['latitude']->getValue();
 			$longitude = $this['longitude']->getValue();
-			if($address) {
-				$this->addressEntity = $address = $this->addressCreator->create($address, $city, $this->primaryLocation, new Latlong($latitude, $longitude));
+			$entityId = $this['entityId']->getValue();
+			if($formattedAddress) {
+				if($entityId) {
+					$address = $this->addressDao->find($entityId);
+					$locality = $this->locations->findOrCreateLocality($city, $this->primaryLocation);
+					$address->setFormattedAddress($formattedAddress);
+					$address->setLocality($locality);
+					$address->setGps(new Latlong($latitude, $longitude));
+				} else {
+					$address = $this->addressCreator->create($formattedAddress, $city, $this->primaryLocation, new Latlong($latitude, $longitude));
+				}
 				$return['addressEntity'] = $address;
+				$this->addressEntity = $address;
 			} else {
 				$return['addressEntity'] = NULL;
 			}
