@@ -347,6 +347,14 @@ em {
   background: #f9f9f9;
 }
 
+.prices i.icon-arrow-right {
+  font-size: 14px;
+  color: #999;
+  font-weight: normal;
+  line-height: 22px;
+  vertical-align: top;
+}
+
 .prices-download {
   margin-top: 0;
   padding: 0 20px;
