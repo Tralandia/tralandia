@@ -93,7 +93,12 @@ class Reservations
 	{
 		$qb = $this->reservationDao->createQueryBuilder('e');
 
-		$qb->andWhere($qb->expr()->eq('e.rental', ':rental'))
+		$qb->leftJoin('e.units', 'u');
+
+		$qb->andWhere($qb->expr()->orX(
+			$qb->expr()->eq('e.rental', ':rental'),
+			$qb->expr()->eq('u.rental', ':rental')
+		))
 			->setParameter('rental', $rental);
 
 		return $qb;

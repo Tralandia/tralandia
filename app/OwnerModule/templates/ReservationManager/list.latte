@@ -1,0 +1,59 @@
+{block content}
+
+<div class="clearfix">
+	<a n:href="add" class="btn short btn-mini marginTop marginRight btn-blue pull-right">{_719604}</a>
+	<h1 class="rentalEditHeader">{_719603}</h1>
+</div>
+{form searchForm, class => quick-search}
+	{if $form['rental']}
+		{input rental, class => select2, style => 'width:200px;'}
+	{/if}
+	{input period, class => select2, style => 'width:200px;'}
+	{input fulltext}
+	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
+		<i class="icon-search"></i> {_664}
+	</button>
+{/form}
+
+{snippet allReservations}
+{foreach $reservations as $reservation}
+	<div class="row-fluid" n:snippet="reservation-$reservation->id">
+		<div class="order-manager-item span12">
+			<h2>
+				{if $reservation->status=='confirmed'}
+					<span class="status ok"><i class="icon-ok"></i></span>
+				{elseif $reservation->status=='opened'}
+					<span class="status"><i class="icon-question"></i></span>
+				{elseif $reservation->status=='canceled'}
+					<span class="status"><i class="icon-trash"></i></span>
+				{/if}
+				{if $reservation->senderName}
+					<a href="#">{$reservation->senderName}</a>
+				{else}
+					<i>{_719605}</i>
+				{/if}
+			</h2>
+			<div class="details">
+				<i><b>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</b></i><br/>
+				{var $adults = $template->translate('o12277', NULL, ['count' => $reservation->adultsCount])}
+				{var $children = $template->translate('o100061', NULL, ['count' => $reservation->childrenCount])}
+				{$reservation->adultsCount} {$adults}, {$reservation->childrenCount} {$children} {if $reservation->childrenAge}({$reservation->childrenAge}){/if}
+			</div>
+			<div class="clearfix"></div>
+			<div class="detail-box">
+				<p><a href="#" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
+				<p class="answer">{$reservation->ownersNote}</p>
+				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{_719627} <i class="icon-arrow-right"></i></a>
+				<a n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
+				{if $reservation->totalPrice}
+				<p class="prices">{_719607}: {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>{_719609}: {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
+				{else}
+				<p class="prices"><i>{_719606}</i></p>
+				{/if}
+			</div>
+		</div>
+	</div>
+{/foreach}
+{/snippet}
+
+{control p}

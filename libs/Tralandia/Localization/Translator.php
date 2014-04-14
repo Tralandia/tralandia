@@ -85,6 +85,10 @@ class Translator implements \Nette\Localization\ITranslator {
 	 */
 	protected function getTranslation($phrase, array $variation = NULL, Language $language)
 	{
+		if($phrase instanceof \Tralandia\Phrase\Phrase) {
+			$phrase = $phrase->id;
+		}
+
 		if($phrase instanceof \Service\Phrase\PhraseService) {
 			$phraseId = $phrase->getEntity()->getId();
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){

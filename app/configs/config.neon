@@ -483,6 +483,7 @@ services:
 	- \Tralandia\Lean\Mapper
 
 	- \Tralandia\Rental\RentalRepository
+	- \Tralandia\Rental\UnitRepository
 
 
 
@@ -745,6 +746,13 @@ factories:
 	dictionaryManagerGridFactory:
 		class: AdminModule\Grids\Dictionary\ManagerGrid
 		implement: AdminModule\Grids\Dictionary\IManagerGridFactory
+
+
+	reservationSearchQuery:
+		class: \Tralandia\Reservation\SearchQuery
+		arguments: [%rentals%, %period%, %fulltext%]
+		parameters: [array rentals, period = NULL, fulltext = NULL]
+		implement: \Tralandia\Reservation\ISearchQueryFactory
 
 includes:
 	- webLoader.neon

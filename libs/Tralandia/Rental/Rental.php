@@ -13,6 +13,7 @@ use Nette;
 /**
  * @property int $id
  * @property \Tralandia\Phrase\Phrase $description m:hasOne(description_id:)
+ * @property \Tralandia\Phrase\Phrase $name m:hasOne(name_id)
  * @property int $maxCapacity
  * @property string $calendar
  * @property string $contactName
@@ -34,6 +35,7 @@ use Nette;
  * @property \Tralandia\Rental\PriceListRow[] $priceList m:belongsToMany
  * @property \Tralandia\Rental\CustomPriceListRow[] $customPriceList m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListFile[] $priceListFiles m:belongsToMany(rental_id:rental_pricelist)
+ * @property \Tralandia\Rental\Unit[] $units m:belongsToMany(rental_id:rental_unit)
  */
 class Rental extends \Tralandia\Lean\BaseEntity
 {

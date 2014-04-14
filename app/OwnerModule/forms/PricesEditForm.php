@@ -57,7 +57,7 @@ class PricesEditForm extends BaseForm {
 
 
 	public function buildForm() {
-		$currency = $this->rental->getCurrency();
+//		$currency = $this->rental->getCurrency();
 
 		$this->addSelect('currency', '713', $this->currencies->getForSelect());
 

@@ -1,7 +1,27 @@
+nette:
+	container:
+		debugger: false  # aktivuje panel v Debugger baru
+
+
 parameters:
-	editor: 'edit://open/?url=file://%file&line=%line'
-	envOptions:
-		email: tralandia.cibi@gmail.com
 
 	database:
+		dbname: tralandia
 		debugger: false
+
+	templateCache:
+		enabled: true
+
+	# staticDomain: NULL
+	# storageDir: /storage
+	# storagePath: /storage
+
+	maxReservationCountPerDay: 100
+	rentalCountOnHome: 15
+	rentalCountOnRootHome: 15
+
+	testerEmail: 'tralandia.cibi@gmail.com'
+
+
+services:
+#	nette.mailer: \Mail\SendmailMailer

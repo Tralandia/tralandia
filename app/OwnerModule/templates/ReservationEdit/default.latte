@@ -1,0 +1,60 @@
+{block content}
+
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+{form editForm}
+	<h1>{_719628} {$reservation->id}</h1>
+	<table class="formTable innerPadding">
+		{include #rentalUnit, control => $form['units'] }
+
+		{include #select, control => $form['status']}
+		
+		{include #text, control => $form['senderName']}
+		{include #email, control => $form['senderEmail']}
+		{include #phone, control => $form['senderPhone']}
+
+		{include #text, control => $form['adultsCount']}
+		{include #text, control => $form['childrenCount']}
+		{include #text, control => $form['childrenAge']}
+
+		{include #text, control => $form['arrivalDate'], class => 'datepicker'}
+		{include #text, control => $form['departureDate'], class => 'datepicker'}
+
+		{include #textArea, control => $form['message']}
+		{include #textArea, control => $form['ownersNote']}
+
+		{include #text, control => $form['referrer']}
+
+		{include #select, control => $form['currency']}
+		{include #text, control => $form['totalPrice']}
+		{include #text, control => $form['paidPrice']}
+
+		<tr class="simpleInput">
+			<td>{_719609}</td>
+			<td><table><tr><td><input type="text" name="price_unpaid" value="" disabled="disabled"></td></tr></table></td>
+			<td><span class="help">Vypocita sa automaticky po vyplneni konecnej ceny a uhradenej sumy</span></td>
+		</tr>
+
+		{include #submit, control => $form['submit']}
+	</table>
+{/form}
+
+<script type="text/javascript" n:syntax="double">
+	var totalPriceInput = '[name="totalPrice"]';
+	var paidPriceInput = '[name="paidPrice"]';
+
+	$(function() {
+		$('.datepicker input').datepicker();
+		$(totalPriceInput+','+paidPriceInput).keyup(function() {
+			calculateUnpaid();
+		})
+		calculateUnpaid();
+	});
+
+	function calculateUnpaid() {
+		var price = $(totalPriceInput).val();
+		var pricePaid = $(paidPriceInput).val();
+		var priceUnpaid = price - pricePaid;
+		$('[name="price_unpaid"]').val(priceUnpaid);
+	}
+</script>

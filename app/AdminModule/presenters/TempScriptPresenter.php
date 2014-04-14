@@ -800,5 +800,57 @@ limit ' . $limit;
 		$this->terminate();
 	}
 
+	public function actionOrderManagerStartup()
+	{
+		$query = 'SELECT r.id, r.maxCapacity, l.id as languageId
+					FROM \Entity\Rental\Rental r
+					INNER JOIN r.address a
+					INNER JOIN a.primaryLocation lo
+					INNER JOIN lo.defaultLanguage l';
+		$qb = $this->em->createQuery($query);
+		$result = $qb->getArrayResult();
+
+		$name = [];
+		foreach($this->languageDao->findAll() as $language) {
+			$name[$language->getId()] = $this->translate(648407, NULL, NULL, NULL, $language);
+		}
+
+
+		$print = [];
+		foreach($result as $row) {
+			$row['maxCapacity'] = (int) $row['maxCapacity'];
+			$print[] = "({$row['id']}, '{$name[$row['languageId']]}', {$row['maxCapacity']}, '0000-00-00 00:00:00', '0000-00-00 00:00:00')";
+		}
+
+		$print = 'INSERT INTO `rental_unit` (`rental_id`, `name`, `maxCapacity`, `created`, `updated`) VALUES ' . implode(', ', $print);
+
+		$response = new \Nette\Application\Responses\TextResponse($print);
+		$this->sendResponse($response);
+	}
+
+
+	public function actionAttacheReservationsToUnits()
+	{
+		$response = new \Nette\Application\Responses\TextResponse('Toto netreba spusatat.');
+		$this->sendResponse($response);
+		$this->terminate();
+
+
+		$query = 'select r.id rId, u.id uId from \Entity\User\RentalReservation r
+					inner join r.rental rental
+					inner join rental.units u';
+		$result = $this->em->createQuery($query)->getArrayResult();
+
+		$print = [];
+		foreach($result as $row) {
+			$print[] = "({$row['rId']}, {$row['uId']})";
+		}
+		$print = 'INSERT INTO `_reservation_unit` (`reservation_id`, `unit_id`) VALUES ' . implode(', ', $print);
+
+		$response = new \Nette\Application\Responses\TextResponse($print);
+		$this->sendResponse($response);
+	}
+
+
 }
 
