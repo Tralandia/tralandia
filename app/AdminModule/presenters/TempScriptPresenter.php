@@ -835,6 +835,7 @@ limit ' . $limit;
 		$this->sendResponse($response);
 		$this->terminate();
 
+
 		$query = 'select r.id rId, u.id uId from \Entity\User\RentalReservation r
 					inner join r.rental rental
 					inner join rental.units u';
