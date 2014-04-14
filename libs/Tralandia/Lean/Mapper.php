@@ -20,7 +20,6 @@ class Mapper extends DefaultMapper {
 
 	protected $tableToClass = [
 		'rental_pricelist' => '\Tralandia\Rental\PriceListFile',
-		'currency' => '\Tralandia\Currency',
 	];
 
 	protected $classToTable;

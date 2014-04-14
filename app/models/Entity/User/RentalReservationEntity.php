@@ -9,8 +9,28 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_rentalreservation", indexes={@ORM\Index(name="senderEmail", columns={"senderEmail"})})
+ *
+ * @method \Entity\Rental\Unit[] getUnits()
+ * @method setStatus($status)
+ * @method string getStatus()
+ * @method setChildrenAge($age)
+ * @method int|null getChildrenAge()
+ * @method setOwnersNote($note)
+ * @method string getOwnersNote()
+ * @method setReferrer($referrer)
+ * @method string getReferrer()
+ * @method setTotalPrice($price)
+ * @method int|null getTotalPrice()
+ * @method setPaidPrice($price)
+ * @method int|null getPaidPrice()
+ * @method setCurrency(\Entity\Currency $currency)
+ * @method \Entity\Currency getCurrency()
  */
-class RentalReservation extends \Entity\BaseEntity {
+class RentalReservation extends \Entity\BaseEntity implements \Security\IOwnerable {
+
+	const STATUS_CONFIRMED = 'confirmed';
+	const STATUS_OPENED = 'opened';
+	const STATUS_CANCELED = 'canceled';
 
 	/**
 	 * @var Collection
@@ -26,8 +46,24 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $rental;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Unit")
+	 * @ORM\JoinTable(name="_reservation_unit",
+	 *      joinColumns={@ORM\JoinColumn(name="reservation_id", referencedColumnName="id", onDelete="CASCADE")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="unit_id", referencedColumnName="id", onDelete="CASCADE")}
+	 *      )
+	 */
+	protected $units;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string")
+	 */
+	protected $status = self::STATUS_OPENED;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $senderEmail;
 
@@ -63,7 +99,7 @@ class RentalReservation extends \Entity\BaseEntity {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $adultsCount;
 
@@ -75,9 +111,103 @@ class RentalReservation extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $childrenAge;
+
+	/**
+	 * @var string
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $message;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $ownersNote;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $referrer;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $totalPrice;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $paidPrice = 0;
+
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
+
+
+	public function getOwnerId()
+	{
+		$rental = $this->getSomeRental();
+		if($rental) return $rental->getOwnerId();
+
+		return NULL;
+	}
+
+
+	/**
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function getSomeRental()
+	{
+		$rental = $this->getRental();
+		if(!$rental) {
+			$unit = $this->units->first();
+			if($unit) $rental = $unit->getRental();
+		}
+
+		return $rental;
+	}
+
+
+	public function addUnit(\Entity\Rental\Unit $unit)
+	{
+		if(!$this->units->contains($unit)) {
+			$this->units->add($unit);
+		}
+
+		return $this;
+	}
+
+
+	public function removeUnit(\Entity\Rental\Unit $unit)
+	{
+		$this->units->removeElement($unit);
+
+		return $this;
+	}
+
+
+	/**
+	 * @return \Entity\Currency|null
+	 */
+	public function getSomeCurrency()
+	{
+		$currency = $this->getCurrency();
+		if(!$currency) {
+			$rental = $this->getSomeRental();
+			if($rental) $currency = $rental->getCurrency();
+		}
+
+		return $currency;
+	}
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -85,6 +215,7 @@ class RentalReservation extends \Entity\BaseEntity {
 	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
+		$this->units = new \Doctrine\Common\Collections\ArrayCollection;
 		parent::__construct();
 	}
 
@@ -117,6 +248,15 @@ class RentalReservation extends \Entity\BaseEntity {
 		return $this->language;
 	}
 
+
+	/**
+	 * @return \Entity\Rental\Rental|null
+	 */
+	public function getRental()
+	{
+		return $this->rental;
+	}
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalReservation
@@ -136,14 +276,6 @@ class RentalReservation extends \Entity\BaseEntity {
 		$this->rental = NULL;
 
 		return $this;
-	}
-
-	/**
-	 * @return \Entity\Rental\Rental|NULL
-	 */
-	public function getRental()
-	{
-		return $this->rental;
 	}
 
 	/**

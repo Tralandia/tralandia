@@ -50,8 +50,27 @@ table.formTable {
 			}
 		}
 	}
+	tr.submitControl td {
+		padding: 10px 0px 10px;
+	}
 }
 
+#content.noPadding table.formTable {
+	.priceListRowsContainer {
+		.rentalPriceRow.rentalUnit {
+			input[type="text"]:first-child {
+				width: 495px;
+			}
+			input[type="text"]:nth-child(2) {
+				width: 115px;
+			}
+			.btn.btn-cancel {
+				margin: 0;
+			}
+		}
+	}
+}
+#content.noPadding table.formTable .btn.btn-cancel
 small.sublitLoadingText {
 	display: block;
 	padding-top: 5px;
@@ -61,6 +80,22 @@ form.dashboard {
 	margin: 0 0 6px;
 }
 
+#content.noPadding table.unitsTable {
+	border-top: 1px solid #DDD;
+	width: 725px !important;
+	margin: 10px 0 10px;
+	border-collapse: separate;
+	border-spacing: 10px 0px;
+	th {
+		font-size: 12px;
+		color: #666;
+	}
+	h2 {
+		padding: 10px 0;
+		margin: 0;
+		font-weight: normal;
+	}
+}
 
 #content.noPadding {
 
@@ -162,10 +197,6 @@ table.pricelistTable {
 }
 
 table.formTable {
-	// border: 1px solid black;
-	// td {
-	// 	border: 1px solid black;
-	// }
 
 	width: 705px;
 
@@ -1372,6 +1403,17 @@ form {
 			background: #a7ba24;
 		}
 
+		&.btn-main {
+			padding: 6px 15px 4px;
+			small {
+				font-size: 14px;
+				font-weight: normal;
+			}
+			i {
+				top: 0;
+			}
+		}
+
 		i {
 			font-size: 11px;
 			float: left;
@@ -1427,6 +1469,12 @@ form {
 			float: right;
 		}
 	}
+}
+
+.submit-wrapper {
+	padding: 20px;
+	margin: 10px -10px -10px;
+	border-top: 1px solid #D3E0A9;
 }
 
 .control-photo .ui-sortable li.addPhotoButton {

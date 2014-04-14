@@ -7,6 +7,7 @@ use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \SecuredPresenter {
 
+
 	protected $reservationDao;
 
 

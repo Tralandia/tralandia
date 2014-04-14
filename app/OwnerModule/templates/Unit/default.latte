@@ -1,0 +1,53 @@
+{block content}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+<h1>{_719651}</h1>
+
+{form unitForm}
+
+	{foreach $form->getAllErrors() as $error}<div class="alert alert-error">{$error}</div>{/foreach}
+	{foreach $rentals as $rental}
+		<div class="clearfix">
+		</div>
+
+		<table class="formTable innerPadding unitsTable crudLines">
+			<tr>
+				<td>
+					<h2>{_$rental->getName()}</h2>
+				</td>
+			</tr>
+			{var $replicator = $form->getComponent($rental->getId())}
+			{foreach $replicator->getComponents() as $component}
+				<tr>
+					<td>
+						<div class="row-fluid">
+							<div class="priceListRowsContainer">
+								<div class="rentalPriceRow rentalUnit">
+									{input $component['name']}
+									{input $component['maxCapacity']}
+									<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
+									{input $component['entityId']}
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{/foreach}
+			<tr>
+				<td>
+					<a class="btn addLine btn-default"><i class="icon-plus"></i> {_500}</a>
+				</td>
+			</tr>
+
+		</table>
+
+
+	{/foreach}
+
+	<table class="formTable innerPadding">
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
+	</table>
+
+
+{/form}
+
