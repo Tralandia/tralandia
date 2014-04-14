@@ -26,6 +26,11 @@ class RentalCreator
 	/**
 	 * @var \Tralandia\BaseDao
 	 */
+	protected $unitRepository;
+
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
 	protected $interviewQuestionRepository;
 
 	/**
@@ -52,6 +57,7 @@ class RentalCreator
 	public function __construct(EntityManager $em, AddressNormalizer $addressNormalizer)
 	{
 		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
+		$this->unitRepository = $em->getRepository(UNIT_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		$this->interviewAnswerRepository = $em->getRepository(INTERVIEW_ANSWER_ENTITY);
@@ -126,6 +132,11 @@ class RentalCreator
 		}
 
 		$rental->setAddress($address);
+
+		$unit = $this->unitRepository->createNew();
+		$unit->name = $rentalName;
+		$unit->maxCapacity = 0;
+		$rental->addUnit($unit);
 
 		$user->addRental($rental);
 

@@ -27,12 +27,21 @@ class Unit extends \Entity\BaseEntity
 	 */
 	protected $name;
 
-
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
 	protected $maxCapacity;
 
+
+	public function setRental(Rental $rental)
+	{
+		$this->rental = $rental;
+	}
+
+	public function unsetRental()
+	{
+		$this->rental = null;
+	}
 
 }
