@@ -1,0 +1,10 @@
+{block content}
+
+<div>
+	STEPS:
+	<ul n:inner-foreach="$steps as $step">
+		<li n:class="$currentStep == $step['slug'] ? active">{$step['name']}</li>
+	</ul>
+</div>
+
+{control $editFormName}

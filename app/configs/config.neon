@@ -537,10 +537,35 @@ factories:
 		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
-	pricesEditFormFactory:
-		class: OwnerModule\Forms\PricesEditForm(%rental%, %environment%)
-		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
-		implement: OwnerModule\Forms\IPricesEditFormFactory
+	aboutFormFactory:
+		class: OwnerModule\RentalEdit\AboutForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \OwnerModule\RentalEdit\IAboutFormFactory
+
+	mediaFormFactory:
+		class: OwnerModule\RentalEdit\MediaForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \OwnerModule\RentalEdit\IMediaFormFactory
+
+	pricesFormFactory:
+		class: OwnerModule\RentalEdit\PricesForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \OwnerModule\RentalEdit\IPricesFormFactory
+
+	amenitiesFormFactory:
+		class: OwnerModule\RentalEdit\AmenitiesForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \OwnerModule\RentalEdit\IAmenitiesFormFactory
+
+	interviewFormFactory:
+		class: OwnerModule\RentalEdit\InterviewForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \OwnerModule\RentalEdit\IInterviewFormFactory
 
 	searchFormFactory:
 		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)

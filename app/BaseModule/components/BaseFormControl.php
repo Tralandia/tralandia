@@ -11,8 +11,13 @@ namespace BaseModule\Components;
 use Nette;
 use Nette\Reflection\ClassType;
 
-class BaseFormControl extends Nette\Application\UI\Control
+abstract class BaseFormControl extends Nette\Application\UI\Control
 {
+	/**
+	 * @var array
+	 */
+	public $onSuccess = [];
+
 
 	public function createTemplate($class = null)
 	{
@@ -22,6 +27,10 @@ class BaseFormControl extends Nette\Application\UI\Control
 			$template->setFile($path); // automatické nastavení šablony
 		}
 		$template->_form = $template->form = $this['form']; // kvůli snippetům
+		$template->setTranslator($this->presenter->getContext()->getService('translator'));
+		$template->_imagePipe = $this->presenter->rentalImagePipe;
+		$template->environment = $this->presenter->environment;
+
 		return $template;
 	}
 
@@ -35,6 +44,27 @@ class BaseFormControl extends Nette\Application\UI\Control
 		} else {
 			$this->template->render();
 		}
+	}
+
+
+	public function translate()
+	{
+		$args = func_get_args();
+		return call_user_func_array(array($this->getPresenter(), 'translate'), $args);
+	}
+
+
+	abstract protected function createComponentForm();
+
+	protected function createComponent($name)
+	{
+		$component = parent::createComponent($name);
+		if($name == 'form') {
+			$component->onSuccess[] = function($component) {
+				$this->onSuccess($component, $this);
+			};
+		}
+		return $component;
 	}
 
 

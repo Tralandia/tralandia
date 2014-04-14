@@ -10,7 +10,7 @@ namespace OwnerModule;
 
 use Nette;
 
-class PricesEditPresenter extends BasePresenter
+class RentalEditPresenter extends BasePresenter
 {
 
 	/**
@@ -18,15 +18,81 @@ class PricesEditPresenter extends BasePresenter
 	 */
 	protected $rental;
 
-	public function actionDefault($id)
-	{
-		$this->rental = $this->findRental($id, TRUE);
-		$this->template->rental = $this->rental;
-		$this->checkPermission($this->rental, 'edit');
+	/**
+	 * @var string
+	 */
+	protected $step;
 
+	protected $steps = [
+		'about' => [],
+		'media' => [],
+		'prices' => [],
+		'amenities' => [],
+		'interview' => [],
+	];
+
+	protected function startup()
+	{
+		parent::startup();
+		$stepsOrder = array_keys($this->steps);
+		$i = 0;
+		foreach($this->steps as $key => $value) {
+			$this->steps[$key]['slug'] = $key;
+			$this->steps[$key]['name'] = $key;
+			$this->steps[$key]['nextStep'] = Nette\Utils\Arrays::get($stepsOrder, $i + 1, NULL);
+			$i++;
+		}
 	}
 
+
+	public function actionDefault($id, $step = 'about')
+	{
+		$this->rental = $this->findRental($this->getParameter('id'), TRUE);
+		$this->checkPermission($this->rental, 'edit');
+
+		$this->step = $step;
+
+		$this->setView('edit');
+		$this->template->rental = $this->rental;
+		$this->template->editFormName = $editFormName = $step . 'Form';
+		$this->template->currentStep = $this->step;
+		$this->template->steps = $this->steps;
+
+		$this[$editFormName]->onSuccess[] = function () {
+			$this->redirect('this', ['step' => $this->steps[$this->step]['nextStep']]);
+		};
+	}
+
+
 	protected function createComponentAboutForm(\OwnerModule\RentalEdit\IAboutFormFactory $factory)
+	{
+		$component = $factory->create($this->rental);
+
+		return $component;
+	}
+
+	protected function createComponentMediaForm(\OwnerModule\RentalEdit\IMediaFormFactory $factory)
+	{
+		$component = $factory->create($this->rental);
+
+		return $component;
+	}
+
+	protected function createComponentPricesForm(\OwnerModule\RentalEdit\IPricesFormFactory $factory)
+	{
+		$component = $factory->create($this->rental);
+
+		return $component;
+	}
+
+	protected function createComponentAmenitiesForm(\OwnerModule\RentalEdit\IAmenitiesFormFactory $factory)
+	{
+		$component = $factory->create($this->rental);
+
+		return $component;
+	}
+
+	protected function createComponentInterviewForm(\OwnerModule\RentalEdit\IInterviewFormFactory $factory)
 	{
 		$component = $factory->create($this->rental);
 

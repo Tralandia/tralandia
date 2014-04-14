@@ -21,9 +21,9 @@ abstract class BaseControl extends Control {
 			$template->setFile($path); // automatické nastavení šablony
 		}
 
-		$template->rand = rand(1, 1000);
 
 		$template->_imagePipe = $this->presenter->rentalImagePipe;
+		$template->rand = rand(1, 1000);
 		$template->getCacheOptions = $this->presenter->getCacheOptions;
 
 

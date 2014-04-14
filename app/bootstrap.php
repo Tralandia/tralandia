@@ -146,7 +146,9 @@ FormContainer::extensionMethod('addAddressContainer',
 	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
 		$addressCreator = $dic->getService('addressCreator');
 		$translator = $dic->getService('translator');
-		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator, $translator);
+		$locations = $dic->getByType('\Tralandia\Location\Locations');
+		$addressRepository = $dic->getService('doctrine.default.entityManager')->getDao(ADDRESS_ENTITY);
+		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator, $addressRepository, $locations, $translator);
 	});
 
 

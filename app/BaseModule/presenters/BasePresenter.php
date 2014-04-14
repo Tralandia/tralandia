@@ -230,7 +230,7 @@ abstract class BasePresenter extends Presenter {
 		$this->redirect(':Front:Home:default');
 	}
 
-	public function beforeRender() {
+	protected function beforeRender() {
 		parent::beforeRender();
 
 		$parameters = $this->getContext()->getParameters();
@@ -241,6 +241,7 @@ abstract class BasePresenter extends Presenter {
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 		$this->template->rand = rand(1, 1000);
+		$this->template->localeCode = $this->environment->getLocale()->getCode();
 		$this->template->isWorld = function() {
 			return $this->primaryLocation->isWorld();
 		};

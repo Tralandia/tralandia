@@ -76,7 +76,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
-		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
 		$this->template->domain = 'Tralandia.'. substr($domain, strpos($domain, 'tralandia') + 10);

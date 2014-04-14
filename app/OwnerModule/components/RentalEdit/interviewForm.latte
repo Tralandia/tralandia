@@ -1,0 +1,64 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form , data-leave-confirm-message => $onChangeConfirm }
+
+	<table class="formTable innerPadding">
+
+		<tr class="interviewGroup">
+			<td colspan="2" id="rentalInterview" class="fieldset"><div class="separator"></div>{_1125} </td><td> {* {input $rentalContainer['translationLanguage'] , class => ' pull-right selectLanguageInterview selectLanguage notFulltext'} *}</td>
+		</tr>
+
+		<tr class="topArrowBox interviewGroup">
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>
+							<span class="help top">{_152284}</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+
+
+		<tr class="simpleInput interviewGroup">
+			<td colspan="3">
+				<div class="langTabs">
+					<div class="header">
+						{foreach $form['interview'][1]->getControls() as $control}
+							{if $control->getName() == $environment->getLanguage()->getIso()}
+								{var $current = 'current'}
+							{else}
+								{var $current = ''}
+							{/if}
+							<a  class="tabPane {$current} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+						{/foreach}
+						{* {input $form['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
+					</div>
+					<div class="content">
+						<table>
+
+							{foreach $form['interview']->getComponents() as $container}
+								{foreach $container->getControls() as $control}
+									{if $control->getName() == $environment->getLanguage()->getIso()}
+										{var $hide = ''}
+									{else}
+										{var $hide = 'hide'}
+									{/if}
+									{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
+								{/foreach}
+							{/foreach}
+
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+
+
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
+	</table>
+{/form}
