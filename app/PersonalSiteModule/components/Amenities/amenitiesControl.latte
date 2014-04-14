@@ -43,7 +43,11 @@
 							<div class="inner-bg active">
 								<div class="line-through"></div>
 								<i class="icon icon-group"></i>
-								<h3 class="service-title">Max. {$rental->getMaxCapacity()} osob</h3>
+								<h3 class="service-title">
+								{if $rental->maxCapacity > 0}
+									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+								{/if}
+								</h3>
 							</div>
 						</figure>
 						<figure n:class="$twoColumnLaytou ? grid-6 : grid-3">
