@@ -58,6 +58,7 @@ class MediaForm extends BaseFormControl
 
 		$form->addRentalPhotosContainer('photos', $this->rental);
 
+		$form->addText('video', '!!!video');
 
 		$form->addSubmit('submit', 'o100083');
 
@@ -85,10 +86,25 @@ class MediaForm extends BaseFormControl
 
 	public function validateForm(BaseForm $form)
 	{
-		$photos = $form['photos']->getFormattedValues();
+		$values = $form->getFormattedValues();
+		$photos = $values->photos;
 		if(count($photos->images) < 3) {
 			$form['photos']['upload']->addError($this->translate('1294'));
 		}
+
+		$videoUrl = $values->video;
+		$videoId = null;
+		if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/v\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtu\.be\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		}
+
+		return $videoId;
 
 	}
 
@@ -110,6 +126,32 @@ class MediaForm extends BaseFormControl
 
 		$this->em->persist($rental);
 		$this->em->flush();
+	}
+
+
+	protected function detectVideo($videoUrl)
+	{
+		$videoId = null;
+		$type = null;
+		if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/v\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtu\.be\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		}
+
+		if($videoId) $type = 'youtube';
+		else {
+			if(preg_match('(https?://)?(www.)?(player.)?vimeo.com/([a-z]*/)*([0-9]{6,11})[?]?.*', $videoUrl, $id)) {
+
+			}
+		}
+
+		return ['id' => $videoId, 'type' => $type];
+
 	}
 
 
