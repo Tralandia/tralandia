@@ -70,6 +70,9 @@ parameters:
 			jqueryCookie:
 				js:
 					- jqueryCookie/lib/jquery.cookie.js
+			jquerySticky:
+				js:
+					- jQuery/jquery.sticky.js
 			jstorage:
 				js:
 					- jstorage/lib/js/jstorage.min.js
@@ -384,7 +387,6 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
-				
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
@@ -446,6 +448,7 @@ parameters:
 				-  %webloader.packages.jstorage%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.jquerySticky%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
