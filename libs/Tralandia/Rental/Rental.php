@@ -32,6 +32,7 @@ use Nette;
  *
  * @property \Tralandia\Rental\InterviewAnswer[] $interviewAnswers m:belongsToMany m:filter(sort#question_id)
  * @property \Tralandia\Rental\Image[] $images m:belongsToMany m:filter(sort)
+ * @property \Tralandia\Rental\Video[] $videos m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListRow[] $priceList m:belongsToMany
  * @property \Tralandia\Rental\CustomPriceListRow[] $customPriceList m:belongsToMany m:filter(sort)
  * @property \Tralandia\Rental\PriceListFile[] $priceListFiles m:belongsToMany(rental_id:rental_pricelist)
@@ -209,7 +210,7 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	}
 
 
-	/********************* PHOTOS / IMAGES *********************/
+	/********************* PHOTOS / IMAGES / VIDEO *********************/
 
 
 	/**
@@ -240,6 +241,27 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	public function getPhotosCount()
 	{
 		return count($this->images);
+	}
+
+	/**
+	 * @return \Tralandia\Rental\Video
+	 */
+	public function getMainVideo()
+	{
+		$video = $this->getFewVideos(1);
+		return reset($video);
+	}
+
+
+	/**
+	 * @param null $limit
+	 * @param int $offset
+	 *
+	 * @return \Tralandia\Rental\Video[]
+	 */
+	public function getFewVideos($limit = NULL, $offset = 0)
+	{
+		return array_slice($this->videos, $offset, $limit);
 	}
 
 	/********************* AMENITIES *********************/

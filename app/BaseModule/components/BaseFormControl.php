@@ -19,6 +19,12 @@ abstract class BaseFormControl extends Nette\Application\UI\Control
 	public $onSuccess = [];
 
 
+	/**
+	 * @var array
+	 */
+	public $onSubmit = [];
+
+
 	public function createTemplate($class = null)
 	{
 		$template = parent::createTemplate($class);
@@ -62,6 +68,9 @@ abstract class BaseFormControl extends Nette\Application\UI\Control
 		if($name == 'form') {
 			$component->onSuccess[] = function($component) {
 				$this->onSuccess($component, $this);
+			};
+			$component->onSubmit[] = function($component) {
+				$this->onSubmit($component, $this);
 			};
 		}
 		return $component;
