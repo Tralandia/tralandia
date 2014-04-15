@@ -56,9 +56,18 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 	{
 		return [
 			'FormHandler\RegistrationHandler::onSuccess',
-			'FormHandler\RentalEditHandler::onSubmit' => 'onSuccess',
-			'OwnerModule\Forms\PricesEditForm::onSave' => 'onSuccess',
+//			'BaseModule\Components\BaseFormControl::onSubmit' => 'onControlSubmit',
+//			'OwnerModule\RentalEdit\AboutForm::onSubmit' => 'onControlSubmit',
+//			'OwnerModule\RentalEdit\MediaForm::onSubmit' => 'onControlSubmit',
+//			'OwnerModule\RentalEdit\PricesForm::onSubmit' => 'onControlSubmit',
+//			'OwnerModule\RentalEdit\AmenitiesForm::onSubmit' => 'onControlSubmit',
+//			'OwnerModule\RentalEdit\InterviewForm::onSubmit' => 'onControlSubmit',
 		];
+	}
+
+	public function onControlSubmit($form, $control)
+	{
+		$this->onSuccess($control->getRental());
 	}
 
 
