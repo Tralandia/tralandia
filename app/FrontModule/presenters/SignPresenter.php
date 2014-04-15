@@ -85,13 +85,13 @@ class SignPresenter extends BasePresenter
 	{
 		$form = $this->simpleFormFactory->create();
 
-		$form->addPassword('password', '553')
+		$form->addPassword('password', '721626')
 			->setOption('help', $this->translate('o100145'))
 			->setOption('prepend', '<i class="icon-lock"></i>')
 			->setRequired($this->translate('o100145'))
 			->addRule($form::MIN_LENGTH, $this->translate('1328'), 5);
 
-		$form->addPassword('password2', '556')
+		$form->addPassword('password2', '721627')
 			->setOption('prepend', '<i class="icon-lock"></i>')
 			->setRequired($this->translate('o100145'));
 
