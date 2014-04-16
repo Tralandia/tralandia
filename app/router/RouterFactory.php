@@ -56,7 +56,7 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $this->personalSiteRouteFactory->create('//<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
+		$router[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'
