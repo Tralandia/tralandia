@@ -6,9 +6,13 @@
 <div class="form-steps">
 	<div class="overlay-left"></div>
 	<div class="overlay-right"></div>
+	{var $isCompleted = TRUE}
 	<ul n:inner-foreach="$steps as $step">
-		{var $isCompleted = $iterator->first}
-		<li n:class="$currentStep == $step['slug'] ? active, $isCompleted ? completed">
+		{var $isStepCurrent = $currentStep == $step['slug']}
+		{if $isStepCurrent}
+			{var $isCompleted = FALSE}
+		{/if}
+		<li n:class="$isStepCurrent ? active, $isCompleted ? completed">
 			<a n:href="this, step => $step['slug']">
 				<span class="status">{if $isCompleted}<i class="icon-ok"></i>{/if}</span>
 				<span class="name">{_$step['name']}</span>
