@@ -1,10 +1,28 @@
 {block content}
 
-<div>
-	STEPS:
+<h1>{_$rental->name}</h1>
+<div class="form-steps">
+	<div class="overlay-left"></div>
+	<div class="overlay-right"></div>
 	<ul n:inner-foreach="$steps as $step">
-		<li n:class="$currentStep == $step['slug'] ? active">{$step['name']}</li>
+		{var $isCompleted = $iterator->first}
+		<li n:class="$currentStep == $step['slug'] ? active, $isCompleted ? completed">
+			<a n:href="this, step => $step['slug']">
+				<span class="status">{if $isCompleted}<i class="icon-ok"></i>{/if}</span>
+				<span class="name">{$step['name']|firstUpper}</span>
+			</a>
+		</li>
 	</ul>
 </div>
+
+<script>
+$(function() {
+	$(".form-steps").sticky({
+		topSpacing: -30,
+		getWidthFrom: '#content',
+		className: 'sticked'
+	});
+});
+</script>
 
 {control $editFormName}
