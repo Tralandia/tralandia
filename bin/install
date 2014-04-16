@@ -4,7 +4,8 @@ WORKING_DIR=`pwd`
 
 sh $WORKING_DIR/bin/flush-cache
 
-composer install
+echo "composer install --prefer-dist"
+composer install --prefer-dist
 
 sudo rm -rf $WORKING_DIR/log/*
 php -f $WORKING_DIR/public/index.php orm:generate-proxies

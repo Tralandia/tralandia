@@ -13,6 +13,7 @@ use Entity\Rental\Service;
 use Entity\Seo\BackLink;
 use Nette;
 use Nette\Application\UI\Form;
+use Nette\Utils\Strings;
 
 class RentalPresenter extends AdminPresenter {
 
@@ -90,7 +91,8 @@ class RentalPresenter extends AdminPresenter {
 	{
 		$form = new Form;
 
-		$form->addText('url', 'Personal site url: http://');
+		$form->addText('url', 'Personal site url:')
+			->addRule(Form::URL, 'Zadaj validne URL');
 		$form->addSubmit('submit');
 
 		$form->onSuccess[] = $this->personalSiteSetupFormOnSuccess;
@@ -102,8 +104,27 @@ class RentalPresenter extends AdminPresenter {
 	{
 		$values = $form->getValues();
 
+		$url = Strings::replace($values->url, '~^(https?://)?~', null);
+		if(Strings::contains($url, '.tralandia.') || Strings::contains($url, '.uns.')) {
+			$url = Strings::replace($url, '~^(www.)?~', null);
+			if(!$match = Strings::match($url, '~([[a-z0-9-]{4,})\.(tralandia|uns)\.(.*)~')) {
+				$form->addError('Subdomena musi mat viac ako 3 znaky a moze obsahovat len: "a-z", "0-9" alebo "-".');
+			}
+		} else if(!Strings::startsWith($url, 'www.')) {
+			$form->addError('Domena musi zacinat na www.');
+		}
+
+
+		if($rental = $this->findRental($url, false, 'personalSiteUrl')) {
+			$form->addError('Tato domena je uz priradena objektu. >> id: '.$rental->getId().', email: '.$rental->getContactEmail());
+		}
+
+		if($form->hasErrors()) {
+			return null;
+		}
+
 		$rental = $this->findRental($this->getParameter('id'));
-		$rental->personalSiteUrl = $values->url;
+		$rental->personalSiteUrl = $url;
 
 		$this->rentalDao->save($rental);
 
