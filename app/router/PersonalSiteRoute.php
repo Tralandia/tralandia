@@ -53,6 +53,8 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 			$params = $appRequest->getParameters();
 
 			$domain = $httpRequest->getUrl()->getHost();
+			if(isset($params['www'])) $domain = str_replace($params['www'], NULL, $domain);
+			unset($params['www']);
 			if($rental = $this->rentalDao->findOneBy(['personalSiteUrl' => $domain])) {
 				$params['rental'] = $rental;
 				$params[BaseRoute::PRIMARY_LOCATION] = $rental->getPrimaryLocation();
