@@ -34,15 +34,22 @@ class RouterFactory
 	 */
 	private $personalSiteRouteFactory;
 
+	/**
+	 * @var ICustomPersonalSiteRouteFactory
+	 */
+	private $customPersonalSiteRouteFactory;
+
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
-								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory)
+								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory,
+								ICustomPersonalSiteRouteFactory $customPersonalSiteRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->personalSiteRouteFactory = $personalSiteRouteFactory;
+		$this->customPersonalSiteRouteFactory = $customPersonalSiteRouteFactory;
 		$this->domainMask = $domainMask;
 	}
 
@@ -75,6 +82,12 @@ class RouterFactory
 		$router[] = $frontRouter = new RouteList('Front');
 
 		$frontRouter[] = $this->frontRouteFactory->create();
+
+		$router[] = $this->customPersonalSiteRouteFactory->create('//[!<www www.>]%domain%/[!<language [a-z]{2}>]', [
+			'module' => 'PersonalSite',
+			'presenter' => 'Default',
+			'action' => 'default'
+		]);
 
 
 		return $router;

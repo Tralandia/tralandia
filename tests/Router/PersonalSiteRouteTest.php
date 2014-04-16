@@ -35,6 +35,14 @@ class PersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
+		$this->routeIn($route, 'http://www.ubytovaniehudak.sk', 'PersonalSite:Default', array(
+			'action' => 'default',
+			'rentalSlug' => 'slniecko',
+			'rental' => $this->findRental('44941'),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+		), 'www.ubytovaniehudak.sk');
+
 		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/hr', 'PersonalSite:Default', array(
 			'action' => 'default',
 			'rentalSlug' => 'slniecko',
