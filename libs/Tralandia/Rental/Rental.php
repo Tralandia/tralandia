@@ -14,18 +14,18 @@ use Nette;
  * @property int $id
  * @property \Tralandia\Phrase\Phrase $description m:hasOne(description_id:)
  * @property \Tralandia\Phrase\Phrase $name m:hasOne(name_id)
- * @property int $maxCapacity
- * @property string $calendar
- * @property string $contactName
- * @property string $email
- * @property string $personalSiteUrl
+ * @property int|null $maxCapacity
+ * @property string|null $calendar
+ * @property string|null $contactName
+ * @property string|null $email
+ * @property string|null $personalSiteUrl
  * @property \DateTime|null $calendarUpdated
  *
  * @property \Tralandia\User\User $user m:hasOne
  * @property \Tralandia\Currency $currency m:hasOne(currency_id)
  * @property \Tralandia\Rental\Type $type m:hasOne
  * @property \Tralandia\Contact\Address $address m:hasOne
- * @property \Tralandia\Contact\Phone $phone m:hasOne
+ * @property \Tralandia\Contact\Phone|null $phone m:hasOne
  *
  * @property \Tralandia\Rental\Amenity[] $amenities m:hasMany
  * @property \Tralandia\Language\Language[] $spokenLanguages m:hasMany
