@@ -33,6 +33,7 @@ use Nette\Utils\Strings;
  * @method \Entity\Rental\CustomPricelistRow[] getCustomPricelistRows()
  * @method setDescription(\Entity\Phrase\Phrase $phrase)
  * @method \Entity\Phrase\Phrase getDescription()
+ * @method getPersonalSiteUrl()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
