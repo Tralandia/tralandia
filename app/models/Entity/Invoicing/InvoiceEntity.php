@@ -10,6 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="invoicing_invoice")
  */
 class Invoice extends \Entity\BaseEntity {
+
+	const GIVEN_FOR_SHARE = 'Share';
+	const GIVEN_FOR_BACKLINK = 'Backlink';
+	const GIVEN_FOR_PAID_INVOICE = 'Paid Invoice';
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", columnDefinition="ENUM('Share', 'Backlink', 'Paid Invoice')")
+	 */
+	protected $givenFor;
+
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
@@ -24,8 +35,9 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\Company")
 	 */
-	protected $companyId;
+	protected $company;
 
 	/**
 	 * @var \Entity\Rental\Rental
@@ -198,8 +210,9 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\ServiceType")
 	 */
-	protected $serviceTypeId;
+	protected $serviceType;
 
 	/**
 	 * @var string
@@ -214,13 +227,29 @@ class Invoice extends \Entity\BaseEntity {
 	protected $serviceNameEn;
 
 
-
-	public function __construct()
+	/**
+	 * @return string
+	 */
+	public function getGivenFor()
 	{
-		parent::__construct();
-
-		$this->questions = new \Doctrine\Common\Collections\ArrayCollection;
+		return $this->givenFor;
 	}
 
 
+	/**
+	 * @param string $givenFor
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	public function setGivenFor($givenFor)
+	{
+		if (!in_array($givenFor, array(
+			self::GIVEN_FOR_BACKLINK,
+			self::GIVEN_FOR_PAID_INVOICE,
+			self::GIVEN_FOR_SHARE))) {
+			throw new \InvalidArgumentException("Invalid givenFor value");
+		}
+
+		$this->givenFor = $givenFor;
+	}
 }
