@@ -19,7 +19,7 @@
 	{/for}
 	{if ($photosCount-4) > 0}
 	<div class="btn-more">
-		<button class="btn-toggle" data-toggle="gallery"><i class="icon icon-chevron-down"></i> {_152659} (+{$rental->getPhotosCount()-4})</button>
+		<button class="btn-toggle" data-toggle="gallery" onclick="photoSetGrid();"><i class="icon icon-chevron-down"></i> {_152659} (+{$rental->getPhotosCount()-4})</button>
 	</div>
 	{/if}
 
