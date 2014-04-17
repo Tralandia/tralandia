@@ -65,7 +65,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 				return null;
 			}
 
-			unset($params['www']);
+			unset($params['www'], $params['host']);
 			$appRequest->setParameters($params);
 
 			return $appRequest;
