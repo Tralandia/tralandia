@@ -711,6 +711,12 @@ function elemScrollTo(){
 	$.scrollTo($(this).data('scrollTo'),800 , {offset: { top: -10} });
 }
 
+function ulShowMore(obj) {
+	$(obj).hide();
+	$(obj).parents('ul').find('li.hide').removeClass('hide');
+	return false;
+} 
+
 
 $(function(){
 	$('.linkToSocialSite').click(function(){

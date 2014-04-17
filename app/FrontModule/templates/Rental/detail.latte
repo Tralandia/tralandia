@@ -165,7 +165,7 @@
 
 										{if count($rental->customPricelistRows) > 0}
 											{foreach $rental->customPricelistRows as $row}
-												<li tooltip="true">
+												<li tooltip="true" n:class="$iterator->getCounter() > 3 ? hide">
 													<div class="row-fluid">
 														<div class="span6">
 															<span class="dateFrom" n:if="$row->seasonFrom">{$row->seasonFrom|date}</span> - <span class="dateTo" n:if="$row->seasonTo">{$row->seasonTo|date}</span>
@@ -183,6 +183,9 @@
 													</div>
 													{/if}
 												</li>
+												{if $iterator->last && $iterator->count() > 3}
+												<li align="center"><a href="#" onclick="ulShowMore(this);">{_297353}</a></li>
+												{/if}
 											{/foreach}
 										{else}
 											{foreach $rental->pricelistRows as $pricelistRow}

@@ -352,9 +352,14 @@ jQuery(document).ready(function($){
 
     // $("#container").fitVids();
 
+    photoSetGrid();
+
+});
+
+function photoSetGrid() {
     $('.photoset-grid-custom').photosetGrid({
       gutter: '5px',
-      layout: '21',
+      layout: '2',
       rel: 'print-gallery',
 
       onInit: function(){},
@@ -366,8 +371,7 @@ jQuery(document).ready(function($){
         }, 1);
       }
     });
-
-});
+}
 
 
 /*------------------------------------------------------------------------------*/

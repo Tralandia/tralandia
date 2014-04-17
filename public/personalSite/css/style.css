@@ -1017,8 +1017,20 @@ body.gateway-open {
   font-weight: normal;
   float: right;
 }
+#contact button i.icon-spinner {
+  display: none;
+}
 #contact button:hover {
   background: #8DA300 !important;
+}
+#contact button.disabled, #contact button.disabled:hover {
+  background: #C8D66E !important;
+}
+#contact button.disabled i.icon-spinner {
+  display: inline;
+}
+#contact button.disabled i.icon-arrow-right {
+  display: none;
 }
 #contact .row {
   margin-bottom: 20px;

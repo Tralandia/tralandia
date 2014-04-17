@@ -28,7 +28,7 @@
 									<span>({$row->bedCount} {_1191, $row->bedCount}{if $row->extraBedCount} + {$row->extraBedCount} {_1185, $row->extraBedCount}{/if})</span>
 								</small>
 							</div>
-							<div class="grid-6"><strong>{$row->price}</strong> / {_1189}</div>
+							<div class="grid-6"><strong>{$row->price}</strong> {_1189}</div>
 						</div>
 					{/if}
 					<div class="grids" n:foreach="$rental->getPriceListFiles() as $file">
