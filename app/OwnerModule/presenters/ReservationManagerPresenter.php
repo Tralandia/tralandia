@@ -134,7 +134,7 @@ class ReservationManagerPresenter extends BasePresenter
 		$form = $this->simpleFormFactory->create();
 
 		$rentals = $this->loggedUser->getRentals()->toArray();
-		if(count($rentals)) {
+		if (count($rentals)>1) {
 			$rentals = \Tools::entitiesMap($rentals, 'id', 'name', $this->translator);
 			$form->addSelect('rental', '', $rentals)
 				->setPrompt('- ' . $this->translate(721502) . ' -');
@@ -150,10 +150,14 @@ class ReservationManagerPresenter extends BasePresenter
 
 		$form->addText('fulltext', '');
 
+		$form->addCheckbox('showCanceled', '');
+
 		$form->addSubmit('submit', '');
 
 		$form->onAttached[] = function($form) {
-			$form['rental']->setDefaultValue($this->rental);
+			if (isset($form['rental'])) {
+				$form['rental']->setDefaultValue($this->rental);
+			}
 			$form['period']->setDefaultValue($this->period);
 			$form['fulltext']->setDefaultValue($this->fulltext);
 		};

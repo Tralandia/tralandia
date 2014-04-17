@@ -111,7 +111,7 @@ var c = $.nette.ext('snippets');
 		});
 		
 		rentalDetailDatepickerInit();
-		$("select.select2").select2();
+		// $("select.select2").select2();
 
 	}	
 

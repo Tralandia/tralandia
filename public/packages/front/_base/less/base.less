@@ -62,19 +62,43 @@ form.quick-search {
 	border-bottom: 1px solid #DDD;
 }
 form.quick-search input[name="fulltext"] {
-	width: 169px;
+	float: left;
+	width: 153px;
 	padding: 3px 8px;
 	border: 1px solid @lightGreen;
 	margin: 0 10px 0 10px;
 	border-radius: 4px;
 }
+form.quick-search input[name="fulltext"].norentals {
+	width: 338px;
+	margin-left: 0;
+}
 form.quick-search button[type="submit"] {
 	background: @lightGreen;
 	color: #FFF;
-	margin-left: -5px;
+	padding: 4px 9px;
 }
 form.quick-search .select2-container {
 	float: left;
+}
+form.quick-search label {
+	float: left;
+	width: 30px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	position: relative;
+	background: #EAF0D7;
+	border: 1px solid #B0C13B;
+	border-radius: 5px;
+	padding: 2px 5px 4px;
+}
+form.quick-search label input {
+	margin-top: 0;
+}
+form.quick-search label i {
+	margin: 5px 0 0 5px;
+	position: absolute;
+	color: #666;
 }
 form.quick-search .select2-container:first-child {
 	margin-right: 10px;
