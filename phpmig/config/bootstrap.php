@@ -5,6 +5,9 @@
 use \Phpmig\Adapter;
 use \Nette;
 
+define('APP_DIR',  __DIR__ . '/../app');
+define('TEMP_DIR',  __DIR__ . '/../temp');
+define('VENDOR_DIR',  __DIR__ . '/../vendor');
 
 require_once VENDOR_DIR . '/autoload.php';
 
@@ -13,9 +16,9 @@ $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addParameters([
-	'centralLanguage' => CENTRAL_LANGUAGE,
-]);
+//$configurator->addParameters([
+//	'centralLanguage' => CENTRAL_LANGUAGE,
+//]);
 
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
@@ -42,15 +45,19 @@ if(php_sapi_name() == 'cli') {
 	$configurator->addConfig(__DIR__ . '/configs/cli.config.neon');
 }
 
+$applicationContainer = $configurator->createContainer();
+$databaseConfig = $applicationContainer->parameters['leanConnectionInfo'];
 
 
 $container = new Pimple();
 
-$container['db'] = $container->share(function() {
-	$dbh = new PDO('mysql:dbname=tralandia;host=127.0.0.1','root','root');
+
+$container['db'] = $container->share(function () use ($databaseConfig) {
+	$dbh = new PDO('mysql:dbname=' . $databaseConfig['database'] . ';host=' . $databaseConfig['host'], $databaseConfig['user'], $databaseConfig['password']);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
 });
+
 
 $container['phpmig.adapter'] = $container->share(function() use ($container) {
 	return new Adapter\PDO\Sql($container['db'], 'phpmig_migrations');

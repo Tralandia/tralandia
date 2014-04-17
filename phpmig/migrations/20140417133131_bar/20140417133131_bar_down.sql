@@ -1,0 +1,1 @@
+-- Bar migration DOWN file

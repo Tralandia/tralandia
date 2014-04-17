@@ -1,0 +1,1 @@
+-- Foo migration UP file

@@ -73,13 +73,21 @@ if (empty($upDown)) {
 	$upDown = ['up', 'down'];
 }
 
+$saveToDir = MIGRATIONS_DIR . '/' . $name;
+if(is_dir($saveToDir)) {
+	msg('Priecinok ' . $saveToDir . ' už existuje.');
+	exit;
+}
+@mkdir($saveToDir, 0777, TRUE);
+
 if ($addSql) {
 	foreach ($upDown as $suffix) {
-		$sqlFilename = SQL_DIR . '/' . $name . '_' . $suffix . '.sql';
+		$sqlFilename = $saveToDir . '/' . $name . '_' . $suffix . '.sql';
 		if (file_exists($sqlFilename)) {
 			msg('SQL soubor, který chcete vytvořit už existuje: ' . $name . '_' . $suffix . '.sql');
 		}
 		file_put_contents($sqlFilename, "-- " . $migrationName . ' migration ' . strtoupper($suffix) . ' file');
+		msg('+f ' . $sqlFilename);
 	}
 }
 
@@ -87,10 +95,11 @@ $templateName = 'template_' . implode('_', $upDown) . ($addSql ? '' : '_nosql') 
 $templateText = file_get_contents(TEMPLATES_DIR . '/' . $templateName);
 $templateText = str_replace('MigrationName', $migrationName, $templateText);
 
-$migrationFilename = MIGRATIONS_DIR . '/' . $name . '.php';
+$migrationFilename = $saveToDir . '/' . $name . '.php';
 
 if (file_exists($migrationFilename)) {
 	msg('PHP soubor pro migraci, který chcete vytvořit už existuje: ' . $name . '.sql');
 }
 
 file_put_contents($migrationFilename, $templateText);
+msg('+f ' . $migrationFilename);

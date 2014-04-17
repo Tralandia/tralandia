@@ -1,0 +1,1 @@
+-- Baz migration UP file
