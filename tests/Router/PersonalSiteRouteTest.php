@@ -16,7 +16,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 	protected function setUp() {
 		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner)>/<presenter>[/<action>[/<id>]]';
 		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
-		$mask = '//<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]';
+		$mask = '//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]';
 		$metadata = [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
@@ -35,6 +35,29 @@ class PersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
+		$this->routeIn($route, 'http://www.ubytovaniehudak.sk', 'PersonalSite:Default', array(
+			'action' => 'default',
+			'rentalSlug' => 'slniecko',
+			'rental' => $this->findRental('44941'),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+		), 'www.ubytovaniehudak.sk');
+
+		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/hr', 'PersonalSite:Default', array(
+			'action' => 'default',
+			'rentalSlug' => 'slniecko',
+			'rental' => $this->findRental('44941'),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+		), 'http://slniecko.uns-local.sk/hr');
+
+		$this->routeIn($route, 'http://slniecko.uns-local.sk/hr', 'PersonalSite:Default', array(
+			'action' => 'default',
+			'rentalSlug' => 'slniecko',
+			'rental' => $this->findRental('44941'),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+		));
 
 		$this->routeOut(
 			$route,
@@ -45,15 +68,9 @@ class PersonalSiteRouteTest extends BaseRouterTest
 				FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
 				FrontRoute::LANGUAGE => $this->findLanguage(60),
 			),
-			'http://mroz.example.com/hr'
+			'http://siesta.example.com/hr'
 		);
 
-		$this->routeIn($route, 'http://mroz.example.com/hr', 'PersonalSite:Default', array(
-			'action' => 'default',
-			'slug' => 'mroz',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
-			FrontRoute::LANGUAGE => $this->findLanguage(60),
-		));
 
 	}
 }

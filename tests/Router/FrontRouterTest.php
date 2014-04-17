@@ -40,6 +40,8 @@ class FrontRouterTest extends BaseRouterTest
 		$route = $this->route;
 
 
+//		$this->routeIn($route, 'http://www.ubytovaniehudak.sk/', NULL);
+
 		$this->routeIn($route, 'http://sk.tralandia.hr', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
@@ -49,22 +51,25 @@ class FrontRouterTest extends BaseRouterTest
 		$this->routeIn($route, 'http://en.tralandia.hr/apartmani-antonita-smjestaj-sa-sarmom-r13496', 'Rental', array(
 			'action' => 'detail',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
 			FrontRoute::RENTAL => $this->findRental(13496),
 		), 'http://en.tralandia.hr/apartmani-antonita-smjestaj-sa-sarmom-r13496');
 
 
-		$this->routeIn($route, 'http://en.tralandia.hr/vinjerac/apartments', 'Home', array(
+		$this->routeIn($route, 'http://en.tralandia.hr/vinjerac/apartments', 'RentalList', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+			FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->findLocation(58592),
+			FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->findRentalType(6),
 		), 'http://en.tralandia.hr/vinjerac/apartments');
 
 
-		$this->routeIn($route, 'http://www.tralandia.hr/vinjerac', 'Home', array(
+		$this->routeIn($route, 'http://www.tralandia.hr/vinjerac', 'RentalList', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::LANGUAGE => $this->findLanguage(60),
+			FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->findLocation(58592),
 		), 'http://www.tralandia.hr/vinjerac');
 
 

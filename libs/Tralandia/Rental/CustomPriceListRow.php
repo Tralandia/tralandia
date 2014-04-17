@@ -13,8 +13,8 @@ use Nette;
 /**
  * @property int $id
  * @property int $sort
- * @property \DateTime $seasonFrom
- * @property \DateTime $seasonTo
+ * @property \DateTime|null $seasonFrom
+ * @property \DateTime|null $seasonTo
  * @property int $price
  * @property \Tralandia\Rental\PriceFor $priceFor m:hasOne(priceFor_id:)
  * @property \Tralandia\Rental\Rental $rental m:hasOne(rental_id:)

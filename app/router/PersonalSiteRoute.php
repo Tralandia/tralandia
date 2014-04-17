@@ -53,7 +53,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 			$params = $appRequest->getParameters();
 
 			$domain = $httpRequest->getUrl()->getHost();
-			if($rental = $this->rentalDao->findOneBy(['personalSiteUrl' => $domain])) {
+			if($rental = $this->getRentalByDomain($domain, $params)) {
 				$params['rental'] = $rental;
 				$params[BaseRoute::PRIMARY_LOCATION] = $rental->getPrimaryLocation();
 				if($params[BaseRoute::LANGUAGE]) {
@@ -65,6 +65,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 				return null;
 			}
 
+			unset($params['www'], $params['host']);
 			$appRequest->setParameters($params);
 
 			return $appRequest;
@@ -86,8 +87,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 		$rental = \Nette\Utils\Arrays::get($params, 'rental', NULL);
 		if(!$rental instanceof \Entity\Rental\Rental) return NULL;
 
-		$domain = $params['rental']->personalSiteUrl;
-		$params['rentalSlug'] = strstr($domain, '.', true);
+		$params = $this->out($params, $rental);
 
 		$params[BaseRoute::LANGUAGE] = $params[BaseRoute::LANGUAGE]->getIso();
 
@@ -105,6 +105,21 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 		}
 
 		return NULL;
+	}
+
+
+	protected function getRentalByDomain($domain, $params)
+	{
+		if(isset($params['www'])) $domain = str_replace($params['www'], NULL, $domain);
+		return $this->rentalDao->findOneBy(['personalSiteUrl' => $domain]);
+	}
+
+	protected function out($params, \Entity\Rental\Rental $rental)
+	{
+		$domain = $params['rental']->personalSiteUrl;
+		$params['rentalSlug'] = strstr($domain, '.', true);
+
+		return $params;
 	}
 }
 

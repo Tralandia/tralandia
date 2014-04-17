@@ -34,15 +34,22 @@ class RouterFactory
 	 */
 	private $personalSiteRouteFactory;
 
+	/**
+	 * @var ICustomPersonalSiteRouteFactory
+	 */
+	private $customPersonalSiteRouteFactory;
+
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
-								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory)
+								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory,
+								ICustomPersonalSiteRouteFactory $customPersonalSiteRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->personalSiteRouteFactory = $personalSiteRouteFactory;
+		$this->customPersonalSiteRouteFactory = $customPersonalSiteRouteFactory;
 		$this->domainMask = $domainMask;
 	}
 
@@ -56,7 +63,13 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $this->personalSiteRouteFactory->create('//<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
+		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.])+>/[!<language [a-z]{2}>]', [
+			'module' => 'PersonalSite',
+			'presenter' => 'Default',
+			'action' => 'default'
+		]);
+
+		$router[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'
