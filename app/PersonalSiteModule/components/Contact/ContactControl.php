@@ -45,6 +45,7 @@ class ContactControl extends BaseControl
 		}
 
 		$this->template->formatedCalendar = implode(',', $formattedCalendar);
+//		$this->template->reservationSent = FALSE;
 
 		$this->template->render();
 	}
@@ -57,8 +58,8 @@ class ContactControl extends BaseControl
 
 		$form->onSuccess[] = function ($form) {
 			//$form->presenter->redirect('this');
-			$form->presenter->template->fromSuccessMessage = 'o1029';
-			$form->presenter->invalidateControl('reservationForm');
+			$form->parent->template->reservationSent = TRUE;
+			$form->parent->invalidateControl('reservationForm');
 		};
 
 		return $form;
