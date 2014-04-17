@@ -5,28 +5,43 @@
 use \Phpmig\Adapter;
 use \Nette;
 
-define('APP_DIR',  __DIR__ . '/../app');
-define('TEMP_DIR',  __DIR__ . '/../temp');
-define('VENDOR_DIR',  __DIR__ . '/../vendor');
+define('APP_DIR',  __DIR__ . '/../../app');
+define('LIBS_DIR',  __DIR__ . '/../../libs');
+define('TEMP_DIR',  __DIR__ . '/../../temp');
+define('LOG_DIR',  __DIR__ . '/../../log');
+define('VENDOR_DIR',  __DIR__ . '/../../vendor');
+define('CENTRAL_LANGUAGE', 38);
 
 require_once VENDOR_DIR . '/autoload.php';
+require_once __DIR__ . '/../traits/ExecuteSQLFromFile.php';
+require_once __DIR__ . '/../traits/ApplicationSettings.php';
+require_once __DIR__ . '/../libs/Migration.php';
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
+
+Nette\Diagnostics\Debugger::$strictMode = TRUE;
+Nette\Diagnostics\Debugger::enable(FALSE);
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-//$configurator->addParameters([
-//	'centralLanguage' => CENTRAL_LANGUAGE,
-//]);
+$configurator->addParameters([
+	'centralLanguage' => CENTRAL_LANGUAGE,
+	'appDir' => APP_DIR,
+]);
+
+$configurator->enableDebugger(LOG_DIR);
+
 
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
-//	->addDirectory(LIBS_DIR)
-//	->addDirectory(TEMP_DIR . '/presenters')
-//	->addDirectory(TEMP_DIR . '/proxies')
+	->addDirectory(LIBS_DIR)
+	->addDirectory(TEMP_DIR . '/presenters')
+	->addDirectory(TEMP_DIR . '/proxies')
 	->register();
 
+
+Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 
@@ -40,10 +55,7 @@ if ($section !== 'production') {
 }
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
-
-if(php_sapi_name() == 'cli') {
-	$configurator->addConfig(__DIR__ . '/configs/cli.config.neon');
-}
+$configurator->addConfig(APP_DIR . '/configs/phpmig.config.neon');
 
 $applicationContainer = $configurator->createContainer();
 $databaseConfig = $applicationContainer->parameters['leanConnectionInfo'];
@@ -63,6 +75,16 @@ $container['phpmig.adapter'] = $container->share(function() use ($container) {
 	return new Adapter\PDO\Sql($container['db'], 'phpmig_migrations');
 });
 
-$container['phpmig.migrations_path'] = __DIR__ . DIRECTORY_SEPARATOR . 'migrations';
+$container['lean'] = $container->share(function() use ($applicationContainer) {
+	return $applicationContainer->getByType('\LeanMapper\Connection');
+});
+
+$migrationsDis = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'migrations';
+$migrations = [];
+foreach(Nette\Utils\Finder::findFiles('*.php')->from($migrationsDis) as $fileName => $file) {
+	$migrations[] = $fileName;
+}
+
+$container['phpmig.migrations'] = $migrations;
 
 return $container;

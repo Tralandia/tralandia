@@ -18,7 +18,9 @@ trait ExecuteSqlFromFile
 	 */
 	private function executeSqlFromFile($affix = NULL)
 	{
-		foreach (Finder::findFiles($this->version . '*' . $affix . '.sql')->in(__DIR__ . '/../migrations/sql/' ) as $file) {
+		$classFileName = \Nette\Reflection\ClassType::from(__CLASS__)->getFileName();
+		$dir = dirname($classFileName);
+		foreach (Finder::findFiles($this->version . '*' . $affix . '.sql')->in($dir) as $file) {
 			$this->executeOneSqlFile($file);
 		}
 
@@ -27,7 +29,7 @@ trait ExecuteSqlFromFile
 	private function executeOneSqlFile($filename)
 	{
 		echo '    Loading SQL file: ' . $filename->getBaseName('.sql');
-		$this->getContainer()['dibi']->loadFile($filename);
+		$this->getContainer()['lean']->loadFile($filename);
 		echo " ....done \n";
 	}
 

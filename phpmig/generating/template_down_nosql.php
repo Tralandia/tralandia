@@ -1,8 +1,7 @@
 <?php
 
-use Phpmig\Migration\Migration;
 
-class MigrationName extends Migration
+class MigrationName extends \Migration\Migration
 {
 
 	/** @var \SystemContainer */

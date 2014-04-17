@@ -19,3 +19,4 @@ $command = isset($argv[1]) ? $argv[1] : 'migrate';
 $command = VENDOR_DIR . '/bin/phpmig ' . $command . ' -b '. CONFIG_DIR . '/bootstrap.php';
 echo $command . "\n";
 system($command);
+//exec($command);

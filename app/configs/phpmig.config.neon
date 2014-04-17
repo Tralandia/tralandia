@@ -1,0 +1,23 @@
+nette:
+	container:
+		debugger: false  # aktivuje panel v Debugger baru
+
+
+parameters:
+
+	templateCache:
+		enabled: false
+
+	staticDomain: NULL
+	storageDir: /storage
+	storagePath: /storage
+
+	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
+
+services:
+
+	environment:
+		class: Environment\Environment
+		factory: Environment\Environment::createFromIso('gb', 'en')
+
+	nette.mailer: \Mail\EmailerMailer
