@@ -7,6 +7,9 @@ sh $WORKING_DIR/bin/flush-cache
 echo "composer install --prefer-dist"
 composer install --prefer-dist
 
+echo "php phpmig/run.php"
+php phpmig/run.php
+
 sudo rm -rf $WORKING_DIR/log/*
 php -f $WORKING_DIR/public/index.php orm:generate-proxies
 
