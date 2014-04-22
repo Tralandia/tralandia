@@ -9,7 +9,8 @@ use Nette\Application\Application;
  *
  * @author Dávid Ďurika
  */
-class EnvironmentVariables extends Nette\Object {
+class EnvironmentVariables extends Nette\Object
+{
 
 	/**
 	 * @var LocationVariables
@@ -39,38 +40,55 @@ class EnvironmentVariables extends Nette\Object {
 	 * @param \ShareLinks $shareLinks
 	 */
 	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables,
-								Application $application, \ShareLinks $shareLinks) {
+								Application $application, \ShareLinks $shareLinks)
+	{
 		$this->locationVariables = $locationVariables;
 		$this->languageVariables = $languageVariables;
 		$this->application = $application;
 		$this->shareLinks = $shareLinks;
 	}
 
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function getLocationEntity() {
+	public function getLocationEntity()
+	{
 		return $this->locationVariables->getEntity();
 	}
+
 
 	/**
 	 * @return \Entity\Language
 	 */
-	public function getLanguageEntity() {
+	public function getLanguageEntity()
+	{
 		return $this->languageVariables->getEntity();
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getVariableSiteDomain() {
-		return $this->getVariableSiteName();
-	}
 
 	/**
 	 * @return string
 	 */
-	public function getVariableSiteName() {
+	public function getVariableSiteDomain()
+	{
+		return $this->getVariableSiteName();
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getVariableSiteName()
+	{
+		/** @var $request \Nette\Application\Request */
+		$request = reset($this->application->getRequests());
+		$presenterName = $request->getPresenterName();
+		if(Nette\Utils\Strings::startsWith($presenterName, 'PersonalSite:')) {
+			$parameters = $request->getParameters();
+			return $parameters['rental']->getPersonalSiteUrl();
+		}
+
 		return ucfirst($this->getLocationEntity()->getFirstDomain()->getDomain());
 	}
 
@@ -81,6 +99,7 @@ class EnvironmentVariables extends Nette\Object {
 	public function getVariableCountryName()
 	{
 		$location = $this->getLocationEntity();
+
 		return $location->isWorld() ? '' : $location->getName();
 	}
 
@@ -97,7 +116,8 @@ class EnvironmentVariables extends Nette\Object {
 	/**
 	 * @return string
 	 */
-	public function getVariableLoginLink() {
+	public function getVariableLoginLink()
+	{
 		return $this->link('//:Front:Sign:in');
 	}
 
@@ -105,7 +125,8 @@ class EnvironmentVariables extends Nette\Object {
 	/**
 	 * @return string
 	 */
-	public function getVariableRegistrationLink() {
+	public function getVariableRegistrationLink()
+	{
 		return $this->link('//:Front:Registration:', ['ls' => 'e1']);
 	}
 
@@ -117,6 +138,7 @@ class EnvironmentVariables extends Nette\Object {
 	{
 		return $this->link('//:Front:SupportUs:default');
 	}
+
 
 	/**
 	 * @param string $destination
@@ -130,8 +152,7 @@ class EnvironmentVariables extends Nette\Object {
 			['primaryLocation' => $this->getLocationEntity(), 'language' => $this->getLanguageEntity()],
 			$arguments
 		);
+
 		return $this->application->getPresenter()->link($destination, $arguments);
 	}
-
-
 }

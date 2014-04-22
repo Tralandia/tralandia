@@ -67,7 +67,9 @@ abstract class BasePresenter extends \BasePresenter {
 	}
 
 
-	public function beforeRender() {
+	public function beforeRender()
+	{
+
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
 		$this->template->isWorld = $primaryLocation->isWorld();
