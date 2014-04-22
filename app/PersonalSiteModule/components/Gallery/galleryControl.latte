@@ -1,4 +1,5 @@
 {var $photosCount = $rental->getPhotosCount()}
+{var $photosShown = 4}
 <section id="gallery" class="work-section section-block">
 	{* <div class="inner-section">
 		<!-- BEGIN #portfolio-slider -->
@@ -12,15 +13,16 @@
 		</div>
 	</div> *}
 	
-	{for $i = 0; $i < $photosCount; $i++}
-		<div class="photoset-grid-custom" style="visibility: hidden;" n:inner-foreach="$rental->getPhotos(2, $i * 2) as $photo">
-			<img n:class="$i >= 2 ? 'photo-hide' : ''" n:photo="$photo->path, full_hd, $photo->created">
-		</div>
-	{/for}
-	{if ($photosCount-4) > 0}
-	<div class="btn-more">
-		<button class="btn-toggle" data-toggle="gallery" onclick="photoSetGrid();"><i class="icon icon-chevron-down"></i> {_152659} (+{$rental->getPhotosCount()-4})</button>
+	<div class="photoset-grid-custom photoset-default" n:inner-foreach="$rental->getPhotos($photosShown, 0) as $photo">
+		<img n:photo="$photo->path, full_hd, $photo->created">
 	</div>
+	{if ($photosCount-$photosShown) > 0}
+		<div class="photoset-grid-custom photoset-extra hidden" n:inner-foreach="$rental->getPhotos(NULL, $photosShown) as $photo">
+			<img n:class="photo-hide" n:photo="$photo->path, full_hd, $photo->created">
+		</div>
+		<div class="btn-more">
+			<button class="btn-toggle" data-toggle="gallery"><i class="icon icon-chevron-down"></i> {_152659} (+{$photosCount-$photosShown})</button>
+		</div>
 	{/if}
 
 	<!-- END #gallery -->
