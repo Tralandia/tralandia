@@ -67,11 +67,8 @@ abstract class BasePresenter extends \BasePresenter {
 	}
 
 
-	public function beforeRender() {
-
-		$httpRequest = $this->getHttpRequest();
-		$domain = $httpRequest->getUrl()->getHost();
-		$r = $this->getRequest();
+	public function beforeRender()
+	{
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
