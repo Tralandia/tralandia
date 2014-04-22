@@ -125,6 +125,9 @@
 				$(this).parent().detach();
 				var $section = $("#"+section);
 				$section.find('.hidden').removeClass('hidden');
+				if (section=="gallery") {
+					photoSetGrid('.photoset-extra');
+				}
 			});
 
 			initSelect2('body');

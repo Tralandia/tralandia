@@ -352,24 +352,15 @@ jQuery(document).ready(function($){
 
     // $("#container").fitVids();
 
-    photoSetGrid();
+    photoSetGrid('.photoset-default');
 
 });
 
-function photoSetGrid() {
-    $('.photoset-grid-custom').photosetGrid({
+function photoSetGrid(selector) {
+    $(selector).photosetGrid({
       gutter: '5px',
-      layout: '2',
-      rel: 'print-gallery',
-
-      onInit: function(){},
-      onComplete: function(){
-        // Show the grid after it renders
-        $('.photoset-grid-custom').attr('style', '');
-        setTimeout(function() {
-            $('.photoset-grid-custom img.photo-hide').parents('.photoset-grid-custom').addClass('hidden');
-        }, 1);
-      }
+      layout: '22222222222222222222',
+      rel: 'print-gallery'
     });
 }
 
