@@ -299,8 +299,8 @@ $(document).ready(function(){
 	$('form:not(.searchForm) .select2.notFulltext').select2({
 		dropdownCssClass: "notFulltext disableFulltext",
 		allowClear: true,
-		minimumResultsForSearch: 99,
-		placeholder:true,
+		minimumResultsForSearch: -1,
+		// placeholder:true,
 	});
 
 	$("form:not(.searchForm) select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});

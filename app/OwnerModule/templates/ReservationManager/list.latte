@@ -5,11 +5,13 @@
 	<h1 class="rentalEditHeader">{_719603}</h1>
 </div>
 {form searchForm, class => quick-search}
-	{if $form['rental']}
-		{input rental, class => select2, style => 'width:200px;'}
+	{var $moreRentals = false}
+	{if $moreRentals}
+		{input rental, class => "select2 notFulltext", style => 'width:175px;'}
 	{/if}
-	{input period, class => select2, style => 'width:200px;'}
-	{input fulltext}
+	{input period, class => "select2 notFulltext", style => 'width:175px;'}
+	{input fulltext, class => ($moreRentals ? '' : 'norentals')}
+	<label class="tooltipElem" title="!!Show canceled">{input showCanceled} <i class="icon-trash"></i></label>
 	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
 		<i class="icon-search"></i> {_664}
 	</button>
@@ -28,10 +30,11 @@
 					<span class="status"><i class="icon-trash"></i></span>
 				{/if}
 				{if $reservation->senderName}
-					<a href="#">{$reservation->senderName}</a>
+					<a n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{$reservation->senderName}</a>
 				{else}
 					<i>{_719605}</i>
 				{/if}
+				<small>({_748130} {$reservation->created|date})</small>
 			</h2>
 			<div class="details">
 				<i><b>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</b></i><br/>
@@ -41,7 +44,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="detail-box">
-				<p><a href="#" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
+				<p><a href="mailto: {$reservation->senderEmail}" target="_blank" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
 				<p class="answer">{$reservation->ownersNote}</p>
 				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{_719627} <i class="icon-arrow-right"></i></a>
 				<a n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>

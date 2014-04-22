@@ -7,7 +7,7 @@
 	<table class="formTable innerPadding">
 		{include #rentalUnit, control => $form['units'] }
 
-		{include #select, control => $form['status']}
+		{include #select, control => $form['status'], controlClass => 'select2 notFulltext'}
 		
 		{include #text, control => $form['senderName']}
 		{include #email, control => $form['senderEmail']}
