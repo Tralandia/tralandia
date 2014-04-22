@@ -208,8 +208,12 @@ class RentalSearchCaching extends \Nette\Object {
 
 		$rentalsPrice = $qb->getQuery()->getResult();
 		foreach($rentalsPrice as $value) {
-			$t = ceil($value['price'] / $priceSearchInterval) * $priceSearchInterval;
+			$t = (int) ceil($value['price'] / $priceSearchInterval) * $priceSearchInterval;
 			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
+			$t2 = (int) ceil(($value['price'] - 1) / $priceSearchInterval) * $priceSearchInterval;
+			if($t != $t2) {
+				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t2][$value['rentalId']] = $value['rentalId'];
+			}
 		}
 	}
 
