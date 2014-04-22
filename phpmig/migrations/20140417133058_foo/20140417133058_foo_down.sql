@@ -1,0 +1,1 @@
+-- Foo migration DOWN file
