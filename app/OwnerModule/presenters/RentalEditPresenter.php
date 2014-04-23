@@ -23,7 +23,7 @@ class RentalEditPresenter extends BasePresenter
 	 */
 	protected $step;
 
-	public static $steps = [
+	protected static $steps = [
 		'about' => [],
 		'media' => [],
 		'prices' => [],
@@ -34,6 +34,11 @@ class RentalEditPresenter extends BasePresenter
 	protected function startup()
 	{
 		parent::startup();
+		self::getSteps();
+	}
+
+	public static function getSteps()
+	{
 		$stepsOrder = array_keys(self::$steps);
 		$i = 0;
 		foreach(self::$steps as $key => $value) {
@@ -42,8 +47,8 @@ class RentalEditPresenter extends BasePresenter
 			self::$steps[$key]['nextStep'] = Nette\Utils\Arrays::get($stepsOrder, $i + 1, NULL);
 			$i++;
 		}
+		return self::$steps;
 	}
-
 
 	public function actionDefault($id, $step = 'about')
 	{
@@ -62,7 +67,6 @@ class RentalEditPresenter extends BasePresenter
 			$this->redirect('this', ['step' => self::$steps[$this->step]['nextStep']]);
 		};
 	}
-
 
 	protected function createComponentAboutForm(\OwnerModule\RentalEdit\IAboutFormFactory $factory)
 	{
