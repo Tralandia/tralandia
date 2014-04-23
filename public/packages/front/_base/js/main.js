@@ -348,7 +348,7 @@ $(document).ready(function(){
 
 	// alerts
 	$(".alert").alert();
-	$('.alert:not(.alert-error)').customAlert();
+	$('.alert:not(.alert-error, .alert-static)').customAlert();
 
 	$('.scrollTo').click(elemScrollTo);
 	$('.calendarEdit').calendarEdit();
