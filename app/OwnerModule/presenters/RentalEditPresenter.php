@@ -23,7 +23,7 @@ class RentalEditPresenter extends BasePresenter
 	 */
 	protected $step;
 
-	protected $steps = [
+	public static $steps = [
 		'about' => [],
 		'media' => [],
 		'prices' => [],
@@ -34,12 +34,12 @@ class RentalEditPresenter extends BasePresenter
 	protected function startup()
 	{
 		parent::startup();
-		$stepsOrder = array_keys($this->steps);
+		$stepsOrder = array_keys(self::$steps);
 		$i = 0;
-		foreach($this->steps as $key => $value) {
-			$this->steps[$key]['slug'] = $key;
-			$this->steps[$key]['name'] = $key;
-			$this->steps[$key]['nextStep'] = Nette\Utils\Arrays::get($stepsOrder, $i + 1, NULL);
+		foreach(self::$steps as $key => $value) {
+			self::$steps[$key]['slug'] = $key;
+			self::$steps[$key]['name'] = $key;
+			self::$steps[$key]['nextStep'] = Nette\Utils\Arrays::get($stepsOrder, $i + 1, NULL);
 			$i++;
 		}
 	}
@@ -56,10 +56,10 @@ class RentalEditPresenter extends BasePresenter
 		$this->template->rental = $this->rental;
 		$this->template->editFormName = $editFormName = $step . 'Form';
 		$this->template->currentStep = $this->step;
-		$this->template->steps = $this->steps;
+		$this->template->steps = self::$steps;
 
 		$this[$editFormName]->onSuccess[] = function () {
-			$this->redirect('this', ['step' => $this->steps[$this->step]['nextStep']]);
+			$this->redirect('this', ['step' => self::$steps[$this->step]['nextStep']]);
 		};
 	}
 
