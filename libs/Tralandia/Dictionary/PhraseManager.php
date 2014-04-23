@@ -47,14 +47,18 @@ class PhraseManager {
 			'displayedTranslations' => []
 		];
 		$languages = $this->languages->findPairsByIso(array_keys($translationsVariations));
+		$sourceLanguage = $phrase->getSourceLanguage()->getIso();
+		$centralLanguage = $this->languages->findCentral()->getIso();
 		foreach($translationsVariations as $languageIso => $variations) {
+			$isSourceLanguage = $sourceLanguage == $languageIso;
+			$isCentralLanguage = $centralLanguage == $languageIso;
 
 			# zistim ci updatujem vsetky variacie alebo len defaultnu
 			if(is_array($variations)) {
-				$deleteTranslation = $this->isVariationsEmpty($variations);
+				$deleteTranslation = !$isSourceLanguage && !$isCentralLanguage && $this->isVariationsEmpty($variations);
 			} else {
 				$defaultTranslation = $variations;
-				$deleteTranslation = !strlen(trim($defaultTranslation));
+				$deleteTranslation = !$isSourceLanguage && !$isCentralLanguage && !strlen(trim($defaultTranslation));
 			}
 
 
