@@ -1,13 +1,15 @@
 <?php
 
 
-class MigrationName extends \Migration\Migration
+class InnvoicingInit extends \Migration\Migration
 {
 
 
 	public function up()
 	{
 		$this->executeSqlFromFile('up');
+
+		
 	}
 
 

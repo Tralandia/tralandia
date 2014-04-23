@@ -12,6 +12,21 @@ use Nette;
 
 class Migration extends \Phpmig\Migration\Migration
 {
+	use \ExecuteSqlFromFile;
+
+	/** @var \SystemContainer|Nette\DI\Container */
+	protected $dic;
+
+	/**
+	 * @var \LeanMapper\Connection
+	 */
+	protected $lean;
+
+	public function init()
+	{
+		$this->dic = $this->getContainer()['dic'];
+		$this->lean = $this->getContainer()['lean'];
+	}
 
 
 	/**
