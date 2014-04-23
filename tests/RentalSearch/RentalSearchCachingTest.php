@@ -19,12 +19,13 @@ class RentalSearchCachingTest extends \Tests\TestCase
 	public function setUp()
 	{
 		$rentalSearchCachingFactory = $this->getContext()->getByType('\Extras\Cache\IRentalSearchCachingFactory');
-		$this->rentalSearchCaching = $rentalSearchCachingFactory->create($this->findLocation('hu', TRUE, 'iso'));
+		$this->rentalSearchCaching = $rentalSearchCachingFactory->create($this->findLocation('sk', TRUE, 'iso'));
 	}
 
 	public function testGeneration() {
-//		$this->rentalSearchCaching->updateWholeCache();
-		$this->rentalSearchCaching->updateRental($this->findRental(15047));
+		$this->rentalSearchCaching->regenerateData();
+//		$this->rentalSearchCaching->updateRental($this->findRental(15047));
+		$cache = $this->rentalSearchCaching;
 		$r = 1;
 	}
 

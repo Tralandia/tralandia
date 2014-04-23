@@ -67,7 +67,7 @@ class Price extends \Nette\Object {
 	 *
 	 * @return string
 	 */
-	public function convertTo( $currency, $format = '%f %s') {
+	public function convertTo( $currency, $format = '%.2f %s') {
 		$value = $this->getAmount($currency);
 
 		if ($format === self::FORMAT_FLOAT) {
@@ -75,6 +75,15 @@ class Price extends \Nette\Object {
 		} else {
 			return sprintf($format, $value, $currency->getIso());
 		}
+	}
+
+
+	/**
+	 * alias for getAmount()
+	 */
+	public function getAmountIn($currency)
+	{
+		return $this->getAmount($currency);
 	}
 
 
@@ -101,7 +110,7 @@ class Price extends \Nette\Object {
 			$value = $this->amounts[$currency->getId()];
 		}
 
-		return $value;
+		return round($value, 2);
 	}
 
 

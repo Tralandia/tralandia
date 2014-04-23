@@ -104,6 +104,19 @@ trait TFindEntityHelper {
 	 * @param bool $need
 	 * @param string $by
 	 *
+	 * @return \Entity\Currency|null
+	 */
+	public function findCurrency($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(CURRENCY_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
 	 * @return \Entity\Rental\AmenityType|null
 	 */
 	public function findAmenityType($id, $need = TRUE, $by = 'id')
