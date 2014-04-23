@@ -104,13 +104,21 @@ class RentalCreator
 	}
 
 
+	/**
+	 * @param User $user
+	 * @param Address $address
+	 * @param $rentalName
+	 * @param $language
+	 *
+	 * @return \Entity\Rental\Rental
+	 */
 	public function createRental(User $user = NULL, Address $address, $rentalName, $language)
 	{
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
 
-		$rentalName = \Tools::transliterate($rentalName);
-		$rental->setSlug($rentalName);
+		$slug = \Tools::transliterate($rentalName);
+		$rental->setSlug($slug);
 
 		$rental->getName()->setSourceLanguage($language);
 		$rental->getTeaser()->setSourceLanguage($language);
