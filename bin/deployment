@@ -14,20 +14,27 @@ sh $WORKING_DIR/bin/publish-maintenance
 sleep 1
 
 echo
-echo "==================== GIT PULL ========================="
+echo "==================== GIT PULL ==========================="
 echo "git pull"
 git pull
 
 echo
-echo "==================== COMPOSER ========================="
+echo "==================== COMPOSER ==========================="
 echo "composer install --prefer-dist"
 composer install --prefer-dist
 
 
 echo
-echo "==================== INSTALL PRODUCTION ========================="
+echo "==================== INSTALL PRODUCTION ================="
 echo "sh $WORKING_DIR/bin/install-production"
 sh $WORKING_DIR/bin/install-production
+
+
+echo
+echo "==================== PHPMIG ============================="
+echo "php $WORKING_DIR/phpmig/run.php"
+php $WORKING_DIR/phpmig/run.php
+
 
 sleep 1
 
