@@ -201,12 +201,18 @@ ul.arrows {
 	}
 }
 
+ul.hints {
+	margin: 0 10px;
 
+	li {
+		margin: 0 0 10px;
 
-
-
-
-
+		span.date {
+			display: block;
+			font-weight: bold;
+		}
+	}	
+}
 
 .blue , a.blue {
 	color: @darkBlue;
@@ -1189,6 +1195,106 @@ ul.arrows {
 
 	#contactFormCover {
 		margin-bottom: 10px;
+	}
+
+	.owner-rentals {
+	    margin: 10px 10px 20px;
+
+		.item {	
+		    padding: 15px;
+		    position: relative;
+		    background: #F8FAE9;
+		    margin-bottom: 15px;
+		    .border-radius(5px);
+		    border: 1px solid #B0C13B;
+
+		    h2 {
+		    	margin: 5px 10px 0px 10px;
+				color: @darkGreen;
+				width: 500px;
+				height: 18px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+		    }
+
+			img {
+				width: 100%;
+			}
+
+			.meta {
+				position: absolute;
+				top: 55px;
+				left: 120px;
+			}
+
+			.well {
+				margin: 0;
+				background: none;
+				.box-shadow(none);
+				border: none;
+
+				a {
+					color: #7D3300;
+				}
+
+				small.percentage {
+				    background: #4A6E85;
+				    padding: 5px 10px;
+				    border-radius: 5px;
+				    position: absolute;
+				    right: 15px;
+				    top: 15px;
+				    font-weight: bold;
+				    color: #fff;
+				}
+
+				&.website {
+					margin: 15px -15px -15px;
+					padding: 15px;
+					background: #EAF0D7;
+					.border-radius(0 0 5px 5px);
+
+					.btn {
+						background: @darkGreen;
+						color: #fff;
+					}
+				}
+
+				div.rental-options {
+
+					a {
+						float: left;
+						padding: 0 10px 0 0;
+						margin: 9px 10px 0 0;
+						border-right: 1px solid #CCC;
+
+						&:last-child {
+							border-right:none;
+						}
+					}
+
+					b {
+						float: left;
+						padding: 0 10px 0 0;
+						margin: 9px 0 0 0;
+					}
+				}
+			}
+		}
+	}
+
+	.alert{
+		margin: 0 10px 10px;
+
+		p {
+			margin: 10px 0 0 0;
+			padding: 0;
+		}
+	}
+
+	.textBlock {
+		margin: 20px 10px;
 	}
 }
 

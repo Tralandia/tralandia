@@ -1,0 +1,83 @@
+{block content}
+
+<h1>!!Dashboard</h1>
+
+<div class="alert alert-static">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<h4 class="alert-heading">Oh snap! You got an error!</h4>
+	<p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+	<p><a class="btn btn-danger" href="#">Take this action</a> <a class="btn" href="#">Or do this</a></p>
+</div>
+
+<div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<h4 class="alert-heading">Toto je nejaky alert!</h4>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur interdum elit eget nisl dictum vestibulum.</p>
+</div>
+
+<hr/>
+
+<h2>!!Vaše objekty</h2>
+<div class="owner-rentals">
+	{foreach $rentalList as $rental}
+	<div class="item">
+		<div class="row-fluid">
+			<div class="span2">
+				{foreach $rental->getSortedImages(1) as $photo}
+				<a n:href=":Owner:RentalEdit:default, id => $rental->id"><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/></a>
+				{/foreach}
+			</div>
+			<div class="span10">
+				<h2><a n:href=":Owner:RentalEdit:default, id => $rental->id">{_$rental->name}</a></h2>
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="well well-small">
+							<div class="rental-options">
+								<b><i class="icon-pencil"></i></b>
+								{foreach $steps as $step}
+									<a n:href=":Owner:RentalEdit:default, id => $rental->id, step => $step['slug']">{$step['name']}</a>
+								{/foreach}
+							</div>
+							<div class="pull-right"><small class="percentage tooltipElem" title="{_153019}">{$rental->getRank()}%</small></div>
+						</div>
+					</div>
+				</div>
+				{* <div class="meta">Registrovany od: 13.3.2014, </div> *}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="well well-small website">
+					{if $rental->personalSiteUrl}
+						<b>Vaša webstránka:</b>
+						<a href="#">Nastavenia</a>
+						<div class="pull-right"><a href="http://{$rental->personalSiteUrl}" target="_blank"><small>http://{$rental->personalSiteUrl} <i class="icon-external-link"></i></small></a></div>
+					{else}
+						<a href="#" class="btn btn-small btn-green">Vytvorit stranku</a>
+					{/if}
+				</div>
+			</div>
+		</div>
+	</div>
+	{/foreach}
+	<a n:href="Rental:add" class="btn btn-green pull-right"><i class="icon-plus"></i> {_450052}</a>
+</div>
+<div class="clearfix"></div>
+<hr/>
+{* 
+<h2>10 zaručených rád ako získať viac hostí!</h2>
+<div class="textBlock">
+	<ol>
+		<li>Pridajte si <b>najlepšie fotky</b>, hlavne tú úvodnú. Úvodná fotka môže byť aj z interiéru objektu. Fotky zaručene <b>predávajú</b>! Nezabudnite na <b>fotky okolia</b> a blízkych atrakcií a pridajte si ich čo najviac <b>(20 ks)</b>!</li>
+		<li>Aktualizujte si a sprehľadnite si <b>cenník</b> a <b>informácie</b>. Ak klient nemá hneď jasno v cenách a informáciách, hľadá inde.</li>
+		<li><b>Popis objektu</b> píšte <b>atraktívne</b> a zaujímavo pre klienta. Spomeňte región, atraktívne vybavenie a top atrakcie v okolí.</li>
+		<li>Aktualizujte si <b>obsadenosť</b>. Šetríte čas sebe a klientovi. Zároveň Vás uprednostníme vo výsledkoch (<b>=viac rezervácií</b>).</li>
+		<li>Používajte <b>marketingové akcie</b>. Nezabúdajte na aktuálnosť.</li>
+		<li>Zdvíhajte telefóny a <b>odpovedajte</b> na zmeškané hovory a emaily <b>najrýchlejšie ako viete</b>.</li>
+		<li>Buďte milí, ústretoví a <b>vážte si</b> každého <b>klienta</b>. Každý to vycíti a ocení!</li>
+		<li>Robte si <b>štatistiky</b> (do PC, zošita) odkiaľ prichádzajú, volajú a emailujú Vaši hostia. Získate tak nielen <b>vyborný prehľad</b>, ale hlavne <b>databázu potenciálnych klientov</b>, ktorých môžete pravidelne emailami oslovovať a získavať.</li>
+		<li>Snažte sa s klientom vždy dohodnúť. Ponúknite mu výhody, zľavu, náhradný termín, náhradné ubytovanie, tak aby ste klienta nestratili, ale získali.</li>
+		<li>Dajte si ohodnotiť Vaše ubytovanie Vašim bývalým hosťom. Referencie spokojných klientov predávajú Vaše ubytovanie najlepšie.</li>
+	</ol>
+</div>
+ *}
