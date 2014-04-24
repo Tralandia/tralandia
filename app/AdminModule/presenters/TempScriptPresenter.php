@@ -367,7 +367,7 @@ class TempScriptPresenter extends BasePresenter {
 		$this->em->flush();
 	}
 
-	public function actionUpdatePolygon($id)
+	public function actionUpdatePolygonForLocation($id)
 	{
 		$location = $this->findLocation($id);
 
@@ -400,7 +400,7 @@ class TempScriptPresenter extends BasePresenter {
 		}
 
 
-		$this->sendJson(['success' => true]);
+		$this->sendJson(['success' => true, 'newRentalsCount' => count($rentals)]);
 	}
 
 
@@ -862,6 +862,8 @@ limit ' . $limit;
 		$this->payload->nameId = $location->getName()->getId();
 		$this->sendPayload();
 	}
+
+
 
 }
 
