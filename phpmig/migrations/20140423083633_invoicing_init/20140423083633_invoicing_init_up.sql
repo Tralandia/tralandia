@@ -1,4 +1,4 @@
--- InnvoicingInit migration UP file
+-- InvoicingInit migration UP file
 
 
 CREATE TABLE invoicing_company (id INT AUTO_INCREMENT NOT NULL, locality_id INT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, address VARCHAR(255) DEFAULT NULL, address2 VARCHAR(255) DEFAULT NULL, postcode VARCHAR(255) DEFAULT NULL, companyId VARCHAR(255) DEFAULT NULL, companyVatId VARCHAR(255) DEFAULT NULL, vat DOUBLE PRECISION DEFAULT NULL, registrator VARCHAR(255) DEFAULT NULL, inEu TINYINT(1) NOT NULL, oldId INT DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, primaryLocation_id INT DEFAULT NULL, INDEX IDX_685A45C588823A92 (locality_id), INDEX IDX_685A45C5DD3EB247 (primaryLocation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
@@ -22,7 +22,18 @@ ALTER TABLE invoicing_service ADD CONSTRAINT FK_C678D658979B1AD6 FOREIGN KEY (co
 ALTER TABLE invoicing_service ADD CONSTRAINT FK_C678D658DD3EB247 FOREIGN KEY (primaryLocation_id) REFERENCES location (id);
 ALTER TABLE invoicing_servicetype ADD CONSTRAINT FK_9E82AD9D71179CD6 FOREIGN KEY (name_id) REFERENCES phrase (id);
 
+ALTER TABLE invoicing_company ADD slug VARCHAR(255) DEFAULT NULL;
+ALTER TABLE `invoicing_company` MODIFY COLUMN `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL AFTER `name`;
 
-INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
-VALUES (NULL, NULL, 'Zero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
+ALTER TABLE invoicing_invoice ADD dateDue DATE NOT NULL, ADD datePaid DATE DEFAULT NULL, ADD dateFrom DATE DEFAULT NULL, ADD dateTo DATE DEFAULT NULL, DROP timeDue, DROP timePaid, DROP timeFrom, DROP timeTo, CHANGE givenFor givenFor ENUM('Share', 'Backlink', 'Paid Invoice');
+ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateFrom` DATE DEFAULT NULL AFTER `paymentInfo`;
+ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateTo` DATE DEFAULT NULL AFTER `dateFrom`;
+ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateDue` DATE NOT NULL AFTER `rental_id`;
+ALTER TABLE `invoicing_invoice` MODIFY COLUMN `datePaid` DATE DEFAULT NULL AFTER `dateDue`;
 
+
+INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `slug`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
+VALUES (NULL, NULL, 'Zero', 'zero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
+
+INSERT INTO `phrase_type` (`id`, `translateTo`, `entityName`, `entityAttribute`, `pluralVariationsRequired`, `genderRequired`, `genderVariationsRequired`, `locativesRequired`, `positionRequired`, `helpForTranslator`, `html`, `translated`, `oldId`, `created`, `updated`, `preFillForTranslator`)
+VALUES (NULL, 'none', '\\Entity\\Invoicing\\ServiceType', 'name', '0', '0', '0', '0', '0', NULL, '0', '1', NULL, '2013-06-16 21:31:21', '2013-06-16 21:31:21', '1');

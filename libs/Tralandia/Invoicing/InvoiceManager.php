@@ -2,50 +2,52 @@
 /**
  * This file is part of the tralandia.
  * User: macbook
- * Created at: 30/01/14 07:34
+ * Created at: 24/04/14 10:40
  */
 
-namespace Tralandia\Rental;
+namespace Tralandia\Invoicing;
 
 
-use Entity\Rental\Service;
 use Nette;
-use Tralandia\BaseDao;
 
-class ServiceManager
+class InvoiceManager
 {
 
 	/**
-	 * @var \Tralandia\BaseDao
+	 * @var \Kdyby\Doctrine\EntityManager
 	 */
-	private $serviceDao;
+	private $em;
 
 	/**
-	 * @var \Tralandia\BaseDao
+	 * @var BaseDao
 	 */
-	private $rentalDao;
+	protected $invoiceDao;
 
 
-	/**
-	 * @param BaseDao $serviceDao
-	 * @param BaseDao $rentalDao
-	 */
-	public function __construct(BaseDao $serviceDao, BaseDao $rentalDao)
+	public function __construct(EntityManager $em)
 	{
-		$this->serviceDao = $serviceDao;
-		$this->rentalDao = $rentalDao;
+		$this->em = $em;
+		$this->invoiceDao = $em->getRepository(INVOICING_INVOICE);
+	}
+
+	public function create()
+	{
+		$invoice = $this->invoiceDao->createNew();
+
+
+		return $invoice;
 	}
 
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
+	 * @param $serviceType
 	 * @param $givenFor
-	 * @param string $serviceType
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return \Entity\Rental\Service
 	 */
-	public function prolong(\Entity\Rental\Rental $rental, $givenFor, $serviceType = Service::TYPE_FEATURED)
+	public function prolongService(\Entity\Rental\Rental $rental, $service, $givenFor)
 	{
 		if($givenFor == Service::GIVEN_FOR_SHARE) {
 			$prolongBy = '+6 months';
@@ -69,9 +71,9 @@ class ServiceManager
 		/** @var $newService Service */
 		$newService = $this->serviceDao->createNew();
 		$newService->setGivenFor($givenFor)
-				->setServiceType($serviceType)
-				->setDateFrom($dateFrom)
-				->setDateTo($dateTo);
+			->setServiceType($serviceType)
+			->setDateFrom($dateFrom)
+			->setDateTo($dateTo);
 
 		$rental->addService($newService);
 		$this->rentalDao->save($rental, $newService);

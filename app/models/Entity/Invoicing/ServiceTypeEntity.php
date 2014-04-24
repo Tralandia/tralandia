@@ -8,6 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_servicetype")
+ *
+ * @method getSlug()
+ * @method setSlug($slug)
+ * @method \Entity\Phrase\Phrase getName()
+ * @method setName(\Entity\Phrase\Phrase $phrase)
  */
 class ServiceType extends \Entity\BaseEntity {
 
