@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo
+echo
+echo "========================================================="
+echo "======================= INSTALL ========================="
+echo "========================================================="
+echo
+
+
 WORKING_DIR=`pwd`
 
 echo
@@ -33,3 +41,5 @@ echo
 echo "==================== dev:setup ========================="
 echo "php -f $WORKING_DIR/public/index.php dev:setup"
 php -f $WORKING_DIR/public/index.php dev:setup
+
+echo "...done..."

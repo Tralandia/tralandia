@@ -1,5 +1,12 @@
 #!/bin/bash
 
+echo
+echo
+echo "========================================================="
+echo "==================== DEPLOYMENT ========================="
+echo "========================================================="
+echo
+
 WORKING_DIR=`pwd`
 
 sh $WORKING_DIR/bin/publish-maintenance
@@ -25,3 +32,6 @@ sh $WORKING_DIR/bin/install-production
 sleep 1
 
 sh $WORKING_DIR/bin/publish-index
+
+
+echo "...done..."
