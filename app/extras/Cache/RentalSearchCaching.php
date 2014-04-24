@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Entity\Location\Location;
 use Entity\Rental\Rental;
+use Extras\Types\Price;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
 use Tralandia\Rental\Rentals;
@@ -203,16 +204,28 @@ class RentalSearchCaching extends \Nette\Object {
 	 */
 	private function regeneratePriceData(QueryBuilder $qb)
 	{
-		$priceSearchInterval = $this->location->getDefaultCurrency()->getSearchInterval();
-		$qb->select('r.id AS rentalId, r.price AS price');
+		$defaultCurrency = $this->location->getDefaultCurrency();
+		$priceSearchInterval = $defaultCurrency->getSearchInterval();
+		$qb->select('r.id AS rentalId, r.price AS price, c.id AS currencyId')
+			->innerJoin('r.currency', 'c');
+
+		$currencies = $this->em->getRepository(CURRENCY_ENTITY)->findAll();
+		$currenciesById = [];
+		foreach($currencies as $currency) {
+			$currenciesById[$currency->getId()] = $currency;
+		}
 
 		$rentalsPrice = $qb->getQuery()->getResult();
 		foreach($rentalsPrice as $value) {
-			$t = (int) ceil($value['price'] / $priceSearchInterval) * $priceSearchInterval;
+			$amount = $value['price'];
+			if($defaultCurrency->getId() != $value['currencyId']) {
+				$price = new Price($amount, $currenciesById[$value['currencyId']]);
+				$amount = $price->getAmountIn($defaultCurrency);
+			}
+			$t = (int) ceil($amount / $priceSearchInterval) * $priceSearchInterval;
 			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
-			$t2 = (int) ceil(($value['price'] - 1) / $priceSearchInterval) * $priceSearchInterval;
-			if($t != $t2) {
-				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t2][$value['rentalId']] = $value['rentalId'];
+			if( !($amount % $priceSearchInterval) && $t > 0) {
+				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t - $priceSearchInterval][$value['rentalId']] = $value['rentalId'];
 			}
 		}
 	}
