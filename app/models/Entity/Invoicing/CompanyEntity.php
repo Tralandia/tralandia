@@ -21,6 +21,12 @@ class Company extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
+	protected $slug;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
 	protected $address;
 
 	/**

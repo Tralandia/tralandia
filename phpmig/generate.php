@@ -22,7 +22,7 @@
 date_default_timezone_set('Europe/Prague');
 
 define('MIGRATIONS_DIR',  __DIR__ . '/migrations');
-define('TEMPLATES_DIR',  __DIR__ . '/generating');
+define('TEMPLATES_DIR',  __DIR__ . '/templates');
 
 iconv_set_encoding('internal_encoding', 'UTF-8');
 extension_loaded('mbstring') && mb_internal_encoding('UTF-8');

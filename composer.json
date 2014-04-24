@@ -24,7 +24,6 @@
         "nextras/datagrid": "@dev",
 		"mobiledetect/mobiledetectlib": "@dev",
 		"giggsey/libphonenumber-for-php": "master",
-        "dg/dibi": "@dev",
 		"texy/texy": "dev-release-2.x",
 		"janmarek/mockista": "@dev",
         "davedevelopment/phpmig": "*",

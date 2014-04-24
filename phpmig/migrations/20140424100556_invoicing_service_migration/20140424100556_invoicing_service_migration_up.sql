@@ -1,0 +1,1 @@
+-- InvoicingServiceMigration migration UP file
