@@ -2,7 +2,6 @@
 
 namespace Entity\Invoicing;
 
-use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +13,8 @@ class Invoice extends \Entity\BaseEntity {
 	const GIVEN_FOR_SHARE = 'Share';
 	const GIVEN_FOR_BACKLINK = 'Backlink';
 	const GIVEN_FOR_PAID_INVOICE = 'Paid Invoice';
+
+	const CREATED_BY_IMPORT = 'import';
 
 	/**
 	 * @var string
@@ -48,15 +49,15 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var \DateTime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="date")
 	 */
-	protected $timeDue;
+	protected $dateDue;
 
 	/**
 	 * @var \DateTime
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="date", nullable=true)
 	 */
-	protected $timePaid;
+	protected $datePaid;
 
 	/**
 	 * @var string
@@ -162,15 +163,15 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var \DateTime|null
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="date", nullable=true)
 	 */
-	protected $timeFrom;
+	protected $dateFrom;
 
 	/**
 	 * @var \DateTime|null
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="date", nullable=true)
 	 */
-	protected $timeTo;
+	protected $dateTo;
 
 	/**
 	 * @var string

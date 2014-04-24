@@ -49,4 +49,9 @@ define('FAQ_CATEGORY_ENTITY', '\Entity\Faq\Category');
 define('TICKET_ENTITY', '\Entity\Ticket\Ticket');
 define('EDIT_LOG_ENTITY', '\Entity\Rental\EditLog');
 define('SEO_BACKLINK_ENTITY', '\Entity\Seo\BackLink');
+define('INVOICING_COMPANY', '\Entity\Invoicing\Company');
+define('INVOICING_INVOICE', '\Entity\Invoicing\Invoice');
+define('INVOICING_SERVICE', '\Entity\Invoicing\Service');
+define('INVOICING_SERVICE_TYPE', '\Entity\Invoicing\ServiceType');
+define('INVOICING_SERVICE_DURATION', '\Entity\Invoicing\ServiceDuration');
 

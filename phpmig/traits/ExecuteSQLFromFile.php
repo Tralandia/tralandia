@@ -16,9 +16,9 @@ trait ExecuteSqlFromFile
 	 * - mají příponu .sql
 	 * - a obsahují daný affix
 	 */
-	private function executeSqlFromFile($affix = NULL)
+	protected function executeSqlFromFile($affix = NULL)
 	{
-		$classFileName = \Nette\Reflection\ClassType::from(__CLASS__)->getFileName();
+		$classFileName = \Nette\Reflection\ClassType::from($this)->getFileName();
 		$dir = dirname($classFileName);
 		foreach (Finder::findFiles($this->version . '*' . $affix . '.sql')->in($dir) as $file) {
 			$this->executeOneSqlFile($file);
@@ -26,9 +26,9 @@ trait ExecuteSqlFromFile
 
 	}
 
-	private function executeOneSqlFile($filename)
+	protected function executeOneSqlFile($filename)
 	{
-		echo '    Loading SQL file: ' . $filename->getBaseName('.sql');
+		echo ' => Loading SQL file: ' . $filename->getBaseName('.sql');
 		$this->getContainer()['lean']->loadFile($filename);
 		echo " ....done \n";
 	}
