@@ -1,19 +1,27 @@
 #!/bin/bash
 
+echo
+echo
+echo "========================================================="
+echo "======================= INSTALL ========================="
+echo "========================================================="
+echo
+
+
 WORKING_DIR=`pwd`
 
 echo
-echo "==================== FLUSH CACHE ========================="
+echo "==================== FLUSH CACHE ========================"
 echo "$WORKING_DIR/bin/flush-cache"
 sh $WORKING_DIR/bin/flush-cache
 
 echo
-echo "==================== COMPOSER ========================="
+echo "==================== COMPOSER ==========================="
 echo "composer install --prefer-dist"
 composer install --prefer-dist
 
 echo
-echo "==================== PHPMIG ========================="
+echo "==================== PHPMIG ============================="
 echo "php phpmig/run.php"
 php phpmig/run.php
 
@@ -21,7 +29,7 @@ sudo rm -rf $WORKING_DIR/log/*
 
 
 echo
-echo "==================== GENERATE PROXIES ========================="
+echo "==================== GENERATE PROXIES ==================="
 echo "php -f $WORKING_DIR/public/index.php orm:generate-proxies"
 php -f $WORKING_DIR/public/index.php orm:generate-proxies
 
@@ -30,6 +38,8 @@ sudo chmod -R 777 $WORKING_DIR/temp
 
 
 echo
-echo "==================== dev:setup ========================="
+echo "==================== dev:setup =========================="
 echo "php -f $WORKING_DIR/public/index.php dev:setup"
 php -f $WORKING_DIR/public/index.php dev:setup
+
+echo "...done..."

@@ -390,8 +390,11 @@ class TempScriptPresenter extends BasePresenter {
 		$qb = $this->rentalDao->createQueryBuilder('r');
 		$qb->leftJoin('r.address', 'a')
 			->leftJoin('a.locations', 'l')
-			->where($qb->expr()->eq('l.id', ':location'))->setParameter('location', $location)
-			->andWhere($qb->expr()->notIn('r.id', $rentalsIds));
+			->where($qb->expr()->eq('l.id', ':location'))->setParameter('location', $location);
+
+		if(count($rentalsIds)) {
+			$qb->andWhere($qb->expr()->notIn('r.id', $rentalsIds));
+		}
 
 		$rentals = $qb->getQuery()->getResult();
 
