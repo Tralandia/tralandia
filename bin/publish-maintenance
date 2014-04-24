@@ -2,9 +2,12 @@
 
 WORKING_DIR=`pwd`
 
-echo
-echo "Publishing maintenance page"
-echo
 
+echo
+echo "==================== PUBLISHING MAINTENANCE PAGE ========================="
+
+echo "mv $WORKING_DIR/public/index.php $WORKING_DIR/public/bootstrap.php"
 mv $WORKING_DIR/public/index.php $WORKING_DIR/public/bootstrap.php
+
+echo "mv $WORKING_DIR/public/.maintenance.php $WORKING_DIR/public/index.php"
 mv $WORKING_DIR/public/.maintenance.php $WORKING_DIR/public/index.php

@@ -2,9 +2,12 @@
 
 WORKING_DIR=`pwd`
 
-echo
-echo "Publishing index page"
-echo
 
+echo
+echo "==================== PUBLISHING INDEX PAGE ========================="
+
+echo "mv $WORKING_DIR/public/index.php $WORKING_DIR/public/.maintenance.php"
 mv $WORKING_DIR/public/index.php $WORKING_DIR/public/.maintenance.php
+
+echo "mv $WORKING_DIR/public/index.php $WORKING_DIR/public/.maintenance.php"
 mv $WORKING_DIR/public/bootstrap.php $WORKING_DIR/public/index.php
