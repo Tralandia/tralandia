@@ -60,6 +60,9 @@ common:
 				country:
 					label: Countries
 					link: ':Admin:Country:list'
+				createLocality:
+					label: Create locality
+					link: ':Admin:Location:createLocality'
 #				region:
 #					label: Regions
 #					link: ':Admin:Region:list'

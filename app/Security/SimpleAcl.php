@@ -61,6 +61,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Admin:DictionaryManager';
 		$resources[] = 'Admin:EntityGenerator';
 		$resources[] = 'Admin:Rental';
+		$resources[] = 'Admin:Location';
 		$resources[] = 'Admin:User';
 		$resources[] = 'Admin:RunRobot';
 		$resources[] = 'Admin:Language';
