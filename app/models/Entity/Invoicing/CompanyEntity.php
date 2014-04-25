@@ -8,6 +8,31 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_company")
+ *
+ * @method setName($name)
+ * @method getName()
+ * @method setSlug($slug)
+ * @method getSlug()
+ * @method setAddress($address)
+ * @method getAddress()
+ * @method setAddress2($address2)
+ * @method getAddress2()
+ * @method setPostcode($postcode)
+ * @method getPostcode()
+ * @method setLocality(\Entity\Location\Location $locality)
+ * @method \Entity\Location\Location getLocality()
+ * @method setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+ * @method \Entity\Location\Location getPrimaryLocation()
+ * @method setCompanyId($companyId)
+ * @method getCompanyId()
+ * @method setCompanyVatId($companyVatId)
+ * @method getCompanyVatId()
+ * @method setVat($vat)
+ * @method getVat()
+ * @method setRegistrator($registrator)
+ * @method getRegistrator()
+ * @method setInEu($inEu)
+ * @method getInEu()
  */
 class Company extends \Entity\BaseEntity {
 

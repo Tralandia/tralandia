@@ -8,6 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_serviceduration")
+ * @method setSlug($slug)
+ * @method getSlug()
+ * @method setName(\Entity\Phrase\Phrase $name)
+ * @method \Entity\Phrase\Phrase getName()
+ * @method setStrtotime($strtotime)
+ * @method getStrtotime()
+ * @method setSort($sort)
+ * @method getSort()
+ * @method setSeparatorAfter($separatorAfter)
+ * @method getSeparatorAfter()
  */
 class ServiceDuration extends \Entity\BaseEntity {
 

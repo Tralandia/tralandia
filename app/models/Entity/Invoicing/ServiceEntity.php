@@ -8,6 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service")
+ * @method setType(ServiceType $type)
+ * @method ServiceType getType()
+ * @method setDuration(\Entity\Invoicing\ServiceDuration $duration)
+ * @method \Entity\Invoicing\ServiceDuration getDuration()
+ * @method setPriceDefault($priceDefault)
+ * @method getPriceDefault()
+ * @method setPriceCurrent($priceCurrent)
+ * @method getPriceCurrent()
+ * @method setCurrency(\Entity\Currency $currency)
+ * @method \Entity\Currency getCurrency()
+ * @method setCompany(Company $company)
+ * @method Company getCompany()
+ * @method setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+ * @method \Entity\Location\Location|NULL getPrimaryLocation()
  */
 class Service extends \Entity\BaseEntity {
 
