@@ -30,12 +30,16 @@ div.calendar {
     .day.active {
         
         &.status01 {
-
-            .skew-gradient( #FDFDF8,#B0C23C  , 21 , 21 );     
+            background: url(../images/calendar-half.png) right bottom;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
         }
 
         &.status10 {
-            .skew-gradient( #B0C23C,#FDFDF8  , 21 , 21 );           
+            background: url(../images/calendar-half-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
         } 
 
         &.status11 {
