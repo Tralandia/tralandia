@@ -170,7 +170,7 @@
 
 										{if count($rental->customPricelistRows) > 0}
 											{foreach $rental->customPricelistRows as $row}
-												<li tooltip="true" n:class="$iterator->getCounter() > 3 ? hide">
+												<li tooltip="true">
 													<div class="row-fluid">
 														<div class="span6">
 															<span class="dateFrom" n:if="$row->seasonFrom">{$row->seasonFrom|date}</span> - <span class="dateTo" n:if="$row->seasonTo">{$row->seasonTo|date}</span>
@@ -188,9 +188,6 @@
 													</div>
 													{/if}
 												</li>
-												{if $iterator->last && $iterator->count() > 3}
-												<li align="center"><a href="#" onclick="ulShowMore(this);">{_297353}</a></li>
-												{/if}
 											{/foreach}
 										{else}
 											{foreach $rental->pricelistRows as $pricelistRow}
@@ -382,21 +379,17 @@
 							<!-- right sidebar -->
 						</div>
 
-
+						{* Gallery *}
 						<div class="row-fluid">
 							<div class="span12">
-
-
 								<div class="metaObjectInfo" id="gallery">
 									<h3>{_537}</h3>
 									<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
-
 									<ul class="bigGallery">
 										{var $mainVideo = $rental->getMainVideo()}
 										<li n:if="$mainVideo">{!$mainVideo->getEmbedCode(467, 276)}</li>
 										{foreach $rental->getImages() as $photo}
 										<li n:class="$iterator->getCounter() > 10 ? 'hide toggleHide'">
-
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
@@ -406,23 +399,165 @@
 									{if count($rental->getImages()) > 10}
 										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos onClickThisHide toggleHide"><i class="icon-arrow-down"></i><span>{_152659}</span> </a>
 									{/if}
-
 								<div class="clearfix"></div>
 							</div>
-
 							<div class="metaObjectInfo" id="priceTable">
 						</div>
 
-
-
-
-
+						{* Rating *}
+						<div class="row-fluid">
+							<div class="span12">
+								<div class="rating">
+									<h3>
+										!!Hodnotenia návštevníkov (2)
+										<a href="#" onclick="$('form.rating-form').removeClass('hide'); return;" class="btn btn-small btn-orange pull-right">Pridať hodnotenie</a>
+									</h3>
+									<form class="rating-form hide">
+										<table cellpadding="0">
+											<tr>
+												<td>Meno</td>
+												<td>Priezvisko</td>
+												<td colspan="2" rowspan="14" width="461" valign="top">
+													<div class="starrr-group">
+														<div class="form-control">
+															<span>Poloha <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[position]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Čistota <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[purity]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Vybavenosť <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[amenities]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Personál <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[personal]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Služby <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[services]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Aktivity a atrakcie v okolí <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[activities]" type="hidden">
+														</div>
+														<div class="form-control">
+															<span>Pomer cena a hodnota <strong></strong></span>
+															<div id="stars" class="starrr"></div>
+															<input name="rating[price]" type="hidden">
+														</div>
+														<div class="submit">
+															<button type="submit" class="btn btn-large btn-orange">Odoslat hodnotenie</button>
+															<a href="#" onclick="$('form.rating-form').addClass('hide'); return;">zrusit</a>
+														</div>
+													</div>
+												</td>
+											<tr>
+												<td><input type="text" name="name"></td>
+												<td><input type="text" name="surname"></td>
+											</tr>
+											<tr>
+												<td>E-mail</td>
+												<td>Termín nastupu</td>
+											</tr>
+											<tr>
+												<td><input type="text" name="email"></td>
+												<td>
+													<input type="text" name="date_from" placeholder="od">
+													<input type="text" name="date_to" placeholder="do">
+												</td>
+											</tr>
+											<tr>
+												<td>Druh skupiny</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<select class="select2" style="width:446px;"><option>- vyberte -</option></select>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2">Pozitiva</td>
+											</tr>
+											<tr>
+												<td colspan="2"><textarea rows="3" name="positives"></textarea></td>
+											</tr>
+											<tr>
+												<td colspan="2">Negativa</td>
+											</tr>
+											<tr>
+												<td colspan="2"><textarea rows="3" name="negatives"></textarea></td>
+											</tr>
+											<tr>
+												<td colspan="2">Ohodnotte obec</td>
+											</tr>
+											<tr>
+												<td colspan="2"><textarea rows="3" name="locality_rating"></textarea></td>
+											</tr>
+											<tr>
+												<td colspan="2">Ohodnotte region</td>
+											</tr>
+											<tr>
+												<td colspan="2"><textarea rows="3" name="region_rating"></textarea></td>
+											</tr>
+										</table>
+									</form>
+									<div class="item">
+										<div class="row-fluid">
+											<div class="span2">
+												<strong>Jan</strong><br/>
+												<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon icon-star-empty"></i></span><br/>
+												<i>Sólo hosť</i><br/>
+												21.05.2014
+											</div>
+											<div class="comments span8">
+												<p>
+													<span class="line"></span>
+													<i class="icon-plus-sign"></i>
+													poloha na samote, komplet vybavenost, idealne aj na turistiku ci foto vylety
+												</p>
+												<p>
+													<span class="line"></span>
+													<i class="icon-minus-sign"></i>
+													nic co by ma odradilo od dalsej navstevy, jedinou trosku neprijemnejsou vecou je nutnost vyslapat si fakt prudky kopec :)
+												</p>
+											</div>
+										</div>
+									</div>
+									<div class="item">
+										<div class="row-fluid">
+											<div class="span2">
+												<strong>Jozko Mrkvicka</strong><br/>
+												<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span><br/>
+												<i>Rodina s malymi detmi</i><br/>
+												18.05.2013
+											</div>
+											<div class="comments span8">
+												<p>
+													<span class="line"></span>
+													<i class="icon-plus-sign"></i>
+													Aenean ultrices nisl purus, tristique pulvinar sem malesuada eget. Suspendisse in odio orci. Proin dapibus lacus non volutpat auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris imperdiet nisl magna, sagittis faucibus justo vestibulum volutpat. Cras accumsan dictum dui non rhoncus. Vivamus dapibus, elit at varius consectetur, lacus tortor gravida velit, non fringilla sem sapien id ante. Sed dictum nisl eu sapien tristique, facilisis suscipit nunc venenatis. Proin a arcu eget enim lacinia consequat ut quis ipsum. Mauris sit amet ante quam.
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
 							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 
-							<div id="objectDetailMap" data-rental-id="{$rental->id}" data-zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" data-zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
 {* 							<div class="rentalInfoBox hide">
