@@ -280,6 +280,7 @@ parameters:
 					# rental detail
 					- front/rentalDetail/js/rentalDetail.js
 					- front/_base/js/rentalEditFormLocalize.js
+					- jQuery/jquery.starrr.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
 					# calendar widget
