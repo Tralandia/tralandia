@@ -8,7 +8,13 @@
 namespace Tralandia\Invoicing;
 
 
+use Entity\Invoicing\Company;
+use Entity\Invoicing\Service;
+use Entity\Rental\Rental;
+use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Tralandia\BaseDao;
+use Tralandia\Localization\Translator;
 
 class InvoiceManager
 {
@@ -30,9 +36,40 @@ class InvoiceManager
 		$this->invoiceDao = $em->getRepository(INVOICING_INVOICE);
 	}
 
-	public function create()
+	public function createInvoice(Rental $rental, Service $service, Company $company, $createdBy, Translator $translator)
 	{
+		$due = Nette\DateTime::from(strtotime('today'))->modify('+14 days');
+		$user = $rental->getOwner();
+		$address = $rental->getAddress();
+
+		/** @var $invoice \Entity\Invoicing\Invoice */
 		$invoice = $this->invoiceDao->createNew();
+
+		//$invoice->setNumber();
+		//$invoice->setVariableNumber();
+		$invoice->setCompany($company);
+		$invoice->setRental($rental);
+		$invoice->setDateDue($due);
+		$invoice->setClientName($rental->getContactName());
+		$rental->getPhone() && $invoice->setClientPhone($rental->getPhone()->getInternational());
+		$invoice->setClientEmail($rental->getContactEmail());
+//		$invoice->setClientAddress();
+//		$invoice->setClientAddress2();
+		$invoice->setClientLocality($address->getLocality()->getName()->getSourceTranslationText());
+//		$invoice->setClientCompanyName();
+//		$invoice->setClientCompanyId();
+//		$invoice->setClientCompanyVatId();
+		$invoice->setCreatedBy($createdBy);
+		$invoice->setVat($company->getVat());
+
+		$duration = $service->getDuration();
+		$currency = $rental->getCurrency();
+		$price = $service->getPriceCurrent();
+		$invoice->setDurationStrtotime($duration->getStrtotime());
+		$invoice->setDurationName($translator->translate($duration->getName()));
+		$invoice->setDurationNameEn($duration->getName()->getCentralTranslationText());
+		$invoice->setPrice($service->getPriceCurrent()); // ?? key treba konvertovat menu ??
+		$invoice->setCurrency($currency);
 
 
 		return $invoice;
