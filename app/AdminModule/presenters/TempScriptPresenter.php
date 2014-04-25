@@ -856,14 +856,7 @@ limit ' . $limit;
 
 	public function actionCreateLocation()
 	{
-		/** @var $location \Entity\Location\Location */
-		$location = $this->locationDao->createNew(TRUE);
-		//$this->
-		//$this->em->flush();
-
-		$this->payload->id = $location->getId();
-		$this->payload->nameId = $location->getName()->getId();
-		$this->sendPayload();
+		$this->redirect('Location:createLocality');
 	}
 
 

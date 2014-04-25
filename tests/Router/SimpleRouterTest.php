@@ -30,11 +30,17 @@ class SimpleRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
-//		$this->routeOut($route, 'Front:Sign', array(
-//			'action' => 'in',
-//			'primaryLocation' => $this->findLocation(56),
-//			'language' => $this->findLanguage(144),
-//		));
+		$this->routeOut(
+			$route,
+			'Admin:Location',
+			array(
+				'action' => 'createLocality',
+				'primaryLocation' => $this->findLocation(1),
+				'language' => $this->findLanguage(38),
+			),
+			'http://www.tralandia.com/admin/location/create-locality',
+			'http://www.tralandia.com/admin/location/create-locality'
+		);
 
 
 		$this->routeOut(
