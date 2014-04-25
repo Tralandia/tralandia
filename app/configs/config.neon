@@ -208,7 +208,7 @@ services:
 		class: \DibiConnection(%cacheDatabase%)
 
 	templateCacheClient:
-		class: \Tralandia\Caching\Database\DatabaseClient(@dibiConnection, 'template')
+		class: \Tralandia\Caching\Database\TemplateClient(@dibiConnection)
 		autowired: false
 
 	templateCacheStorage:

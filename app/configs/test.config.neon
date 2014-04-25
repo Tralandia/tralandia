@@ -20,6 +20,6 @@ services:
 		class: Environment\Environment
 		factory: Environment\Environment::createFromIds(56, 144)
 
-	databaseCacheClient:
-		class: \Tralandia\Caching\Database\DatabaseClient(\DibiConnection(%cacheDatabase%), 'test')
-		autowired: false
+#	databaseCacheClient:
+#		class: \Tralandia\Caching\Database\DatabaseClient(\DibiConnection(%cacheDatabase%), 'test')
+#		autowired: false
