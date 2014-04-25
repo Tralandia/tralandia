@@ -9,7 +9,7 @@
 		<li n:class="$currentStep == $step['slug'] ? active, $isCompleted ? completed">
 			<a n:href="this, step => $step['slug']">
 				<span class="status">{if $isCompleted}<i class="icon-ok"></i>{/if}</span>
-				<span class="name">{$step['name']|firstUpper}</span>
+				<span class="name">{_$step['name']}</span>
 			</a>
 		</li>
 	</ul>

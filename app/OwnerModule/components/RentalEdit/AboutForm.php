@@ -220,6 +220,7 @@ class AboutForm extends BaseFormControl
 				->setOption('help', $this->translate('726', null, null, null, $language));
 
 			$descriptionContainer->addTextArea($iso, $this->translate('696729', null, null, null, $language))
+				->setAttribute('rows', 10)
 				->setOption('help', '');
 
 			$i = 1;
