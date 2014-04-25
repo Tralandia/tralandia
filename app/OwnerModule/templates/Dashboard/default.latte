@@ -35,7 +35,7 @@
 							<div class="rental-options">
 								<b><i class="icon-pencil"></i></b>
 								{foreach $steps as $step}
-									<a n:href=":Owner:RentalEdit:default, id => $rental->id, step => $step['slug']">{$step['name']}</a>
+									<a n:href=":Owner:RentalEdit:default, id => $rental->id, step => $step['slug']">{_$step['name']}</a>
 								{/foreach}
 							</div>
 							<div class="pull-right"><small class="percentage tooltipElem" title="{_153019}">{$rental->getRank()}%</small></div>
