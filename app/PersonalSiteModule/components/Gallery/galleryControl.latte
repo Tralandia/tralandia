@@ -3,9 +3,24 @@
 	<div class="inner-section">
 		<!-- BEGIN #portfolio-slider -->
 		<div id="portfolio-slider" class="">
+			{var $mainVideo = $rental->getMainVideo()}
+			{var $one = 0;}
+			{if $mainVideo}
+				{var $one = 1;}
+			{/if}
 			{for $i = 0; $i < $photosCount; $i++}
-				<ul n:class="$i >= 2 ? 'grids hidden' : 'grids'" n:inner-foreach="$rental->getPhotos(2, $i * 2) as $photo">
-					<li class="grid-6"><img width="600" height="400" n:photo="$photo->path, full_hd, $photo->created" class="attachment-portfolio-thumb wp-post-image" alt="13907408814693" /></li>
+				{var $photosOffset =  $i * 2 - $one}
+				<ul n:class="$i >= 2 ? 'grids hidden' : 'grids'" n:inner-foreach="$rental->getPhotos(2, $photosOffset) as $photo">
+					{var $drawVideo = $mainVideo && $i == 0}
+					{if $drawVideo}
+						<li class="grid-6">
+							{!$mainVideo->getEmbedCode(600, 400)}
+						</li>
+					{/if}
+					<li class="grid-6">
+						<img width="600" height="400" n:photo="$photo->path, full_hd, $photo->created" class="attachment-portfolio-thumb wp-post-image" />
+					</li>
+					{if $drawVideo}{?break}{/if}
 				</ul>
 			{/for}
 			<!-- END #portfolio-slider -->

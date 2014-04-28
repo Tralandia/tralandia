@@ -13,6 +13,12 @@ use Nette;
 abstract class BaseFormControl extends \BaseModule\Components\BaseFormControl
 {
 
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
+	protected $rental;
+
+
 	public function createTemplate($class = null)
 	{
 		$template = parent::createTemplate($class);
@@ -21,4 +27,12 @@ abstract class BaseFormControl extends \BaseModule\Components\BaseFormControl
 		return $template;
 	}
 
+
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function getRental()
+	{
+		return $this->rental;
+	}
 }

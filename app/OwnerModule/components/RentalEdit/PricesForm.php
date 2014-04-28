@@ -23,11 +23,6 @@ class PricesForm extends BaseFormControl
 {
 
 	/**
-	 * @var \Entity\Rental\Rental
-	 */
-	private $rental;
-
-	/**
 	 * @var \Environment\Environment
 	 */
 	private $environment;

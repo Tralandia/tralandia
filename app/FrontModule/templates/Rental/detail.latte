@@ -32,7 +32,7 @@
 							<div class="position">TOP</div>
 						{/if} *}
 
-						{foreach $rental->getSortedImages(4) as $photo}
+						{foreach $rental->getImages(4) as $photo}
 						<div n:class="$iterator->first ? imageFirst">
 							<img class="scrollTo" data-scroll-to=".bigGallery" alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 							{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
@@ -384,8 +384,10 @@
 									<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 
 									<ul class="bigGallery">
-										{foreach $rental->getSortedImages() as $photo}
-										<li n:class="$iterator->odd ? odd , $iterator->getCounter() > 10 ? 'hide toggleHide'">
+										{var $mainVideo = $rental->getMainVideo()}
+										<li n:if="$mainVideo">{!$mainVideo->getEmbedCode(467, 276)}</li>
+										{foreach $rental->getImages() as $photo}
+										<li n:class="$iterator->getCounter() > 10 ? 'hide toggleHide'">
 
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
@@ -393,7 +395,7 @@
 										{/foreach}
 									</ul>
 
-									{if count($rental->getSortedImages()) > 10}
+									{if count($rental->getImages()) > 10}
 										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos onClickThisHide toggleHide"><i class="icon-arrow-down"></i><span>{_152659}</span> </a>
 									{/if}
 

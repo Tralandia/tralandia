@@ -11,6 +11,7 @@ namespace OwnerModule\RentalEdit;
 use BaseModule\Forms\BaseForm;
 use BaseModule\Forms\ISimpleFormFactory;
 use Entity\Rental\Rental;
+use Entity\Rental\Video;
 use Environment\Environment;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
@@ -24,11 +25,6 @@ use Tralandia\Rental\Types;
 
 class MediaForm extends BaseFormControl
 {
-
-	/**
-	 * @var \Entity\Rental\Rental
-	 */
-	private $rental;
 
 	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
@@ -58,6 +54,7 @@ class MediaForm extends BaseFormControl
 
 		$form->addRentalPhotosContainer('photos', $this->rental);
 
+		$form->addText('video', '!!!video');
 
 		$form->addSubmit('submit', 'o100083');
 
@@ -74,9 +71,11 @@ class MediaForm extends BaseFormControl
 	{
 		$rental = $this->rental;
 
-
+		$videoUrl = null;
+		$video = $rental->getMainVideo();
+		if($video) $videoUrl = $video->getUrl();
 		$defaults = [
-
+			'video' => $videoUrl,
 		];
 
 		$form->setDefaults($defaults);
@@ -85,11 +84,17 @@ class MediaForm extends BaseFormControl
 
 	public function validateForm(BaseForm $form)
 	{
-		$photos = $form['photos']->getFormattedValues();
+		$values = $form->getFormattedValues();
+		$photos = $values->photos;
 		if(count($photos->images) < 3) {
 			$form['photos']['upload']->addError($this->translate('1294'));
 		}
 
+		$videoUrl = $values->video;
+		$video = $this->detectVideo($videoUrl);
+		if(!$video->id) {
+			$form['video']->addError('Video link is invalid');
+		}
 	}
 
 
@@ -108,8 +113,47 @@ class MediaForm extends BaseFormControl
 			}
 		}
 
-		$this->em->persist($rental);
+		$videoUrl = $validValues->video;
+		$detectedVideo = $this->detectVideo($videoUrl);
+
+		$video = $rental->getMainVideo();
+		if(!$video) {
+			$video = new Video();
+			$video->setSort(0);
+			$rental->addVideo($video);
+		}
+		$video->setService($detectedVideo->service);
+		$video->setVideoId($detectedVideo->id);
+
+		$this->em->persist($rental, $video);
 		$this->em->flush();
+	}
+
+
+	protected function detectVideo($videoUrl)
+	{
+		$videoId = null;
+		$service = null;
+		if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtube\.com\/v\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		} else if (preg_match('/youtu\.be\/([^\&\?\/]+)/', $videoUrl, $id)) {
+			$videoId = $id[1];
+		}
+
+		if($videoId) $service = 'youtube';
+		else {
+			if(preg_match('~(https?://)?(www.)?(player.)?vimeo.com/([a-z]*/)*([0-9]{6,11})[?]?.*~', $videoUrl, $id)) {
+				$videoId = $id[5];
+				$service = 'vimeo';
+			}
+		}
+
+		return Nette\ArrayHash::from(['id' => $videoId, 'service' => $service]);
+
 	}
 
 

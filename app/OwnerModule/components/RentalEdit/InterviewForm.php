@@ -26,11 +26,6 @@ class InterviewForm extends BaseFormControl
 {
 
 	/**
-	 * @var \Entity\Rental\Rental
-	 */
-	private $rental;
-
-	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
 	 */
 	private $formFactory;
