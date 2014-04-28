@@ -73,6 +73,9 @@ parameters:
 			jquerySticky:
 				js:
 					- jQuery/jquery.sticky.js
+			jqueryTimeago:
+				js:
+					- jQuery/jquery.timeago.js
 			jstorage:
 				js:
 					- jstorage/lib/js/jstorage.min.js
@@ -449,6 +452,7 @@ parameters:
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.jquerySticky%
+				-  %webloader.packages.jqueryTimeago%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%

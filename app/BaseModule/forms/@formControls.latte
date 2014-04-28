@@ -407,6 +407,35 @@
 
 {/define #phone}
 
+{* Rental Unit Container ------------------------------------------ *}
+{define #rentalUnit}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+
+<tr class="units">
+	<td colspan="2">
+		{foreach $container->getRentals() as $rental}
+			{var $unitsControl = $container->getUnitsControl()}
+			<h3>{_$rental->name} (<a n:href=":Owner:Unit:default">{_719635}</a>)</h3>
+			<div class="units-container clearfix" id="unit{$rental->getId()}">
+				{foreach $unitsControl[$rental->getId()] as $key => $label}
+					<label>{$unitsControl[$rental->getId()]->getControlItem($key)}{_$label}</label>
+				{/foreach}
+			</div>
+		{/foreach}
+	</td>
+
+	<td>
+		<span class="help">{$mainControl->getOption('help')}</span>
+		{dump $mainControl}
+		<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
+	</td>
+
+{/define #rentalUnit}
+
 
 {*
 	Address Container -------------------------------------------

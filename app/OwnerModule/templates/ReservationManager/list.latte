@@ -11,7 +11,7 @@
 	{/if}
 	{input period, class => "select2 notFulltext", style => 'width:175px;'}
 	{input fulltext, class => ($moreRentals ? '' : 'norentals')}
-	<label class="tooltipElem" title="!!Show canceled">{input showCanceled} <i class="icon-trash"></i></label>
+	<label class="tooltipElem" title="{_759414}">{input showCanceled} <i class="icon-trash"></i></label>
 	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
 		<i class="icon-search"></i> {_664}
 	</button>
@@ -34,7 +34,7 @@
 				{else}
 					<i>{_719605}</i>
 				{/if}
-				<small>({_748130} {$reservation->created|date})</small>
+				<small>({_748130} {$reservation->created|timeago})</small>
 			</h2>
 			<div class="details">
 				<i><b>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</b></i><br/>
