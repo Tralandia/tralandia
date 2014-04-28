@@ -5,8 +5,7 @@
 
 	<table class="formTable innerPadding">
 
-		<tr><td colspan="3"><div id="rentalAmenities"></div></td></tr>
-		{include #checkboxList, control => $form['board'], colCount => 3}
+		{include #checkboxList, control => $form['board'], colCount => 3, separator => false}
 		{include #checkboxList, control => $form['children'], colCount => 3}
 		{include #checkboxList, control => $form['service'], colCount => 3}
 		{include #checkboxList, control => $form['wellness'], colCount => 3}
