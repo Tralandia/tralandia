@@ -301,6 +301,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $services;
 
 	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Unit", mappedBy="rental", cascade={"persist"})
+	 */
+	protected $units;
+
+	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
 	 * @var array
 	 */
@@ -426,6 +432,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$videos = $this->videos->slice($offset, $limit);
 		return $videos;
 	}
+
+
+	public function addUnit(\Entity\Rental\Unit $unit)
+	{
+		if(!$this->units->contains($unit)) {
+			$this->units->add($unit);
+		}
+		$unit->setRental($this);
+
+		return $this;
+	}
+
+	public function removeUnit(\Entity\Rental\Unit $unit)
+	{
+		$this->units->removeElement($unit);
+		$unit->unsetRental();
+
+		return $this;
+	}
+
 
 
 	/**
@@ -959,6 +985,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->videos = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->units = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->services = new \Doctrine\Common\Collections\ArrayCollection;

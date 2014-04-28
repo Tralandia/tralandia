@@ -78,7 +78,7 @@ class ReservationEditPresenter extends BasePresenter
 
 		$form->addText('referrer', 719640);
 
-		$form->addSelect('currency', 2116, $this->currencies->getForSelect());
+		$form->addSelect('currency', 713, $this->currencies->getForSelect());
 
 		$form->addText('totalPrice', 719607)
 			->addCondition(BaseForm::FILLED)
