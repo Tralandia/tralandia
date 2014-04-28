@@ -29,15 +29,23 @@ class InvoiceManager
 	 */
 	protected $invoiceDao;
 
+	/**
+	 * @var BaseDao
+	 */
+	protected $companyDao;
+
 
 	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
 		$this->invoiceDao = $em->getRepository(INVOICING_INVOICE);
+		$this->companyDao = $em->getRepository(INVOICING_COMPANY);
 	}
 
-	public function createInvoice(Rental $rental, Service $service, Company $company, $createdBy, Translator $translator)
+	public function createInvoice(Rental $rental, Service $service, $createdBy, Translator $translator)
 	{
+		$company = $this->pickCompany();
+		
 		$due = Nette\DateTime::from(strtotime('today'))->modify('+14 days');
 		$user = $rental->getOwner();
 		$address = $rental->getAddress();
@@ -73,6 +81,12 @@ class InvoiceManager
 
 
 		return $invoice;
+	}
+
+
+	protected function pickCompany()
+	{
+		return $this->companyDao->findOneBy(['slug' => Company::SLUG_ZERO]);
 	}
 
 
