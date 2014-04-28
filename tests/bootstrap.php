@@ -1,60 +1,43 @@
 <?php
 
-use Nette\Diagnostics\Debugger;
+/**
+ * This file is part of the Kdyby (http://www.kdyby.org)
+ *
+ * Copyright (c) 2008 Filip Procházka (filip@prochazka.su)
+ *
+ * For the full copyright and license information, please view the file license.md that was distributed with this source code.
+ */
 
-// Absolute filesystem path to the web root
-define('ROOT_DIR', __DIR__ . '/..');
-define('TEMP_DIR', ROOT_DIR . '/temp');
-define('LIBS_DIR', ROOT_DIR . '/libs');
-define('APP_DIR', ROOT_DIR . '/app');
-define('TESTS_DIR', ROOT_DIR . '/tests');
-define('INCLUDE_DIR', TESTS_DIR . '/include');
-define('CENTRAL_LANGUAGE', 38);
-define('VENDOR_DIR', ROOT_DIR . '/vendor');
+if (@!include __DIR__ . '/../../vendor/autoload.php') {
+	echo 'Install Nette Tester using `composer update --dev`';
+	exit(1);
+}
 
-require APP_DIR . '/entityConstants.php';
+// configure environment
+Tester\Environment::setup();
+class_alias('Tester\Assert', 'Assert');
+date_default_timezone_set('Europe/Prague');
 
-
-$_SERVER['HTTP_HOST'] = 'localhost';
-
-// Load Nette Framework
-require_once VENDOR_DIR . '/autoload.php';
-
-// Load configuration from config.neon
-$configurator = new Nette\Config\Configurator;
-$configurator->setTempDirectory(TEMP_DIR);
-$wwwDir = dirname(__FILE__) . '/../public';
-$configurator->addParameters(array('appDir' => APP_DIR, 'wwwDir' => $wwwDir, 'centralLanguage' => CENTRAL_LANGUAGE));
-
-//$configurator->enableDebugger(ROOT_DIR . '/log');
-
-$robotLoader = $configurator->createRobotLoader();
-$robotLoader->addDirectory(APP_DIR)
-	->addDirectory(__DIR__)
-	->addDirectory(LIBS_DIR)
-	->addDirectory(TEMP_DIR . '/presenters')
-	->register();
-
-require_once LIBS_DIR . '/tools.php';
-
-Extras\Config\PresenterExtension::register($configurator);
-Kdyby\Replicator\Container::register();
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
-
-$configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
-$configurator->addConfig(APP_DIR . '/configs/test.config.neon', FALSE);
-
-$container = $configurator->createContainer();
-require_once APP_DIR . '/extras/EntityAnnotation.php';
-\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
-\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
-\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
-\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
-
-# toto musi byt to dole!
-Debugger::enable(FALSE);
+// create temporary directory
+define('TEMP_DIR', __DIR__ . '/../tmp/' . (isset($_SERVER['argv']) ? md5(serialize($_SERVER['argv'])) : getmypid()));
+Tester\Helpers::purge(TEMP_DIR);
 
 
-//ob_start();
-//$container->application->run();
+$_SERVER = array_intersect_key($_SERVER, array_flip(array(
+	'PHP_SELF', 'SCRIPT_NAME', 'SERVER_ADDR', 'SERVER_SOFTWARE', 'HTTP_HOST', 'DOCUMENT_ROOT', 'OS', 'argc', 'argv')));
+$_SERVER['REQUEST_TIME'] = 1234567890;
+$_ENV = $_GET = $_POST = array();
+
+
+if (extension_loaded('xdebug')) {
+	xdebug_disable();
+	Tester\CodeCoverage\Collector::start(__DIR__ . '/coverage.dat');
+}
+
+function id($val) {
+	return $val;
+}
+
+function run(Tester\TestCase $testCase) {
+	$testCase->run(isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : NULL);
+}
