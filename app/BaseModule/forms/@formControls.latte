@@ -286,6 +286,7 @@
 	*}
 
 	{define #checkboxList}
+	{default $separator = true}
 	{default $colCount = 1}
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
@@ -313,7 +314,7 @@
 			<table class="checkboxes">
 				<tr>
 					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
-					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}
+					<td colspan="3" class="fieldset">{if $separator}<div class="separator"></div>{/if}{_$control->caption|firstUpper}
 						{if $control->isRequired()}
 							<i class="icon-asterisk"></i>
 						{/if}
