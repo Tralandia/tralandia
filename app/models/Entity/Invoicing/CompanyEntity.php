@@ -36,6 +36,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Company extends \Entity\BaseEntity {
 
+	const SLUG_ZERO = 'zero';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
