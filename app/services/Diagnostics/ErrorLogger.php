@@ -37,7 +37,7 @@ class ErrorLogger extends Nette\Diagnostics\Logger {
 		$davidUrl = 'http://www.123sms.sk/api/rest/?'.implode('&', $david);
 
 		$content = file_get_contents($radoUrl);
-		$content = file_get_contents($davidUrl);
+//		$content = file_get_contents($davidUrl);
 
 		$mailer = array('\Nette\Diagnostics\Logger', 'defaultMailer');
 		Nette\Callback::create($mailer)->invoke($message, implode(', ', $email));
