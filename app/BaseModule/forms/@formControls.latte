@@ -280,12 +280,13 @@
 	{/define #controlErrors}
 
 
-{*
-Checkbox List -------------------------------------------
-@param $control \Nextras\Forms\Container\MultiOptionList
-*}
+	{*
+	Checkbox List -------------------------------------------
+	@param $control \Nextras\Forms\Container\MultiOptionList
+	*}
 
-{define #checkboxList}
+	{define #checkboxList}
+	{default $separator = true}
 	{default $colCount = 1}
 	{if $colCount == 1}
 	{include #opentag , class => 'simpleInput' , control => $control}
@@ -311,10 +312,9 @@ Checkbox List -------------------------------------------
 	{include #opentag, control => $control}
 		<td colspan="3">
 			<table class="checkboxes">
-				{if $control->caption}
 				<tr>
 					{* <td colspan="{$colCount-1}" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}</td> *}
-					<td colspan="3" class="fieldset"><div class="separator"></div>{_$control->caption|firstUpper}
+					<td colspan="3" class="fieldset">{if $separator}<div class="separator"></div>{/if}{_$control->caption|firstUpper}
 						{if $control->isRequired()}
 							<i class="icon-asterisk"></i>
 						{/if}
@@ -324,7 +324,6 @@ Checkbox List -------------------------------------------
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 					</td>
 				</tr>
-				{/if}
 				<tr>
 					<td width="{(int)(100/$colCount)}%">
 						{var $i = 1}
@@ -407,36 +406,6 @@ Checkbox List -------------------------------------------
 </tr>
 
 {/define #phone}
-
-
-{* Rental Unit Container ------------------------------------------- *}
-{define #rentalUnit}
-{var
-	$container = $control;
-	$mainControl = $container->getMainControl()
-}
-{?unset($control)}
-
-<tr class="units">
-	<td colspan="2">
-		{foreach $container->getRentals() as $rental}
-			{var $unitsControl = $container->getUnitsControl()}
-			<h3>{_$rental->name} (<a n:href=":Owner:Unit:default">{_719635}</a>)</h3>
-			<div class="units-container clearfix" id="unit{$rental->getId()}">
-				{foreach $unitsControl[$rental->getId()] as $key => $label}
-					<label>{$unitsControl[$rental->getId()]->getControlItem($key)}{_$label}</label>
-				{/foreach}
-			</div>
-		{/foreach}
-	</td>
-
-	<td>
-		<span class="help">{$mainControl->getOption('help')}</span>
-		{dump $mainControl}
-		<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
-	</td>
-
-{/define #rentalUnit}
 
 
 {*
@@ -743,7 +712,7 @@ Checkbox List -------------------------------------------
 					</div>
 				{/foreach}
 			</div>
-			<a class="btn addLine btn-green"><i class="icon-plus"></i> {_o100168}</a>
+			<a class="btn btn-default addLine"><i class="icon-plus"></i> {_o100168}</a>
 
 		</div>
 	</td>
@@ -768,9 +737,9 @@ Checkbox List -------------------------------------------
 	<td class="pricelistControl" colspan="3">
 		<table class="pricelistTable sortable">
 			<tr>
-				<th>Sezóna</th>
-				<th>Cena</th>
-				<th>Typ ceny</th>
+				<th>{_713758}</th>
+				<th>{_713759}</th>
+				<th>{_713760}</th>
 				<th>
 					<div class="langTabs">
 						<div class="header">
@@ -831,7 +800,8 @@ Checkbox List -------------------------------------------
 	</td>
 </tr>
 <tr class="pricelistControlButton {$trClass}">
-	<td colspan="3"><a href="#" class="btn-green btn createNewLine"><i class="icon-plus"></i> {_o100168}</a></td>
+	<td valign="top"><a href="#" class="btn btn-default createNewLine"><i class="icon-plus"></i> {_o100168}</a></td>
+	<td colspan="2" align="right"><small class="pull-right">* {_759836}</small></td>
 </tr>
 {/define #rentalPriceList}
 
@@ -847,7 +817,7 @@ Checkbox List -------------------------------------------
 	$months = $container->getMonths();
 }
 {?unset($control)}
-<div class="calendarEdit clearfix">
+<div class="calendarEdit">
 	{control calendar:editable, 12}
 	{input $container['data']}
 </div>
@@ -861,17 +831,15 @@ Checkbox List -------------------------------------------
 	@param $dataLoadingText string
 	*}
 	{define #submit}
-	{default $class = 'submitImput'}
+	{default $class = 'simpleImput'}
 	{default $icon = 'icon-ok'}
 	{include #opentag , class => $class , control => $control}
-		<td>
-
-		</td>
-		<td colspan="2">
-			<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green btn-main {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
-			</button>
-			<small class="sublitLoadingText"></small>
+		<td colspan="3">
+			<div class="form-actions">
+				<button type="submit" {ifset $dataLoadingText}data-loading-text="{$dataLoadingText}"{/ifset} class="btn btn-green {$class}" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+					<i class="{$icon}"></i> <i class="icon-spinner icon-spin"></i> <small>{_$control->caption}</small>
+				</button>
+			</div>
 		</td>
 	</tr>
 	{/define #submit}

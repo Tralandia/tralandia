@@ -1,0 +1,34 @@
+{block content}
+<div class="smallBrandBanner">
+	<a target="_blank" href="{link :Front:Rental:detail $rental}">{_152320}</a>
+</div>
+<h1>{_$rental->name}</h1>
+<div class="form-steps">
+	<div class="overlay-left"></div>
+	<div class="overlay-right"></div>
+	{var $isCompleted = TRUE}
+	<ul n:inner-foreach="$steps as $step">
+		{var $isStepCurrent = $currentStep == $step['slug']}
+		{if $isStepCurrent}
+			{var $isCompleted = FALSE}
+		{/if}
+		<li n:class="$isStepCurrent ? active, $isCompleted ? completed">
+			<a n:href="this, step => $step['slug']">
+				<span class="status">{if $isCompleted}<i class="icon-ok"></i>{/if}</span>
+				<span class="name">{_$step['name']}</span>
+			</a>
+		</li>
+	</ul>
+</div>
+
+<script>
+$(function() {
+	$(".form-steps").sticky({
+		topSpacing: -30,
+		getWidthFrom: '#content',
+		className: 'sticked'
+	});
+});
+</script>
+
+{control $editFormName}

@@ -49,19 +49,18 @@ class SimpleAcl extends Permission
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
 		$resources[] = 'Owner:Rental';
+		$resources[] = 'Owner:RentalEdit';
 		$resources[] = 'Owner:User';
 		$resources[] = 'Owner:CalendarWidget';
 		$resources[] = 'Owner:Calendar';
 		$resources[] = 'Owner:PricesEdit';
-		$resources[] = 'Owner:ReservationManager';
-		$resources[] = 'Owner:ReservationEdit';
 		$resources[] = 'Owner:Unit';
+		$resources[] = 'Owner:Dashboard';
 
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';
 		$resources[] = 'Admin:EntityGenerator';
 		$resources[] = 'Admin:Rental';
-		$resources[] = 'Admin:Location';
 		$resources[] = 'Admin:User';
 		$resources[] = 'Admin:RunRobot';
 		$resources[] = 'Admin:Language';
@@ -86,7 +85,6 @@ class SimpleAcl extends Permission
 
 		$resources[] = $userEntity = 'Entity\User\User';
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
-		$resources[] = $reservationEntity = 'Entity\User\RentalReservation';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
 
 		foreach ($resources as $resource) {
@@ -101,15 +99,14 @@ class SimpleAcl extends Permission
 
 		$this->allow(RoleEntity::OWNER, $ownerModule);
 		$this->allow(RoleEntity::OWNER, 'Owner:Rental', self::ALL);
+		$this->allow(RoleEntity::OWNER, 'Owner:RentalEdit', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:User', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:CalendarWidget', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:Calendar', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:PricesEdit', self::ALL);
-		$this->allow(RoleEntity::OWNER, 'Owner:ReservationManager', self::ALL);
-		$this->allow(RoleEntity::OWNER, 'Owner:ReservationEdit', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:Unit', self::ALL);
+		$this->allow(RoleEntity::OWNER, 'Owner:Dashboard', self::ALL);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
-		$this->allow(RoleEntity::OWNER, $reservationEntity, self::ALL, [$assertion, 'owner']);
 
 		$this->allow(RoleEntity::TRANSLATOR, $adminModule);
 		$this->allow(RoleEntity::TRANSLATOR, $phrasePresenter, 'editList');

@@ -1,28 +1,26 @@
 <?php
+/**
+ * This file is part of the tralandia.
+ * User: macbook
+ * Created at: 11/04/14 08:13
+ */
 
-namespace OwnerModule\Forms;
+namespace OwnerModule\RentalEdit;
 
-use Doctrine\ORM\EntityManager;
+
+use BaseModule\Forms\BaseForm;
+use BaseModule\Forms\ISimpleFormFactory;
 use Entity\Rental\CustomPricelistRow;
 use Entity\Rental\Pricelist;
 use Entity\Rental\Rental;
 use Environment\Environment;
-use Nette\Localization\ITranslator;
-use Tralandia\Currency\Currencies;
+use Kdyby\Doctrine\EntityManager;
+use Nette;
 use Nette\Utils\Html;
+use Tralandia\Currency\Currencies;
 
-class PricesEditForm extends BaseForm {
-
-	/**
-	 * @var array
-	 */
-	public $onSave = [];
-
-
-	/**
-	 * @var \Entity\Rental\Rental
-	 */
-	private $rental;
+class PricesForm extends BaseFormControl
+{
 
 	/**
 	 * @var \Environment\Environment
@@ -39,64 +37,84 @@ class PricesEditForm extends BaseForm {
 	 */
 	private $em;
 
+	/**
+	 * @var \BaseModule\Forms\ISimpleFormFactory
+	 */
+	private $formFactory;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
-	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Environment\Environment $environment
+	 * @param \BaseModule\Forms\ISimpleFormFactory $formFactory
+	 * @param \Kdyby\Doctrine\EntityManager $em
 	 * @param \Tralandia\Currency\Currencies $currencies
-	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Rental $rental, Environment $environment, EntityManager $em, Currencies $currencies, ITranslator $translator){
+	public function __construct(Rental $rental, Environment $environment, ISimpleFormFactory $formFactory, EntityManager $em, Currencies $currencies){
+		parent::__construct();
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->currencies = $currencies;
-		parent::__construct($translator);
 		$this->em = $em;
+		$this->formFactory = $formFactory;
 	}
 
 
-	public function buildForm() {
-//		$currency = $this->rental->getCurrency();
 
-		$this->addSelect('currency', '713', $this->currencies->getForSelect());
+	public function createComponentForm()
+	{
+		$form = $this->formFactory->create();
+
+		$form->addSelect('currency', '713', $this->currencies->getForSelect());
 
 		$currencySpan = Html::el('span', array(
 			'for' => 'currency'
 		));
 
-		$this->addText('price', 'o100078')
+		$form->addText('price', 'o100078')
 			->setOption('append', $currencySpan . ' ' . $this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
-			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
+			->addRule(BaseForm::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			->setRequired('151883');
 
-		$this->addRentalPriceListContainer('customPriceList', $this->rental);
+		$form->addRentalPriceListContainer('customPriceList', $this->rental);
 
-		$this->addRentalPriceUploadContainer('priceUpload', $this->rental);
+		$form->addRentalPriceUploadContainer('priceUpload', $this->rental);
 
-		$this->addSubmit('submit', 'o100151');
+		$form->addSubmit('submit', 'o100151');
 
-		$this->onSuccess[] = [$this, 'process'];
-
-		$this->onAttached[] = function(\Nette\Application\UI\Form $form) {
+		$form->onAttached[] = function(\Nette\Application\UI\Form $form) {
 			$form['customPriceList']->setDefaultsValues();
 			$form['priceUpload']->setDefaultsValues();
 		};
 
+		$form->onValidate[] = $this->validateForm;
+		$form->onSuccess[] = $this->processForm;
+
+		$this->setDefaults($form);
+
+		return $form;
 	}
 
-	public function setDefaultsValues()
+
+	public function setDefaults(BaseForm $form)
 	{
 		$rental = $this->rental;
 		$defaults = [
 			'currency' => $rental->getCurrency()->getId(),
 			'price' => $rental->getPrice()->getSourceAmount(),
 		];
-		$this->setDefaults($defaults);
+		$form->setDefaults($defaults);
 	}
 
-	public function process(PricesEditForm $form)
+
+	public function validateForm(BaseForm $form)
+	{
+
+	}
+
+
+	public function processForm(BaseForm $form)
 	{
 		$values = $form->getFormattedValues();
 
@@ -128,12 +146,13 @@ class PricesEditForm extends BaseForm {
 		}
 
 		$this->em->flush();
-		$this->onSave($rental);
 	}
+
 
 }
 
-interface IPricesEditFormFactory
+
+interface IPricesFormFactory
 {
-	public function create(Rental $rental, Environment $environment);
+	public function create(\Entity\Rental\Rental $rental);
 }

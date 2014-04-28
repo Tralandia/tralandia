@@ -33,7 +33,6 @@ use Nette\Utils\Strings;
  * @method \Entity\Rental\CustomPricelistRow[] getCustomPricelistRows()
  * @method setDescription(\Entity\Phrase\Phrase $phrase)
  * @method \Entity\Phrase\Phrase getDescription()
- * @method getPersonalSiteUrl()
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
@@ -259,6 +258,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Video", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OrderBy({"sort" = "ASC"})
+	 */
+	protected $videos;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Fulltext", mappedBy="rental")
 	 */
 	protected $fulltexts;
@@ -293,13 +299,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\OrderBy({"dateTo" = "ASC"})
 	 */
 	protected $services;
-
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Unit", mappedBy="rental", cascade={"persist"})
-	 */
-	protected $units;
 
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
@@ -378,7 +377,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	public function getMainImage()
 	{
-		$t = $this->getSortedImages(1);
+		return $this->getImage(0);
+	}
+
+	public function getImage($offset = 0)
+	{
+		$t = $this->getImages(1, $offset);
 		$t = reset($t);
 
 		return $t;
@@ -393,9 +397,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getImages($limit = NULL, $offset = 0)
 	{
-		$return = [];
+		$offset < 0 && $offset = 0;
 		$images = $this->images->slice($offset, $limit);
 		return $images;
+	}
+
+
+	/**
+	 * @return \Entity\Rental\Video
+	 */
+	public function getMainVideo()
+	{
+		$t = $this->getVideos(1);
+		$t = reset($t);
+
+		return $t;
 	}
 
 
@@ -403,23 +419,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @param null $limit
 	 * @param int $offset
 	 *
-	 * @return Image[]
+	 * @return array|\Entity\Rental\Video[]
 	 */
-	public function getSortedImages($limit = NULL, $offset = 0)
+	public function getVideos($limit = NULL, $offset = 0)
 	{
-		if(!$this->sortedImages) {
-			$sortedImages = $this->images->toArray();
-			usort($sortedImages, function($a, $b) { return ($a->sort < $b->sort) ? -1 : 1;});
-			//usort($sortedImages, function($a, $b) { return $a < $b;});
-			$this->sortedImages = $sortedImages;
-		}
-
-		$images = $this->sortedImages;
-		if($limit !== NULL || $offset > 0) {
-			$images = array_slice($images, $offset, $limit);
-		}
-
-		return $images;
+		$videos = $this->videos->slice($offset, $limit);
+		return $videos;
 	}
 
 
@@ -935,24 +940,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return new Url($this->url);
 	}
 
-	public function addUnit(\Entity\Rental\Unit $unit)
-	{
-		if(!$this->units->contains($unit)) {
-			$this->units->add($unit);
-		}
-		$unit->setRental($this);
-
-		return $this;
-	}
-
-	public function removeUnit(\Entity\Rental\Unit $unit)
-	{
-		$this->units->removeElement($unit);
-		$unit->unsetRental();
-
-		return $this;
-	}
-
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -971,7 +958,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->units = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->videos = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->services = new \Doctrine\Common\Collections\ArrayCollection;
@@ -1736,6 +1723,32 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		$this->images->removeElement($image);
 		$image->unsetRental();
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entity\Rental\Video
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addVideo(\Entity\Rental\Video $video)
+	{
+		if(!$this->videos->contains($video)) {
+			$this->videos->add($video);
+		}
+		$video->setRental($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entity\Rental\Video
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeVideo(\Entity\Rental\Video $video)
+	{
+		$this->videos->removeElement($video);
+		$video->unsetRental();
 
 		return $this;
 	}

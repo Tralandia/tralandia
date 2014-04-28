@@ -1,0 +1,120 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form , data-leave-confirm-message => $onChangeConfirm }
+
+	<table class="formTable innerPadding">
+		{* 		<tr class="formHeading	">
+					<td colspan="3">{_o100189}</td>
+				</tr> *}
+{* 
+		<tr>
+			<td colspan="2" id="rentalContactInformation" class="fieldset">{_o960} </td><td> </td>
+		</tr> *}
+
+
+		{* {include #fieldset, text => 'o960' , id => 'rentalContactInformation'} *}
+		{* {include #text, control => $form['name']} *}
+		{include #text, control => $form['contactName']}
+		{include #phone, control => $form['phone']}
+		{include #email, control => $form['email']}
+		{include #url, control => $form['url']}
+
+		<tr class="nameSloganGroup">
+			<td colspan="3" id="rentalNameSlogan" class="fieldset"><div class="separator"></div>{_o100137}</td>
+		</tr>
+
+		{if count($form['name']->getAllErrors())}
+
+			<tr class="topArrowBox invalid nameSloganGroup">
+				<td colspan="3">
+					<table>
+						<tr>
+							<td>
+								<span class="invalidAlert lang">{_152283}</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+		{else}
+			<tr class="topArrowBox nameSloganGroup">
+				<td colspan="3">
+					<table>
+						<tr>
+							<td>
+								<span class="help top">{_152284}</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		{/if}
+
+		<tr class="simpleInput nameSloganGroup">
+			<td colspan="3">
+				<div class="langTabs">
+					<div class="header">
+						{foreach $form['name']->getControls() as $control}
+							{if $control->getName() == $environment->getLanguage()->getIso()}
+								{var $current = 'current'}
+							{else}
+								{var $current = ''}
+							{/if}
+							<a  class="tabPane {$current} {$control->getName()}" data-iso="{$control->getName()}" href="#">{$control->getName()|upper}</a>
+						{/foreach}
+						{* {input $form['translationLanguage'] , class => 'selectLanguageBasicInformation pull-left selectLanguage notFulltext' , data-placeholder => 'data placeholder'} *}
+					</div>
+					<div class="content">
+						<table>
+							{foreach $form['name']->getControls() as $control}
+								{if $control->getName() == $environment->getLanguage()->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #text, control => $control , class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
+							{foreach $form['teaser']->getControls() as $control}
+								{if $control->getName() == $environment->getLanguage()->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #text, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
+							{foreach $form['description']->getControls() as $control}
+								{if $control->getName() == $environment->getLanguage()->getIso()}
+									{var $hide = ''}
+								{else}
+									{var $hide = 'hide'}
+								{/if}
+								{include #textArea, control => $control, class => $control->getName().' selectLanguageBasicInformation toggleLanguage '.$hide}
+							{/foreach}
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+
+		{include #fieldset, text => 'o100085' , id => 'rentalBasicInformation'}
+		{include #rentalType, control => $form['type']}
+		{include #text, control => $form['maxCapacity']}
+		{include #text, control => $form['bedroomCount']}
+		{include #text, control => $form['roomsLayout']}
+
+		{include #select, control => $form['checkIn'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $form['checkOut'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $form['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+		{include #select, control => $form['pet'] , controlClass => 'select2 pet notFulltext'}
+		{include #select, control => $form['placement'], controlClass => 'select2 placement notFulltext'}
+		{include #checkboxList, control => $form['spokenLanguages'], colCount => 3}
+
+		{include #fieldset, text => 'o100086', trClass => 'addressGroup', id => 'rentalAddress' , required => true}
+
+		{include #address, control => $form['address'], trClass => 'addressGroup'}
+		{include #submit, control => $form['submit'], icon => 'icon-ok' , controlClass => 'pull-right', class => 'submitControl'}
+	</table>
+{/form}

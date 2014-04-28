@@ -49,7 +49,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->pageSeo = $this->seoFactory->create($this->link('//this'), $this->getRequest());
 	}
 
-	public function beforeRender() {
+	protected function beforeRender() {
 
 		$this['head']->addTitle($this->translate('o100182'));
 

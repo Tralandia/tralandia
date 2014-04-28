@@ -10,57 +10,9 @@
 		{if isset($rentalList)}
 		<h4>{_o100152}</h4>
 		<ul class="nav">
-			<li style="display: none;">
-				<a n:href=":Owner:ReservationManager:list"><i class="icon icon-angle-right"></i> Manazer objednavok</a>
-				<ul>
-					<li><a n:href=":Owner:Unit:default"><i class="icon icon-angle-right"></i> Ubytovacie jednotky</a></li>
-				</ul>
-			</li>
-
-			{foreach $rentalList as $rental}
-				{if $iterator->first}{var $firstRental = $rental}{/if}
-
-				<li>
-
-					{if $currentRental === $rental}
-						<a class="current" href="#"><i class="icon icon-angle-right"></i> {_$rental->getName()}</a>
-					{else}
-						<a n:href=":Owner:Rental:edit, id => $rental->id"><i class="icon icon-angle-right"></i> {_$rental->getName()} <small>({$rental->getRank()}%)</small></a>
-					{/if}
-
-					{if $currentRental === $rental}
-					<ul n:if="$currentRental">
-						<li ><a href="{link :Front:Rental:detail $rental}" target="_blank"><i class="icon icon-angle-right"></i>{_152320}</a></li>
-
-						<li class="info"><i class="icon icon-angle-right"></i>{_152732} <strong>{if $rental->isLive()}{_152730}{else}{_152731}{/if}</strong></li>
-						<li class="info tooltipElem" title="{_153019}"><i class="icon icon-angle-right"></i>{_152733} <strong>{$rental->getRank()}%</strong></li>
-
-						<li><a href="{link :Owner:Calendar:default $rental->id}"><i class="icon icon-angle-right"></i> {_151834}</a></li>
-						<li><a href="{link :Owner:PricesEdit:default $rental->id}"><i class="icon icon-angle-right"></i>{_o933}</a></li>
-
-						<li><a class="scrollTo" data-scroll-to="#rentalContactInformation" n:href="//Rental:edit#rentalContactInformation $rental->id"><i class="icon icon-angle-right"></i>{_o960}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalNameSlogan" n:href="//Rental:edit#rentalNameSlogan $rental->id"><i class="icon icon-angle-right"></i>{_o100137}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalBasicInformation" n:href="//Rental:edit#rentalBasicInformation $rental->id"><i class="icon icon-angle-right"></i>{_o100085}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalAddress" n:href="//Rental:edit#rentalAddress $rental->id"><i class="icon icon-angle-right"></i>{_o100086}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalPhotoGalllery" n:href="//Rental:edit#rentalPhotoGalllery $rental->id"><i class="icon icon-angle-right"></i>{_o980}</a></li>
-						{*<li><a class="scrollTo" data-scroll-to="#rentalPriceList" n:href="//Rental:edit#rentalPriceList $rental->id"><i class="icon icon-angle-right"></i>{_o933}</a></li>*}
-						{*<li><a class="scrollTo" data-scroll-to="#rentalPriceUpload" n:href="//Rental:edit#rentalPriceUpload $rental->id"><i class="icon icon-angle-right"></i>{_o100166}</a></li>*}
-						<li><a class="scrollTo" data-scroll-to="#rentalAmenities" n:href="//Rental:edit#rentalAmenities $rental->id"><i class="icon icon-angle-right"></i>{_573}</a></li>
-						<li><a class="scrollTo" data-scroll-to="#rentalInterview" n:href="//Rental:edit#rentalInterview $rental->id"><i class="icon icon-angle-right"></i>{_1125}</a></li>
-
-					</ul>
-					{/if}
-				</li>
-			{/foreach}
-
-			{ifset $firstRental}
-			{* <li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100153}</a></li> *}
-			{* <li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id"><i class="icon icon-angle-right"></i> {_o100184} <span class="counter">{$reservationsCount}</span></a></li> *}
-
-			<li><a n:href="Rental:add"><i class="icon icon-angle-right"></i> {_450052}</a></li>
+			<li><a n:href=":Owner:Dashboard:default"><i class="icon icon-angle-right"></i> {_1300}</a></li>
 			<li><a n:href=":Owner:User:edit"><i class="icon icon-angle-right"></i> {_o100146}</a></li>
 			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_o100154}</a></li>
-			{/ifset}
 		</ul>
 		{/if}
 	</aside>

@@ -1,0 +1,21 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form , data-leave-confirm-message => $onChangeConfirm }
+
+	<table class="formTable innerPadding">
+
+		{include #checkboxList, control => $form['board'], colCount => 3, separator => false}
+		{include #checkboxList, control => $form['children'], colCount => 3}
+		{include #checkboxList, control => $form['service'], colCount => 3}
+		{include #checkboxList, control => $form['wellness'], colCount => 3}
+		{include #checkboxList, control => $form['kitchen'], colCount => 3}
+		{include #checkboxList, control => $form['bathroom'], colCount => 3}
+		{include #checkboxList, control => $form['nearBy'], colCount => 3}
+		{include #checkboxList, control => $form['rentalServices'], colCount => 3}
+		{include #checkboxList, control => $form['onFacility'], colCount => 3}
+		{include #checkboxList, control => $form['sportsFun'], colCount => 3}
+
+		{include #submit, control => $form['submit'], icon => 'icon-ok' , controlClass => 'pull-right', class => 'submitControl'}
+	</table>
+{/form}
