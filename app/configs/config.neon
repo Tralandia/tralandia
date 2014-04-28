@@ -463,6 +463,7 @@ services:
 
 	- [class: \Tralandia\Console\DevSetupCommand, tags: [kdyby.console.command]]
 	- [class: \Tralandia\Console\UpdateExchangeRateCommand, tags: [kdyby.console.command]]
+	- [class: \Tralandia\Console\InvalidateCacheCommand, tags: [kdyby.console.command]]
 	- [class: \Tralandia\Console\CleanUpLocationsCommand, tags: [kdyby.console.command]]
 
 	- [class: \Tralandia\Console\EmailManagerCommand, tags: [kdyby.console.command]]
