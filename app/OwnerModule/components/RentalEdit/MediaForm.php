@@ -54,7 +54,8 @@ class MediaForm extends BaseFormControl
 
 		$form->addRentalPhotosContainer('photos', $this->rental);
 
-		$form->addText('video', '!!!video');
+		$form->addText('video', 764730)
+			->setOption('help', $this->translate(764731));
 
 		$form->addSubmit('submit', 'o100083');
 
