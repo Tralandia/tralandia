@@ -10,7 +10,7 @@ namespace Tralandia\Caching\Database;
 
 use Nette;
 
-class DatabaseClient implements IDatabaseClient {
+class TemplateClient implements IDatabaseClient {
 
 
 	/**
@@ -29,11 +29,10 @@ class DatabaseClient implements IDatabaseClient {
 	private $tagsTable;
 
 
-	public function __construct(\DibiConnection $connection, $table)
+	public function __construct(\DibiConnection $connection)
 	{
 		$this->connection = $connection;
-		$this->table = $table;
-		$this->tagsTable = $table . '_tag';
+		$this->table = 'template_cache';
 	}
 
 
@@ -51,8 +50,12 @@ class DatabaseClient implements IDatabaseClient {
 		$args = [
 			'id' => $id,
 			'value' => gzcompress($value, 6),
-			'expiration' => $expiration,
+			'expiration' => $expiration ? Nette\DateTime::from($expiration) : NULL,
 		];
+
+		if(is_array($tags)) {
+			$args = array_merge($args, $this->tagsToColumns($tags));
+		}
 
 		if($row) {
 			unset($args['id']);
@@ -60,22 +63,6 @@ class DatabaseClient implements IDatabaseClient {
 		} else {
 			$this->connection->query("INSERT DELAYED INTO [{$this->table}]", $args);
 
-		}
-
-		if(is_array($tags)) {
-			$this->connection->query("DELETE FROM [{$this->tagsTable}] WHERE [cache_id] = %s", $id);
-
-			if(count($tags)) {
-				$tagValues = [];
-				foreach($tags as $tag) {
-					$tagValues[] = [
-						'cache_id' => $id,
-						'tag' => $tag,
-					];
-				}
-
-				$this->connection->query("INSERT DELAYED INTO [{$this->tagsTable}] %ex", $tagValues);
-			}
 		}
 
 	}
@@ -111,7 +98,7 @@ class DatabaseClient implements IDatabaseClient {
 	{
 		do {
 			$expiration = $row->expiration;
-			if($expiration !== NULL && $expiration <= time()) {
+			if($expiration !== NULL && $expiration <= new Nette\DateTime()) {
 				break;
 			}
 
@@ -123,31 +110,35 @@ class DatabaseClient implements IDatabaseClient {
 	}
 
 
-	public function findCacheIdsByTags(array $tags)
-	{
-		$selection = $this->connection->select('c.id AS cId, count(c.id) AS count')
-			->from($this->table . ' AS c')
-			->innerJoin($this->tagsTable . ' AS t')->on('t.cache_id = c.id')
-			->where('[tag] IN %in', $tags)
-			->groupBy('c.id')
-			->having('count = %i', count($tags));
-
-		return $selection->fetchPairs('cId', 'cId');
-	}
-
-
 	public function cleanByTags(array $tags)
 	{
 		if(count($tags)) {
-			$ids = $this->findCacheIdsByTags($tags);
-			$this->clearByIds($ids);
+			$columns = $this->tagsToColumns($tags);
+			$this->connection->query("DELETE FROM [{$this->table}] WHERE %or", $columns);
+
 		}
 	}
 
 	public function clearByIds(array $ids)
 	{
 		$this->connection->delete($this->table)->where('[id] IN %in', $ids)->execute();
-		$this->connection->delete($this->tagsTable)->where('[cache_id] IN %in', $ids)->execute();
+	}
+
+
+	protected function tagsToColumns(array $tags)
+	{
+		$columns = [];
+
+		foreach($tags as $tag) {
+			if(Nette\Utils\Strings::contains($tag, '/')) {
+				list($column, $value) = explode('/', $tag, 2);
+				$columns['tag' . ucfirst($column)] = $value;
+			} else {
+				$columns['tagType'] = $tag;
+			}
+		}
+
+		return $columns;
 	}
 
 }

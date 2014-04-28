@@ -19,7 +19,7 @@ class DatabaseStorage extends Nette\Object implements Nette\Caching\IStorage {
 	private $database;
 
 
-	public function __construct(DatabaseClient $database)
+	public function __construct(IDatabaseClient $database)
 	{
 		$this->database = $database;
 	}

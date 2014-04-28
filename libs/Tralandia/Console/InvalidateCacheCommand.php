@@ -14,19 +14,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpdateExchangeRateCommand extends BaseCommand
+class InvalidateCacheCommand extends BaseCommand
 {
 
-
-	/**
-	 * @var \LeanMapper\Connection
-	 */
-	protected $db;
 
 
 	protected function configure()
 	{
-		$this->setName('updateExchangeRate');
+		$this->setName('invalidateCache');
 
 //		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember|backlink]');
 //
@@ -35,25 +30,18 @@ class UpdateExchangeRateCommand extends BaseCommand
 	}
 
 
-	protected function initialize(InputInterface $input, OutputInterface $output)
-	{
-		$this->db = $this->getHelper('dic')->getByType('\LeanMapper\Connection');
-	}
-
-
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$XML = simplexml_load_file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
 
-		$message = [];
-		foreach($XML->Cube->Cube->Cube as $rate){
-			$message[] = $rate["rate"].' '.$rate["currency"];
-			$update = "update currency set exchangeRate = '{$rate['rate']}' where iso = '{$rate['currency']}'";
-			$this->db->query($update);
-		}
+		/** @var $db \DibiConnection */
+		$db = $this->getHelper('dic')->getContainer()->getService('dibiConnection');
 
-		$this->report($message);
+		$now = new \DateTime();
+		$query = 'delete from [template_cache] where [expiration] < %d';
 
+		$affectedRows = $db->query($query, $now);
+
+		$this->report("$affectedRows template cache row(s) deleted.");
 	}
 
 
