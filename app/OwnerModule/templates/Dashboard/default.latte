@@ -1,7 +1,7 @@
 {block content}
 
 <h1>{_1300}</h1>
-{* 
+{*
 <div class="alert alert-static">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<h4 class="alert-heading">Oh snap! You got an error!</h4>
@@ -22,9 +22,7 @@
 	<div class="item">
 		<div class="row-fluid">
 			<div class="span2">
-				{foreach $rental->getSortedImages(1) as $photo}
-				<a n:href=":Owner:RentalEdit:default, id => $rental->id"><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/></a>
-				{/foreach}
+				<a n:href=":Owner:RentalEdit:default, id => $rental->id"><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$rental->getMainImage()"/></a>
 			</div>
 			<div class="span10">
 				<h2><a n:href=":Owner:RentalEdit:default, id => $rental->id">{_$rental->name}</a></h2>
@@ -59,7 +57,7 @@
 	<a n:href="Rental:add" class="btn btn-green pull-right"><i class="icon-plus"></i> {_450052}</a>
 	<div class="clearfix"></div>
 </div>
-{* 
+{*
 <hr/>
 <h2>10 zaručených rád ako získať viac hostí!</h2>
 <div class="textBlock">
