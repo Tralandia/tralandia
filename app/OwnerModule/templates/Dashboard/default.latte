@@ -1,7 +1,7 @@
 {block content}
 
 <h1>!!Dashboard</h1>
-
+{* 
 <div class="alert alert-static">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<h4 class="alert-heading">Oh snap! You got an error!</h4>
@@ -14,7 +14,7 @@
 	<h4 class="alert-heading">Toto je nejaky alert!</h4>
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur interdum elit eget nisl dictum vestibulum.</p>
 </div>
-
+*}
 <hr/>
 
 <h2>!!Vaše objekty</h2>
@@ -35,7 +35,7 @@
 							<div class="rental-options">
 								<b><i class="icon-pencil"></i></b>
 								{foreach $steps as $step}
-									<a n:href=":Owner:RentalEdit:default, id => $rental->id, step => $step['slug']">{$step['name']}</a>
+									<a n:href=":Owner:RentalEdit:default, id => $rental->id, step => $step['slug']">{_$step['name']}</a>
 								{/foreach}
 							</div>
 							<div class="pull-right"><small class="percentage tooltipElem" title="{_153019}">{$rental->getRank()}%</small></div>

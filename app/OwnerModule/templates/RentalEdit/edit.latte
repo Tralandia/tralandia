@@ -1,5 +1,7 @@
 {block content}
-
+<div class="smallBrandBanner">
+	<a target="_blank" href="{link :Front:Rental:detail $rental}">{_152320}</a>
+</div>
 <h1>{_$rental->name}</h1>
 <div class="form-steps">
 	<div class="overlay-left"></div>
@@ -9,7 +11,7 @@
 		<li n:class="$currentStep == $step['slug'] ? active, $isCompleted ? completed">
 			<a n:href="this, step => $step['slug']">
 				<span class="status">{if $isCompleted}<i class="icon-ok"></i>{/if}</span>
-				<span class="name">{$step['name']|firstUpper}</span>
+				<span class="name">{_$step['name']}</span>
 			</a>
 		</li>
 	</ul>

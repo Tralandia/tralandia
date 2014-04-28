@@ -24,11 +24,11 @@ class RentalEditPresenter extends BasePresenter
 	protected $step;
 
 	protected static $steps = [
-		'about' => [],
-		'media' => [],
-		'prices' => [],
-		'amenities' => [],
-		'interview' => [],
+		'about' => ["name" => 759830],
+		'media' => ["name" => 537],
+		'prices' => ["name" => 571],
+		'amenities' => ["name" => 1198],
+		'interview' => ["name" => 1125],
 	];
 
 	protected function startup()
@@ -43,7 +43,6 @@ class RentalEditPresenter extends BasePresenter
 		$i = 0;
 		foreach(self::$steps as $key => $value) {
 			self::$steps[$key]['slug'] = $key;
-			self::$steps[$key]['name'] = $key;
 			self::$steps[$key]['nextStep'] = Nette\Utils\Arrays::get($stepsOrder, $i + 1, NULL);
 			$i++;
 		}

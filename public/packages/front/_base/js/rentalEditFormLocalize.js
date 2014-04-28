@@ -22,6 +22,7 @@ function languageSelect(el,iso){
 
         $(el).parents('form').find('a.tabPane').removeClass('current');
         $(el).parents('form').find('a.tabPane.'+iso).removeClass('hide').addClass('current');
+        $(el).parents('table').find('input.'+iso)[0].focus();
 
         $(el).select2('val',0);
     }

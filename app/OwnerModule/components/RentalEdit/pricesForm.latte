@@ -1,6 +1,5 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form form, data-leave-confirm-message => $onChangeConfirm}
-	<h1>{_$rental->name} - {_o933}</h1>
 	<table class="formTable innerPadding">
 
 		{include #select, control => $form['currency'] , controlClass => 'select2 currency-select'}
@@ -12,7 +11,7 @@
 
 		{include #fieldset, text => 'o100166' , id => 'rentalPriceUpload', trClass => 'priceUploadGroup'}
 		{include #rentalPriceUpload, control => $form['priceUpload'], trClass => 'priceUploadGroup'}
-		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
+		{include #submit, control => $form['submit'], icon => 'icon-ok' , controlClass => 'pull-right', class => 'submitControl'}
 
 	</table>
 {/form}
