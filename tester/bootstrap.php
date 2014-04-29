@@ -34,6 +34,7 @@ if (extension_loaded('xdebug')) {
 	Tester\CodeCoverage\Collector::start(__DIR__ . '/coverage.dat');
 }
 
+
 function id($val) {
 	return $val;
 }
@@ -41,3 +42,7 @@ function id($val) {
 function run(Tester\TestCase $testCase) {
 	$testCase->run(isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : NULL);
 }
+
+$container = require_once(__DIR__ . '/bootstrapNette.php');
+
+return $container;

@@ -480,6 +480,9 @@ services:
 	- \AdminModule\EmailTester\EmailTesterForm
 
 
+	- \Tralandia\Invoicing\InvoiceManager
+
+
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
