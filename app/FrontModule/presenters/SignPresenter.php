@@ -91,7 +91,7 @@ class SignPresenter extends BasePresenter
 			->setRequired($this->translate('o100145'))
 			->addRule($form::MIN_LENGTH, $this->translate('1328'), 5);
 
-		$form->addPassword('password2', '721627')
+		$form->addPassword('password2', '764615')
 			->setOption('prepend', '<i class="icon-lock"></i>')
 			->setRequired($this->translate('o100145'));
 

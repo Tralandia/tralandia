@@ -21,7 +21,7 @@
 {if count($rentals)>1}
 	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
 	<option>selct</option>
-		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //CalendarWidget:, id => $rental->id}">{_$rental->name}</option>
+		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Calendar:, id => $rental->id}">{_$rental->name}</option>
 	</select>
 {/if}
 
