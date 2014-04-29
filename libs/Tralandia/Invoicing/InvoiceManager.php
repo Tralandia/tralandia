@@ -20,11 +20,6 @@ class InvoiceManager
 {
 
 	/**
-	 * @var \Kdyby\Doctrine\EntityManager
-	 */
-	private $em;
-
-	/**
 	 * @var BaseDao
 	 */
 	protected $invoiceDao;
@@ -35,19 +30,17 @@ class InvoiceManager
 	protected $companyDao;
 
 
-	public function __construct(EntityManager $em)
+	public function __construct($invoiceDao, $companyDao)
 	{
-		$this->em = $em;
-		$this->invoiceDao = $em->getRepository(INVOICING_INVOICE);
-		$this->companyDao = $em->getRepository(INVOICING_COMPANY);
+		$this->invoiceDao = $invoiceDao;
+		$this->companyDao = $companyDao;
 	}
 
 	public function createInvoice(Rental $rental, Service $service, $createdBy, Translator $translator)
 	{
-		$company = $this->pickCompany();
-		
+		$company = $this->pickCompany($service);
+
 		$due = Nette\DateTime::from(strtotime('today'))->modify('+14 days');
-		$user = $rental->getOwner();
 		$address = $rental->getAddress();
 
 		/** @var $invoice \Entity\Invoicing\Invoice */
@@ -84,9 +77,13 @@ class InvoiceManager
 	}
 
 
-	protected function pickCompany()
+	protected function pickCompany(Service $service)
 	{
-		return $this->companyDao->findOneBy(['slug' => Company::SLUG_ZERO]);
+		if($service->isForFree()) {
+			return $this->companyDao->findOneBy(['slug' => Company::SLUG_ZERO]);
+		} else {
+			return $this->companyDao->findOneBy(['slug' => Company::SLUG_TRALANDIA_SRO]);
+		}
 	}
 
 

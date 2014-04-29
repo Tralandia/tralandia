@@ -37,6 +37,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Company extends \Entity\BaseEntity {
 
 	const SLUG_ZERO = 'zero';
+	const SLUG_TRALANDIA_SRO = 'tralandiaSro';
 
 	/**
 	 * @var string

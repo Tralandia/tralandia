@@ -482,6 +482,9 @@ services:
 	- \AdminModule\EmailTester\NewsletterTesterForm
 
 
+	- \Tralandia\Invoicing\InvoiceManager
+
+
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
