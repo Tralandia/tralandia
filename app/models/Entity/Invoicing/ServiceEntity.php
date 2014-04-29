@@ -68,4 +68,8 @@ class Service extends \Entity\BaseEntity {
 	 */
 	protected $primaryLocation;
 
+	public function isForFree()
+	{
+		return !$this->priceCurrent;
+	}
 }

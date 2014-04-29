@@ -35,5 +35,9 @@ ALTER TABLE `invoicing_invoice` MODIFY COLUMN `datePaid` DATE DEFAULT NULL AFTER
 INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `slug`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
 VALUES (NULL, NULL, 'Zero', 'zero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
 
+INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `slug`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
+VALUES (NULL, NULL, 'Tralandia s.r.o', 'tralandiaSro', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
+
+
 INSERT INTO `phrase_type` (`id`, `translateTo`, `entityName`, `entityAttribute`, `pluralVariationsRequired`, `genderRequired`, `genderVariationsRequired`, `locativesRequired`, `positionRequired`, `helpForTranslator`, `html`, `translated`, `oldId`, `created`, `updated`, `preFillForTranslator`)
 VALUES (NULL, 'none', '\\Entity\\Invoicing\\ServiceType', 'name', '0', '0', '0', '0', '0', NULL, '0', '1', NULL, '2013-06-16 21:31:21', '2013-06-16 21:31:21', '1');

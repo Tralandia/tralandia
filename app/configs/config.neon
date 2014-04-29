@@ -478,6 +478,9 @@ services:
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
 
 
+	- \Tralandia\Invoicing\InvoiceManager
+
+
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
