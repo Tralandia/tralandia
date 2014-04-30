@@ -67,6 +67,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 			}
 
 			$lastDayOfMonth = $start->modifyClone('last day of this month');
+			$now = new \Nette\DateTime();
 
 			while ($start <= $lastDayOfMonth) {
 				$day = $start->format('d');
@@ -75,6 +76,12 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				}
 				$month['days'][$day] = [
 					'day' => $day,
+					'isWeekday' => (
+						in_array($start->format('N'), array(6,7))
+						? true 
+						: false
+					),
+					'isPast' => ($now > $start)
 				];
 				$start->modify('+1 day');
 			}
