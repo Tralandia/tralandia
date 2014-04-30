@@ -624,7 +624,7 @@ body.gateway-open {
 #logo strong {
   float: left;
   padding: 8px 10px 12px;
-  width: 600px;
+  width: 375px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1753,7 +1753,7 @@ h3#pings {
 
 @media only screen and (max-width: 1280px) {
   #logo strong {
-    width: 430px;
+    width: 400px;
   }
   #slideshow .slider-content h2 {
     font-size: 50px;
