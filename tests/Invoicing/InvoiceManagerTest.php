@@ -9,7 +9,6 @@ namespace Tests\Invoicing;
 
 
 use Entity\Invoicing\Company;
-use Extras\FormMask\Items\Foctories\PhraseFactory;
 use Nette;
 use Tests\TestCase;
 use Tralandia\Invoicing\InvoiceManager;
@@ -17,7 +16,7 @@ use Tralandia\Invoicing\InvoiceManager;
 /**
  * @backupGlobals disabled
  */
-class InvoicingManagerTest extends TestCase
+class InvoiceManagerTest extends TestCase
 {
 
 

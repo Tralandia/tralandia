@@ -322,4 +322,62 @@ class Invoice extends \Entity\BaseEntity {
 
 		$this->givenFor = $givenFor;
 	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isPaid()
+	{
+		return (bool) $this->datePaid;
+	}
+
+
+	public function getPricePeriods()
+	{
+		if($this->isPaid()) {
+			$periods = [];
+			$price = $this->price;
+			$priceEur = $this->priceEur;
+			$from = $this->dateFrom;
+			$to = $this->dateTo;
+			$totalDays = $from->diff($to)->format('%a');
+			$interval = new \DateInterval('P1Y'); // Period 1 Year
+			foreach(new \DatePeriod($from, $interval, $to) as $date) {
+				/** @var $date \DateTime */
+				$tempTo = clone $date;
+				$tempTo->modify('last day of december ' . $tempTo->format('Y'));
+
+				$addOneDay = TRUE;
+				if($tempTo >= $to) {
+					$tempTo = clone $to;
+					$addOneDay = FALSE;
+				}
+
+				$tempFrom = clone $tempTo;
+				$tempFrom->modify('first day of january ' . $tempFrom->format('Y'));
+
+				if($tempFrom <= $from) {
+					$tempFrom = clone $from;
+				}
+
+
+				$periodDays = $tempFrom->diff($tempTo)->format('%a');
+				$addOneDay && $periodDays++;
+				$periodPrice = $price * ($periodDays * 100 / $totalDays) / 100;
+				$periodPriceEur = $priceEur * ($periodDays * 100 / $totalDays) / 100;
+
+				$periods[] = [
+					'from' => $tempFrom,
+					'to' => $tempTo,
+					'price' => round($periodPrice, 2),
+					'priceEur' => round($periodPriceEur, 2)
+				];
+			}
+
+			return $periods;
+		} else {
+			return [];
+		}
+	}
 }
