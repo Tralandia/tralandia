@@ -201,4 +201,16 @@ class Countries {
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
+	public function find($id)
+	{
+		$qb = $this->locationDao->createQueryBuilder('e');
+
+		$qb->innerJoin('e.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country');
+
+		$qb->andWhere($qb->expr()->eq('e.id', ':id'))->setParameter('id', $id);
+
+		return $qb->getQuery()->getOneOrNullResult();
+	}
+
 }
