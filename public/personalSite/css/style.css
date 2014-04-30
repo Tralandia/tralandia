@@ -624,6 +624,10 @@ body.gateway-open {
 #logo strong {
   float: left;
   padding: 8px 10px 12px;
+  width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-inner, .inner-section {
@@ -671,6 +675,7 @@ body.gateway-open {
   line-height: 1;
   margin-left: 10px;
   position: relative;
+  float: left;
 }
 #primary-nav li.sfHover > a, #primary-nav li.current-menu-item > a, #primary-nav li.active > a {
   background: #1c93c5;
@@ -694,6 +699,7 @@ body.gateway-open {
   font-weight: bold;
 }
 #primary-nav li.language {
+  margin-top: 8px;
 }
 #primary-nav li.language a.select2-choice {
     padding: 5px 5px 5px 15px;
@@ -1746,11 +1752,17 @@ h3#pings {
 }
 
 @media only screen and (max-width: 1280px) {
+  #logo strong {
+    width: 430px;
+  }
   #slideshow .slider-content h2 {
     font-size: 50px;
   }
   #slideshow .slider-content h3 {
     font-size: 25px;
+  }
+  #logo strong {
+    font-size: 26px;
   }
 }
 /*------------------------------------------------------------------------*/
@@ -1892,6 +1904,9 @@ h3#pings {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  #logo strong {
+    width: 460px;
+  }
   #team .team-members .member {
     width: 46%;
   }
@@ -1907,9 +1922,6 @@ h3#pings {
   }
   #primary-nav li a {
     padding: 15px 5px;
-  }
-  #logo strong {
-    font-size: 26px;
   }
   #map {
     width: 100%;
@@ -2000,6 +2012,9 @@ h3#pings {
   }
 }
 @media only screen and (max-width: 480px) {
+  #logo strong {
+    width: 300px;
+  }
   #portfolio-slider .portfolio-content {
     padding-top: 25%;
   }
