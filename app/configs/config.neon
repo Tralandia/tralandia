@@ -482,7 +482,7 @@ services:
 	- \AdminModule\EmailTester\NewsletterTesterForm
 
 
-	- \Tralandia\Invoicing\InvoiceManager
+	- \Tralandia\Invoicing\InvoiceManager(@doctrine.dao(Entity\Contact\PotentialMember), @doctrine.dao(Entity\Contact\PotentialMember))
 
 
 	# ==============================
@@ -555,15 +555,20 @@ factories:
 		parameters: [Entity\User\User user, Entity\Ticket\Ticket ticket]
 		implement: FrontModule\Forms\ITicketFormFactory
 
-	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%environment%, %presenter%)
-		parameters: [Environment\Environment environment, Nette\Application\UI\Presenter presenter]
-		implement: FrontModule\Forms\IRegistrationFormFactory
-
 	rentalEditFormFactory:
 		class: OwnerModule\Forms\RentalEditForm(%rental%, %environment%)
 		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
 		implement: OwnerModule\Forms\IRentalEditFormFactory
+
+	registrationFormFactory:
+		class: \FrontModule\RegistrationForm\RegistrationForm
+		implement: \FrontModule\RegistrationForm\IRegistrationFormFactory
+
+	addRentalFormFactory:
+		class: \OwnerModule\RentalEdit\AddRentalForm
+		arguments: [%user%, ... ]
+		parameters: [Entity\User\User user]
+		implement: \OwnerModule\RentalEdit\IAddRentalFormFactory
 
 	aboutFormFactory:
 		class: OwnerModule\RentalEdit\AboutForm
