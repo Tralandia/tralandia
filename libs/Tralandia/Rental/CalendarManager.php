@@ -21,6 +21,7 @@ class CalendarManager
 	const KEY_DATE = 'd';
 	const KEY_YEAR = 'y';
 	const KEY_DAY_Z = 'dz';
+	const KEY_CLASS = 'c';
 
 	const DATE_FORMAT_FOR_KEY = 'Y-m-d';
 
@@ -80,11 +81,41 @@ class CalendarManager
 							self::KEY_FREE_CAPACITY => $rental->getMaxCapacity(),
 							self::KEY_YEAR => $date->format('Y'),
 							self::KEY_DAY_Z => $date->format('z'),
+							self::KEY_DATE => clone $date,
 						];
 					}
 
 					$occupancy[$rentalId][$dateKey][self::KEY_FREE_CAPACITY] -= $unit->getMaxCapacity();
 				}
+			}
+		}
+
+		$getClassPart = function($capacity) {
+			if($capacity === NULL) {
+				return 0;
+			} else {
+				return $capacity ? '1' : '2';
+			}
+		};
+
+		foreach($occupancy as &$days) {
+			foreach($days as &$value) {
+				$class = 's';
+
+				$previousDay = clone $value[self::KEY_DATE];
+				$previousDay->modify('-1 day');
+				$previousKey = $previousDay->format(self::DATE_FORMAT_FOR_KEY);
+				if(array_key_exists($previousKey, $days)) {
+					$previousDayFreeCapacity = $days[$previousKey][self::KEY_FREE_CAPACITY];
+				} else {
+					$previousDayFreeCapacity = NULL;
+				}
+				$class .= $getClassPart($previousDayFreeCapacity);
+
+				$class .= $getClassPart($value[self::KEY_FREE_CAPACITY]);
+
+				$value[self::KEY_CLASS] = $class;
+				unset($value[self::KEY_DATE]);
 			}
 		}
 
