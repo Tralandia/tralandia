@@ -33,7 +33,7 @@
 		{else}
 			{var $full = ''}
 		{/if}
-		<div class="day active {$selected} {$status}{if $day->isWeekday} weekday{/if}{if $day->isPast} disabled{/if}{$full}" data-day="{$key}-{$day->day}">{$day->day}<abbr>3</abbr></div>
+		<div class="day active tooltipElem {$selected} {$status}{if $day->isWeekday} weekday{/if}{if $day->isPast} disabled{/if}{$full}" data-day="{$key}-{$day->day}" title="Available (for 15 people: 4+3+8)">{$day->day}<abbr>3</abbr></div>
 	{/foreach}
 	{foreach $month->daysAfter as $day}
 		<div class="day inactive"></div>

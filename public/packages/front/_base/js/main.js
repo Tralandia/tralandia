@@ -338,7 +338,9 @@ $(document).ready(function(){
 
 	// click map tooltip
 	$('.point').tooltip();
-	$('.tooltipElem').tooltip();
+	$('.tooltipElem').tooltip({
+		delay: 200
+	});
 
 
 	// alerts
