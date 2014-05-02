@@ -25,7 +25,6 @@ class CalendarManager
 	const KEY_IS_WEEKDAY = 'iwd';
 	const KEY_CLASS = 'c';
 	const KEY_NEXT_DAY_CLASS = 'ndc';
-
 	const DATE_FORMAT_FOR_KEY = 'Y-m-d';
 
 	/**
