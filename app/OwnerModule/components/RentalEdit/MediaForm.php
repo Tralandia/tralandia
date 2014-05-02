@@ -92,9 +92,11 @@ class MediaForm extends BaseFormControl
 		}
 
 		$videoUrl = $values->video;
-		$video = $this->detectVideo($videoUrl);
-		if(!$video->id) {
-			$form['video']->addError('Video link is invalid');
+		if($videoUrl) {
+			$video = $this->detectVideo($videoUrl);
+			if(!$video->id) {
+				$form['video']->addError('Video link is invalid');
+			}
 		}
 	}
 
