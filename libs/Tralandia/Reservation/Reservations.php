@@ -53,6 +53,48 @@ class Reservations
 
 
 	/**
+	 * @param User $user
+	 * @param null $status
+	 * @param \DateTime $departureFrom
+	 *
+	 * @return \Entity\User\RentalReservation[]
+	 */
+	public function getUsersReservations(User $user, $status = NULL,\DateTime $departureFrom = NULL)
+	{
+		$query = 'select r.id from ' . RENTAL_ENTITY . ' r where r.user = :user';
+		$query = $this->reservationDao->createQuery($query);
+		$query->setParameter('user', $user);
+		$rentals = $query->getArrayResult();
+
+		$rentalsIds = \Tools::arrayMap($rentals, 'id');
+
+		$query = 'select u.id from ' . UNIT_ENTITY . ' u where u.rental IN (:rentals)';
+		$query = $this->reservationDao->createQuery($query);
+		$query->setParameter('rentals', array_values($rentalsIds));
+		$units = $query->getArrayResult();
+
+		$unitsIds = \Tools::arrayMap($units, 'id');
+
+		$qb = $this->reservationDao->createQueryBuilder('e');
+		$qb->innerJoin('e.units', 'u');
+		$qb->andWhere($qb->expr()->orX(
+			$qb->expr()->in('e.rental', $rentalsIds),
+			$qb->expr()->in('u.id', $unitsIds)
+		));
+
+		if($status) {
+			$qb->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', $status);
+		}
+
+		if($departureFrom) {
+			$qb->andWhere($qb->expr()->gte('e.departureDate', ':departureDate'))->setParameter('departureDate', $departureFrom);
+		}
+
+		return $qb->getQuery()->getResult();
+	}
+
+
+	/**
 	 * @param Rental $rental
 	 *
 	 * @return int|number
