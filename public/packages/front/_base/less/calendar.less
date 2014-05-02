@@ -106,6 +106,12 @@ div.calendar {
                 }
             }
 
+            &:hover {
+                color: #000;
+                border: 1px solid #ccc;
+                padding: 0;
+            }
+
         }
 
         abbr {
@@ -118,7 +124,7 @@ div.calendar {
         }
         
         &.weekday {
-            background: #F6F6F6;
+            background: #F3F3F3;
         }
 
         &.dayName {
@@ -128,9 +134,12 @@ div.calendar {
 
         &.disabled {
             cursor: default;
-            color: #ccc;
+            color: #ddd;
             background: none;
             border-color: #eee;
+            abbr {
+                display: none;
+            }
         }
 
         &:hover {
@@ -226,12 +235,12 @@ div.calendar {
 }
 div.calendar  {
     .monthName {
-        color: @brown;
+        color: #333;
         font-size: 12px;
         font-weight: bold;
         padding: 4px 0 3px;
         margin: 0 5px 3px 0;
-        background: #F6F6F6;
+        background: #F3F3F3;
         border-radius: 5px;
     }
 
