@@ -10,7 +10,9 @@ use Extras\Annotation as EA;
 use Nette\DateTime;
 use Nette\Http\Url;
 use Nette\Utils\Arrays;
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Tralandia\Rental\CalendarManager;
 
 /**
  * @ORM\Entity
@@ -355,6 +357,19 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $lastUpdate;
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getMaxCapacity()
+	{
+		$max = 0;
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$max += $unit->getMaxCapacity();
+		}
+		return $max;
+	}
 
 	/**
 	 * @return string|NULL
@@ -884,11 +899,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function setCalendar(array $calendar)
 	{
-		foreach ($calendar as $key => $date) {
-			$calendar[$key] = $date->format('z');
-		}
+		$calendar = Json::encode($calendar);
 
-		$this->calendar = ',' . (implode(',', $calendar)) . ',';
+		$this->calendar = $calendar;
 		$this->formattedCalendar = NULL;
 
 		return $this;
@@ -905,16 +918,17 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		}
 
 		if(!is_array($this->formattedCalendar)) {
-			$days = array_filter(explode(',', $this->calendar));
+			$days = Json::decode($this->calendar, Json::FORCE_ARRAY);
 			$todayZ = date('z');
-			$calendarUpdatedZ = $this->getCalendarUpdated()->format('z');
 			$thisYear = $this->getCalendarUpdated()->format('Y');
-			$nextYear = $thisYear + 1;
 			$daysTemp = [];
-			foreach ($days as $key => $day) {
-				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
-				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-				$daysTemp[] = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
+			foreach ($days as $key => $value) {
+				if ($thisYear <= $value[CalendarManager::KEY_YEAR]
+					&& $todayZ <= $value[CalendarManager::KEY_DAY_Z])
+				{
+					$daysTemp[$key] = $value;
+					$daysTemp[$key][CalendarManager::KEY_DATE] = new \Nette\DateTime("$key 00:00:00");
+				}
 			}
 
 			$this->formattedCalendar = array_filter($daysTemp);
@@ -1916,14 +1930,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->maxCapacity = NULL;
 
 		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getMaxCapacity()
-	{
-		return $this->maxCapacity;
 	}
 
 	/**
