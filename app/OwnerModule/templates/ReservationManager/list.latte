@@ -6,9 +6,10 @@
 </div>
 {form searchForm, class => quick-search}
 	{var $moreRentals = false}
-	{if $moreRentals}
+	{ifset $form['rental']}
+		{var $moreRentals = true}
 		{input rental, class => "select2 notFulltext", style => 'width:175px;'}
-	{/if}
+	{/ifset}
 	{input period, class => "select2 notFulltext", style => 'width:175px;'}
 	{input fulltext, class => ($moreRentals ? '' : 'norentals')}
 	<label class="tooltipElem" title="{_759414}">{input showCanceled} <i class="icon-trash"></i></label>
