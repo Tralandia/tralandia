@@ -30,5 +30,7 @@ INSERT INTO `_reservation_unit` (`reservation_id`, `unit_id`)
 VALUES
 	(1, 1),
 	(1, 2),
+	(1, 3),
+	(1, 4),
 	(2, 3),
 	(3, 4);
