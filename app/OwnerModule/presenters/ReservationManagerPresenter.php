@@ -73,6 +73,7 @@ class ReservationManagerPresenter extends BasePresenter
 		$reservation = $this->findReservation($id);
 		$this->checkPermission($reservation, 'edit');
 
+		# !!! POZOR !!! nemoze dat status 'confirmed' pokial nevybral unit
 		if(!in_array($status, [\Entity\User\RentalReservation::STATUS_CANCELED]))
 			throw new InvalidArgumentException;
 
