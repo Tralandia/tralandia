@@ -26,6 +26,8 @@ use Tralandia\Rental\Types;
 class MediaForm extends BaseFormControl
 {
 
+	public $onFormSuccess = [];
+
 	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
 	 */
@@ -137,6 +139,8 @@ class MediaForm extends BaseFormControl
 
 		$this->em->persist($rental, $video);
 		$this->em->flush();
+
+		$this->onFormSuccess($form, $rental);
 	}
 
 
