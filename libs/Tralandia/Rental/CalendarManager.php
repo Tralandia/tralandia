@@ -21,7 +21,10 @@ class CalendarManager
 	const KEY_DATE = 'd';
 	const KEY_YEAR = 'y';
 	const KEY_DAY_Z = 'dz';
+	const KEY_DAY_D = 'dd';
+	const KEY_IS_WEEKDAY = 'iwd';
 	const KEY_CLASS = 'c';
+	const KEY_NEXT_DAY_CLASS = 'ndc';
 
 	const DATE_FORMAT_FOR_KEY = 'Y-m-d';
 
@@ -77,12 +80,7 @@ class CalendarManager
 					$rentalId = $rental->getId();
 					$dateKey = $date->format(self::DATE_FORMAT_FOR_KEY);
 					if(!isset($occupancy[$rentalId][$dateKey])) {
-						$occupancy[$rentalId][$dateKey] = [
-							self::KEY_FREE_CAPACITY => $rental->getMaxCapacity(),
-							self::KEY_YEAR => $date->format('Y'),
-							self::KEY_DAY_Z => $date->format('z'),
-							self::KEY_DATE => clone $date,
-						];
+						$occupancy[$rentalId][$dateKey] = self::createDay($date, $rental->getMaxCapacity());
 					}
 
 					$occupancy[$rentalId][$dateKey][self::KEY_FREE_CAPACITY] -= $unit->getMaxCapacity();
@@ -112,9 +110,10 @@ class CalendarManager
 				}
 				$class .= $getClassPart($previousDayFreeCapacity);
 
-				$class .= $getClassPart($value[self::KEY_FREE_CAPACITY]);
+				$class .= $nextDayClassPart = $getClassPart($value[self::KEY_FREE_CAPACITY]);
 
 				$value[self::KEY_CLASS] = $class;
+				$value[self::KEY_NEXT_DAY_CLASS] = "s{$nextDayClassPart}0";
 				unset($value[self::KEY_DATE]);
 			}
 		}
@@ -122,4 +121,16 @@ class CalendarManager
 		return $occupancy;
 	}
 
+
+	public static function createDay(\DateTime $date, $maxCapacity)
+	{
+		return [
+			self::KEY_FREE_CAPACITY => $maxCapacity,
+			self::KEY_YEAR => $date->format('Y'),
+			self::KEY_DAY_Z => $date->format('z'),
+			self::KEY_DAY_D => $date->format('d'),
+			self::KEY_IS_WEEKDAY => in_array($date->format('N'), array(6,7)),
+			self::KEY_DATE => clone $date,
+		];
+	}
 }
