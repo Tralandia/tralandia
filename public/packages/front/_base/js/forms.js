@@ -575,9 +575,9 @@ $(function(){
 				$calendar.find('.day.active').click(function(){
 
 					var statusClass = {
-						first: 'status01',
-						last: 'status10',
-						middle: 'status11'
+						first: 's01',
+						last: 's10',
+						middle: 's11'
 					}
 
 					var currentTime = $(this).attr('data-day');
@@ -593,7 +593,7 @@ $(function(){
 
 						// console.log('vyvoleny');
 						$(this).removeClass('selected');
-						$(this).addClass(' status00');
+						$(this).addClass(' s00');
 
 						$.calendarEdit.removeDate(currentTime,$input);
 
