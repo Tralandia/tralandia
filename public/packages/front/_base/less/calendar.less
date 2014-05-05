@@ -35,7 +35,7 @@ div.calendar {
 
         &.active {
 
-            &.status01 {
+            &.s01 {
                 background-image: url(../images/calendar-half-orange.png);
                 background-position: right bottom;
                 background-size: cover;
@@ -46,13 +46,22 @@ div.calendar {
                 abbr {
                     color: rgba(255,255,255,0.5);
                 }
+            }
 
-                &.full {
-                    background-image: url(../images/calendar-half-red.png);
+            &.s02 {
+                background-image: url(../images/calendar-half-red.png);
+                background-position: right bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
                 }
             }
 
-            &.status10 {
+            &.s10 {
                 background-image: url(../images/calendar-half-orange-end.png);
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
@@ -66,43 +75,63 @@ div.calendar {
                 abbr {
                     color: rgba(0,0,0,0.5);
                 }
-
-                &.full {
-                    background-image: url(../images/calendar-half-red-end.png);
-                }
             } 
 
-            &.status11 {
+            &.s20 {
+                background-image: url(../images/calendar-half-red-end.png);
+                background-position: right bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }                
+            }
+
+            &.s11 {
                 /*orange*/
                 background: #F68703;
 
                 abbr {
                     color: rgba(255,255,255,0.5);
                 }
+            }
 
-                &.full {
-                    /*red*/
-                    background: #F65103;
+            &.s12 {
+                background-image: url(../images/calendar-orange-red.png);
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+                
+                abbr {
+                    color: rgba(255,255,255,0.5);
                 }
+            }
 
-                &.from-full {
-                    background-image: url(../images/calendar-red-orange.png);
-                    -webkit-background-size: cover;
-                    -moz-background-size: cover;
-                    -o-background-size: cover;
-                    background-size: cover;
-                    background-position: left bottom;
-                    background-repeat: no-repeat;
+            &.s21 {
+                background-image: url(../images/calendar-red-orange.png);
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
                 }
+            }
 
-                &.to-full {
-                    background-image: url(../images/calendar-orange-red.png);
-                    -webkit-background-size: cover;
-                    -moz-background-size: cover;
-                    -o-background-size: cover;
-                    background-size: cover;
-                    background-position: left bottom;
-                    background-repeat: no-repeat;
+            &.s22 {
+                background: #F65103;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
                 }
             }
 
@@ -185,16 +214,16 @@ div.calendar  {
 
         div.day.active {
             
-            &.status01 {
+            &.s01 {
 
                 .skew-gradient( rgb(238, 241, 223),#B0C23C  , 17 , 15 );     
             }
 
-            &.status10 {
+            &.s10 {
                 .skew-gradient( #B0C23C,rgb(238, 241, 223)  , 18 , 15 );           
             } 
 
-            &.status11 {
+            &.s11 {
                 background: #B0C23C;
             }       
         }
