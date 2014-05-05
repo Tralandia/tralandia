@@ -23,8 +23,8 @@ class CalendarManager
 	const KEY_DAY_Z = 'dz';
 	const KEY_DAY_D = 'dd';
 	const KEY_IS_WEEKDAY = 'iwd';
-	const KEY_NEXT_DAY_CLASS = 'ndc';
 	const KEY_CLASS = 'c';
+	const KEY_NEXT_DAY_CLASS = 'ndc';
 
 	const DATE_FORMAT_FOR_KEY = 'Y-m-d';
 
