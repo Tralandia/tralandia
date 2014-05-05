@@ -44,6 +44,9 @@ class SignPresenter extends BasePresenter
 
 	public function actionNewPassword($np)
 	{
+		$header = $this->getComponent('head');
+		$header->addTitle($this->translate(633548));
+
 		try {
 			$this->authenticator->checkNewPasswordHash($np);
 		} catch(\Nette\Security\AuthenticationException $e) {
