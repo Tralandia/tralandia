@@ -161,14 +161,18 @@ class AboutForm extends BaseFormControl
 			->setPrompt('o854');
 
 
-		$form->addText('maxCapacity', 'o100072')
-			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
-			->setOption('help', $this->translate('o100073'))
-			->setOption('append', $this->translate('o490', 2))
-			->setRequired()
-			->addRule(BaseForm::INTEGER, $this->translate('o100106'))
-			->addRule(BaseForm::RANGE, $this->translate('o100106'), [0, 999999999999999]);
+		$editUnitLink = Nette\Utils\Html::el('a')
+			->href($this->getPresenter()->link(':Owner:Unit:default'))
+			->setText('Edit your Units');
 
+		$form->addText('maxCapacity', 'o100072')
+			->setDisabled(true)
+			->setOption('help', $editUnitLink);
+			//->setOption('help', $this->translate('o100073'))
+			//->setOption('append', $this->translate('o490', 2))
+			//->setRequired()
+			//->addRule(BaseForm::INTEGER, $this->translate('o100106'))
+			//->addRule(BaseForm::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
 
 		$form->addPhoneContainer('phone', 'o10899', $phonePrefixes);
