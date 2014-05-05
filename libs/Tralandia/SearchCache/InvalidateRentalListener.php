@@ -73,16 +73,21 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 
 	public function onSuccess(Rental $rental, array $options = NULL)
 	{
+		lt('search','invalidateCacheTL');
 		if(!$options || in_array(self::CLEAR_SEARCH, $options)) {
 			$this->updateRentalSearchCacheRobotFactory->create($rental->getPrimaryLocation())->runForRental($rental);
 		}
+		lt('search','invalidateCacheTL');
 
+		lt('template','invalidateCacheTL');
 		if(!$options || in_array(self::CLEAR_TEMPLATE, $options)) {
 			$this->templateCache->clean([
 				Cache::TAGS => ['rental/' . $rental->getId()],
 			]);
 		}
+		lt('template','invalidateCacheTL');
 
+		lt('dictionary','invalidateCacheTL');
 		if(!$options || in_array(self::CLEAR_DICTIONARY, $options)) {
 			$this->translatorCache->remove($rental->getName()->getId());
 			$this->translatorCache->remove($rental->getTeaser()->getId());
@@ -95,16 +100,21 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 				$this->translatorCache->remove($row->getNote()->getId());
 			}
 		}
+		lt('dictionary','invalidateCacheTL');
 
+		lt('RT','invalidateCacheTL');
 		if(!$options || in_array(self::CLEAR_RENTALPICKER, $options)) {
 			$this->mapSearchCache->remove($rental->getId());
 		}
+		lt('RT','invalidateCacheTL');
 
+		lt('homepage','invalidateCacheTL');
 		if($options && in_array(self::CLEAR_HOMEPAGE, $options)) { // pozor tu je vinimka !!!
 			$this->templateCache->clean([
 				Cache::TAGS => ['primaryLocation/' . $rental->getPrimaryLocation()->getIso(), 'home'],
 			]);
 		}
+		lt('homepage','invalidateCacheTL');
 
 	}
 
