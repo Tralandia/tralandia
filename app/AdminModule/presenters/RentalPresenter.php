@@ -102,6 +102,7 @@ class RentalPresenter extends AdminPresenter {
 
 	public function personalSiteSetupFormOnSuccess(Form $form)
 	{
+		lt('save','personalSiteTL');
 		$values = $form->getValues();
 
 		$url = Strings::replace($values->url, '~^(https?://)?~', null);
@@ -127,6 +128,7 @@ class RentalPresenter extends AdminPresenter {
 		$rental->personalSiteUrl = $url;
 
 		$this->rentalDao->save($rental);
+		lt('save','personalSiteTL');
 
 		$this->prolongService($rental, Service::GIVEN_FOR_PAID_INVOICE, Service::TYPE_PERSONAL_SITE);
 	}
@@ -135,12 +137,17 @@ class RentalPresenter extends AdminPresenter {
 
 	public function prolongService(Rental $rental, $serviceFor, $serviceType = Service::TYPE_FEATURED)
 	{
+		lt('prolong','personalSiteTL');
 		$this->serviceManager->prolong($rental, $serviceFor, $serviceType);
+		lt('prolong','personalSiteTL');
 		$invalidateOption = [
 			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_SEARCH,
 			\Tralandia\SearchCache\InvalidateRentalListener::CLEAR_HOMEPAGE,
 		];
+		lt('invalidateCache','personalSiteTL');
 		$this->invalidateRentalListener->onSuccess($rental, $invalidateOption);
+		lt('invalidateCache','personalSiteTL');
+
 		$this->flashMessage('done', self::FLASH_SUCCESS);
 		$this->redirect('list');
 	}
