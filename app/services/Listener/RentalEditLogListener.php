@@ -73,7 +73,19 @@ class RentalEditLogListener extends Nette\Object implements \Kdyby\Events\Subscr
 	{
 		return [
 			'FormHandler\RentalEditHandler::onSubmit' => 'createLog',
+			'OwnerModule\RentalEdit\AboutForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\MediaForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\PricesForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\AmenitiesForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\InterviewForm::onFormSuccess' => 'onControlSubmit',
 		];
 	}
+
+	public function onControlSubmit($form, $rental)
+	{
+		$this->createLog($rental);
+	}
+
+
 }
 

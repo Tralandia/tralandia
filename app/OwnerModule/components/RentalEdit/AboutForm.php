@@ -25,6 +25,8 @@ use Tralandia\Rental\Types;
 class AboutForm extends BaseFormControl
 {
 
+	public $onFormSuccess = [];
+
 	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
 	 */
@@ -416,6 +418,7 @@ class AboutForm extends BaseFormControl
 		$this->em->persist($rental);
 		$this->em->flush();
 
+		$this->onFormSuccess($form, $rental);
 	}
 
 
