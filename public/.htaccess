@@ -50,6 +50,7 @@ Deny from 204.12.251.37
   RewriteCond %{HTTP_USER_AGENT} .*WOW64.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Yahoo\!\ Slurp.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Najdi\.si.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*linkdexbot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} bingbot [OR]
   RewriteCond %{HTTP_USER_AGENT} AhrefsBot [OR]
   RewriteCond %{HTTP_USER_AGENT} JikeSpider [OR]
