@@ -14,6 +14,7 @@ use Nette;
  * @property int $id
  * @property \Tralandia\Phrase\Phrase $description m:hasOne(description_id:)
  * @property \Tralandia\Phrase\Phrase $name m:hasOne(name_id)
+ * @property string $slug
  * @property int|null $maxCapacity
  * @property string|null $calendar
  * @property string|null $contactName
@@ -220,6 +221,16 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	{
 		$images = $this->getPhotos(1);
 		return reset($images);
+	}
+
+
+	/**
+	 * @alias getMainPhoto
+	 * @return Image
+	 */
+	public function getMainImage()
+	{
+		return $this->getMainPhoto();
 	}
 
 

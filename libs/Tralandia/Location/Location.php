@@ -15,6 +15,7 @@ use Nette;
  * @property string $localName
  * @property \Tralandia\Language\Language $defaultLanguage m:hasOne(defaultLanguage_id:)
  * @property \Tralandia\Currency $defaultCurrency m:hasOne(defaultCurrency_id:)
+ * @property \Tralandia\Domain\Domain $domain m:hasOne
  */
 class Location extends \Tralandia\Lean\BaseEntity
 {
