@@ -14,6 +14,7 @@ class Macros extends \Nette\Latte\Macros\MacroSet {
 	public static function install(Compiler $compiler) {
 		$me = parent::install($compiler);
 		$me->addMacro('timer', array($me, 'macroTimer'), '\Nette\Diagnostics\Debugger::barDump(\Nette\Diagnostics\Debugger::timer(%node.word), %node.word)');
+		$me->addMacro('logTimer', 'lt(%node.args)');
 		//$me->addMacro('formControlOpenTag', array($me, 'macroFormControlOpenTag'));
 		return $me;
 	}
