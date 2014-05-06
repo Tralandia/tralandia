@@ -7,8 +7,11 @@ class AboutUsPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$userSiteReviewRepository = $this->em->getRepository(SITE_REVIEW_ENTITY);
-		$this->template->testimonials = $userSiteReviewRepository->findBy([], ['created' => 'DESC']);
+		lt('start', 'lt-review');
+		/** @var $siteReviewRepository \Tralandia\SiteReview\SiteReviewRepository */
+		$siteReviewRepository = $this->getContext()->getByType('\Tralandia\SiteReview\SiteReviewRepository');
+		$this->template->testimonials = $siteReviewRepository->findByEnvironment($this->environment);
+		lt('start', 'lt-review');
 	}
 
 }

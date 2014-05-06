@@ -487,6 +487,8 @@ services:
 	- \Tralandia\Rental\RentalRepository
 	- \Tralandia\Rental\UnitRepository
 
+	- \Tralandia\SiteReview\SiteReviewRepository
+
 
 
 factories:
