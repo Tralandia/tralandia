@@ -635,6 +635,24 @@ factories:
 #			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
+	simpleFrontRouteFactory:
+		class: Routers\SimpleFrontRoute
+		arguments: [ %domainMask%, ... ]
+		setup:
+			- $locationDao(@doctrine.dao(Entity\Location\Location))
+			- $languageDao(@doctrine.dao(Entity\Language))
+			- $rentalDao(@doctrine.dao(Entity\Rental\Rental))
+			- $rentalTypeDao(@doctrine.dao(Entity\Rental\Type))
+			- $rentalAmenityDao(@doctrine.dao(Entity\Rental\Amenity))
+			- $rentalPlacementDao(@doctrine.dao(Entity\Rental\Placement))
+			- $routingPathSegmentDao(@doctrine.dao(Entity\Routing\PathSegment))
+			- $domainDao(@doctrine.dao(Entity\Domain))
+			- $pageDao(@doctrine.dao(Entity\Page))
+			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
+			- $pageDao(@doctrine.dao(Entity\Page))
+#			- setCache(@frontRouteCache)
+		implement: Routers\ISimpleFrontRouteFactory
+
 
 	# ==============================
 	# ==================== CACHE
