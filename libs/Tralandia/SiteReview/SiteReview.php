@@ -6,7 +6,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property \Tralandia\Language\Language $language m:hasOne
  * @property \Tralandia\Location\Location $primaryLocation m:hasOne(primaryLocation_id:)
  * @property \Tralandia\Rental\Rental|NULL $rental m:hasOne

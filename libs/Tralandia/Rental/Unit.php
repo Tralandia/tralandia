@@ -6,7 +6,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $name
  * @property int $maxCapacity
  * @property \Tralandia\Rental\Rental $rental m:hasOne
