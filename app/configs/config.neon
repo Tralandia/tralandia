@@ -486,6 +486,7 @@ services:
 
 	- \Tralandia\Rental\RentalRepository
 	- \Tralandia\Rental\UnitRepository
+	- \Tralandia\Location\LocationRepository
 
 	- \Tralandia\SiteReview\SiteReviewRepository
 	- \Tralandia\Routing\PageRepository

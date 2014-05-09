@@ -560,6 +560,10 @@ class SimpleFrontRoute extends BaseRoute
 	{
 		$segmentId = $params[$segmentName];
 
+		if(is_object($segmentId)) {
+			$segmentId = $segmentId->getId();
+		}
+
 		if($segmentName == 'location') {
 			$where = [
 				'type' => static::$pathSegmentTypes[$segmentName],
