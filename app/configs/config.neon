@@ -651,6 +651,7 @@ factories:
 			- $routingPathSegmentDao(@doctrine.dao(Entity\Routing\PathSegment))
 			- $domainDao(@doctrine.dao(Entity\Domain))
 			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
+			- $pageDao(@doctrine.dao(Entity\Page))
 #			- setCache(@frontRouteCache)
 		implement: Routers\ISimpleFrontRouteFactory
 
