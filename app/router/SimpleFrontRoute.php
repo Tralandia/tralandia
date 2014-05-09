@@ -12,7 +12,10 @@ use Repository\Location\LocationRepository;
 use Nette\Application\Routers\Route;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
+use Tralandia\Lean\Mapper;
 use Tralandia\Location\Countries;
+use Tralandia\Routing\PageRepository;
+use Tralandia\Routing\PathSegmentRepository;
 use Tralandia\Routing\PathSegments;
 
 class SimpleFrontRoute extends BaseRoute
@@ -83,7 +86,6 @@ class SimpleFrontRoute extends BaseRoute
 	public $routingPathSegmentDao;
 	public $domainDao;
 	public $favoriteListDao;
-	public $pageDao;
 	public $phraseDecoratorFactory;
 
 	/**
@@ -96,6 +98,21 @@ class SimpleFrontRoute extends BaseRoute
 	 */
 	protected $cache;
 
+	/**
+	 * @var \Tralandia\Routing\PageRepository
+	 */
+	private $pageRepository;
+
+	/**
+	 * @var \Tralandia\Routing\PathSegmentRepository
+	 */
+	private $pathSegmentRepository;
+
+	/**
+	 * @var \LeanMapper\Connection
+	 */
+	private $lean;
+
 
 	/**
 	 * @param string $domainMask
@@ -103,13 +120,18 @@ class SimpleFrontRoute extends BaseRoute
 	 * @param \Device $device
 	 * @param \Tralandia\Routing\PathSegments $pathSegments
 	 */
-	public function __construct($domainMask, EntityManager $em, \Device $device, PathSegments $pathSegments)
+	public function __construct($domainMask, EntityManager $em, \Device $device, PathSegments $pathSegments,
+								\LeanMapper\Connection $lean,
+								PageRepository $pageRepository, PathSegmentRepository $pathSegmentRepository)
 	{
 		$this->device = $device;
 		$mask = '//[!' . $domainMask . '/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $em);
 		$this->pathSegments = $pathSegments;
+		$this->pageRepository = $pageRepository;
+		$this->pathSegmentRepository = $pathSegmentRepository;
+		$this->lean = $lean;
 	}
 
 
@@ -377,7 +399,7 @@ class SimpleFrontRoute extends BaseRoute
 				break;
 			default:
 				$destination = ':Front:'.$presenter.':'.$action;
-				$page = $this->pageDao->findOneByDestination($destination);
+				$page = $this->pageRepository->findOneBy(['destination' => $destination]);
 				if($page) {
 					$params[self::PAGE] = $page;
 				} else {
@@ -537,19 +559,45 @@ class SimpleFrontRoute extends BaseRoute
 	public function getSegmentById($segmentName, $params)
 	{
 		$segmentId = $params[$segmentName];
-		$language = $params['language'];
+
+		if($segmentName == 'location') {
+			$where = [
+				'type' => static::$pathSegmentTypes[$segmentName],
+				'entityId' => $segmentId
+			];
+		} else {
+			$languageId = $params['language']->getId();
+			$where = [
+				'type' => static::$pathSegmentTypes[$segmentName],
+				'entityId' => $segmentId,
+				'language_id' => $languageId
+			];
+		}
+
+		$segment = $this->lean->query('select pathSegment from routing_pathsegment where %and', $where)->fetchSingle();
+
+
+		return $segment;
+	}
+
+
+	public function getSegmentById_old($segmentName, $params)
+	{
+		$segmentId = $params[$segmentName];
 		$segment = NULL;
 
 		if($segmentName == 'location') {
-			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
+			$segmentRow = $this->pathSegmentRepository->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId
 			));
 		} else {
-			$segmentRow = $this->routingPathSegmentDao->findOneBy(array(
+			$languageId = $params['language']->getId();
+
+			$segmentRow = $this->pathSegmentRepository->findOneBy(array(
 				'type' => static::$pathSegmentTypes[$segmentName],
 				'entityId' => $segmentId,
-				'language' => $language
+				'language_id' => $languageId
 			));
 		}
 

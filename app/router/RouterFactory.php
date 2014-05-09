@@ -100,7 +100,8 @@ class RouterFactory
 
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$frontRouter[] = $this->frontRouteFactory->create();
+		$frontRouter[] = $this->simpleFrontRouteFactory->create();
+//		$frontRouter[] = $this->frontRouteFactory->create();
 
 
 		return $router;
