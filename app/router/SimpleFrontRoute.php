@@ -85,6 +85,7 @@ class SimpleFrontRoute extends BaseRoute
 	public $pathSegments;
 	public $routingPathSegmentDao;
 	public $domainDao;
+	public $pageDao;
 	public $favoriteListDao;
 	public $phraseDecoratorFactory;
 
