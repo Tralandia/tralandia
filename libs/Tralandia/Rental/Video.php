@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $service
  * @property string $videoId
  */

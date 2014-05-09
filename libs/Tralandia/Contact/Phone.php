@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $value
  * @property string $international
  * @property string $national

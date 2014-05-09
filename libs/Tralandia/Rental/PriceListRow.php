@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property int $roomCount
  * @property int $bedCount
  * @property int $extraBedCount

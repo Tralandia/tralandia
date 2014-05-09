@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $iso
  */
 class Language extends \Tralandia\Lean\BaseEntity

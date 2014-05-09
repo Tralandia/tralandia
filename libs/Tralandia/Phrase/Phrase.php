@@ -6,7 +6,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property \Tralandia\Phrase\Translation[] $translations m:belongsToMany
  */
 class Phrase extends \Tralandia\Lean\BaseEntity
