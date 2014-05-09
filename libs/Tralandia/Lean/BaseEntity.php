@@ -14,6 +14,7 @@ use Nette;
  * Class BaseEntity
  * @package Tralandia\Lean
  *
+ * @property int $id
  * @property \DateTime $created
  * @property \DateTime $updated
  */

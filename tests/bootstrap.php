@@ -26,7 +26,7 @@ $configurator->setTempDirectory(TEMP_DIR);
 $wwwDir = dirname(__FILE__) . '/../public';
 $configurator->addParameters(array('appDir' => APP_DIR, 'wwwDir' => $wwwDir, 'centralLanguage' => CENTRAL_LANGUAGE));
 
-//$configurator->enableDebugger(ROOT_DIR . '/log');
+$configurator->enableDebugger(ROOT_DIR . '/log');
 
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)

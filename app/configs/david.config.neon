@@ -6,14 +6,14 @@ nette:
 parameters:
 
 	templateCache:
-		enabled: yes
+		enabled: no
 
 #	staticDomain: NULL
 #	storageDir: /storage
 #	storagePath: /storage
 
 	maxReservationCountPerDay: 100
-	rentalCountOnHome: 15
+#	rentalCountOnHome: 15
 	rentalCountOnRootHome: 15
 
 	testerEmail: 'durika.d@gmail.com'

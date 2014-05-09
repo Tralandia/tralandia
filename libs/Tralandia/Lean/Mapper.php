@@ -22,6 +22,7 @@ class Mapper extends DefaultMapper {
 		'rental_pricelist' => '\Tralandia\Rental\PriceListFile',
 		'currency' => '\Tralandia\Currency',
 		'user_sitereview' => '\Tralandia\SiteReview\SiteReview',
+		'page' => '\Tralandia\Routing\Page',
 	];
 
 	protected $classToTable;
