@@ -8,7 +8,7 @@
 	</a>
 </div>
 
-	<div class="innerPadding baseRadius baseBorder" id="header">
+	<div class="innerPadding baseRadius baseBorder" id="header" data-cache="{$rand}">
 {* 	<div id="socialMediaLinks">
 		<a class="facebook" href="{$facebookPage}" target="_blank"><i class="icon-facebook-sign"></i></a>
 		<a class="googlePlus" href="{$googlePlusProfile}" target="_blank"><i class="icon-google-plus-sign"></i></a>
@@ -129,7 +129,7 @@
 								{if $country->getId() == $environment->getPrimaryLocation()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$country->getName()}</small></span>
 								{else}
-									<a href="{plink this, primaryLocation => $country}" n:attr="rel => $rel">
+									<a href="{plink :Front:Home:, primaryLocation => $country}" n:attr="rel => $rel">
 										<i class="icon-angle-right"></i>
 										<small>{_$country->getName()}</small>
 										<small style="color: gray; font-weight: normal; font-size: 9px;">({$country->rentalCount})</small>
@@ -159,7 +159,7 @@
 								{if $language->getId() == $environment->getLanguage()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink this, language => $language}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
+									<a href="{plink :Front:Home:, language => $language}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
