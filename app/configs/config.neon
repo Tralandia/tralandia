@@ -11,6 +11,10 @@ nette:
 
 	session:
 		autoStart: true
+		save_handler: files
+#		save_path: 'tcp://127.0.0.1:11211?persistent=1&weight=1&timeout=1&retry_interval=2'
+#		save_path: '/www/tralandia/temp/sessions'
+#		save_path: '127.0.0.1:11211'
 		expiration: '+1 year'
 		name: PHPSESSIONID2
 		cookie_path: '/'
