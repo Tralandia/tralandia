@@ -111,7 +111,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		parent::tearDown();
-		\Mockery::close();
 		$this->mockista->assertExpectations();
 	}
 
