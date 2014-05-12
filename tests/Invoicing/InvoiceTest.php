@@ -8,7 +8,7 @@
 namespace Tests\Invoicing;
 
 
-use Entity\Invoicing\Invoice;
+use Tralandia\Invoicing\Invoice;
 use Nette;
 use Tests\TestCase;
 
@@ -22,10 +22,10 @@ class InvoiceTest extends TestCase
 	{
 
 		$invoice = new Invoice;
-		$invoice->setDatePaid(new \DateTime());
+		$invoice->datePaid = new \DateTime();
 
-		$invoice->setPrice(3);
-		$invoice->setPriceEur(6);
+		$invoice->price = 3;
+		$invoice->priceEur = 6;
 		$invoice->setDateFrom(new \DateTime('2014-1-1'));
 		$invoice->setDateTo(new \DateTime('2016-12-31'));
 
