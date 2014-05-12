@@ -159,7 +159,7 @@
 								{if $language->getId() == $environment->getLanguage()->getId()}
 									<span><i class="icon-ok"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></span>
 								{else}
-									<a href="{plink :Front:Home:, language => $language}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
+									<a href="?lang={$language->getId()}" n:attr="class => $class, rel => $rel"><i class="icon-angle-right"></i> <small>{_$language->getName(), NULL, NULL, NULL, $language}</small></a>
 								{/if}
 							</li>
 						</ul>
