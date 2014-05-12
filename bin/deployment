@@ -36,6 +36,21 @@ echo "php $WORKING_DIR/phpmig/run.php"
 php $WORKING_DIR/phpmig/run.php
 
 
+echo
+echo "==================== TRUNCATE TEMPLATE_CACHE ============================="
+mysql -h 192.168.4.72 -utralandia -p986269962525 -e "truncate template_cache" cache
+
+
+echo
+echo "pink www.tralandia.com"
+echo "status code: "
+curl -o /dev/null --silent --head --write-out '%{http_code}\n' www.tralandia.com
+
+echo
+echo "pink www.tralandia.sk"
+echo "status code: "
+curl -o /dev/null --silent --head --write-out '%{http_code}\n' www.tralandia.sk
+
 sleep 1
 
 sh $WORKING_DIR/bin/publish-index
