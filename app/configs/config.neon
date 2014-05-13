@@ -460,7 +460,6 @@ services:
 	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Rental\EditLog), @mapSearchCache)
 	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
-	- \Tralandia\Rental\CalendarManager
 	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
 
