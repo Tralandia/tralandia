@@ -6,6 +6,7 @@ use Nette;
 
 
 /**
+ * @property int $id
  * @property string|null $name
  * @property string|null $slug
  * @property string|null $address
@@ -17,10 +18,12 @@ use Nette;
  * @property string|null $companyVatId
  * @property float|null $vat
  * @property string|null $registrator
- * @property boolean $inEu = TRUE;
+ * @property boolean $inEu = TRUE
  */
 class Company extends \Tralandia\Lean\BaseEntity
 {
+	const SLUG_ZERO = 'zero';
+	const SLUG_TRALANDIA_SRO = 'tralandiaSro';
 
 
 }

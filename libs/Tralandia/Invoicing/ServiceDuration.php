@@ -14,6 +14,16 @@ use Nette;
  */
 class ServiceDuration extends \Tralandia\Lean\BaseEntity
 {
+	const DURATION_NO_DURATION = '_no_duration_';
+	const DURATION_FOREVER = '_forever_';
+
+	/**
+	 * @return int
+	 */
+	public function getNameId()
+	{
+		return $this->row->name_id;
+	}
 
 
 }
