@@ -40,15 +40,15 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 		$months = $columns * $rows;
 
-		$monthWidth = 136;
-		$monthHeight = 150;
+		$monthWidth = 180;
+		$monthHeight = 200;
 
 		$iFrameWidth = ($monthWidth * $columns)+ 10;
 		$iFrameHeight = ($monthHeight * $rows)+ 10;
 
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
-			['language' => $language, 'rental' => $rental, 'months' => $months]
+			['language' => $language, 'rental' => $rental, 'months' => $months, 'version' => 'v2']
 		);
 
 		$code = Html::el('iframe')
