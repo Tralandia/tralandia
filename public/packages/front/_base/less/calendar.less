@@ -24,7 +24,7 @@ div.calendar {
     /*iframe calendar*/
     &.iframe {
         width: 126px;
-        height: 225px;
+        height: 200px;
     }
 
 
@@ -202,33 +202,77 @@ div.calendar  {
         }  
     }
 
-    /*iframe calendar*/
-    &.iframe {
-        div.day {
-            width: 15px;  
-            height: 25px;
-            small {
-                font-size: 8px;
+    &.iframe.old {
+        height: 150px;
+
+        .monthName {
+            padding: 0;
+            background: none;
+            color: #7D3300;
+            margin: 0;
+        }
+
+        .day {
+            border: 1px solid #fff;
+            margin: 0;
+            border-bottom: none;
+            border-right: none;
+            width: 16px;
+            height: 14px;
+            font-size: 10px;
+            border-color: #FFF;
+            border-radius: 0;
+            padding: 0;
+
+            &.inactive {
+                color: #EEE;
+                cursor: default !important;
+            }
+
+            &.active {
+                background-color: #EEF1DF;
+                color: #626D32;
+                box-shadow: inset 0 0 6px #D7DFAF;
+
+                &.s01 {
+                    border: 1px solid #FFF;
+                    border-right: none;
+                    border-bottom: none;
+                    padding: 0;
+                }
+
+                &.s11 {
+                    background: #F68703;
+                    padding: 0;
+                }
+
+                &.s10 {
+                    border: 1px solid #FFF;
+                    border-right: none;
+                    border-bottom: none;
+                    padding: 0;
+                }
+            }
+
+            &:hover {
+                border: 1px solid #fff;
+                border-bottom: none;
+                border-right: none;
             }
         }
 
-        div.day.active {
-            
-            &.s01 {
+    }
 
-                .skew-gradient( rgb(238, 241, 223),#B0C23C  , 17 , 15 );     
-            }
+    &.iframe.v2 {
+        width: 170px;
 
-            &.s10 {
-                .skew-gradient( #B0C23C,rgb(238, 241, 223)  , 18 , 15 );           
-            } 
-
-            &.s11 {
-                background: #B0C23C;
-            }       
+        .monthName {
+            margin: 0 9px 3px 0;
         }
 
-
+        .day {
+            width: 20px;
+        }
     }
 
 }

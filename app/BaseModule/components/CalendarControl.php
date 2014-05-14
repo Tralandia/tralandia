@@ -25,14 +25,16 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		$this->selectedDays = $selectedDays;
 	}
 
-	public function renderIframe($monthsCount, array $selectedDays = NULL){
+	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = NULL){
 		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'iframe');
+		$template->version = $version;
+		$class = 'iframe ' . $version;
+		$this->render($monthsCount, $selectedDays, $class);
 	}
 
 	public function renderEditable($monthsCount, array $selectedDays = NULL){
 		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'editable');
+		$this->render($monthsCount, $selectedDays, 'editable');
 	}
 
 	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0)

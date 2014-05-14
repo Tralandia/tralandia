@@ -15,10 +15,13 @@ class CalendarIframePresenter extends BasePresenter {
 
 	public function actionDefault($rental, $months)
 	{
-		$selectedData = $rental->getCalendar();
-
 		$this->template->monthsCount = $months;
+		
+		$selectedData = $rental->getCalendar();
 		$this->template->selectedData = $selectedData;
+
+		$params = $this->request->getParameters();
+		$this->template->version = $params['version'] ?: 'old';
 	}
 
 	protected function createComponentCalendar()

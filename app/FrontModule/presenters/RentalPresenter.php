@@ -78,6 +78,7 @@ class RentalPresenter extends BasePresenter {
 
 		$formattedCalendar = [];
 		foreach($rental->getCalendar() as $day) {
+			if (!$day instanceof \DateTime) continue;
 			$formattedCalendar[] = $day->format('d-m-Y');
 		}
 
