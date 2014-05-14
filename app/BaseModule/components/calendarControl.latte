@@ -30,7 +30,7 @@
 			 data-day="{$key}-{$day->dd}"
 			 title="Available (for 15 people: 4+3+8)">
 			{$day->dd}
-			{if $version!='old'}
+			{if $version!='old' && $version!='v2'}
 			<abbr>{$day->fc}</abbr>
 			{/if}
 		</div>
