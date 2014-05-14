@@ -205,6 +205,10 @@ parameters:
 				css:
 					- front/_base/less/calendar.less
 					- front/calendarIframe/less/calendarIframe.less
+				js:
+					- jQuery/lib/jquery.js
+					- bootstrap/lib/js/bootstrap-tooltip.js
+					- front/calendarIframe/js/main.js
 			Front:
 				css:
 					#- front/_base/less/fonts.less
