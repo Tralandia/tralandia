@@ -24,7 +24,6 @@ Deny from 188.143.232.111
   # RewriteBase /
   RewriteCond %{HTTP_USER_AGENT} .*Java.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Python\-urllib.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*SeznamBot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Najdi\.si.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Baiduspider.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Vietnamese.* [OR]
@@ -59,7 +58,6 @@ Deny from 188.143.232.111
   RewriteCond %{HTTP_USER_AGENT} .*TurnitinBot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*SISTRIX.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Yahoo\!\ Slurp.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*Najdi\.si.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*linkdexbot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*BacklinkCrawler.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*WBSearchBot.* [OR]
@@ -69,7 +67,6 @@ Deny from 188.143.232.111
   RewriteCond %{HTTP_USER_AGENT} AhrefsBot [OR]
   RewriteCond %{HTTP_USER_AGENT} JikeSpider [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
-  #RewriteCond %{HTTP_USER_AGENT} SeznamBot [OR]
   RewriteCond %{HTTP_USER_AGENT} Jyxobot [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
   RewriteCond %{HTTP_USER_AGENT} UnisterBot [OR]
