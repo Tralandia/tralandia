@@ -481,7 +481,7 @@ services:
 	- \AdminModule\EmailTester\NewsletterTesterForm
 
 
-	- \Tralandia\Invoicing\InvoiceManager(@doctrine.dao(Entity\Contact\PotentialMember), @doctrine.dao(Entity\Contact\PotentialMember))
+	- \Tralandia\Invoicing\InvoiceManager
 
 
 	# ==============================
@@ -505,6 +505,11 @@ services:
 	- \Tralandia\Routing\PathSegmentRepository
 
 	- \Tralandia\GpsSearchLog\GpsSearchLogRepository
+
+	- \Tralandia\Invoicing\InvoiceRepository
+	- \Tralandia\Invoicing\CompanyRepository
+	- \Tralandia\Invoicing\ServiceDurationRepository
+	- \Tralandia\Invoicing\ServiceRepository
 
 
 

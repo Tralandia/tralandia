@@ -34,20 +34,21 @@ class InvoiceManagerTest extends TestCase
 
 	protected function setUp()
 	{
+		$this->newDataSet(__DIR__ . '/InvoiceManagerTest.sql');
 		$this->invoiceManager = $this->getContext()->getByType('\Tralandia\Invoicing\InvoiceManager');
-		$rental = new Rental();
-
-		$this->rental = $rental;
 	}
 
 
 	public function testBasic()
 	{
-		/** @var $serviceDurationRepository ServiceDurationRepository */
-		$serviceDurationRepository =$this->getContext()->getByType('\Tralandia\Invoicing\ServiceDurationRepository');
-		$serviceDuration = $serviceDurationRepository->createNew();
+		$rental = $this->getContext()->getByType('\Tralandia\Rental\RentalRepository')->find(1);
+		$service = $this->getContext()->getByType('\Tralandia\Invoicing\ServiceRepository')->find(1);
+		$translator = $this->getContext()->getService('translatorFactory')->create($this->findLanguage(38));
 
-		$this->invoiceManager->createInvoice($this->rental, );
+		$invoice = $this->invoiceManager->createInvoice($rental, $service, 'test', $translator);
+
+		$this->assertNotNull($invoice);
+
 	}
 
 }

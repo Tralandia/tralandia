@@ -8,10 +8,9 @@
 namespace Tralandia\Invoicing;
 
 
-use Entity\Invoicing\Company;
-use Entity\Invoicing\Service;
-use Entity\Rental\Rental;
-use Kdyby\Doctrine\EntityManager;
+use Tralandia\Invoicing\Company;
+use Tralandia\Invoicing\Service;
+use Tralandia\Rental\Rental;
 use Nette;
 use Tralandia\BaseDao;
 use Tralandia\Localization\Translator;
@@ -19,21 +18,16 @@ use Tralandia\Localization\Translator;
 class InvoiceManager
 {
 
-	/**
-	 * @var BaseDao
-	 */
-	protected $invoiceDao;
 
 	/**
-	 * @var BaseDao
+	 * @var CompanyRepository
 	 */
-	protected $companyDao;
+	private $companyRepository;
 
 
-	public function __construct($invoiceDao, $companyDao)
+	public function __construct(CompanyRepository $companyRepository)
 	{
-		$this->invoiceDao = $invoiceDao;
-		$this->companyDao = $companyDao;
+		$this->companyRepository = $companyRepository;
 	}
 
 	public function createInvoice(Rental $rental, Service $service, $createdBy, Translator $translator)
@@ -41,36 +35,35 @@ class InvoiceManager
 		$company = $this->pickCompany($service);
 
 		$due = Nette\DateTime::from(strtotime('today'))->modify('+14 days');
-		$address = $rental->getAddress();
+//		$address = $rental->address;
 
-		/** @var $invoice \Entity\Invoicing\Invoice */
-		$invoice = $this->invoiceDao->createNew();
+		$invoice = new Invoice();
 
 		//$invoice->setNumber();
 		//$invoice->setVariableNumber();
-		$invoice->setCompany($company);
-		$invoice->setRental($rental);
-		$invoice->setDateDue($due);
-		$invoice->setClientName($rental->getContactName());
-		$rental->getPhone() && $invoice->setClientPhone($rental->getPhone()->getInternational());
-		$invoice->setClientEmail($rental->getContactEmail());
+		$invoice->company = $company;
+		$invoice->rental = $rental;
+		$invoice->dateDue = $due;
+		$invoice->clientName = $rental->contactName;
+		$rental->phone && $invoice->clientPhone = $rental->phone->international;
+		$invoice->clientEmail = $rental->getContactEmail();
 //		$invoice->setClientAddress();
 //		$invoice->setClientAddress2();
-		$invoice->setClientLocality($address->getLocality()->getName()->getSourceTranslationText());
+//		$invoice->clientLocality = $translator->translate($address->locality->getNameId());
 //		$invoice->setClientCompanyName();
 //		$invoice->setClientCompanyId();
 //		$invoice->setClientCompanyVatId();
-		$invoice->setCreatedBy($createdBy);
-		$invoice->setVat($company->getVat());
+		$invoice->createdBy = $createdBy;
+		$invoice->vat = $company->vat;
 
-		$duration = $service->getDuration();
-		$currency = $rental->getCurrency();
-		$price = $service->getPriceCurrent();
-		$invoice->setDurationStrtotime($duration->getStrtotime());
-		$invoice->setDurationName($translator->translate($duration->getName()));
-		$invoice->setDurationNameEn($duration->getName()->getCentralTranslationText());
-		$invoice->setPrice($service->getPriceCurrent()); // ?? key treba konvertovat menu ??
-		$invoice->setCurrency($currency);
+		$duration = $service->duration;
+		$currency = $rental->currency;
+		$price = $service->priceCurrent;
+		$invoice->durationStrtotime = $duration->strtotime;
+		$invoice->durationName = $translator->translate($duration->getNameId());
+		$invoice->durationNameEn = $duration->name->getCentralTranslationText();
+		$invoice->price = $price; // ?? key treba konvertovat menu ??
+		$invoice->currency = $currency;
 
 
 		return $invoice;
@@ -80,22 +73,22 @@ class InvoiceManager
 	protected function pickCompany(Service $service)
 	{
 		if($service->isForFree()) {
-			return $this->companyDao->findOneBy(['slug' => Company::SLUG_ZERO]);
+			return $this->companyRepository->findOneBy(['slug' => Company::SLUG_ZERO]);
 		} else {
-			return $this->companyDao->findOneBy(['slug' => Company::SLUG_TRALANDIA_SRO]);
+			return $this->companyRepository->findOneBy(['slug' => Company::SLUG_TRALANDIA_SRO]);
 		}
 	}
 
 
 	/**
-	 * @param \Entity\Rental\Rental $rental
+	 * @param \Tralandia\Rental\Rental $rental
 	 * @param $serviceType
 	 * @param $givenFor
 	 *
 	 * @throws \InvalidArgumentException
-	 * @return \Entity\Rental\Service
+	 * @return \Tralandia\Rental\Service
 	 */
-	public function prolongService(\Entity\Rental\Rental $rental, $service, $givenFor)
+	public function prolongService(\Tralandia\Rental\Rental $rental, $service, $givenFor)
 	{
 		if($givenFor == Service::GIVEN_FOR_SHARE) {
 			$prolongBy = '+6 months';

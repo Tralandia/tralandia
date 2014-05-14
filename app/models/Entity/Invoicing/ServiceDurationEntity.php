@@ -21,6 +21,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ServiceDuration extends \Entity\BaseEntity {
 
+	const DURATION_NO_DURATION = '_no_duration_';
+	const DURATION_FOREVER = '_forever_';
+
 
 	/**
 	 * @var string
