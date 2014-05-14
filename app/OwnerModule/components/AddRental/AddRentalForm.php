@@ -158,7 +158,6 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	}
 
 
-
 }
 
 
