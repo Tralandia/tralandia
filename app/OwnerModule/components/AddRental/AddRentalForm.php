@@ -5,7 +5,7 @@
  * Created at: 11/04/14 08:13
  */
 
-namespace OwnerModule\RentalEdit;
+namespace OwnerModule\AddRental;
 
 
 use BaseModule\Forms\BaseForm;
@@ -19,13 +19,14 @@ use Nette;
 use Service\Rental\RentalCreator;
 use Tralandia\BaseDao;
 use Tralandia\Dictionary\PhraseManager;
+use Tralandia\Invoicing\ServiceRepository;
 use Tralandia\Language\Languages;
 use Tralandia\Location\Countries;
 use Tralandia\Placement\Placements;
 use Tralandia\Rental\Amenities;
 use Tralandia\Rental\Types;
 
-class AddRentalForm extends BaseFormControl
+class AddRentalForm extends \BaseModule\Components\BaseFormControl
 {
 
 	public $onFormSuccess = [];
@@ -56,8 +57,15 @@ class AddRentalForm extends BaseFormControl
 	 */
 	private $user;
 
+	/**
+	 * @var \Tralandia\Invoicing\ServiceRepository
+	 */
+	private $serviceRepository;
 
-	public function __construct(User $user, RentalCreator $rentalCreator, Countries $countries, ISimpleFormFactory $formFactory, EntityManager $em)
+
+	public function __construct(User $user, RentalCreator $rentalCreator, Countries $countries,
+								ServiceRepository $serviceRepository,
+								ISimpleFormFactory $formFactory, EntityManager $em)
 	{
 		parent::__construct();
 		$this->em = $em;
@@ -65,6 +73,7 @@ class AddRentalForm extends BaseFormControl
 		$this->rentalCreator = $rentalCreator;
 		$this->countries = $countries;
 		$this->user = $user;
+		$this->serviceRepository = $serviceRepository;
 	}
 
 
@@ -77,6 +86,10 @@ class AddRentalForm extends BaseFormControl
 		$countries = $this->countries->getForSelect();
 		$form->addSelect('country', 'o1094', $countries)
 			->setDefaultValue($this->user->getPrimaryLocation()->getId());
+
+		$services = $this->serviceRepository->findAll();
+		$services = \Tools::entitiesMap($services, 'id', 'label', $this->translator);
+		$form->addOptionList('service', '', $services);
 
 		$form->addSubmit('submit', '450090');
 

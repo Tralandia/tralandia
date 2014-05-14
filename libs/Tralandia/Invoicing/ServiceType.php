@@ -13,4 +13,9 @@ class ServiceType extends \Tralandia\Lean\BaseEntity
 {
 
 
+	public function getNameId()
+	{
+		return $this->row->name_id;
+	}
+
 }
