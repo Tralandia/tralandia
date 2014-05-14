@@ -497,6 +497,8 @@ services:
 	- \LeanMapper\DefaultEntityFactory
 	- \Tralandia\Lean\Mapper
 
+	- \Tralandia\User\UserRepository
+
 	- \Tralandia\Rental\RentalRepository
 	- \Tralandia\Rental\UnitRepository
 	- \Tralandia\Location\LocationRepository
