@@ -1,5 +1,12 @@
 {block content}
 
+{if count($rentals)>1}
+	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
+	<option>selct</option>
+		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Calendar:, id => $rental->id}">{_$rental->name}</option>
+	</select>
+{/if}
+
 <h1>{_151834}</h1>
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
@@ -17,13 +24,6 @@
 <div class="clearfix"></div>
 {var $currentLanguageId = $environment->getPrimaryLocation()->defaultLanguage->id}
 <h1 class="marginLeft marginTop2 pull-left">{_o100186}</h1>
-
-{if count($rentals)>1}
-	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
-	<option>selct</option>
-		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Calendar:, id => $rental->id}">{_$rental->name}</option>
-	</select>
-{/if}
 
 <div class="clearfix"></div>
 
