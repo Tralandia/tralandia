@@ -62,9 +62,14 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	 */
 	private $serviceRepository;
 
+	/**
+	 * @var \Tralandia\Language\Languages
+	 */
+	private $languages;
+
 
 	public function __construct(User $user, RentalCreator $rentalCreator, Countries $countries,
-								ServiceRepository $serviceRepository,
+								Languages $languages, ServiceRepository $serviceRepository,
 								ISimpleFormFactory $formFactory, EntityManager $em)
 	{
 		parent::__construct();
@@ -74,6 +79,7 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$this->countries = $countries;
 		$this->user = $user;
 		$this->serviceRepository = $serviceRepository;
+		$this->languages = $languages;
 	}
 
 
@@ -90,6 +96,23 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$services = $this->serviceRepository->findAll();
 		$services = \Tools::entitiesMap($services, 'id', 'label', $this->translator);
 		$form->addOptionList('service', '', $services);
+
+
+		$languages = $this->languages->getForSelectWithLinks();
+
+		$form->addText('clientName', 'clientName');
+		$form->addText('clientPhone', 'clientPhone');
+		$form->addText('clientEmail', 'clientEmail');
+		$form->addText('clientUrl', 'clientUrl');
+		$form->addText('clientAddress', 'clientAddress');
+		$form->addText('clientAddress2', 'clientAddress2');
+		$form->addText('clientLocality', 'clientLocality');
+		$form->addText('clientPostcode', 'clientPostcode');
+		$form->addSelect('clientPrimaryLocation', 'clientPrimaryLocation', $countries);
+		$form->addSelect('clientLanguage', 'clientLanguage', $languages);
+		$form->addText('clientCompanyName', 'clientCompanyName');
+		$form->addText('clientCompanyId', 'clientCompanyId');
+		$form->addText('clientCompanyVatId', 'clientCompanyVatId');
 
 		$form->addSubmit('submit', '450090');
 
