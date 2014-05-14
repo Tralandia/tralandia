@@ -86,7 +86,7 @@ if ($addSql) {
 		if (file_exists($sqlFilename)) {
 			msg('SQL soubor, který chcete vytvořit už existuje: ' . $name . '_' . $suffix . '.sql');
 		}
-		file_put_contents($sqlFilename, "-- " . $migrationName . ' migration ' . strtoupper($suffix) . ' file');
+		file_put_contents($sqlFilename, "-- " . $migrationName . ' migration ' . strtoupper($suffix) . ' file' . "\n\n");
 		msg('+f ' . $sqlFilename);
 	}
 }
