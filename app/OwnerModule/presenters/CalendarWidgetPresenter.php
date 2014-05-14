@@ -54,7 +54,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 		$code = Html::el('iframe')
 			->src($link)
 			->scrolling('no')
-			->style("width: {$iFrameWidth}px ;height: {$iFrameHeight}px; border:none; margin:0 auto;");
+			->style("width: {$iFrameWidth}px ;height: {$iFrameHeight}px; border:none; margin:0 auto; background-color: #fff;");
 
 		$json = ['code' => htmlspecialchars_decode("$code")];
 		$this->sendJson($json);
