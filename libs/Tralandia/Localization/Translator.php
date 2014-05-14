@@ -8,6 +8,7 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
 use Tralandia\BaseDao;
+use Tralandia\Dictionary\Translatable;
 
 class Translator implements \Nette\Localization\ITranslator {
 
@@ -65,6 +66,10 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL,Language $language = NULL)
 	{
+		if($phrase instanceof Translatable) {
+			return $phrase->translate($this);
+		}
+
 		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
 			$variation[self::VARIATION_COUNT] = $count;
 		}
