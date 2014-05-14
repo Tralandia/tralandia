@@ -3,6 +3,7 @@
 namespace Tralandia\Invoicing;
 
 use Nette;
+use Tralandia\Dictionary\Translatable;
 
 
 /**
@@ -24,6 +25,18 @@ class Service extends \Tralandia\Lean\BaseEntity
 	public function isForFree()
 	{
 		return !$this->priceCurrent;
+	}
+
+
+	/**
+	 * @return Translatable
+	 */
+	public function getLabel()
+	{
+		$label = new Translatable();
+		$label->phrase($this->type->getNameId())->string(' ')->phrase($this->duration->getNameId());
+
+		return $label;
 	}
 
 }

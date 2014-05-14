@@ -9,7 +9,9 @@ namespace BaseModule\Components;
 
 
 use Nette;
+use Nette\Application\UI\Presenter;
 use Nette\Reflection\ClassType;
+use Tralandia\Localization\Translator;
 
 abstract class BaseFormControl extends Nette\Application\UI\Control
 {
@@ -23,6 +25,12 @@ abstract class BaseFormControl extends Nette\Application\UI\Control
 	 * @var array
 	 */
 	public $onSubmit = [];
+
+
+	/**
+	 * @var Translator
+	 */
+	protected $translator;
 
 
 	public function createTemplate($class = null)
@@ -74,6 +82,16 @@ abstract class BaseFormControl extends Nette\Application\UI\Control
 			};
 		}
 		return $component;
+	}
+
+	protected function attached($presenter)
+	{
+		parent::attached($presenter);
+
+		if ($presenter instanceof Presenter) {
+			$this->translator = $this->presenter->getContext()->getService('translator');
+		}
+
 	}
 
 
