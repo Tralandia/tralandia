@@ -58,7 +58,6 @@ Deny from 188.143.232.111
   RewriteCond %{HTTP_USER_AGENT} .*archive\.org_bot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*TurnitinBot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*SISTRIX.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*WOW64.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Yahoo\!\ Slurp.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Najdi\.si.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*linkdexbot.* [OR]
