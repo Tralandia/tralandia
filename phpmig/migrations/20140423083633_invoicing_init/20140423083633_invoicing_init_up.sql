@@ -40,4 +40,4 @@ VALUES (NULL, NULL, 'Tralandia s.r.o', 'tralandiaSro', NULL, NULL, NULL, NULL, N
 
 
 INSERT INTO `phrase_type` (`id`, `translateTo`, `entityName`, `entityAttribute`, `pluralVariationsRequired`, `genderRequired`, `genderVariationsRequired`, `locativesRequired`, `positionRequired`, `helpForTranslator`, `html`, `translated`, `oldId`, `created`, `updated`, `preFillForTranslator`)
-VALUES (NULL, 'none', '\\Entity\\Invoicing\\ServiceType', 'name', '0', '0', '0', '0', '0', NULL, '0', '1', NULL, '2013-06-16 21:31:21', '2013-06-16 21:31:21', '1');
+VALUES (NULL, 'supported', '\\Entity\\Invoicing\\ServiceType', 'name', '0', '0', '0', '0', '0', NULL, '0', '1', NULL, '2013-06-16 21:31:21', '2013-06-16 21:31:21', '1');
