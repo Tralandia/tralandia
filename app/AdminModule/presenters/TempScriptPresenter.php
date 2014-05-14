@@ -859,7 +859,20 @@ limit ' . $limit;
 		$this->redirect('Location:createLocality');
 	}
 
+	public function createComponentEciovni()
+	{
+		/** @var $invoiceGenerator \Tralandia\InvoiceGenerator\PdfGenerator */
+		$invoiceGenerator = $this->getContext()->getByType('\Tralandia\InvoiceGenerator\PdfGenerator');
+		return $invoiceGenerator->getEciovni();
+	}
 
+
+	public function actionTestInvoice()
+	{
+		$mpdf = new \mPDF('utf-8');
+
+		$this['eciovni']->exportToPdf($mpdf);
+	}
 
 }
 

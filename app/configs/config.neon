@@ -482,6 +482,7 @@ services:
 
 
 	- \Tralandia\Invoicing\InvoiceManager
+	- \Tralandia\InvoiceGenerator\PdfGenerator
 
 
 	# ==============================
@@ -569,10 +570,10 @@ factories:
 		implement: \FrontModule\RegistrationForm\IRegistrationFormFactory
 
 	addRentalFormFactory:
-		class: \OwnerModule\RentalEdit\AddRentalForm
+		class: \OwnerModule\AddRental\AddRentalForm
 		arguments: [%user%, ... ]
 		parameters: [Entity\User\User user]
-		implement: \OwnerModule\RentalEdit\IAddRentalFormFactory
+		implement: \OwnerModule\AddRental\IAddRentalFormFactory
 
 	aboutFormFactory:
 		class: OwnerModule\RentalEdit\AboutForm

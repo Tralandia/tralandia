@@ -56,7 +56,7 @@ class RentalPresenter extends BasePresenter
 	}
 
 
-	public function createComponentAddForm(\OwnerModule\RentalEdit\IAddRentalFormFactory $factory)
+	public function createComponentAddForm(\OwnerModule\AddRental\IAddRentalFormFactory $factory)
 	{
 		$component = $factory->create($this->loggedUser);
 
