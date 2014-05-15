@@ -237,7 +237,6 @@ div.calendar  {
             &.active {
                 background-color: #EEF1DF;
                 color: #626D32;
-                box-shadow: inset 0 0 6px #D7DFAF;
 
                 &.s01 {
                     border: 1px solid #FFF;
@@ -255,6 +254,28 @@ div.calendar  {
                     border: 1px solid #FFF;
                     border-right: none;
                     border-bottom: none;
+                    padding: 0;
+                }
+
+                &.s02 {
+                    padding: 0 1px 1px 0;
+                    
+                    &:hover {
+                        border: none;
+                    }
+                }
+
+                &.s20 {
+                    padding: 0 1px 1px 0;
+
+                    &:hover {
+                        border: none;
+                    }
+                }
+
+                &.s22 {
+                    background: #F65103;
+                    border-color: #F65103;
                     padding: 0;
                 }
             }
