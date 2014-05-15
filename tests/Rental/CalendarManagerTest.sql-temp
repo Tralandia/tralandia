@@ -3,10 +3,11 @@ VALUES
 	(1, NULL, NULL, 'jacqueline.boidet@wanadoo.fr', 'gepetto10150', NULL, 'null', NULL, '2014-05-02 08:43:52', '2014-05-02 08:43:52', NULL);
 
 
-INSERT INTO `rental` (`id`, `user_id`, `type_id`, `address_id`, `name_id`, `teaser_id`, `phone_id`, `status`, `classification`, `rank`, `slug`, `contactName`, `url`, `personalSiteUrl`, `email`, `checkIn`, `checkOut`, `pricesUponRequest`, `price`, `calendar`, `calendarUpdated`, `maxCapacity`, `bedroomCount`, `rooms`, `oldId`, `created`, `updated`, `editLanguage_id`, `harvested`, `emailSent`, `registeredFromEmail`, `lastUpdate`, `backlinkEmailSent`, `currency_id`, `description_id`)
+INSERT INTO `rental` (`id`, `user_id`, `type_id`, `address_id`, `name_id`, `teaser_id`, `phone_id`, `status`, `classification`, `rank`, `slug`, `contactName`, `url`, `personalSiteUrl`, `email`, `checkIn`, `checkOut`, `pricesUponRequest`, `price`, `calendar`, `calendarUpdated`, `oldCalendar`, `oldCalendarUpdated`, `maxCapacity`, `bedroomCount`, `rooms`, `oldId`, `created`, `updated`, `editLanguage_id`, `harvested`, `emailSent`, `registeredFromEmail`, `lastUpdate`, `backlinkEmailSent`, `currency_id`, `description_id`)
 VALUES
-	(1, 1, NULL, NULL, NULL, NULL, NULL, 6, 4, 66, 'el-tajil', 'Sady Yajaira Bonilla', 'http://www.eltajil.es/', NULL, 'segurconst@gmail.com', 'byAgreement', 'byAgreement', 0, 18, NULL, NULL, 8, 3, '2+2+3', NULL, '2014-04-09 21:51:05', '2014-04-10 00:21:24', NULL, 0, 0, NULL, '2014-04-09 23:59:50', 1, NULL, NULL),
-	(2, 1, NULL, NULL, NULL, NULL, NULL, 6, 4, 66, 'el-tajil', 'Sady Yajaira Bonilla', 'http://www.eltajil.es/', NULL, 'segurconst@gmail.com', 'byAgreement', 'byAgreement', 0, 18, NULL, NULL, 8, 3, '2+2+3', NULL, '2014-04-09 21:51:05', '2014-04-10 00:21:24', NULL, 0, 0, NULL, '2014-04-09 23:59:50', 1, NULL, NULL);
+	(1, 1, NULL, NULL, NULL, NULL, NULL, 6, 4, 66, 'el-tajil', 'Sady Yajaira Bonilla', 'http://www.eltajil.es/', NULL, 'segurconst@gmail.com', 'byAgreement', 'byAgreement', 0, 18, NULL, NULL, NULL, NULL, 8, 3, '2+2+3', NULL, '2014-04-09 21:51:05', '2014-04-10 00:21:24', NULL, 0, 0, NULL, '2014-04-09 23:59:50', 1, NULL, NULL),
+	(2, 1, NULL, NULL, NULL, NULL, NULL, 6, 4, 66, 'el-tajil', 'Sady Yajaira Bonilla', 'http://www.eltajil.es/', NULL, 'segurconst@gmail.com', 'byAgreement', 'byAgreement', 0, 18, NULL, NULL, NULL, NULL, 8, 3, '2+2+3', NULL, '2014-04-09 21:51:05', '2014-04-10 00:21:24', NULL, 0, 0, NULL, '2014-04-09 23:59:50', 1, NULL, NULL),
+	(3, 1, NULL, NULL, NULL, NULL, NULL, 6, 4, 66, 'el-tajil', 'Sady Yajaira Bonilla', 'http://www.eltajil.es/', NULL, 'segurconst@gmail.com', 'byAgreement', 'byAgreement', 0, 18, NULL, NULL, ",99,100,101,102,115,116,117,118,224,225,226,227,", '2014-04-25 12:40:01', 8, 3, '4+4', NULL, '2014-04-09 21:51:05', '2014-04-10 00:21:24', NULL, 0, 0, NULL, '2014-04-09 23:59:50', 1, NULL, NULL);
 
 
 
@@ -21,9 +22,9 @@ VALUES
 
 INSERT INTO `user_rentalreservation` (`id`, `language_id`, `rental_id`, `senderEmail`, `senderName`, `arrivalDate`, `departureDate`, `adultsCount`, `childrenCount`, `message`, `oldId`, `created`, `updated`, `senderPhone_id`, `senderRemoteAddress`, `status`, `childrenAge`, `ownersNote`, `referrer`, `totalPrice`, `paidPrice`, `currency_id`)
 VALUES
-	(1, NULL, 1, 'email@gmail.com', NULL, '2014-05-06 00:00:00', '2014-05-07 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL),
-	(2, NULL, 1, 'email@gmail.com', NULL, '2014-05-15 00:00:00', '2014-05-17 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL),
-	(3, NULL, 1, 'email@gmail.com', NULL, '2014-05-25 00:00:00', '2014-05-28 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL);
+	(1, NULL, 1, 'email@gmail.com', NULL, '2014-05-16 00:00:00', '2014-05-17 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL),
+	(2, NULL, 1, 'email@gmail.com', NULL, '2014-05-25 00:00:00', '2014-05-27 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL),
+	(3, NULL, 1, 'email@gmail.com', NULL, '2014-06-04 00:00:00', '2014-06-07 00:00:00', 2, 0, 'Hi', NULL, '2014-05-02 00:06:04', '2014-05-02 00:06:04', NULL, '92.232.167.179', 'confirmed', NULL, NULL, NULL, NULL, 0, NULL);
 
 
 INSERT INTO `_reservation_unit` (`reservation_id`, `unit_id`)
