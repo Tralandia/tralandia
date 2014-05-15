@@ -40,13 +40,19 @@ class UserTest extends TestCase
 	{
 		$user = $this->userRepository->find(1);
 
-		$user->invoicingInformation = new ClientInformation(['default' => ['bar']]);
+		$user->setDefaultInvoicingInformation(['foo' => 'bar', 'clientName' => 'John']);
+//		$user->invoicingInformation = ['foo' => 'bar', 'clientName' => 'John'];
 
-		$invoicingInformation = $user->invoicingInformation;
+		$this->userRepository->save($user);
 
+		$defaultInformation = $user->getDefaultInvoicingInformation();
 
-
-		$this->assertNotNull($invoicingInformation);
+		$this->assertTrue(is_array($defaultInformation));
+		$this->assertArrayNotHasKey('foo', $defaultInformation);
+		$this->assertArrayHasKey('clientPhone', $defaultInformation);
+		$this->assertEquals(NULL, $defaultInformation['clientPhone']);
+		$this->assertArrayHasKey('clientName', $defaultInformation);
+		$this->assertEquals('John', $defaultInformation['clientName']);
 	}
 
 }

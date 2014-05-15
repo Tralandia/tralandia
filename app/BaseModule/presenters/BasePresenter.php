@@ -45,6 +45,12 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $userDao;
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\User\UserRepository
+	 */
+	public $userRepository;
+
 
 	public $cssFiles;
 	public $cssRemoteFiles;
@@ -130,6 +136,11 @@ abstract class BasePresenter extends Presenter {
 	public $loggedUser;
 
 	/**
+	 * @var \Tralandia\User\User
+	 */
+	public $loggedLeanUser;
+
+	/**
 	 * @autowire
 	 * @var \Tester\ITester
 	 */
@@ -208,6 +219,7 @@ abstract class BasePresenter extends Presenter {
 
 		if($this->user->isLoggedIn()) {
 			$this->loggedUser = $this->userDao->find($this->user->getId());
+			$this->loggedLeanUser = $this->userRepository->find($this->user->getId());
 			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
 				$this->redirect(':Front:Sign:out');
 			}

@@ -10,21 +10,14 @@ namespace OwnerModule\AddRental;
 
 use BaseModule\Forms\BaseForm;
 use BaseModule\Forms\ISimpleFormFactory;
-use Entity\Rental\Rental;
-use Entity\Rental\Video;
-use Entity\User\User;
-use Environment\Environment;
+use Tralandia\User\User;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Service\Rental\RentalCreator;
-use Tralandia\BaseDao;
-use Tralandia\Dictionary\PhraseManager;
 use Tralandia\Invoicing\ServiceRepository;
 use Tralandia\Language\Languages;
 use Tralandia\Location\Countries;
-use Tralandia\Placement\Placements;
-use Tralandia\Rental\Amenities;
-use Tralandia\Rental\Types;
+use Tralandia\User\UserRepository;
 
 class AddRentalForm extends \BaseModule\Components\BaseFormControl
 {
@@ -53,7 +46,7 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	private $countries;
 
 	/**
-	 * @var \Entity\User\User
+	 * @var \Tralandia\User\User
 	 */
 	private $user;
 
@@ -67,9 +60,15 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	 */
 	private $languages;
 
+	/**
+	 * @var \Tralandia\User\UserRepository
+	 */
+	private $userRepository;
+
 
 	public function __construct(User $user, RentalCreator $rentalCreator, Countries $countries,
 								Languages $languages, ServiceRepository $serviceRepository,
+								UserRepository $userRepository,
 								ISimpleFormFactory $formFactory, EntityManager $em)
 	{
 		parent::__construct();
@@ -80,6 +79,7 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$this->user = $user;
 		$this->serviceRepository = $serviceRepository;
 		$this->languages = $languages;
+		$this->userRepository = $userRepository;
 	}
 
 
@@ -91,7 +91,7 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 		$countries = $this->countries->getForSelect();
 		$form->addSelect('country', 'o1094', $countries)
-			->setDefaultValue($this->user->getPrimaryLocation()->getId());
+			->setDefaultValue($this->user->primaryLocation->id);
 
 		$services = $this->serviceRepository->findAll();
 		$services = \Tools::entitiesMap($services, 'id', 'label', $this->translator);
@@ -102,8 +102,6 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 		$form->addText('clientName', 'clientName');
 		$form->addText('clientPhone', 'clientPhone');
-		$form->addText('clientEmail', 'clientEmail');
-		$form->addText('clientUrl', 'clientUrl');
 		$form->addText('clientAddress', 'clientAddress');
 		$form->addText('clientAddress2', 'clientAddress2');
 		$form->addText('clientLocality', 'clientLocality');
@@ -132,6 +130,9 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 //			'video' => $videoUrl,
 		];
 
+		$defaultInfo = $this->user->getDefaultInvoicingInformation();
+		$defaults = array_merge($defaultInfo, $defaults);
+
 		$form->setDefaults($defaults);
 	}
 
@@ -145,11 +146,15 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 	public function processForm(BaseForm $form)
 	{
-		$values = $form->getFormattedValues();
+		$values = $form->getFormattedValues(TRUE);
 
 		$primaryLocation = $this->countries->find($values->country);
 
-		$rental = $this->rentalCreator->simpleCreate($this->user, $primaryLocation, $values->name);
+		$this->user->setDefaultInvoicingInformation($values);
+		$this->userRepository->save($this->user);
+
+		$doctrineUser = $this->em->getRepository(USER_ENTITY)->find($this->user->id);
+		$rental = $this->rentalCreator->simpleCreate($doctrineUser, $primaryLocation, $values->name);
 
 		$this->em->persist($rental);
 		$this->em->flush();
@@ -163,5 +168,5 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 interface IAddRentalFormFactory
 {
-	public function create(\Entity\User\User $user);
+	public function create(\Tralandia\User\User $user);
 }
