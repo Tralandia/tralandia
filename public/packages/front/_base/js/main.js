@@ -132,15 +132,10 @@ App.prototype.uitoggleOldClick = function(){
 	return false;
 }
 
-App.prototype.uitoggleClick = function(){
-
+uitoggleClick = function(){
 	var forClass = '.'+$(this).attr('for');
-	console.log(forClass);
-
 	var openText = $(this).attr('data-opentext');
 	var closeText = $(this).attr('data-closetext');
-
-
 
 	if($(this).hasClass('active')){
 		$(forClass).slideUp('fast');
@@ -361,7 +356,7 @@ $(document).ready(function(){
 
 	/* register listeners */
 	/* UI toggle function */
-	$('.toggle').click(A.uitoggleClick);
+	$('.toggle').click(uitoggleClick);
 
 	/* object detail init large map after small map click */
 	$('.mapsImage').click(A.initMapsObjectDetail);
