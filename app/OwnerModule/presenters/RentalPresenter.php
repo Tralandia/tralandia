@@ -58,7 +58,7 @@ class RentalPresenter extends BasePresenter
 
 	public function createComponentAddForm(\OwnerModule\AddRental\IAddRentalFormFactory $factory)
 	{
-		$component = $factory->create($this->loggedUser);
+		$component = $factory->create($this->loggedLeanUser);
 
 		$component->onFormSuccess[] = function($form, $rental) {
 			$this->redirect('RentalEdit:default', ['id' => $rental->getId()]);

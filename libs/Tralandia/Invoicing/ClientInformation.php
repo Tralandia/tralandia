@@ -9,69 +9,33 @@ namespace Tralandia\Invoicing;
 
 
 use Nette;
-use Nette\Utils\Json;
-use Tralandia\User\User;
 
 class ClientInformation
 {
 
-	protected $info = [];
+	protected static $emptyData = [
+		'clientName' => null,
+		'clientPhone' => null,
+		'clientAddress' => null,
+		'clientAddress2' => null,
+		'clientLocality' => null,
+		'clientPostcode' => null,
+		'clientPrimaryLocation' => null,
+		'clientLanguage' => null,
+		'clientCompanyName' => null,
+		'clientCompanyId' => null,
+		'clientCompanyVatId' => null,
+	];
 
-	/**
-	 * @var \Tralandia\User\User
-	 */
-	private $user;
 
-
-	/**
-	 * @param array $info
-	 * @param User $user
-	 */
-	public function __construct(array $info, User $user = null)
+	public static function filter($info)
 	{
+		$info = array_merge(self::$emptyData, $info);
 		foreach($info as $key => $value) {
-			$this->setInfo($value, $key);
+			if(!array_key_exists($key, self::$emptyData)) {
+				unset($info[$key]);
+			}
 		}
-
-		$this->user = $user;
-	}
-
-
-	/**
-	 * @param $info
-	 * @param string $type
-	 */
-	public function setInfo($info, $type = 'default')
-	{
-		$this->info[$type] = $info;
-	}
-
-
-	/**
-	 * @param string $type
-	 *
-	 * @return mixed
-	 */
-	public function getInfo($type = 'default')
-	{
-		$info = Nette\Utils\Arrays::get($this->info, $type, []);
-		if(!isset($info['email']) && $this->user) $info['email'] = $this->user->login;
-
 		return $info;
 	}
-
-	public function fillValue($array, $name, $onUser)
-	{
-		if(!isset($info['email']) && $this->user) $info['email'] = $this->user->login;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return Json::encode($this->info);
-	}
-
 }
