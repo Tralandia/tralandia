@@ -117,23 +117,34 @@
             "time": "2014-03-24 10:30:54"
         },
         {
-            "name": "dibi/dibi",
-            "version": "v2.1.0",
+            "name": "dg/dibi",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb"
+                "reference": "3d1e2d1b7a3159b700a057b55858e013ba6179cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/dc4fe8b398f05549c1b19bc5743038023eb432fb",
-                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/3d1e2d1b7a3159b700a057b55858e013ba6179cd",
+                "reference": "3d1e2d1b7a3159b700a057b55858e013ba6179cd",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "replace": {
+                "dg/dibi": "self.version"
+            },
             "require-dev": {
-                "nette/tester": "@dev"
+                "nette/tester": "~1.1"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "dibi/"
@@ -141,9 +152,9 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3",
-                "GPLv2",
-                "GPLv3"
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
             ],
             "authors": [
                 {
@@ -165,7 +176,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2013-06-23 00:34:14"
+            "time": "2014-05-13 15:45:47"
         },
         {
             "name": "doctrine/annotations",
@@ -1898,16 +1909,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Tharos/LeanMapper.git",
-                "reference": "2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7"
+                "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7",
-                "reference": "2c07558a69dac15cd8aaed4a1aa9a2f2aeb637a7",
+                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/257d404091dbe525a9334283ad1e3584bd6a0e4a",
+                "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a",
                 "shasum": ""
             },
             "require": {
-                "dibi/dibi": "~2.0"
+                "dg/dibi": "~2.0"
             },
             "require-dev": {
                 "nette/tester": "dev-master"
@@ -1929,10 +1940,61 @@
             ],
             "description": "Tiny ORM based on powerful dibi database abstraction library for PHP 5.",
             "homepage": "http://www.leanmapper.com",
-            "time": "2013-12-13 09:29:14"
+            "time": "2014-04-27 19:12:51"
         }
     ],
     "packages-dev": [
+        {
+            "name": "dibi/dibi",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/dibi.git",
+                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/dc4fe8b398f05549c1b19bc5743038023eb432fb",
+                "reference": "dc4fe8b398f05549c1b19bc5743038023eb432fb",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "dibi/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPLv2",
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "Dibi is Database Abstraction Library for PHP 5.",
+            "homepage": "http://dibiphp.com/",
+            "keywords": [
+                "access",
+                "database",
+                "dbal",
+                "mssql",
+                "mysql",
+                "odbc",
+                "oracle",
+                "pdo",
+                "postgresql",
+                "sqlite"
+            ],
+            "time": "2013-06-23 00:34:14"
+        },
         {
             "name": "mockery/mockery",
             "version": "dev-master",
