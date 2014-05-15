@@ -258,6 +258,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $calendarUpdated;
 
 	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $oldCalendar;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $oldCalendarUpdated;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
 	 * @ORM\OrderBy({"sort" = "ASC"})
@@ -319,6 +331,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var array
 	 */
 	private $formattedCalendar;
+
+	/**
+	 * toto nieje stlpec v DB je to len pomocna premenna
+	 * @var array
+	 */
+	private $formattedOldCalendar;
 
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
@@ -914,7 +932,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getCalendar()
 	{
 		if(!$this->getCalendarUpdated()) {
-			return [];
+			return $this->getOldCalendar();
 		}
 
 		if(!is_array($this->formattedCalendar)) {
@@ -934,6 +952,39 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 			$this->formattedCalendar = array_filter($daysTemp);
 		}
 		return $this->formattedCalendar;
+	}
+
+
+	public function getOldCalendar()
+	{
+		if(!$this->getOldCalendarUpdated()) {
+			return [];
+		}
+
+		if(!is_array($this->formattedOldCalendar)) {
+			$days = array_filter(explode(',', $this->oldCalendar));
+
+			$todayZ = date('z');
+			$calendarUpdatedZ = $this->getOldCalendarUpdated()->format('z');
+			$thisYear = $this->getOldCalendarUpdated()->format('Y');
+			$nextYear = $thisYear + 1;
+			$daysTemp = [];
+
+			foreach ($days as $key => $day) {
+				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
+				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
+				$date = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
+				$dateKey = $date->format(CalendarManager::DATE_FORMAT_FOR_KEY);
+				$daysTemp[$dateKey] = CalendarManager::createDay($date, 0);
+			}
+
+			$daysTemp = CalendarManager::formatOccupancy([1 => $daysTemp], false);
+			$daysTemp = $daysTemp[1];
+
+			$this->formattedOldCalendar = array_filter($daysTemp);
+		}
+
+		return $this->formattedOldCalendar;
 	}
 
 
@@ -1774,11 +1825,20 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 	/**
+	 * @return \DateTime|NULL
+	 */
+	public function getCalendarUpdated()
+	{
+		return $this->calendarUpdated;
+	}
+
+	/**
+	 * @param \DateTime
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetCalendarUpdated()
+	public function setOldCalendarUpdated(\DateTime $calendarUpdated)
 	{
-		$this->calendarUpdated = NULL;
+		$this->oldCalendarUpdated = $calendarUpdated;
 
 		return $this;
 	}
@@ -1786,9 +1846,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getCalendarUpdated()
+	public function getOldCalendarUpdated()
 	{
-		return $this->calendarUpdated;
+		return $this->oldCalendarUpdated;
 	}
 
 	/**

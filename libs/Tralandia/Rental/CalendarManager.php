@@ -88,6 +88,14 @@ class CalendarManager
 			}
 		}
 
+		$occupancy = self::formatOccupancy($occupancy);
+
+		return $occupancy;
+	}
+
+
+	public static function formatOccupancy($occupancy, $unsetDate = TRUE)
+	{
 		$getClassPart = function($capacity) {
 			if($capacity === NULL) {
 				return 0;
@@ -114,7 +122,7 @@ class CalendarManager
 
 				$value[self::KEY_CLASS] = $class;
 				$value[self::KEY_NEXT_DAY_CLASS] = "s{$nextDayClassPart}0";
-				unset($value[self::KEY_DATE]);
+				if($unsetDate) unset($value[self::KEY_DATE]);
 			}
 		}
 

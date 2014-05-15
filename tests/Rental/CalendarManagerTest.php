@@ -60,4 +60,14 @@ class CalendarManagerTest extends \Tests\TestCase
 	}
 
 
+	public function testOldCalendar()
+	{
+		$rental = $this->findRental(3);
+
+		$calendar = $rental->getCalendar();
+
+		$this->assertEquals([], $calendar);
+	}
+
+
 }
