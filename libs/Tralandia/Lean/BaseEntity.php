@@ -46,4 +46,15 @@ class BaseEntity extends \LeanMapper\Entity
 		return Json::encode($array);
 	}
 
+
+	/**
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	public function toString($value)
+	{
+		return "$value";
+	}
+
 }

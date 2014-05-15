@@ -11,6 +11,7 @@ namespace Tests\Invoicing;
 use Entity\Invoicing\Company;
 use Nette;
 use Tests\TestCase;
+use Tralandia\Invoicing\ClientInformation;
 use Tralandia\Invoicing\InvoiceManager;
 use Tralandia\Invoicing\ServiceDurationRepository;
 use Tralandia\Rental\Rental;
@@ -35,15 +36,15 @@ class UserTest extends TestCase
 	}
 
 
-	public function testBasic()
+	public function testInvoicingInformation()
 	{
-
 		$user = $this->userRepository->find(1);
 
-		$user->invoicingInformation = [['foo'], 'bar'];
-		$this->userRepository->save($user);
+		$user->invoicingInformation = new ClientInformation(['default' => ['bar']]);
 
 		$invoicingInformation = $user->invoicingInformation;
+
+
 
 		$this->assertNotNull($invoicingInformation);
 	}
