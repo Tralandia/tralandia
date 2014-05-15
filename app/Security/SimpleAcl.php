@@ -58,6 +58,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Owner:Dashboard';
 		$resources[] = 'Owner:ReservationManager';
 		$resources[] = 'Owner:ReservationEdit';
+		$resources[] = 'Owner:Rating';
 
 		$resources[] = 'Admin:Currency';
 		$resources[] = 'Admin:DictionaryManager';
@@ -112,6 +113,7 @@ class SimpleAcl extends Permission
 		$this->allow(RoleEntity::OWNER, 'Owner:Dashboard', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:ReservationManager', self::ALL);
 		$this->allow(RoleEntity::OWNER, 'Owner:ReservationEdit', self::ALL);
+		$this->allow(RoleEntity::OWNER, 'Owner:Rating', self::ALL);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
 		$this->allow(RoleEntity::OWNER, $rentalReservationEntity, self::ALL, [$assertion, 'owner']);
 
