@@ -574,7 +574,7 @@ factories:
 	addRentalFormFactory:
 		class: \OwnerModule\AddRental\AddRentalForm
 		arguments: [%user%, ... ]
-		parameters: [Entity\User\User user]
+		parameters: [Tralandia\User\User user]
 		implement: \OwnerModule\AddRental\IAddRentalFormFactory
 
 	aboutFormFactory:
