@@ -39,6 +39,8 @@ use Tralandia\Rental\CalendarManager;
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
 
+	use \Tralandia\Rental\TGetCalendar;
+
 	const STATUS_DRAFT = 0;
 
 	const STATUS_LIVE = 6;
@@ -325,18 +327,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\OneToMany(targetEntity="Unit", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $units;
-
-	/**
-	 * toto nieje stlpec v DB je to len pomocna premenna
-	 * @var array
-	 */
-	private $formattedCalendar;
-
-	/**
-	 * toto nieje stlpec v DB je to len pomocna premenna
-	 * @var array
-	 */
-	private $formattedOldCalendar;
 
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
@@ -923,68 +913,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->formattedCalendar = NULL;
 
 		return $this;
-	}
-
-
-	/**
-	 * @return array|\DateTime[]
-	 */
-	public function getCalendar()
-	{
-		if(!$this->getCalendarUpdated()) {
-			return $this->getOldCalendar();
-		}
-
-		if(!is_array($this->formattedCalendar)) {
-			$days = Json::decode($this->calendar, Json::FORCE_ARRAY);
-			$todayZ = date('z');
-			$thisYear = $this->getCalendarUpdated()->format('Y');
-			$daysTemp = [];
-			foreach ($days as $key => $value) {
-				if ($thisYear <= $value[CalendarManager::KEY_YEAR]
-					&& $todayZ <= $value[CalendarManager::KEY_DAY_Z])
-				{
-					$daysTemp[$key] = $value;
-					$daysTemp[$key][CalendarManager::KEY_DATE] = new \Nette\DateTime("$key 00:00:00");
-				}
-			}
-
-			$this->formattedCalendar = array_filter($daysTemp);
-		}
-		return $this->formattedCalendar;
-	}
-
-
-	public function getOldCalendar()
-	{
-		if(!$this->getOldCalendarUpdated()) {
-			return [];
-		}
-
-		if(!is_array($this->formattedOldCalendar)) {
-			$days = array_filter(explode(',', $this->oldCalendar));
-
-			$todayZ = date('z');
-			$calendarUpdatedZ = $this->getOldCalendarUpdated()->format('z');
-			$thisYear = $this->getOldCalendarUpdated()->format('Y');
-			$nextYear = $thisYear + 1;
-			$daysTemp = [];
-
-			foreach ($days as $key => $day) {
-				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
-				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-				$date = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
-				$dateKey = $date->format(CalendarManager::DATE_FORMAT_FOR_KEY);
-				$daysTemp[$dateKey] = CalendarManager::createDay($date, 0);
-			}
-
-			$daysTemp = CalendarManager::formatOccupancy([1 => $daysTemp], false);
-			$daysTemp = $daysTemp[1];
-
-			$this->formattedOldCalendar = array_filter($daysTemp);
-		}
-
-		return $this->formattedOldCalendar;
 	}
 
 

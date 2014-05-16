@@ -12,6 +12,7 @@ use Entity\User\RentalReservation;
 use Entity\User\User;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Nette\Utils\Json;
 use Tralandia\Reservation\Reservations;
 
 class CalendarManager
@@ -141,4 +142,67 @@ class CalendarManager
 			self::KEY_DATE => clone $date,
 		];
 	}
+
+
+	/**
+	 * @return \DateTime[]
+	 */
+	public static function getCalendar($entity)
+	{
+		if(!$entity->getCalendarUpdated()) {
+			return self::getOldCalendar($entity);
+		}
+
+		if(!is_array($entity->formattedCalendar)) {
+			$days = Json::decode($entity->calendar, Json::FORCE_ARRAY);
+			$todayZ = date('z');
+			$thisYear = $entity->getCalendarUpdated()->format('Y');
+			$daysTemp = [];
+			foreach ($days as $key => $value) {
+				if ($thisYear <= $value[CalendarManager::KEY_YEAR]
+					&& $todayZ <= $value[CalendarManager::KEY_DAY_Z])
+				{
+					$daysTemp[$key] = $value;
+					$daysTemp[$key][CalendarManager::KEY_DATE] = new \Nette\DateTime("$key 00:00:00");
+				}
+			}
+
+			$entity->formattedCalendar = array_filter($daysTemp);
+		}
+		return $entity->formattedCalendar;
+	}
+
+
+	public static function getOldCalendar($entity)
+	{
+		if(!$entity->getOldCalendarUpdated()) {
+			return [];
+		}
+
+		if(!is_array($entity->formattedOldCalendar)) {
+			$days = array_filter(explode(',', $entity->oldCalendar));
+
+			$todayZ = date('z');
+			$calendarUpdatedZ = $entity->getOldCalendarUpdated()->format('z');
+			$thisYear = $entity->getOldCalendarUpdated()->format('Y');
+			$nextYear = $thisYear + 1;
+			$daysTemp = [];
+
+			foreach ($days as $key => $day) {
+				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
+				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
+				$date = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
+				$dateKey = $date->format(CalendarManager::DATE_FORMAT_FOR_KEY);
+				$daysTemp[$dateKey] = CalendarManager::createDay($date, 0);
+			}
+
+			$daysTemp = CalendarManager::formatOccupancy([1 => $daysTemp], false);
+			$daysTemp = $daysTemp[1];
+
+			$entity->formattedOldCalendar = array_filter($daysTemp);
+		}
+
+		return $entity->formattedOldCalendar;
+	}
+
 }
