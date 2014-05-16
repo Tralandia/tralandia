@@ -172,6 +172,7 @@ doctrine:
 	charset: utf8
 	driver: pdo_mysql
 	debugger: false
+	logging: false
 	autoGenerateProxyClasses: true
 	metadata:
 		Entity: %appDir%/models
