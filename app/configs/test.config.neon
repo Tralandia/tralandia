@@ -18,6 +18,15 @@ parameters:
 		charset: utf8
 		lazy: TRUE
 
+	leanConnectionInfo:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: tralandia_test
+		charset: utf8
+		lazy: TRUE
+		profiler: true
+
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 #	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<hostLocal [a-z-\\.]+>"
 

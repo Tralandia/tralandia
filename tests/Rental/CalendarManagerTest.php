@@ -69,5 +69,15 @@ class CalendarManagerTest extends \Tests\TestCase
 		$this->assertEquals([], $calendar);
 	}
 
+	public function testLeanOldCalendar()
+	{
+		/** @var $rental \Tralandia\Rental\Rental */
+		$rental = $this->getContext()->getByType('\Tralandia\Rental\RentalRepository')->find(3);
+
+		$calendar = $rental->getCalendar();
+
+		$this->assertEquals([], $calendar);
+	}
+
 
 }
