@@ -698,7 +698,7 @@ factories:
 		implement: Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
-		class: Tralandia\Localization\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @translatorCache)
+		class: Tralandia\Localization\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @doctrine.dao(Entity\Phrase\Alias), @translatorCache)
 		parameters: [Entity\Language language]
 		implement: Tralandia\Localization\ITranslatorFactory
 

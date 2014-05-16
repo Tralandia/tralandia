@@ -37,6 +37,10 @@ common:
 							link: ':Admin:Phrase:add'
 							linkArgs:
 								type: LatteHtml
+						alias:
+							lable: Alias
+							icon: icon-angle-right
+							link: ':Admin:Phrase:addAlias'
 				language:
 					separator: true
 					label: Languages
