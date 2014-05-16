@@ -2358,6 +2358,15 @@ div.day {
 div.day.active {
   color: #663300!Important;
   cursor: pointer;
+  position: relative;
+  line-height: 21px;
+}
+
+div.day.active abbr {
+  position: absolute;
+  bottom: -5px;
+  font-size: 10px;
+  color: #aaa;
 }
 
 div.day..ro {
@@ -2394,13 +2403,13 @@ div.day..inactive {
   background-color: #C5D279;
 }
 
-.selected.status01 {
+div.day.s01 {
   background: url(../img/calendar-half.png) right bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
 }
-.status10 {
+div.day.s10 {
   background: url(../img/calendar-half-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
