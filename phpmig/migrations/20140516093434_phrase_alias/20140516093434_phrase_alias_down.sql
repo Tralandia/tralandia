@@ -1,0 +1,1 @@
+-- PhraseAlias migration DOWN file

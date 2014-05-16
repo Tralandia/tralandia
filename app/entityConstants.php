@@ -29,6 +29,7 @@ define('PATH_SEGMENT_OLD_ENTITY', '\Entity\Routing\PathSegmentOld');
 define('CURRENCY_ENTITY', '\Entity\Currency');
 define('PAGE_ENTITY', '\Entity\Page');
 define('PHRASE_ENTITY', '\Entity\Phrase\Phrase');
+define('PHRASE_ALIAS_ENTITY', '\Entity\Phrase\Alias');
 define('PHRASE_TYPE_ENTITY', '\Entity\Phrase\Type');
 define('TRANSLATION_ENTITY', '\Entity\Phrase\Translation');
 define('SYSTEM_LOG_ENTITY', '\Entity\Log\System');
