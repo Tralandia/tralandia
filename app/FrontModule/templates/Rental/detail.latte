@@ -51,7 +51,7 @@
 						</h1>
 
 						{if $mainImage = $rental->getMainImage()}
-							<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
+							<button class="marginTop  rentalDetail btn btn-compare addToFavorites currentObject" data-id="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{image $rental->getMainImage()}" data-location="{_$rental->address->locality->name}" data-price="{$rental->priceFrom}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}"><i class="icon-heart-empty"></i><i class="icon-heart"></i></button>
 						{/if}
 
 						<p class="locality noPadding">
@@ -144,16 +144,22 @@
 
 
 							<ul class="detailPriceList" n:if="count($rental->pricelistRows) > 0 || count($rental->customPricelistRows) > 0 || $rental->price->getSourceAmount() || $rental->bedroomCount || $rental->rooms">
-								<li><h3 n:class="$pricesAvailable ? full : small">
+								<li>
+								<h3 n:class="$pricesAvailable ? full : small">
 
-								{if $rental->maxCapacity > 0}
-									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-									{else}
-									{_571}
-								{/if}
+									{if $rental->maxCapacity > 0}
+										{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+										{else}
+										{_571}
+									{/if}
 
 
-								<span n:if="$rental->price->getSourceAmount()">{_o100007} <strong>{$rental->price}</strong> {_o100004}</span>
+									<span n:if="$rental->priceFrom->getSourceAmount()">{_o100007}
+										<strong>
+											{$rental->priceFrom}{if $rental->priceTo->getSourceAmount() != $rental->priceFrom->getSourceAmount()} - {$rental->priceTo}{/if}
+										</strong>
+										{_o100004}
+									</span>
 
 								</h3>
 								{if count($rental->customPricelistRows) > 0 || count($rental->pricelistRows) > 0}
