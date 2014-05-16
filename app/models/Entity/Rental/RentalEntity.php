@@ -674,6 +674,25 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \Extras\Types\Price
 	 */
+	public function getPrice()
+	{
+		return $this->getPriceFrom();
+	}
+
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		return $this->setPriceFrom($price);
+	}
+
+	public function setFloatPrice($price)
+	{
+		return $this->setFloatPriceFrom($price);
+	}
+
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
 	public function getPriceFrom()
 	{
 		return new \Extras\Types\Price($this->priceFrom, $this->getCurrency());
@@ -691,6 +710,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function setFloatPriceFrom($price)
 	{
 		$this->setPriceFrom(new \Extras\Types\Price($price, $this->getCurrency()));
+		return $this;
 	}
 
 	/**
@@ -713,6 +733,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function setFloatPriceTo($price)
 	{
 		$this->setPriceTo(new \Extras\Types\Price($price, $this->getCurrency()));
+		return $this;
 	}
 
 
