@@ -210,7 +210,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var price
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $price;
+	protected $priceFrom;
+
+	/**
+	 * @var price
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $priceTo;
 
 	/**
 	 * @var Collection
@@ -668,23 +674,45 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @return \Extras\Types\Price
 	 */
-	public function getPrice()
+	public function getPriceFrom()
 	{
-		return new \Extras\Types\Price($this->price, $this->getCurrency());
+		return new \Extras\Types\Price($this->priceFrom, $this->getCurrency());
 	}
 
 
-	public function setPrice(\Extras\Types\Price $price)
+	public function setPriceFrom(\Extras\Types\Price $price)
 	{
-		$this->price = $price->convertToFloat($this->getCurrency());
+		$this->priceFrom = $price->convertToFloat($this->getCurrency());
 
 		return $this;
 	}
 
 
-	public function setFloatPrice($price)
+	public function setFloatPriceFrom($price)
 	{
-		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+		$this->setPriceFrom(new \Extras\Types\Price($price, $this->getCurrency()));
+	}
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPriceTo()
+	{
+		return new \Extras\Types\Price($this->priceTo, $this->getCurrency());
+	}
+
+
+	public function setPriceTo(\Extras\Types\Price $price)
+	{
+		$this->priceTo = $price->convertToFloat($this->getCurrency());
+
+		return $this;
+	}
+
+
+	public function setFloatPriceTo($price)
+	{
+		$this->setPriceTo(new \Extras\Types\Price($price, $this->getCurrency()));
 	}
 
 

@@ -73,7 +73,13 @@ class PricesForm extends BaseFormControl
 			'for' => 'currency'
 		));
 
-		$form->addText('price', 'o100078')
+		$form->addText('priceFrom', 'o100078')
+			->setOption('append', $currencySpan . ' ' . $this->translate('o100004'))
+			->setOption('help', $this->translate('o100073'))
+			->addRule(BaseForm::RANGE, $this->translate('o100105'), [0, 999999999999999])
+			->setRequired('151883');
+
+		$form->addText('priceTo', 'o100078')
 			->setOption('append', $currencySpan . ' ' . $this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
 			->addRule(BaseForm::RANGE, $this->translate('o100105'), [0, 999999999999999])
@@ -104,7 +110,8 @@ class PricesForm extends BaseFormControl
 		$rental = $this->rental;
 		$defaults = [
 			'currency' => $rental->getCurrency()->getId(),
-			'price' => $rental->getPrice()->getSourceAmount(),
+			'priceFrom' => $rental->getPriceFrom()->getSourceAmount(),
+			'priceTo' => $rental->getPriceTo()->getSourceAmount(),
 		];
 		$form->setDefaults($defaults);
 	}
@@ -112,7 +119,10 @@ class PricesForm extends BaseFormControl
 
 	public function validateForm(BaseForm $form)
 	{
-
+		$values = $form->getFormattedValues();
+		if($values['priceFrom'] > $values['priceTo']) {
+			$form['priceTo']->addError('Price from must be bigger than price to');
+		}
 	}
 
 
@@ -125,7 +135,8 @@ class PricesForm extends BaseFormControl
 		$currency = $this->em->getRepository(CURRENCY_ENTITY)->find($values['currency']);
 		$rental->setCurrency($currency);
 
-		$rental->setFloatPrice($values['price']);
+		$rental->setFloatPriceFrom($values['priceFrom']);
+		$rental->setFloatPriceTo($values['priceTo']);
 
 		if ($value = $values['customPriceList']) {
 			foreach ($value['list'] as $pricelistRow) {
