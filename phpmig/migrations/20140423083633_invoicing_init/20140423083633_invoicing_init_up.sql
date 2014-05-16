@@ -31,6 +31,9 @@ ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateTo` DATE DEFAULT NULL AFTER `
 ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateDue` DATE NOT NULL AFTER `rental_id`;
 ALTER TABLE `invoicing_invoice` MODIFY COLUMN `datePaid` DATE DEFAULT NULL AFTER `dateDue`;
 
+ALTER TABLE `invoicing_invoice` ADD INDEX (`number`);
+ALTER TABLE `invoicing_invoice` ADD UNIQUE INDEX (`company_id`, `number`);
+
 
 INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `slug`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
 VALUES (NULL, NULL, 'Zero', 'zero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
