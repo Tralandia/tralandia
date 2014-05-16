@@ -37,10 +37,10 @@
 			{include #text, control => $rentalContainer['name']}
 
 			{include #rentalType, control => $rentalContainer['type']}
-			{if $rentalContainer['price'] instanceof \Nette\Forms\Controls\TextInput}
-				{include #text, control => $rentalContainer['price']}
+			{if $rentalContainer['priceFrom'] instanceof \Nette\Forms\Controls\TextInput}
+				{include #text, control => $rentalContainer['priceFrom']}
 			{else}
-				{include #price, control => $rentalContainer['price']}
+				{include #price, control => $rentalContainer['priceFrom']}
 			{/if}
 			{include #text, control => $rentalContainer['maxCapacity']}
 			{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}

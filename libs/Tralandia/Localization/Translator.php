@@ -71,7 +71,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		if(!$language) $language = $this->language;
 
-		if(Strings::match($phrase, '~a[0-9]+~')) {
+		if(is_scalar($phrase) && Strings::match($phrase, '~a[0-9]+~')) {
 			$aliasId = substr($phrase, 1);
 			$phrase = $this->resolveAlias($aliasId);
 		}
