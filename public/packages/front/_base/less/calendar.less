@@ -15,37 +15,173 @@ h1 {
 div.calendar {
     float: left;
     font-size: 11px;
-    height: 180px;
+    height: 230px;
     margin: 0 0 0 0;
     text-align: center;
-    width: 168px;
+    width: 227px;
     margin-left: 10px;
 
     /*iframe calendar*/
     &.iframe {
         width: 126px;
-        height: 150px;
-    }    
+        height: 200px;
+    }
 
-    .day.active {
-        
-        &.status01 {
-            background: url(../images/calendar-half.png) right bottom;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-color: transparent;
+
+
+    div.day {
+        background: none;
+        position: relative;
+
+        &.active {
+
+            &.s01 {
+                background-image: url(../images/calendar-half-orange.png);
+                background-position: right bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.s02 {
+                background-image: url(../images/calendar-half-red.png);
+                background-position: right bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.s10 {
+                background-image: url(../images/calendar-half-orange-end.png);
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(0,0,0,0.5);
+                }
+            } 
+
+            &.s20 {
+                background-image: url(../images/calendar-half-red-end.png);
+                background-position: right bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: none;
+                padding: 1px;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }                
+            }
+
+            &.s11 {
+                /*orange*/
+                background: #F68703;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.s12 {
+                background-image: url(../images/calendar-orange-red.png);
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+                
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.s21 {
+                background-image: url(../images/calendar-red-orange.png);
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &.s22 {
+                background: #F65103;
+
+                abbr {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+
+            &:hover {
+                color: #000;
+                border: 1px solid #ccc;
+                padding: 0;
+
+                abbr {
+                    right: 1px;
+                    bottom: 0;
+                }
+            }
+
         }
 
-        &.status10 {
-            background: url(../images/calendar-half-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
-            background-repeat: no-repeat;
-            background-color: transparent;
-        } 
+        abbr {
+            position: absolute;
+            right: 2px;
+            bottom: 1px;
+            font-size: 9px;
+            color: #999;
+            line-height: 9px;
+        }
+        
+        &.weekday {
+            background: #F3F3F3;
+        }
 
-        &.status11 {
-            background: #B0C23C;
-        }       
+        &.dayName {
+            background: none;
+            width: 23px;
+        }
+
+        &.disabled {
+            cursor: default;
+            color: #ddd;
+            background: none;
+            border-color: #eee;
+            abbr {
+                display: none;
+            }
+        }
+
+        &:hover {
+
+        }
     }
+
+
 }
 
 
@@ -53,40 +189,117 @@ div.calendar {
 div.calendar  {
 
     div.day {
-        border: 1px solid #CBD2A0;
+        border: none;
+        padding: 1px;
         float: left;
-        height: 18px;
-        line-height: 18px;
-        margin-bottom: 1px;
-        margin-right: 1px;
+        height: 25px;
+        line-height: 20px;
+        margin-bottom: 3px;
+        margin-right: 3px;
         text-align: center;
-        width: 20px;        
+        width: 27px;
+        border-radius: 5px;
+
+        &.inactive {
+            background: none;
+            border: none;
+            padding: 1px;
+        }  
     }
 
-    /*iframe calendar*/
-    &.iframe {
-        div.day {
-            width: 15px;  
-            height: 13px;
+    &.iframe.old {
+        height: 150px;
+
+        .monthName {
+            padding: 0;
+            background: none;
+            color: #7D3300;
+            margin: 0;
         }
 
-        div.day.active {
-            
-            &.status01 {
+        .day {
+            border: 1px solid #fff;
+            margin: 0;
+            border-bottom: none;
+            border-right: none;
+            width: 16px;
+            height: 14px;
+            font-size: 10px;
+            border-color: #FFF;
+            border-radius: 0;
+            padding: 0;
 
-                .skew-gradient( rgb(238, 241, 223),#B0C23C  , 17 , 15 );     
+            &.inactive {
+                color: #EEE;
+                cursor: default !important;
             }
 
-            &.status10 {
-                .skew-gradient( #B0C23C,rgb(238, 241, 223)  , 18 , 15 );           
-            } 
+            &.active {
+                background-color: #EEF1DF;
+                color: #626D32;
 
-            &.status11 {
-                background: #B0C23C;
-            }       
+                &.s01 {
+                    border: 1px solid #FFF;
+                    border-right: none;
+                    border-bottom: none;
+                    padding: 0;
+                }
+
+                &.s11 {
+                    background: #F68703;
+                    padding: 0;
+                }
+
+                &.s10 {
+                    border: 1px solid #FFF;
+                    border-right: none;
+                    border-bottom: none;
+                    padding: 0;
+                }
+
+                &.s02 {
+                    padding: 0 1px 1px 0;
+                    
+                    &:hover {
+                        border: none;
+                    }
+                }
+
+                &.s20 {
+                    padding: 0 1px 1px 0;
+
+                    &:hover {
+                        border: none;
+                    }
+                }
+
+                &.s22 {
+                    background: #F65103;
+                    border-color: #F65103;
+                    padding: 0;
+                }
+            }
+
+            &:hover {
+                border: 1px solid #fff;
+                border-bottom: none;
+                border-right: none;
+            }
         }
 
+    }
 
+    &.iframe.v2 {
+        width: 170px;
+
+        .monthName {
+            margin: 0 9px 3px 0;
+        }
+
+        .day {
+            width: 20px;
+            line-height: 20px;
+        }
     }
 
 }
@@ -116,15 +329,19 @@ div.calendar  {
 div.calendar {
     .dayName {
         border: 1px solid transparent !important;
-        color: #91A136;        
+        color: #91A136;
      }
 
 }
 div.calendar  {
     .monthName {
-        color: @brown;
+        color: #333;
         font-size: 12px;
-        font-weight: bold;        
+        font-weight: bold;
+        padding: 4px 0 3px;
+        margin: 0 5px 3px 0;
+        background: #F3F3F3;
+        border-radius: 5px;
     }
 
     &.iframe {

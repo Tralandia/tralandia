@@ -413,9 +413,10 @@
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
+{var $errors = $mainControl->getErrors()}
 {?unset($control)}
 
-<tr class="units">
+<tr n:class="units, count($errors) > 0 ? error">
 	<td colspan="2">
 		{foreach $container->getRentals() as $rental}
 			{var $unitsControl = $container->getUnitsControl()}
@@ -431,7 +432,7 @@
 	<td>
 		<span class="help">{$mainControl->getOption('help')}</span>
 		{dump $mainControl}
-		<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $errors}</span>
 	</td>
 
 {/define #rentalUnit}

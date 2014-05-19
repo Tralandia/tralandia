@@ -2,6 +2,7 @@
 namespace BaseModule\Components;
 
 use Nette\DateTime;
+use Tralandia\Rental\CalendarManager;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
 
@@ -24,14 +25,16 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		$this->selectedDays = $selectedDays;
 	}
 
-	public function renderIframe($monthsCount, array $selectedDays = NULL){
+	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = NULL){
 		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'iframe');
+		$template->version = $version;
+		$class = 'iframe ' . $version;
+		$this->render($monthsCount, $selectedDays, $class);
 	}
 
 	public function renderEditable($monthsCount, array $selectedDays = NULL){
 		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'editable');
+		$this->render($monthsCount, $selectedDays, 'editable');
 	}
 
 	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0)
@@ -45,21 +48,22 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		if($monthsOffset) {
 			$fromDate->modify('+'.$monthsOffset.' month');
 		}
+
 		$months = [];
 		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];
 			$start = clone $fromDate;
-			$key = $start->format('Y-m');
+			$monthKey = $start->format('Y-m');
 
 			$monthName = $this->locale->getMonth($start->format('n'));
 			$month['title'] = $monthName.' '.$start->format('Y');
 
-			$month['daysBefore'] = [];
+			$month['blankDays'] = [];
 			$firstDayOfMonth = $start->modifyClone()->format('N');
 			if($firstDayOfMonth--) {
 				$before = $start->modifyClone("-$firstDayOfMonth days");
 				for( $b=0 ; $b<$firstDayOfMonth ; $b++ ) {
-					$month['daysBefore'][] = [
+					$month['blankDays'][] = [
 						'day' => $before->format('d'),
 					];
 					$before->modify('+1 day');
@@ -68,33 +72,27 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 
 			$lastDayOfMonth = $start->modifyClone('last day of this month');
 
+			$previousDay = NULL;
 			while ($start <= $lastDayOfMonth) {
-				$day = $start->format('d');
-				if(isset($selectedDays["$key-$day"])) {
-
+				$key = $start->format(CalendarManager::DATE_FORMAT_FOR_KEY);
+				if(array_key_exists($key, $selectedDays)) {
+					$month['days'][$key] = $previousDay = $selectedDays[$key];
+				} else {
+					$tempDay = CalendarManager::createDay($start, 99);
+					if($previousDay) {
+						$tempDay[CalendarManager::KEY_CLASS] = $previousDay[CalendarManager::KEY_NEXT_DAY_CLASS];
+					}
+					$month['days'][$key] = $tempDay;
+					$previousDay = NULL;
 				}
-				$month['days'][$day] = [
-					'day' => $day,
-				];
 				$start->modify('+1 day');
 			}
 
-			$month['daysAfter'] = [];
-			$lastDayOfMonthN = $lastDayOfMonth->format('N');
-			if($lastDayOfMonthN < 7) {
-				for( $a=$lastDayOfMonthN ; $a<7 ; $a++ ) {
-					$lastDayOfMonth->modify('+1 day');
-					$month['daysAfter'][] = [
-						'day' => $lastDayOfMonth->format('d'),
-					];
-				}
-			}
-
-			$months[$key] = $month;
+			$months[$monthKey] = $month;
 			$fromDate->modify('first day of next month');
 		}
 
-		$months = $this->markSelectedDays($months, $selectedDays);
+//		$months = $this->markSelectedDays($months, $selectedDays);
 
 		$this->template->months = \Nette\ArrayHash::from($months);
 

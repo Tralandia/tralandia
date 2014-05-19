@@ -10,8 +10,29 @@ parameters:
 		charset: utf8
 		driver: pdo_mysql
 
+	dibiDb:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: tralandia_test
+		charset: utf8
+		lazy: TRUE
+
+	leanConnectionInfo:
+		user: root
+		password: root
+		host: 127.0.0.1
+		database: tralandia_test
+		charset: utf8
+		lazy: TRUE
+		profiler: true
+
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 #	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<hostLocal [a-z-\\.]+>"
+
+doctrine:
+	dbname: tralandia_test
+
 
 services:
 	session: Kdyby\Tests\Http\FakeSession
@@ -19,6 +40,9 @@ services:
 	environment:
 		class: Environment\Environment
 		factory: Environment\Environment::createFromIds(56, 144)
+
+	testDb:
+		class: \DibiConnection(%dibiDb%)
 
 #	databaseCacheClient:
 #		class: \Tralandia\Caching\Database\DatabaseClient(\DibiConnection(%cacheDatabase%), 'test')
