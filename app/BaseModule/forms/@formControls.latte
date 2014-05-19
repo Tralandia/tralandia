@@ -375,6 +375,33 @@
 {/define #price}
 
 
+{* Container ------------------------------------------- *}
+{define #container}
+{include #opentag, class => 'simpleInput ' , control => $container}
+	<td>
+		{_$text} <i class="icon-asterisk"></i>
+	</td>
+	<td>
+		<table class="addOnTable">
+			<tr n:foreach="$container->getControls() as $control">
+				<td>
+					<div class="input-prepend input-append">
+						<span class="add-on">{!$control->getOption('prepend')}</span>
+						{input $control, class => "input-medium"}
+						<span class="add-on">{!$control->getOption('append')}</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<td>
+		{* <span class="help-inline">{$control->getOption('help')}</span> *}
+		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+	</td>
+</tr>
+{/define}
+
+
 {* Phone Container ------------------------------------------- *}
 {define #phone}
 {var
