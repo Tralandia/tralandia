@@ -1,0 +1,81 @@
+{block content}
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="rating">
+			<h3>
+				!!Hodnotenia návštevníkov (2)
+						
+				{if count($rentals)>1}
+					<select class="select2 pull-right marginTop" id="rentalSelect">
+						<option redirect="{plink //Rating:default}">filter</option>
+						<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Rating:, id => $rental->id}">{_$rental->name}</option>
+					</select>
+				{/if}
+			</h3>
+			<div class="item">
+				<div class="row-fluid">
+					<div class="span2">
+						<strong>Jan</strong><br/>
+						<span class="stars" tooltip="true" title="Poloha: 3.2"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon icon-star-empty"></i></span><br/>
+						<i>Sólo hosť</i><br/>
+						21.05.2014
+					</div>
+					<div class="comments span8">
+						<p>
+							<span class="line"></span>
+							<i class="icon-plus-sign"></i>
+							poloha na samote, komplet vybavenost, idealne aj na turistiku ci foto vylety
+						</p>
+						<p>
+							<span class="line"></span>
+							<i class="icon-minus-sign"></i>
+							nic co by ma odradilo od dalsej navstevy, jedinou trosku neprijemnejsou vecou je nutnost vyslapat si fakt prudky kopec :)
+						</p>
+					</div>
+				</div>
+				<div class="response">
+					<div class="row-fluid">
+						<div class="span2">&nbsp;</div>
+						<div class="comments span8">
+							<div class="name"><strong>Odpoved ubytovatela</strong> <i>(21.05.2014)</i></div>
+							<p>
+								<span class="line"></span>
+								<i class="icon-user"></i>
+								Cras accumsan dictum dui non rhoncus. Vivamus dapibus, elit at varius consectetur, lacus tortor gravida velit, non fringilla sem sapien id ante. Sed dictum nisl eu sapien tristique, facilisis suscipit nunc venenatis.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="row-fluid">
+					<div class="span2">
+						<strong>Jozko Mrkvicka</strong><br/>
+						<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span><br/>
+						<i>Rodina s malymi detmi</i><br/>
+						18.05.2013
+					</div>
+					<div class="comments span8">
+						<p>
+							<span class="line"></span>
+							<i class="icon-plus-sign"></i>
+							Aenean ultrices nisl purus, tristique pulvinar sem malesuada eget. Suspendisse in odio orci. Proin dapibus lacus non volutpat auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris imperdiet nisl magna, sagittis faucibus justo vestibulum volutpat. Cras accumsan dictum dui non rhoncus. Vivamus dapibus, elit at varius consectetur, lacus tortor gravida velit, non fringilla sem sapien id ante. Sed dictum nisl eu sapien tristique, facilisis suscipit nunc venenatis. Proin a arcu eget enim lacinia consequat ut quis ipsum. Mauris sit amet ante quam.
+						</p>
+					</div>
+				</div>
+				<div class="response">
+					<div class="row-fluid">
+						<div class="span2">&nbsp;</div>
+						<div class="comments span8">
+							{* <div class="name"><strong>Odpoved ubytovatela</strong> <i>(21.05.2014)</i></div> *}
+							<p>
+								<a href="#" class="btn btn-default">Odpovedať</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
