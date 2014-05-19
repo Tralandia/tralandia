@@ -846,9 +846,10 @@
 	$container = $control;
 	$months = $container->getMonths();
 }
+		{default $version = 'v2'}
 {?unset($control)}
 <div class="calendarEdit clearfix">
-	{control calendar:editable, 12}
+	{control calendar:editable, 12, null, $version}
 	{input $container['data']}
 </div>
 {/define #calendar}
