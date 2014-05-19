@@ -20,6 +20,24 @@ trait TGetCalendar
 	 */
 	protected $formattedOldCalendar;
 
+
+	/**
+	 * @return bool
+	 */
+	public function useOldCalendar()
+	{
+		$cu = $this->getCalendarUpdated();
+		return !isset($cu);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function calendarVersion()
+	{
+		return $this->useOldCalendar() ? 'old' : 'v2';
+	}
+
 	/**
 	 * @return array|\DateTime[]
 	 */
@@ -92,5 +110,143 @@ trait TGetCalendar
 
 		return $this->formattedOldCalendar;
 	}
+
+
+
+	/**
+	 * @param array $calendar
+	 * @param \DateTime $updated
+	 *
+	 * @return $this
+	 */
+	public function updateCalendar(array $calendar, \DateTime $updated = NULL)
+	{
+		if($updated === NULL) {
+			$updated = new \DateTime();
+		}
+
+		$this->setCalendarUpdated($updated);
+		$this->setCalendar($calendar);
+
+		return $this;
+	}
+
+
+	/**
+	 * @param array|\DateTime[]
+	 *
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setCalendar(array $calendar)
+	{
+		$calendar = Json::encode($calendar);
+
+		$this->calendar = $calendar;
+		$this->formattedCalendar = NULL;
+
+		return $this;
+	}
+
+
+	/**
+	 * @param array $calendar
+	 * @param \DateTime $updated
+	 *
+	 * @return $this
+	 */
+	public function updateOldCalendar(array $calendar, \DateTime $updated = NULL)
+	{
+		if($updated === NULL) {
+			$updated = new \DateTime();
+		}
+
+		$this->setOldCalendarUpdated($updated);
+		$this->setOldCalendar($calendar);
+
+		return $this;
+	}
+
+
+	/**
+	 * @param array|\DateTime[]
+	 *
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setOldCalendar(array $calendar)
+	{
+		foreach ($calendar as $key => $date) {
+			$calendar[$key] = $date->format('z');
+		}
+
+		$this->oldCalendar = ',' . (implode(',', $calendar)) . ',';
+		$this->formattedOldCalendar = NULL;
+
+		return $this;
+	}
+
+
+	/**
+	 * @param \DateTime $from
+	 * @param \DateTime $to
+	 *
+	 * @return bool
+	 */
+	public function isAvailable(\DateTime $from, \DateTime $to = NULL)
+	{
+		$calendar = $this->getCalendar();
+
+		if(!count($calendar)) return TRUE;
+
+		if($to === NULL) $to = clone $from;
+
+		$from->modify('midnight');
+		while($from <= $to) {
+			if(in_array($from, $calendar)) return FALSE;
+			$from->modify('next day');
+		}
+
+		return TRUE;
+	}
+
+
+	/**
+	 * @param \DateTime
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setCalendarUpdated(\DateTime $calendarUpdated)
+	{
+		$this->calendarUpdated = $calendarUpdated;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime|NULL
+	 */
+	public function getCalendarUpdated()
+	{
+		return $this->calendarUpdated;
+	}
+
+	/**
+	 * @param \DateTime
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setOldCalendarUpdated(\DateTime $calendarUpdated)
+	{
+		$this->oldCalendarUpdated = $calendarUpdated;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime|NULL
+	 */
+	public function getOldCalendarUpdated()
+	{
+		return $this->oldCalendarUpdated;
+	}
+
+
 
 }

@@ -25,24 +25,21 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		$this->selectedDays = $selectedDays;
 	}
 
-	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = NULL){
-		$template = $this->template;
-		$template->version = $version;
-		$class = 'iframe ' . $version;
-		$this->render($monthsCount, $selectedDays, $class);
+	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = 'v2'){
+		$this->render($monthsCount, $selectedDays, 'iframe', 0, $version);
 	}
 
-	public function renderEditable($monthsCount, array $selectedDays = NULL){
-		$template = $this->template;
-		$this->render($monthsCount, $selectedDays, 'editable');
+	public function renderEditable($monthsCount, array $selectedDays = NULL, $version = 'v2'){
+		$this->render($monthsCount, $selectedDays, 'editable', 0, $version);
 	}
 
-	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0)
+	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0, $version = 'v2')
 	{
 		$selectedDays = $selectedDays ? $selectedDays : $this->selectedDays;
 
 		$template = $this->template;
-		$template->containerClass = $class;
+		$template->version = $version;
+		$template->containerClass = $class . ' ' . $version;
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
 		if($monthsOffset) {
@@ -94,7 +91,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 
 //		$months = $this->markSelectedDays($months, $selectedDays);
 
-		$this->template->months = \Nette\ArrayHash::from($months);
+		$template->months = \Nette\ArrayHash::from($months);
 
 		$template->render();
 	}

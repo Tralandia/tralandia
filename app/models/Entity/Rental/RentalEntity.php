@@ -882,64 +882,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 
 	/**
-	 * @param array $calendar
-	 * @param \DateTime $updated
-	 *
-	 * @return $this
-	 */
-	public function updateCalendar(array $calendar, \DateTime $updated = NULL)
-	{
-		if($updated === NULL) {
-			$updated = new \DateTime();
-		}
-
-		$this->setCalendarUpdated($updated);
-		$this->setCalendar($calendar);
-
-		return $this;
-	}
-
-
-	/**
-	 * @param array|\DateTime[]
-	 *
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendar(array $calendar)
-	{
-		$calendar = Json::encode($calendar);
-
-		$this->calendar = $calendar;
-		$this->formattedCalendar = NULL;
-
-		return $this;
-	}
-
-
-	/**
-	 * @param \DateTime $from
-	 * @param \DateTime $to
-	 *
-	 * @return bool
-	 */
-	public function isAvailable(\DateTime $from, \DateTime $to = NULL)
-	{
-		$calendar = $this->getCalendar();
-
-		if(!count($calendar)) return TRUE;
-
-		if($to === NULL) $to = clone $from;
-
-		$from->modify('midnight');
-		while($from <= $to) {
-			if(in_array($from, $calendar)) return FALSE;
-			$from->modify('next day');
-		}
-
-		return TRUE;
-	}
-
-	/**
 	 * @return \Entity\Rental\Placement|NULL
 	 */
 	public function getPlacement()
@@ -1731,53 +1673,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->interviewAnswers;
 	}
 
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendar()
-	{
-		$this->calendar = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendarUpdated(\DateTime $calendarUpdated)
-	{
-		$this->calendarUpdated = $calendarUpdated;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getCalendarUpdated()
-	{
-		return $this->calendarUpdated;
-	}
-
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setOldCalendarUpdated(\DateTime $calendarUpdated)
-	{
-		$this->oldCalendarUpdated = $calendarUpdated;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getOldCalendarUpdated()
-	{
-		return $this->oldCalendarUpdated;
-	}
 
 	/**
 	 * @param \Entity\Rental\Image

@@ -11,6 +11,12 @@ class ReservationEditPresenter extends BasePresenter
 
 	/**
 	 * @autowire
+	 * @var \Tralandia\SearchCache\UpdateCalendarListener
+	 */
+	protected $updateCalendarListener;
+
+	/**
+	 * @autowire
 	 * @var \Tralandia\Location\Countries
 	 */
 	protected $countries;
@@ -184,6 +190,8 @@ class ReservationEditPresenter extends BasePresenter
 
 		$this->em->persist($reservation);
 		$this->em->flush($reservation);
+
+		$this->updateCalendarListener->onReservationEdit($reservation);
 	}
 
 }
