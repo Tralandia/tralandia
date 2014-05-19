@@ -354,6 +354,16 @@ jQuery(document).ready(function($){
 
     photoSetGrid('.photoset-default');
 
+    $(document).tooltip({
+        show: {
+            delay: 200
+        },
+        position: {
+            my: "center bottom",
+            at: "center bottom-25"
+        }
+    });
+
 });
 
 function photoSetGrid(selector) {
