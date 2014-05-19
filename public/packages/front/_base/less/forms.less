@@ -496,7 +496,7 @@ table.formTable {
 				top: -4px;
 			}
 
-			table {
+			table:not(.addOnTable) {
 				border-collapse: collapse;
 				border-spacing: 0px;
 				width: 300px;
@@ -519,6 +519,15 @@ table.formTable {
 
 				td input[type="radio"], td input[type="checkbox"] {
 					width: 40px;
+				}
+			}
+
+			table.addOnTable {
+				span.invalidAlert {
+					float: none;
+					display: block;
+					text-align: left;
+					padding-left: 5px;
 				}
 			}
 
@@ -618,34 +627,32 @@ table.formTable {
 			height: 46px;
 			color: @brown;
 			td {
-				padding-top: 20px;
+				/*padding-top: 20px;*/
 				padding-bottom: 10px;
 			}
 
-			td:last-child {
-				span.help , span.invalidAlert  {
-					font-size: 12px;
-					color: #999;
-					line-height: 14px;
-					font-weight: normal;
-				}
-
-				span.invalidAlert {
-					color: red;
-					text-align: right;
-					float: right;
-				}
-
-			}
+		}
+		
+		span.help , span.invalidAlert  {
+			font-size: 12px;
+			color: #999;
+			line-height: 14px;
+			font-weight: normal;
 		}
 
+		span.invalidAlert {
+			color: red;
+			text-align: right;
+			float: right;
+		}
+/*
 		tr:nth-child(2) {
 			td {
 				vertical-align: top;
-				/*padding: 0px 10px ;*/
+				padding: 0px 10px ;
 			}
 		}
-
+*/
 		label {
 			margin-left: 5px;
 			cursor: pointer;
