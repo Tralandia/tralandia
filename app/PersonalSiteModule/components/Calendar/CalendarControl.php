@@ -18,7 +18,7 @@ class CalendarControl extends BaseControl
 	/**
 	 * @var Rental
 	 */
-	private $rental;
+	protected $rental;
 
 	/**
 	 * @var \BaseModule\Components\ICalendarControlFactory
