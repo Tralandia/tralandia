@@ -30,7 +30,7 @@
 			 data-day="{$key}-{$day->dd}">
 			{$day->dd}
 			{if $version!='old'}
-			<abbr>{$day->fc}</abbr>
+			<abbr n:if="$day->fc !== NULL">{$day->fc}</abbr>
 			{/if}
 		</div>
 	{/foreach}

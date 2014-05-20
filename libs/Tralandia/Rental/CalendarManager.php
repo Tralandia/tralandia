@@ -131,7 +131,7 @@ class CalendarManager
 	}
 
 
-	public static function createDay(\DateTime $date, $maxCapacity)
+	public static function createDay(\DateTime $date, $maxCapacity = NULL)
 	{
 		return [
 			self::KEY_FREE_CAPACITY => $maxCapacity,
