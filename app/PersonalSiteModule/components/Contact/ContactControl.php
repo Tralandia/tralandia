@@ -18,7 +18,7 @@ class ContactControl extends BaseControl
 	/**
 	 * @var Rental
 	 */
-	private $rental;
+	protected $rental;
 
 	/**
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory

@@ -28,6 +28,7 @@ use Nette;
  * @property \Tralandia\Rental\Type $type m:hasOne
  * @property \Tralandia\Contact\Address $address m:hasOne
  * @property \Tralandia\Contact\Phone|null $phone m:hasOne
+ * @property \Tralandia\PersonalSite\Configuration|null $personalSiteConfiguration m:hasOne(personalSiteConfiguration_id:)
  *
  * @property \Tralandia\Rental\Amenity[] $amenities m:hasMany
  * @property \Tralandia\Language\Language[] $spokenLanguages m:hasMany

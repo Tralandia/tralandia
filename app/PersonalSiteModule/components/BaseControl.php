@@ -20,10 +20,14 @@ abstract class BaseControl extends Control {
 		$helpers = $this->presenter->getContext()->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
 
-		$path = dirname(ClassType::from($this)->getFileName()) . '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
-
 		$template->setTranslator($this->presenter->getContext()->getService('translator'));
 
+		$path = null;
+		if(isset($this->rental)) {
+			$path = APP_DIR . '/PersonalSiteModule/templates/'
+				. ucfirst($this->rental->personalSiteConfiguration->template)
+				. '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
+		}
 		if(is_file($path)) {
 			$template->setFile($path); // automatické nastavení šablony
 		}
