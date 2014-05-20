@@ -215,7 +215,11 @@ trait TGetCalendar
 	 */
 	public function setCalendarUpdated(\DateTime $calendarUpdated)
 	{
-		$this->calendarUpdated = $calendarUpdated;
+		if($this instanceof \Tralandia\Rental\Rental) {
+			$this->row->calendarUpdated = $calendarUpdated;
+		} else {
+			$this->calendarUpdated = $calendarUpdated;
+		}
 
 		return $this;
 	}
@@ -225,7 +229,7 @@ trait TGetCalendar
 	 */
 	public function getCalendarUpdated()
 	{
-		return $this->calendarUpdated;
+		return $this instanceof \Tralandia\Rental\Rental ? $this->row->calendarUpdated : $this->calendarUpdated;
 	}
 
 	/**
@@ -234,7 +238,11 @@ trait TGetCalendar
 	 */
 	public function setOldCalendarUpdated(\DateTime $calendarUpdated)
 	{
-		$this->oldCalendarUpdated = $calendarUpdated;
+		if($this instanceof \Tralandia\Rental\Rental) {
+			$this->row->oldCalendarUpdated = $calendarUpdated;
+		} else {
+			$this->oldCalendarUpdated = $calendarUpdated;
+		}
 
 		return $this;
 	}
@@ -244,7 +252,7 @@ trait TGetCalendar
 	 */
 	public function getOldCalendarUpdated()
 	{
-		return $this->oldCalendarUpdated;
+		return $this instanceof \Tralandia\Rental\Rental ? $this->row->oldCalendarUpdated : $this->oldCalendarUpdated;
 	}
 
 

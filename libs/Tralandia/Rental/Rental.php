@@ -115,6 +115,7 @@ class Rental extends \Tralandia\Lean\BaseEntity
 
 	public function isCalendarEmpty()
 	{
+		$c = $this->getCalendar();
 		return !(bool) count($this->getCalendar());
 	}
 

@@ -1,12 +1,13 @@
 <section id="calendar" class="section-block content-section" data-bg="" data-color="" data-link="">
 	<div class="inner-section">
 		<h2 class="main-title">Kalendár obsadenosti <time datetime="2011-10-05T09:00Z">aktualizované: <b>{$rental->calendarUpdated|date}</b></time></h2>
+		{var $version = $rental->calendarVersion()}
 		<div class="entry-content">
-			{control calendar, 4, $rental->calendar}
+			{control calendar, 4, $rental->calendar, 'rentalDetail', 0, $version}
 			<div class="clearfix"></div>
-			{control calendar, 4, $rental->calendar, 'hidden', 4}
+			{control calendar, 4, $rental->calendar, 'hidden', 4, $version}
 			<div class="clearfix"></div>
-			{control calendar, 4, $rental->calendar, 'hidden', 8}
+			{control calendar, 4, $rental->calendar, 'hidden', 8, $version}
 			<div class="clearfix"></div>
 		</div>
 		<div class="clearfix"></div>
