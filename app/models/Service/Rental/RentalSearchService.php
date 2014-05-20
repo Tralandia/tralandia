@@ -319,7 +319,7 @@ class RentalSearchService extends Nette\Object
 					$byPrice = [];
 					$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
 					foreach($priceOptions as $priceOption) {
-						if($priceOption > $value['from'] && $priceOption <= $value['to']) {
+						if($priceOption >= $value['from'] && $priceOption < $value['to']) {
 							$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
 						}
 					}
