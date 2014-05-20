@@ -22,7 +22,9 @@
 		{var $status = ''}
 
 		{ifset $day->c}
-			{var $selected = 'selected'}
+			{if $day->c && $day->c != 's20'}
+				{var $selected = 'selected'}
+			{/if}
 			{var $status = $day->c}
 		{/ifset}
 

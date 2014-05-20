@@ -522,7 +522,7 @@ $(function(){
 
 	};
 
-	$.calendarEdit.conteiner = [];
+	$.calendarEdit.container = [];
 
 	$.calendarEdit.addToInput = function(a,$elem){
 
@@ -532,17 +532,48 @@ $(function(){
 
 	$.calendarEdit.addDate = function(d,$elem){
 
-		$.calendarEdit.conteiner.push(d);
+		$.calendarEdit.container.push(d);
 
-		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
-	};
+		$.calendarEdit.addToInput($.calendarEdit.container,$elem);
+	}
+
+	$.calendarEdit.setSelected = function(newInputValues, $calendarForm) {
+		var dates = newInputValues.split(',');
+
+		$calendarForm.find('div.day').removeClass()
+
+		for(var n in dates) {
+			var date = dates[n];
+			var $date = $calendarForm.find('div.day[data-day="'+date+'"]');
+
+		}
+
+		// $calendar.find('.day.active').each(function(ii){
+
+		// 	$(this).removeClass(statusClass.last);
+		// 	$(this).removeClass(statusClass.middle);
+		// 	$(this).removeClass(statusClass.first);
+
+		// 	if ($(this).hasClass('selected') && status == 0 ){
+		// 		$(this).addClass(statusClass.first);
+		// 		status = 1;
+		// 	} else if($(this).hasClass('selected') && (status == 1 || status == 2) ){
+		// 		$(this).addClass(statusClass.middle);
+		// 		status = 2;
+		// 	} else if(!$(this).hasClass('selected') && (status == 2 || status == 1) ){
+		// 		$(this).addClass(statusClass.last);
+		// 		status = 0;
+		// 	}
+
+		// });
+	}
 
 	$.calendarEdit.removeDate = function(d,$elem){
 
-		var p = $.calendarEdit.conteiner.indexOf(d);
+		var p = $.calendarEdit.container.indexOf(d);
 
-		$.calendarEdit.conteiner.splice(p,1);
-		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
+		$.calendarEdit.container.splice(p,1);
+		$.calendarEdit.addToInput($.calendarEdit.container,$elem);
 	};
 
 	$.fn.calendarEdit = function(options){
@@ -557,15 +588,10 @@ $(function(){
 			var $buttonSave = $('.calendarSumitButton');
 
 			var inputValues = $input.val();
-			// console.log(inputValues);
 
 			if(defaultValue.length > 0){
-				$.calendarEdit.conteiner = defaultValue.split(',');
+				$.calendarEdit.container = defaultValue.split(',');
 			}
-
-			$input.on('change',function(){
-				// console.log($(this).val());
-			})
 
 			$calendarForm.find('.calendar').each(function(i){
 
@@ -575,59 +601,50 @@ $(function(){
 				$calendar.find('.day.active').click(function(){
 
 					var statusClass = {
-						first: 's01',
-						last: 's10',
-						middle: 's11'
+						first: 's02',
+						last: 's20',
+						middle: 's22'
 					}
 
-					var currentTime = $(this).attr('data-day');
-					// console.log(currentTime);
+					var currentTime = $(this).data('day');
 
 					if(!$(this).hasClass('selected')){
-
-						$(this).addClass('selected');
-
 						$.calendarEdit.addDate(currentTime,$input);
-
 					} else {
-
-						// console.log('vyvoleny');
-						$(this).removeClass('selected');
-						$(this).addClass(' s00');
-
 						$.calendarEdit.removeDate(currentTime,$input);
-
 					}
 
-					var stats = 0 ;
-
-					$calendar.find('.day.active').each(function(ii){
-
-						$(this).removeClass(statusClass.last);
-						$(this).removeClass(statusClass.middle);
-						$(this).removeClass(statusClass.first);
-
-						if($(this).hasClass('selected') && stats == 0 ){
-							$(this).addClass(statusClass.first);
-
-							stats = 1;
-						}
-
-						else if($(this).hasClass('selected') && (stats == 1 || stats == 2) ){
-							$(this).addClass(statusClass.middle);
-
-							stats = 2;
-						}
-
-						else if(!$(this).hasClass('selected') && (stats == 2 || stats == 1) ){
-							$(this).addClass(statusClass.last);
-
-							stats = 0;
-						}
-
-					});
-
 					var newInputValues = $input.val();
+
+					var dates = newInputValues.split(',');
+
+					$calendarForm.find('div.day').removeClass(
+						$.map(statusClass, function(el) {
+							return el;
+						}).join(' ')
+					);
+					$calendarForm.find('div.day').removeClass('selected');
+
+					for(var n in dates) {
+						var date = dates[n];
+						var $date = $calendarForm.find('div.day[data-day="'+date+'"]');
+						var $dateNext = $date.next();
+						var $datePrev = $date.prev();
+
+						if ($date.hasClass(statusClass.last)) {
+							$date.addClass(statusClass.middle);
+						} else {
+							$date.addClass(statusClass.first);
+						}
+
+						if ($dateNext.hasClass(statusClass.first)) {
+							$dateNext.addClass(statusClass.middle);
+						} else {
+							$dateNext.addClass(statusClass.last);
+						}
+
+						$date.addClass('selected');
+					}
 
 					if(newInputValues != inputValues){
 						$buttonSave.attr('disabled',false);
@@ -636,7 +653,6 @@ $(function(){
 						$buttonSave.attr('disabled',true);
 						$buttonSave.find('small').html($buttonSave.data('inactiveText'));
 					}
-
 
 					return false;
 
