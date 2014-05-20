@@ -76,7 +76,7 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.-_])+>/[!<language [a-z]{2}>]', [
+		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.\\-])+>/[!<language [a-z]{2}>]', [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'

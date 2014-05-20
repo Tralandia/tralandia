@@ -18,7 +18,7 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 //		$mask = '//[!<www www.>]%domain%/[!<language [a-z]{2}>]';
 //		$mask = '//<host [a-z\\.]+>/[!<language [a-z]{2}>]';
-		$mask = '//<host (?:(?!tralandia|tra-local)[a-z\\.])+>/[!<language [a-z]{2}>]';
+		$mask = '//<host (?:(?!tralandia|tra-local)[a-z\\.\\-])+>/[!<language [a-z]{2}>]';
 		$metadata = [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
@@ -36,6 +36,13 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 //			'primaryLocation' => $this->findLocation(56),
 //			'language' => $this->findLanguage(144),
 //		));
+
+		$this->routeIn($route, 'http://www.ubytovanie-hudak.local/', 'PersonalSite:Default', array(
+			'action' => 'default',
+			'rental' => $this->findRental(21812),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://www.ubytovanie-hudak.local/');
 
 		$this->routeIn($route, 'http://www.tralandia.sk/', NULL);
 
