@@ -18,7 +18,7 @@ class AmenitiesControl extends BaseControl
 	/**
 	 * @var Rental
 	 */
-	private $rental;
+	protected $rental;
 
 
 	public function __construct(Rental $rental)
