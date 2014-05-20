@@ -18,7 +18,7 @@ class GalleryControl extends BaseControl
 	/**
 	 * @var \Tralandia\Rental\Rental
 	 */
-	private $rental;
+	protected $rental;
 
 
 	public function __construct(Rental $rental)

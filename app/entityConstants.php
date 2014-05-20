@@ -18,6 +18,7 @@ define('RENTAL_ROOM_TYPE_ENTITY', '\Entity\Rental\RoomType');
 define('RENTAL_IMAGE_ENTITY', '\Entity\Rental\Image');
 define('INTERVIEW_QUESTION_ENTITY', '\Entity\Rental\InterviewQuestion');
 define('INTERVIEW_ANSWER_ENTITY', '\Entity\Rental\InterviewAnswer');
+define('PERSONAL_SITE_CONFIGURATION_ENTITY', '\Entity\PersonalSite\Configuration');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
 define('BLACK_LIST_ENTITY', '\Entity\User\BlackList');

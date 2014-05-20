@@ -162,7 +162,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var \Entity\PersonalSite\Configuration
-	 * @ORM\OneToOne(targetEntity="Entity\PersonalSite\Configuration", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\PersonalSite\Configuration", inversedBy="rental", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $personalSiteConfiguration;
@@ -377,7 +377,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	public function getPersonalSiteUrl()
 	{
-		return $this->personalSiteConfiguration->getUrl();
+		$configuration = $this->personalSiteConfiguration;
+		return $configuration ? $configuration->getUrl() : NULL;
 	}
 
 	/**

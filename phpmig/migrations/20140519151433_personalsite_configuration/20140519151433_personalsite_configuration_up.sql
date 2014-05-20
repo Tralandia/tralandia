@@ -28,3 +28,9 @@ DROP INDEX UNIQ_1619C27D34BF244E ON rental;
 ALTER TABLE rental CHANGE personalsite_id personalSiteConfiguration_id INT DEFAULT NULL;
 ALTER TABLE rental ADD CONSTRAINT FK_1619C27D91BA7309 FOREIGN KEY (personalSiteConfiguration_id) REFERENCES personalsite_configuration (id) ON DELETE CASCADE;
 CREATE UNIQUE INDEX UNIQ_1619C27D91BA7309 ON rental (personalSiteConfiguration_id);
+
+
+ALTER TABLE personalsite_configuration ADD template VARCHAR(255) NOT NULL;
+ALTER TABLE `personalsite_configuration` CHANGE `template` `template` VARCHAR(255)  CHARACTER SET utf8  NOT NULL  DEFAULT 'first';
+ALTER TABLE `personalsite_configuration` MODIFY COLUMN `template` VARCHAR(255) CHARACTER SET utf8 NOT NULL DEFAULT 'first' AFTER `url`;
+update personalsite_configuration set template = 'first';

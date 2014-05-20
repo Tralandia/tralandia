@@ -36,7 +36,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
-		$this->routeIn($route, 'http://slniecko.uns-local.sk/', 'PersonalSite:Default', array(
+		$this->routeIn($route, 'http://slniecko.uns-local.sk/', 'PersonalSite:First', array(
 			'action' => 'default',
 			'rentalSlug' => 'slniecko',
 			'rental' => $this->findRental('44941'),
