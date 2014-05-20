@@ -156,8 +156,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+	 * @todo nepouzivany od 19.5.2014
 	 */
 	protected $personalSiteUrl;
+
+	/**
+	 * @var \Entity\PersonalSite\Configuration
+	 * @ORM\OneToOne(targetEntity="Entity\PersonalSite\Configuration", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
+	 */
+	protected $personalSiteConfiguration;
 
 	/**
 	 * @var string
@@ -365,6 +373,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $lastUpdate;
+
+
+	public function getPersonalSiteUrl()
+	{
+		return $this->personalSiteConfiguration->getUrl();
+	}
 
 	/**
 	 * @return integer|NULL

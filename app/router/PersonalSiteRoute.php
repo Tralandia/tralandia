@@ -116,7 +116,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 
 	protected function out($params, \Entity\Rental\Rental $rental)
 	{
-		$domain = $params['rental']->personalSiteUrl;
+		$domain = $params['rental']->getPersonalSiteUrl();
 		$params['rentalSlug'] = strstr($domain, '.', true);
 
 		return $params;

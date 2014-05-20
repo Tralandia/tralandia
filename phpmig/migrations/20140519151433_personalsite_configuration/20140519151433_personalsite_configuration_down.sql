@@ -1,0 +1,1 @@
+-- PersonalsiteConfiguration migration DOWN file
