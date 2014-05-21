@@ -248,7 +248,7 @@ class OptionGenerator
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName()),
-				'count' => count($top[$value->getId()]),
+				'count' => $top[$value->getId()],
 			];
 		}
 
@@ -261,9 +261,11 @@ class OptionGenerator
 	/**
 	 * @return array
 	 */
-	public function generateSpokenLanguage()
+	public function generateSpokenLanguage(Location $location)
 	{
-		$languages = $this->spokenLanguages->getUsed();
+		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+		$centralLanguage = $languageRepository->find(CENTRAL_LANGUAGE);
+		$languages = $location->getImportantLanguages($centralLanguage);
 
 		if(!$languages) return [];
 

@@ -49,7 +49,7 @@ class UpdateYourRental extends EmailManager
 		// select count(*) from rental where rank < 75 and (emailSent = 0 or emailSent is null)
 		$qb = $this->rentalDao->createQueryBuilder('r');
 		$qb->where($qb->expr()->eq('r.emailSent', ':emailSent'))->setParameter('emailSent', FALSE)
-			->andWhere($qb->expr()->lt('r.rank', ':requiredRank'))->setParameter('requiredRank', 75)
+			->andWhere($qb->expr()->lt('r.rank', ':requiredRank'))->setParameter('requiredRank', 60)
 //			->andWhere($qb->expr()->eq('r.harvested', ':harvestedOnly'))->setParameter('harvestedOnly', TRUE)
 			->setMaxResults(1);
 

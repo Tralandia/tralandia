@@ -24,6 +24,11 @@ class RouterFactory
 	 */
 	protected $frontRouteFactory;
 
+	/**
+	 * @var ISimpleFrontRouteFactory
+	 */
+	protected $simpleFrontRouteFactory;
+
 	public $languageDao;
 	public $locationDao;
 
@@ -39,18 +44,26 @@ class RouterFactory
 	 */
 	private $customPersonalSiteRouteFactory;
 
+	/**
+	 * @var array
+	 */
+	private $options;
+
 
 	public function __construct($domainMask, array $options, ISimpleRouteFactory $simpleRouteFactory,
-								IFrontRouteFactory $frontRouteFactory, IPersonalSiteRouteFactory $personalSiteRouteFactory,
+								IFrontRouteFactory $frontRouteFactory, ISimpleFrontRouteFactory $simpleFrontRouteFactory,
+								IPersonalSiteRouteFactory $personalSiteRouteFactory,
 								ICustomPersonalSiteRouteFactory $customPersonalSiteRouteFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
+		$this->simpleFrontRouteFactory = $simpleFrontRouteFactory;
 		$this->personalSiteRouteFactory = $personalSiteRouteFactory;
 		$this->customPersonalSiteRouteFactory = $customPersonalSiteRouteFactory;
 		$this->domainMask = $domainMask;
+		$this->options = $options;
 	}
 
 	/**
@@ -63,7 +76,7 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.])+>/[!<language [a-z]{2}>]', [
+		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.\\-])+>/[!<language [a-z]{2}>]', [
 			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'
@@ -87,7 +100,8 @@ class RouterFactory
 
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$frontRouter[] = $this->frontRouteFactory->create();
+		$frontRouter[] = $this->simpleFrontRouteFactory->create();
+//		$frontRouter[] = $this->frontRouteFactory->create();
 
 
 		return $router;

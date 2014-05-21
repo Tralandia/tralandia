@@ -7,6 +7,7 @@ use Extras\Cache\Cache;
 use Nette\Utils\Arrays;
 use Robot\IUpdateRentalSearchCacheRobotFactory;
 use Tralandia\BaseDao;
+use Tralandia\Location\LocationRepository;
 
 class RentalSearchService extends Nette\Object
 {
@@ -61,10 +62,16 @@ class RentalSearchService extends Nette\Object
 	 */
 	private $rentalDao;
 
+	/**
+	 * @var \Tralandia\Location\LocationRepository
+	 */
+	private $locationRepository;
+
 
 	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,BaseDao $rentalDao,
 								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
-								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory)
+								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory,
+								LocationRepository $locationRepository)
 	{
 		$this->primaryLocation = $primaryLocation;
 
@@ -72,6 +79,7 @@ class RentalSearchService extends Nette\Object
 		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
 		$this->rentalDao = $rentalDao;
+		$this->locationRepository = $locationRepository;
 	}
 
 	/**
@@ -250,16 +258,20 @@ class RentalSearchService extends Nette\Object
 	 *
 	 * @return array
 	 */
-	public function getCollectedResults($criterionType)
+	public function getCollectedResults($criterionType, $maxResults = NULL)
 	{
 		$this->loadCache();
 
 		if(!array_key_exists($criterionType, $this->searchCacheData)) return [];
 		$results = $this->getResults();
 
-		$collection = [];
-		foreach($this->searchCacheData[$criterionType] as $key => $value) {
-			$collection[$key] = array_intersect($results, $value);
+		if($criterionType == self::CRITERIA_LOCATION) {
+			$collection = $this->locationRepository->findTopLocationsForSearch($results, $maxResults);
+		} else {
+			$collection = [];
+			foreach($this->searchCacheData[$criterionType] as $key => $value) {
+				$collection[$key] = array_intersect($results, $value);
+			}
 		}
 
 		return array_filter($collection);
@@ -307,7 +319,7 @@ class RentalSearchService extends Nette\Object
 					$byPrice = [];
 					$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
 					foreach($priceOptions as $priceOption) {
-						if($priceOption > $value['from'] && $priceOption <= $value['to']) {
+						if($priceOption >= $value['from'] && $priceOption < $value['to']) {
 							$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
 						}
 					}

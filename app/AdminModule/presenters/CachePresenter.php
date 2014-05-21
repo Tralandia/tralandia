@@ -6,6 +6,7 @@ namespace AdminModule;
 use Nette\ArrayHash;
 use Nette\Caching\Cache;
 use Service\Rental\RentalSearchService;
+use Tralandia\Localization\Translator;
 
 class CachePresenter extends BasePresenter {
 
@@ -36,6 +37,19 @@ class CachePresenter extends BasePresenter {
 	{
 		$this->invalidatePhrasesCache([$id]);
 		$this->sendPayload();
+	}
+
+	public function actionInvalidateAliasesCache()
+	{
+		$cache = $this->getContext()->getService('translatorCache');
+
+		$aliases = $this->em->getRepository(PHRASE_ALIAS_ENTITY)->findall();
+
+		foreach($aliases as $alias) {
+			$cache->remove(Translator::getAliasCacheKey($alias->id));
+		}
+
+		$this->sendJson(['status' => 'done']);
 	}
 
 	public function actionInvalidateCache($id)

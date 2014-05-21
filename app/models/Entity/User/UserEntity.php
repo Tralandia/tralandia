@@ -60,6 +60,14 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $newsletter;
 
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $invoicingInformation;
+
+
+
 	public function hasRole(array $roles)
 	{
 		return $this->getRole() && in_array($this->getRole()->getSlug(), $roles);

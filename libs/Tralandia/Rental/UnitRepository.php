@@ -15,7 +15,7 @@ use Tralandia\Lean\BaseRepository;
  * Class UnitRepository
  * @package Tralandia\Rental
  *
- * @method save(\Tralandia\Rental\Unit $unit)
+ * @method save(\Tralandia\Rental\Unit $entity)
  * @method \Tralandia\Rental\Unit createNew()
  * @method \Tralandia\Rental\Unit find()
  * @method \Tralandia\Rental\Unit findOneBy()

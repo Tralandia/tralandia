@@ -11,7 +11,7 @@ use Nette;
 
 
 /**
- * @property int $id
+ * @property int $sort
  */
 class InterviewQuestion extends \Tralandia\Lean\BaseEntity
 {

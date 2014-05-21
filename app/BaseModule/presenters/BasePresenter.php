@@ -45,6 +45,12 @@ abstract class BasePresenter extends Presenter {
 	 */
 	public $userDao;
 
+	/**
+	 * @autowire
+	 * @var \Tralandia\User\UserRepository
+	 */
+	public $userRepository;
+
 
 	public $cssFiles;
 	public $cssRemoteFiles;
@@ -130,6 +136,11 @@ abstract class BasePresenter extends Presenter {
 	public $loggedUser;
 
 	/**
+	 * @var \Tralandia\User\User
+	 */
+	public $loggedLeanUser;
+
+	/**
 	 * @autowire
 	 * @var \Tester\ITester
 	 */
@@ -173,6 +184,12 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect(301, 'this');
 		}
 
+		if(!empty($this->params['lang'])) {
+			$language = $this->findLanguage($this->params['lang'], FALSE);
+			unset($this->params['lang']);
+			$language && $this->redirect(301, 'this', [FrontRoute::LANGUAGE => $language]);
+		}
+
 		if($device = $this->getParameter(FrontRoute::DEVICE)) {
 			if(in_array($device, [Device::MOBILE, Device::DESKTOP])) {
 				$this->device->setDevice($device);
@@ -202,6 +219,7 @@ abstract class BasePresenter extends Presenter {
 
 		if($this->user->isLoggedIn()) {
 			$this->loggedUser = $this->userDao->find($this->user->getId());
+			$this->loggedLeanUser = $this->userRepository->find($this->user->getId());
 			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
 				$this->redirect(':Front:Sign:out');
 			}

@@ -24,14 +24,16 @@
         "nextras/datagrid": "@dev",
 		"mobiledetect/mobiledetectlib": "@dev",
 		"giggsey/libphonenumber-for-php": "master",
-        "dg/dibi": "@dev",
 		"texy/texy": "dev-release-2.x",
 		"janmarek/mockista": "@dev",
         "davedevelopment/phpmig": "*",
+        "ondrejbrejla/eciovni": "*",
         "pimple/pimple": "1.*"
 	},
     "require-dev": {
-        "phpunit/phpunit": "4.*"
+        "phpunit/phpunit": "4.*",
+        "mockery/mockery": "@dev",
+        "nette/tester": "@dev"
     },
     "repositories": [
 		{

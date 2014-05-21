@@ -26,6 +26,8 @@ use Tralandia\Rental\Types;
 class MediaForm extends BaseFormControl
 {
 
+	public $onFormSuccess = [];
+
 	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
 	 */
@@ -92,9 +94,11 @@ class MediaForm extends BaseFormControl
 		}
 
 		$videoUrl = $values->video;
-		$video = $this->detectVideo($videoUrl);
-		if(!$video->id) {
-			$form['video']->addError('Video link is invalid');
+		if($videoUrl) {
+			$video = $this->detectVideo($videoUrl);
+			if(!$video->id) {
+				$form['video']->addError('Video link is invalid');
+			}
 		}
 	}
 
@@ -115,19 +119,28 @@ class MediaForm extends BaseFormControl
 		}
 
 		$videoUrl = $validValues->video;
-		$detectedVideo = $this->detectVideo($videoUrl);
-
 		$video = $rental->getMainVideo();
-		if(!$video) {
-			$video = new Video();
-			$video->setSort(0);
-			$rental->addVideo($video);
+		if($videoUrl) {
+			$detectedVideo = $this->detectVideo($videoUrl);
+
+			if(!$video) {
+				$video = new Video();
+				$video->setSort(0);
+				$rental->addVideo($video);
+			}
+			$video->setService($detectedVideo->service);
+			$video->setVideoId($detectedVideo->id);
+		} else {
+			if($video) {
+				$rental->removeVideo($video);
+				$this->em->remove($video);
+			}
 		}
-		$video->setService($detectedVideo->service);
-		$video->setVideoId($detectedVideo->id);
 
 		$this->em->persist($rental, $video);
 		$this->em->flush();
+
+		$this->onFormSuccess($form, $rental);
 	}
 
 

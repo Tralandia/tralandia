@@ -624,6 +624,10 @@ body.gateway-open {
 #logo strong {
   float: left;
   padding: 8px 10px 12px;
+  width: 375px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-inner, .inner-section {
@@ -671,6 +675,7 @@ body.gateway-open {
   line-height: 1;
   margin-left: 10px;
   position: relative;
+  float: left;
 }
 #primary-nav li.sfHover > a, #primary-nav li.current-menu-item > a, #primary-nav li.active > a {
   background: #1c93c5;
@@ -694,6 +699,7 @@ body.gateway-open {
   font-weight: bold;
 }
 #primary-nav li.language {
+  margin-top: 8px;
 }
 #primary-nav li.language a.select2-choice {
     padding: 5px 5px 5px 15px;
@@ -1746,11 +1752,17 @@ h3#pings {
 }
 
 @media only screen and (max-width: 1280px) {
+  #logo strong {
+    width: 390px;
+  }
   #slideshow .slider-content h2 {
     font-size: 50px;
   }
   #slideshow .slider-content h3 {
     font-size: 25px;
+  }
+  #logo strong {
+    font-size: 26px;
   }
 }
 /*------------------------------------------------------------------------*/
@@ -1892,6 +1904,9 @@ h3#pings {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  #logo strong {
+    width: 390px;
+  }
   #team .team-members .member {
     width: 46%;
   }
@@ -1907,9 +1922,6 @@ h3#pings {
   }
   #primary-nav li a {
     padding: 15px 5px;
-  }
-  #logo strong {
-    font-size: 26px;
   }
   #map {
     width: 100%;
@@ -2000,6 +2012,9 @@ h3#pings {
   }
 }
 @media only screen and (max-width: 480px) {
+  #logo strong {
+    width: 300px;
+  }
   #portfolio-slider .portfolio-content {
     padding-top: 25%;
   }
@@ -2350,14 +2365,30 @@ div.day {
   text-align: center;
   padding-top: 3px;
   float: left;
-  border: 1px solid #CBD2A0;
+  border: none;
   margin-right: 1px;
   margin-bottom: 1px;
+  background: #f3f3f3;
+  border-radius: 3px;
 } 
+div.day.inactive {
+  border: none;
+  background: none;
+}
 
 div.day.active {
   color: #663300!Important;
   cursor: pointer;
+  position: relative;
+  line-height: 21px;
+}
+
+div.day.active abbr {
+  position: absolute;
+  bottom: -4px;
+  font-size: 10px;
+  color: #aaa;
+  right: 2px;
 }
 
 div.day..ro {
@@ -2390,20 +2421,52 @@ div.day..inactive {
   margin-bottom: 10px;
 }
 
-.selected {
-  background-color: #C5D279;
+div.day.selected {
+  background-color: #f68703;
+  border-color: #f68703;
 }
 
-.selected.status01 {
-  background: url(../img/calendar-half.png) right bottom;
+div.day.s01 {
+  background: url(../../images/calendar-half-orange.png) right bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #f3f3f3;
+}
+div.day.s10 {
+  background: url(../../images/calendar-half-orange-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #f3f3f3;
+}
+
+div.day.s02 {
+  background: url(../../images/calendar-half-red.png) right bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
+  background-color: #f3f3f3;
 }
-.status10 {
-  background: url(../img/calendar-half-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+div.day.s20 {
+  background: url(../../images/calendar-half-red-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
+  background-color: #f3f3f3;
+}
+div.day.s22 {
+  background: #f65103;
+}
+div.day.s21 {
+  background: url(../../images/calendar-red-orange.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background-repeat: no-repeat;
+}
+div.day.s12 {
+  background: url(../../images/calendar-orange-red.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background-repeat: no-repeat;
+}
+div.day.active.selected abbr {
+  color: #fff;
+}
+div.day.active.selected.s10 abbr, div.day.active.selected.s20 abbr {
+  color: #AAA;
 }
 
 /*CUSTOMIZED*/
@@ -2585,6 +2648,15 @@ ul.interviewList li p {
   color: #f00;
 }
 */
+
+body .ui-tooltip {
+  font-size: 12px;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  border-color: #A0B325;
+  border-width: 1px;
+  color: #333;
+}
 
 .photoset-grid-custom {
   margin-bottom: 5px;

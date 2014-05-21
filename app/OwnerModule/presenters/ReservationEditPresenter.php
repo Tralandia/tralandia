@@ -11,6 +11,12 @@ class ReservationEditPresenter extends BasePresenter
 
 	/**
 	 * @autowire
+	 * @var \Tralandia\SearchCache\UpdateCalendarListener
+	 */
+	protected $updateCalendarListener;
+
+	/**
+	 * @autowire
 	 * @var \Tralandia\Location\Countries
 	 */
 	protected $countries;
@@ -78,7 +84,7 @@ class ReservationEditPresenter extends BasePresenter
 
 		$form->addText('referrer', 719640);
 
-		$form->addSelect('currency', 2116, $this->currencies->getForSelect());
+		$form->addSelect('currency', 713, $this->currencies->getForSelect());
 
 		$form->addText('totalPrice', 719607)
 			->addCondition(BaseForm::FILLED)
@@ -134,8 +140,15 @@ class ReservationEditPresenter extends BasePresenter
 	{
 		$values = $form->getFormattedValues();
 
-		if(!count($values['units'])) {
-			$form['units']['mainControl']->addError('!!! vyber aspon jednu moznost');
+		if($values['status'] == \Entity\User\RentalReservation::STATUS_CONFIRMED) {
+			if(!$values['arrivalDate'] || !$values['departureDate']) {
+				$form['arrivalDate']->addError('Arrival and departure date are required');
+				$form['departureDate']->addError('Arrival and departure date are required');
+			}
+
+			if(!count($values['units'])) {
+				$form['units']['mainControl']->addError('Please, select at least one unit');
+			}
 		}
 	}
 
@@ -164,14 +177,21 @@ class ReservationEditPresenter extends BasePresenter
 		$currency = $this->em->getRepository(CURRENCY_ENTITY)->find($values['currency']);
 		$reservation->setCurrency($currency);
 
-		$units = $this->em->getRepository(UNIT_ENTITY)->findBy(['id' => $values['units']]);
-		foreach($units as $unit) {
-			$reservation->addUnit($unit);
+		if($values['units']) {
+			$units = $this->em->getRepository(UNIT_ENTITY)->findBy(['id' => $values['units']]);
+			foreach($units as $unit) {
+				$reservation->addUnit($unit);
+			}
+		} else {
+			$rental = $this->loggedUser->getFirstRental();
+			$reservation->setRental($rental);
 		}
 
 
 		$this->em->persist($reservation);
 		$this->em->flush($reservation);
+
+		$this->updateCalendarListener->onReservationEdit($reservation);
 	}
 
 }

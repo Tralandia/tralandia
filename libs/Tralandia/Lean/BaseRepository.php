@@ -110,17 +110,17 @@ class BaseRepository extends Repository
 
 	/**
 	 * @param $where
+	 * @param null $limit
 	 *
 	 * @return mixed|null
 	 */
-	public function findBy($where)
+	public function findBy($where, $limit = null)
 	{
-		return $this->createEntities(
-			$this->connection->select('*')
-				->from($this->getTable())
-				->where('%and', $where)
-				->fetchAll()
-		);
+		$fluent = $this->createFluent();
+		$fluent->where('%and', $where);
+		$limit && $fluent->limit($limit);
+
+		return $this->createEntities($fluent->fetchAll());
 	}
 
 	/**

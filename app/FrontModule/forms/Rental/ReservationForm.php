@@ -217,6 +217,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setChildrenCount($values->children);
 		$reservation->setMessage($values->message);
 		$reservation->setSenderRemoteAddress($this->request->getRemoteAddress());
+		$reservation->setReferrer($this->request->getUrl()->getAuthority());
 
 		$this->reservationRepository->save($reservation);
 

@@ -83,6 +83,17 @@ function rrmdir($dir) {
 	}
 }
 
+function l($message, $priority = Debugger::INFO)
+{
+	Debugger::log($message, $priority);
+}
+
+function lt($name, $priority = 'timerLog')
+{
+	$time = t($name);
+	l("$name: $time", $priority);
+}
+
 /**
  * PHP workaround for direct usage of created class
  *

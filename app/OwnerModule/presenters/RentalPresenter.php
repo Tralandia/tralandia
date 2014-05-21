@@ -44,9 +44,9 @@ class RentalPresenter extends BasePresenter
 	{
 		$rental = $this->loggedUser->getFirstRental();
 		if (!$rental) {
-			$this->redirect('User:edit');
+			$this->redirect('add');
 		}
-		$this->redirect('edit', ['id' => $rental->getId()]);
+		$this->redirect('RentalEdit:default', ['id' => $rental->getId()]);
 	}
 
 
@@ -56,41 +56,22 @@ class RentalPresenter extends BasePresenter
 	}
 
 
-	public function createComponentAddForm()
+	public function createComponentAddForm(\OwnerModule\AddRental\IAddRentalFormFactory $factory)
 	{
-		$form = $this->simpleFormFactory->create();
-		$form->addText('name', $this->translate(152275))
-			->setRequired(TRUE);
+		$component = $factory->create($this->loggedLeanUser);
 
-		$countries = $this->countries->getForSelect();
-		$form->addSelect('country', 'o1094', $countries)
-			->setDefaultValue($this->loggedUser->getPrimaryLocation()->getId());
-
-		$form->addSubmit('submit', '450090');
-
-		$form->onSuccess[] = $this->addFormSuccess;
-
-		return $form;
-	}
+		$component->onFormSuccess[] = function($form, $rental) {
+			$this->redirect('RentalEdit:default', ['id' => $rental->getId()]);
+		};
 
 
-	public function addFormSuccess(Form $form)
-	{
-		$values = $form->getValues();
-
-		$primaryLocation = $this->findLocation($values->country);
-
-		$rental = $this->rentalCreator->simpleCreate($this->loggedUser, $primaryLocation, $values->name);
-
-		$this->rentalDao->add($rental);
-		$this->em->flush();
-
-		$this->redirect('edit', ['id' => $rental->getId()]);
+		return $component;
 	}
 
 
 	public function actionEdit($id)
 	{
+		$this->redirect('RentalEdit:default', ['id' => $id]); // pouziva sa uz novy edit
 		$this->rental = $this->rentalDao->find($id);
 
 		$this->checkPermission($this->rental, 'edit');

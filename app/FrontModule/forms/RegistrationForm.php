@@ -155,14 +155,14 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 			$currency = $this->country->getDefaultCurrency();
 			if($currency) {
-				$rentalContainer->addText('price', 'o100078')
+				$rentalContainer->addText('priceFrom', 'o100078')
 					->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 					->setOption('help', $this->translate('o100073'))
 					->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 					->setRequired('151883');
 			} else {
 				$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
-				$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
+				$rentalContainer->addPriceContainer('priceFrom', 'o100078', $currencies);
 			}
 
 			$amenityImportant = $this->amenities->findImportantForSelect();
@@ -196,7 +196,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'number' => '908 123 789'
 				],
 				'name' => 'Chata Test',
-				'price' => 5,
+				'priceFrom' => 5,
 				'maxCapacity' => 15,
 				'type' => [
 					'type' => 3,
@@ -216,7 +216,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 
 		];
-//		$this->setDefaults($defaults);
+		$this->setDefaults($defaults);
 	}
 
 
