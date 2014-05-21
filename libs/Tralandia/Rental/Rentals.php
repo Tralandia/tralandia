@@ -637,7 +637,7 @@ LIMIT $limit";
 	 */
 	public function filterRentalsForMap(QueryBuilder $qb)
 	{
-		$qb->andWhere($qb->expr()->gte('r.price', ':minPrice'))->setParameter('minPrice', 1);
+		$qb->andWhere($qb->expr()->gte('r.priceFrom', ':minPrice'))->setParameter('minPrice', 1);
 		return $qb;
 	}
 
