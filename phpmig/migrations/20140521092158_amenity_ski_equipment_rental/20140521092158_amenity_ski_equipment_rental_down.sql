@@ -1,0 +1,1 @@
+-- AmenitySkiEquipmentRental migration DOWN file
