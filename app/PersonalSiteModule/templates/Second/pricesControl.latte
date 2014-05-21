@@ -1,0 +1,48 @@
+{var $rentalPricelist = $rental->getPriceList()}
+{var $rentalPricelistCount = count($rentalPricelist)}
+{var $customPriceListCount = count($rental->customPriceList)}
+
+{if ($customPriceListCount > 0 || $rentalPricelistCount > 0)}
+<section id="prices" class="section-block content-section">
+	<div class="inner-section">
+		<h2 class="main-title">{_1197}</h2>
+		<div class="grids">
+			<div class="grid-12">
+				<div class="prices">
+					{if $customPriceListCount > 0}
+						<div class="grids" n:foreach="$rental->customPriceList as $row">
+							<div class="grid-6">
+								<span n:if="$row->seasonFrom" class="date">{$row->seasonFrom|date}</span> <i class="icon icon-arrow-right"></i> <span n:if="$row->seasonTo" class="date">{$row->seasonTo|date}</span>
+							</div>
+							{dump $row->price}
+							<div class="grid-6"><strong>{$row->price}</strong> / {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
+							<div class="grid-12">
+								<span class="small">{_$row->noteId}</span>
+							</div>
+						</div>
+					{else}
+						<div class="grids" n:foreach="$rentalPricelist as $row">
+							<div class="grid-6">
+								{$row->roomCount}x {_$row->roomType->nameId}
+								<small>
+									<span>({$row->bedCount} {_1191, $row->bedCount}{if $row->extraBedCount} + {$row->extraBedCount} {_1185, $row->extraBedCount}{/if})</span>
+								</small>
+							</div>
+							<div class="grid-6"><strong>{$row->price}</strong> {_1189}</div>
+						</div>
+					{/if}
+					<div class="grids" n:foreach="$rental->getPriceListFiles() as $file">
+						<div class="grid-6">
+							{$file->name} <small>{$file->fileSize|bytes}</small>
+						</div>
+						<div class="grid-6">
+							<a href="{plink :Front:Download:pricelist $file->id}" class="">{_512} <i class="icon icon-download"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END #prices -->
+</section>
+{/if}
