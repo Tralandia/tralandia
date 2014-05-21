@@ -34,7 +34,7 @@ function msg($msg)
 
 function snakeToCamel($val)
 {
-	return str_replace(' ', '', ucwords(str_replace('_', ' ', $val)));
+	return str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $val)));
 }
 
 if (!isset($argv[1])) {
@@ -50,7 +50,7 @@ $downKeywords = ['-d', '-down'];
 // jméno třídy migrace
 $migrationName = snakeToCamel(trim($argv[1]));
 // základ jména souborů
-$name = date('YmdHis') . '_' . trim($argv[1]);
+$name = date('YmdHis') . '_' . trim(str_replace('-', '_', $argv[1]));
 // chceme SQL?
 $addSql = TRUE;
 // UP a DOWN?
