@@ -86,7 +86,7 @@ $container['db'] = $container->share(function () use ($databaseConfig) {
 
 
 $container['phpmig.adapter'] = $container->share(function() use ($container) {
-	return new Adapter\PDO\Sql($container['db'], 'phpmig_migrations');
+	return new Adapter\PDO\Sql($container['db'], '___phpmig_migrations');
 });
 
 $container['lean'] = $container->share(function() use ($applicationContainer) {
