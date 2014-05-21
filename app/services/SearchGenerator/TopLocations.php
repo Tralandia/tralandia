@@ -64,15 +64,7 @@ class TopLocations
 			$search = $this->getSearch();
 		}
 
-		$locations = $search->getCollectedResults(RentalSearchService::CRITERIA_LOCATION);
-
-		if (count($locations)) {
-			$locations = $this->sortArrayByNumberOfItems($locations);
-
-			if (is_numeric($maxResults)) {
-				$locations = array_chunk($locations, $maxResults, TRUE)[0];
-			}
-		}
+		$locations = $search->getCollectedResults(RentalSearchService::CRITERIA_LOCATION, $maxResults);
 
 		return $locations;
 	}

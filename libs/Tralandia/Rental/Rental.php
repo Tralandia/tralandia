@@ -11,15 +11,17 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property \Tralandia\Phrase\Phrase $description m:hasOne(description_id:)
  * @property \Tralandia\Phrase\Phrase $name m:hasOne(name_id)
+ * @property string $slug
  * @property int|null $maxCapacity
- * @property string|null $calendar
  * @property string|null $contactName
  * @property string|null $email
  * @property string|null $personalSiteUrl
+ * @property string|null $calendar
  * @property \DateTime|null $calendarUpdated
+ * @property string|null $oldCalendar
+ * @property \DateTime|null $oldCalendarUpdated
  *
  * @property \Tralandia\User\User $user m:hasOne
  * @property \Tralandia\Currency $currency m:hasOne(currency_id)
@@ -41,15 +43,13 @@ use Nette;
 class Rental extends \Tralandia\Lean\BaseEntity
 {
 
+	use \Tralandia\Rental\TGetCalendar;
+
 	/**
 	 * @var array
 	 */
 	private $_interview;
 
-	/**
-	 * @var array
-	 */
-	private $_formattedCalendar;
 
 	/**
 	 * @return int
@@ -112,37 +112,10 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	}
 
 
-	/**
-	 * @return array|\DateTime[]
-	 */
-	public function getCalendar()
-	{
-		if(!$this->calendarUpdated) {
-			return [];
-		}
-
-		if(!is_array($this->_formattedCalendar)) {
-			$days = array_filter(explode(',', $this->row->calendar));
-			$todayZ = date('z');
-			$calendarUpdatedZ = $this->calendarUpdated->format('z');
-			$thisYear = $this->calendarUpdated->format('Y');
-			$nextYear = $thisYear + 1;
-			$daysTemp = [];
-			foreach ($days as $key => $day) {
-				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
-				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-				$daysTemp[] = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
-			}
-
-			$this->_formattedCalendar = array_filter($daysTemp);
-		}
-
-		return $this->_formattedCalendar;
-	}
-
 
 	public function isCalendarEmpty()
 	{
+		$c = $this->getCalendar();
 		return !(bool) count($this->getCalendar());
 	}
 
@@ -220,6 +193,16 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	{
 		$images = $this->getPhotos(1);
 		return reset($images);
+	}
+
+
+	/**
+	 * @alias getMainPhoto
+	 * @return Image
+	 */
+	public function getMainImage()
+	{
+		return $this->getMainPhoto();
 	}
 
 

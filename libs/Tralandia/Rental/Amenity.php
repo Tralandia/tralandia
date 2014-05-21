@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $slug
  * @property bool $important
  * @property \Tralandia\Rental\AmenityType $type m:hasOne(type_id)

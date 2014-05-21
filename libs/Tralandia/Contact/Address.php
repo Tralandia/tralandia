@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string|null $formattedAddress
  * @property string $address
  * @property string $postalCode

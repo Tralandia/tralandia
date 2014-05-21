@@ -49,7 +49,7 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	 */
 	public function request($image, $size = Image::MEDIUM)
 	{
-		if (!$image instanceof \Entity\Rental\Image) {
+		if (!$image instanceof \Entity\Rental\Image && !$image instanceof \Tralandia\Rental\Image) {
 			return NULL;
 		}
 

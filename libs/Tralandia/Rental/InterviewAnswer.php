@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property \Tralandia\Phrase\Phrase $answer m:hasOne(answer_id:)
  * @property \Tralandia\Rental\InterviewQuestion $question m:hasOne(question_id:rental_interviewquestion)
  */

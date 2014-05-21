@@ -206,7 +206,7 @@ class RentalSearchCaching extends \Nette\Object {
 	{
 		$defaultCurrency = $this->location->getDefaultCurrency();
 		$priceSearchInterval = $defaultCurrency->getSearchInterval();
-		$qb->select('r.id AS rentalId, r.price AS price, c.id AS currencyId')
+		$qb->select('r.id AS rentalId, r.priceFrom AS priceFrom, r.priceTo AS priceTo, c.id AS currencyId')
 			->innerJoin('r.currency', 'c');
 
 		$currencies = $this->em->getRepository(CURRENCY_ENTITY)->findAll();
@@ -217,15 +217,24 @@ class RentalSearchCaching extends \Nette\Object {
 
 		$rentalsPrice = $qb->getQuery()->getResult();
 		foreach($rentalsPrice as $value) {
-			$amount = $value['price'];
+			$priceFrom = $value['priceFrom'];
+			$priceTo = $value['priceTo'];
 			if($defaultCurrency->getId() != $value['currencyId']) {
-				$price = new Price($amount, $currenciesById[$value['currencyId']]);
-				$amount = $price->getAmountIn($defaultCurrency);
+				$price = new Price($priceFrom, $currenciesById[$value['currencyId']]);
+				$priceFrom = $price->getAmountIn($defaultCurrency);
+
+				$price = new Price($priceTo, $currenciesById[$value['currencyId']]);
+				$priceTo = $price->getAmountIn($defaultCurrency);
 			}
-			$t = (int) ceil($amount / $priceSearchInterval) * $priceSearchInterval;
-			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
-			if( !($amount % $priceSearchInterval) && $t > 0) {
-				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t - $priceSearchInterval][$value['rentalId']] = $value['rentalId'];
+
+			$min = (int) floor($priceFrom / $priceSearchInterval) * $priceSearchInterval;
+			if( !($priceFrom % $priceSearchInterval) && $min > 0) {
+				$min = $min - $priceSearchInterval;
+			}
+			$max = (int) floor($priceTo / $priceSearchInterval) * $priceSearchInterval;
+
+			foreach(range($min, $max, $priceSearchInterval) as $t) {
+				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
 			}
 		}
 	}

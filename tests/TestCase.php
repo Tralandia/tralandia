@@ -35,6 +35,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	private $em;
 
+	/**
+	 * @var \LeanMapper\Connection
+	 */
+	private $db;
+
 	/** @var \Mockista\Registry */
 	protected $mockista;
 
@@ -47,6 +52,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		$this->context = Nette\Environment::getContext();
 		$this->em = $this->context->getByType('\Doctrine\ORM\EntityManager');
+		$this->db = $this->context->getService('testDb');
 		$this->mockista = new \Mockista\Registry();
 		$this->initializeFindEntityHelper($this->getEm());
 
@@ -70,6 +76,37 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		return $this->em;
 	}
+
+
+	protected function getDb()
+	{
+		return $this->db;
+	}
+
+
+	protected function newDataSet($file, array $variables = NULL)
+	{
+		$this->executeSqlFile(__DIR__ . '/truncate.sql');
+		$this->executeSqlFile($file, $variables);
+	}
+
+	protected function executeSqlFile($file, array $variables = NULL)
+	{
+		if($variables) {
+			$file = $this->createTempSqlFile($file, $variables);
+		}
+		$this->getDb()->loadFile($file);
+	}
+
+	private function createTempSqlFile($file, array $variables)
+	{
+		$content = file_get_contents($file);
+		$content = str_replace(array_keys($variables), array_values($variables), $content);
+		$newFile = $file . '-temp';
+		file_put_contents($newFile, $content, LOCK_EX);
+		return $newFile;
+	}
+
 
 	protected function tearDown()
 	{

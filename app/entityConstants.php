@@ -29,6 +29,7 @@ define('PATH_SEGMENT_OLD_ENTITY', '\Entity\Routing\PathSegmentOld');
 define('CURRENCY_ENTITY', '\Entity\Currency');
 define('PAGE_ENTITY', '\Entity\Page');
 define('PHRASE_ENTITY', '\Entity\Phrase\Phrase');
+define('PHRASE_ALIAS_ENTITY', '\Entity\Phrase\Alias');
 define('PHRASE_TYPE_ENTITY', '\Entity\Phrase\Type');
 define('TRANSLATION_ENTITY', '\Entity\Phrase\Translation');
 define('SYSTEM_LOG_ENTITY', '\Entity\Log\System');
@@ -46,4 +47,9 @@ define('FAQ_CATEGORY_ENTITY', '\Entity\Faq\Category');
 define('TICKET_ENTITY', '\Entity\Ticket\Ticket');
 define('EDIT_LOG_ENTITY', '\Entity\Rental\EditLog');
 define('SEO_BACKLINK_ENTITY', '\Entity\Seo\BackLink');
+define('INVOICING_COMPANY', '\Entity\Invoicing\Company');
+define('INVOICING_INVOICE', '\Entity\Invoicing\Invoice');
+define('INVOICING_SERVICE', '\Entity\Invoicing\Service');
+define('INVOICING_SERVICE_TYPE', '\Entity\Invoicing\ServiceType');
+define('INVOICING_SERVICE_DURATION', '\Entity\Invoicing\ServiceDuration');
 

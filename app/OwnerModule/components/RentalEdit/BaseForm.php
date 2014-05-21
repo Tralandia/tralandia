@@ -13,6 +13,7 @@ use Nette;
 abstract class BaseFormControl extends \BaseModule\Components\BaseFormControl
 {
 
+
 	/**
 	 * @var \Entity\Rental\Rental
 	 */

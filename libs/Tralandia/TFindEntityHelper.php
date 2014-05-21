@@ -144,6 +144,19 @@ trait TFindEntityHelper {
 	 * @param bool $need
 	 * @param string $by
 	 *
+	 * @return \Entity\Phrase\Alias|null
+	 */
+	public function findAlias($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(PHRASE_ALIAS_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
 	 * @return \Entity\Phrase\Translation|null
 	 */
 	public function findTranslation($id, $need = TRUE, $by = 'id')

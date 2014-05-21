@@ -1,0 +1,38 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form }
+	<table class="formTable innerPadding">
+
+		{include #text, control => $form['name']}
+
+		{include #select, control => $form['country'] , controlClass => 'select2 country notFulltext'}
+
+
+		<tr>
+			<td>
+				{foreach $form['service']->items as $key => $label}
+					{label service:$key}
+						{input service:$key}
+						{$label}
+					{/label}
+				{/foreach}
+			</td>
+		</tr>
+
+		{include #text, control => $form['clientName']}
+		{include #text, control => $form['clientPhone']}
+		{include #text, control => $form['clientAddress']}
+		{include #text, control => $form['clientAddress2']}
+		{include #text, control => $form['clientLocality']}
+		{include #text, control => $form['clientPostcode']}
+		{include #select, control => $form['clientPrimaryLocation']}
+		{include #select, control => $form['clientLanguage']}
+		{include #text, control => $form['clientCompanyName']}
+		{include #text, control => $form['clientCompanyId']}
+		{include #text, control => $form['clientCompanyVatId']}
+
+		{include #submit, control => $form['submit'], icon => 'icon-plus' , controlClass => 'pull-right', class => 'submitControl'}
+
+	</table>
+{/form}

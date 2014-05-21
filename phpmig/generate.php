@@ -22,7 +22,7 @@
 date_default_timezone_set('Europe/Prague');
 
 define('MIGRATIONS_DIR',  __DIR__ . '/migrations');
-define('TEMPLATES_DIR',  __DIR__ . '/generating');
+define('TEMPLATES_DIR',  __DIR__ . '/templates');
 
 iconv_set_encoding('internal_encoding', 'UTF-8');
 extension_loaded('mbstring') && mb_internal_encoding('UTF-8');
@@ -34,7 +34,7 @@ function msg($msg)
 
 function snakeToCamel($val)
 {
-	return str_replace(' ', '', ucwords(str_replace('_', ' ', $val)));
+	return str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $val)));
 }
 
 if (!isset($argv[1])) {
@@ -50,7 +50,7 @@ $downKeywords = ['-d', '-down'];
 // jméno třídy migrace
 $migrationName = snakeToCamel(trim($argv[1]));
 // základ jména souborů
-$name = date('YmdHis') . '_' . trim($argv[1]);
+$name = date('YmdHis') . '_' . trim(str_replace('-', '_', $argv[1]));
 // chceme SQL?
 $addSql = TRUE;
 // UP a DOWN?
@@ -86,7 +86,7 @@ if ($addSql) {
 		if (file_exists($sqlFilename)) {
 			msg('SQL soubor, který chcete vytvořit už existuje: ' . $name . '_' . $suffix . '.sql');
 		}
-		file_put_contents($sqlFilename, "-- " . $migrationName . ' migration ' . strtoupper($suffix) . ' file');
+		file_put_contents($sqlFilename, "-- " . $migrationName . ' migration ' . strtoupper($suffix) . ' file' . "\n\n");
 		msg('+f ' . $sqlFilename);
 	}
 }

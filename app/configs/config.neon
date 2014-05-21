@@ -11,6 +11,10 @@ nette:
 
 	session:
 		autoStart: true
+#		save_handler: files
+#		save_path: '127.0.0.1:11211?persistent=1&weight=1&timeout=1&retry_interval=2'
+#		save_path: '/www/tralandia/temp/sessions'
+#		save_path: '127.0.0.1:11211'
 		expiration: '+1 year'
 		name: PHPSESSIONID2
 		cookie_path: '/'
@@ -90,7 +94,7 @@ parameters:
 	templateCache:
 		enabled: TRUE
 		header: #zle sa generovali linky na prepinanie jazyka
-			enabled: FALSE
+			enabled: TRUE
 			if: '[!userLoggedIn]'
 			key: '[language]_[primaryLocation]'
 			expiration: 'tomorrow'
@@ -168,6 +172,7 @@ doctrine:
 	charset: utf8
 	driver: pdo_mysql
 	debugger: false
+	logging: false
 	autoGenerateProxyClasses: true
 	metadata:
 		Entity: %appDir%/models
@@ -455,6 +460,7 @@ services:
 	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Rental\EditLog), @mapSearchCache)
 	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
+	- \Tralandia\Rental\CalendarManager
 	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
 
@@ -472,6 +478,10 @@ services:
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
 
 
+	- \Tralandia\Invoicing\InvoiceManager
+	- \Tralandia\InvoiceGenerator\PdfGenerator
+
+
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================
@@ -484,8 +494,20 @@ services:
 	- \LeanMapper\DefaultEntityFactory
 	- \Tralandia\Lean\Mapper
 
+	- \Tralandia\User\UserRepository
+
 	- \Tralandia\Rental\RentalRepository
 	- \Tralandia\Rental\UnitRepository
+	- \Tralandia\Location\LocationRepository
+
+	- \Tralandia\SiteReview\SiteReviewRepository
+	- \Tralandia\Routing\PageRepository
+	- \Tralandia\Routing\PathSegmentRepository
+
+	- \Tralandia\Invoicing\InvoiceRepository
+	- \Tralandia\Invoicing\CompanyRepository
+	- \Tralandia\Invoicing\ServiceDurationRepository
+	- \Tralandia\Invoicing\ServiceRepository
 
 
 
@@ -530,15 +552,20 @@ factories:
 		parameters: [Entity\User\User user, Entity\Ticket\Ticket ticket]
 		implement: FrontModule\Forms\ITicketFormFactory
 
-	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%environment%, %presenter%)
-		parameters: [Environment\Environment environment, Nette\Application\UI\Presenter presenter]
-		implement: FrontModule\Forms\IRegistrationFormFactory
-
 	rentalEditFormFactory:
 		class: OwnerModule\Forms\RentalEditForm(%rental%, %environment%)
 		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
 		implement: OwnerModule\Forms\IRentalEditFormFactory
+
+	registrationFormFactory:
+		class: \FrontModule\RegistrationForm\RegistrationForm
+		implement: \FrontModule\RegistrationForm\IRegistrationFormFactory
+
+	addRentalFormFactory:
+		class: \OwnerModule\AddRental\AddRentalForm
+		arguments: [%user%, ... ]
+		parameters: [Tralandia\User\User user]
+		implement: \OwnerModule\AddRental\IAddRentalFormFactory
 
 	aboutFormFactory:
 		class: OwnerModule\RentalEdit\AboutForm
@@ -633,6 +660,23 @@ factories:
 #			- setCache(@frontRouteCache)
 		implement: Routers\IFrontRouteFactory
 
+	simpleFrontRouteFactory:
+		class: Routers\SimpleFrontRoute
+		arguments: [ %domainMask%, ... ]
+		setup:
+			- $locationDao(@doctrine.dao(Entity\Location\Location))
+			- $languageDao(@doctrine.dao(Entity\Language))
+			- $rentalDao(@doctrine.dao(Entity\Rental\Rental))
+			- $rentalTypeDao(@doctrine.dao(Entity\Rental\Type))
+			- $rentalAmenityDao(@doctrine.dao(Entity\Rental\Amenity))
+			- $rentalPlacementDao(@doctrine.dao(Entity\Rental\Placement))
+			- $routingPathSegmentDao(@doctrine.dao(Entity\Routing\PathSegment))
+			- $domainDao(@doctrine.dao(Entity\Domain))
+			- $favoriteListDao(@doctrine.dao(Entity\FavoriteList))
+			- $pageDao(@doctrine.dao(Entity\Page))
+#			- setCache(@frontRouteCache)
+		implement: Routers\ISimpleFrontRouteFactory
+
 
 	# ==============================
 	# ==================== CACHE
@@ -671,7 +715,7 @@ factories:
 		implement: Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
-		class: Tralandia\Localization\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @translatorCache)
+		class: Tralandia\Localization\Translator(%language%, @doctrine.dao(Entity\Phrase\Phrase), @doctrine.dao(Entity\Phrase\Alias), @translatorCache)
 		parameters: [Entity\Language language]
 		implement: Tralandia\Localization\ITranslatorFactory
 

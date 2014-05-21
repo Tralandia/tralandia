@@ -1,0 +1,14 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form, class => 'registrationForm'}
+
+	<table class="formTable innerPadding">
+
+		{include #email, control => $form['email']}
+		{include #password, control => $form['password']}
+		{include #password, control => $form['passwordAgain']}
+
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , controlClass => 'pull-right', class => 'submitControl'}
+	</table>
+{/form}

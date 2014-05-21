@@ -73,6 +73,9 @@ parameters:
 			jquerySticky:
 				js:
 					- jQuery/jquery.sticky.js
+			jqueryTimeago:
+				js:
+					- jQuery/jquery.timeago.js
 			jstorage:
 				js:
 					- jstorage/lib/js/jstorage.min.js
@@ -202,6 +205,10 @@ parameters:
 				css:
 					- front/_base/less/calendar.less
 					- front/calendarIframe/less/calendarIframe.less
+				js:
+					- jQuery/lib/jquery.js
+					- bootstrap/lib/js/bootstrap-tooltip.js
+					- front/calendarIframe/js/main.js
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -449,6 +456,7 @@ parameters:
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.jquerySticky%
+				-  %webloader.packages.jqueryTimeago%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%

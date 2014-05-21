@@ -100,7 +100,8 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->navigationBarLastActive = $this->getActiveNavbarTab();
 
 		$header = $this->getComponent('head');
-		$header->addTitle($this->pageSeo->getTitle());
+		$title = $this->pageSeo->getTitle();
+		$title && $header->addTitle($title);
 
 
 		$this->template->og = array();

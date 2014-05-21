@@ -42,7 +42,7 @@ class DefaultPresenter extends BasePresenter
 			\Tralandia\Localization\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE
 		));
 		$this->template->rental = $rental;
-		$this->template->showCalendar = $rental->calendarUpdated && !$rental->isCalendarEmpty();
+		$this->template->showCalendar = !$rental->isCalendarEmpty();
 	}
 
 

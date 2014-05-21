@@ -233,9 +233,20 @@ class PhraseListPresenter extends BasePresenter {
 		$this->phrases = \Tools::arrayMap($translations, function($v){return $v->getPhrase();});
 
 		$editForm = $this['phraseEditForm'];
-		$editForm->setDefaults([
-			'toLanguages' => $language->getId()
-		]);
+
+		if($this->user->isInRole(Role::TRANSLATOR)) {
+			$translatorLanguage = $this->languageDao->findOneByTranslator($this->loggedUser);
+
+			$editForm->setDefaults([
+				'toLanguages' => $translatorLanguage->getId()
+			]);
+
+		} else {
+			$editForm->setDefaults([
+				'toLanguages' => $language->getId()
+			]);
+		}
+
 
 		//$editForm['toLanguages']->setDisabled();
 		$this->template->headerText = 'Search: ' . $search;

@@ -6,7 +6,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property int $sort
  */
 class PriceFor extends \Tralandia\Lean\BaseEntity

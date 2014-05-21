@@ -8,9 +8,11 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
 use Tralandia\BaseDao;
+use Tralandia\Dictionary\Translatable;
 
 class Translator implements \Nette\Localization\ITranslator {
 
+	const ALIAS_PREFIX = 'a';
 	const DEFAULT_LANGUAGE = 38;
 
 	const VARIATION_PLURAL = 'plural';
@@ -38,11 +40,17 @@ class Translator implements \Nette\Localization\ITranslator {
 	 */
 	protected $development;
 
+	/**
+	 * @var \Tralandia\BaseDao
+	 */
+	private $aliasesDao;
 
-	public function __construct(Language $language, BaseDao $phraseDao, Cache $translatorCache) {
+
+	public function __construct(Language $language, BaseDao $phraseDao, BaseDao $aliasesDao, Cache $translatorCache) {
 		$this->language = $language;
 		$this->cache = $translatorCache;
 		$this->phraseDao = $phraseDao;
+		$this->aliasesDao = $aliasesDao;
 	}
 
 	public function setDevelopment($development)
@@ -58,11 +66,20 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL,Language $language = NULL)
 	{
+		if($phrase instanceof Translatable) {
+			return $phrase->translate($this);
+		}
+
 		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
 			$variation[self::VARIATION_COUNT] = $count;
 		}
 
 		if(!$language) $language = $this->language;
+
+		if(is_scalar($phrase) && Strings::match($phrase, '~a[0-9]+~')) {
+			$aliasId = substr($phrase, 1);
+			$phrase = $this->resolveAlias($aliasId);
+		}
 
 		$translation = $this->getTranslation($phrase, $variation, $language);
 
@@ -210,6 +227,46 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	}
 
+
+	/**
+	 * @param $aliasId
+	 *
+	 * @return int|NULL
+	 */
+	private function resolveAlias($aliasId)
+	{
+		$cacheKey = self::getAliasCacheKey($aliasId);
+		$phraseId = $this->cache->load($cacheKey);
+
+		if(!$phraseId) {
+			$alias = $this->aliasesDao->find($aliasId);
+			if($alias) {
+				if($alias->phrase) {
+					$phraseId = $alias->phrase->getId();
+				} else {
+					$phraseId = '{'.$cacheKey.':'.$alias->help.'}';
+				}
+			} else {
+				$phraseId = '{'.$cacheKey.':INVALID_ALIAS}';
+			}
+			$this->cache->save($cacheKey, $phraseId, [
+				Cache::TAGS => ['translator', 'translator.alias'],
+			]);
+		}
+
+		return $phraseId;
+	}
+
+
+	/**
+	 * @param $aliasId
+	 *
+	 * @return string
+	 */
+	public static function getAliasCacheKey($aliasId)
+	{
+		return self::ALIAS_PREFIX . $aliasId;
+	}
 }
 
 

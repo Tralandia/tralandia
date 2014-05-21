@@ -60,7 +60,9 @@ class RentalListPresenter extends BasePresenter {
 			$itemCount = $search->getRentalsCount();
 
 			$lastSearch = $this->searchHistory;
-			$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
+			if(!$this->isAjax()) {
+				$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
+			}
 			$this->prepareListTemplate($search, $itemCount);
 		}
 

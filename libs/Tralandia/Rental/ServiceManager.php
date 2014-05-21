@@ -40,6 +40,7 @@ class ServiceManager
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param $givenFor
+	 * @param string $serviceType
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return \Entity\Rental\Service

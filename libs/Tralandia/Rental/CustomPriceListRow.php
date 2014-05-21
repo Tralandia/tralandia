@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property int $sort
  * @property \DateTime|null $seasonFrom
  * @property \DateTime|null $seasonTo

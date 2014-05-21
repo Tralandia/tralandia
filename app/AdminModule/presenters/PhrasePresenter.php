@@ -3,6 +3,7 @@
 namespace AdminModule;
 
 
+use Entity\Phrase\Alias;
 use Entity\User\Role;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
@@ -54,6 +55,40 @@ class PhrasePresenter extends BasePresenter {
 		$this->sendPayload();
 	}
 
+
+
+	public function actionAddAlias($newAlias)
+	{
+
+		if($newAlias) {
+			$alias = $this->findAlias($newAlias);
+			$this->template->newAlias = $alias;
+		}
+
+	}
+
+	protected function createComponentAddAlias()
+	{
+		$form = $this->simpleFormFactory->create();
+		$form->addText('help', 'Help');
+		$form->addSubmit('submit', 'Submit');
+
+		$form->onSuccess[] = $this->processAddAlias;
+
+		return $form;
+	}
+
+	public function processAddAlias(Form $form)
+	{
+		$values = $form->getValues();
+
+		$aliasDao = $this->em->getRepository(PHRASE_ALIAS_ENTITY);
+		$alias = new Alias();
+		$alias->help = $values->help;
+
+		$aliasDao->save($alias);
+		$this->redirect('this', ['newAlias' => $alias->getId()]);
+	}
 
 	/* ------- Update Phrase Status --------- */
 

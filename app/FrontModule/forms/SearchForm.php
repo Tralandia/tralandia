@@ -79,7 +79,7 @@ class SearchForm extends BaseForm
 		/*placement $placement = $this->searchOptionGenerator->generatePlacement(); placement*/
 		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getCurrency());
 		$capacity = $this->searchOptionGenerator->generateCapacity();
-		$languages = $this->searchOptionGenerator->generateSpokenLanguage();
+		$languages = $this->searchOptionGenerator->generateSpokenLanguage($this->environment->getPrimaryLocation());
 		$boards = $this->searchOptionGenerator->generateBoard();
 
 		$this->addSelect('country', 'o1070', $countries)

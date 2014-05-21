@@ -23,6 +23,8 @@ use Tralandia\Rental\Amenities;
 class AmenitiesForm extends BaseFormControl
 {
 
+	public $onFormSuccess = [];
+
 	/**
 	 * @var \Environment\Environment
 	 */
@@ -195,6 +197,8 @@ class AmenitiesForm extends BaseFormControl
 		}
 
 		$this->em->flush();
+
+		$this->onFormSuccess($form, $rental);
 	}
 
 

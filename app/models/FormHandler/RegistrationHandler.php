@@ -114,7 +114,8 @@ class RegistrationHandler extends FormHandler
 			->setMaxCapacity($rentalValues->maxCapacity)
 			->setCheckIn($rentalValues->checkIn)
 			->setCheckOut($rentalValues->checkOut)
-			->setFloatPrice($rentalValues->price);
+			->setFloatPriceFrom($rentalValues->priceFrom)
+			->setFloatPriceTo($rentalValues->priceFrom);
 
 		if($rentalValues->phone->entity) $rental->setPhone($rentalValues->phone->entity);
 

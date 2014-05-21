@@ -25,6 +25,18 @@ echo "==================== PHPMIG ============================="
 echo "php phpmig/run.php"
 php phpmig/run.php
 
+echo
+echo "==================== DROP TEST DB TABLES ============================="
+echo "SET FOREIGN_KEY_CHECKS=0;" >> $WORKING_DIR/drop.sql
+/usr/local/mysql/bin/mysqldump -h 127.0.0.1 -u root -proot --no-data --skip-lock-tables tralandia_test | grep ^DROP >> $WORKING_DIR/drop.sql
+/usr/local/mysql/bin/mysql -h 127.0.0.1 -u root -proot tralandia_test < $WORKING_DIR/drop.sql
+echo "SET FOREIGN_KEY_CHECKS=1;" >> $WORKING_DIR/drop.sql
+rm $WORKING_DIR/drop.sql
+
+echo
+echo "==================== COPY TO TEST DB ============================="
+/usr/local/mysql/bin/mysqldump -h 127.0.0.1 -u root -proot --no-data --skip-lock-tables tralandia | /usr/local/mysql/bin/mysql -h 127.0.0.1 -u root -proot tralandia_test
+
 sudo rm -rf $WORKING_DIR/log/*
 
 

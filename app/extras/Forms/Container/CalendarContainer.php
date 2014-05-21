@@ -31,8 +31,8 @@ class CalendarContainer extends BaseContainer
 		$this->calendarControl = new CalendarControl($locale, $selectedDays);
 
 		$formattedDates = [];
-		foreach($selectedDays as $day) {
-			$formattedDates[] = $day->format('Y-m-d');
+		foreach($selectedDays as $key => $day) {
+			$formattedDates[] = $key;
 		}
 
 		$this->addHidden('data')->setDefaultValue(implode(',', $formattedDates));
