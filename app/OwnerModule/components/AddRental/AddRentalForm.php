@@ -10,6 +10,8 @@ namespace OwnerModule\AddRental;
 
 use BaseModule\Forms\BaseForm;
 use BaseModule\Forms\ISimpleFormFactory;
+use Tralandia\Invoicing\InvoiceManager;
+use Tralandia\Rental\RentalRepository;
 use Tralandia\User\User;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
@@ -65,10 +67,20 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	 */
 	private $userRepository;
 
+	/**
+	 * @var \Tralandia\Invoicing\InvoiceManager
+	 */
+	private $invoiceManager;
 
-	public function __construct(User $user, RentalCreator $rentalCreator, Countries $countries,
+	/**
+	 * @var \Tralandia\Rental\RentalRepository
+	 */
+	private $rentalRepository;
+
+
+	public function __construct(User $user, RentalCreator $rentalCreator, InvoiceManager $invoiceManager, Countries $countries,
 								Languages $languages, ServiceRepository $serviceRepository,
-								UserRepository $userRepository,
+								UserRepository $userRepository, RentalRepository $rentalRepository,
 								ISimpleFormFactory $formFactory, EntityManager $em)
 	{
 		parent::__construct();
@@ -80,6 +92,8 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$this->serviceRepository = $serviceRepository;
 		$this->languages = $languages;
 		$this->userRepository = $userRepository;
+		$this->invoiceManager = $invoiceManager;
+		$this->rentalRepository = $rentalRepository;
 	}
 
 
@@ -95,7 +109,8 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 		$services = $this->serviceRepository->findAll();
 		$services = \Tools::entitiesMap($services, 'id', 'label', $this->translator);
-		$form->addOptionList('service', '', $services);
+		$form->addOptionList('service', '', $services)
+			->setRequired(TRUE);
 
 
 		$languages = $this->languages->getForSelectWithLinks();
@@ -127,7 +142,18 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	{
 
 		$defaults = [
-//			'video' => $videoUrl,
+			'name' => Nette\Utils\Strings::random(6, 'a-z'),
+			'clientName' => 'clientName',
+			'clientPhone' => 'clientPhone',
+			'clientAddress' => 'clientAddress',
+			'clientAddress2' => 'clientAddress2',
+			'clientLocality' => 'clientLocality',
+			'clientPostcode' => 'clientPostcode',
+			'clientPrimaryLocation' => 52,
+			'clientLanguage' => 144,
+			'clientCompanyName' => 'clientCompanyName',
+			'clientCompanyId' => 'clientCompanyId',
+			'clientCompanyVatId' => 'clientCompanyVatId',
 		];
 
 		$defaultInfo = $this->user->getDefaultInvoicingInformation();
@@ -148,18 +174,24 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	{
 		$values = $form->getFormattedValues(TRUE);
 
-		$primaryLocation = $this->countries->find($values->country);
+		$primaryLocation = $this->countries->find($values['country']);
 
 		$this->user->setDefaultInvoicingInformation($values);
 		$this->userRepository->save($this->user);
 
 		$doctrineUser = $this->em->getRepository(USER_ENTITY)->find($this->user->id);
-		$rental = $this->rentalCreator->simpleCreate($doctrineUser, $primaryLocation, $values->name);
+		$doctrineRental = $this->rentalCreator->simpleCreate($doctrineUser, $primaryLocation, $values['name']);
 
-		$this->em->persist($rental);
+		$this->em->persist($doctrineRental);
 		$this->em->flush();
 
-		$this->onFormSuccess($form, $rental);
+		$rental = $this->rentalRepository->find($doctrineRental->getId());
+		$service = $this->serviceRepository->find($values['service']);
+
+		$invoice = $this->invoiceManager->createInvoice($rental, $service, $this->user->login, $this->translator);
+		$this->invoiceManager->save($invoice);
+
+		$this->onFormSuccess($form, $doctrineRental);
 	}
 
 

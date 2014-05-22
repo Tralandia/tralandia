@@ -8,11 +8,8 @@
 namespace Tralandia\Invoicing;
 
 
-use Tralandia\Invoicing\Company;
-use Tralandia\Invoicing\Service;
 use Tralandia\Rental\Rental;
 use Nette;
-use Tralandia\BaseDao;
 use Tralandia\Localization\Translator;
 
 class InvoiceManager
@@ -24,49 +21,67 @@ class InvoiceManager
 	 */
 	private $companyRepository;
 
+	/**
+	 * @var InvoiceRepository
+	 */
+	private $invoiceRepository;
 
-	public function __construct(CompanyRepository $companyRepository)
+
+	public function __construct(InvoiceRepository $invoiceRepository, CompanyRepository $companyRepository)
 	{
 		$this->companyRepository = $companyRepository;
+		$this->invoiceRepository = $invoiceRepository;
 	}
 
 	public function createInvoice(Rental $rental, Service $service, $createdBy, Translator $translator)
 	{
 		$company = $this->pickCompany($service);
+		$info = $rental->user->getDefaultInvoicingInformation();
 
 		$due = Nette\DateTime::from(strtotime('today'))->modify('+14 days');
-//		$address = $rental->address;
 
 		$invoice = new Invoice();
 
-		//$invoice->setNumber();
-		//$invoice->setVariableNumber();
+		$invoice->number = Nette\Utils\Strings::random(4, '0-9');
+		$invoice->variableNumber = Nette\Utils\Strings::random(4, '0-9');
 		$invoice->company = $company;
 		$invoice->rental = $rental;
 		$invoice->dateDue = $due;
-		$invoice->clientName = $rental->contactName;
-		$rental->phone && $invoice->clientPhone = $rental->phone->international;
-		$invoice->clientEmail = $rental->getContactEmail();
-//		$invoice->setClientAddress();
-//		$invoice->setClientAddress2();
-//		$invoice->clientLocality = $translator->translate($address->locality->getNameId());
-//		$invoice->setClientCompanyName();
-//		$invoice->setClientCompanyId();
-//		$invoice->setClientCompanyVatId();
+
+		$invoice->clientName = $info['clientName'];
+		$invoice->clientPhone = $info['clientPhone'];
+		$invoice->clientAddress = $info['clientAddress'];
+		$invoice->clientAddress2 = $info['clientAddress2'];
+		$invoice->clientLocality = $info['clientLocality'];
+		$invoice->clientPostcode = $info['clientPostcode'];
+		$invoice->clientCompanyName = $info['clientCompanyName'];
+		$invoice->clientCompanyId = $info['clientCompanyId'];
+		$invoice->clientCompanyVatId = $info['clientCompanyVatId'];
+
 		$invoice->createdBy = $createdBy;
 		$invoice->vat = $company->vat;
 
 		$duration = $service->duration;
 		$currency = $rental->currency;
-		$price = $service->priceCurrent;
+		$price = $service->getPriceCurrent();
 		$invoice->durationStrtotime = $duration->strtotime;
 		$invoice->durationName = $translator->translate($duration->getNameId());
 		$invoice->durationNameEn = $duration->name->getCentralTranslationText();
-		$invoice->price = $price; // ?? key treba konvertovat menu ??
+		$invoice->price = $price->convertToFloat($rental->getSomeCurrency()); // ?? key treba konvertovat menu ??
+		$invoice->priceEur = $price->convertToEurFloat();
 		$invoice->currency = $currency;
+		$invoice->serviceName = $translator->translate($service->type->getNameId());
+		$invoice->serviceNameEn = $service->type->name->getCentralTranslationText();
+		$invoice->serviceType = $service->type;
 
 
 		return $invoice;
+	}
+
+
+	public function save($invoice)
+	{
+		$this->invoiceRepository->save($invoice);
 	}
 
 

@@ -68,8 +68,10 @@ class Phrase extends \Tralandia\Lean\BaseEntity
 	 * @return NULL|string
 	 */
 	public function getCentralTranslationText() {
-		return $this->getCentralTranslation()->translation;
+		$translation = $this->getCentralTranslation();
+		return $translation ? $translation->translation : NULL;
 	}
+
 
 
 }

@@ -140,6 +140,7 @@ class RentalCreator
 		}
 
 		$rental->setAddress($address);
+		$rental->setCurrency($address->getPrimaryLocation()->getDefaultCurrency());
 
 		$unit = $this->unitRepository->createNew();
 		$unit->name = $rentalName;

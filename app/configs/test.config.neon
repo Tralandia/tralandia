@@ -31,7 +31,7 @@ parameters:
 #	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<hostLocal [a-z-\\.]+>"
 
 doctrine:
-	dbname: tralandia
+	dbname: tralandia_test
 
 
 services:

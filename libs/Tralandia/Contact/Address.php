@@ -31,14 +31,6 @@ class Address extends \Tralandia\Lean\BaseEntity
 		}
 	}
 
-	public function toString()
-	{
-		if($this->formattedAddress) {
-			return "{$this->formattedAddress}";
-		} else {
-			return "{$this->address}, {$this->postalCode}" . (isset($this->locality) ? ' ' . $this->locality->localName : NULL);
-		}
-	}
 
 	/**
 	 * @param \Extras\Types\Latlong
