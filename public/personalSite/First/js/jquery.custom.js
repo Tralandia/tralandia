@@ -154,8 +154,22 @@ jQuery(document).ready(function($){
     /* Change menu active when scroll through sections
     /*------------------------------------------------------------------------------*/
 
-    $(window).scroll(function () {
-        var inview = $('section:in-viewport:first').attr('id');
+    $(window).scroll(function() {
+        var inview = $('section:in-viewport');
+        var scrollPosition = $(window).scrollTop();
+
+        if (inview.length==0) return false;
+
+        inview.each(function() {
+            var offset = $(this).offset();
+            if (offset.top > scrollPosition) {
+                inview = $(this).attr('id');
+                return false;
+            }
+        });
+
+        if (typeof inview == 'object') return false;
+        
         var menu_item = $('#navigation li a');
         var link = menu_item.filter('[href=#' + inview + ']');
         

@@ -115,10 +115,10 @@ jQuery(document).ready(function($){
     });
 
     $(".primary-menu").find('a:not(#mobile-nav)').on('click', function(e){
+        e.preventDefault();
         var re=/^#/g;
         var _this = $(this).attr('href') 
         if(re.test(_this) === true){
-            e.preventDefault();
             var h = _this.replace('#', '');
             window.location.hash = "section="+h;
         }
@@ -157,6 +157,9 @@ jQuery(document).ready(function($){
     $(window).scroll(function() {
         var inview = $('section:in-viewport');
         var scrollPosition = $(window).scrollTop();
+
+        if (inview.length==0) return false;
+
         inview.each(function() {
             var offset = $(this).offset();
             if (offset.top > scrollPosition) {
@@ -164,6 +167,9 @@ jQuery(document).ready(function($){
                 return false;
             }
         });
+
+        if (typeof inview == 'object') return false;
+
         var menu_item = $('#navigation li a');
         var link = menu_item.filter('[href=#' + inview + ']');
         
@@ -365,13 +371,17 @@ jQuery(document).ready(function($){
 });
 
 function photoSetGrid(selector) {
+    layout = '';
+    for (var i = $(selector).find('img').length; i >= 1; i--) {
+        layout += '2';
+    };
+
     $(selector).photosetGrid({
-      gutter: '5px',
-      layout: '22222222222222222222',
+      gutter: '10px',
+      layout: layout,
       rel: 'print-gallery'
     });
 }
-
 
 /*------------------------------------------------------------------------------*/
 /* The Awesome FlexSlider
