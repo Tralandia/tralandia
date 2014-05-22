@@ -31,7 +31,7 @@ class RegistrationPresenter extends BasePresenter
 			$identity = $this->authenticator->getIdentity($user);
 			$this->login($identity);
 			$this->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
-			$this->redirect('afterLogin');
+			$this->redirect(':Owner:Rental:add');
 		};
 
 

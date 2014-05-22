@@ -79,6 +79,15 @@ class Price extends \Nette\Object {
 
 
 	/**
+	 * @return float
+	 */
+	public function convertToEurFloat()
+	{
+		return round($this->sourceAmount / $this->sourceCurrency->exchangeRate, 2);
+	}
+
+
+	/**
 	 * alias for getAmount()
 	 */
 	public function getAmountIn($currency)

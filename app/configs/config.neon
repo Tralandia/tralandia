@@ -481,7 +481,7 @@ services:
 
 
 	- \Tralandia\Invoicing\InvoiceManager
-	- \Tralandia\InvoiceGenerator\PdfGenerator
+	- \Tralandia\Invoicing\InvoiceDocumentGenerator
 
 
 	# ==============================

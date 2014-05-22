@@ -26,6 +26,12 @@ abstract class BasePresenter extends \SecuredPresenter {
 	protected $reservations;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Invoicing\InvoiceRepository
+	 */
+	protected $invoiceRepository;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
@@ -64,8 +70,9 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->template->reservationsCount = $this->reservations->getReservationsCountByUser($this->loggedUser);
 
 //		$this->template->rental = $this->rental;
-		$this->template->rentalList = $this->loggedUser->getRentals();
+
 		$this->template->owner = $this->loggedUser;
+		$this->template->invoices = $this->invoiceRepository->findForUser($this->loggedLeanUser);
 		parent::beforeRender();
 	}
 

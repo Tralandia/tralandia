@@ -6,13 +6,12 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string|null $name
  * @property string|null $slug
  * @property string|null $address
  * @property string|null $address2
  * @property string|null $postcode
- * @property \Tralandia\Location\Location $locality m:hasOne(locality_id)
+ * @property string|null $locality
  * @property \Tralandia\Location\Location $primaryLocation m:hasOne(primaryLocation_id)
  * @property string|null $companyId
  * @property string|null $companyVatId

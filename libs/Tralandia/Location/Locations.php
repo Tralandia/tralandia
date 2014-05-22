@@ -9,11 +9,9 @@ namespace Tralandia\Location;
 
 
 use Entity\Language;
-use Entity\Location\Location;
 use InvalidArgumentException;
 use Model\Location\ILocationDecoratorFactory;
 use Nette;
-use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 use Tralandia\BaseDao;
 
@@ -51,12 +49,12 @@ class Locations
 
 	/**
 	 * @param string $locality
-	 * @param Location $primaryLocation
+	 * @param \Entity\Location\Location $primaryLocation
 	 *
 	 * @throws InvalidArgumentException
-	 * @return Location
+	 * @return \Entity\Location\Location
 	 */
-	public function findOrCreateLocality($locality, Location $primaryLocation)
+	public function findOrCreateLocality($locality, \Entity\Location\Location $primaryLocation)
 	{
 		if(!$primaryLocation->isPrimary()) {
 			throw new InvalidArgumentException('$primaryLocation nie je primarna krajina!');
@@ -123,7 +121,7 @@ class Locations
 		return $qb->getQuery()->getResult();
 	}
 
-	public function findSuggestForLocalityAndRegion($search,Location $location, Language $language)
+	public function findSuggestForLocalityAndRegion($search,\Entity\Location\Location $location, Language $language)
 	{
 		$qb = $this->locationDao->createQueryBuilder('e');
 		$qb->leftJoin('e.type', 't')
