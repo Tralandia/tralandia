@@ -51,7 +51,78 @@ table.formTable {
 		}
 	}
 	tr.submitControl td {
-		padding: 10px 0px 10px;
+		padding: 0 10px 0 0;
+	}
+
+	tr.package {
+		label {
+			.basic-gradient(#fff, #EEF3E2);
+			border: 1px solid #DBE0B3;
+			padding: 8px 18px;
+			.border-radius(5px);
+			cursor: pointer;
+			color: #698308;
+
+			&:hover {
+				border-color: #CBD2A0;
+			}
+
+			&.active {
+				.basic-gradient(#91B315, #698308);
+				border-color: #698308;
+				opacity: 1;
+				color: #fff;
+
+				span.price.free {
+					color: #fff;
+				}
+
+				&.type1 {
+					.basic-gradient(#f6f6f6, #ccc);
+					border-color: #bbb;
+					color: #333;
+				}
+				&.type2 {
+					.basic-gradient(#ECF070, #E2DA17);
+					border-color: #C2BD41;
+				}
+			}
+
+			&.type1 {
+				.basic-gradient(#fff, #eee);
+				border-color: #ccc;
+				color: #333;
+
+				&:hover {
+					border-color: #CBD2A0;
+				}
+			}
+
+			&.type2 {
+				.basic-gradient(#fff, #F4F7AC);
+				border-color: #ECE775;
+				color: #5E590B;
+
+				&:hover {
+					border-color: #CBD2A0;
+				}
+			}
+
+			input {
+				margin: 2px 8px 0 0;
+				float: left;
+			}
+
+			span.price {
+				float: right;
+				font-weight: bold;
+				color: #FF7000;
+
+				&.free {
+					color: #698308;
+				}
+			}
+		}
 	}
 }
 
