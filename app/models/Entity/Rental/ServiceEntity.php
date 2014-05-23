@@ -4,14 +4,11 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-
-use    Extras\Annotation as EA;
-use Extras\FileStorage;
+use Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_service")
- *
  */
 class Service extends \Entity\BaseEntity
 {
@@ -19,10 +16,12 @@ class Service extends \Entity\BaseEntity
 	const GIVEN_FOR_SHARE = 'Share';
 	const GIVEN_FOR_BACKLINK = 'Backlink';
 	const GIVEN_FOR_PAID_INVOICE = 'Paid Invoice';
+	const GIVEN_FOR_MEMBERSHIP = 'Membership';
 
 
 	const TYPE_FEATURED = 'featured';
 	const TYPE_PERSONAL_SITE = 'personalSite';
+	const TYPE_PREMIUM_PS = 'premium-ps';
 
 	/**
 	 * @var Collection
