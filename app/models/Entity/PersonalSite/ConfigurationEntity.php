@@ -27,7 +27,7 @@ class Configuration extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $template;
+	protected $template = \Tralandia\PersonalSite\Configuration::TEMPLATE_FIRST;
 
 
 	/**

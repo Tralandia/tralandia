@@ -4,6 +4,7 @@ define('LOCATION_ENTITY', '\Entity\Location\Location');
 define('LOCATION_TYPE_ENTITY', '\Entity\Location\Type');
 define('LANGUAGE_ENTITY', '\Entity\Language');
 define('UNIT_ENTITY', '\Entity\Rental\Unit');
+define('SERVICE_ENTITY', '\Entity\Rental\Service');
 define('RENTAL_ENTITY', '\Entity\Rental\Rental');
 define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
 define('RENTAL_AMENITY_ENTITY', '\Entity\Rental\Amenity');

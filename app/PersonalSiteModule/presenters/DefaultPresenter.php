@@ -8,6 +8,7 @@
 namespace PersonalSiteModule;
 
 
+use Entity\Rental\Service;
 use Nette;
 use PersonalSiteModule\Amenities\IAmenitiesControlFactory;
 use PersonalSiteModule\Calendar\ICalendarControlFactory;
@@ -27,6 +28,12 @@ class DefaultPresenter extends BasePresenter
 	protected $rentalRepository;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\ServiceManager
+	 */
+	protected $serviceManager;
+
+	/**
 	 * @var \Tralandia\Rental\Rental
 	 */
 	protected $currentRental;
@@ -43,6 +50,7 @@ class DefaultPresenter extends BasePresenter
 		));
 		$this->template->rental = $rental;
 		$this->template->showCalendar = !$rental->isCalendarEmpty();
+		$this->template->hasPremiumService = $this->serviceManager->hasPremiumPS($rental);
 	}
 
 
