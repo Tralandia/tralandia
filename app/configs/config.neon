@@ -421,8 +421,6 @@ services:
 	# ==============================
 	# ==================== Components
 	# ==============================
-	calendarControl: BaseModule\Components\CalendarControl
-
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
 	- \FrontModule\Components\SearchHistory\SearchHistoryControl
 	- \FrontModule\Components\VisitedRentals\VisitedRentalsControl
@@ -512,6 +510,11 @@ factories:
 #	rentalEditFormFactory:
 #		class: OwnerModule\Forms\RentalEditForm(%rental%)
 #		implement: OwnerModule\Forms\IRentalEditFormFactory
+
+	editableCalendarControlFactory:
+		class: \BaseModule\Components\CalendarControl(%rental%, ...)
+		parameters: [rental]
+		implement: \BaseModule\Components\ICalendarControlFactory
 
 	userEditFormFactory:
 		class: OwnerModule\Forms\UserEditForm(%user%, @doctrine.dao(Entity\User\User))

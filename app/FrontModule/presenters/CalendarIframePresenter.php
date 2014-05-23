@@ -7,16 +7,11 @@ use Nette\Application\BadRequestException;
 
 class CalendarIframePresenter extends BasePresenter {
 
-	/**
-	 * @autowire
-	 * @var \BaseModule\Components\CalendarControl
-	 */
-	protected $calendarControl;
 
 	public function actionDefault($rental, $months)
 	{
 		$this->template->monthsCount = $months;
-		
+
 		$selectedData = $rental->getCalendar();
 		$this->template->selectedData = $selectedData;
 
@@ -24,9 +19,9 @@ class CalendarIframePresenter extends BasePresenter {
 		$this->template->version = $params['version'] ?: 'old';
 	}
 
-	protected function createComponentCalendar()
+	protected function createComponentCalendar(\BaseModule\Components\ICalendarControlFactory $factory)
 	{
-		$comp = $this->calendarControl;
+		$comp = $factory->create($this->getParameter('rental'));
 
 		return $comp;
 	}

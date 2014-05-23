@@ -7,6 +7,8 @@ use Tralandia\Rental\CalendarManager;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
 
+	const VERSION_2 = 'v2';
+
 	/**
 	 * @var \Environment\Locale
 	 */
@@ -18,23 +20,28 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $selectedDays;
 
+	/**
+	 * @var \Nette\ComponentModel\IContainer
+	 */
+	private $rental;
 
 
-	public function __construct(\Environment\Locale $locale, array $selectedDays = NULL) {
+	public function __construct($rental, \Environment\Locale $locale) {
 		parent::__construct();
 		$this->locale = $locale;
-		$this->selectedDays = $selectedDays;
+		$this->selectedDays = $rental->getCalendar();
+		$this->rental = $rental;
 	}
 
-	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = 'v2'){
+	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = self::VERSION_2){
 		$this->render($monthsCount, $selectedDays, 'iframe', 0, $version);
 	}
 
-	public function renderEditable($monthsCount, array $selectedDays = NULL, $version = 'v2'){
+	public function renderEditable($monthsCount, array $selectedDays = NULL, $version = self::VERSION_2){
 		$this->render($monthsCount, $selectedDays, 'editable', 0, $version);
 	}
 
-	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0, $version = 'v2')
+	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0, $version = self::VERSION_2)
 	{
 		$selectedDays = $selectedDays ? $selectedDays : $this->selectedDays;
 
@@ -48,6 +55,8 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		}
 
 		$months = [];
+		$unitsCapacity = $version == self::VERSION_2 ? $this->rental->getUnitsCapacity() : null;
+		$rentalFreeCapacity = $version == self::VERSION_2 ? null : 1;
 		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];
 			$start = clone $fromDate;
@@ -76,7 +85,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				if(array_key_exists($key, $selectedDays)) {
 					$month['days'][$key] = $previousDay = $selectedDays[$key];
 				} else {
-					$tempDay = CalendarManager::createDay($start);
+					$tempDay = CalendarManager::createDay($start, $unitsCapacity, $rentalFreeCapacity);
 					if($previousDay) {
 						$tempDay[CalendarManager::KEY_CLASS] = $previousDay[CalendarManager::KEY_NEXT_DAY_CLASS];
 					}
@@ -129,4 +138,9 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	}
 
 
+}
+
+interface ICalendarControlFactory {
+
+	public function create($rental);
 }

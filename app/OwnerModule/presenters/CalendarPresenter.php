@@ -30,7 +30,7 @@ class CalendarPresenter extends BasePresenter
 	public function createComponentCalendarForm()
 	{
 		$form = $this->simpleFormFactory->create();
-		$form->addCalendarContainer('calendar', 'Calendar', $this->currentRental->getCalendar());
+		$form->addCalendarContainer('calendar', 'Calendar', $this->currentRental);
 
 		// $form->addSubmit('submit', 'o100083');
 
@@ -60,7 +60,6 @@ class CalendarPresenter extends BasePresenter
 		$this->currentRental = $this->findRental($id);
 		$this->template->rental = $this->currentRental;
 		$this->template->environment = $this->environment;
-		$this->template->thisRental = $this->currentRental;
 		$this->template->languages = $this->languages->getSupportedForSelect();
 
 		$this->template->rentals = $this->loggedUser->getRentals();

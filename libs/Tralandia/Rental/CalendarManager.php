@@ -134,10 +134,10 @@ class CalendarManager
 	}
 
 
-	public static function createDay(\DateTime $date, array $freeUnitsCapacity = NULL)
+	public static function createDay(\DateTime $date, array $freeUnitsCapacity = NULL, $freeCapacity = 0)
 	{
 		return [
-			self::KEY_FREE_CAPACITY => !$freeUnitsCapacity ? 0 : array_sum($freeUnitsCapacity), // aby sme predisli BC break-u
+			self::KEY_FREE_CAPACITY => !$freeUnitsCapacity ? $freeCapacity : array_sum($freeUnitsCapacity), // aby sme predisli BC break-u
 			self::KEY_FREE_UNITS => $freeUnitsCapacity,
 			self::KEY_BOOKED_UNITS => [],
 			self::KEY_YEAR => $date->format('Y'),
@@ -170,9 +170,9 @@ class CalendarManager
 			} else {
 				$units = implode('+', $day[self::KEY_FREE_UNITS]);
 				if(count($day[self::KEY_BOOKED_UNITS])) {
-					$day['title'] = Translatable::from([790458], '(', [231], ": $units)");
+					$day['title'] = Translatable::from([790458], '(', [231, 2], ": $units)");
 				} else {
-					$day['title'] = Translatable::from([790452], '(', [231], ": $units)");
+					$day['title'] = Translatable::from([790452], '(', [231, 2], ": $units)");
 				}
 			}
 		}
