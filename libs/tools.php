@@ -385,8 +385,11 @@ class Tools {
 	}
 
 
-	public static function entitiesMap(array $array, $keyOrValue, $value = NULL, \Nette\Localization\ITranslator $translator = NULL)
+	public static function entitiesMap($array, $keyOrValue, $value = NULL, \Nette\Localization\ITranslator $translator = NULL)
 	{
+		if($array instanceof \Doctrine\ORM\PersistentCollection) {
+			$array = $array->toArray();
+		}
 		if(is_string($keyOrValue)) {
 			$keyOrValue = function($key, $val) use ($keyOrValue) {
 				return $val->{$keyOrValue};

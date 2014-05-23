@@ -99,7 +99,7 @@ trait TGetCalendar
 				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
 				$date = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
 				$dateKey = $date->format(CalendarManager::DATE_FORMAT_FOR_KEY);
-				$daysTemp[$dateKey] = CalendarManager::createDay($date, 0);
+				$daysTemp[$dateKey] = CalendarManager::createDay($date);
 			}
 
 			$daysTemp = CalendarManager::formatOccupancy([1 => $daysTemp], false);

@@ -39,7 +39,6 @@ TRUNCATE TABLE `rental`;
 TRUNCATE TABLE `phrase_type`;
 TRUNCATE TABLE `phrase_translation`;
 TRUNCATE TABLE `phrase`;
-TRUNCATE TABLE `phpmig_migrations`;
 TRUNCATE TABLE `page`;
 TRUNCATE TABLE `medium_type`;
 TRUNCATE TABLE `medium`;

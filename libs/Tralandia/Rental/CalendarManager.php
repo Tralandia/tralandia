@@ -13,12 +13,15 @@ use Entity\User\User;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Utils\Json;
+use Tralandia\Dictionary\Translatable;
 use Tralandia\Reservation\Reservations;
 
 class CalendarManager
 {
 
 	const KEY_FREE_CAPACITY = 'fc';
+	const KEY_FREE_UNITS = 'fu';
+	const KEY_BOOKED_UNITS = 'bu';
 	const KEY_DATE = 'd';
 	const KEY_YEAR = 'y';
 	const KEY_DAY_Z = 'dz';
@@ -81,10 +84,10 @@ class CalendarManager
 					$rentalId = $rental->getId();
 					$dateKey = $date->format(self::DATE_FORMAT_FOR_KEY);
 					if(!isset($occupancy[$rentalId][$dateKey])) {
-						$occupancy[$rentalId][$dateKey] = self::createDay($date, $rental->getMaxCapacity());
+						$occupancy[$rentalId][$dateKey] = self::createDay($date, $rental->getUnitsCapacity());
 					}
 
-					$occupancy[$rentalId][$dateKey][self::KEY_FREE_CAPACITY] -= $unit->getMaxCapacity();
+					self::unitBooked($occupancy[$rentalId][$dateKey], $unit->getId());
 				}
 			}
 		}
@@ -131,16 +134,48 @@ class CalendarManager
 	}
 
 
-	public static function createDay(\DateTime $date, $maxCapacity = NULL)
+	public static function createDay(\DateTime $date, array $freeUnitsCapacity = NULL, $freeCapacity = 0)
 	{
 		return [
-			self::KEY_FREE_CAPACITY => $maxCapacity,
+			self::KEY_FREE_CAPACITY => !$freeUnitsCapacity ? $freeCapacity : array_sum($freeUnitsCapacity), // aby sme predisli BC break-u
+			self::KEY_FREE_UNITS => $freeUnitsCapacity,
+			self::KEY_BOOKED_UNITS => [],
 			self::KEY_YEAR => $date->format('Y'),
 			self::KEY_DAY_Z => $date->format('z'),
 			self::KEY_DAY_D => $date->format('d'),
 			self::KEY_IS_WEEKDAY => in_array($date->format('N'), array(6,7)),
 			self::KEY_DATE => clone $date,
 		];
+	}
+
+	public static function unitBooked(&$data, $unit)
+	{
+		$data[self::KEY_BOOKED_UNITS][$unit] = $data[self::KEY_FREE_UNITS][$unit];
+		unset($data[self::KEY_FREE_UNITS][$unit]);
+		$data[self::KEY_FREE_CAPACITY] = array_sum($data[self::KEY_FREE_UNITS]);
+	}
+
+
+	public static function setDayTitle(&$day)
+	{
+		if($day[self::KEY_FREE_UNITS] == null) {
+			if($day[self::KEY_FREE_CAPACITY] == 0) {
+				$day['title'] = Translatable::from([790459]);
+			} else {
+				$day['title'] = Translatable::from([790452]);
+			}
+		} else {
+			if($day[self::KEY_FREE_CAPACITY] == 0) {
+				$day['title'] = Translatable::from([790459]);
+			} else {
+				$units = implode('+', $day[self::KEY_FREE_UNITS]);
+				if(count($day[self::KEY_BOOKED_UNITS])) {
+					$day['title'] = Translatable::from([790458], '(', [231, 2], ": $units)");
+				} else {
+					$day['title'] = Translatable::from([790452], '(', [231, 2], ": $units)");
+				}
+			}
+		}
 	}
 
 }

@@ -3,9 +3,10 @@
 {if count($rentals)>1}
 	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
 	<option>selct</option>
-		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Calendar:, id => $rental->id}">{_$rental->name}</option>
+		<option n:foreach="$rentals as $value" n:attr="selected => ($rental->id == $value->id ? 'selected')" redirect="{plink //Calendar:, id => $value->id}">{_$value->name}</option>
 	</select>
 {/if}
+
 
 {if $rental->useOldCalendar()}
 
@@ -34,7 +35,7 @@
 
 <p>{_o100187}</p>
 
-<form data-id="{$thisRental->id}" id="calendarWidgetControl" data-link-template="{!$linkTemplate}">
+<form data-id="{$rental->id}" id="calendarWidgetControl" data-link-template="{!$linkTemplate}">
 
 	<div class="control-group calendarWidgetControl clearfix">
 
