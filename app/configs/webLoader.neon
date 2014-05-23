@@ -295,6 +295,8 @@ parameters:
 					# calendar widget
 					- front/calendarWidget/js/calendarWidget.js
 					# search sidebar
+					- 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false'
+					- ubilabs-geocomplete/jquery.geocomplete.min.js
 					- front/search/js/search.js
 					# - front/_base/js/antirobot.js
 					- front/_base/js/reservationForm.js
