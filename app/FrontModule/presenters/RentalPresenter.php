@@ -26,9 +26,9 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \BaseModule\Components\CalendarControl
+	 * @var \BaseModule\Components\ICalendarControlFactory
 	 */
-	protected $calendarControl;
+	protected $calendarControlFactory;
 
 	public function actionDetail($rental)
 	{
@@ -198,7 +198,7 @@ class RentalPresenter extends BasePresenter {
 
 	protected function createComponentCalendar()
 	{
-		$comp = $this->calendarControl;
+		$comp = $this->calendarControlFactory->create($this->getParameter('rental'));
 
 		return $comp;
 	}
