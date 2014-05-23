@@ -2,6 +2,7 @@
 namespace BaseModule\Components;
 
 use Nette\DateTime;
+use Tralandia\Dictionary\Translatable;
 use Tralandia\Rental\CalendarManager;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
@@ -74,7 +75,6 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				$key = $start->format(CalendarManager::DATE_FORMAT_FOR_KEY);
 				if(array_key_exists($key, $selectedDays)) {
 					$month['days'][$key] = $previousDay = $selectedDays[$key];
-					$month['days'][$key]['title'] = ;
 				} else {
 					$tempDay = CalendarManager::createDay($start);
 					if($previousDay) {
@@ -83,6 +83,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 					$month['days'][$key] = $tempDay;
 					$previousDay = NULL;
 				}
+				CalendarManager::setDayTitle($month['days'][$key]);
 				$start->modify('+1 day');
 			}
 

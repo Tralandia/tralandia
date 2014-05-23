@@ -71,12 +71,31 @@ class Translatable
 		$string = '';
 		foreach($this->sentence as $key => $value) {
 			if($value['type'] == self::TYPE_PHRASE) {
-				$value['value'] = $translator->translate($value['value']);
+				$value['value'] = call_user_func_array([$translator, 'translate'], $value['value']);
 			}
 
 			$string .= $value['value'];
 		}
 
 		return $string;
+	}
+
+
+	/**
+	 * @return Translatable
+	 */
+	public static function from()
+	{
+		$t = new self;
+		$args = func_get_args();
+		foreach($args as $arg) {
+			if(is_scalar($arg)) {
+				$t->string($arg);
+			} else if(is_array($arg)) {
+				$t->phrase($arg);
+			}
+		}
+
+		return $t;
 	}
 }
