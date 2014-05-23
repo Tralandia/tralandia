@@ -19,6 +19,7 @@ class CalendarManager
 {
 
 	const KEY_FREE_CAPACITY = 'fc';
+	const KEY_FREE_UNITS = 'fu';
 	const KEY_DATE = 'd';
 	const KEY_YEAR = 'y';
 	const KEY_DAY_Z = 'dz';
@@ -81,10 +82,10 @@ class CalendarManager
 					$rentalId = $rental->getId();
 					$dateKey = $date->format(self::DATE_FORMAT_FOR_KEY);
 					if(!isset($occupancy[$rentalId][$dateKey])) {
-						$occupancy[$rentalId][$dateKey] = self::createDay($date, $rental->getMaxCapacity());
+						$occupancy[$rentalId][$dateKey] = self::createDay($date, $rental->getUnitsCapacity());
 					}
 
-					$occupancy[$rentalId][$dateKey][self::KEY_FREE_CAPACITY] -= $unit->getMaxCapacity();
+					self::unitBooked($occupancy[$rentalId][$dateKey], $unit->getId());
 				}
 			}
 		}
@@ -131,16 +132,23 @@ class CalendarManager
 	}
 
 
-	public static function createDay(\DateTime $date, $maxCapacity = NULL)
+	public static function createDay(\DateTime $date, array $freeUnitsCapacity = NULL)
 	{
 		return [
-			self::KEY_FREE_CAPACITY => $maxCapacity,
+			self::KEY_FREE_CAPACITY => !$freeUnitsCapacity ? 0 : array_sum($freeUnitsCapacity), // aby sme predisli BC break-u
+			self::KEY_FREE_UNITS => $freeUnitsCapacity,
 			self::KEY_YEAR => $date->format('Y'),
 			self::KEY_DAY_Z => $date->format('z'),
 			self::KEY_DAY_D => $date->format('d'),
 			self::KEY_IS_WEEKDAY => in_array($date->format('N'), array(6,7)),
 			self::KEY_DATE => clone $date,
 		];
+	}
+
+	public static function unitBooked(&$data, $unit)
+	{
+		unset($data[self::KEY_FREE_UNITS][$unit]);
+		$data[self::KEY_FREE_CAPACITY] = array_sum($data[self::KEY_FREE_UNITS]);
 	}
 
 }

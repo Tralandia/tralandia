@@ -74,6 +74,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				$key = $start->format(CalendarManager::DATE_FORMAT_FOR_KEY);
 				if(array_key_exists($key, $selectedDays)) {
 					$month['days'][$key] = $previousDay = $selectedDays[$key];
+					$month['days'][$key]['title'] = ;
 				} else {
 					$tempDay = CalendarManager::createDay($start);
 					if($previousDay) {

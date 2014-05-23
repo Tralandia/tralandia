@@ -379,6 +379,22 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $max;
 	}
 
+	public function getUnits()
+	{
+		return $this->units;
+	}
+
+	public function getUnitsCapacity()
+	{
+		$capacity = [];
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$capacity[$unit->id] = $unit->getMaxCapacity();
+		}
+
+		return $capacity;
+	}
+
 	/**
 	 * @return string|NULL
 	 */
