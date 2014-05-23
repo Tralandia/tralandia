@@ -51,7 +51,93 @@ table.formTable {
 		}
 	}
 	tr.submitControl td {
-		padding: 10px 0px 10px;
+		padding: 0 10px 0 0;
+	}
+
+	tr.package {
+		label {
+			background: #EEF3E2;
+			padding: 8px 18px 8px 8px;
+			.border-radius(5px);
+			cursor: pointer;
+			color: #698308;
+
+			&:hover {
+				border-color: #CBD2A0;
+			}
+
+			&.active {
+				background: #698308;
+				opacity: 1;
+				color: #fff;
+
+				span.price.free {
+					color: #fff;
+				}
+
+				&.type1 {
+					background: #666;
+					color: #fff;
+					
+					span.price {
+						color: #fff;
+					}
+				}
+				&.type2 {
+					background: #FC0;
+				}
+				.radio2 {
+
+					.icon-check-sign {
+						display: inline;
+					}
+
+					.icon-sign-blank {
+						display: none;
+					}
+				}
+			}
+
+			.radio2 {
+				float: left;
+				font-size: 24px;
+				width: 30px;
+				margin-top: 2px;
+
+				.icon-check-sign {
+					display: none;
+				}
+
+				.icon-sign-blank {
+					color: #FDFDF8;
+				}
+			}
+
+			&.type1 {
+				background: #ECF0F1;
+				color: #333;
+			}
+
+			&.type2 {
+				background: #F1C40F;
+				color: #5E590B;
+			}
+
+			input {
+				display: none;
+			}
+
+			span.price {
+				float: right;
+				font-weight: bold;
+				color: #645151;
+				font-size: 16px;
+
+				&.free {
+					color: #698308;
+				}
+			}
+		}
 	}
 }
 
