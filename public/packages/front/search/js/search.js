@@ -148,7 +148,7 @@
 
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -394,7 +394,7 @@ $(function(){
 
 
 
-	$('.searchForm .select2 , input[data-autocomplete-url]').on('change',function(e){
+	$('.searchForm .select2 , input[data-autocomplete-url] , input[name="location"] , input[name="viewport"]').on('change',function(e){
 
 		updateSerachLinkUrl();
 		updateCriteriaCount();
@@ -419,7 +419,58 @@ $(function(){
 	$('.btnSearchClose').on('click',closeCriteriaSelectButton)
 						.live('click',closeCriteriaSelectButton);
 
+	var $geocomplete = $('.searchForm input#geocomplete');
+	var country = $geocomplete.data('country');
+
+	$geocomplete.geocomplete({
+			country: country,
+			types: ['geocode','establishment']
+		})
+		.bind("geocode:result", geocodeResult)
+		.bind("geocode:error", geocodeError)
+		.bind("geocode:multiple", geocodeMultiple);
+
 });
+
+function geocodeResult(event, result) {
+	var $geocomplete = $(this).parent('div');
+
+	if (result.geometry) {
+
+		if (result.geometry.location) {
+			var value = result.geometry.location.lat() + ',' + result.geometry.location.lng();
+			$geocomplete
+				.find('input[name="location"]')
+				.val(value);
+		}
+
+		// if (result.geometry.viewport) {
+		// 	var value = JSON.stringify([
+		// 		[result.geometry.viewport.getSouthWest().lat(),
+		// 		result.geometry.viewport.getSouthWest().lng()],
+		// 		[result.geometry.viewport.getNorthEast().lat(),
+		// 		result.geometry.viewport.getNorthEast().lng()]
+		// 	]);
+		// 	$geocomplete
+		// 		.find('input[name="viewport"]')
+		// 		.val(value);
+		// }
+		
+		$geocomplete.addClass('selected');
+
+		updateSerachLinkUrl();
+		updateCriteriaCount();
+
+	}
+}
+
+function geocodeError(event, error) {
+	console.log(error);
+}
+
+function geocodeMultiple(event, results) {
+	console.log(results);
+}
 
 function closeCriteriaSelectButton(){
 		
