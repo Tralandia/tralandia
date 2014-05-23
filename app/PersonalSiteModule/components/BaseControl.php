@@ -34,7 +34,5 @@ abstract class BaseControl extends Control {
 	}
 
 
-
-
 }
 

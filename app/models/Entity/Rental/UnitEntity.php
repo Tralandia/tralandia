@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rental_unit")
  *
  * @method \Entity\Rental\Rental getRental()
+ * @method int getMaxCapacity()
  */
 class Unit extends \Entity\BaseEntity
 {

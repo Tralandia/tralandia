@@ -90,7 +90,7 @@ class RentalDataSource extends BaseDataSource {
 			$newRow['id'] = $row->getId();
 			$newRow['entity'] = $row;
 
-			$newRow['editLink'] = $presenter->link(':Owner:Rental:edit', [
+			$newRow['editLink'] = $presenter->link(':Owner:RentalEdit:default', [
 					'id' => $row->getId(),
 					FrontRoute::PRIMARY_LOCATION => $owner->getPrimaryLocation(),
 					FrontRoute::LANGUAGE => $owner->getLanguage(),

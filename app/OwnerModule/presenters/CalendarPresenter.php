@@ -5,6 +5,7 @@ namespace OwnerModule;
 
 use BaseModule\Forms\SimpleForm;
 use Nette\Application\BadRequestException;
+use Nette\Utils\Html;
 
 class CalendarPresenter extends BasePresenter
 {
@@ -22,7 +23,7 @@ class CalendarPresenter extends BasePresenter
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\SearchCache\InvalidateRentalListener
+	 * @var \Tralandia\RentalSearch\InvalidateRentalListener
 	 */
 	protected $invalidateRentalListener;
 
@@ -44,7 +45,7 @@ class CalendarPresenter extends BasePresenter
 
 		$rental = $this->currentRental;
 
-		$rental->updateCalendar($values['calendar']['data']);
+		$rental->updateOldCalendar($values['calendar']['data']);
 
 		$this->em->flush($rental);
 
@@ -64,14 +65,14 @@ class CalendarPresenter extends BasePresenter
 
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
-			':Owner:CalendarWidget:generateCode',
+			'generateCode',
 			['id' => '__rental__', 'wLanguage' => '__language__', 'columns' => '__columns__', 'rows' => '__rows__']
 		);
 	}
 
 	public function actionGenerateCode($id, $wLanguage, $columns, $rows)
 	{
-		$language = $this->languageRepositoryAccessor->get()->find($wLanguage);
+		$language = $this->findLanguage($wLanguage);
 		$rental = $this->findRental($id);
 		if(!$language) {
 			throw new BadRequestException;
@@ -85,9 +86,10 @@ class CalendarPresenter extends BasePresenter
 		$iFrameWidth = ($monthWidth * $columns)+ 10;
 		$iFrameHeight = ($monthHeight * $rows)+ 10;
 
+		$version = $rental->calendarVersion();
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
-			['language' => $language, 'rental' => $rental, 'months' => $months]
+			['language' => $language, 'rental' => $rental, 'months' => $months, 'version' => $version]
 		);
 
 		$code = Html::el('iframe')

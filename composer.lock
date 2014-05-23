@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bace1b0ad8d2111e95560ae67583a5cb",
+    "hash": "34ee7bb7d2180ce448529e21fc5d70ac",
     "packages": [
         {
             "name": "davedevelopment/phpmig",
@@ -1900,6 +1900,62 @@
     ],
     "packages-dev": [
         {
+            "name": "nette/tester",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/tester.git",
+                "reference": "2700482a71973a8bcfd5ae2ca7ccc25b4621e599"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/tester/zipball/2700482a71973a8bcfd5ae2ca7ccc25b4621e599",
+                "reference": "2700482a71973a8bcfd5ae2ca7ccc25b4621e599",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "Tester/tester"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "Tester/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "http://nette.org/contributors"
+                }
+            ],
+            "description": "An easy-to-use PHP Unit Testing framework.",
+            "homepage": "http://nette.org",
+            "keywords": [
+                "nette",
+                "testing",
+                "unit"
+            ],
+            "time": "2014-04-23 21:33:51"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "dev-master",
             "source": {
@@ -2568,7 +2624,8 @@
         "mobiledetect/mobiledetectlib": 20,
         "dg/dibi": 20,
         "texy/texy": 20,
-        "janmarek/mockista": 20
+        "janmarek/mockista": 20,
+        "nette/tester": 20
     },
     "platform": {
         "php": ">= 5.3.0"

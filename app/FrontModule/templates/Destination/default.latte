@@ -18,7 +18,7 @@
 			<div n:foreach="$links as $link" class="span4">
 				<ul n:inner-foreach="$link as $row" class="hp-list arrows">
 					<li class="arrow">
-						<a n:href="RentalList:, \Routers\FrontRoute::LOCATION => $row->entity" title="{_$row['entity']->name}"><span class="hoverUnderline">{_$row['entity']->name}</span> <span>({$row['count']})</span></a>
+						<a n:href="RentalList:, \Routers\FrontRoute::LOCATION => $row->entity" title="{$row['name']}"><span class="hoverUnderline">{$row['name']}</span> <span>({$row['count']})</span></a>
 					</li>
 				</ul>
 			</div>

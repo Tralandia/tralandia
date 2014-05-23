@@ -10,7 +10,9 @@ use Extras\Annotation as EA;
 use Nette\DateTime;
 use Nette\Http\Url;
 use Nette\Utils\Arrays;
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Tralandia\Rental\CalendarManager;
 
 /**
  * @ORM\Entity
@@ -36,6 +38,8 @@ use Nette\Utils\Strings;
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
+
+	use \Tralandia\Rental\TGetCalendar;
 
 	const STATUS_DRAFT = 0;
 
@@ -210,7 +214,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var price
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $price;
+	protected $priceFrom;
+
+	/**
+	 * @var price
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $priceTo;
 
 	/**
 	 * @var Collection
@@ -248,6 +258,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $calendarUpdated;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $oldCalendar;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $oldCalendarUpdated;
 
 	/**
 	 * @var Collection
@@ -301,10 +323,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $services;
 
 	/**
-	 * toto nieje stlpec v DB je to len pomocna premenna
-	 * @var array
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Unit", mappedBy="rental", cascade={"persist"})
 	 */
-	private $formattedCalendar;
+	protected $units;
 
 	/**
 	 * toto nieje stlpec v DB je to len pomocna premenna
@@ -343,6 +365,19 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $lastUpdate;
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getMaxCapacity()
+	{
+		$max = 0;
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$max += $unit->getMaxCapacity();
+		}
+		return $max;
+	}
 
 	/**
 	 * @return string|NULL
@@ -426,6 +461,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$videos = $this->videos->slice($offset, $limit);
 		return $videos;
 	}
+
+
+	public function addUnit(\Entity\Rental\Unit $unit)
+	{
+		if(!$this->units->contains($unit)) {
+			$this->units->add($unit);
+		}
+		$unit->setRental($this);
+
+		return $this;
+	}
+
+	public function removeUnit(\Entity\Rental\Unit $unit)
+	{
+		$this->units->removeElement($unit);
+		$unit->unsetRental();
+
+		return $this;
+	}
+
 
 
 	/**
@@ -644,21 +699,64 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getPrice()
 	{
-		return new \Extras\Types\Price($this->price, $this->getCurrency());
+		return $this->getPriceFrom();
 	}
-
 
 	public function setPrice(\Extras\Types\Price $price)
 	{
-		$this->price = $price->convertToFloat($this->getCurrency());
+		return $this->setPriceFrom($price);
+	}
+
+	public function setFloatPrice($price)
+	{
+		return $this->setFloatPriceFrom($price);
+	}
+
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPriceFrom()
+	{
+		return new \Extras\Types\Price($this->priceFrom, $this->getCurrency());
+	}
+
+
+	public function setPriceFrom(\Extras\Types\Price $price)
+	{
+		$this->priceFrom = $price->convertToFloat($this->getCurrency());
 
 		return $this;
 	}
 
 
-	public function setFloatPrice($price)
+	public function setFloatPriceFrom($price)
 	{
-		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+		$this->setPriceFrom(new \Extras\Types\Price($price, $this->getCurrency()));
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPriceTo()
+	{
+		return new \Extras\Types\Price($this->priceTo, $this->getCurrency());
+	}
+
+
+	public function setPriceTo(\Extras\Types\Price $price)
+	{
+		$this->priceTo = $price->convertToFloat($this->getCurrency());
+
+		return $this;
+	}
+
+
+	public function setFloatPriceTo($price)
+	{
+		$this->setPriceTo(new \Extras\Types\Price($price, $this->getCurrency()));
+		return $this;
 	}
 
 
@@ -784,94 +882,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 
 	/**
-	 * @param array $calendar
-	 * @param \DateTime $updated
-	 *
-	 * @return $this
-	 */
-	public function updateCalendar(array $calendar, \DateTime $updated = NULL)
-	{
-		if($updated === NULL) {
-			$updated = new \DateTime();
-		}
-
-		$this->setCalendarUpdated($updated);
-		$this->setCalendar($calendar);
-
-		return $this;
-	}
-
-
-	/**
-	 * @param array|\DateTime[]
-	 *
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendar(array $calendar)
-	{
-		foreach ($calendar as $key => $date) {
-			$calendar[$key] = $date->format('z');
-		}
-
-		$this->calendar = ',' . (implode(',', $calendar)) . ',';
-		$this->formattedCalendar = NULL;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return array|\DateTime[]
-	 */
-	public function getCalendar()
-	{
-		if(!$this->getCalendarUpdated()) {
-			return [];
-		}
-
-		if(!is_array($this->formattedCalendar)) {
-			$days = array_filter(explode(',', $this->calendar));
-			$todayZ = date('z');
-			$calendarUpdatedZ = $this->getCalendarUpdated()->format('z');
-			$thisYear = $this->getCalendarUpdated()->format('Y');
-			$nextYear = $thisYear + 1;
-			$daysTemp = [];
-			foreach ($days as $key => $day) {
-				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
-				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-				$daysTemp[] = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
-			}
-
-			$this->formattedCalendar = array_filter($daysTemp);
-		}
-		return $this->formattedCalendar;
-	}
-
-
-	/**
-	 * @param \DateTime $from
-	 * @param \DateTime $to
-	 *
-	 * @return bool
-	 */
-	public function isAvailable(\DateTime $from, \DateTime $to = NULL)
-	{
-		$calendar = $this->getCalendar();
-
-		if(!count($calendar)) return TRUE;
-
-		if($to === NULL) $to = clone $from;
-
-		$from->modify('midnight');
-		while($from <= $to) {
-			if(in_array($from, $calendar)) return FALSE;
-			$from->modify('next day');
-		}
-
-		return TRUE;
-	}
-
-	/**
 	 * @return \Entity\Rental\Placement|NULL
 	 */
 	public function getPlacement()
@@ -959,6 +969,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->videos = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->units = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->services = new \Doctrine\Common\Collections\ArrayCollection;
@@ -1662,44 +1673,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->interviewAnswers;
 	}
 
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendar()
-	{
-		$this->calendar = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendarUpdated(\DateTime $calendarUpdated)
-	{
-		$this->calendarUpdated = $calendarUpdated;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendarUpdated()
-	{
-		$this->calendarUpdated = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getCalendarUpdated()
-	{
-		return $this->calendarUpdated;
-	}
 
 	/**
 	 * @param \Entity\Rental\Image
@@ -1840,14 +1813,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->maxCapacity = NULL;
 
 		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getMaxCapacity()
-	{
-		return $this->maxCapacity;
 	}
 
 	/**

@@ -1,0 +1,12 @@
+{block content}
+
+{ifset $newAlias}
+<h1>New Alias id is: {l}_a{$newAlias->id}{r}</h1>
+<hr>
+{/ifset}
+<h1>Add Alias</h1>
+
+{control addAlias}
+
+<hr/>
+<a n:href="Cache:invalidateAliasesCache" target="_blank">Invalidate Aliases Cache</a>

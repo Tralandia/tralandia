@@ -21,6 +21,8 @@ class Mapper extends DefaultMapper {
 	protected $tableToClass = [
 		'rental_pricelist' => '\Tralandia\Rental\PriceListFile',
 		'currency' => '\Tralandia\Currency',
+		'user_sitereview' => '\Tralandia\SiteReview\SiteReview',
+		'page' => '\Tralandia\Routing\Page',
 	];
 
 	protected $classToTable;
@@ -139,6 +141,10 @@ class Mapper extends DefaultMapper {
 	{
 		if(!$this->classToTable) {
 			$this->classToTable = array_flip($this->tableToClass);
+		}
+
+		if(!Nette\Utils\Strings::startsWith($class, '\\')) {
+			$class = '\\' . $class;
 		}
 
 		return array_key_exists($class, $this->classToTable) ? $this->classToTable[$class] : NULL;

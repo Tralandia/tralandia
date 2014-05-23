@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $slug
  */
 class Type extends \Tralandia\Lean\BaseEntity

@@ -173,6 +173,12 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect(301, 'this');
 		}
 
+		if(!empty($this->params['lang'])) {
+			$language = $this->findLanguage($this->params['lang'], FALSE);
+			unset($this->params['lang']);
+			$language && $this->redirect(301, 'this', [FrontRoute::LANGUAGE => $language]);
+		}
+
 		if($device = $this->getParameter(FrontRoute::DEVICE)) {
 			if(in_array($device, [Device::MOBILE, Device::DESKTOP])) {
 				$this->device->setDevice($device);

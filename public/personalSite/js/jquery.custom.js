@@ -354,12 +354,27 @@ jQuery(document).ready(function($){
 
     photoSetGrid('.photoset-default');
 
+    $(document).tooltip({
+        show: {
+            delay: 200
+        },
+        position: {
+            my: "center bottom",
+            at: "center bottom-25"
+        }
+    });
+
 });
 
 function photoSetGrid(selector) {
+    layout = '';
+    for (var i = $(selector).find('img').length; i >= 1; i--) {
+        layout += '2';
+    };
+
     $(selector).photosetGrid({
       gutter: '5px',
-      layout: '22222222222222222222',
+      layout: layout,
       rel: 'print-gallery'
     });
 }

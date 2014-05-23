@@ -1,0 +1,1 @@
+-- OwnerNewRedirect migration DOWN file

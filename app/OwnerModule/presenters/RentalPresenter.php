@@ -44,9 +44,9 @@ class RentalPresenter extends BasePresenter
 	{
 		$rental = $this->loggedUser->getFirstRental();
 		if (!$rental) {
-			$this->redirect('User:edit');
+			$this->redirect('add');
 		}
-		$this->redirect('edit', ['id' => $rental->getId()]);
+		$this->redirect('RentalEdit:default', ['id' => $rental->getId()]);
 	}
 
 
@@ -91,6 +91,7 @@ class RentalPresenter extends BasePresenter
 
 	public function actionEdit($id)
 	{
+		$this->redirect('RentalEdit:default', ['id' => $id]); // pouziva sa uz novy edit
 		$this->rental = $this->rentalDao->find($id);
 
 		$this->checkPermission($this->rental, 'edit');

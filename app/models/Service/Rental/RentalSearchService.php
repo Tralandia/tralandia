@@ -7,6 +7,8 @@ use Extras\Cache\Cache;
 use Nette\Utils\Arrays;
 use Robot\IUpdateRentalSearchCacheRobotFactory;
 use Tralandia\BaseDao;
+use Tralandia\Location\LocationRepository;
+use Tralandia\RentalSearch\GpsHelper;
 
 class RentalSearchService extends Nette\Object
 {
@@ -17,6 +19,7 @@ class RentalSearchService extends Nette\Object
 	const CRITERIA_LOCATION = 'location';
 	const CRITERIA_RENTAL_TYPE = 'rentalType';
 	const CRITERIA_PLACEMENT = 'placement';
+	const CRITERIA_GPS = 'gps';
 
 	const CRITERIA_CAPACITY = 'fcapacity';
 	const CRITERIA_SPOKEN_LANGUAGE = 'flanguage';
@@ -61,10 +64,16 @@ class RentalSearchService extends Nette\Object
 	 */
 	private $rentalDao;
 
+	/**
+	 * @var \Tralandia\Location\LocationRepository
+	 */
+	private $locationRepository;
+
 
 	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,BaseDao $rentalDao,
 								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
-								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory)
+								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory,
+								LocationRepository $locationRepository)
 	{
 		$this->primaryLocation = $primaryLocation;
 
@@ -72,6 +81,7 @@ class RentalSearchService extends Nette\Object
 		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
 		$this->rentalDao = $rentalDao;
+		$this->locationRepository = $locationRepository;
 	}
 
 	/**
@@ -157,6 +167,13 @@ class RentalSearchService extends Nette\Object
 	public function setBoardCriterion(Entity\Rental\Amenity $board = NULL)
 	{
 		$this->criteria[self::CRITERIA_BOARD] = $board;
+		$this->resetResults();
+	}
+
+
+	public function setGpsCriterion($latitude, $longitude)
+	{
+		$this->criteria[self::CRITERIA_GPS] = ['latitude' => $latitude, 'longitude' => $longitude];
 		$this->resetResults();
 	}
 
@@ -250,16 +267,20 @@ class RentalSearchService extends Nette\Object
 	 *
 	 * @return array
 	 */
-	public function getCollectedResults($criterionType)
+	public function getCollectedResults($criterionType, $maxResults = NULL)
 	{
 		$this->loadCache();
 
 		if(!array_key_exists($criterionType, $this->searchCacheData)) return [];
 		$results = $this->getResults();
 
-		$collection = [];
-		foreach($this->searchCacheData[$criterionType] as $key => $value) {
-			$collection[$key] = array_intersect($results, $value);
+		if($criterionType == self::CRITERIA_LOCATION) {
+			$collection = $this->locationRepository->findTopLocationsForSearch($results, $maxResults);
+		} else {
+			$collection = [];
+			foreach($this->searchCacheData[$criterionType] as $key => $value) {
+				$collection[$key] = array_intersect($results, $value);
+			}
 		}
 
 		return array_filter($collection);
@@ -307,11 +328,30 @@ class RentalSearchService extends Nette\Object
 					$byPrice = [];
 					$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
 					foreach($priceOptions as $priceOption) {
-						if($priceOption > $value['from'] && $priceOption <= $value['to']) {
+						if($priceOption >= $value['from'] && $priceOption < $value['to']) {
 							$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
 						}
 					}
 					$results[$key] = $byPrice;
+				} else if ($key == self::CRITERIA_GPS) {
+					$getSquare = function($a, $b) {
+						return Arrays::get($this->searchCacheData, array(self::CRITERIA_GPS, $a, $b), []);
+					};
+					$latitudeKey = GpsHelper::coordinateToKey($value['latitude']);
+					$longitudeKey = GpsHelper::coordinateToKey($value['longitude']);
+
+					$byGps = [];
+					$c = 5;
+					$byGps += $getSquare($latitudeKey, $longitudeKey);
+					$byGps += $getSquare($latitudeKey, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey, $longitudeKey - $c);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey + $c, $longitudeKey - $c);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey + $c);
+					$byGps += $getSquare($latitudeKey - $c, $longitudeKey - $c);
+					$results[$key] = $byGps;
 				} else {
 					$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
 				}

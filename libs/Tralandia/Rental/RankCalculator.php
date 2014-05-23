@@ -208,7 +208,7 @@ class RankCalculator {
 		}
 
 		// Prices
-		if ($rental->getPrice()->getSourceAmount() > 0) {
+		if ($rental->getPriceFrom()->getSourceAmount() > 0) {
 			$rank['points'] += 3;
 			$rank['complete'][] = 'price';
 		} else {

@@ -50,6 +50,7 @@ class TemplateClient implements IDatabaseClient {
 		$args = [
 			'id' => $id,
 			'value' => gzcompress($value, 6),
+			'valid' => 1,
 			'expiration' => $expiration ? Nette\DateTime::from($expiration) : NULL,
 		];
 
@@ -97,8 +98,9 @@ class TemplateClient implements IDatabaseClient {
 	public function isCacheValid($row)
 	{
 		do {
+			$valid = $row->valid;
 			$expiration = $row->expiration;
-			if($expiration !== NULL && $expiration <= new Nette\DateTime()) {
+			if($valid == 0 || ($expiration !== NULL && $expiration <= new Nette\DateTime())) {
 				break;
 			}
 
@@ -114,14 +116,15 @@ class TemplateClient implements IDatabaseClient {
 	{
 		if(count($tags)) {
 			$columns = $this->tagsToColumns($tags);
-			$this->connection->query("DELETE FROM [{$this->table}] WHERE %or", $columns);
+			$this->connection->query("UPDATE [{$this->table}] SET valid = 0 WHERE %or", $columns);
 
 		}
 	}
 
 	public function clearByIds(array $ids)
 	{
-		$this->connection->delete($this->table)->where('[id] IN %in', $ids)->execute();
+		$this->connection->query("UPDATE [{$this->table}] SET valid = 0 WHERE [id] IN %in", $ids);
+
 	}
 
 

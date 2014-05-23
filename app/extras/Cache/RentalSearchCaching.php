@@ -10,6 +10,7 @@ use Extras\Types\Price;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
 use Tralandia\Rental\Rentals;
+use Tralandia\RentalSearch\GpsHelper;
 
 class RentalSearchCaching extends \Nette\Object {
 
@@ -110,6 +111,7 @@ class RentalSearchCaching extends \Nette\Object {
 
 	public function updateWholeCache()
 	{
+		$this->cacheContent = null;
 		$this->regenerateData();
 		$this->save();
 	}
@@ -159,6 +161,7 @@ class RentalSearchCaching extends \Nette\Object {
 			$baseQb->andWhere('r.id = :onlyForRental')->setParameter('onlyForRental', $rental->getId());
 		}
 
+		$this->regenerateGpsData(clone $baseQb);
 		$this->regenerateLocationsData(clone $baseQb);
 		$this->regenerateRentalTypeData(clone $baseQb);
 		$this->regenerateCapacityData(clone $baseQb);
@@ -206,7 +209,7 @@ class RentalSearchCaching extends \Nette\Object {
 	{
 		$defaultCurrency = $this->location->getDefaultCurrency();
 		$priceSearchInterval = $defaultCurrency->getSearchInterval();
-		$qb->select('r.id AS rentalId, r.price AS price, c.id AS currencyId')
+		$qb->select('r.id AS rentalId, r.priceFrom AS priceFrom, r.priceTo AS priceTo, c.id AS currencyId')
 			->innerJoin('r.currency', 'c');
 
 		$currencies = $this->em->getRepository(CURRENCY_ENTITY)->findAll();
@@ -217,15 +220,24 @@ class RentalSearchCaching extends \Nette\Object {
 
 		$rentalsPrice = $qb->getQuery()->getResult();
 		foreach($rentalsPrice as $value) {
-			$amount = $value['price'];
+			$priceFrom = $value['priceFrom'];
+			$priceTo = $value['priceTo'];
 			if($defaultCurrency->getId() != $value['currencyId']) {
-				$price = new Price($amount, $currenciesById[$value['currencyId']]);
-				$amount = $price->getAmountIn($defaultCurrency);
+				$price = new Price($priceFrom, $currenciesById[$value['currencyId']]);
+				$priceFrom = $price->getAmountIn($defaultCurrency);
+
+				$price = new Price($priceTo, $currenciesById[$value['currencyId']]);
+				$priceTo = $price->getAmountIn($defaultCurrency);
 			}
-			$t = (int) ceil($amount / $priceSearchInterval) * $priceSearchInterval;
-			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
-			if( !($amount % $priceSearchInterval) && $t > 0) {
-				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t - $priceSearchInterval][$value['rentalId']] = $value['rentalId'];
+
+			$min = (int) floor($priceFrom / $priceSearchInterval) * $priceSearchInterval;
+			if( !($priceFrom % $priceSearchInterval) && $min > 0) {
+				$min = $min - $priceSearchInterval;
+			}
+			$max = (int) floor($priceTo / $priceSearchInterval) * $priceSearchInterval;
+
+			foreach(range($min, $max, $priceSearchInterval) as $t) {
+				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
 			}
 		}
 	}
@@ -304,6 +316,22 @@ class RentalSearchCaching extends \Nette\Object {
 
 		foreach($rentalsLocation as $value) {
 			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value['locationId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateGpsData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, a.latitude AS latitude, a.longitude AS longitude');
+
+		$rentals = $qb->getQuery()->getResult();
+		foreach($rentals as $value) {
+			$latitude = GpsHelper::coordinateToKey($value['latitude']);
+			$longitude = GpsHelper::coordinateToKey($value['longitude']);
+			$this->cacheContent[RentalSearchService::CRITERIA_GPS][$latitude][$longitude][$value['rentalId']] = $value['rentalId'];
 		}
 	}
 

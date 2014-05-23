@@ -9,15 +9,29 @@ Deny from 83.233.207.74
 Deny from 185.10.104
 Deny from 46.161.41.32
 Deny from 125.77.135.1
+Deny from 95.82.130.35
+Deny from 5.9.112.180
+Deny from 204.12.251.37
+Deny from 37.59.189.238
+Deny from 91.239.27.99
+Deny from 188.143.232.111
+
 #Deny from 151.236.42.200
-
-
 
 # mod_rewrite
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # RewriteBase /
-
+  RewriteCond %{HTTP_USER_AGENT} .*Java.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Python\-urllib.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Najdi\.si.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Baiduspider.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Vietnamese.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Nutch.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*woobot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Nuhk.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*TencentTraveler.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*VoilaBot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*HTTrack.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*Teleport.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*twiceler.* [OR]
@@ -32,15 +46,27 @@ Deny from 125.77.135.1
   RewriteCond %{HTTP_USER_AGENT} .*baidu.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*shopwiki.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*linkwalker.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*riddler.io.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*riddler\.io.* [OR]
   RewriteCond %{HTTP_USER_AGENT} .*TurnitinBot.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*Mail.RU_Bot.* [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*archive.org_bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Mail\.RU_Bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*archive\.org_bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*www\.opensiteexplorer\.org.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*fr-crawler.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Mail\.RU_Bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*msnbot\.htm.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*archive\.org_bot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*TurnitinBot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*SISTRIX.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*Yahoo\!\ Slurp.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*linkdexbot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*BacklinkCrawler.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*WBSearchBot.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*ca-crawler.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*SearchmetricsBot.* [OR]
   RewriteCond %{HTTP_USER_AGENT} bingbot [OR]
   RewriteCond %{HTTP_USER_AGENT} AhrefsBot [OR]
   RewriteCond %{HTTP_USER_AGENT} JikeSpider [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
-  #RewriteCond %{HTTP_USER_AGENT} SeznamBot [OR]
   RewriteCond %{HTTP_USER_AGENT} Jyxobot [OR]
   RewriteCond %{HTTP_USER_AGENT} coccoc [OR]
   RewriteCond %{HTTP_USER_AGENT} UnisterBot [OR]
@@ -98,7 +124,7 @@ Deny from 125.77.135.1
   RewriteCond %{HTTP_USER_AGENT} ^GetSmart [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Gets [OR]
   RewriteCond %{HTTP_USER_AGENT} ^GetWeb [OR]
-  RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+  RewriteCond %{HTTP_USER_AGENT} ^Go\-Ahead\-Got\-It [OR]
   RewriteCond %{HTTP_USER_AGENT} ^gotit [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
   RewriteCond %{HTTP_USER_AGENT} ^Grabber [OR]
@@ -116,7 +142,7 @@ Deny from 125.77.135.1
   RewriteCond %{HTTP_USER_AGENT} ^InternetLinkAgent [OR]
   RewriteCond %{HTTP_USER_AGENT} ^IPhoto [OR]
   RewriteCond %{HTTP_USER_AGENT} ^iwantmy [OR]
-  RewriteCond %{HTTP_USER_AGENT} ^iwantmyxxx.com [OR]
+  RewriteCond %{HTTP_USER_AGENT} ^iwantmyxxx\.com [OR]
   RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
   RewriteCond %{HTTP_USER_AGENT} ^JOC [OR]
   RewriteCond %{HTTP_USER_AGENT} ^JustView [OR]
@@ -188,7 +214,7 @@ Deny from 125.77.135.1
   RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
   RewriteCond %{HTTP_USER_AGENT} ^WWWCopy [OR]
   RewriteCond %{HTTP_USER_AGENT} ^WWWoffle [OR]
-  RewriteCond %{HTTP_USER_AGENT} .*search.msn.com.* [OR]
+  RewriteCond %{HTTP_USER_AGENT} .*search\.msn\.com.* [OR]
   RewriteCond %{REMOTE_ADDR} ^46\.161\.41\.24$
   RewriteRule ^.*$ - [F,L]
 

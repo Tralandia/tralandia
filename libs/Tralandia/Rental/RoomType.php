@@ -11,7 +11,7 @@ use Nette;
 
 
 /**
- * @property int $id
+ * @property string $slug
  */
 class RoomType extends \Tralandia\Lean\BaseEntity
 {

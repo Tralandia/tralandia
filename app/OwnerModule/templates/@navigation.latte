@@ -10,8 +10,16 @@
 		{if isset($rentalList)}
 		<h4>{_o100152}</h4>
 		<ul class="nav">
+			{var $firstRental = $owner->getFirstRental()}
+			{if $firstRental && !$firstRental->useOldCalendar()}
+				<li><a n:href=":Owner:ReservationManager:list"><i class="icon icon-angle-right"></i> ReservationManager:list</a></li>
+				<li><a n:href=":Owner:Unit:default"><i class="icon icon-angle-right"></i> Unit:default</a></li>
+			{/if}
 			<li><a n:href=":Owner:Dashboard:default"><i class="icon icon-angle-right"></i> {_1300}</a></li>
 			<li><a n:href=":Owner:User:edit"><i class="icon icon-angle-right"></i> {_o100146}</a></li>
+			{if $firstRental}
+				<li><a n:href=":Owner:Calendar:default, id => $firstRental->id"><i class="icon icon-angle-right"></i> {_151835}</a></li>
+			{/if}
 			<li><a n:href=":Front:Sign:out"><i class="icon icon-angle-right"></i> {_o100154}</a></li>
 		</ul>
 		{/if}

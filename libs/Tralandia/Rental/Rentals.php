@@ -546,7 +546,7 @@ LIMIT $limit";
 		}
 
 		$images = [];
-		foreach($rental->getSortedImages(6) as $image) {
+		foreach($rental->getImages(6) as $image) {
 			$images[] = [
 				'sort' => $image->getSort(),
 				'filePath' => STATIC_DOMAIN . 'rental_images' . $image->getFilePath() . '/medium.jpeg',
@@ -637,7 +637,7 @@ LIMIT $limit";
 	 */
 	public function filterRentalsForMap(QueryBuilder $qb)
 	{
-		$qb->andWhere($qb->expr()->gte('r.price', ':minPrice'))->setParameter('minPrice', 1);
+		$qb->andWhere($qb->expr()->gte('r.priceFrom', ':minPrice'))->setParameter('minPrice', 1);
 		return $qb;
 	}
 

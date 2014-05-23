@@ -11,7 +11,6 @@ use Nette;
 
 
 /**
- * @property int $id
  * @property string $filePath
  */
 class Image extends \Tralandia\Lean\BaseEntity

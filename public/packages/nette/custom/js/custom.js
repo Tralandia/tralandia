@@ -62,6 +62,14 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
 };
 
 
+/**
+ * Setup handlers.
+ */
+Nette.initForm = function(form) {
+	$("select.select2").select2();
+};
+
+
 $(document).ready(function(){
 
 $('a.a.btn-warning').click(function (e) {

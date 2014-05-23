@@ -93,18 +93,22 @@ class RentalPriceListContainer extends BaseContainer
 			->getControlPrototype()
 			->setPlaceholder($this->translator->translate('505'));
 
-		$dateFromControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
-			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+		$dateFromControl
+			->addCondition(Form::FILLED)
+			->addRule(Form::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
 		$dateToControl = $container->addAdvancedDatePicker('seasonTo')
 			->getControlPrototype()
 			->setPlaceholder($this->translator->translate('506'));
 
-		$dateToControl->addCondition(\FrontModule\Forms\BaseForm::FILLED)
-			->addRule(\FrontModule\Forms\BaseForm::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
+		$dateToControl
+			->addCondition(Form::FILLED)
+			->addRule(Form::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')]);
 
 		$container->addText('price', 'o100078')
 			->setOption('append', $this->rental->getCurrency()->getIso())
+			->addCondition(Form::FILLED)
+			->addRule(Form::FLOAT)
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
 
 		$container->addSelect('priceFor', '', $this->priceForOptions);
@@ -143,7 +147,7 @@ class RentalPriceListContainer extends BaseContainer
 				foreach($row['note'] as $text) {
 					if(strlen($text)) $hasNote = TRUE;
 				}
-				if (!$row['seasonFrom'] && !$row['seasonTo'] && !$row['price'] && !$row['priceFor'] && !$hasNote) continue;
+				if (!$row['seasonFrom'] && !$row['seasonTo'] && !$row['price'] && !$hasNote) continue;
 
 				$rowEntity = NULL;
 				if ($row['entityId']) {

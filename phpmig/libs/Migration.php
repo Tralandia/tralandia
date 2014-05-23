@@ -14,4 +14,30 @@ class Migration extends \Phpmig\Migration\Migration
 {
 
 
+	/**
+	 * @return \SystemContainer|Nette\DI\Container
+	 */
+	protected function getDic()
+	{
+		return $this->getContainer()['dic'];
+	}
+
+
+	/**
+	 * @return \Kdyby\Doctrine\EntityManager
+	 */
+	protected function getEm()
+	{
+		return $this->getContainer()['em'];
+	}
+
+
+	/**
+	 * @return \LeanMapper\Connection
+	 */
+	protected function getLean()
+	{
+		return $this->getContainer()['lean'];
+	}
+
 }

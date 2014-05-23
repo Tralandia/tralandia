@@ -76,6 +76,26 @@ class Helpers {
 
 
 	/**
+	 * ISO 8601 formating.
+	 * @param  string|int|DateTime
+	 * @param  string
+	 * @return string
+	 */
+	public function timeago($time)
+	{
+
+		if ($time == NULL) { // intentionally ==
+			return NULL;
+		}
+
+		return \Nette\Utils\Html::el('abbr', array(
+			"class" => "timeago",
+			"title" => $time->format(\DateTime::ISO8601)
+		))->setHtml($this->date($time));
+	}
+
+
+	/**
 	 * Phone formatting.
 	 * @param  \Entity\Contact\Phone
 	 * @return string
