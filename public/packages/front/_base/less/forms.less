@@ -56,9 +56,8 @@ table.formTable {
 
 	tr.package {
 		label {
-			.basic-gradient(#fff, #EEF3E2);
-			border: 1px solid #DBE0B3;
-			padding: 8px 18px;
+			background: #EEF3E2;
+			padding: 8px 18px 8px 8px;
 			.border-radius(5px);
 			cursor: pointer;
 			color: #698308;
@@ -68,8 +67,7 @@ table.formTable {
 			}
 
 			&.active {
-				.basic-gradient(#91B315, #698308);
-				border-color: #698308;
+				background: #698308;
 				opacity: 1;
 				color: #fff;
 
@@ -78,45 +76,62 @@ table.formTable {
 				}
 
 				&.type1 {
-					.basic-gradient(#f6f6f6, #ccc);
-					border-color: #bbb;
-					color: #333;
+					background: #666;
+					color: #fff;
+					
+					span.price {
+						color: #fff;
+					}
 				}
 				&.type2 {
-					.basic-gradient(#ECF070, #E2DA17);
-					border-color: #C2BD41;
+					background: #FC0;
+				}
+				.radio2 {
+
+					.icon-check-sign {
+						display: inline;
+					}
+
+					.icon-sign-blank {
+						display: none;
+					}
+				}
+			}
+
+			.radio2 {
+				float: left;
+				font-size: 24px;
+				width: 30px;
+				margin-top: 2px;
+
+				.icon-check-sign {
+					display: none;
+				}
+
+				.icon-sign-blank {
+					color: #FDFDF8;
 				}
 			}
 
 			&.type1 {
-				.basic-gradient(#fff, #eee);
-				border-color: #ccc;
+				background: #ECF0F1;
 				color: #333;
-
-				&:hover {
-					border-color: #CBD2A0;
-				}
 			}
 
 			&.type2 {
-				.basic-gradient(#fff, #F4F7AC);
-				border-color: #ECE775;
+				background: #F1C40F;
 				color: #5E590B;
-
-				&:hover {
-					border-color: #CBD2A0;
-				}
 			}
 
 			input {
-				margin: 2px 8px 0 0;
-				float: left;
+				display: none;
 			}
 
 			span.price {
 				float: right;
 				font-weight: bold;
-				color: #FF7000;
+				color: #645151;
+				font-size: 16px;
 
 				&.free {
 					color: #698308;
