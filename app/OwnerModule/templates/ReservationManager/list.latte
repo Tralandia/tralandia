@@ -48,7 +48,7 @@
 				<p><a href="mailto: {$reservation->senderEmail}" target="_blank" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
 				<p class="answer">{$reservation->ownersNote}</p>
 				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{_719627} <i class="icon-arrow-right"></i></a>
-				<a n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
+				<a n:if="$reservation->status != 'canceled'" n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
 				{if $reservation->totalPrice}
 				<p class="prices">{_719607} {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>{_719609} {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
 				{else}
