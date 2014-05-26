@@ -82,6 +82,7 @@ class SimpleAcl extends Permission
 		$resources[] = 'Admin:StatisticsDictionary';
 		$resources[] = 'Admin:StatisticsRentalEdit';
 		$resources[] = 'Admin:StatisticsUnsubscribed';
+		$resources[] = 'Admin:EmailTester';
 		$resources[] = $phrasePresenter = 'Admin:Phrase';
 		$resources[] = $phraseListPresenter = 'Admin:PhraseList';
 

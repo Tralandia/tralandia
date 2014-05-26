@@ -90,6 +90,13 @@ common:
 					label: Unsubscribed
 					link: ':Admin:StatisticsUnsubscribed:list'
 
+		email:
+			label: Email
+			items:
+				tester:
+					label: Tester
+					link: ':Admin:EmailTester:default'
+
 		cache:
 			label: Cache
 			items:

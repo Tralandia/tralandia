@@ -1,0 +1,1 @@
+-- UserNewsletterUpdate migration DOWN file

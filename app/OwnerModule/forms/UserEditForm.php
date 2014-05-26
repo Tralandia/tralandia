@@ -42,7 +42,7 @@ class UserEditForm extends BaseForm {
 			->addConditionOn($this["password"], self::FILLED)
 				->addRule(self::EQUAL, 'o100149', $this["password"]);
 
-//		$this->addCheckbox('newsletter', 'o100150');
+		$this->addCheckbox('newsletter', '792460');
 
 		$this->addSubmit('submit', 'o100151');
 
@@ -67,7 +67,7 @@ class UserEditForm extends BaseForm {
 		if($values->passwordOld == $user->getPassword() && $values->password == $values->confirmPassword) {
 			$user->setPassword($values->password);
 		}
-//		$user->setNewsletter($values->newsletter);
+		$user->setNewsletter($values->newsletter);
 
 		$this->userDao->save($user);
 	}
