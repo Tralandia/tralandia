@@ -61,9 +61,10 @@ table.formTable {
 			.border-radius(5px);
 			cursor: pointer;
 			color: #698308;
+			opacity: 0.9;
 
 			&:hover {
-				border-color: #CBD2A0;
+				opacity: 1;
 			}
 
 			&.active {
@@ -114,6 +115,7 @@ table.formTable {
 
 				.icon-sign-blank {
 					color: #FDFDF8;
+					text-shadow: 0 0px 1px #B0C13B;
 				}
 			}
 
@@ -158,6 +160,24 @@ table.formTable {
 						}
 					}
 				}
+			}
+		}
+	}
+	tr.package-info {
+		td {
+			padding: 8px;
+
+			a {
+				color: #7D3300;
+				font-weight: bold;
+			}
+
+			div {
+				margin-top: 10px;
+				background: #F8FAE9;
+				padding: 10px;
+				text-align: left;
+				font-size: 13px;
 			}
 		}
 	}
