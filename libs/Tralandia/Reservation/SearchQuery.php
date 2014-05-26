@@ -8,6 +8,7 @@
 namespace Tralandia\Reservation;
 
 
+use Entity\User\RentalReservation;
 use Kdyby\Doctrine\QueryObject;
 use Kdyby;
 use Nette;
@@ -18,6 +19,8 @@ class SearchQuery extends QueryObject
 	const PERIOD_PAST = 'past';
 	const PERIOD_PRESENT = 'present';
 	const PERIOD_FUTURE = 'future';
+	const PERIOD_CURRENT = 'current';
+	const PERIOD_NONE = 'none';
 
 	/**
 	 * @var array
@@ -39,14 +42,20 @@ class SearchQuery extends QueryObject
 	 */
 	private $phoneBook;
 
+	/**
+	 * @var bool
+	 */
+	private $showCanceled;
 
-	public function __construct(array $rentals, $period = NULL, $fulltext = NULL, \Extras\Books\Phone $phoneBook)
+
+	public function __construct(array $rentals, $period = NULL, $fulltext = NULL, $showCanceled = NULL, \Extras\Books\Phone $phoneBook)
 	{
 		parent::__construct();
 		$this->rentals = $rentals;
 		$this->period = $period;
 		$this->fulltext = $fulltext;
 		$this->phoneBook = $phoneBook;
+		$this->showCanceled = $showCanceled;
 	}
 
 
@@ -76,6 +85,13 @@ class SearchQuery extends QueryObject
 				$qb->andWhere('e.departureDate >= :departureDate')->setParameter('departureDate', $today);
 			} else if($this->period == self::PERIOD_FUTURE) {
 				$qb->andWhere('e.arrivalDate > :arrivalDate')->setParameter('arrivalDate', $today);
+			} else if($this->period == self::PERIOD_CURRENT) {
+				$qb->andWhere('e.departureDate >= :departureDate')->setParameter('departureDate', $today);
+			} else if($this->period == self::PERIOD_NONE) {
+				$or = $qb->expr()->orX();
+				$or->add($qb->expr()->isNull('e.arrivalDate'));
+				$or->add($qb->expr()->isNull('e.departureDate'));
+				$qb->andWhere($or);
 			}
 		}
 
@@ -99,6 +115,12 @@ class SearchQuery extends QueryObject
 			$qb->andWhere($fulltextOr);
 		}
 
+		$findStatus = [RentalReservation::STATUS_CONFIRMED, RentalReservation::STATUS_OPENED];
+		if($this->showCanceled) {
+			$findStatus[] = RentalReservation::STATUS_CANCELED;
+		}
+		$qb->andWhere($qb->expr()->in('e.status', $findStatus));
+
 		$qb->orderBy('e.arrivalDate', 'ASC');
 
 		return $qb;
@@ -109,5 +131,5 @@ class SearchQuery extends QueryObject
 
 interface ISearchQueryFactory
 {
-	public function create(array $rentals, $period = NULL, $fulltext = NULL);
+	public function create(array $rentals, $period = NULL, $fulltext = NULL, $showCanceled = NULL);
 }

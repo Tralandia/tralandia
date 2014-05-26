@@ -41,13 +41,19 @@ class ReservationManagerPresenter extends BasePresenter
 	 * @persistent
 	 * @var string
 	 */
-	public $period;
+	public $period = SearchQuery::PERIOD_CURRENT;
 
 	/**
 	 * @persistent
 	 * @var string
 	 */
 	public $fulltext;
+
+	/**
+	 * @persistent
+	 * @var bool
+	 */
+	public $showCanceled;
 
 
 	public function injectDependencies(\Nette\DI\Container $dic) {
@@ -96,7 +102,7 @@ class ReservationManagerPresenter extends BasePresenter
 		} else {
 			$rentals = $this->loggedUser->getRentals()->toArray();
 		}
-		$query = $this->searchFactory->create($rentals, $this->period, $this->fulltext);
+		$query = $this->searchFactory->create($rentals, $this->period, $this->fulltext, $this->showCanceled);
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
 		$this->template->storedSearch = $this->storeSearch();
 	}
@@ -108,7 +114,12 @@ class ReservationManagerPresenter extends BasePresenter
 			$key = \Nette\Utils\Strings::random(5);
 		} while (isset($session[$key]));
 
-		$session[$key] = array($this->user->getId(), ['rental' => $this->rental, 'period' => $this->period, 'fulltext' => $this->fulltext]);
+		$session[$key] = array($this->user->getId(), [
+			'rental' => $this->rental,
+			'period' => $this->period,
+			'fulltext' => $this->fulltext,
+			'showCanceled' => (bool) $this->showCanceled,
+		]);
 		$session->setExpiration($expiration, $key);
 		return $key;
 	}
@@ -125,6 +136,7 @@ class ReservationManagerPresenter extends BasePresenter
 		$this->rental = Arrays::get($search, 'rental', NULL);
 		$this->period = Arrays::get($search, 'period', NULL);
 		$this->fulltext = Arrays::get($search, 'fulltext', NULL);
+		$this->showCanceled = (bool) Arrays::get($search, 'showCanceled', NULL);
 		$this->redirect('this');
 	}
 
@@ -143,11 +155,10 @@ class ReservationManagerPresenter extends BasePresenter
 
 
 		$form->addSelect('period', '', [
+			SearchQuery::PERIOD_CURRENT => 'a2',
+			SearchQuery::PERIOD_NONE => 'a3',
 			SearchQuery::PERIOD_PAST => 720292,
-			SearchQuery::PERIOD_PRESENT => 720294,
-			SearchQuery::PERIOD_FUTURE => 720295,
-		])
-			->setPrompt('- ' . $this->translate(721502) . ' -');
+		]);
 
 		$form->addText('fulltext', '');
 
@@ -161,6 +172,7 @@ class ReservationManagerPresenter extends BasePresenter
 			}
 			$form['period']->setDefaultValue($this->period);
 			$form['fulltext']->setDefaultValue($this->fulltext);
+			$form['showCanceled']->setDefaultValue($this->showCanceled);
 		};
 
 		$form->onSuccess[] = function($form) {
@@ -169,6 +181,7 @@ class ReservationManagerPresenter extends BasePresenter
 			$this->rental = $values->rental;
 			$this->period = $values->period;
 			$this->fulltext = $values->fulltext;
+			$this->showCanceled = $values->showCanceled;
 
 			$this->redirect('this');
 		};
