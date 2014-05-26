@@ -19,16 +19,22 @@
 					{label service:$key, class => $price > 0 ? ($price > 10 ? 'type2' : 'type1')}
 						<span class="radio2"><i class="icon-check-sign"></i><i class="icon-sign-blank"></i></span>
 						{if $price == 0}
-							<span class="price free"><i>ZADARMINKO</i></span>
+							<span class="price-free"><i>ZADARMINKO</i></span>
 						{else}
-							<span class="price">{$price} EUR</span>
+							<table class="price">
+								<tr>
+									<td><strike>{$price+9} EUR</strike></td>
+									<td><strong>{$price} EUR</strong></td>
+									<td>bez DPH zlava 10%</td>
+								</tr>
+							</table>
 						{/if}
 						{input service:$key, data-price => $price}
 						{$label}
 					{/label}
 				</td>
 			</tr>
-			{var $price += 10}
+			{var $price += 9}
 		{/foreach}
 
 
@@ -65,7 +71,9 @@
 		var $billingDetails = $('.billing-details');
 		$('.package input:radio').change(function() {
 			$('.package label').removeClass('active');
+			$('.package label').addClass('inactive');
 			$(this).parents('label').addClass('active');
+			$(this).parents('label').removeClass('inactive');
 			
 			var packagePrice = $(this).data('price');
 			if (packagePrice == 0) {
