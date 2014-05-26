@@ -14,6 +14,7 @@ class EmailTesterPresenter extends BasePresenter
 	protected function createComponentEmailTesterForm(\AdminModule\EmailTester\EmailTesterForm $control)
 	{
 		$control->onFormSuccess[] = function () {
+			$this->flashMessage('email sent!');
 			$this->redirect('this');
 		};
 		return $control;

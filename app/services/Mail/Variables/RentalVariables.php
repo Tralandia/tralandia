@@ -16,10 +16,18 @@ class RentalVariables extends Nette\Object {
 	private $rental;
 
 	/**
-	 * @param \Entity\Rental\Rental $rental
+	 * @var \Image\RentalImagePipe
 	 */
-	public function __construct(\Entity\Rental\Rental $rental) {
+	private $imagePipe;
+
+
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Image\RentalImagePipe $imagePipe
+	 */
+	public function __construct(\Entity\Rental\Rental $rental, \Image\RentalImagePipe $imagePipe) {
 		$this->rental = $rental;
+		$this->imagePipe = $imagePipe;
 	}
 
 	/**
@@ -43,6 +51,11 @@ class RentalVariables extends Nette\Object {
 	public function getVariablePrice()
 	{
 		return (string) $this->rental->getPrice();
+	}
+
+	public function getVariableMainPhoto()
+	{
+		return $this->imagePipe->request($this->rental->getMainImage());
 	}
 
 }

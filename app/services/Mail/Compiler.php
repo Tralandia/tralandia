@@ -73,6 +73,11 @@ class Compiler {
 	 */
 	private $shareLinks;
 
+	/**
+	 * @var \Image\RentalImagePipe
+	 */
+	private $imagePipe;
+
 
 	/**
 	 * @param \Environment\Environment $environment
@@ -81,13 +86,14 @@ class Compiler {
 	 * @param \Security\Authenticator $authenticator
 	 * @param \TranslationTexy $texy
 	 */
-	public function __construct(Environment $environment, Application $application, \ShareLinks $shareLinks, Authenticator $authenticator, \TranslationTexy $texy)
+	public function __construct(Environment $environment, Application $application, \Image\RentalImagePipe $imagePipe, \ShareLinks $shareLinks, Authenticator $authenticator, \TranslationTexy $texy)
 	{
 		$this->application = $application;
 		$this->authenticator = $authenticator;
 		$this->shareLinks = $shareLinks;
 		$this->texy = $texy;
 		$this->setEnvironment($environment);
+		$this->imagePipe = $imagePipe;
 	}
 
 	/**
@@ -165,7 +171,7 @@ class Compiler {
 	 */
 	public function addRental($variableName, \Entity\Rental\Rental $rental)
 	{
-		$this->variables[$variableName] = new Variables\RentalVariables($rental, $this->application);
+		$this->variables[$variableName] = new Variables\RentalVariables($rental, $this->imagePipe);
 		return $this;
 	}
 
