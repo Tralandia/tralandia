@@ -1,10 +1,17 @@
 -- PsForFree migration UP file
 
 
+update rental
+inner join contact_address a on a.id = rental.address_id
+inner join location l on l.id = a.primaryLocation_id
+inner join domain d on d.id = l.domain_id
+inner join personalsite_configuration c on c.url = concat(rental.id,'.',d.domain)
+set personalSiteConfiguration_id = c.id;
 
-ALTER TABLE `personalsite_configuration` DROP INDEX `url`;
-ALTER TABLE `personalsite_configuration` ADD UNIQUE INDEX (`url`);
-
-ALTER TABLE rental ADD CONSTRAINT FK_1619C27D91BA7309 FOREIGN KEY (personalSiteConfiguration_id) REFERENCES personalsite_configuration (id) ON DELETE CASCADE;
-CREATE UNIQUE INDEX UNIQ_1619C27D91BA7309 ON rental (personalSiteConfiguration_id);
-
+update rental
+inner join contact_address a on a.id = rental.address_id
+inner join location l on l.id = a.primaryLocation_id
+inner join domain d on d.id = l.domain_id
+inner join personalsite_configuration c on c.url = concat(rental.slug,'.',d.domain)
+set personalSiteConfiguration_id = c.id
+where personalSiteConfiguration_id is null;

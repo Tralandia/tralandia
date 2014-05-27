@@ -58,4 +58,13 @@ class RentalVariables extends Nette\Object {
 		return $this->imagePipe->request($this->rental->getMainImage());
 	}
 
+	public function getVariablePersonalSiteLink(EnvironmentVariables $environment)
+	{
+		$ps = $this->rental->personalSiteConfiguration;
+		if(!$ps) return '#';
+
+		return $ps->url;
+
+	}
+
 }

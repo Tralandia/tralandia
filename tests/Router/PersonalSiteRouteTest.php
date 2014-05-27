@@ -36,13 +36,13 @@ class PersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
-		$this->routeIn($route, 'http://haven-resort-hua-hin.th.tra-local.com/', 'PersonalSite:First', array(
+		$this->routeIn($route, 'http://brooklands-island-view-apartments.ai.tra-local.com/', 'PersonalSite:Second', array(
 			'action' => 'default',
-			'rentalSlug' => 'slniecko',
-			'rental' => $this->findRental('44941'),
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-		), 'http://slniecko.uns-local.sk/');
+			'rentalSlug' => 'brooklands-island-view-apartments',
+			'rental' => $this->findRental(146),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(237),
+			FrontRoute::LANGUAGE => $this->findLanguage(38),
+		), 'http://brooklands-island-view-apartments.tra-local.com/');
 
 		$this->routeIn($route, 'http://slniecko.uns-local.sk/', 'PersonalSite:First', array(
 			'action' => 'default',

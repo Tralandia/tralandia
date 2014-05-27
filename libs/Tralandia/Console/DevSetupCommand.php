@@ -43,7 +43,7 @@ class DevSetupCommand extends BaseCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$query = 'SELECT id, url FROM personalsite_configuration WHERE url IS NOT NULL and url != "" AND id < 100';
+		$query = 'SELECT id, url FROM personalsite_configuration WHERE url IS NOT NULL and url != "" AND id < 500';
 		$result = $this->db->query($query)->fetchAll();
 		foreach($result as $row) {
 			$url = Nette\Utils\Strings::replace($row['url'], [
