@@ -104,7 +104,7 @@ class RegistrationHandler extends FormHandler
 
 
 		/** @var $rental \Entity\Rental\Rental */
-		$rental = $rentalCreator->create($address, $user, $rentalValues->name);
+		$rental = $rentalCreator->create($address, $user, $rentalValues->name, $rentalValues->maxCapacity);
 
 		$rental->setType($rentalValues->type->type)
 			->setEditLanguage($values->language)
