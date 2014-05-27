@@ -409,9 +409,14 @@ class Compiler {
 					$val = $this->environment->getTranslator()->translate($variable['fullname']);
 				}
 				$val = $this->findAndReplaceVariables($val);
-				$val = str_replace("\n", '$$$', $val);
-				$val = $this->texy->processLine($val);
-				$val = str_replace('$$$', '<br>', $val);
+
+				if(in_array($variable['fullname'], [791120])) {
+					$val = $this->texy->process($val);
+				} else {
+					$val = str_replace("\n", '$$$', $val);
+					$val = $this->texy->processLine($val);
+					$val = str_replace('$$$', '<br>', $val);
+				}
 			} else if (array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
 				if(Strings::contains($methodName, 'Link')) {
