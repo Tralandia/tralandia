@@ -32,11 +32,17 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 	 */
 	protected $languageDao;
 
+	/**
+	 * @var BaseDao
+	 */
+	protected $configurationDao;
+
 
 	public function __construct($mask, $metadata = array(), EntityManager $em)
 	{
 		$this->route = new Route($mask, $metadata);
 		$this->rentalDao = $em->getRepository(RENTAL_ENTITY);
+		$this->configurationDao = $em->getRepository(PERSONAL_SITE_CONFIGURATION_ENTITY);
 		$this->languageDao = $em->getRepository(LANGUAGE_ENTITY);
 	}
 
@@ -51,6 +57,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 
 		if ($appRequest) {
 			$params = $appRequest->getParameters();
+			$presenter = $appRequest->getPresenterName();
 
 			$domain = $httpRequest->getUrl()->getHost();
 			if($rental = $this->getRentalByDomain($domain, $params)) {
@@ -61,12 +68,15 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 				} else {
 					$params[BaseRoute::LANGUAGE] = $rental->getPrimaryLocation()->getDefaultLanguage();
 				}
+
+				$presenter = 'PersonalSite:' . ucfirst($rental->getPersonalSiteConfiguration()->template);
 			} else {
 				return null;
 			}
 
-			unset($params['www'], $params['host']);
+			unset($params['www'], $params['cs'], $params['host']);
 			$appRequest->setParameters($params);
+			$appRequest->setPresenterName($presenter);
 
 			return $appRequest;
 		}
@@ -97,6 +107,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 
 		unset($params['rental'], $params[BaseRoute::PRIMARY_LOCATION]);
 		$appRequest->setParameters($params);
+		$appRequest->setPresenterName('PersonalSite:Default');
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 
@@ -111,12 +122,13 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 	protected function getRentalByDomain($domain, $params)
 	{
 		if(isset($params['www'])) $domain = str_replace($params['www'], NULL, $domain);
-		return $this->rentalDao->findOneBy(['personalSiteUrl' => $domain]);
+		$config = $this->configurationDao->findOneBy(['url' => $domain]);
+		return $config ? $config->getRental() : NULL;
 	}
 
 	protected function out($params, \Entity\Rental\Rental $rental)
 	{
-		$domain = $params['rental']->personalSiteUrl;
+		$domain = $params['rental']->getPersonalSiteUrl();
 		$params['rentalSlug'] = strstr($domain, '.', true);
 
 		return $params;

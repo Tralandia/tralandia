@@ -1,0 +1,36 @@
+<section id="contact" class="section-block" data-bg="" data-color="" data-link="">
+	<div class="inner-section">
+		<div class="grids">
+			<div class="grid-6">
+				<h3 class="sub-heading">{_575}</h3>
+				<div class="row contact-row"><i class="icon icon-user"></i> {$rental->contactName}</div>
+				<address>
+					<div class="row contact-row"><i class="icon icon-home"></i> {$rental->address->toString()}</div>
+				</address>
+				<div class="row contact-row"><i class="icon icon-envelope"></i> {$rental->email}</div>
+				<div class="row contact-row"><i class="icon icon-phone"></i> {$rental->phone->international}</div>
+				<div class="row contact-row">
+					<i class="icon icon-bullhorn"></i>
+					{foreach $rental->spokenLanguages as $language}
+						{_$language->nameId}{if !$iterator->last}, {/if}
+					{/foreach}
+				</div>
+				<div id="map">
+					{var $gps = $rental->address->getGps()}
+					<img src="http://maps.googleapis.com/maps/api/staticmap?center={$gps->getLatitude()},{$gps->getLongitude()}&zoom=11&size=570x340&sensor=false&markers=color:red|{$gps->getLatitude()},{$gps->getLongitude()}">
+				</div>
+			</div>
+			<div class="grid-6">
+				<h3 class="sub-heading">{_629882}</h3>
+				{snippet reservationForm}
+					{ifset $reservationSent}
+						<blockquote><p>{_o1029}</p></blockquote>
+					{else}
+						{include '../../../FrontModule/forms/Rental/personalReservationForm.latte'}
+					{/ifset}
+				{/snippet}
+			</div>
+		</div>
+	</div>
+	<!-- END #contact -->
+</section>

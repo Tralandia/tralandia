@@ -2427,26 +2427,26 @@ div.day.selected {
 }
 
 div.day.s01 {
-  background: url(../../images/calendar-half-orange.png) right bottom;
+  background: url(../img/calendar-half-orange.png) right bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #f3f3f3;
 }
 div.day.s10 {
-  background: url(../../images/calendar-half-orange-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-half-orange-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
   background-color: #f3f3f3;
 }
 
 div.day.s02 {
-  background: url(../../images/calendar-half-red.png) right bottom;
+  background: url(../img/calendar-half-red.png) right bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
   background-color: #f3f3f3;
 }
 div.day.s20 {
-  background: url(../../images/calendar-half-red-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-half-red-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
   background-color: #f3f3f3;
@@ -2455,11 +2455,11 @@ div.day.s22 {
   background: #f65103;
 }
 div.day.s21 {
-  background: url(../../images/calendar-red-orange.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-red-orange.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
 }
 div.day.s12 {
-  background: url(../../images/calendar-orange-red.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-orange-red.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
 }
 div.day.active.selected abbr {

@@ -48,7 +48,7 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 
 		$this->routeIn($route, 'http://ubytovaniehudak.local/', 'PersonalSite:Default', array(
 			'action' => 'default',
-			'rental' => $this->findRental(23551),
+			'rental' => $this->findRental(21812),
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
 			FrontRoute::LANGUAGE => $this->findLanguage(144),
 		), 'http://www.ubytovaniehudak.local/');

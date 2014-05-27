@@ -22,7 +22,7 @@ require_once APP_DIR . '/entityConstants.php';
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 Nette\Diagnostics\Debugger::$strictMode = TRUE;
-Nette\Diagnostics\Debugger::enable(FALSE);
+Nette\Diagnostics\Debugger::enable(TRUE, TEMP_DIR);
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -32,7 +32,7 @@ $configurator->addParameters([
 	'appDir' => APP_DIR,
 ]);
 
-//$configurator->setDebugMode(false);
+$configurator->setDebugMode(TRUE);
 
 $configurator->enableDebugger(LOG_DIR);
 
@@ -52,10 +52,10 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 if ($section !== 'production') {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 } else {
-	$logger = new \Diagnostics\ErrorLogger;
-	$logger->email = $logEmail;
-	$logger->directory = ROOT_DIR . '/log';
-	Nette\Diagnostics\Debugger::$logger = $logger;
+//	$logger = new \Diagnostics\ErrorLogger;
+//	$logger->email = $logEmail;
+//	$logger->directory = ROOT_DIR . '/log';
+//	Nette\Diagnostics\Debugger::$logger = $logger;
 }
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);

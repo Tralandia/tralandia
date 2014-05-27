@@ -476,6 +476,9 @@ services:
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
 
 
+	- \AdminModule\EmailTester\EmailTesterForm
+
+
 	# ==============================
 	# ==================== LeanMapper
 	# ==============================

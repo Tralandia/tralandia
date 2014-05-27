@@ -79,7 +79,7 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 		$body = $emailCompiler->compileBody();
 
 		$message->setSubject($emailCompiler->compileSubject());
-		$message->setHtmlBody($body);
+		$message->setHtmlBody($body, FALSE);
 
 		$message->addTo($email);
 

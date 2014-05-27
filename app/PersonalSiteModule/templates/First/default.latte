@@ -15,7 +15,9 @@
 
 {control welcomeScreen}
 {control amenities}
-{control gallery}
+{if $hasPremiumService}
+	{control gallery}
+{/if}
 {control prices}
 {if $showCalendar}
 	{control calendar}

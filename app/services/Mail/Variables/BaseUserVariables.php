@@ -69,4 +69,10 @@ abstract class BaseUserVariables extends Nette\Object {
 		return $environment->link('//:Front:Sign:newPassword', [BaseRoute::NEW_PASSWORD => $hash]);
 	}
 
+	public function getVariableUnsubscribeLink(EnvironmentVariables $environment)
+	{
+		return $environment->link('//:Front:Home:unsubscribeUser', ['email' => $this->getUser()->getEmail()]);
+	}
+
+
 }

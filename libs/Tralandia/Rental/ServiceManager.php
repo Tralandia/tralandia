@@ -50,8 +50,8 @@ class ServiceManager
 			$prolongBy = '+6 months';
 		} else if($givenFor == Service::GIVEN_FOR_BACKLINK) {
 			$prolongBy = '+12 months';
-		} else if($givenFor == Service::GIVEN_FOR_PAID_INVOICE && $serviceType == Service::TYPE_PERSONAL_SITE) {
-			$prolongBy = '+12 months';
+		} else if($givenFor == Service::GIVEN_FOR_MEMBERSHIP && $serviceType == Service::TYPE_PREMIUM_PS) {
+			$prolongBy = '+100 years';
 		} else {
 			throw new \InvalidArgumentException();
 		}
@@ -76,6 +76,21 @@ class ServiceManager
 		$this->rentalDao->save($rental, $newService);
 
 		return $newService;
+	}
+
+
+	public function hasPremiumPS($rental)
+	{
+		$qb = $this->serviceDao->createQueryBuilder('s');
+		$qb->andWhere('s.serviceType = ?1')
+			->andWhere('s.rental = ?2')
+			->andWhere('s.dateFrom <= ?3')
+			->andWhere('s.dateTo >= ?3')
+			->setParameters([1 => Service::TYPE_PREMIUM_PS, 2 => $rental->id, 3 => new \DateTime()]);
+
+		$result = $qb->getQuery()->getOneOrNullResult();
+
+		return (bool) $result;
 	}
 
 
