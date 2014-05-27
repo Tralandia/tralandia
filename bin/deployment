@@ -38,8 +38,12 @@ php $WORKING_DIR/phpmig/run.php
 
 echo
 echo "==================== TRUNCATE TEMPLATE_CACHE ============================="
+echo "mysql -h 192.168.4.72 -utralandia -p986269962525 -e 'truncate template_cache' cache"
 mysql -h 192.168.4.72 -utralandia -p986269962525 -e "truncate template_cache" cache
 
+
+echo
+echo "==================== PING ============================="
 
 echo
 echo "pink www.tralandia.com"
