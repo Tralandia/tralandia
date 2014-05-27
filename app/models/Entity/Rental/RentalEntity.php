@@ -386,6 +386,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getMaxCapacity()
 	{
+		if($this->useOldCalendar()) {
+			return $this->maxCapacity;
+		}
+
 		$max = 0;
 		/** @var $unit Unit */
 		foreach($this->units as $unit) {
