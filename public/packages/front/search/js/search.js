@@ -171,7 +171,7 @@ function generateRedirectUrl(count){
 
 	var path = [];
 
-	$.each($('.searchForm select.path:not(.selectRedirect),input[type=hidden]').serializeArray(),function(k,v){
+	$.each($('.searchForm select.path:not(.selectRedirect),input.path,input.nospam').serializeArray(),function(k,v){
 		path.push(v.value);
 	});
 
@@ -182,7 +182,7 @@ function generateRedirectUrl(count){
 
 	path = path.join('/');
 
-	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
+	var p = $('.searchForm').find("select[value][value!='']:not(.path), input[value][value!=''][name!='location']:not(.path,.nospam)").serialize();
 
 	var allParameetrs = p+path;
 		allParameetrs = allParameetrs.length;
@@ -423,7 +423,7 @@ $(function(){
 	var country = $geocomplete.data('country');
 
 	$geocomplete.geocomplete({
-			country: country,
+			// country: country,
 			types: ['geocode','establishment']
 		})
 		.bind("geocode:result", geocodeResult)
@@ -436,32 +436,31 @@ function geocodeResult(event, result) {
 	var $geocomplete = $(this).parent('div');
 
 	if (result.geometry) {
-
 		if (result.geometry.location) {
 			var value = result.geometry.location.lat() + ',' + result.geometry.location.lng();
-			$geocomplete
-				.find('input[name="location"]')
-				.val(value);
+			$geocomplete.find('input[name="location"]').val(value);
 		}
-
-		// if (result.geometry.viewport) {
-		// 	var value = JSON.stringify([
-		// 		[result.geometry.viewport.getSouthWest().lat(),
-		// 		result.geometry.viewport.getSouthWest().lng()],
-		// 		[result.geometry.viewport.getNorthEast().lat(),
-		// 		result.geometry.viewport.getNorthEast().lng()]
-		// 	]);
-		// 	$geocomplete
-		// 		.find('input[name="viewport"]')
-		// 		.val(value);
-		// }
-		
-		$geocomplete.addClass('selected');
-
-		updateSerachLinkUrl();
-		updateCriteriaCount();
-
 	}
+
+	if (result.formatted_address) {
+		$geocomplete.find('input[name="formatted_address"]').val(result.formatted_address);
+	}
+
+	if (result.address_components) {
+		for(var n in result.address_components) {
+			var component = result.address_components[n];
+			if (component.types && component.types[0] == 'country' && component.short_name) {
+				$geocomplete.find('input[name="country"]').val(component.short_name.toLowerCase());
+				break;
+			}
+		}
+	}
+
+	$geocomplete.addClass('selected');
+
+	updateSerachLinkUrl();
+	updateCriteriaCount();
+
 }
 
 function geocodeError(event, error) {
