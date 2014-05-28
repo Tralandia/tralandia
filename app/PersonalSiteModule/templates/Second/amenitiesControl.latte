@@ -1,7 +1,7 @@
 {var $twoColumnLaytou = $rental->isAnyQuestionAnswered() || $rental->hasDescription()}
 <!-- BEGIN #services -->
 <section id="services" class="section-block content-section">
-	{if $rental->isAnyQuestionAnswered()}
+	{if $rental->isAnyQuestionAnswered() || $rental->hasDescription()}
 	<div class="metaObjectInfo" id="interviewAnswers">
 		{if $rental->hasDescription()}
 			{var $descriptionPhraseIdTemp = $rental->descriptionId}
