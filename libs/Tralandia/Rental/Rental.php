@@ -384,6 +384,16 @@ class Rental extends \Tralandia\Lean\BaseEntity
 		return $amenity->slug != 'no-pets';
 	}
 
+	public function getUnitsCapacity()
+	{
+		$capacity = [];
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$capacity[$unit->id] = $unit->maxCapacity;
+		}
+
+		return $capacity;
+	}
 
 
 
