@@ -59,6 +59,18 @@ class UpdateYourRental extends EmailManager
 		$this->rental = $rental;
 	}
 
+	public function totalCount()
+	{
+		throw new Nette\NotImplementedException;
+	}
+
+
+	public function toSentCount()
+	{
+		throw new Nette\NotImplementedException;
+	}
+
+
 	/**
 	 * @return bool
 	 */

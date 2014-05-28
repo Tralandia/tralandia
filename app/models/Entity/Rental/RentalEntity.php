@@ -365,6 +365,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
+	protected $newsletterSent = FALSE;
+
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
 	protected $backlinkEmailSent = FALSE;
 
 

@@ -63,6 +63,17 @@ class PotentialMember extends EmailManager
 		$this->potentialMember = $qb->getQuery()->getOneOrNullResult();
 	}
 
+	public function totalCount()
+	{
+		throw new Nette\NotImplementedException;
+	}
+
+
+	public function toSentCount()
+	{
+		throw new Nette\NotImplementedException;
+	}
+
 	/**
 	 * @return bool
 	 */

@@ -37,10 +37,11 @@ class EmailManagerCommand extends BaseCommand
 	{
 		$this->setName('email:manager');
 
-		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember|backlink]');
+		$this->addArgument('emailType', InputArgument::REQUIRED, 'aky email sa ma posielat? [updateYourRental|potentialMember|backlink|newsletter]');
 
 		$this->addOption('time', 't', InputOption::VALUE_REQUIRED, 'Dlzka trvania (v sec.)', 11);
 		$this->addOption('reset', NULL, InputOption::VALUE_NONE);
+		$this->addOption('count', NULL, InputOption::VALUE_NONE);
 	}
 
 
@@ -54,6 +55,8 @@ class EmailManagerCommand extends BaseCommand
 			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\PotentialMember');
 		} else if($emailType == 'backlink') {
 			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\Backlink');
+		} else if($emailType == 'newsletter') {
+			$this->emailManager = $this->getHelper('dic')->getByType('\Tralandia\Console\EmailManager\Newsletter');
 		} else {
 			return 1;
 		}
@@ -94,6 +97,15 @@ class EmailManagerCommand extends BaseCommand
 			if($input->getOption('reset')) {
 				$this->log($output, '-------- resetting --------', $emailManager::NAME);
 				$emailManager->resetManager();
+				$this->log($output, '-------- done --------', $emailManager::NAME);
+				return 0;
+			}
+
+			if($input->getOption('count')) {
+				$count = $emailManager->toSentCount();
+				$totalCount = $emailManager->totalCount();
+				$this->log($output, $count . ' emails left', $emailManager::NAME);
+				$this->log($output, "of $totalCount", $emailManager::NAME);
 				$this->log($output, '-------- done --------', $emailManager::NAME);
 				return 0;
 			}

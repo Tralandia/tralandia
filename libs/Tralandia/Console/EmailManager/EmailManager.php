@@ -30,4 +30,8 @@ abstract class EmailManager {
 
 	abstract public function resetManager();
 
+	abstract public function totalCount();
+
+	abstract public function toSentCount();
+
 }
