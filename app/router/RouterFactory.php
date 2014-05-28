@@ -83,7 +83,7 @@ class RouterFactory
 			'action' => 'default'
 		]);
 
-		$personalSite[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.[!<cs [a-z]{2,3}.>]%domain%/[!<language [a-z]{2}>]', [
+		$personalSite[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.<host [a-z\\.\\-]+>/[!<language [a-z]{2}>]', [
 			'presenter' => 'Default',
 			'action' => 'default'
 		]);
