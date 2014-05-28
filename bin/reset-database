@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo
+echo
+echo "========================================================="
+echo "========================================================="
+echo
+
+
+WORKING_DIR=`pwd`
+
+
+echo
+echo "==================== DROP TABLES ========================"
+echo "SET FOREIGN_KEY_CHECKS=0;" >> $WORKING_DIR/drop.sql
+/usr/local/mysql/bin/mysqldump -h 127.0.0.1 -u root -proot --no-data --skip-lock-tables tralandia | grep ^DROP >> $WORKING_DIR/drop.sql
+echo "SET FOREIGN_KEY_CHECKS=1;" >> $WORKING_DIR/drop.sql
+/usr/local/mysql/bin/mysql -h 127.0.0.1 -u root -proot tralandia < $WORKING_DIR/drop.sql
+rm $WORKING_DIR/drop.sql
+
+
+echo
+echo "==================== IMPORT ============================="
+/usr/local/mysql/bin/mysqldump -h 127.0.0.1 -u root -proot tralandia_import --single-transaction | /usr/local/mysql/bin/mysql -h 127.0.0.1 -u root -proot tralandia
+
+
+echo "...done..."
