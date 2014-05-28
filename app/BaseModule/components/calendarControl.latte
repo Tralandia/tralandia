@@ -29,7 +29,7 @@
 		{/ifset}
 
 		<div class="day active tooltipElem {$selected} {$status}{if $day->iwd} weekday{/if}{if $now > $day->d} disabled{/if}{$full}"
-			 data-day="{$key}-{$day->dd}" title="{_$day->title}">
+			 data-day="{$key}-{$day->dd}" {if $version!='old'}title="{_$day->title}"{/if}>
 			{$day->dd}
 			{if $version!='old'}
 			<abbr n:if="$day->fc !== NULL">{$day->fc}</abbr>
