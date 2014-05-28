@@ -78,12 +78,12 @@ class RouterFactory
 
 		$router[] = $personalSite = new RouteList('PersonalSite');
 
-		$personalSite[] = $this->customPersonalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.[!<cs [a-z]{2,3}.>]%domain%/[!<language [a-z]{2}>]', [
+		$personalSite[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z0-9\\.\\-])+>/[!<language [a-z]{2}>]', [
 			'presenter' => 'Default',
 			'action' => 'default'
 		]);
 
-		$personalSite[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
+		$personalSite[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.[!<cs [a-z]{2,3}.>]%domain%/[!<language [a-z]{2}>]', [
 			'presenter' => 'Default',
 			'action' => 'default'
 		]);
