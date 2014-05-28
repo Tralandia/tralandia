@@ -6,15 +6,19 @@
 
 <variables name="listInfo" data-info-rental-count="{$totalResultsCount}" data-info-list-title="{$pageH1}" data-info-paginator-page="{$paginatorPage}" data-pagging="50"></variables>
 
-<div class="smallBrandBanner"><a href="{plink Registration:}">{_695}</a></div>
+{ifset $forAttractions}
 
-<h1>{$pageH1}
-	<span class="counter">
-		({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
-	</span>
-</h1>
+{else}
+	<div class="smallBrandBanner"><a href="{plink Registration:}">{_695}</a></div>
 
-{control searchBar:breadcrumb}
+	<h1>{$pageH1}
+		<span class="counter">
+			({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
+		</span>
+	</h1>
+
+	{control searchBar:breadcrumb}
+{/ifset}
 
 <div class="row-fluid">
 	<div class="span12">
@@ -135,7 +139,7 @@
 
 				</div>
 			{else}
-				<div class="noSearchResults">
+				<div n:class="$forAttractions ? 'forAttractions', noSearchResults">
 					<i class="entypo-search"></i>
 					<h2>{_151880}</h2>
 					<p>{_151881}</p>
