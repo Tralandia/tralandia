@@ -2,6 +2,7 @@
 namespace Tests\Router;
 
 use Nette, Extras;
+use Nette\Application\Routers\RouteList;
 use Routers\BaseRoute;
 use Routers\FrontRoute;
 
@@ -18,14 +19,15 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 //		$mask = '//[!<www www.>]%domain%/[!<language [a-z]{2}>]';
 //		$mask = '//<host [a-z\\.]+>/[!<language [a-z]{2}>]';
+		$personalSite = new RouteList('PersonalSite');
 		$mask = '//<host (?:(?!tralandia|tra-local)[a-z\\.\\-])+>/[!<language [a-z]{2}>]';
 		$metadata = [
-			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'
 		];
 
-		$this->route = $this->getContext()->customPersonalSiteRouteFactory->create($mask, $metadata);
+		$personalSite[] = $this->getContext()->customPersonalSiteRouteFactory->create($mask, $metadata);
+		$this->route = $personalSite;
 	}
 
 	public function testCompiler() {
@@ -37,22 +39,22 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
-		$this->routeOut($route, 'Front:CalendarIframe', array(
-			'action' => 'default',
-			'rentla' => $this->findRental('44941'),
-			'months' => '8',
-			'version' => 'old',
-			'primaryLocation' => $this->findLocation(56),
-			'language' => $this->findLanguage(144),
-		), NULL);
+//		$this->routeOut($route, 'Front:CalendarIframe', array(
+//			'action' => 'default',
+//			'rentla' => $this->findRental('44941'),
+//			'months' => '8',
+//			'version' => 'old',
+//			'primaryLocation' => $this->findLocation(56),
+//			'language' => $this->findLanguage(144),
+//		), NULL);
+//
 
-
-		$this->routeIn($route, 'http://www.ubytovanie-hudak.local/', 'PersonalSite:Default', array(
+		$this->routeIn($route, 'http://www.ubytovaniehudak.local/', 'PersonalSite:First', array(
 			'action' => 'default',
 			'rental' => $this->findRental(21812),
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
 			FrontRoute::LANGUAGE => $this->findLanguage(144),
-		), 'http://www.ubytovanie-hudak.local/');
+		), 'http://www.ubytovaniehudak.local/');
 
 		$this->routeIn($route, 'http://www.tralandia.sk/', NULL);
 

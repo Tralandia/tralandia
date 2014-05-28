@@ -19,7 +19,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 
 		$personalSite = new RouteList('PersonalSite');
-		$mask = '//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.[!<cs [a-z]{2,3}.>]%domain%/[!<language [a-z]{2}>]';
+		$mask = '//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.<host [a-z\\.\\-]+>/[!<language [a-z]{2}>]';
 		$metadata = [
 			'presenter' => 'Default',
 			'action' => 'default'
@@ -47,7 +47,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 			'rental' => $this->findRental(146),
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(237),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
-		), 'http://brooklands-island-view-apartments.tra-local.com/');
+		), 'http://brooklands-island-view-apartments.ai.tra-local.com/');
 
 		$this->routeIn($route, 'http://slniecko.uns-local.sk/', 'PersonalSite:First', array(
 			'action' => 'default',
@@ -57,7 +57,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(144),
 		), 'http://slniecko.uns-local.sk/');
 
-		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/hr', 'PersonalSite:Default', array(
+		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/hr', 'PersonalSite:First', array(
 			'action' => 'default',
 			'rentalSlug' => 'slniecko',
 			'rental' => $this->findRental('44941'),
@@ -65,7 +65,7 @@ class PersonalSiteRouteTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(60),
 		), 'http://slniecko.uns-local.sk/hr');
 
-		$this->routeIn($route, 'http://slniecko.uns-local.sk/hr', 'PersonalSite:Default', array(
+		$this->routeIn($route, 'http://slniecko.uns-local.sk/hr', 'PersonalSite:First', array(
 			'action' => 'default',
 			'rentalSlug' => 'slniecko',
 			'rental' => $this->findRental('44941'),
@@ -75,14 +75,14 @@ class PersonalSiteRouteTest extends BaseRouterTest
 
 		$this->routeOut(
 			$route,
-			'PersonalSite:Default',
+			'PersonalSite:First',
 			array(
 				'action' => 'default',
 				'rental' => $this->findRental('15729'),
 				FrontRoute::PRIMARY_LOCATION => $this->findLocation(154),
 				FrontRoute::LANGUAGE => $this->findLanguage(60),
 			),
-			'http://siesta.example.com/hr'
+			'http://siesta.tra-local.hu/hr'
 		);
 
 
