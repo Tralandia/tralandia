@@ -37,6 +37,16 @@ class CustomPersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		));
 
+		$this->routeOut($route, 'Front:CalendarIframe', array(
+			'action' => 'default',
+			'rentla' => $this->findRental('44941'),
+			'months' => '8',
+			'version' => 'old',
+			'primaryLocation' => $this->findLocation(56),
+			'language' => $this->findLanguage(144),
+		), NULL);
+
+
 		$this->routeIn($route, 'http://www.ubytovanie-hudak.local/', 'PersonalSite:Default', array(
 			'action' => 'default',
 			'rental' => $this->findRental(21812),

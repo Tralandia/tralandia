@@ -2,6 +2,7 @@
 namespace Tests\Router;
 
 use Nette, Extras;
+use Nette\Application\Routers\RouteList;
 use Routers\BaseRoute;
 use Routers\FrontRoute;
 
@@ -17,24 +18,28 @@ class PersonalSiteRouteTest extends BaseRouterTest
 		//$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner)>/<presenter>[/<action>[/<id>]]';
 		//$mask = '//[!<language ([a-z]{2}|www)>.<host [a-z.]+>/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
 
+		$personalSite = new RouteList('PersonalSite');
 		$mask = '//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.[!<cs [a-z]{2,3}.>]%domain%/[!<language [a-z]{2}>]';
 		$metadata = [
-			'module' => 'PersonalSite',
 			'presenter' => 'Default',
 			'action' => 'default'
 		];
 
-		$this->route = $this->getContext()->personalSiteRouteFactory->create($mask, $metadata);
+		$personalSite[] = $this->getContext()->personalSiteRouteFactory->create($mask, $metadata);
+		$this->route = $personalSite;
 	}
 
 	public function testCompiler() {
 		$route = $this->route;
 
-//		$this->routeOut($route, 'Front:Sign', array(
-//			'action' => 'in',
+//		$this->routeOut($route, 'Front:CalendarIframe', array(
+//			'action' => 'default',
+//			'rentla' => $this->findRental('44941'),
+//			'months' => '8',
+//			'version' => 'old',
 //			'primaryLocation' => $this->findLocation(56),
 //			'language' => $this->findLanguage(144),
-//		));
+//		), NULL);
 
 		$this->routeIn($route, 'http://brooklands-island-view-apartments.ai.tra-local.com/', 'PersonalSite:Second', array(
 			'action' => 'default',
