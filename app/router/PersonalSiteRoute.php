@@ -69,7 +69,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 					$params[BaseRoute::LANGUAGE] = $rental->getPrimaryLocation()->getDefaultLanguage();
 				}
 
-				$presenter = 'PersonalSite:' . ucfirst($rental->getPersonalSiteConfiguration()->template);
+				$presenter = ucfirst($rental->getPersonalSiteConfiguration()->template);
 			} else {
 				return null;
 			}
@@ -107,7 +107,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 
 		unset($params['rental'], $params[BaseRoute::PRIMARY_LOCATION]);
 		$appRequest->setParameters($params);
-		$appRequest->setPresenterName('PersonalSite:Default');
+		$appRequest->setPresenterName('Default');
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 
