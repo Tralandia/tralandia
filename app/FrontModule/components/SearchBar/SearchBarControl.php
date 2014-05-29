@@ -28,7 +28,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public $location;
 
 	/**
-	 * @persistent
 	 * @var string|NULL
 	 */
 	public $address;
@@ -186,8 +185,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
 
 		if($this->location) {
-			$jsVariables['data-location-slug'] = $this->location->getSlug();
-			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
+//			$jsVariables['data-location-slug'] = $this->location->getSlug();
+//			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
+			$jsVariables['data-address'] = $presenter->translate($this->location->getName());
 		}
 
 		if($this->address) {

@@ -278,7 +278,9 @@ class SimpleFrontRoute extends BaseRoute
 				|| isset($params[self::BOARD])
 				|| isset($params[self::PLACEMENT])
 				|| isset($params[self::PRICE_FROM])
-				|| isset($params[self::PRICE_TO]))
+				|| isset($params[self::PRICE_TO])
+				|| isset($params[self::LATITUDE])
+				|| isset($params[self::LONGITUDE]))
 			{
 				$presenter = 'RentalList';
 				$params['action'] = 'default';
