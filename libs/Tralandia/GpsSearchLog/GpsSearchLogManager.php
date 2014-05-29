@@ -35,8 +35,6 @@ class GpsSearchLogManager
 
 	public function log($latitude, $longitude, $address, $primaryLocation)
 	{
-		$latitude = round($latitude, 7);
-		$longitude = round($longitude, 7);
 		if($primaryLocation instanceof Location) {
 			$primaryLocation = $primaryLocation->getId();
 		}
@@ -45,12 +43,14 @@ class GpsSearchLogManager
 			$primaryLocation = $this->locationRepository->find($primaryLocation);
 		}
 
-		if($gpsSearchLog = $this->repository->findOneBy(['latitude' => $latitude, 'longitude' => $longitude])) {
+		if($gpsSearchLog = $this->findOneByGps($latitude, $longitude)) {
 			$gpsSearchLog->count = $gpsSearchLog->count + 1;
 		} else {
 			$gpsSearchLog = $this->repository->createNew();
 
-			$gpsSearchLog->text = $address;
+			$address = explode(',', $address);
+			array_pop($address);
+			$gpsSearchLog->text = implode(',', $address);
 			$gpsSearchLog->latitude = $latitude;
 			$gpsSearchLog->longitude = $longitude;
 			$gpsSearchLog->primaryLocation = $primaryLocation;
@@ -60,5 +60,17 @@ class GpsSearchLogManager
 
 
 		return $gpsSearchLog;
+	}
+
+
+	/**
+	 * @param $latitude
+	 * @param $longitude
+	 *
+	 * @return GpsSearchLog
+	 */
+	public function findOneByGps($latitude, $longitude)
+	{
+		return $this->repository->findOneBy(['latitude' => $latitude, 'longitude' => $longitude]);
 	}
 }

@@ -19,7 +19,7 @@
 			<i class="icon-flag"></i>
 			{input country , class => 'select2 selectRedirect disabledFulltext path sidebarCountry', data-js-country => 'selected' , data-css-class => 'filterSelect'}
 		</div>
- {* 
+ {*
 		<div class="inputFilterSearch">
 			<i class="icon-map-marker"></i>
 			{input location ,
@@ -34,10 +34,10 @@
  *}
 		<div class="inputFilterSearch geocomplete">
 			<i class="entypo-location"></i>
-			<input name="location" id="geocomplete" data-country="{$environmentLocation->iso}">
+			<input name="address" id="geocomplete" data-country="{$environmentLocation->iso}">
+			{*{input address, data-country => $environmentLocation->iso}*}
 			<input type="hidden" name="latitude">
 			<input type="hidden" name="longitude">
-			<input type="hidden" name="formatted_address">
 			<input type="hidden" name="country">
 		</div>
 

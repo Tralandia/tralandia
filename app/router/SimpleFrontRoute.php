@@ -301,6 +301,9 @@ class SimpleFrontRoute extends BaseRoute
 
 			foreach($params as $key => $value) {
 				if(array_key_exists($key, self::$pathParametersMapper)) {
+					if($key == self::LATITUDE || $key == self::LONGITUDE) {
+						$value = round($value, 7);
+					}
 					$params[self::$pathParametersMapper[$key]] = $value;
 					unset($params[$key]);
 				}
