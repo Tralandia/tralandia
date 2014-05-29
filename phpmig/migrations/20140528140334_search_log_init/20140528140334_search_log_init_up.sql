@@ -20,3 +20,6 @@ ALTER TABLE `searchlog` ADD `count` INT(11)  UNSIGNED  NOT NULL  DEFAULT '1'  AF
 /* 09:39:24 _Tralandia */ ALTER TABLE `searchlog` ADD `created` DATETIME  NOT NULL  AFTER `primaryLocation_id`;
 /* 09:39:36 _Tralandia */ ALTER TABLE `searchlog` ADD `updated` DATETIME  NOT NULL  AFTER `created`;
 
+
+/* 09:57:27 _Tralandia */ RENAME TABLE `searchlog` TO `gpssearchlog`;
+
