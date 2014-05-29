@@ -24,9 +24,9 @@ class RentalListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\SearchLog\SearchLogManager
+	 * @var \Tralandia\GpsSearchLog\GpsSearchLogManager
 	 */
-	protected $searchLogManager;
+	protected $gpsSearchLogManager;
 
 	/**
 	 * @autowire
@@ -68,7 +68,7 @@ class RentalListPresenter extends BasePresenter {
 			if(!$this->isAjax()) {
 				$lastSearch = $this->searchHistory;
 				$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
-				$this->searchLogManager->log($this['searchBar']->latitude, $this['searchBar']->longitude, $this->getParameter('formatted_address', ''), $this->primaryLocation);
+				$this->gpsSearchLogManager->log($this['searchBar']->latitude, $this['searchBar']->longitude, $this->getParameter('formatted_address', ''), $this->primaryLocation);
 			}
 			$this->prepareListTemplate($search, $itemCount);
 		}
