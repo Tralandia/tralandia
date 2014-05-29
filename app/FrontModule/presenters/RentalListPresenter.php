@@ -70,15 +70,18 @@ class RentalListPresenter extends BasePresenter {
 				$latitude = $this['searchBar']->latitude;
 				$longitude = $this['searchBar']->longitude;
 
-				if(!$lastSearch->hasGps($latitude, $longitude)) {
-					$gpsSearchLog = $this->gpsSearchLogManager->log($latitude, $longitude, $this->getParameter('formatted_address', ''), $this->primaryLocation);
-				} else {
-					$gpsSearchLog = $this->gpsSearchLogManager->findOneByGps($latitude, $longitude);
+				if($latitude && $longitude) {
+					if(!$lastSearch->hasGps($latitude, $longitude)) {
+						$gpsSearchLog = $this->gpsSearchLogManager->log($latitude, $longitude, $this->getParameter('formatted_address', ''), $this->primaryLocation);
+					} else {
+						$gpsSearchLog = $this->gpsSearchLogManager->findOneByGps($latitude, $longitude);
+					}
+
+					$this->template->gpsSearchLog = $gpsSearchLog;
+					$this->template->pageH1 = $gpsSearchLog->text;
 				}
 				$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
 
-				$this->template->gpsSearchLog = $gpsSearchLog;
-				$this->template->pageH1 = $gpsSearchLog->text;
 			}
 			$this->prepareListTemplate($search, $itemCount);
 		}
