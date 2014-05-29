@@ -365,6 +365,10 @@ em {
   height: 340px;
 }
 
+#map img {
+  max-width: none;
+}
+
 @media screen and (max-width: 768px) {
   .grids {
     margin: 0;
