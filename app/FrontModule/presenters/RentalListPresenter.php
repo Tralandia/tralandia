@@ -72,7 +72,7 @@ class RentalListPresenter extends BasePresenter {
 
 				if($latitude && $longitude) {
 					if(!$lastSearch->hasGps($latitude, $longitude)) {
-						$gpsSearchLog = $this->gpsSearchLogManager->log($latitude, $longitude, $this->getParameter('formatted_address', ''), $this->primaryLocation);
+						$gpsSearchLog = $this->gpsSearchLogManager->log($latitude, $longitude, $this->getParameter('address', ''), $this->primaryLocation);
 					} else {
 						$gpsSearchLog = $this->gpsSearchLogManager->findOneByGps($latitude, $longitude);
 					}

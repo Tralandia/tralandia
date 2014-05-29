@@ -189,7 +189,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 //			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
 			$jsVariables['data-address'] = $presenter->translate($this->location->getName());
 		}
-
+		
 		if($this->address) {
 			$jsVariables['data-address'] = $this->address;
 		}
