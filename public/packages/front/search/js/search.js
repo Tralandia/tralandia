@@ -437,8 +437,12 @@ function geocodeResult(event, result) {
 
 	if (result.geometry) {
 		if (result.geometry.location) {
-			$geocomplete.find('input[name="latitude"]').val(result.geometry.location.lat());
-			$geocomplete.find('input[name="longitude"]').val(result.geometry.location.lng());
+			var latitude = result.geometry.location.lat();
+				latitude = Math.round(latitude * 10000000) / 10000000;
+			var longitude = result.geometry.location.lng();
+				longitude = Math.round(longitude * 10000000) / 10000000;
+			$geocomplete.find('input[name="latitude"]').val(latitude);
+			$geocomplete.find('input[name="longitude"]').val(longitude);
 		}
 	}
 
