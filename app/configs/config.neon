@@ -461,6 +461,7 @@ services:
 	- \Tralandia\Rental\CalendarManager
 	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
+	- \Tralandia\GpsSearchLog\GpsSearchLogManager
 
 	# ==========================================================
 	# ==========================================================
@@ -500,6 +501,8 @@ services:
 	- \Tralandia\SiteReview\SiteReviewRepository
 	- \Tralandia\Routing\PageRepository
 	- \Tralandia\Routing\PathSegmentRepository
+
+	- \Tralandia\GpsSearchLog\GpsSearchLogRepository
 
 
 

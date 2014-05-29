@@ -5,7 +5,7 @@
  * Created at: 6/14/13 8:48 AM
  */
 
-namespace Tralandia\SearchLog;
+namespace Tralandia\GpsSearchLog;
 
 use Nette;
 
@@ -17,7 +17,7 @@ use Nette;
  * @property float $longitude
  * @property \Tralandia\Location\Location $primaryLocation m:hasOne(primaryLocation_id:)
  */
-class SearchLog extends \Tralandia\Lean\BaseEntity
+class GpsSearchLog extends \Tralandia\Lean\BaseEntity
 {
 
 	public function getNameId()

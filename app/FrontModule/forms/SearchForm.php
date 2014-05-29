@@ -119,7 +119,7 @@ class SearchForm extends BaseForm
 			->setPrompt('')
 			->setAttribute('data-placeholder', $this->translate('151885'));
 
-		$this->addSubmit('submit', 'o100092');
+		$this->addSubmit('submit', 'o100092', FALSE);
 	}
 
 
