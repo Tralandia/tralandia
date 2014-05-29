@@ -565,6 +565,7 @@ function _selectSetSelectedValue(){
 
 	$('variables').each(function(i){
 		var selector = $(this).attr('for');
+		var $variables = $(this);
 
 		$(selector+' select,'+selector+' input').each(function(k,v){
 
@@ -573,28 +574,19 @@ function _selectSetSelectedValue(){
 			switch($(this).prop('tagName')){
 				case 'SELECT':					
 				dataSelector = 'data-selected';
+				var attr = $(this).attr(dataSelector);
 				break;				
 				case 'INPUT':
-				dataSelector = 'data-'+$(this).attr('name')+'-name';
+				dataSelector = 'data-'+$(this).attr('name');
+				var attr = $variables.attr(dataSelector);
 				break;
 
 			}
 
-			
-
-			var attr = $(this).attr(dataSelector);
-
 			if (typeof attr !== 'undefined' && attr !== false) {
-
-
-
 				$(this).val(attr);
-
-				// console.log(attr);
 			}
-
-
-		})
+		});
 
 	});
 
