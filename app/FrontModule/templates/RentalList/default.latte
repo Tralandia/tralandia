@@ -18,7 +18,8 @@
 
 <div class="row-fluid">
 	<div class="span12">
-		<div id="map-canvas"></div>
+
+		<div n:if="$latitude" id="map-canvas"></div>
 
 		<div class="mytabUi ui-tabs-nav ui-tabs">
 			{if count($rentals)}
@@ -162,7 +163,7 @@
 </div>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script n:syntax="double">
+<script n:syntax="double" n:if="$latitude">
 	var infowindow = null;
 
 //	var mapCenter = [48.6909605901733, 19.57763684375005];
