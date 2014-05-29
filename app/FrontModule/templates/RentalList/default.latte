@@ -32,7 +32,7 @@
 
 						{var $rentalData = $findRental($rentalId); }
 
-						<div style="display: none" d="{$getDistance($latitude, $longitude, $rental->address->gps->latitude, $rental->address->gps->longitude)}"></div>
+						{*<div style="display: none" d="{$getDistance($latitude, $longitude, $rentalData->address->gps->latitude, $rentalData->address->gps->longitude)}"></div>*}
 
 						{var $tempCacheOptions = $getCacheOptions('rentalBrick', ['rental' => $rentalId])}
 
