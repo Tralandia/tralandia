@@ -182,7 +182,7 @@ function generateRedirectUrl(count){
 
 	path = path.join('/');
 
-	var p = $('.searchForm').find("select[value][value!='']:not(.path), input[value][value!=''][name!='location']:not(.path,.nospam)").serialize();
+	var p = $('.searchForm').find("select[value][value!='']:not(.path), input[value][value!=''][name!='location'][name!='do']:not(.path,.nospam)").serialize();
 
 	var allParameetrs = p+path;
 		allParameetrs = allParameetrs.length;
@@ -199,8 +199,8 @@ function generateRedirectUrl(count){
 
 	var url = path+(p != '' ? '?'+p : '');
 
-	if(count){
-		if(p.length == 0){			
+	if (count) {
+		if (p.length == 0) {
 			url+='?do=searchBar-getSearchCount';
 		} else {
 			url+='&do=searchBar-getSearchCount';
@@ -208,7 +208,6 @@ function generateRedirectUrl(count){
 	}
 
 	return url;
-	// 
 }
 
 
@@ -394,7 +393,7 @@ $(function(){
 
 
 
-	$('.searchForm .select2 , input[data-autocomplete-url] , input[name="location"] , input[name="viewport"]').on('change',function(e){
+	$('.searchForm .select2 , input[data-autocomplete-url] , input[name="address"] , input[name="viewport"]').on('change',function(e){
 
 		updateSerachLinkUrl();
 		updateCriteriaCount();
@@ -444,10 +443,6 @@ function geocodeResult(event, result) {
 			$geocomplete.find('input[name="latitude"]').val(latitude);
 			$geocomplete.find('input[name="longitude"]').val(longitude);
 		}
-	}
-
-	if (result.formatted_address) {
-		$geocomplete.find('input[name="formatted_address"]').val(result.formatted_address);
 	}
 
 	if (result.address_components) {
