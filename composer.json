@@ -27,7 +27,6 @@
 		"texy/texy": "dev-release-2.x",
 		"janmarek/mockista": "@dev",
         "davedevelopment/phpmig": "*",
-        "ondrejbrejla/eciovni": "*",
         "pimple/pimple": "1.*"
 	},
     "require-dev": {

@@ -1,0 +1,9 @@
+{block content}
+
+<table>
+	<tr n:foreach="$invoices as $invoice">
+		<td>{$invoice->id}</td>
+		<td>{$invoice->number}</td>
+		<td><a n:href="Invoice:default $invoice->id">show</a></td>
+	</tr>
+</table>

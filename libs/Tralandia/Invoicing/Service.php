@@ -39,4 +39,14 @@ class Service extends \Tralandia\Lean\BaseEntity
 		return $label;
 	}
 
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPriceCurrent()
+	{
+		return new \Extras\Types\Price($this->row->priceCurrent, $this->currency);
+	}
+
+
 }

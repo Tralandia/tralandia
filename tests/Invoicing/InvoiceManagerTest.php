@@ -41,14 +41,16 @@ class InvoiceManagerTest extends TestCase
 
 	public function testBasic()
 	{
+		/** @var $rental \Tralandia\Rental\Rental */
 		$rental = $this->getContext()->getByType('\Tralandia\Rental\RentalRepository')->find(1);
 		$service = $this->getContext()->getByType('\Tralandia\Invoicing\ServiceRepository')->find(1);
 		$translator = $this->getContext()->getService('translatorFactory')->create($this->findLanguage(38));
 
 		$invoice = $this->invoiceManager->createInvoice($rental, $service, 'test', $translator);
 
-		$this->assertNotNull($invoice);
 
+		$this->assertNotNull($invoice);
+		$this->assertEquals('clientName', $invoice->clientName);
 	}
 
 }
