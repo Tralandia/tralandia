@@ -1,5 +1,7 @@
 <?php
 
+use Service\Rental\RentalSearchService;
+
 class SearchHistory {
 
 	const MAX_COUNT = 10;
@@ -45,6 +47,13 @@ class SearchHistory {
 		}
 
 		$this->setHistoryData($history);
+
+		if(isset($criteria[RentalSearchService::CRITERIA_GPS])) {
+			$gpsSearchLogs = $this->getGpsSearchLogData();
+			$hash = md5($criteria[RentalSearchService::CRITERIA_GPS]['latitude'].'|'.$criteria[RentalSearchService::CRITERIA_GPS]['longitude']);
+			$gpsSearchLogs[$hash] = 1;
+			$this->setGpsSearchLogData($gpsSearchLogs);
+		}
 	}
 
 
@@ -105,6 +114,46 @@ class SearchHistory {
 	protected function setHistoryData(array $history)
 	{
 		$this->section->history = $history;
+	}
+
+	/* ====================================================== */
+	/* =================== GPS SEARCH LOG =================== */
+	/* ====================================================== */
+
+	/**
+	 * @return array
+	 */
+	protected function getGpsSearchLogData()
+	{
+		$data = $this->section->gpsSearchLog;
+		if(!$data) {
+			$data = [];
+		}
+
+		return $data;
+	}
+
+
+	/**
+	 * @param array $data
+	 */
+	protected function setGpsSearchLogData(array $data)
+	{
+		$this->section->gpsSearchLog = $data;
+	}
+
+
+	/**
+	 * @param $latitude
+	 * @param $longitude
+	 *
+	 * @return bool
+	 */
+	public function hasGps($latitude, $longitude)
+	{
+		$gpsSearchLogs = $this->getGpsSearchLogData();
+		$hash = md5($latitude.'|'.$longitude);
+		return isset($gpsSearchLogs[$hash]);
 	}
 
 }
