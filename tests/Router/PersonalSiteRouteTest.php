@@ -41,6 +41,14 @@ class PersonalSiteRouteTest extends BaseRouterTest
 //			'language' => $this->findLanguage(144),
 //		), NULL);
 
+		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/', 'PersonalSite:First', array(
+			'action' => 'default',
+//			'rentalSlug' => 'slniecko',
+			'rental' => $this->findRental('44941'),
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://slniecko.uns-local.sk/');
+
 		$this->routeIn($route, 'http://brooklands-island-view-apartments.ai.tra-local.com/', 'PersonalSite:Second', array(
 			'action' => 'default',
 			'rentalSlug' => 'brooklands-island-view-apartments',
@@ -49,13 +57,6 @@ class PersonalSiteRouteTest extends BaseRouterTest
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 		), 'http://brooklands-island-view-apartments.ai.tra-local.com/');
 
-		$this->routeIn($route, 'http://slniecko.uns-local.sk/', 'PersonalSite:First', array(
-			'action' => 'default',
-			'rentalSlug' => 'slniecko',
-			'rental' => $this->findRental('44941'),
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(52),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-		), 'http://slniecko.uns-local.sk/');
 
 		$this->routeIn($route, 'http://www.slniecko.uns-local.sk/hr', 'PersonalSite:First', array(
 			'action' => 'default',
