@@ -74,7 +74,7 @@ class PersonalSiteRoute extends Nette\Object implements Nette\Application\IRoute
 				return null;
 			}
 
-			unset($params['www'], $params['cs'], $params['host']);
+			unset($params['www'], $params['host'], $params['rentalSlug']);
 			$appRequest->setParameters($params);
 			$appRequest->setPresenterName($presenter);
 
