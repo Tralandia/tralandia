@@ -10,7 +10,7 @@ class InvoicingServiceMigration extends \Migration\Migration
 		$lean = $this->getLean();
 
 		$query = 'select * from invoicing_company where slug = %s';
-		$zeroCompany = $this->getLean()->query($query, 'zero')->fetchSingle();
+		$zeroCompany = $this->getLean()->query($query, 'zero')->fetch();
 
 		$serviceTypes = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->findAll();
 		$serviceTypes = Tools::entitiesMap($serviceTypes, 'slug');
@@ -28,7 +28,7 @@ class InvoicingServiceMigration extends \Migration\Migration
 			$invoice['number'] = $i;
 			$invoice['variableNumber'] = $i;
 			$invoice['company_id'] = $zeroCompany->id;
-			$invoice['rental_id'] = $serviceRow->rental->id;
+			$invoice['rental_id'] = $serviceRow->rental_id;
 			$invoice['dateDue'] = $serviceRow->created;
 			$invoice['datePaid'] = $serviceRow->created;
 			$invoice['clientName'] = null;
