@@ -69,6 +69,11 @@ class RentalSearchService extends Nette\Object
 	 */
 	private $locationRepository;
 
+	/**
+	 * @var \Extras\Cache\IRentalOrderCachingFactory
+	 */
+	private $rentalOrderCachingFactory;
+
 
 	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,BaseDao $rentalDao,
 								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
@@ -82,6 +87,15 @@ class RentalSearchService extends Nette\Object
 		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
 		$this->rentalDao = $rentalDao;
 		$this->locationRepository = $locationRepository;
+		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
+	}
+
+
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	{
+		$this->primaryLocation = $primaryLocation;
+		$this->rentalOrderCaching = $this->rentalOrderCachingFactory->create($primaryLocation);
+		$this->resetResults();
 	}
 
 	/**
