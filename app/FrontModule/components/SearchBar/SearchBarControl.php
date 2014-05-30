@@ -10,6 +10,7 @@ use Environment\Environment;
 use FrontModule\Components\SearchHistory\SearchHistoryControl;
 use FrontModule\Components\VisitedRentals\VisitedRentalsControl;
 use FrontModule\Forms\ISearchFormFactory;
+use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
@@ -189,7 +190,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 //			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
 			$jsVariables['data-address'] = $presenter->translate($this->location->getName());
 		}
-		
+
 		if($this->address) {
 			$jsVariables['data-address'] = $this->address;
 		}
@@ -436,6 +437,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	{
 		$search = $this->search;
 
+//		$countryIso = $this->getPresenter()->getParameter('country');
+//		if($countryIso != $search->getPrimaryLocation()->getIso()) {
+//			$location = $this->em->getRepository(LOCATION_ENTITY)->findOneBy(['iso' => $countryIso]);
+//			$search->setPrimaryLocation($location);
+//		}
+
 		if ($this->location) {
 			$search->setLocationCriterion($this->location);
 		}
@@ -531,6 +538,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$gps = $this->gpsSearchLogManager->findOneByGps($this->latitude, $this->longitude);
 			if($gps) {
 				$this->address = $gps->text;
+			} else if($presenter instanceof Presenter && $address = $presenter->getParameter('address')) {
+				$this->address = $address;
 			}
 		}
 	}
