@@ -78,6 +78,12 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 	private $rentalRepository;
 
 
+	/**
+	 * @var \Tralandia\Invoicing\Service[]
+	 */
+	protected $services;
+
+
 	public function __construct(User $user, RentalCreator $rentalCreator, InvoiceManager $invoiceManager, Countries $countries,
 								Languages $languages, ServiceRepository $serviceRepository,
 								UserRepository $userRepository, RentalRepository $rentalRepository,
@@ -94,6 +100,16 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$this->userRepository = $userRepository;
 		$this->invoiceManager = $invoiceManager;
 		$this->rentalRepository = $rentalRepository;
+		$this->services = $this->serviceRepository->findForRegistration();
+	}
+
+
+	public function prepareTemplate()
+	{
+		parent::prepareTemplate();
+
+		$this->template->services = $this->services;
+
 	}
 
 
@@ -107,7 +123,8 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$form->addSelect('country', 'o1094', $countries)
 			->setDefaultValue($this->user->primaryLocation->id);
 
-		$services = $this->serviceRepository->findAll();
+
+		$services = $this->services;
 		$services = \Tools::entitiesMap($services, 'id', 'label', $this->translator);
 		$form->addOptionList('service', '', $services)
 			->setRequired(TRUE);
@@ -143,17 +160,17 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 
 		$defaults = [
 			'name' => Nette\Utils\Strings::random(6, 'a-z'),
-			'clientName' => 'clientName',
-			'clientPhone' => 'clientPhone',
-			'clientAddress' => 'clientAddress',
-			'clientAddress2' => 'clientAddress2',
-			'clientLocality' => 'clientLocality',
-			'clientPostcode' => 'clientPostcode',
+			'clientName' => 'Client Name',
+			'clientPhone' => '+421 909 090 909',
+			'clientAddress' => 'Address',
+			'clientAddress2' => 'Address 2',
+			'clientLocality' => 'Locality',
+			'clientPostcode' => '12 345',
 			'clientPrimaryLocation' => 52,
 			'clientLanguage' => 144,
-			'clientCompanyName' => 'clientCompanyName',
-			'clientCompanyId' => 'clientCompanyId',
-			'clientCompanyVatId' => 'clientCompanyVatId',
+			'clientCompanyName' => 'Company Name',
+			'clientCompanyId' => '123456789',
+			'clientCompanyVatId' => 'VAT123456789',
 		];
 
 		$defaultInfo = $this->user->getDefaultInvoicingInformation();

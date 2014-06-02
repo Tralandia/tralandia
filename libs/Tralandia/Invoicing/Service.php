@@ -24,7 +24,7 @@ class Service extends \Tralandia\Lean\BaseEntity
 	 */
 	public function isForFree()
 	{
-		return !$this->priceCurrent;
+		return !$this->getPriceCurrent()->getSourceAmount();
 	}
 
 

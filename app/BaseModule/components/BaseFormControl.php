@@ -48,8 +48,11 @@ abstract class BaseFormControl extends Nette\Application\UI\Control
 		return $template;
 	}
 
+	public function prepareTemplate() {}
+
 	public function render()
 	{
+		$this->prepareTemplate();
 		if ($this->template instanceof \Nette\Templating\FileTemplate
 			&& !is_file($this->template->getFile())) {
 
