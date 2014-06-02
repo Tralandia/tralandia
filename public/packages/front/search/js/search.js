@@ -298,8 +298,8 @@ function _searchSelect2() {
 
 function searchCriteriumSetActive(select){
 	$(select).parent().addClass('selected');
-
-	if(!$(select).hasClass('selectRedirect')){
+	
+	if($(select).prop('tagName') == 'SELECT' && !$(select).hasClass('selectRedirect')){
 		if ($(select).parent().find('.btnSearchClose').length == 0){
 			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="icon-remove"></i></a>');
 		}
