@@ -63,7 +63,7 @@ class RentalVariables extends Nette\Object {
 		$ps = $this->rental->personalSiteConfiguration;
 		if(!$ps) return '#';
 
-		return $ps->url;
+		return 'http://' . $ps->url;
 
 	}
 
