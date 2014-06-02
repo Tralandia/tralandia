@@ -422,7 +422,7 @@ $(function(){
 	var country = $geocomplete.data('country');
 
 	$geocomplete.geocomplete({
-			// country: country,
+			country: country,
 			types: ['geocode','establishment']
 		})
 		.bind("geocode:result", geocodeResult)
