@@ -40,6 +40,9 @@ VALUES (NULL, NULL, 'Zero', 'zero', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0
 
 INSERT INTO `invoicing_company` (`id`, `locality_id`, `name`, `slug`, `address`, `address2`, `postcode`, `companyId`, `companyVatId`, `vat`, `registrator`, `inEu`, `oldId`, `created`, `updated`, `primaryLocation_id`)
 VALUES (NULL, NULL, 'Tralandia s.r.o', 'tralandiaSro', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2014-1-1', '2014-1-1', NULL);
+UPDATE `invoicing_company` SET `address` = 'Address', `address2` = 'Address 2', `postcode` = '12 345', `companyId` = '123456789', `companyVatId` = 'VAT123456789', `vat` = '0.19' WHERE `id` = '2';
+UPDATE `invoicing_company` SET `registrator` = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. ', `inEu` = '1' WHERE `id` = '2';
+UPDATE `invoicing_company` SET `locality` = 'Locality' WHERE `id` = '2';
 
 
 INSERT INTO `phrase_type` (`id`, `translateTo`, `entityName`, `entityAttribute`, `pluralVariationsRequired`, `genderRequired`, `genderVariationsRequired`, `locativesRequired`, `positionRequired`, `helpForTranslator`, `html`, `translated`, `oldId`, `created`, `updated`, `preFillForTranslator`)

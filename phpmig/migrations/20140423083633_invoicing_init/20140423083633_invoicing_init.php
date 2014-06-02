@@ -9,23 +9,23 @@ class InvoicingInit extends \Migration\Migration
 	{
 		$this->executeSqlFromFile('up');
 
+		/** @var $type \Entity\Invoicing\ServiceType */
+		$type = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->createNew();
+		$type->setSlug('basic');
+		$type->getName()->getCentralTranslation()->setTranslation('Basic');
+
+		$this->getEm()->persist($type);
+
 		/** @var $featured \Entity\Invoicing\ServiceType */
 		$featured = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->createNew();
-		$featured->setSlug('featured');
-		$featured->getName()->getCentralTranslation()->setTranslation('Featured');
+		$featured->setSlug('premium');
+		$featured->getName()->getCentralTranslation()->setTranslation('Premium');
 
 		$this->getEm()->persist($featured);
 
-		/** @var $personalSite \Entity\Invoicing\ServiceType */
-		$personalSite = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->createNew();
-		$personalSite->setSlug('personalSite');
-		$personalSite->getName()->getCentralTranslation()->setTranslation('Personal site');
-
-		$this->getEm()->persist($personalSite);
-
 		/** @var $type \Entity\Invoicing\ServiceType */
 		$type = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->createNew();
-		$type->setSlug('premium-ps');
+		$type->setSlug('ps-premium');
 		$type->getName()->getCentralTranslation()->setTranslation('Premium PS');
 
 		$this->getEm()->persist($type);

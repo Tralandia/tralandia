@@ -35,7 +35,7 @@ class InvoiceDocumentGenerator
 		$customer = $this->getCustomer($invoice);
 		$items = $this->getItems($invoice);
 
-		$dataBuilder = new DataBuilder($invoice->number, 'Invoice - ' . $invoice->number, $supplier, $customer, $dateExp, $dateNow, $items);
+		$dataBuilder = new DataBuilder($invoice->number, 'Invoice', $supplier, $customer, $dateExp, $dateNow, $items);
 		$dataBuilder->setVariableSymbol($invoice->variableNumber)->setDateOfVatRevenueRecognition($dateNow);
 		$data = $dataBuilder->build();
 
@@ -51,7 +51,8 @@ class InvoiceDocumentGenerator
 		$builder
 			->setIn($company->companyId)
 			->setTin($company->companyVatId)
-			->setAccountNumber('mock / 1111');
+			->setAccountNumber('mock / 1111')
+			->setVatPayer(TRUE);
 
 		return $builder->build();
 	}
