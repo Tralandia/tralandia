@@ -381,6 +381,7 @@ class Compiler {
 	{
 		$match = Strings::matchAll($html, '~(?P<originalname>\[(?P<fullname>((?P<prefix>[a-zA-Z]+)_)?(?P<name>[a-zA-Z0-9]+))\])~');
 		$match = array_map('array_filter', $match);
+		$match = \Tools::arrayMap($match, 'fullname', NULL);
 		return $match;
 	}
 
