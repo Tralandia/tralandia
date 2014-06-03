@@ -49,6 +49,14 @@ class SeoService extends Nette\Object {
 				Translator::VARIATION_CASE => \Entity\Language::LOCATIVE,
 			),
 		),
+		'address' => [
+			null,
+			null,
+		],
+		'addressLocative' => [
+			null,
+			null,
+		],
 		'rentalTypePlural' => array(
 			'rentalType',
 			'name',
@@ -144,6 +152,11 @@ class SeoService extends Nette\Object {
 			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');
 			if ($destination == ':Front:RentalList:default') {
 				$hash = array();
+
+				if($this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE])) {
+					$hash[] = '/'.FrontRoute::LOCATION;
+				}
+
 				foreach ($this->pathSegmentParameters as $key => $value) {
 					if ($this->existsParameter($value)) {
 						$hash[] = '/'.$key;
@@ -212,10 +225,13 @@ class SeoService extends Nette\Object {
 		foreach ($variables as $value) {
 			if(!array_key_exists($value['replacement'], $this->replacements)) continue;
 
-			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')
-				&& !$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION]) )
-			{
-				$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
+			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')) {
+				if($this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE])) {
+					$replacement = $this->replacements[$value['replacement']];
+
+				} else if(!$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION])) {
+					$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
+				}
 			} else {
 				$replacement = $this->replacements[$value['replacement']];
 			}
