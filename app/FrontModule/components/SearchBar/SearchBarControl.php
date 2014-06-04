@@ -193,6 +193,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		if($this->address) {
 			$jsVariables['data-address'] = $this->address;
+			$jsVariables['data-latitude'] = $this->latitude;
+			$jsVariables['data-longitude'] = $this->longitude;
 		}
 
 		if($this->rentalType) {
@@ -275,6 +277,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO] => $this->priceTo,
 				FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->rentalType,
 				FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->location,
+				FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE] => $this->latitude,
+				FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE] => $this->longitude,
 				FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
 			];
 			$filter = array_filter($filter);
@@ -306,6 +310,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$key = 'price';
 			}
 
+			if(($key == FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE] || $key == FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE]))
+			{
+				if(isset($breadcrumbLinks['address'])) continue;
+				$value = $this->address;
+				$key = 'address';
+			}
+
 			if($value) {
 				$link = [];
 				$link['href'] = $this->presenter->link(':Front:RentalList:', $filter);
@@ -330,7 +341,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$breadcrumbLinks[$key] = $link;
 			}
 
-			if($key == 'price') {
+			if($key == 'address') {
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE]] = NULL;
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE]] = NULL;
+			} else if($key == 'price') {
 				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_FROM]] = NULL;
 				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO]] = NULL;
 			} else {
