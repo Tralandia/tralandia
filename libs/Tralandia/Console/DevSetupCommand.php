@@ -43,15 +43,22 @@ class DevSetupCommand extends BaseCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-
-		$query = 'SELECT id, personalSiteUrl FROM rental WHERE personalSiteUrl IS NOT NULL and personalSiteUrl != ""';
+		$query = 'SELECT id, url FROM personalsite_configuration WHERE url IS NOT NULL and url != "" AND id < 500';
 		$result = $this->db->query($query)->fetchAll();
 		foreach($result as $row) {
-			$url = Nette\Utils\Strings::replace($row['personalSiteUrl'], [
+			$url = Nette\Utils\Strings::replace($row['url'], [
 				'~\.tralandia\.~' => '.tra-local.',
 				'~\.uns\.~' => '.uns-local.',
 			]);
-			$update = "update rental set personalSiteUrl = '{$url}' where id = '{$row['id']}'";
+
+			if(Nette\Utils\Strings::startsWith($url, 'www.')) {
+				$l = explode('.', $url);
+				array_pop($l);
+				$l[] = 'local';
+				$url = implode('.', $l);
+			}
+
+			$update = "update personalsite_configuration set url = '{$url}' where id = '{$row['id']}'";
 			$this->db->query($update);
 		}
 

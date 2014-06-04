@@ -10,7 +10,9 @@ use Extras\Annotation as EA;
 use Nette\DateTime;
 use Nette\Http\Url;
 use Nette\Utils\Arrays;
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Tralandia\Rental\CalendarManager;
 
 /**
  * @ORM\Entity
@@ -36,6 +38,8 @@ use Nette\Utils\Strings;
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 {
+
+	use \Tralandia\Rental\TGetCalendar;
 
 	const STATUS_DRAFT = 0;
 
@@ -152,8 +156,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+	 * @todo nepouzivany od 19.5.2014
 	 */
 	protected $personalSiteUrl;
+
+	/**
+	 * @var \Entity\PersonalSite\Configuration
+	 * @ORM\OneToOne(targetEntity="Entity\PersonalSite\Configuration", inversedBy="rental", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
+	 */
+	protected $personalSiteConfiguration;
 
 	/**
 	 * @var string
@@ -256,6 +268,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $calendarUpdated;
 
 	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $oldCalendar;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $oldCalendarUpdated;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
 	 * @ORM\OrderBy({"sort" = "ASC"})
@@ -316,12 +340,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * toto nieje stlpec v DB je to len pomocna premenna
 	 * @var array
 	 */
-	private $formattedCalendar;
-
-	/**
-	 * toto nieje stlpec v DB je to len pomocna premenna
-	 * @var array
-	 */
 	private $sortedImages;
 
 	/**
@@ -347,6 +365,13 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
+	protected $newsletterSent = FALSE;
+
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
 	protected $backlinkEmailSent = FALSE;
 
 
@@ -355,6 +380,46 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $lastUpdate;
+
+
+	public function getPersonalSiteUrl()
+	{
+		$configuration = $this->personalSiteConfiguration;
+		return $configuration ? $configuration->getUrl() : NULL;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getMaxCapacity()
+	{
+		if($this->useOldCalendar()) {
+			return $this->maxCapacity;
+		}
+
+		$max = 0;
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$max += $unit->getMaxCapacity();
+		}
+		return $max;
+	}
+
+	public function getUnits()
+	{
+		return $this->units;
+	}
+
+	public function getUnitsCapacity()
+	{
+		$capacity = [];
+		/** @var $unit Unit */
+		foreach($this->units as $unit) {
+			$capacity[$unit->id] = $unit->getMaxCapacity();
+		}
+
+		return $capacity;
+	}
 
 	/**
 	 * @return string|NULL
@@ -857,94 +922,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		}
 	}
 
-
-	/**
-	 * @param array $calendar
-	 * @param \DateTime $updated
-	 *
-	 * @return $this
-	 */
-	public function updateCalendar(array $calendar, \DateTime $updated = NULL)
-	{
-		if($updated === NULL) {
-			$updated = new \DateTime();
-		}
-
-		$this->setCalendarUpdated($updated);
-		$this->setCalendar($calendar);
-
-		return $this;
-	}
-
-
-	/**
-	 * @param array|\DateTime[]
-	 *
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendar(array $calendar)
-	{
-		foreach ($calendar as $key => $date) {
-			$calendar[$key] = $date->format('z');
-		}
-
-		$this->calendar = ',' . (implode(',', $calendar)) . ',';
-		$this->formattedCalendar = NULL;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return array|\DateTime[]
-	 */
-	public function getCalendar()
-	{
-		if(!$this->getCalendarUpdated()) {
-			return [];
-		}
-
-		if(!is_array($this->formattedCalendar)) {
-			$days = array_filter(explode(',', $this->calendar));
-			$todayZ = date('z');
-			$calendarUpdatedZ = $this->getCalendarUpdated()->format('z');
-			$thisYear = $this->getCalendarUpdated()->format('Y');
-			$nextYear = $thisYear + 1;
-			$daysTemp = [];
-			foreach ($days as $key => $day) {
-				if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
-				$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-				$daysTemp[] = \Nette\DateTime::createFromFormat('z Y G-i-s', "$day $year 00-00-00");
-			}
-
-			$this->formattedCalendar = array_filter($daysTemp);
-		}
-		return $this->formattedCalendar;
-	}
-
-
-	/**
-	 * @param \DateTime $from
-	 * @param \DateTime $to
-	 *
-	 * @return bool
-	 */
-	public function isAvailable(\DateTime $from, \DateTime $to = NULL)
-	{
-		$calendar = $this->getCalendar();
-
-		if(!count($calendar)) return TRUE;
-
-		if($to === NULL) $to = clone $from;
-
-		$from->modify('midnight');
-		while($from <= $to) {
-			if(in_array($from, $calendar)) return FALSE;
-			$from->modify('next day');
-		}
-
-		return TRUE;
-	}
 
 	/**
 	 * @return \Entity\Rental\Placement|NULL
@@ -1738,44 +1715,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->interviewAnswers;
 	}
 
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendar()
-	{
-		$this->calendar = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendarUpdated(\DateTime $calendarUpdated)
-	{
-		$this->calendarUpdated = $calendarUpdated;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendarUpdated()
-	{
-		$this->calendarUpdated = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getCalendarUpdated()
-	{
-		return $this->calendarUpdated;
-	}
 
 	/**
 	 * @param \Entity\Rental\Image
@@ -1916,14 +1855,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		$this->maxCapacity = NULL;
 
 		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getMaxCapacity()
-	{
-		return $this->maxCapacity;
 	}
 
 	/**

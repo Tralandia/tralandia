@@ -1,0 +1,1 @@
+-- RentalNewsletterManager migration DOWN file

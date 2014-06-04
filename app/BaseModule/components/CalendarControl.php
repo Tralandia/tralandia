@@ -2,8 +2,12 @@
 namespace BaseModule\Components;
 
 use Nette\DateTime;
+use Tralandia\Dictionary\Translatable;
+use Tralandia\Rental\CalendarManager;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
+
+	const VERSION_2 = 'v2';
 
 	/**
 	 * @var \Environment\Locale
@@ -16,50 +20,57 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $selectedDays;
 
+	/**
+	 * @var \Nette\ComponentModel\IContainer
+	 */
+	private $rental;
 
 
-	public function __construct(\Environment\Locale $locale, array $selectedDays = NULL) {
+	public function __construct($rental, \Environment\Locale $locale) {
 		parent::__construct();
 		$this->locale = $locale;
-		$this->selectedDays = $selectedDays;
+		$this->selectedDays = $rental->getCalendar();
+		$this->rental = $rental;
 	}
 
-	public function renderIframe($monthsCount, array $selectedDays = NULL){
-		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'iframe');
+	public function renderIframe($monthsCount, array $selectedDays = NULL, $version = self::VERSION_2){
+		$this->render($monthsCount, $selectedDays, 'iframe', 0, $version);
 	}
 
-	public function renderEditable($monthsCount, array $selectedDays = NULL){
-		$template = $this->template;
-		$this->render($monthsCount,$selectedDays, 'editable');
+	public function renderEditable($monthsCount, array $selectedDays = NULL, $version = self::VERSION_2){
+		$this->render($monthsCount, $selectedDays, 'editable', 0, $version);
 	}
 
-	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0)
+	public function render($monthsCount, array $selectedDays = NULL, $class = 'rentalDetail', $monthsOffset = 0, $version = self::VERSION_2)
 	{
 		$selectedDays = $selectedDays ? $selectedDays : $this->selectedDays;
 
 		$template = $this->template;
-		$template->containerClass = $class;
+		$template->version = $version;
+		$template->containerClass = $class . ' ' . $version;
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
 		if($monthsOffset) {
 			$fromDate->modify('+'.$monthsOffset.' month');
 		}
+
 		$months = [];
+		$unitsCapacity = $version == self::VERSION_2 ? $this->rental->getUnitsCapacity() : null;
+		$rentalFreeCapacity = $version == self::VERSION_2 ? null : 1;
 		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];
 			$start = clone $fromDate;
-			$key = $start->format('Y-m');
+			$monthKey = $start->format('Y-m');
 
 			$monthName = $this->locale->getMonth($start->format('n'));
 			$month['title'] = $monthName.' '.$start->format('Y');
 
-			$month['daysBefore'] = [];
+			$month['blankDays'] = [];
 			$firstDayOfMonth = $start->modifyClone()->format('N');
 			if($firstDayOfMonth--) {
 				$before = $start->modifyClone("-$firstDayOfMonth days");
 				for( $b=0 ; $b<$firstDayOfMonth ; $b++ ) {
-					$month['daysBefore'][] = [
+					$month['blankDays'][] = [
 						'day' => $before->format('d'),
 					];
 					$before->modify('+1 day');
@@ -68,35 +79,30 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 
 			$lastDayOfMonth = $start->modifyClone('last day of this month');
 
+			$previousDay = NULL;
 			while ($start <= $lastDayOfMonth) {
-				$day = $start->format('d');
-				if(isset($selectedDays["$key-$day"])) {
-
+				$key = $start->format(CalendarManager::DATE_FORMAT_FOR_KEY);
+				if(array_key_exists($key, $selectedDays)) {
+					$month['days'][$key] = $previousDay = $selectedDays[$key];
+				} else {
+					$tempDay = CalendarManager::createDay($start, $unitsCapacity, $rentalFreeCapacity);
+					if($previousDay) {
+						$tempDay[CalendarManager::KEY_CLASS] = $previousDay[CalendarManager::KEY_NEXT_DAY_CLASS];
+					}
+					$month['days'][$key] = $tempDay;
+					$previousDay = NULL;
 				}
-				$month['days'][$day] = [
-					'day' => $day,
-				];
+				CalendarManager::setDayTitle($month['days'][$key]);
 				$start->modify('+1 day');
 			}
 
-			$month['daysAfter'] = [];
-			$lastDayOfMonthN = $lastDayOfMonth->format('N');
-			if($lastDayOfMonthN < 7) {
-				for( $a=$lastDayOfMonthN ; $a<7 ; $a++ ) {
-					$lastDayOfMonth->modify('+1 day');
-					$month['daysAfter'][] = [
-						'day' => $lastDayOfMonth->format('d'),
-					];
-				}
-			}
-
-			$months[$key] = $month;
+			$months[$monthKey] = $month;
 			$fromDate->modify('first day of next month');
 		}
 
-		$months = $this->markSelectedDays($months, $selectedDays);
+//		$months = $this->markSelectedDays($months, $selectedDays);
 
-		$this->template->months = \Nette\ArrayHash::from($months);
+		$template->months = \Nette\ArrayHash::from($months);
 
 		$template->render();
 	}
@@ -132,4 +138,9 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	}
 
 
+}
+
+interface ICalendarControlFactory {
+
+	public function create($rental);
 }

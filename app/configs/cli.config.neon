@@ -6,11 +6,11 @@ nette:
 parameters:
 
 	templateCache:
-		enabled: false
+		enabled: yes
 
-	staticDomain: NULL
-	storageDir: /storage
-	storagePath: /storage
+#	staticDomain: NULL
+#	storageDir: /storage
+#	storagePath: /storage
 
 	domainMask: "[!<www www.>][!<language ([a-z]{2}|www)>.]<host [a-z\\.]+>"
 

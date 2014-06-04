@@ -76,14 +76,14 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z\\.])+>/[!<language [a-z]{2}>]', [
-			'module' => 'PersonalSite',
+		$router[] = $personalSite = new RouteList('PersonalSite');
+
+		$personalSite[] = $this->customPersonalSiteRouteFactory->create('//<host (?:(?!tralandia|tra-local)[a-z0-9\\.\\-])+>/[!<language [a-z]{2}>]', [
 			'presenter' => 'Default',
 			'action' => 'default'
 		]);
 
-		$router[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.%domain%/[!<language [a-z]{2}>]', [
-			'module' => 'PersonalSite',
+		$personalSite[] = $this->personalSiteRouteFactory->create('//[!<www www.>]<rentalSlug [a-z0-9-]{4,}>.<host [a-z\\.\\-]+>/[!<language [a-z]{2}>]', [
 			'presenter' => 'Default',
 			'action' => 'default'
 		]);

@@ -17,4 +17,6 @@ services:
 	- [class: Listener\NotificationEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\PotentialMemberEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\BacklinkEmailListener, tags: [kdyby.subscriber]]
+	- [class: Listener\PsOfferEmailListener, tags: [kdyby.subscriber]]
+	- [class: Tralandia\SearchCache\UpdateCalendarListener, tags: [kdyby.subscriber]]
 

@@ -163,14 +163,21 @@ class AboutForm extends BaseFormControl
 			->setPrompt('o854');
 
 
-		$form->addText('maxCapacity', 'o100072')
-			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
+		$editUnitLink = Nette\Utils\Html::el('a')
+			->target('_blank')
+			->href($this->getPresenter()->link(':Owner:Unit:default'))
+			->setText('Edit your Units');
+
+		$maxCapacity = $form->addText('maxCapacity', 'o100072')
 			->setOption('help', $this->translate('o100073'))
-			->setOption('append', $this->translate('o490', 2))
+			//->setOption('append', $this->translate('o490', 2))
 			->setRequired()
 			->addRule(BaseForm::INTEGER, $this->translate('o100106'))
 			->addRule(BaseForm::RANGE, $this->translate('o100106'), [0, 999999999999999]);
 
+		if(!$this->rental->useOldCalendar()) {
+			$maxCapacity->setDisabled(TRUE)->setOption('help', $editUnitLink);
+		}
 
 
 		$form->addPhoneContainer('phone', 'o10899', $phonePrefixes);

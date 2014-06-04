@@ -18,19 +18,19 @@ class CalendarControl extends BaseControl
 	/**
 	 * @var Rental
 	 */
-	private $rental;
+	protected $rental;
 
 	/**
-	 * @var \BaseModule\Components\CalendarControl
+	 * @var \BaseModule\Components\ICalendarControlFactory
 	 */
-	protected $calendarControl;
+	protected $calendarControlFactory;
 
 
-	public function __construct(Rental $rental, \BaseModule\Components\CalendarControl $calendarControl)
+	public function __construct(Rental $rental, \BaseModule\Components\ICalendarControlFactory $calendarControlFactory)
 	{
 		parent::__construct();
 		$this->rental = $rental;
-		$this->calendarControl = $calendarControl;
+		$this->calendarControlFactory = $calendarControlFactory;
 	}
 
 	public function render()
@@ -44,7 +44,7 @@ class CalendarControl extends BaseControl
 
 	protected function createComponentCalendar()
 	{
-		$comp = $this->calendarControl;
+		$comp = $this->calendarControlFactory->create($this->rental);
 
 		return $comp;
 	}

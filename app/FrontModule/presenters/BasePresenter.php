@@ -333,6 +333,22 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->redirect('Home:');
 	}
 
+	public function actionUnsubscribeUser($email)
+	{
+		if($email) {
+			$dao = $this->em->getRepository(USER_ENTITY);
+			$user = $dao->findOneBy(['login' => $email]);
+			if($user) {
+				$user->newsletter = FALSE;
+				$dao->save($user);
+
+				$this->flashMessage(315392, self::FLASH_ERROR);
+			}
+		}
+
+		$this->redirect('Home:');
+	}
+
 	public function createComponentFooter($name) {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
 	}

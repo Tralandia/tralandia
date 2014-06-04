@@ -24,15 +24,16 @@ class CalendarContainer extends BaseContainer
 	 * @param \Environment\Locale $locale
 	 * @param array $selectedDays
 	 */
-	public function __construct($label = NULL, Locale $locale, array $selectedDays = NULL)
+	public function __construct($label = NULL, Locale $locale, $rental)
 	{
 		parent::__construct();
 
-		$this->calendarControl = new CalendarControl($locale, $selectedDays);
+		$this->calendarControl = new CalendarControl($rental, $locale);
 
 		$formattedDates = [];
-		foreach($selectedDays as $day) {
-			$formattedDates[] = $day->format('Y-m-d');
+		$selectedDays = $rental->getCalendar();
+		foreach($selectedDays as $key => $day) {
+			$formattedDates[] = $key;
 		}
 
 		$this->addHidden('data')->setDefaultValue(implode(',', $formattedDates));

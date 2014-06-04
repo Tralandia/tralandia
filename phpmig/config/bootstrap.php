@@ -16,11 +16,13 @@ require_once VENDOR_DIR . '/autoload.php';
 require_once __DIR__ . '/../traits/ExecuteSQLFromFile.php';
 require_once __DIR__ . '/../traits/ApplicationSettings.php';
 require_once __DIR__ . '/../libs/Migration.php';
+require_once APP_DIR . '/entityConstants.php';
+
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : 'production';
 
 Nette\Diagnostics\Debugger::$strictMode = TRUE;
-Nette\Diagnostics\Debugger::enable(FALSE);
+Nette\Diagnostics\Debugger::enable(TRUE, TEMP_DIR);
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -29,6 +31,8 @@ $configurator->addParameters([
 	'centralLanguage' => CENTRAL_LANGUAGE,
 	'appDir' => APP_DIR,
 ]);
+
+$configurator->setDebugMode(TRUE);
 
 $configurator->enableDebugger(LOG_DIR);
 
@@ -48,16 +52,26 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 if ($section !== 'production') {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 } else {
-	$logger = new \Diagnostics\ErrorLogger;
-	$logger->email = $logEmail;
-	$logger->directory = ROOT_DIR . '/log';
-	Nette\Diagnostics\Debugger::$logger = $logger;
+//	$logger = new \Diagnostics\ErrorLogger;
+//	$logger->email = $logEmail;
+//	$logger->directory = ROOT_DIR . '/log';
+//	Nette\Diagnostics\Debugger::$logger = $logger;
 }
 
 $configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/phpmig.config.neon');
 
 $applicationContainer = $configurator->createContainer();
+
+
+require_once APP_DIR . '/extras/EntityAnnotation.php';
+\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(APP_DIR . '/extras/EntityAnnotation.php');
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
+\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
+
+
+
 $databaseConfig = $applicationContainer->parameters['leanConnectionInfo'];
 
 
@@ -72,11 +86,15 @@ $container['db'] = $container->share(function () use ($databaseConfig) {
 
 
 $container['phpmig.adapter'] = $container->share(function() use ($container) {
-	return new Adapter\PDO\Sql($container['db'], 'phpmig_migrations');
+	return new Adapter\PDO\Sql($container['db'], '___phpmig_migrations');
 });
 
 $container['lean'] = $container->share(function() use ($applicationContainer) {
 	return $applicationContainer->getByType('\LeanMapper\Connection');
+});
+
+$container['em'] = $container->share(function() use ($applicationContainer) {
+	return $applicationContainer->getByType('\Kdyby\Doctrine\EntityManager');
 });
 
 $migrationsDis = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'migrations';
@@ -86,5 +104,7 @@ foreach(Nette\Utils\Finder::findFiles('*.php')->from($migrationsDis) as $fileNam
 }
 
 $container['phpmig.migrations'] = $migrations;
+
+$container['dic'] = $applicationContainer;
 
 return $container;

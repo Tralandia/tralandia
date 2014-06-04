@@ -375,6 +375,33 @@
 {/define #price}
 
 
+{* Container ------------------------------------------- *}
+{define #container}
+{include #opentag, class => 'simpleInput ' , control => $container}
+	<td>
+		{_$text} <i class="icon-asterisk"></i>
+	</td>
+	<td>
+		<table class="addOnTable">
+			<tr n:foreach="$container->getControls() as $control">
+				<td>
+					<div class="input-prepend input-append">
+						<span class="add-on">{!$control->getOption('prepend')}</span>
+						{input $control, class => "input-medium"}
+						<span class="add-on">{!$control->getOption('append')}</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<td>
+		{* <span class="help-inline">{$control->getOption('help')}</span> *}
+		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+	</td>
+</tr>
+{/define}
+
+
 {* Phone Container ------------------------------------------- *}
 {define #phone}
 {var
@@ -413,9 +440,10 @@
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
+{var $errors = $mainControl->getErrors()}
 {?unset($control)}
 
-<tr class="units">
+<tr n:class="units, count($errors) > 0 ? error">
 	<td colspan="2">
 		{foreach $container->getRentals() as $rental}
 			{var $unitsControl = $container->getUnitsControl()}
@@ -431,7 +459,7 @@
 	<td>
 		<span class="help">{$mainControl->getOption('help')}</span>
 		{dump $mainControl}
-		<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $errors}</span>
 	</td>
 
 {/define #rentalUnit}
@@ -845,9 +873,10 @@
 	$container = $control;
 	$months = $container->getMonths();
 }
+		{default $version = 'v2'}
 {?unset($control)}
 <div class="calendarEdit clearfix">
-	{control calendar:editable, 12}
+	{control calendar:editable, 12, null, $version}
 	{input $container['data']}
 </div>
 {/define #calendar}

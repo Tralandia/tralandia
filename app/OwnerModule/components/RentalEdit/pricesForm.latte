@@ -4,8 +4,7 @@
 
 		{include #select, control => $form['currency'] , controlClass => 'select2 currency-select'}
 
-		{include #text, control => $form['priceFrom']}
-		{include #text, control => $form['priceTo']}
+		{include #container, container => $form['priceInterval'], text => 'o100078'}
 
 		{include #fieldset, text => 'o933' , id => 'rentalPriceList', trClass => 'priceListGroup' , required => true}
 		{include #rentalPriceList, control => $form['customPriceList'], trClass => 'priceListGroup'}

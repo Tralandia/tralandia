@@ -65,7 +65,7 @@ class RentalCreator
 		$this->addressNormalizer = $addressNormalizer;
 	}
 
-	public function create(\Entity\Contact\Address $address, $userOrPrimaryLocation, $rentalName)
+	public function create(\Entity\Contact\Address $address, $userOrPrimaryLocation, $rentalName, $maxCapacity = 0)
 	{
 		if ($userOrPrimaryLocation instanceof User){
 			$language = $userOrPrimaryLocation->getLanguage();
@@ -80,7 +80,7 @@ class RentalCreator
 			$user = $userOrPrimaryLocation;
 		}
 
-		$rental = $this->createRental($user, $address, $rentalName, $language);
+		$rental = $this->createRental($user, $address, $rentalName, $language, $maxCapacity);
 
 		return $rental;
 	}
@@ -112,7 +112,7 @@ class RentalCreator
 	 *
 	 * @return \Entity\Rental\Rental
 	 */
-	public function createRental(User $user = NULL, Address $address, $rentalName, $language)
+	public function createRental(User $user = NULL, Address $address, $rentalName, $language, $maxCapacity = 0)
 	{
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
@@ -143,7 +143,7 @@ class RentalCreator
 
 		$unit = $this->unitRepository->createNew();
 		$unit->name = $rentalName;
-		$unit->maxCapacity = 0;
+		$unit->maxCapacity = $maxCapacity;
 		$rental->addUnit($unit);
 
 		$user->addRental($rental);

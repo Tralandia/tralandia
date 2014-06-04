@@ -18,7 +18,7 @@ class ContactControl extends BaseControl
 	/**
 	 * @var Rental
 	 */
-	private $rental;
+	protected $rental;
 
 	/**
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
@@ -41,7 +41,7 @@ class ContactControl extends BaseControl
 
 		$formattedCalendar = [];
 		foreach($rental->getCalendar() as $day) {
-			$formattedCalendar[] = $day->format('d-m-Y');
+			$formattedCalendar[] = $day['d']->format('d-m-Y');
 		}
 
 		$this->template->formatedCalendar = implode(',', $formattedCalendar);

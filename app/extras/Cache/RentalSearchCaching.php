@@ -227,14 +227,12 @@ class RentalSearchCaching extends \Nette\Object {
 				$priceTo = $price->getAmountIn($defaultCurrency);
 			}
 
-			$min = (int) ceil($priceFrom / $priceSearchInterval) * $priceSearchInterval;
+			$min = (int) floor($priceFrom / $priceSearchInterval) * $priceSearchInterval;
 			if( !($priceFrom % $priceSearchInterval) && $min > 0) {
 				$min = $min - $priceSearchInterval;
 			}
-			$max = (int) ceil($priceTo / $priceSearchInterval) * $priceSearchInterval;
-			if( !($priceTo % $priceSearchInterval) && $max > 0) {
-				$max = $max - $priceSearchInterval;
-			}
+			$max = (int) floor($priceTo / $priceSearchInterval) * $priceSearchInterval;
+
 			foreach(range($min, $max, $priceSearchInterval) as $t) {
 				$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$value['rentalId']] = $value['rentalId'];
 			}

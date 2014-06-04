@@ -1,5 +1,9 @@
+{var $now = new \DateTime();}
 <div class="calendar {$containerClass}" n:foreach="$months as $key => $month">
+	{var $odd = $iterator->isOdd()}
 	<div class="monthName">{$month->title}</div>
+
+	{if $version=='old'}
 	<div class="day dayName">{_o100053}</div>
 	<div class="day dayName">{_o100054}</div>
 	<div class="day dayName">{_o100055}</div>
@@ -7,28 +11,30 @@
 	<div class="day dayName">{_o100057}</div>
 	<div class="day dayName">{_o100058}</div>
 	<div class="day dayName">{_o100059}</div>
-	{foreach $month->daysBefore as $day}
-		<div class="day inactive">{$day->day}</div>
+	{/if}
+
+	{foreach $month->blankDays as $day}
+		<div class="day inactive">{if $version=='old'}{$day->day}{/if}</div>
 	{/foreach}
+
 	{foreach $month->days as $day}
 		{var $selected = ''}
-		{var $status = 'status'}
-		{ifset $day->selected}{var $selected = 'selected'}{/ifset}
+		{var $status = ''}
 
-		{ifset $day->status->end}
-			{var $status .= '1'}
-		{else}
-			{var $status .= '0'}
+		{ifset $day->c}
+			{if $day->c && $day->c != 's20'}
+				{var $selected = 'selected'}
+			{/if}
+			{var $status = $day->c}
 		{/ifset}
-		{ifset $day->status->start}
-			{var $status .= '1'}
-		{else}
-			{var $status .= '0'}
-		{/ifset}
-		<div class="day active {$selected} {$status}" data-day="{$key}-{$day->day}">{$day->day}</div>
-	{/foreach}
-	{foreach $month->daysAfter as $day}
-		<div class="day inactive">{$day->day}</div>
+
+		<div class="day active tooltipElem {$selected} {$status}{if $day->iwd} weekday{/if}{if $now > $day->d} disabled{/if}{$full}"
+			 data-day="{$key}-{$day->dd}" {if $version!='old'}title="{_$day->title}"{/if}>
+			{$day->dd}
+			{if $version!='old'}
+			<abbr n:if="$day->fc !== NULL">{$day->fc}</abbr>
+			{/if}
+		</div>
 	{/foreach}
 	<div class="borderBottom"></div>
 </div>

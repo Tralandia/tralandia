@@ -6,9 +6,10 @@
 </div>
 {form searchForm, class => quick-search}
 	{var $moreRentals = false}
-	{if $moreRentals}
+	{ifset $form['rental']}
+		{var $moreRentals = true}
 		{input rental, class => "select2 notFulltext", style => 'width:175px;'}
-	{/if}
+	{/ifset}
 	{input period, class => "select2 notFulltext", style => 'width:175px;'}
 	{input fulltext, class => ($moreRentals ? '' : 'norentals')}
 	<label class="tooltipElem" title="{_759414}">{input showCanceled} <i class="icon-trash"></i></label>
@@ -47,9 +48,9 @@
 				<p><a href="mailto: {$reservation->senderEmail}" target="_blank" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
 				<p class="answer">{$reservation->ownersNote}</p>
 				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{_719627} <i class="icon-arrow-right"></i></a>
-				<a n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
+				<a n:if="$reservation->status != 'canceled'" n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
 				{if $reservation->totalPrice}
-				<p class="prices">{_719607}: {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>{_719609}: {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
+				<p class="prices">{_719607} {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>{_719609} {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
 				{else}
 				<p class="prices"><i>{_719606}</i></p>
 				{/if}

@@ -11,10 +11,10 @@ nette:
 
 	session:
 		autoStart: true
-#		save_handler: files
+		save_handler: files
 #		save_path: '127.0.0.1:11211?persistent=1&weight=1&timeout=1&retry_interval=2'
 #		save_path: '/www/tralandia/temp/sessions'
-#		save_path: '127.0.0.1:11211'
+#		save_path: 'tcp://127.0.0.1:11211'
 		expiration: '+1 year'
 		name: PHPSESSIONID2
 		cookie_path: '/'
@@ -421,8 +421,6 @@ services:
 	# ==============================
 	# ==================== Components
 	# ==============================
-	calendarControl: BaseModule\Components\CalendarControl
-
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
 	- \FrontModule\Components\SearchHistory\SearchHistoryControl
 	- \FrontModule\Components\VisitedRentals\VisitedRentalsControl
@@ -460,6 +458,7 @@ services:
 	- \Tralandia\Placement\Placements(@doctrine.dao(Entity\Rental\Placement))
 	- \Tralandia\Rental\Rentals(@doctrine.dao(Entity\Rental\Rental), @doctrine.dao(Entity\Location\Location), @doctrine.dao(Entity\Rental\EditLog), @mapSearchCache)
 	- \Tralandia\Rental\Types(@doctrine.dao(Entity\Rental\Type))
+	- \Tralandia\Rental\CalendarManager
 	- \Tralandia\Reservation\Reservations(@doctrine.dao(Entity\User\RentalReservation))
 	- \Tralandia\Routing\PathSegments(@doctrine.dao(Entity\Routing\PathSegment), @doctrine.dao(Entity\Routing\PathSegmentOld))
 
@@ -473,8 +472,12 @@ services:
 
 	- [class: \Tralandia\Console\EmailManagerCommand, tags: [kdyby.console.command]]
 	- \Tralandia\Console\EmailManager\UpdateYourRental(@doctrine.dao(Entity\Rental\Rental), ...)
-	- \Tralandia\Console\EmailManager\Backlink(@doctrine.dao(Entity\Rental\Rental), ...)
 	- \Tralandia\Console\EmailManager\PotentialMember(@doctrine.dao(Entity\Contact\PotentialMember), ...)
+	- \Tralandia\Console\EmailManager\Backlink(@doctrine.dao(Entity\Rental\Rental), ...)
+	- \Tralandia\Console\EmailManager\Newsletter(@doctrine.dao(Entity\Rental\Rental),@doctrine.dao(Entity\Language), ...)
+
+
+	- \AdminModule\EmailTester\EmailTesterForm
 
 
 	# ==============================
@@ -511,6 +514,11 @@ factories:
 #	rentalEditFormFactory:
 #		class: OwnerModule\Forms\RentalEditForm(%rental%)
 #		implement: OwnerModule\Forms\IRentalEditFormFactory
+
+	editableCalendarControlFactory:
+		class: \BaseModule\Components\CalendarControl(%rental%, ...)
+		parameters: [rental]
+		implement: \BaseModule\Components\ICalendarControlFactory
 
 	userEditFormFactory:
 		class: OwnerModule\Forms\UserEditForm(%user%, @doctrine.dao(Entity\User\User))
@@ -804,8 +812,8 @@ factories:
 
 	reservationSearchQuery:
 		class: \Tralandia\Reservation\SearchQuery
-		arguments: [%rentals%, %period%, %fulltext%]
-		parameters: [array rentals, period = NULL, fulltext = NULL]
+		arguments: [%rentals%, %period%, %fulltext%, %showCanceled%]
+		parameters: [array rentals, period = NULL, fulltext = NULL, showCanceled = NULL]
 		implement: \Tralandia\Reservation\ISearchQueryFactory
 
 includes:

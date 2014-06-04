@@ -17,8 +17,8 @@ class CustomPersonalSiteRoute extends PersonalSiteRoute
 	protected function getRentalByDomain($domain, $params)
 	{
 
-		$rental = $this->rentalDao->findOneBy(['personalSiteUrl' => [$domain, 'www.' . $domain]]);
-		return $rental;
+		$config = $this->configurationDao->findOneBy(['url' => [$domain, 'www.' . $domain]]);
+		return $config ? $config->getRental() : NULL;
 	}
 
 	protected function out($params, \Entity\Rental\Rental $rental)
