@@ -33,4 +33,15 @@ class GpsSearchLog extends \Tralandia\Lean\BaseEntity
 		return $this->row->type_id;
 	}
 
+
+	/**
+	 * @return string
+	 */
+	public function getShortText()
+	{
+		$text = explode(',', $this->text);
+		array_pop($text);
+		return implode(',', $text);
+	}
+
 }
