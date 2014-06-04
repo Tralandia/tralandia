@@ -50,11 +50,7 @@ class SeoService extends Nette\Object {
 			),
 		),
 		'address' => [
-			null,
-			null,
-		],
-		'addressLocative' => [
-			null,
+			'address',
 			null,
 		],
 		'rentalTypePlural' => array(
@@ -227,8 +223,7 @@ class SeoService extends Nette\Object {
 
 			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')) {
 				if($this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE])) {
-					$replacement = $this->replacements[$value['replacement']];
-
+					$replacement = $this->replacements['address'];
 				} else if(!$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION])) {
 					$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
 				}
@@ -236,16 +231,22 @@ class SeoService extends Nette\Object {
 				$replacement = $this->replacements[$value['replacement']];
 			}
 
-			/** @var $phrase \Entity\Phrase\Phrase */
-			$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
-
 			$textKey = '['.$value['replacement'].']';
-			if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
-				$texts[$textKey] = $this->translator->translate($phrase, NULL, $replacement[2]);
+			if($replacement[1] === NULL) {
+				$text = $this->getParameter($replacement[0]);
+				$text = explode(',', $text);
+				array_pop($text);
+				$texts[$textKey] = implode(',', $text);
 			} else {
-				$texts[$textKey] = $this->translator->translate($phrase);
-			}
+				/** @var $phrase \Entity\Phrase\Phrase */
+				$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
 
+				if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
+					$texts[$textKey] = $this->translator->translate($phrase, NULL, $replacement[2]);
+				} else {
+					$texts[$textKey] = $this->translator->translate($phrase);
+				}
+			}
 
 		}
 

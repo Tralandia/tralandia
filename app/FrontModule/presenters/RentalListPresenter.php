@@ -78,7 +78,7 @@ class RentalListPresenter extends BasePresenter {
 					}
 
 					$this->template->gpsSearchLog = $gpsSearchLog;
-					$this->template->pageH1 = $gpsSearchLog->text;
+					$this->template->pageH1 = $gpsSearchLog->getShortText();
 				}
 				$lastSearch->addSearch($search->getCriteriaData(), $search->getRentalsIds(NULL), $this->pageSeo->getUrl(), $this->pageSeo->getH1());
 

@@ -48,9 +48,7 @@ class GpsSearchLogManager
 		} else {
 			$gpsSearchLog = $this->repository->createNew();
 
-			$address = explode(',', $address);
-			array_pop($address);
-			$gpsSearchLog->text = implode(',', $address);
+			$gpsSearchLog->text = $address;
 			$gpsSearchLog->latitude = $latitude;
 			$gpsSearchLog->longitude = $longitude;
 			$gpsSearchLog->primaryLocation = $primaryLocation;
