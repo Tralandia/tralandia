@@ -11,7 +11,7 @@
 		<h4>{_o100152}</h4>
 		<ul class="nav">
 			{var $firstRental = $owner->getFirstRental()}
-			{if $firstRental && !$firstRental->useOldCalendar()}
+			{if $firstRental}
 				<li><a n:href=":Owner:ReservationManager:list"><i class="icon icon-angle-right"></i> {_719603}</a></li>
 				<li><a n:href=":Owner:Unit:default"><i class="icon icon-angle-right"></i> {_719651}</a></li>
 			{/if}
