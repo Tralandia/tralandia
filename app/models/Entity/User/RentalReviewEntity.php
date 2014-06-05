@@ -12,8 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RentalReview extends \Entity\BaseEntity {
 
-	// static const STATUS_PENDING = 0;
-	// static const STATUS_APROVED = 1;
+	 const STATUS_BANNED = 0;
+	 const STATUS_LIVE = 1;
+
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer")
+	 */
+	protected $status = self::STATUS_LIVE;
 
 	/**
 	 * @var Collection
@@ -37,266 +43,98 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $senderName;
+	protected $senderFirstName;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Phone", cascade={"persist"})
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $senderPhone;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $arrivalDate;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $departureDate;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
-	 */
-	protected $capacity;
+	protected $senderLastName;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $message;
+	protected $group;
+
+	/**
+	 * @var \Datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $arrivalDate;
+
+	/**
+	 * @var \Datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $departureDate;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $messagePros;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $messageNegative;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $messageLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $messageRegion;
 
 
-			//@entity-generator-code --- NEMAZAT !!!
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer")
+	 */
+	protected $pointsLocation;
 
-	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct()
-	{
-		parent::__construct();
-	}
-		
 	/**
-	 * @param \Entity\Language
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function setLanguage(\Entity\Language $language)
-	{
-		$this->language = $language;
+	protected $pointsCleanness;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function unsetLanguage()
-	{
-		$this->language = NULL;
+	protected $pointsAmenities;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\Language|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rental = $rental;
+	protected $pointsPersonal;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function unsetRental()
-	{
-		$this->rental = NULL;
+	protected $pointsServices;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\Rental\Rental|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getRental()
-	{
-		return $this->rental;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderEmail($senderEmail)
-	{
-		$this->senderEmail = $senderEmail;
+	protected $pointsAttractions;
 
-		return $this;
-	}
-		
 	/**
-	 * @return string|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getSenderEmail()
-	{
-		return $this->senderEmail;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderName($senderName)
-	{
-		$this->senderName = $senderName;
+	protected $pointsPrice;
 
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSenderName()
-	{
-		return $this->senderName;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Phone
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderPhone(\Entity\Contact\Phone $senderPhone)
-	{
-		$this->senderPhone = $senderPhone;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetSenderPhone()
-	{
-		$this->senderPhone = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Contact\Phone|NULL
-	 */
-	public function getSenderPhone()
-	{
-		return $this->senderPhone;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setArrivalDate(\DateTime $arrivalDate)
-	{
-		$this->arrivalDate = $arrivalDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetArrivalDate()
-	{
-		$this->arrivalDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getArrivalDate()
-	{
-		return $this->arrivalDate;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setDepartureDate(\DateTime $departureDate)
-	{
-		$this->departureDate = $departureDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetDepartureDate()
-	{
-		$this->departureDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDepartureDate()
-	{
-		return $this->departureDate;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setCapacity($capacity)
-	{
-		$this->capacity = $capacity;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getCapacity()
-	{
-		return $this->capacity;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setMessage($message)
-	{
-		$this->message = $message;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getMessage()
-	{
-		return $this->message;
-	}
 }
