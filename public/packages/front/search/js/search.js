@@ -395,6 +395,15 @@ $(function(){
 
 	$('.searchForm .select2 , input[data-autocomplete-url] , input[name="address"] , input[name="viewport"]').on('change',function(e){
 
+		if ($(this).attr('name') == 'address') {
+			var latitude = $('input[name="latitude"]').val();
+			var longitude = $('input[name="longitude"]').val();
+
+			if (!latitude || !longitude) {
+				return;
+			}
+		}
+
 		updateSerachLinkUrl();
 		updateCriteriaCount();
 
