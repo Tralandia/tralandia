@@ -68,9 +68,9 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 	{
 		$form = $this->formFactory->create();
 
-		$form->addText('firstName', 'Meno');
-		$form->addText('lastName', 'priezvisko');
-		$form->addText('email', 'email');
+		$form->addText('firstName', 'a27');
+		$form->addText('lastName', 'a28');
+		$form->addText('email', 'a29');
 
 		$form->addAdvancedDatePicker('date_from')
 			->getControlPrototype()
@@ -82,31 +82,67 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 			->setPlaceholder($this->translate('o1044'));
 
 		$groups = ['foo', 'bar'];
-		$form->addSelect('group', 'skupina', $groups)
-			->setPrompt('skupina');
+		$form->addSelect('group', 'a30', $groups)
+			->setPrompt('a45')
+			->setRequired(TRUE);
 
 		$messages = $form->addContainer('messages');
-		$messages->addTextArea('positives', 'plus');
-		$messages->addTextArea('negatives', 'minus');
-		$messages->addTextArea('locality', 'obec');
-		$messages->addTextArea('region', 'region');
+		$messages->addTextArea('positives', 'a31');
+		$messages->addTextArea('negatives', 'a32');
+		$messages->addTextArea('locality', 'a33');
+		$messages->addTextArea('region', 'a34');
 
 		$ratingContainer = $form->addContainer('rating');
-		$ratingContainer->addHidden('position')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('purity')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('amenities')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('personal')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('services')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('activities')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
-		$ratingContainer->addHidden('price')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratings = [
+			['position', 'a35'],
+			['purity', 'a36'],
+			['amenities', 'a37'],
+			['personal', 'a38'],
+			['services', 'a39'],
+			['activities', 'a40'],
+			['price', 'a41'],
+		];
+		foreach($ratings as $value) {
+			$ratingContainer->addHidden($value[0])
+				->setOption('caption', $value[1])
+				->setDefaultValue(0)
+				->addRule($form::INTEGER)
+				->addRule($form::RANGE, NULL, [0,5]);
 
+		}
 
-		$form->addSubmit('submit', 'o100083');
+		$form->addSubmit('submit', 'a46');
 
 		$form->onValidate[] = $this->validateForm;
 		$form->onSuccess[] = $this->processForm;
 
+		$form->setDefaults($this->getTestDefaults());
+
 		return $form;
+	}
+
+	public function getTestDefaults()
+	{
+		$defaults = [];
+		$defaults['email'] = 'email';
+		$defaults['firstName'] = 'firstName';
+		$defaults['lastName'] = 'lastName';
+		$defaults['group'] = '1';
+		$defaults['date_from'] = 'date_from';
+		$defaults['date_to'] = 'date_to';
+		$defaults['messages']['positives'] = 'positives';
+		$defaults['messages']['negatives'] = 'negatives';
+		$defaults['messages']['locality'] = 'locality';
+		$defaults['messages']['region'] = 'region';
+//		$defaults['rating']['position'] = 'position';
+//		$defaults['rating']['purity'] = 'purity';
+//		$defaults['rating']['amenities'] = 'amenities';
+//		$defaults['rating']['personal'] = 'personal';
+//		$defaults['rating']['services'] = 'services';
+//		$defaults['rating']['activities'] = 'activities';
+//		$defaults['rating']['price'] = 'price';
+
+		return $defaults;
 	}
 
 
@@ -127,9 +163,9 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		$review->senderEmail = $values->email;
 		$review->senderFirstName = $values->firstName;
 		$review->senderLastName = $values->lastName;
-		$review->group = $values->group;
-		$review->arrivalDate = $values->date_from;
-		$review->departureDate = $values->date_to;
+		$review->groupType = $values->group;
+//		$review->arrivalDate = $values->date_from;
+//		$review->departureDate = $values->date_to;
 		$review->messagePositives = $values->messages->positives;
 		$review->messageNegatives = $values->messages->negatives;
 		$review->messageLocality = $values->messages->locality;
@@ -139,8 +175,10 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		$review->ratingAmenities = $values->rating->amenities;
 		$review->ratingPersonal = $values->rating->personal;
 		$review->ratingServices = $values->rating->services;
-		$review->ratingAttractions = $values->rating->activites;
+		$review->ratingAttractions = $values->rating->activities;
 		$review->ratingPrice = $values->rating->price;
+
+		$review->updateAvgRating();
 
 		$this->em->persist($review);
 		$this->em->flush();
