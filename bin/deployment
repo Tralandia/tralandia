@@ -42,6 +42,11 @@ echo "mysql -h 192.168.4.72 -utralandia -p986269962525 -e 'truncate template_cac
 mysql -h 192.168.4.72 -utralandia -p986269962525 -e "truncate template_cache" cache
 
 
+sleep 1
+
+sh $WORKING_DIR/bin/publish-index
+
+
 echo
 echo "==================== PING ============================="
 
@@ -55,9 +60,6 @@ echo "pink www.tralandia.sk"
 echo "status code: "
 curl -o /dev/null --silent --head --write-out '%{http_code}\n' www.tralandia.sk
 
-sleep 1
-
-sh $WORKING_DIR/bin/publish-index
 
 
 echo "...done..."
