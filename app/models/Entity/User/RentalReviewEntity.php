@@ -55,7 +55,7 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $group;
+	protected $groupType;
 
 	/**
 	 * @var \Datetime
@@ -135,6 +135,27 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @ORM\Column(type="integer")
 	 */
 	protected $ratingPrice;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
+	 */
+	protected $avgRating;
+
+
+	public function updateAvgRating()
+	{
+		$ratings = array_filter([
+			$this->ratingLocation,
+			$this->ratingCleanness,
+			$this->ratingAmenities,
+			$this->ratingPersonal,
+			$this->ratingServices,
+			$this->ratingAttractions,
+			$this->ratingPrice
+		]);
+		$this->avgRating = round((array_sum($ratings) / count($ratings)),2);
+	}
 
 
 }

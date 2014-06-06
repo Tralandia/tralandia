@@ -295,8 +295,14 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 							<div class="rating-header">
-								<b>3.2</b>
-								<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span>
+								<b>{$avgRating}</b>
+								<span class="stars" n:inner-foreach="range(1,5) as $i">
+									{if $i < $avgRating}
+										<i class="icon-star icon"></i>
+									{else}
+										<i class="icon icon-star-empty"></i>
+									{/if}
+								</span>
 							</div>
 
 							<div class="sidebarContact">
@@ -412,11 +418,11 @@
 							<div class="span12">
 								<div class="rating">
 									<h3>
-										!!Hodnotenia návštevníkov (2)
-										<a href="#" onclick="$('form.rating-form').toggleClass('hide'); return;" class="btn btn-small btn-orange pull-right">Pridať hodnotenie</a>
+										{_a44}
+										<a href="#" onclick="$('form.rating-form').toggleClass('hide'); return;" class="btn btn-small btn-orange pull-right">{_a47}</a>
 									</h3>
 									{control addReview}
-									<div class="item">
+									<div class="item" n:foreach="$reviews as $review">
 										<div class="row-fluid">
 											<div class="span2">
 												<strong>Jan</strong><br/>

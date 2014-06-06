@@ -21,6 +21,12 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Tralandia\RentalReview\RentalReviewRepository
+	 */
+	protected $rentalReviewRepository;
+
+	/**
+	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
@@ -41,7 +47,6 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	public function desktopDetail($rental) {
-//		d('detail', t('detail'));
 		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -116,9 +121,11 @@ class RentalPresenter extends BasePresenter {
 
 		$this->visitedRentals->visit($rental);
 
+		$this->template->avgRating = $this->rentalReviewRepository->getRentalAvgRate($rental);
+		$this->template->reviews = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental], ['created' => 'DESC']);
+
 
 		$this->setLayout('detailLayout');
-//		d('detail', t('detail'));
 	}
 
 

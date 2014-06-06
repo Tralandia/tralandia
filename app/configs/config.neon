@@ -503,6 +503,7 @@ services:
 	- \Tralandia\Routing\PathSegmentRepository
 
 	- \Tralandia\GpsSearchLog\GpsSearchLogRepository
+	- \Tralandia\RentalReview\RentalReviewRepository
 
 
 
