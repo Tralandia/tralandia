@@ -73,13 +73,13 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="text")
 	 */
-	protected $messagePros;
+	protected $messagePositives;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="text")
 	 */
-	protected $messageNegative;
+	protected $messageNegatives;
 
 	/**
 	 * @var string
@@ -98,43 +98,43 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsLocation;
+	protected $ratingLocation;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsCleanness;
+	protected $ratingCleanness;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsAmenities;
+	protected $ratingAmenities;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsPersonal;
+	protected $ratingPersonal;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsServices;
+	protected $ratingServices;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsAttractions;
+	protected $ratingAttractions;
 
 	/**
 	 * @var int
 	 * @ORM\Column(type="integer")
 	 */
-	protected $pointsPrice;
+	protected $ratingPrice;
 
 
 }
