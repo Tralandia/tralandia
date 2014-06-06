@@ -45,6 +45,12 @@ class Template extends \Entity\BaseEntity {
 	 */
 	protected $layout;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $isNewsletter = false;
+
 
 	/**
 	 * @param string

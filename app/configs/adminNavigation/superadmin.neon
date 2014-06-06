@@ -94,8 +94,8 @@ common:
 			label: Email
 			items:
 				tester:
-					label: Tester
-					link: ':Admin:EmailTester:default'
+					label: Newsletter Tester
+					link: ':Admin:EmailTester:newsletter'
 
 		cache:
 			label: Cache

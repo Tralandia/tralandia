@@ -1,0 +1,1 @@
+-- EmailLayoutIsNewsletter migration DOWN file
