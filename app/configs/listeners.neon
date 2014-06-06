@@ -20,3 +20,10 @@ services:
 	- [class: Listener\PsOfferEmailListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\SearchCache\UpdateCalendarListener, tags: [kdyby.subscriber]]
 
+factories:
+
+	newsletterEmailSender:
+		class: \Listener\NewsletterEmailSender
+		arguments: [%template%, ... ]
+		parameters: [\Entity\Email\Template template]
+		implement: \Listener\INewsletterEmailSenderFactory

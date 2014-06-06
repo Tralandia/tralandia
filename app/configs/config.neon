@@ -478,6 +478,7 @@ services:
 
 
 	- \AdminModule\EmailTester\EmailTesterForm
+	- \AdminModule\EmailTester\NewsletterTesterForm
 
 
 	# ==============================
