@@ -558,6 +558,12 @@ factories:
 		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
+	addReviewFormFactory:
+		class: \FrontModule\RentalReview\AddReviewForm
+		arguments: [%rental%, ... ]
+		parameters: [Entity\Rental\Rental rental]
+		implement: \FrontModule\RentalReview\IAddReviewFormFactory
+
 	aboutFormFactory:
 		class: OwnerModule\RentalEdit\AboutForm
 		arguments: [%rental%, ... ]

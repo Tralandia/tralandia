@@ -5,6 +5,7 @@ namespace FrontModule;
 use Entity\Rental\Image;
 use Entity\Rental\Rental;
 use FrontModule\Forms\Rental\IformatedCalendarFormFactory;
+use FrontModule\RentalReview\IAddReviewFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
@@ -194,6 +195,11 @@ class RentalPresenter extends BasePresenter {
 		};
 
 		return $form;
+	}
+
+	protected function createComponentAddReview(IAddReviewFormFactory $factory)
+	{
+		return $factory->create($this->getParameter('rental'));
 	}
 
 	protected function createComponentCalendar()

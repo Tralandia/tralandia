@@ -7,3 +7,5 @@ ALTER TABLE user_rentalreview ADD senderFirstName VARCHAR(255) NOT NULL, ADD sen
 
 ALTER TABLE user_rentalreview ADD status INT NOT NULL;
 ALTER TABLE user_rentalreview ADD pointsPersonal INT NOT NULL;
+
+ALTER TABLE user_rentalreview ADD messagePositives LONGTEXT NOT NULL, ADD messageNegatives LONGTEXT NOT NULL, ADD ratingLocation INT NOT NULL, ADD ratingCleanness INT NOT NULL, ADD ratingAmenities INT NOT NULL, ADD ratingPersonal INT NOT NULL, ADD ratingServices INT NOT NULL, ADD ratingAttractions INT NOT NULL, ADD ratingPrice INT NOT NULL, DROP messagePros, DROP messageNegative, DROP pointsLocation, DROP pointsCleanness, DROP pointsAmenities, DROP pointsServices, DROP pointsAttractions, DROP pointsPrice, DROP pointsPersonal;

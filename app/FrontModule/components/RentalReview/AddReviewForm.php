@@ -25,6 +25,12 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 
 	public $onFormSuccess = [];
 
+
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
+	protected $rental;
+
 	/**
 	 * @var \Environment\Environment
 	 */
@@ -62,7 +68,37 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 	{
 		$form = $this->formFactory->create();
 
-		$form->addText('firstName', )
+		$form->addText('firstName', 'Meno');
+		$form->addText('lastName', 'priezvisko');
+		$form->addText('email', 'email');
+
+		$form->addAdvancedDatePicker('date_from')
+			->getControlPrototype()
+			->setPlaceholder($this->translate('o1043'));
+
+
+		$form->addAdvancedDatePicker('date_to')
+			->getControlPrototype()
+			->setPlaceholder($this->translate('o1044'));
+
+		$groups = ['foo', 'bar'];
+		$form->addSelect('group', 'skupina', $groups)
+			->setPrompt('skupina');
+
+		$messages = $form->addContainer('messages');
+		$messages->addTextArea('positives', 'plus');
+		$messages->addTextArea('negatives', 'minus');
+		$messages->addTextArea('locality', 'obec');
+		$messages->addTextArea('region', 'region');
+
+		$ratingContainer = $form->addContainer('rating');
+		$ratingContainer->addHidden('position')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('purity')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('amenities')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('personal')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('services')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('activities')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
+		$ratingContainer->addHidden('price')->setOption('caption', 'position')->addCondition($form::FILLED)->addRule($form::RANGE, NULL, [1,5]);
 
 
 		$form->addSubmit('submit', 'o100083');
@@ -82,10 +118,35 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 
 	public function processForm(BaseForm $form)
 	{
-		$validValues = $form->getFormattedValues();
+		$values = $form->getFormattedValues();
+
+		$review = new \Entity\User\RentalReview;
+
+		$review->language = $this->environment->getLanguage();
+		$review->rental = $this->rental;
+		$review->senderEmail = $values->email;
+		$review->senderFirstName = $values->firstName;
+		$review->senderLastName = $values->lastName;
+		$review->group = $values->group;
+		$review->arrivalDate = $values->date_from;
+		$review->departureDate = $values->date_to;
+		$review->messagePositives = $values->messages->positives;
+		$review->messageNegatives = $values->messages->negatives;
+		$review->messageLocality = $values->messages->locality;
+		$review->messageRegion = $values->messages->region;
+		$review->ratingLocation = $values->rating->position;
+		$review->ratingCleanness = $values->rating->purity;
+		$review->ratingAmenities = $values->rating->amenities;
+		$review->ratingPersonal = $values->rating->personal;
+		$review->ratingServices = $values->rating->services;
+		$review->ratingAttractions = $values->rating->activites;
+		$review->ratingPrice = $values->rating->price;
+
+		$this->em->persist($review);
+		$this->em->flush();
 
 
-		$this->onFormSuccess($form, $rental);
+		$this->onFormSuccess($form, $review);
 	}
 
 
