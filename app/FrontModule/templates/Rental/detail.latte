@@ -295,7 +295,7 @@
 
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
-							<div class="rating-header">
+							<div class="rating-header" n:if="$avgRating">
 								<b>{$avgRating}</b>
 								{include #avgRating, rating => $avgRating}
 							</div>
