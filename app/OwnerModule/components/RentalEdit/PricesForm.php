@@ -164,6 +164,12 @@ class PricesForm extends BaseFormControl
 			}
 		}
 
+		$qb = $this->em->getRepository(RENTAL_PRICELIST_ROW_ENTITY)->createQueryBuilder('p');
+		$qb->delete()
+			->where('p.rental = ?1')->setParameter(1, $rental->id);
+
+		$qb->getQuery()->execute();
+
 		$this->em->flush();
 
 		$this->onFormSuccess($form, $rental);

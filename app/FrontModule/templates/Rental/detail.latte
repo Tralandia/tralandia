@@ -138,10 +138,9 @@
 							<div class="clearfix"></div>
 
 							{var $pricesAvailable = false}
-								{if count($rental->pricelistRows) > 0}
+							{if count($rental->pricelistRows) > 0 || count($rental->customPricelistRows) > 0 || count($rental->pricelists) > 0}
 								{var $pricesAvailable = true}
-								{/if}
-
+							{/if}
 
 							<ul class="detailPriceList" n:if="count($rental->pricelistRows) > 0 || count($rental->customPricelistRows) > 0 || $rental->price->getSourceAmount() || $rental->bedroomCount || $rental->rooms">
 								<li>
@@ -162,7 +161,7 @@
 									</span>
 
 								</h3>
-								{if count($rental->customPricelistRows) > 0 || count($rental->pricelistRows) > 0}
+								{if count($rental->pricelistRows) > 0 || count($rental->customPricelistRows) > 0 || count($rental->pricelists) > 0}
 									<ul>
 										<li>
 											{if $rental->bedroomCount} {_o100075} <span>{$rental->bedroomCount} </span>{/if}
@@ -210,13 +209,13 @@
 
 
 										{if count($rental->pricelists) > 0}
-										{var $pricesAvailable = true}
-										{foreach $rental->pricelists as $pricelist}
-										<li n:class="$iterator->first ? separator">
-											<i class="icon-save"></i>  {if $pricelist->name} <strong class="priceListName">{$pricelist->name}</strong> {/if} <span class="language">{_$pricelist->language->name}</span>
-											<a n:href="Download:pricelist $pricelist->id" class="btn-pricelist">{_o955}</a>
-										</li>
-										{/foreach}
+											{var $pricesAvailable = true}
+											{foreach $rental->pricelists as $pricelist}
+											<li n:class="$iterator->first ? separator">
+												<i class="icon-save"></i>  {if $pricelist->name} <strong class="priceListName">{$pricelist->name}</strong> {/if} <span class="language">{_$pricelist->language->name}</span>
+												<a n:href="Download:pricelist $pricelist->id" class="btn-pricelist">{_o955}</a>
+											</li>
+											{/foreach}
 										{/if}
 
 									</ul>
