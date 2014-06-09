@@ -21,12 +21,6 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Tralandia\RentalReview\RentalReviewRepository
-	 */
-	protected $rentalReviewRepository;
-
-	/**
-	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
@@ -45,6 +39,14 @@ class RentalPresenter extends BasePresenter {
 			$this->desktopDetail($rental);
 		}
 	}
+
+
+	public function renderDetail($rental)
+	{
+		$this->template->avgRating = $this->rentalReviewRepository->getRentalAvgRate($rental);
+		$this->template->reviews = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental, 'language' => $this->language->id], ['created' => 'DESC']);
+	}
+
 
 	public function desktopDetail($rental) {
 		/** @var $rental \Entity\Rental\Rental */
@@ -120,9 +122,6 @@ class RentalPresenter extends BasePresenter {
 		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
 
 		$this->visitedRentals->visit($rental);
-
-		$this->template->avgRating = $this->rentalReviewRepository->getRentalAvgRate($rental);
-		$this->template->reviews = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental], ['created' => 'DESC']);
 
 
 		$this->setLayout('detailLayout');
@@ -206,7 +205,13 @@ class RentalPresenter extends BasePresenter {
 
 	protected function createComponentAddReview(IAddReviewFormFactory $factory)
 	{
-		return $factory->create($this->getParameter('rental'));
+		$component = $factory->create($this->getParameter('rental'));
+
+		$component->onFormSuccess[] = function () {
+			$this->invalidateControl('rating');
+		};
+
+		return $component;
 	}
 
 	protected function createComponentCalendar()

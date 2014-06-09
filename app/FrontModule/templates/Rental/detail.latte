@@ -296,13 +296,7 @@
 					<div class="span3 sidebarRightDetail">
 							<div class="rating-header">
 								<b>{$avgRating}</b>
-								<span class="stars" n:inner-foreach="range(1,5) as $i">
-									{if $i < $avgRating}
-										<i class="icon-star icon"></i>
-									{else}
-										<i class="icon icon-star-empty"></i>
-									{/if}
-								</span>
+								{include #avgRating, rating => $avgRating}
 							</div>
 
 							<div class="sidebarContact">
@@ -416,7 +410,7 @@
 						{* Rating *}
 						<div class="row-fluid">
 							<div class="span12">
-								<div class="rating">
+								<div class="rating" n:snippet="rating">
 									<h3>
 										{_a44}
 										<a href="#" onclick="$('form.rating-form').toggleClass('hide'); return;" class="btn btn-small btn-orange pull-right">{_a47}</a>
@@ -425,39 +419,35 @@
 									<div class="item" n:foreach="$reviews as $review">
 										<div class="row-fluid">
 											<div class="span2">
-												<strong>Jan</strong><br/>
-												<span class="stars" tooltip="true" title="Poloha: 3.2"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon icon-star-empty"></i></span><br/>
-												<i>Sólo hosť</i><br/>
-												21.05.2014
+												<strong>{$review->senderFirstName}</strong><br/>
+												{include #avgRating, rating => $review->avgRating}
+												<i>{$review->groupType}</i><br/>
+												{$review->created|date}
 											</div>
 											<div class="comments span8">
 												<p>
 													<span class="line"></span>
 													<i class="icon-plus-sign"></i>
-													poloha na samote, komplet vybavenost, idealne aj na turistiku ci foto vylety
+													{$review->messagePositives}
 												</p>
 												<p>
 													<span class="line"></span>
 													<i class="icon-minus-sign"></i>
-													nic co by ma odradilo od dalsej navstevy, jedinou trosku neprijemnejsou vecou je nutnost vyslapat si fakt prudky kopec :)
+													{$review->messageNegatives}
 												</p>
 											</div>
 										</div>
-									</div>
-									<div class="item">
-										<div class="row-fluid">
-											<div class="span2">
-												<strong>Jozko Mrkvicka</strong><br/>
-												<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span><br/>
-												<i>Rodina s malymi detmi</i><br/>
-												18.05.2013
-											</div>
-											<div class="comments span8">
-												<p>
-													<span class="line"></span>
-													<i class="icon-plus-sign"></i>
-													Aenean ultrices nisl purus, tristique pulvinar sem malesuada eget. Suspendisse in odio orci. Proin dapibus lacus non volutpat auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris imperdiet nisl magna, sagittis faucibus justo vestibulum volutpat. Cras accumsan dictum dui non rhoncus. Vivamus dapibus, elit at varius consectetur, lacus tortor gravida velit, non fringilla sem sapien id ante. Sed dictum nisl eu sapien tristique, facilisis suscipit nunc venenatis. Proin a arcu eget enim lacinia consequat ut quis ipsum. Mauris sit amet ante quam.
-												</p>
+										<div class="response" n:if="$review->hasAnswer()">
+											<div class="row-fluid">
+												<div class="span2">&nbsp;</div>
+												<div class="comments span8">
+													<div class="name"><strong>{_a50}</strong></div>
+													<p>
+														<span class="line"></span>
+														<i class="icon-user"></i>
+														{$review->ownerAnswer}
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -603,3 +593,14 @@
 
 	{/cache}
 
+
+
+{define #avgRating}
+	<span class="stars" n:inner-foreach="range(1,5) as $i">
+		{if $i < $rating}
+			<i class="icon-star icon"></i>
+		{else}
+			<i class="icon icon-star-empty"></i>
+		{/if}
+	</span>
+{/define}

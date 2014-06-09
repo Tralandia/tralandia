@@ -143,6 +143,14 @@ class RentalReview extends \Entity\BaseEntity {
 	protected $avgRating;
 
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $ownerAnswer;
+
+
+
 	public function updateAvgRating()
 	{
 		$ratings = array_filter([
@@ -157,5 +165,14 @@ class RentalReview extends \Entity\BaseEntity {
 		$this->avgRating = round((array_sum($ratings) / count($ratings)),2);
 	}
 
+	public function getCustomerFullName()
+	{
+		return $this->senderFirstName . ' ' . $this->senderLastName;
+	}
+
+	public function hasAnswer()
+	{
+		return (boolean) strlen($this->ownerAnswer);
+	}
 
 }
