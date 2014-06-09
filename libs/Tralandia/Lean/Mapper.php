@@ -23,6 +23,7 @@ class Mapper extends DefaultMapper {
 		'currency' => '\Tralandia\Currency',
 		'user_sitereview' => '\Tralandia\SiteReview\SiteReview',
 		'page' => '\Tralandia\Routing\Page',
+		'user_rentalreview' => '\Tralandia\RentalReview\RentalReview',
 	];
 
 	protected $classToTable;

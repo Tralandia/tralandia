@@ -1,0 +1,57 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+
+{form form , class => 'rating-form hide ajax'}
+	<table cellpadding="0">
+		<tr>
+			<td>{$form['firstName']->caption}</td>
+			<td>{$form['lastName']->caption}</td>
+			<td colspan="2" rowspan="14" width="461" valign="top">
+				<div class="starrr-group">
+					{foreach $form['rating']->getComponents() as $rating}
+						<div class="form-control">
+							<span>{$rating->getOption('caption')} <strong></strong></span>
+							<div id="stars" class="starrr"></div>
+							{input $rating}
+						</div>
+					{/foreach}
+					<div class="submit">
+						{input submit, class => 'btn btn-large btn-orange'}
+						<a href="#" onclick="$('form.rating-form').addClass('hide'); return;">{_a43}</a>
+					</div>
+				</div>
+			</td>
+		<tr>
+			<td>{input firstName}</td>
+			<td>{input lastName}</td>
+		</tr>
+		<tr>
+			<td>{$form['email']->caption}</td>
+			<td>{_a42}</td>
+		</tr>
+		<tr>
+			<td>{input email}</td>
+			<td>
+				{input date_from}
+				{input date_to}
+			</td>
+		</tr>
+		<tr>
+			<td>{$form['group']->caption}</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				{input group, class => select2}
+			</td>
+		</tr>
+		{foreach $form['messages']->getComponents() as $message}
+			<tr>
+				<td colspan="2">{$message->caption}</td>
+			</tr>
+			<tr>
+				<td colspan="2">{input $message}</td>
+			</tr>
+		{/foreach}
+	</table>
+{/form}

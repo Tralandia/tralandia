@@ -56,6 +56,12 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $rentals;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\RentalReview\RentalReviewRepository
+	 */
+	protected $rentalReviewRepository;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
@@ -176,6 +182,7 @@ abstract class BasePresenter extends \BasePresenter {
 		return [
 			'entity' => $rental,
 			'firstInterviewAnswerText' => $firstInterviewAnswerText,
+			'avgRating' => $this->rentalReviewRepository->getRentalAvgRate($rental),
 		];
 	}
 

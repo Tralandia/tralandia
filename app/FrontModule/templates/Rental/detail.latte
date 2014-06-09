@@ -296,8 +296,8 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 							<div class="rating-header">
-								<b>3.2</b>
-								<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span>
+								<b>{$avgRating}</b>
+								{include #avgRating, rating => $avgRating}
 							</div>
 
 							<div class="sidebarContact">
@@ -411,145 +411,44 @@
 						{* Rating *}
 						<div class="row-fluid">
 							<div class="span12">
-								<div class="rating">
+								<div class="rating" n:snippet="rating">
 									<h3>
-										!!Hodnotenia návštevníkov (2)
-										<a href="#" onclick="$('form.rating-form').removeClass('hide'); return;" class="btn btn-small btn-orange pull-right">Pridať hodnotenie</a>
+										{_a44}
+										<a href="#" onclick="$('form.rating-form').toggleClass('hide'); return;" class="btn btn-small btn-orange pull-right">{_a47}</a>
 									</h3>
-									<form class="rating-form hide">
-										<table cellpadding="0">
-											<tr>
-												<td>Meno</td>
-												<td>Priezvisko</td>
-												<td colspan="2" rowspan="14" width="461" valign="top">
-													<div class="starrr-group">
-														<div class="form-control">
-															<span>Poloha <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[position]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Čistota <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[purity]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Vybavenosť <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[amenities]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Personál <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[personal]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Služby <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[services]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Aktivity a atrakcie v okolí <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[activities]" type="hidden">
-														</div>
-														<div class="form-control">
-															<span>Pomer cena a hodnota <strong></strong></span>
-															<div id="stars" class="starrr"></div>
-															<input name="rating[price]" type="hidden">
-														</div>
-														<div class="submit">
-															<button type="submit" class="btn btn-large btn-orange">Odoslat hodnotenie</button>
-															<a href="#" onclick="$('form.rating-form').addClass('hide'); return;">zrusit</a>
-														</div>
-													</div>
-												</td>
-											<tr>
-												<td><input type="text" name="name"></td>
-												<td><input type="text" name="surname"></td>
-											</tr>
-											<tr>
-												<td>E-mail</td>
-												<td>Termín nastupu</td>
-											</tr>
-											<tr>
-												<td><input type="text" name="email"></td>
-												<td>
-													<input type="text" name="date_from" placeholder="od">
-													<input type="text" name="date_to" placeholder="do">
-												</td>
-											</tr>
-											<tr>
-												<td>Druh skupiny</td>
-												<td></td>
-											</tr>
-											<tr>
-												<td colspan="2">
-													<select class="select2" style="width:446px;"><option>- vyberte -</option></select>
-												</td>
-											</tr>
-											<tr>
-												<td colspan="2">Pozitiva</td>
-											</tr>
-											<tr>
-												<td colspan="2"><textarea rows="3" name="positives"></textarea></td>
-											</tr>
-											<tr>
-												<td colspan="2">Negativa</td>
-											</tr>
-											<tr>
-												<td colspan="2"><textarea rows="3" name="negatives"></textarea></td>
-											</tr>
-											<tr>
-												<td colspan="2">Ohodnotte obec</td>
-											</tr>
-											<tr>
-												<td colspan="2"><textarea rows="3" name="locality_rating"></textarea></td>
-											</tr>
-											<tr>
-												<td colspan="2">Ohodnotte region</td>
-											</tr>
-											<tr>
-												<td colspan="2"><textarea rows="3" name="region_rating"></textarea></td>
-											</tr>
-										</table>
-									</form>
-									<div class="item">
+									{control addReview}
+									<div class="item" n:foreach="$reviews as $review">
 										<div class="row-fluid">
 											<div class="span2">
-												<strong>Jan</strong><br/>
-												<span class="stars" tooltip="true" title="Poloha: 3.2"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon icon-star-empty"></i></span><br/>
-												<i>Sólo hosť</i><br/>
-												21.05.2014
+												<strong>{$review->senderFirstName}</strong><br/>
+												{include #avgRating, rating => $review->avgRating}
+												<i>{$review->groupType}</i><br/>
+												{$review->created|date}
 											</div>
 											<div class="comments span8">
 												<p>
 													<span class="line"></span>
 													<i class="icon-plus-sign"></i>
-													poloha na samote, komplet vybavenost, idealne aj na turistiku ci foto vylety
+													{$review->messagePositives}
 												</p>
 												<p>
 													<span class="line"></span>
 													<i class="icon-minus-sign"></i>
-													nic co by ma odradilo od dalsej navstevy, jedinou trosku neprijemnejsou vecou je nutnost vyslapat si fakt prudky kopec :)
+													{$review->messageNegatives}
 												</p>
 											</div>
 										</div>
-									</div>
-									<div class="item">
-										<div class="row-fluid">
-											<div class="span2">
-												<strong>Jozko Mrkvicka</strong><br/>
-												<span class="stars"><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star icon"></i><i class="icon-star-empty icon"></i><i class="icon icon-star-empty"></i></span><br/>
-												<i>Rodina s malymi detmi</i><br/>
-												18.05.2013
-											</div>
-											<div class="comments span8">
-												<p>
-													<span class="line"></span>
-													<i class="icon-plus-sign"></i>
-													Aenean ultrices nisl purus, tristique pulvinar sem malesuada eget. Suspendisse in odio orci. Proin dapibus lacus non volutpat auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris imperdiet nisl magna, sagittis faucibus justo vestibulum volutpat. Cras accumsan dictum dui non rhoncus. Vivamus dapibus, elit at varius consectetur, lacus tortor gravida velit, non fringilla sem sapien id ante. Sed dictum nisl eu sapien tristique, facilisis suscipit nunc venenatis. Proin a arcu eget enim lacinia consequat ut quis ipsum. Mauris sit amet ante quam.
-												</p>
+										<div class="response" n:if="$review->hasAnswer()">
+											<div class="row-fluid">
+												<div class="span2">&nbsp;</div>
+												<div class="comments span8">
+													<div class="name"><strong>{_a50}</strong></div>
+													<p>
+														<span class="line"></span>
+														<i class="icon-user"></i>
+														{$review->ownerAnswer}
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -695,3 +594,14 @@
 
 	{/cache}
 
+
+
+{define #avgRating}
+	<span class="stars" n:inner-foreach="range(1,5) as $i">
+		{if $i < $rating}
+			<i class="icon-star icon"></i>
+		{else}
+			<i class="icon icon-star-empty"></i>
+		{/if}
+	</span>
+{/define}
