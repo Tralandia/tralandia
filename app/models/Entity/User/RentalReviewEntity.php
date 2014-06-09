@@ -12,8 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RentalReview extends \Entity\BaseEntity {
 
-	 const STATUS_BANNED = 0;
-	 const STATUS_LIVE = 1;
+	const STATUS_BANNED = 0;
+	const STATUS_LIVE = 1;
+
+	const GROUP_TYPE_SOLO = 'a51';
+	const GROUP_TYPE_YOUNG_PAIR = '';
+	const GROUP_TYPE_OLD_PAIR = '';
+	const GROUP_TYPE_GROUP = '';
+	const GROUP_TYPE_FRIENDS = '';
+	const GROUP_TYPE_FAMILY_YOUNG_KIDS = '';
+	const GROUP_TYPE_FAMILY_OLD_KIDS = '';
 
 	/**
 	 * @var int
@@ -53,7 +61,7 @@ class RentalReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $groupType;
 
@@ -71,25 +79,25 @@ class RentalReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $messagePositives;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $messageNegatives;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $messageLocality;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $messageRegion;
 
@@ -145,7 +153,7 @@ class RentalReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $ownerAnswer;
 
