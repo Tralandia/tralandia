@@ -16,12 +16,12 @@ class RentalReview extends \Entity\BaseEntity {
 	const STATUS_LIVE = 1;
 
 	const GROUP_TYPE_SOLO = 'a51';
-	const GROUP_TYPE_YOUNG_PAIR = '';
-	const GROUP_TYPE_OLD_PAIR = '';
-	const GROUP_TYPE_GROUP = '';
+	const GROUP_TYPE_YOUNG_PAIR = 'a52';
+	const GROUP_TYPE_OLD_PAIR = 'a54';
+	const GROUP_TYPE_GROUP = 'a53';
 	const GROUP_TYPE_FRIENDS = '';
-	const GROUP_TYPE_FAMILY_YOUNG_KIDS = '';
-	const GROUP_TYPE_FAMILY_OLD_KIDS = '';
+	const GROUP_TYPE_FAMILY_YOUNG_KIDS = 'a55';
+	const GROUP_TYPE_FAMILY_OLD_KIDS = 'a56';
 
 	/**
 	 * @var int
