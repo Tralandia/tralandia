@@ -9,4 +9,17 @@
 {control addAlias}
 
 <hr/>
+
+<table class="table">
+	<tr n:foreach="$aliases as $alias">
+		{var $aid = $alias->id}
+		<td>{$alias->help}</td>
+		<td>{if $alias->phrase}{l}_{$alias->phrase->id}{r} {_$alias->phrase}{/if}</td>
+		<td>{$aid}</td>
+		<td>{l}_a{$aid}{r}</td>
+	</tr>
+</table>
+
+
+<hr/>
 <a n:href="Cache:invalidateAliasesCache" target="_blank">Invalidate Aliases Cache</a>
