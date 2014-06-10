@@ -30,7 +30,8 @@
 					</td>
 				</tr>
 			{/if}
-			<tr class="package">
+			{var $forCountry = $service->primaryLocation ? $service->primaryLocation->id : NULL}
+			<tr class="package" data-for-country="{$forCountry}">
 				<td colspan="3">
 					{label service:$key, class => !$service->isForFree() ? ($service->type->slug == 'premium' ? 'type2' : 'type1')}
 						<span class="radio2"><i class="icon-check-sign"></i><i class="icon-sign-blank"></i></span>
