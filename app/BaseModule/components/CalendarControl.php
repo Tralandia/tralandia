@@ -57,6 +57,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 		$months = [];
 		$unitsCapacity = $version == self::VERSION_2 ? $this->rental->getUnitsCapacity() : null;
 		$rentalFreeCapacity = $version == self::VERSION_2 ? null : 1;
+		$previousDay = NULL;
 		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];
 			$start = clone $fromDate;
@@ -79,7 +80,7 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 
 			$lastDayOfMonth = $start->modifyClone('last day of this month');
 
-			$previousDay = NULL;
+
 			while ($start <= $lastDayOfMonth) {
 				$key = $start->format(CalendarManager::DATE_FORMAT_FOR_KEY);
 				if(array_key_exists($key, $selectedDays)) {
@@ -100,42 +101,11 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 			$fromDate->modify('first day of next month');
 		}
 
-//		$months = $this->markSelectedDays($months, $selectedDays);
-
 		$template->months = \Nette\ArrayHash::from($months);
 
 		$template->render();
 	}
 
-	/**
-	 * @param array $months
-	 * @param array $selectedDays
-	 *
-	 * @return array
-	 */
-	protected function markSelectedDays(array $months, array $selectedDays = NULL)
-	{
-		if($selectedDays === NULL) return $months;
-
-		foreach($selectedDays as $date) {
-			$yearMonth = $date->format('Y-m');
-			$day = $date->format('d');
-			if(isset($months[$yearMonth]['days'][$day])) {
-				$months[$yearMonth]['days'][$day]['selected'] = TRUE;
-				$months[$yearMonth]['days'][$day]['status']['start'] = TRUE;
-			}
-
-			//$nextDay = $date->modifyClone('+1 day');
-			$nextDay = c($date)->modify('+1 day');
-			$yearMonth = $nextDay->format('Y-m');
-			$day = $nextDay->format('d');
-			if(isset($months[$yearMonth]['days'][$day])) {
-				$months[$yearMonth]['days'][$day]['status']['end'] = TRUE;
-			}
-		}
-
-		return $months;
-	}
 
 
 }

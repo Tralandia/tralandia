@@ -6,7 +6,7 @@ nette:
 parameters:
 
 	templateCache:
-		enabled: yes
+		enabled: no
 
 #	staticDomain: NULL
 #	storageDir: /storage
