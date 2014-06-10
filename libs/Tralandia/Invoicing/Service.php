@@ -13,7 +13,7 @@ use Tralandia\Dictionary\Translatable;
  * @property float|null $priceCurrent
  * @property \Tralandia\Currency $currency m:hasOne()
  * @property Company $company m:hasOne()
- * @property \Tralandia\Location\Location $primaryLocation m:hasOne(primaryLocation_id)
+ * @property \Tralandia\Location\Location|NULL $primaryLocation m:hasOne(primaryLocation_id)
  */
 class Service extends \Tralandia\Lean\BaseEntity
 {
