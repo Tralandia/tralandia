@@ -6,18 +6,21 @@
 
 <variables name="listInfo" data-info-rental-count="{$totalResultsCount}" data-info-list-title="{$pageH1}" data-info-paginator-page="{$paginatorPage}" data-pagging="50"></variables>
 
-<div class="smallBrandBanner"><a href="{plink Registration:}">{_695}</a></div>
-
-<h1>{$pageH1}
-	<span class="counter">
-		({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
-	</span>
-</h1>
-
-{control searchBar:breadcrumb}
-
 <div class="row-fluid">
 	<div class="span12">
+
+		<div n:if="$latitude" id="map-canvas" class="list"></div>
+
+		<div class="smallBrandBanner"><a href="{plink Registration:}">{_695}</a></div>
+
+		<h1>{$pageH1}
+			<span class="counter">
+				({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]}{if $paginatorPage > 1}, {_o100202} {$paginatorPage}.{/if})
+			</span>
+		</h1>
+
+		{control searchBar:breadcrumb}
+
 		<div class="mytabUi ui-tabs-nav ui-tabs">
 			{if count($rentals)}
 				<div id="tabs-1" class="ui-tabs-panel">
@@ -27,6 +30,10 @@
 							{var $rental = $rentalId}
 							{var $rentalId = $rentalId->getId()}
 						{/if}
+
+						{var $rentalData = $findRental($rentalId); }
+
+						{*<div style="display: none" d="{$getDistance($latitude, $longitude, $rentalData->address->gps->latitude, $rentalData->address->gps->longitude)}"></div>*}
 
 						{var $tempCacheOptions = $getCacheOptions('rentalBrick', ['rental' => $rentalId])}
 
@@ -124,6 +131,15 @@
 
 								</div>
 							</div>
+
+
+
+
+							<div class="postarea blog list schoolItem" id="schoolInfo{$rental->id}" latitude="{$rental->address->gps->latitude}" longitude="{$rental->address->gps->longitude}" style="display: none;">
+								<div style="display: none;" class="infoWindowContent">
+									<a href="{link Rental:detail $rental}" target="_blank">{$rentalName}</a>
+								</div>
+							</div>
 						{/cache}
 
 						{if !$foreachIterator->last}
@@ -146,4 +162,57 @@
 
 </div>
 
+<script n:syntax="double">
+	var infowindow = null;
 
+//	var mapCenter = [48.6909605901733, 19.57763684375005];
+	var blueIconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+	function initialize() {
+		var lat = {{$latitude}};
+		var lng = {{$longitude}};
+
+		var myLatlng = new google.maps.LatLng(lat, lng);
+		var mapOptions = {
+			zoom: 10,
+			center: myLatlng,
+			scrollwheel: false
+		}
+		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+//        google.maps.event.addListener(map, 'click', function() {
+//            alert(map.getCenter().toString());
+//        })
+
+		infowindow = new google.maps.InfoWindow({
+			content: "holding..."
+		});
+
+		$( "div.schoolItem" ).each(function() {
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng($(this).attr('latitude'), $(this).attr('longitude')),
+				map: map,
+				id: $(this).attr('id')
+			});
+
+			google.maps.event.addListener(marker, 'click', function() {
+				var content = $('#'+this.id).find('.infoWindowContent').html();
+				infowindow.setContent(content);
+				infowindow.open(marker.get('map'),marker);
+			});
+		});
+
+		new google.maps.Marker({
+			position: new google.maps.LatLng(lat,lng),
+			map: map,
+			id: 1,
+			icon: blueIconUrl,
+			zIndex: 1000
+		});
+
+
+
+
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>

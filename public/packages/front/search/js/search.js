@@ -148,7 +148,7 @@
 
 		});
 	};
-	
+
 })(jQuery);
 
 
@@ -171,7 +171,7 @@ function generateRedirectUrl(count){
 
 	var path = [];
 
-	$.each($('.searchForm select.path:not(.selectRedirect),input[type=hidden]').serializeArray(),function(k,v){
+	$.each($('.searchForm select.path:not(.selectRedirect),input.path,input.nospam').serializeArray(),function(k,v){
 		path.push(v.value);
 	});
 
@@ -182,7 +182,7 @@ function generateRedirectUrl(count){
 
 	path = path.join('/');
 
-	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
+	var p = $('.searchForm').find("select[value][value!='']:not(.path), input[value][value!=''][name!='location'][name!='do']:not(.path,.nospam)").serialize();
 
 	var allParameetrs = p+path;
 		allParameetrs = allParameetrs.length;
@@ -199,8 +199,8 @@ function generateRedirectUrl(count){
 
 	var url = path+(p != '' ? '?'+p : '');
 
-	if(count){
-		if(p.length == 0){			
+	if (count) {
+		if (p.length == 0) {
 			url+='?do=searchBar-getSearchCount';
 		} else {
 			url+='&do=searchBar-getSearchCount';
@@ -208,7 +208,6 @@ function generateRedirectUrl(count){
 	}
 
 	return url;
-	// 
 }
 
 
@@ -299,8 +298,8 @@ function _searchSelect2() {
 
 function searchCriteriumSetActive(select){
 	$(select).parent().addClass('selected');
-
-	if(!$(select).hasClass('selectRedirect')){
+	
+	if($(select).prop('tagName') == 'SELECT' && !$(select).hasClass('selectRedirect')){
 		if ($(select).parent().find('.btnSearchClose').length == 0){
 			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="icon-remove"></i></a>');
 		}
@@ -394,7 +393,16 @@ $(function(){
 
 
 
-	$('.searchForm .select2 , input[data-autocomplete-url]').on('change',function(e){
+	$('.searchForm .select2 , input[data-autocomplete-url] , input[name="address"] , input[name="viewport"]').on('change',function(e){
+
+		if ($(this).attr('name') == 'address') {
+			var latitude = $('input[name="latitude"]').val();
+			var longitude = $('input[name="longitude"]').val();
+
+			if (!latitude || !longitude) {
+				return;
+			}
+		}
 
 		updateSerachLinkUrl();
 		updateCriteriaCount();
@@ -419,7 +427,57 @@ $(function(){
 	$('.btnSearchClose').on('click',closeCriteriaSelectButton)
 						.live('click',closeCriteriaSelectButton);
 
+	var $geocomplete = $('.searchForm input#geocomplete');
+	var country = $geocomplete.data('country');
+
+	$geocomplete.geocomplete({
+			country: country,
+			types: ['geocode','establishment']
+		})
+		.bind("geocode:result", geocodeResult)
+		.bind("geocode:error", geocodeError)
+		.bind("geocode:multiple", geocodeMultiple);
+
 });
+
+function geocodeResult(event, result) {
+	var $geocomplete = $(this).parent('div');
+
+	if (result.geometry) {
+		if (result.geometry.location) {
+			var latitude = result.geometry.location.lat();
+				latitude = Math.round(latitude * 10000000) / 10000000;
+			var longitude = result.geometry.location.lng();
+				longitude = Math.round(longitude * 10000000) / 10000000;
+			$geocomplete.find('input[name="latitude"]').val(latitude);
+			$geocomplete.find('input[name="longitude"]').val(longitude);
+		}
+	}
+
+	if (result.address_components) {
+		for(var n in result.address_components) {
+			var component = result.address_components[n];
+			if (component.types && component.types[0] == 'country' && component.short_name) {
+				$geocomplete.find('input[name="country"]').val(component.short_name.toLowerCase());
+				break;
+			}
+		}
+	}
+
+	$geocomplete.addClass('selected');
+
+	updateSerachLinkUrl();
+	updateCriteriaCount();
+
+}
+
+function geocodeError(event, error) {
+	console.log(error);
+}
+
+function geocodeMultiple(event, results) {
+	console.log(results);
+}
 
 function closeCriteriaSelectButton(){
 		

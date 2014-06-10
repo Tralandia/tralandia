@@ -385,9 +385,6 @@
 					float: right;
 				}			
 
-
-	
-
 				a {
 					width: 73px;
 					div {
@@ -396,6 +393,40 @@
 						}
 					}
 				}	
+			}
+		}
+
+		&.geocomplete {
+			height: auto;
+			text-align: center;
+			position: relative;
+
+			i.entypo-location {
+				position: absolute;
+				left: 5px;
+				top: 3px;
+				color: #AAA;
+			}
+			&.selected {
+				i.entypo-location {
+					color: #686868;
+				}
+				input {
+					font-size: 14px;
+				}
+			}
+
+			input {
+				border: none;
+				padding: 4px 5px 3px 25px;
+				.border-radius(4px);
+				width: 175px;
+				margin-bottom: 0;
+				color: #444;
+
+				&:focus {
+					outline: none;
+				}
 			}
 		}
 

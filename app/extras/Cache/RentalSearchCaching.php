@@ -10,6 +10,7 @@ use Extras\Types\Price;
 use Nette\Caching;
 use Service\Rental\RentalSearchService;
 use Tralandia\Rental\Rentals;
+use Tralandia\RentalSearch\GpsHelper;
 
 class RentalSearchCaching extends \Nette\Object {
 
@@ -110,6 +111,7 @@ class RentalSearchCaching extends \Nette\Object {
 
 	public function updateWholeCache()
 	{
+		$this->cacheContent = null;
 		$this->regenerateData();
 		$this->save();
 	}
@@ -159,6 +161,7 @@ class RentalSearchCaching extends \Nette\Object {
 			$baseQb->andWhere('r.id = :onlyForRental')->setParameter('onlyForRental', $rental->getId());
 		}
 
+		$this->regenerateGpsData(clone $baseQb);
 		$this->regenerateLocationsData(clone $baseQb);
 		$this->regenerateRentalTypeData(clone $baseQb);
 		$this->regenerateCapacityData(clone $baseQb);
@@ -313,6 +316,22 @@ class RentalSearchCaching extends \Nette\Object {
 
 		foreach($rentalsLocation as $value) {
 			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value['locationId']][$value['rentalId']] = $value['rentalId'];
+		}
+	}
+
+
+	/**
+	 * @param QueryBuilder $qb
+	 */
+	private function regenerateGpsData(QueryBuilder $qb)
+	{
+		$qb->select('r.id AS rentalId, a.latitude AS latitude, a.longitude AS longitude');
+
+		$rentals = $qb->getQuery()->getResult();
+		foreach($rentals as $value) {
+			$latitude = GpsHelper::coordinateToKey($value['latitude']);
+			$longitude = GpsHelper::coordinateToKey($value['longitude']);
+			$this->cacheContent[RentalSearchService::CRITERIA_GPS][$latitude][$longitude][$value['rentalId']] = $value['rentalId'];
 		}
 	}
 

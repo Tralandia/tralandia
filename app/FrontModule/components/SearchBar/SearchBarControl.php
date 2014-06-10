@@ -10,12 +10,14 @@ use Environment\Environment;
 use FrontModule\Components\SearchHistory\SearchHistoryControl;
 use FrontModule\Components\VisitedRentals\VisitedRentalsControl;
 use FrontModule\Forms\ISearchFormFactory;
+use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
+use Tralandia\GpsSearchLog\GpsSearchLogManager;
 use Tralandia\Routing\PathSegments;
 
 class SearchBarControl extends \BaseModule\Components\BaseControl {
@@ -25,6 +27,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 * @var \Entity\Location\Location|NULL
 	 */
 	public $location;
+
+	/**
+	 * @var string|NULL
+	 */
+	public $address;
 
 	/**
 	 * @persistent
@@ -55,6 +62,18 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 * @var integer
 	 */
 	public $capacity;
+
+	/**
+	 * @persistent
+	 * @var float
+	 */
+	public $latitude;
+
+	/**
+	 * @persistent
+	 * @var float
+	 */
+	public $longitude;
 
 	/**
 	 * @persistent
@@ -113,6 +132,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	private $visitedRentals;
 
+	/**
+	 * @var \Tralandia\GpsSearchLog\GpsSearchLogManager
+	 */
+	private $gpsSearchLogManager;
+
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
@@ -127,7 +151,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, PathSegments $pathSegments,
-								OptionGenerator $searchOptionGenerator, \Device $device,
+								OptionGenerator $searchOptionGenerator, \Device $device, GpsSearchLogManager $gpsSearchLogManager,
 								SearchHistoryControl $searchHistory, VisitedRentalsControl $visitedRentals)
 	{
 		parent::__construct();
@@ -140,6 +164,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->pathSegments = $pathSegments;
 		$this->searchHistory = $searchHistory;
 		$this->visitedRentals = $visitedRentals;
+		$this->gpsSearchLogManager = $gpsSearchLogManager;
 	}
 
 	public function render()
@@ -161,8 +186,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
 
 		if($this->location) {
-			$jsVariables['data-location-slug'] = $this->location->getSlug();
-			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
+//			$jsVariables['data-location-slug'] = $this->location->getSlug();
+//			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
+			$jsVariables['data-address'] = $presenter->translate($this->location->getName());
+		}
+
+		if($this->address) {
+			$jsVariables['data-address'] = $this->address;
+			$jsVariables['data-latitude'] = $this->latitude;
+			$jsVariables['data-longitude'] = $this->longitude;
 		}
 
 		if($this->rentalType) {
@@ -245,6 +277,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO] => $this->priceTo,
 				FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE] => $this->rentalType,
 				FrontRoute::$pathParametersMapper[FrontRoute::LOCATION] => $this->location,
+				FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE] => $this->latitude,
+				FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE] => $this->longitude,
 				FrontRoute::PRIMARY_LOCATION => $this->environment->getPrimaryLocation(),
 			];
 			$filter = array_filter($filter);
@@ -276,6 +310,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$key = 'price';
 			}
 
+			if(($key == FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE] || $key == FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE]))
+			{
+				if(isset($breadcrumbLinks['address'])) continue;
+				$value = $this->address;
+				$key = 'address';
+			}
+
 			if($value) {
 				$link = [];
 				$link['href'] = $this->presenter->link(':Front:RentalList:', $filter);
@@ -300,7 +341,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$breadcrumbLinks[$key] = $link;
 			}
 
-			if($key == 'price') {
+			if($key == 'address') {
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE]] = NULL;
+				$filter[FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE]] = NULL;
+			} else if($key == 'price') {
 				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_FROM]] = NULL;
 				$filter[FrontRoute::$pathParametersMapper[FrontRoute::PRICE_TO]] = NULL;
 			} else {
@@ -331,13 +375,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	{
 		$bottomLinks = [];
 		$links = [];
-		if(!$this->location && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
+		if(!$this->location && !$this->latitude && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
 			$count = 30;
 			$links = $this->searchOptionGenerator->generateLocationLinks($count, $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::LOCATION;
 			$bottomLinks['title'] = 'o100098';
 			$bottomLinks['iconClass'] = 'icon-map-marker';
 		}
+
 		if(!count($links) && !$this->rentalType) {
 			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::RENTAL_TYPE;
@@ -406,6 +451,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	{
 		$search = $this->search;
 
+//		$countryIso = $this->getPresenter()->getParameter('country');
+//		if($countryIso != $search->getPrimaryLocation()->getIso()) {
+//			$location = $this->em->getRepository(LOCATION_ENTITY)->findOneBy(['iso' => $countryIso]);
+//			$search->setPrimaryLocation($location);
+//		}
+
 		if ($this->location) {
 			$search->setLocationCriterion($this->location);
 		}
@@ -424,6 +475,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		if ($this->board) {
 			$search->setBoardCriterion($this->board);
+		}
+
+		if ($this->latitude && $this->longitude) {
+			$search->setGpsCriterion($this->latitude, $this->longitude);
 		}
 
 		/*placement
@@ -486,6 +541,21 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$component = $this->visitedRentals;
 
 		return $component;
+	}
+
+
+	public function attached($presenter)
+	{
+		parent::attached($presenter);
+
+		if($this->latitude && $this->longitude) {
+			$gps = $this->gpsSearchLogManager->findOneByGps($this->latitude, $this->longitude);
+			if($gps) {
+				$this->address = $gps->text;
+			} else if($presenter instanceof Presenter && $address = $presenter->getParameter('address')) {
+				$this->address = $address;
+			}
+		}
 	}
 
 }

@@ -86,8 +86,9 @@ class SearchForm extends BaseForm
 			->setPrompt('o1070')
 			->setAttribute('data-placeholder', $this->translate('o1070'));
 
-		$this->addHidden(FrontRoute::LOCATION)
-			->setAttribute('data-placeholder', $this->translate('o1070'));
+//		$this->addText('address')
+//			->setHtmlId('geocomplete')
+//			->setAttribute('data-placeholder', $this->translate('o1070'));
 
 		$this->addSelect(FrontRoute::RENTAL_TYPE, 'o20926', $rentalTypes)
 			->setPrompt('')
@@ -119,7 +120,7 @@ class SearchForm extends BaseForm
 			->setPrompt('')
 			->setAttribute('data-placeholder', $this->translate('151885'));
 
-		$this->addSubmit('submit', 'o100092');
+		$this->addSubmit('submit', 'o100092', FALSE);
 	}
 
 
@@ -133,10 +134,10 @@ class SearchForm extends BaseForm
 	{
 		$values = parent::getValues($asArray);
 
-		if (isset($values->location)) {
-			$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
-			$values->location = $locationRepository->find($values->location);
-		}
+//		if (isset($values->location)) {
+//			$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
+//			$values->location = $locationRepository->find($values->location);
+//		}
 
 		if (isset($values->rentalType)) {
 			$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);

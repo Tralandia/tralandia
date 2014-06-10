@@ -33,6 +33,8 @@ class SimpleFrontRoute extends BaseRoute
 	const PRICE_TO = 'priceTo';
 	const BOARD = 'board';
 	const PLACEMENT = 'placement';
+	const LATITUDE = 'latitude';
+	const LONGITUDE = 'longitude';
 
 	const PAGE = 'page';
 	const LOCATION = 'location';
@@ -53,6 +55,8 @@ class SimpleFrontRoute extends BaseRoute
 		self::CAPACITY => 'searchBar-capacity',
 		self::SPOKEN_LANGUAGE => 'searchBar-spokenLanguage',
 		self::BOARD => 'searchBar-board',
+		self::LATITUDE => 'searchBar-latitude',
+		self::LONGITUDE => 'searchBar-longitude',
 	];
 
 	public $urlStampOptions = [
@@ -68,6 +72,8 @@ class SimpleFrontRoute extends BaseRoute
 		self::CAPACITY,
 		self::SPOKEN_LANGUAGE,
 		self::BOARD,
+		self::LATITUDE,
+		self::LONGITUDE,
 		self::PAGE,
 		self::FAVORITE_LIST,
 	];
@@ -272,7 +278,9 @@ class SimpleFrontRoute extends BaseRoute
 				|| isset($params[self::BOARD])
 				|| isset($params[self::PLACEMENT])
 				|| isset($params[self::PRICE_FROM])
-				|| isset($params[self::PRICE_TO]))
+				|| isset($params[self::PRICE_TO])
+				|| isset($params[self::LATITUDE])
+				|| isset($params[self::LONGITUDE]))
 			{
 				$presenter = 'RentalList';
 				$params['action'] = 'default';
@@ -295,6 +303,9 @@ class SimpleFrontRoute extends BaseRoute
 
 			foreach($params as $key => $value) {
 				if(array_key_exists($key, self::$pathParametersMapper)) {
+					if($key == self::LATITUDE || $key == self::LONGITUDE) {
+						$value = round($value, 7);
+					}
 					$params[self::$pathParametersMapper[$key]] = $value;
 					unset($params[$key]);
 				}
