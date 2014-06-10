@@ -5,6 +5,7 @@ namespace Service\Seo;
 use Nette, Extras, Service, Doctrine, Entity;
 use Nette\Utils\Strings;
 use Routers\FrontRoute;
+use Tralandia\GpsSearchLog\GpsSearchLogManager;
 use Tralandia\Localization\Translator;
 use Tralandia\BaseDao;
 
@@ -77,20 +78,26 @@ class SeoService extends Nette\Object {
 	 */
 	private $pageDao;
 
+	/**
+	 * @var \Tralandia\GpsSearchLog\GpsSearchLogManager
+	 */
+	private $gpsSearchLogManager;
+
 
 	/**
 	 * @param string $url
 	 * @param Nette\Application\Request $request
 	 * @param \Tralandia\BaseDao $pageDao
+	 * @param \Tralandia\GpsSearchLog\GpsSearchLogManager $gpsSearchLogManager
 	 * @param \Nette\Localization\ITranslator $translator
-	 *
 	 */
-	public function __construct($url, Nette\Application\Request $request, BaseDao $pageDao,
+	public function __construct($url, Nette\Application\Request $request, BaseDao $pageDao, GpsSearchLogManager $gpsSearchLogManager,
 								Nette\Localization\ITranslator $translator)
 	{
 		$this->url = $url;
 		$this->pageDao = $pageDao;
 		$this->request = $request;
+		$this->gpsSearchLogManager = $gpsSearchLogManager;
 		$this->requestParameters = $this->request->getParameters();
 		$this->translator = $translator;
 
@@ -219,24 +226,27 @@ class SeoService extends Nette\Object {
 
 		$texts = array();
 		foreach ($variables as $value) {
+			$replacement = NULL;
 			if(!array_key_exists($value['replacement'], $this->replacements)) continue;
 
 			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')) {
 				if($this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE])) {
-					$replacement = $this->replacements['address'];
+					$latitude = $this->getParameter(FrontRoute::$pathParametersMapper[FrontRoute::LATITUDE]);
+					$longitude = $this->getParameter(FrontRoute::$pathParametersMapper[FrontRoute::LONGITUDE]);
+					$log = $this->gpsSearchLogManager->findOneByGps($latitude, $longitude);
+					$replacement = $log ? $log->getShortText() : '';
 				} else if(!$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION])) {
 					$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
+				} else {
+					$replacement = $this->replacements[$value['replacement']];
 				}
 			} else {
 				$replacement = $this->replacements[$value['replacement']];
 			}
 
 			$textKey = '['.$value['replacement'].']';
-			if($replacement[1] === NULL) {
-				$text = $this->getParameter($replacement[0]);
-				$text = explode(',', $text);
-				array_pop($text);
-				$texts[$textKey] = implode(',', $text);
+			if(is_scalar($replacement)) {
+				$texts[$textKey] = $replacement;
 			} else {
 				/** @var $phrase \Entity\Phrase\Phrase */
 				$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
