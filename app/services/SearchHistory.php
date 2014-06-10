@@ -43,8 +43,11 @@ class SearchHistory {
 		];
 
 		if(count($history) > self::MAX_COUNT) {
+			$history = array_reverse($history);
 			$history = array_chunk($history, self::MAX_COUNT, TRUE)[0];
+			$history = array_reverse($history);
 		}
+
 
 		$this->setHistoryData($history);
 
@@ -82,6 +85,15 @@ class SearchHistory {
 	public function getHistory()
 	{
 		return array_reverse($this->getHistoryData());
+	}
+
+
+	/**
+	 * @param $history
+	 */
+	public function setHistory($history)
+	{
+		$this->setHistoryData(array_reverse($history));
 	}
 
 
