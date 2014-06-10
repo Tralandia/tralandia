@@ -12,43 +12,46 @@
 			<td colspan="3" class="fieldset">!Vyberte balík služieb</td>
 		</tr>
 
-		{var $price = 0}
+
+		{var $lastServiceType = 'basic'}
 		{foreach $form['service']->items as $key => $label}
+			{var $service = $services[$key]}
+			{if $lastServiceType != $service->type->slug}
+				<tr class="package-info">
+					<td colspan="3" align="center">
+						<a href="#" class="toggle" for="package-info-1">Aký je rozdiel medzi TOP a KLASIK balíkom?</a>
+						<div class="package-info package-info-1 hide">
+							<p>Získajte s TOP BALÍKOM <b>SUPER VÝHODY</b> navyše. <b>Vaše ubytovanie bude</b> na rozdiel od KLASIK balíka <b>vždy:</b></p>
+							<p>1. <b>Zobrazené na úvodnej stránke.</b></p>
+							<p>2. Zobrazené na <b>prvých pozíciách</b> pri akomkoľvek <b>vyhľadávaní,</b> ako aj <b>v kategóriách a v sekciách</b>.</p>
+							<p>3. Zobrazené na <b>prvých pozíciách</b> vo Vašej <b>lokalite, regióne, turistickej oblasti, okrese, obci a kraji.</b></p>
+							<p>4. Takto zobrazované na všetkých našich <b>12-tich ubytovacích weboch v zahraničí.</b></p>
+						</div>
+					</td>
+				</tr>
+			{/if}
 			<tr class="package">
 				<td colspan="3">
-					{label service:$key, class => $price > 0 ? ($price > 19 ? 'type2' : 'type1')}
+					{label service:$key, class => !$service->isForFree() ? ($service->type->slug == 'premium' ? 'type2' : 'type1')}
 						<span class="radio2"><i class="icon-check-sign"></i><i class="icon-sign-blank"></i></span>
-						{if $price == 0}
-							<span class="price-free"><i>ZADARMINKO</i></span>
+						{_$service->type->name} - {_$service->duration->name}
+						{if $service->isForFree()}
+							<span class="price-free"><i>!!ZADARMINKO!!</i></span>
 						{else}
 							<table class="price">
 								<tr>
-									<td><strike>{$price+9} EUR</strike></td>
-									<td><strong>{$price} EUR</strong></td>
-									<td>bez DPH zlava 10%</td>
+									<td><strike>{$service->priceDefault}</strike></td>
+									<td><strong>{$service->priceCurrent}</strong></td>
+									<td>!!bez DPH!!</td>
 								</tr>
 							</table>
 						{/if}
-						{input service:$key, data-price => $price}
+						{input service:$key, data-price => $service->priceCurrent}
 						{$label}
 					{/label}
 				</td>
 			</tr>
-			{if $price == 18}
-			<tr class="package-info">
-				<td colspan="3" align="center">
-					<a href="#" class="toggle" for="package-info-1">Aký je rozdiel medzi TOP a KLASIK balíkom?</a>
-					<div class="package-info package-info-1 hide">
-                        <p>Získajte s TOP BALÍKOM <b>SUPER VÝHODY</b> navyše. <b>Vaše ubytovanie bude</b> na rozdiel od KLASIK balíka <b>vždy:</b></p>
-                        <p>1. <b>Zobrazené na úvodnej stránke.</b></p>
-                        <p>2. Zobrazené na <b>prvých pozíciách</b> pri akomkoľvek <b>vyhľadávaní,</b> ako aj <b>v kategóriách a v sekciách</b>.</p>
-                        <p>3. Zobrazené na <b>prvých pozíciách</b> vo Vašej <b>lokalite, regióne, turistickej oblasti, okrese, obci a kraji.</b></p>
-                        <p>4. Takto zobrazované na všetkých našich <b>12-tich ubytovacích weboch v zahraničí.</b></p>
-					</div>
-				</td>
-			</tr>
-			{/if}
-			{var $price += 9}
+			{var $lastServiceType = $service->type->slug}
 		{/foreach}
 
 
@@ -88,7 +91,7 @@
 			$('.package label').addClass('inactive');
 			$(this).parents('label').addClass('active');
 			$(this).parents('label').removeClass('inactive');
-			
+
 			var packagePrice = $(this).data('price');
 			if (packagePrice == 0) {
 				$billingDetails.find('.slide').slideUp();

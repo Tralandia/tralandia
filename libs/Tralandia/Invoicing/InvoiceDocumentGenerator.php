@@ -8,6 +8,7 @@
 namespace Tralandia\Invoicing;
 
 
+use Environment\Environment;
 use Nette;
 use OndrejBrejla\Eciovni\Eciovni;
 use OndrejBrejla\Eciovni\ParticipantBuilder;
@@ -19,6 +20,17 @@ use Tralandia\Invoicing\Invoice;
 
 class InvoiceDocumentGenerator
 {
+	/**
+	 * @var \Environment\Environment
+	 */
+	private $environment;
+
+
+	function __construct(Environment $environment)
+	{
+		$this->environment = $environment;
+	}
+
 
 	/**
 	 * @param Invoice $invoice
@@ -35,11 +47,17 @@ class InvoiceDocumentGenerator
 		$customer = $this->getCustomer($invoice);
 		$items = $this->getItems($invoice);
 
-		$dataBuilder = new DataBuilder($invoice->number, 'Invoice - ' . $invoice->number, $supplier, $customer, $dateExp, $dateNow, $items);
+		$dataBuilder = new DataBuilder($invoice->number, 'Invoice', $supplier, $customer, $dateExp, $dateNow, $items);
 		$dataBuilder->setVariableSymbol($invoice->variableNumber)->setDateOfVatRevenueRecognition($dateNow);
 		$data = $dataBuilder->build();
 
-		return new Eciovni($data);
+		$eciovni = new Eciovni($data);
+
+		$eciovni->getTemplate()->setTranslator($this->environment->getTranslator());
+
+		$eciovni->setTemplatePath(__DIR__ . '/invoiceDocument.latte');
+
+		return $eciovni;
 	}
 
 
@@ -51,7 +69,8 @@ class InvoiceDocumentGenerator
 		$builder
 			->setIn($company->companyId)
 			->setTin($company->companyVatId)
-			->setAccountNumber('mock / 1111');
+			->setAccountNumber('mock / 1111')
+			->setVatPayer(TRUE);
 
 		return $builder->build();
 	}

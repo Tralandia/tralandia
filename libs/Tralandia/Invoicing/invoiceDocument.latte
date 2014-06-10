@@ -1,0 +1,273 @@
+{**
+ * Template for Eciovni plugin for Nette Framework
+ *
+ * @copyright  Copyright (c) 2009 Ondřej Brejla
+ * @license    New BSD License
+ * @link       http://github.com/OndrejBrejla/Nette-InvoiceControl
+ *
+ * @param    string                $title
+ * @param    string                $id
+ * @param    string                $logo
+ * @param    string                $stamp
+ *
+ * @param    string                $supplierName
+ * @param    string                $supplierStreet
+ * @param    string                $supplierHouseNumber
+ * @param    string                $supplierCity
+ * @param    string                $supplierZip
+ * @param    string                $supplierIn
+ * @param    string                $supplierTin
+ * @param    string                $supplierAccountNumber
+ * @param    string                $supplierBankName
+ * @param    string                $supplierPayment
+ * @param    bool                  $vatPayer
+ * @param    string                $supplierOrder
+ *
+ * @param    string                $dateOfIssuance
+ * @param    string                $expirationDate
+ * @param    string                $dateOfVatRevenueRecognition
+ *
+ * @param    string                $variableSymbol
+ * @param    string                $specificSymbol
+ * @param    string                $constantSymbol
+ *
+ * @param    string                $customerName
+ * @param    string                $customerStreet
+ * @param    string                $customerHouseNumber
+ * @param    string                $customerCity
+ * @param    string                $customerZip
+ * @param    string                $customerIn
+ * @param    string                $customerTin
+ * @param    string                $customerAccountNumber
+ * @param    string                $customerOrder
+ *
+ * @param    Item[]                $items
+ *
+ * @param    double                $finalUntaxedValue
+ * @param    double                $finalTaxValue
+ * @param    double                $finalValue
+ * @param    double                $inoviceRound
+ * @param    double                $finalValueRound
+ *}
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="cs">
+    <title></title>
+</head>
+
+<body>
+<style type="text/css">
+    body {
+        font-family: Arial;
+    }
+
+    table {
+        font-size: 12px;
+    }
+</style>
+<div>
+    {if $logo != null}<img src="{$basePath}/images/{$logo}" style="width:220px;height:60px;float:left;margin-bottom:10px" alt="Logo" />{/if}
+    <div style="text-align: right; border-bottom: 2px solid #000000; color: #1A5DAC; font-weight: bold; font-size: 20px;clear:both;">{$title} {$id}</div>
+
+    <table>
+        <tr>
+            <td width="40%">
+                <span style="color: #1A5DAC; font-weight: bold; font-size: 12px;">{_a4}</span>
+                <table style="font-weight: bold; margin-bottom: 15px;">
+                    <tr>
+                        <td>{$supplierName}</td>
+                    </tr>
+                    <tr>
+                        <td>{$supplierStreet} {$supplierHouseNumber}</td>
+                    </tr>
+                    <tr>
+                        <td>{$supplierCity}, {$supplierZip}</td>
+                    </tr>
+                </table>
+
+                <table style="color: #1A5DAC; margin-bottom: 15px;">
+                    <tr>
+                        <td>{_a5}</td>
+                        <td>{$supplierIn}</td>
+                    </tr>
+                    <tr>
+                        <td>{_a6}</td>
+                        <td>{$supplierTin}</td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; margin-bottom: 15px;">
+                    <tr>
+                        <td>{_a7}</td>
+                        <td style="text-align: center; border: 3px solid #000000; font-weight: bold" width="220">{$supplierAccountNumber}</td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%;">
+                    <tr>
+                        <td>{_a8}</td>
+                        <td style="text-align: center;">{$supplierBankName}</td>
+                    </tr>
+                    <tr>
+                        <td>{_a9}</td>
+                        <td style="text-align: center;">{$supplierPayment}</td>
+                    </tr>
+                    <tr>
+                        <td>{_a10}</td>
+                        <td style="text-align: center;">{$dateOfIssuance}</td>
+                    </tr>
+                    <tr>
+                        <td>{_a11}</td>
+                        <td style="text-align: center;">{$expirationDate}</td>
+                    </tr>
+                    {if $vatPayer}
+                    <tr>
+                        <td>{_a12}</td>
+                        <td style="text-align: center;">{$dateOfVatRevenueRecognition}</td>
+                    </tr>
+                    {/if}
+                </table>
+            </td>
+            <td width="60%" align="right">
+                <table style="margin-bottom: 15px;">
+                    <tr>
+                        <td style="text-align: right;">{_a13}</td>
+                        <td style="text-align: center;">{$variableSymbol}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">{_a14}</td>
+                        <td style="text-align: center;">{$specificSymbol}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">{_a15}</td>
+                        <td style="text-align: center;">{$constantSymbol}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">{_a16}</td>
+                        <td style="text-align: center;">{$supplierOrder}</td>
+                    </tr>
+                </table>
+
+                <table style="border: 3px solid #000000;">
+                    <tr>
+                        <td width="350">
+                            <span style="color: #1A5DAC; font-weight: bold; font-size: 12px;">{_a17}</span>
+                            <table style="margin-bottom: 15px;">
+                                <tr>
+                                    <td>{_a5}</td>
+                                    <td>{$customerIn == 0 ? '' : $customerIn}</td>
+                                </tr>
+                                <tr>
+                                    <td>{_a6}</td>
+                                    <td>{$customerTin}</td>
+                                </tr>
+                                {*<tr>*}
+                                    {*<td>Vaše č. obj.:</td>*}
+                                    {*<td>{$customerOrder}</td>*}
+                                {*</tr>*}
+                            </table>
+
+                            <table style="font-weight: bold; margin-bottom: 15px;">
+                                <tr>
+                                    <td>{$customerName}</td>
+                                </tr>
+                                <tr>
+                                    <td>{$customerStreet} {$customerHouseNumber}</td>
+                                </tr>
+                                <tr>
+                                    <td>{$customerCity}, {$customerZip}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div style="border: 1px solid #BEC8CE; clear: both; margin-bottom: 15px;">
+        <table style="width: 100%;">
+            <tr>
+                <td><strong>{_a18}</strong></td>
+                <td style="text-align: right;"><strong>{_a19}</strong></td>
+                <td style="text-align: right;"><strong>{_a20}</strong></td>
+                {*<td style="text-align: right;"><strong>MJ</strong></td>*}
+                {if $vatPayer}
+                <td style="text-align: right;"><strong>%DPH</strong></td>
+                <td style="text-align: right;"><strong>DPH</strong></td>
+                {/if}
+                <td style="text-align: right;"><strong>{_a21}</strong></td>
+            </tr>
+            {foreach $items as $item}
+            <tr>
+                <td>{$item->getDescription()}</td>
+                <td style="text-align: right;">{$item->countUntaxedUnitValue()|round}</td>
+                <td style="text-align: right;">{$item->getUnits()|round}</td>
+                {*<td style="text-align: right;">{$item->getQUnits()}</td>*}
+                {if $vatPayer}
+                <td style="text-align: right;">{$item->getTax()->inUpperDecimal() * 100 - 100|round}</td>
+                <td style="text-align: right;">{$item->countTaxValue()|round}</td>
+                {/if}
+                <td style="text-align: right;">{$item->countFinalValue()|round}</td>
+            </tr>
+            {/foreach}
+        </table>
+    </div>
+    <div style="border: 2px solid #000000; margin-bottom: 15px;">
+    <table style="width: 100%;">
+        {if $vatPayer}
+        <tr>
+            <td>{_a22}</td>
+            <td style="text-align: right;">{$finalUntaxedValue|round}</td>
+        </tr>
+        <tr>
+            <td>{_a23}</td>
+            <td style="text-align: right;">{$finalTaxValue|round}</td>
+        </tr>
+        <tr style="font-size: 20px;">
+            <td><strong>{_a24}</strong></td>
+            <td style="text-align: right;"><strong>{$finalValue|round}</strong></td>
+        </tr>
+        {if $inoviceRound != null}
+        <tr>
+            <td>Zaokrouhleno (Kč):</td>
+            <td style="text-align: right;">{$inoviceRound|round}</td>
+        </tr>
+        <tr style="font-size: 20px;">
+            <td><strong>Celkem k úhradě (Kč):</strong></td>
+            <td style="text-align: right;"><strong>{$finalValueRound|round}</strong></td>
+        </tr>
+        {/if}
+        {else}
+        <tr style="font-size: 20px;">
+            <td><strong>Celkem (Kč):</strong></td>
+            <td style="text-align: right;">{$finalUntaxedValue|round}</td>
+        </tr>
+        {/if}
+    </table>
+    </div>
+    {if $vatPayer && FALSE}
+    <table style="width:50%;border-top:1px solid #000;border-left:1px solid #000;border-collapse:collapse;">
+        <tr>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">Rekapitulace DPH v Kč</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">Základ</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">DPH</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">Včetně DPH</td>
+        </tr>
+        {foreach $finalSummary as $final}
+        <tr>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">{$final["name"]}</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">{$final["outTax"]|round}</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">{$final["tax"]|round}</td>
+            <td style="border-right:1px solid #000;border-bottom:1px solid #000;">{$final["withTax"]|round}</td>
+        </tr>
+        {/foreach}
+    </table>
+    {/if}
+    <div style="text-align: right; padding-right: 30px;margin-top:10px;">
+        {if $stamp != null}<img src="{$basePath}/images/{$stamp}" style="width:180px;" alt="Vystavil, razítko, podpis:" />{/if}
+    </div>
+    <div style="float:right;text-align:center;width:150px;border-top:2px dashed #000000;font-weight: bold;margin-top:5px;margin-right:50px;">{_a25}</div>
+    <div style="float:left;margin-top:0px;">{_a26}<br />{$supplierRegistration}</div>
+</div>
+</body>
+</html>

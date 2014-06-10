@@ -15,6 +15,9 @@ class InvoicingServiceMigration extends \Migration\Migration
 		$serviceTypes = $this->getEm()->getRepository(INVOICING_SERVICE_TYPE)->findAll();
 		$serviceTypes = Tools::entitiesMap($serviceTypes, 'slug');
 
+		\Nette\Utils\Arrays::renameKey($serviceTypes, 'premium', 'featured');
+		\Nette\Utils\Arrays::renameKey($serviceTypes, 'ps-premium', 'premium-ps');
+
 		$today = strtotime('today');
 		$query = 'select * from rental_service where dateTo >= %d';
 		$result = $lean->query($query, $today);
@@ -23,6 +26,8 @@ class InvoicingServiceMigration extends \Migration\Migration
 
 		$i = 1;
 		foreach($result as $serviceRow) {
+			if($serviceRow->serviceType == 'personalSite') continue;
+
 			$invoice = [];
 			$invoice['givenFor'] = $serviceRow->givenFor;
 			$invoice['number'] = $i;

@@ -19,5 +19,18 @@ use Tralandia\Lean\BaseRepository;
 class ServiceRepository extends BaseRepository
 {
 
+	/**
+	 * @return \Tralandia\Invoicing\Service[]
+	 */
+	public function findForRegistration()
+	{
+		$fluent = $this->createFluent();
+		$fluent->innerJoin($this->mapper->getTable('\Invoicing\ServiceType') . ' t')->on('t.id = type_id')
+			->where('t.slug IN %in', ['basic', 'premium'])
+			->order('priceCurrent ASC');
+
+		return $this->createEntities($fluent->fetchAll());
+
+	}
 
 }
