@@ -606,9 +606,10 @@ $(function(){
 						middle: 's22'
 					}
 
-					var currentTime = $(this).data('day');
+					var $day = $(this);
+					var currentTime = $day.data('day');
 
-					if(!$(this).hasClass('selected')){
+					if(!$day.hasClass('selected')){
 						$.calendarEdit.addDate(currentTime,$input);
 					} else {
 						$.calendarEdit.removeDate(currentTime,$input);
@@ -628,8 +629,11 @@ $(function(){
 					for(var n in dates) {
 						var date = dates[n];
 						var $date = $calendarForm.find('div.day[data-day="'+date+'"]');
-						var $dateNext = $date.next();
-						var $datePrev = $date.prev();
+						var $dateNext = $date.next('div.day');
+
+						if ($dateNext.length == 0) {
+							$dateNext = $date.parent('div.calendar').next('div.calendar').find('div.day.active').first();
+						}
 
 						if ($date.hasClass(statusClass.last)) {
 							$date.addClass(statusClass.middle);
