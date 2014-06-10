@@ -1,3 +1,5 @@
+
+
 {var $now = new \DateTime();}
 <div class="calendar {$containerClass}" n:foreach="$months as $key => $month">
 	{var $odd = $iterator->isOdd()}
@@ -14,7 +16,7 @@
 	{/if}
 
 	{foreach $month->blankDays as $day}
-		<div class="day inactive {$status}">{if $version=='old'}{$day->day}{/if}</div>
+		<div class="day inactive">{if $version=='old'}{$day->day}{/if}</div>
 	{/foreach}
 
 	{foreach $month->days as $day}

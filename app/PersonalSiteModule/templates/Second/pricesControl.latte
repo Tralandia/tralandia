@@ -1,8 +1,9 @@
 {var $rentalPricelist = $rental->getPriceList()}
 {var $rentalPricelistCount = count($rentalPricelist)}
 {var $customPriceListCount = count($rental->customPriceList)}
+{var $priceListFilesCount = count($rental->getPriceListFiles())}
 
-{if ($customPriceListCount > 0 || $rentalPricelistCount > 0)}
+{if ($customPriceListCount > 0 || $rentalPricelistCount > 0 || $priceListFilesCount > 0)}
 <section id="prices" class="section-block content-section">
 	<div class="inner-section">
 		<h2 class="main-title">{_1197}</h2>
