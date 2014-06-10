@@ -19,7 +19,7 @@ class RentalReview extends \Entity\BaseEntity {
 	const GROUP_TYPE_YOUNG_PAIR = 'a52';
 	const GROUP_TYPE_OLD_PAIR = 'a54';
 	const GROUP_TYPE_GROUP = 'a53';
-	const GROUP_TYPE_FRIENDS = '';
+	const GROUP_TYPE_FRIENDS = 'a57';
 	const GROUP_TYPE_FAMILY_YOUNG_KIDS = 'a55';
 	const GROUP_TYPE_FAMILY_OLD_KIDS = 'a56';
 

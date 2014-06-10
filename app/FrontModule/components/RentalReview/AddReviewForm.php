@@ -81,9 +81,18 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 			->getControlPrototype()
 			->setPlaceholder($this->translate('o1044'));
 
-		$groups = ['foo', 'bar'];
-		$form->addSelect('group', 'a30', $groups)
+		$groups = [
+			\Entity\User\RentalReview::GROUP_TYPE_SOLO,
+			\Entity\User\RentalReview::GROUP_TYPE_YOUNG_PAIR,
+			\Entity\User\RentalReview::GROUP_TYPE_OLD_PAIR,
+			\Entity\User\RentalReview::GROUP_TYPE_GROUP,
+			\Entity\User\RentalReview::GROUP_TYPE_FRIENDS,
+			\Entity\User\RentalReview::GROUP_TYPE_FAMILY_YOUNG_KIDS,
+			\Entity\User\RentalReview::GROUP_TYPE_FAMILY_OLD_KIDS,
+		];
+		$form->addSelect('group', 'a30')
 			->setPrompt('a45')
+			->setItems($groups, FALSE)
 			->setRequired(TRUE);
 
 		$messages = $form->addContainer('messages');
@@ -127,7 +136,7 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		$defaults['email'] = 'email';
 		$defaults['firstName'] = 'firstName';
 		$defaults['lastName'] = 'lastName';
-		$defaults['group'] = '1';
+		$defaults['group'] = 'a51';
 		$defaults['date_from'] = 'date_from';
 		$defaults['date_to'] = 'date_to';
 		$defaults['messages']['positives'] = 'positives';
