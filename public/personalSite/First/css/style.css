@@ -2203,6 +2203,12 @@ h1.incoming-gateway, .loader {
   font-size: 14px;
 }
 
+#video {
+  margin: -40px 0 5px;
+  padding: 40px 0;
+  background: #333;
+}
+
 #gallery-1 .gallery-item {
   width: 30.5% !important;
 }

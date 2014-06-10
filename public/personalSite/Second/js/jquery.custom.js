@@ -251,14 +251,14 @@ jQuery(document).ready(function($){
 
         prettyPrint();
 
-        $("#gateway-wrapper").fitVids();
+        // $("#gateway-wrapper").fitVids();
 
-        jQuery('#portfolio-single-slider').fitVids().flexslider({
-            directionNav: false,
-            controlNav: true,
-            multipleKeyboard: true,
-            video: true
-        });
+        // jQuery('#portfolio-single-slider').fitVids().flexslider({
+        //     directionNav: false,
+        //     controlNav: true,
+        //     multipleKeyboard: true,
+        //     video: true
+        // });
     }
 
     function closeGateway(){
@@ -364,7 +364,7 @@ jQuery(document).ready(function($){
 
     }
 
-    // $("#container").fitVids();
+    $("#container").fitVids();
 
     photoSetGrid('.photoset-default');
 

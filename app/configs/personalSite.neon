@@ -47,6 +47,12 @@ factories:
 		parameters: [\Tralandia\Rental\Rental rental]
 		implement: \PersonalSiteModule\Gallery\IGalleryControlFactory
 
+	videoControlFactory:
+		class: \PersonalSiteModule\Video\VideoControl
+		arguments: [%rental%]
+		parameters: [\Tralandia\Rental\Rental rental]
+		implement: \PersonalSiteModule\Video\IVideoControlFactory
+
 	pricesControlFactory:
 		class: \PersonalSiteModule\Prices\PricesControl
 		arguments: [%rental%]

@@ -2150,6 +2150,10 @@ h1.incoming-gateway, .loader {
   font-size: 14px;
 }
 
+#video {
+  padding: 0;
+}
+
 #gallery-1 .gallery-item {
   width: 30.5% !important;
 }
