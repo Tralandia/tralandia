@@ -12,3 +12,4 @@ ALTER TABLE user_rentalreview ADD messagePositives LONGTEXT NOT NULL, ADD messag
 ALTER TABLE user_rentalreview CHANGE `group` `groupType` VARCHAR(255) NOT NULL;
 ALTER TABLE user_rentalreview ADD avgRating DOUBLE PRECISION NOT NULL;
 ALTER TABLE user_rentalreview ADD ownerAnswer LONGTEXT NOT NULL;
+ALTER TABLE user_rentalreview CHANGE groupType groupType VARCHAR(255) DEFAULT NULL, CHANGE messageLocality messageLocality LONGTEXT DEFAULT NULL, CHANGE messageRegion messageRegion LONGTEXT DEFAULT NULL, CHANGE messagePositives messagePositives LONGTEXT DEFAULT NULL, CHANGE messageNegatives messageNegatives LONGTEXT DEFAULT NULL, CHANGE ownerAnswer ownerAnswer LONGTEXT DEFAULT NULL;
