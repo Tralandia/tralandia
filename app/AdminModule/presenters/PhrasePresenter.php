@@ -64,13 +64,17 @@ class PhrasePresenter extends BasePresenter {
 			$alias = $this->findAlias($newAlias);
 			$this->template->newAlias = $alias;
 		}
+	}
 
+	public function renderAddAlias()
+	{
+		$this->template->aliases = $this->em->getRepository(PHRASE_ALIAS_ENTITY)->findBy([], ['created' => 'DESC']);
 	}
 
 	protected function createComponentAddAlias()
 	{
 		$form = $this->simpleFormFactory->create();
-		$form->addText('help', 'Help');
+		$form->addTextArea('help', 'Help');
 		$form->addSubmit('submit', 'Submit');
 
 		$form->onSuccess[] = $this->processAddAlias;
@@ -82,12 +86,19 @@ class PhrasePresenter extends BasePresenter {
 	{
 		$values = $form->getValues();
 
-		$aliasDao = $this->em->getRepository(PHRASE_ALIAS_ENTITY);
-		$alias = new Alias();
-		$alias->help = $values->help;
+		$help = array_filter(explode("\n", $values->help));
+		$new = [];
+		foreach($help as $row) {
+			$new[] = $alias = new Alias();
+			$alias->help = trim($row);
 
-		$aliasDao->save($alias);
-		$this->redirect('this', ['newAlias' => $alias->getId()]);
+			$this->em->persist($alias);
+		}
+
+		$this->em->flush();
+//		$firstAlias = reset($new);
+//		$lastAlias = end($new);
+//		$this->redirect('this', ['fromAlias' => $firstAlias->id, 'toAlias' => $lastAlias->id]);
 	}
 
 	/* ------- Update Phrase Status --------- */
