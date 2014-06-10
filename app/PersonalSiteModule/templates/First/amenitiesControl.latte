@@ -46,7 +46,7 @@
 								<h3 class="service-title">
 								{if $rental->maxCapacity > 0}
 									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-									<br>(2×4 + 1×3 + 4×2)
+									<br>{$rental->getFormattedCapacity()}
 								{/if}
 								</h3>
 							</div>
