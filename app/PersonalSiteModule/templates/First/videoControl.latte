@@ -1,0 +1,9 @@
+{var $video = $rental->getMainVideo()}
+
+{if $video}
+<section id="video" class="work-section section-block">
+	<div class="inner-section">
+		{!$video->getEmbedCode(1170, 658)}
+	</div>
+</section>
+{/if}

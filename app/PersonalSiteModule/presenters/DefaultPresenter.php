@@ -14,6 +14,7 @@ use PersonalSiteModule\Amenities\IAmenitiesControlFactory;
 use PersonalSiteModule\Calendar\ICalendarControlFactory;
 use PersonalSiteModule\Contact\IContactControlFactory;
 use PersonalSiteModule\Gallery\IGalleryControlFactory;
+use PersonalSiteModule\Video\IVideoControlFactory;
 use PersonalSiteModule\Prices\IPricesControlFactory;
 use PersonalSiteModule\WelcomeScreen\IWelcomeScreenControlFactory;
 use Tralandia\Rental\Rental;
@@ -65,6 +66,11 @@ class DefaultPresenter extends BasePresenter
 	}
 
 	protected function createComponentGallery(IGalleryControlFactory $controlFactory)
+	{
+		return $controlFactory->create($this->getRental());
+	}
+
+	protected function createComponentVideo(IVideoControlFactory $controlFactory)
 	{
 		return $controlFactory->create($this->getRental());
 	}
