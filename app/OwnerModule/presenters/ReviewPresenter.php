@@ -5,7 +5,7 @@ namespace OwnerModule;
 
 use Nette\Application\UI\Multiplier;
 
-class RatingPresenter extends BasePresenter {
+class ReviewPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
