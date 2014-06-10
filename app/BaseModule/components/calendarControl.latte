@@ -14,7 +14,7 @@
 	{/if}
 
 	{foreach $month->blankDays as $day}
-		<div class="day inactive">{if $version=='old'}{$day->day}{/if}</div>
+		<div class="day inactive {$status}">{if $version=='old'}{$day->day}{/if}</div>
 	{/foreach}
 
 	{foreach $month->days as $day}
@@ -22,7 +22,7 @@
 		{var $status = ''}
 
 		{ifset $day->c}
-			{if $day->c && $day->c != 's20'}
+			{if $day->c && $day->c != 's20' && $day->c != 's10'}
 				{var $selected = 'selected'}
 			{/if}
 			{var $status = $day->c}
