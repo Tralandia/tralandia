@@ -1,0 +1,2 @@
+-- InvoicingNewEmail migration UP file
+
