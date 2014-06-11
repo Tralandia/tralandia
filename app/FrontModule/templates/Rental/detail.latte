@@ -295,7 +295,8 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 							<div class="rating-header" n:if="$avgRating">
-								<b>{$avgRating}</b>
+								{* <b>{$avgRating}</b> *}
+								<span class="ratings-count"><a href="#">12 hodnotení (3.23)</a></span>
 								{include #avgRating, rating => $avgRating}
 							</div>
 
