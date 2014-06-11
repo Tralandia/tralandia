@@ -453,6 +453,9 @@
 											</div>
 										</div>
 									</div>
+									{if count($reviews) == 0}
+										<p align="center"><a href="#" onclick="$('form.rating-form').toggleClass('hide'); $(this).hide(); return;">{_a58}</a></p>
+									{/if}
 								</div>
 							</div>
 						</div>
