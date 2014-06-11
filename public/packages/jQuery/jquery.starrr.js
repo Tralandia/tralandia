@@ -9,7 +9,8 @@ var __slice = [].slice;
       fullStarClass: 'fa fa-star',
       numStars: 5,
       change: function(e, value) {},
-      hover: function(e, value) {}
+      mouseover: function(e, value) {},
+      mouseout: function(e, value) {}
     };
 
     function Starrr($el, options) {
@@ -41,7 +42,8 @@ var __slice = [].slice;
         };
       })(this));
       this.$el.on('starrr:change', this.options.change);
-      this.$el.on('mouseover.starrr', 'i', this.options.hover);
+      this.$el.on('mouseover.starrr', 'i', this.options.mouseover);
+      this.$el.on('mouseout.starrr', 'i', this.options.mouseout);
     }
 
     Starrr.prototype.createStars = function() {
@@ -98,8 +100,8 @@ var __slice = [].slice;
   });
 })(window.jQuery, window);
 
+var starrrTexts = [];
 $(function() {
-  var starrrTexts = [];
   var variables = $('variables[for="starrr"]').data();
   for(var n in variables) {
     starrrTexts.push(variables[n]);
@@ -119,9 +121,26 @@ $(function() {
         $control.find('span strong').html(value+'/5');
       }
     },
-    hover: function(e, value) {
-      var index = $(e.currentTarget).index();
-      console.log(starrrTexts[index]);
+    mouseover: function(e) {
+      var $target = $(e.currentTarget);
+      setStarrrText($target, true);
+    },
+    mouseout: function(e) {
+      var $target = $(e.currentTarget);
+      setStarrrText($target, false);
     }
   });
 });
+
+function setStarrrText($target, targetIndex) {
+  var index = 0;
+  var $formControl = $target.parents('.form-control');
+
+  if (targetIndex) {
+    index = $target.index() + 1;
+  } else {
+    index = $formControl.find('input').val();
+  }
+
+  $formControl.find('.starrr-text').html(starrrTexts[index]);
+}
