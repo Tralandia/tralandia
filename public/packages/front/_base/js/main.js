@@ -136,17 +136,24 @@ uitoggleClick = function(){
 	var forClass = '.'+$(this).attr('for');
 	var openText = $(this).attr('data-opentext');
 	var closeText = $(this).attr('data-closetext');
+	var destroyBtnOnClick = $(this).data('destroy-onclick');
 
-	if($(this).hasClass('active')){
+	if($(forClass).hasClass('active')){
 		$(forClass).slideUp('fast');
-		$(this).removeClass('active').html($(this).attr('close'));
+		$(forClass).removeClass('active');
+		$(this).html($(this).attr('close'));
 
 		$(this).html(openText);
 	} else {
 		$(forClass).slideDown('fast');
-		$(this).addClass('active').html($(this).attr('opened'));
+		$(forClass).addClass('active');
+		$(this).html($(this).attr('opened'));
 
 		$(this).html(closeText);		
+	}
+
+	if (destroyBtnOnClick) {
+		$(destroyBtnOnClick).detach();
 	}
 
 	return false;
