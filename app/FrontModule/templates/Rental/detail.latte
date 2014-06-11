@@ -296,7 +296,8 @@
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
 							<div class="rating-header" n:if="$avgRating">
-								<b>{$avgRating}</b>
+								{* <b>{$avgRating}</b> *}
+								<span class="ratings-count"><a href="#">12 hodnotení (3.23)</a></span>
 								{include #avgRating, rating => $avgRating}
 							</div>
 
@@ -597,9 +598,13 @@
 
 
 {define #avgRating}
+	{var $rest = $rating - floor($rating)}
 	<span class="stars" n:inner-foreach="range(1,5) as $i">
 		{if $i < $rating}
 			<i class="icon-star icon"></i>
+		{elseif $rest > 0}
+			<i class="icon-star-half-full icon"></i>
+			{var $rest = 0;}
 		{else}
 			<i class="icon icon-star-empty"></i>
 		{/if}
