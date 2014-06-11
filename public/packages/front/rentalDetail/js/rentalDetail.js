@@ -480,7 +480,9 @@ $(document).ready(function(){
 function onChangeCalendar(self){
 
 	var reservations = $(self).data('reservations');
+	if (reservations) {
 		reservations = reservations.split(',');
+	}
 		
 
 	setTimeout(function(){
@@ -539,6 +541,7 @@ function onChangeCalendar(self){
 					realDate = '0'+realDate;
 				}
 
+				if (reservations) {
 					if(jQuery.inArray(realDate, reservations) != -1){
 
 						switch(status){
@@ -562,7 +565,7 @@ function onChangeCalendar(self){
 							datepickerSetClass(this,statusClass.stop);
 						}						
 					}
-
+				}
 
 				
 			});

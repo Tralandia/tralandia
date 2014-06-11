@@ -8,7 +8,8 @@ var __slice = [].slice;
       emptyStarClass: 'fa fa-star-o',
       fullStarClass: 'fa fa-star',
       numStars: 5,
-      change: function(e, value) {}
+      change: function(e, value) {},
+      hover: function(e, value) {}
     };
 
     function Starrr($el, options) {
@@ -40,6 +41,7 @@ var __slice = [].slice;
         };
       })(this));
       this.$el.on('starrr:change', this.options.change);
+      this.$el.on('mouseover.starrr', 'i', this.options.hover);
     }
 
     Starrr.prototype.createStars = function() {
@@ -97,6 +99,12 @@ var __slice = [].slice;
 })(window.jQuery, window);
 
 $(function() {
+  var starrrTexts = [];
+  var variables = $('variables[for="starrr"]').data();
+  for(var n in variables) {
+    starrrTexts.push(variables[n]);
+  };
+
   return $(".starrr").starrr({
     emptyStarClass: 'icon icon-star-empty',
     fullStarClass: 'icon icon-star',
@@ -110,6 +118,10 @@ $(function() {
         $control.find('.starrr').addClass('checked');
         $control.find('span strong').html(value+'/5');
       }
+    },
+    hover: function(e, value) {
+      var index = $(e.currentTarget).index();
+      console.log(starrrTexts[index]);
     }
   });
 });

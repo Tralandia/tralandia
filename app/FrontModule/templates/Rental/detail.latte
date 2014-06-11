@@ -414,7 +414,7 @@
 								<div class="rating" n:snippet="rating">
 									<h3>
 										{_a44}
-										<a href="#" onclick="$('form.rating-form').toggleClass('hide'); return;" class="btn btn-small btn-orange pull-right">{_a47}</a>
+										<a href="#" class="toggle btn btn-small btn-orange pull-right" for="review-form" data-destroy-onclick="a#reviewform-btn">{_a47}</a>
 									</h3>
 									{control addReview}
 									<div class="item" n:foreach="$reviews as $review">
@@ -453,7 +453,7 @@
 										</div>
 									</div>
 									{if count($reviews) == 0}
-										<p align="center"><a href="#" onclick="$('form.rating-form').toggleClass('hide'); $(this).hide(); return;">{_a58}</a></p>
+										<p align="center"><a href="#" class="toggle" for="review-form" data-destroy-onclick="a#reviewform-btn" id="reviewform-btn">{_a58}</a></p>
 									{/if}
 								</div>
 							</div>
