@@ -2,7 +2,7 @@
 
 <div class="review-form hide">
 	{form form , class => 'rating-form ajax'}
-		<variables for="starrr" data-first="Hrozne" data-second="Zle" data-third="Dobre" data-fourth="Vyborne" data-fifth="Najlepsie"></variables>
+		<variables for="starrr" data-default="Ohodnotte!" data-first="Hrozne" data-second="Zle" data-third="Dobre" data-fourth="Vyborne" data-fifth="Najlepsie"></variables>
 		<table cellpadding="0">
 			<tr>
 				<td>{$form['firstName']->caption}</td>
@@ -10,10 +10,11 @@
 				<td colspan="2" rowspan="14" width="461" valign="top">
 					<div class="starrr-group">
 						{foreach $form['rating']->getComponents() as $rating}
-							<div class="form-control">
-								<span>{$rating->getOption('caption')} <strong></strong></span>
-								<div id="stars" class="starrr"></div>
+							<div class="form-control clearfix">
+								<span class="caption">{$rating->getOption('caption')} <strong></strong></span>
+								<div id="stars" class="starrr pull-left"></div>
 								{input $rating}
+								<div class="starrr-text pull-left">ohodnotte!</div>
 							</div>
 						{/foreach}
 						<div class="submit">
