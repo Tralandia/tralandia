@@ -20,7 +20,6 @@ use Tralandia\Rental\CalendarManager;
  * 		indexes={
  * 			@ORM\Index(name="status", columns={"status"}),
  * 			@ORM\Index(name="slug", columns={"slug"}),
- * 			@ORM\Index(name="personalSiteUrl", columns={"personalSiteUrl"}),
  * 			@ORM\Index(name="rank", columns={"rank"}),
  * 			@ORM\Index(name="calendarUpdated", columns={"calendarUpdated"}),
  * 			@ORM\Index(name="harvested", columns={"harvested"}),
@@ -152,13 +151,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $url;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 * @todo nepouzivany od 19.5.2014
-	 */
-	protected $personalSiteUrl;
 
 	/**
 	 * @var \Entity\PersonalSite\Configuration
