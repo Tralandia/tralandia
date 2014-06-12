@@ -48,7 +48,8 @@ class ReviewPresenter extends BasePresenter {
 
 			$form->addTextArea('answer');
 			$form->addHidden('reviewId', $reviewId);
-			$form->addSubmit('submit', 'odpovedat');
+			$form->addSubmit('submit', 'odpovedat')
+				->setAttribute('class', 'btn btn-default pull-right');
 
 			$form->onSuccess[] = $this->processAnswerForm;
 

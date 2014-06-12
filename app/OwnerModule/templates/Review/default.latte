@@ -14,7 +14,7 @@
 			</h3>
 			<div class="item" n:foreach="$reviews as $review" n:snippet="review-$review->id">
 				<div class="row-fluid">
-					<div class="span2">
+					<div class="span3">
 						<strong>{$review->getCustomerFullName()}</strong><br/>
 						<span class="stars" n:inner-foreach="range(1,5) as $i">
 							{if $i < $review->avgRating}
@@ -26,7 +26,7 @@
 						<i>{_$review->groupType}</i><br/>
 						{$review->created|date}
 					</div>
-					<div class="comments span8">
+					<div class="comments span9">
 						<p>
 							<span class="line"></span>
 							<i class="icon-plus-sign"></i>
@@ -39,10 +39,9 @@
 						</p>
 					</div>
 				</div>
-				<div class="response">
+				<div class="owner-response">
 					<div class="row-fluid">
-						<div class="span2">&nbsp;</div>
-						<div class="comments span8">
+						<div class="comments span12">
 							{if $review->hasAnswer()}
 								<div class="name"><strong>{_a50}</strong></div>
 								<p>
@@ -51,9 +50,10 @@
 									{$review->ownerAnswer}
 								</p>
 							{else}
-								<p>
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}" id="btn-answer-form-{$review->id}">odpovedat</a>
+								<div class="answer-form-{$review->id} hide">
 									{control answerForm-$review->id}
-								</p>
+								</div>
 							{/if}
 						</div>
 					</div>

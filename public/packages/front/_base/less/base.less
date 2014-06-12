@@ -1565,6 +1565,7 @@ div.rating {
 	    margin: 10px 0 10px 0;
 	    border: 1px solid #ddd;
 	    border-radius: 3px;
+	    position: relative;
 
 	    .stars {
     		color: #749108;
@@ -1577,7 +1578,7 @@ div.rating {
 	    		i {
 	    			position: absolute;
 	    			left: -10px;
-	    			top: 2px;
+	    			top: 0px;
 	    			&.icon-plus-sign {
 	    				color: #749108;
 	    			}
@@ -1587,10 +1588,20 @@ div.rating {
 	    		}
 	    		.line {
 	    			position: absolute;
-					left: -5px;
-					top: 5px;
+					left: -7px;
+					top: 10px;
 					bottom: 2px;
-					border-left: 2px solid #EEE;
+					border-left: 5px solid rgba(0,0,0,0.05);
+	    		}
+	    		&.positives {
+	    			.line {
+	    				border-color: rgba(116, 145, 8, 0.1);
+	    			}
+	    		}
+	    		&.negatives {
+	    			.line {
+	    				border-color: rgba(211, 44, 22, 0.1);
+	    			}
 	    		}
 	    	}
 	    }
@@ -1598,13 +1609,19 @@ div.rating {
 
     .response {
     	background: #F8FAE9;
-		margin: 0 -10px -10px;
-		padding: 10px;
-		border-top: 1px solid #EEE;
+		margin: 0;
+		padding: 10px 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: 280px;
 
 		.name {
 			strong {
 				color: #749108;
+				display: block;
+				margin-bottom: 5px;
 			}
 			i {
 				font-size: 12px;
@@ -1613,6 +1630,22 @@ div.rating {
 
 		p {
 			margin-bottom: 0;
+		}
+    }
+
+    .owner-response {
+    	background: #F8FAE9;
+		margin: 10px -10px -10px -10px;
+		padding: 10px 8px 4px;
+
+		textarea {
+			width: 668px;
+		}
+
+		a.toggle {
+			font-weight: normal;
+			text-decoration: underline;
+			padding: 5px 10px 8px;
 		}
     }
 }
