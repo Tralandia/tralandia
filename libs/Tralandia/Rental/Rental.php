@@ -17,7 +17,6 @@ use Nette;
  * @property int|null $maxCapacity
  * @property string|null $contactName
  * @property string|null $email
- * @property string|null $personalSiteUrl
  * @property string|null $calendar
  * @property \DateTime|null $calendarUpdated
  * @property string|null $oldCalendar
