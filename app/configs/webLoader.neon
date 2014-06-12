@@ -431,7 +431,7 @@ parameters:
 				-  %webloader.packages.select2HideInputText%
 				-  %webloader.packages.jqueryPlacehoder%
 				-  %webloader.packages.rentalMapPlugin%
-				
+
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
