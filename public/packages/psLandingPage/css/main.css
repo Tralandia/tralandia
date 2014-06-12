@@ -1,0 +1,449 @@
+body {
+	margin-top: 0px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	color: #333;
+}
+
+ul.list {
+	font-size: 22px;
+	line-height: 32px;
+	padding-left: 0;
+	list-style: none;
+	margin-bottom: 30px;
+}
+ul.list li {
+	padding-left: 40px;
+}
+ul.list li:before {
+	content: "\f00c";
+	font-family: 'FontAwesome';
+	display: inline-block;
+	margin-left: -40px;
+	width: 40px;
+	color: #84A30E;
+}
+
+h3 {
+	font-size: 50px;
+	font-weight: 400;
+	color: #ED5E29;
+}
+h4 {
+	font-size: 26px;
+	color: #666;
+}
+hr {
+	margin-bottom: 40px;
+	border-color: #ECF0F1;
+}
+
+.btn-primary {
+	/*background: #84A30E;*/
+	display: block;
+	border: none;
+	padding: 10px 20px;
+}
+
+.section-colored {
+	border-top: 1px solid #ECF0F1;
+	margin-top: 40px;
+	background: #ECF0F1;
+}
+
+.header-image {
+	background-color: #ECF0F1;
+	height: auto;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+.header-image .container {
+	position: relative;
+}
+.header-image .layouts {
+	position: absolute;
+	right: 10%;
+	width: 90%;
+	top: 10px;
+	margin-right: 120px;
+}
+.header-image .headline ul.list {
+	margin-left: 75%;
+	text-align: left;
+	font-weight: 300;
+	font-size: 20px;
+	margin-top: 20px;
+	line-height: 28px;
+}
+.header-image .headline ul.list li b {
+	font-weight: 400;
+}
+
+.headline {
+	padding: 50px 0 0px;
+	min-height: 580px;
+}
+.headline a.btn {
+	position: absolute;
+	right: 120px;
+	bottom: -70px;
+	padding: 10px 20px;
+	font-size: 16px;
+}
+
+.headline > .container > h1 {
+	font-size: 50px;
+	line-height: 55px;
+	padding: 20px 0;
+	text-align: right;
+	border-radius: 20px;
+	margin-top: 0;
+	color: #333;
+	width: 500px;
+	font-weight: 400;
+	float: right;
+}
+.headline > .container > h1 > strong {
+	color: #ED5E29;
+	display: block;
+	font-weight: 400;
+}
+
+.headline > .container > h2 {
+	display: block;
+	font-size: 28px;
+	clear: both;
+	text-align: left;
+	margin-left: 75%;
+	padding-top: 10px;
+	font-weight: 400;
+}
+.headline > .container > h2 > a.btn {
+	margin-top: 10px;
+	padding: 10px 20px;
+}
+
+#references {
+	
+}
+#references label {
+	margin-bottom: 10px;
+	font-weight: 300;
+	color: #999;
+	font-size: 22px;
+}
+#references .reference-item {
+	position: relative;
+}
+#references .reference-item .item {
+	border: 2px solid #333;
+	border-radius: 5px;
+}
+#references .reference-item .item:hover {
+	border: 2px solid #ED5E29;
+}
+#references .reference-item .item img {
+	border-radius: 3px 3px 0 0;
+}
+#references .reference-item .item a.text {
+	position: relative;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 5px 10px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	font-size: 14px;
+	display: block;
+}
+
+.featurette-divider {
+	margin: 40px 0;
+}
+.featurette:first-child {
+	margin-top: 120px;
+}
+.featurette {
+	overflow: hidden; 
+}
+
+.featurette-image.pull-left {
+	margin-right: 40px;
+}
+.featurette-image.pull-right {
+	margin-left: 40px;
+}
+
+.featurette-heading {
+	font-size: 50px;
+}
+.featurette-heading .text-highlighted {
+	color: #ED5E29;
+}
+
+.navbar-inverse {
+	padding: 10px;
+	background: #262626;
+}
+.navbar-inverse .navbar-nav {
+    float: none;
+
+}
+.navbar-inverse .navbar-nav > li {
+
+}
+.navbar-inverse .navbar-nav > li:last-child {
+	float: right;
+}
+.navbar-inverse .navbar-nav > li:last-child a {
+	background: #ED5E29;
+	color: #fff;
+	border-radius: 5px;
+}
+.navbar-inverse .navbar-nav > li > a {
+
+    font-size: 18px;
+    text-transform: uppercase;
+    
+
+    color: #ccc;
+
+}
+.navbar-inverse a.navbar-brand {
+    padding: 0;
+
+}
+.navbar-inverse a.navbar-brand img {
+	width: 50px;
+	margin-right: 10px;
+}
+
+#contact form {
+	padding: 10px 20px 0;
+	background: #ECF0F1;
+	border-radius: 10px;
+	border: 2px solid #357EBD;
+}
+#contact form h3 {
+	font-size: 40px;
+	color: #586264;
+	margin: 10px 0 15px;
+	border-bottom: 1px solid #CAD6D8;
+	padding-bottom: 15px;
+}
+
+footer {
+	margin: 40px 0;
+	color: #999;
+	font-weight: 300;
+	font-size: 16px;
+}
+
+footer .info {
+	padding: 0;
+	background: #ECF0F1;
+	border-radius: 10px;
+}
+
+footer p.pull-right {
+	text-align: right;
+}
+
+/* RESPONSIVE CSS */
+
+@media (max-width: 1200px) {
+
+.headline > .container > h1 {font-size: 32px;}
+.headline > .container > h2 {font-size: 26px;}
+.featurette-divider {margin: 50px 0;}
+.featurette-image.pull-left {margin-right: 20px;}
+.featurette-image.pull-right {margin-left: 20px;}
+.featurette-heading {font-size: 35px;}
+
+}
+
+@media (max-width: 991px) {
+
+.headline > .container > h1 {font-size: 105px;}
+.headline > .container > h2 {font-size: 50px;}
+.featurette-divider {margin: 40px 0;}
+.featurette-image {max-width: 50%;}
+.featurette-image.pull-left {margin-right: 10px;}
+.featurette-image.pull-right {margin-left: 10px;}
+.featurette-heading {font-size: 30px;}
+
+}
+
+@media (max-width: 768px) {
+	
+.container {margin: 0 15px;}
+.featurette-divider {margin: 40px 0;}
+.featurette-heading {font-size: 25px;}
+
+}
+
+
+@media (max-width: 668px) {
+
+.headline > .container > h1 {font-size: 70px;}
+.headline > .container > h2 {font-size: 32px;}
+.featurette-divider {margin: 30px 0;}
+
+}
+
+@media (max-width: 640px) {
+
+.headline {padding: 75px 0 25px 0;}
+.headline > .container > h1 {font-size: 60px;}
+.headline > .container > h2 {font-size: 30px;}
+
+}
+
+@media (max-width: 375px) {
+
+.featurette-divider {margin: 10px 0;}
+.featurette-image {max-width: 100%;}
+.featurette-image.pull-left {margin-right: 0; margin-bottom: 10px;}
+.featurette-image.pull-right {margin-left: 0; margin-bottom: 10px;}
+
+}
+
+/*
+ *****************************************
+ * Pricing table *************************
+ *****************************************
+ */
+
+
+/* Use a wide full screen for small screens like tablets. */
+@media (min-width: 768px) and (max-width:992px) {
+    .container {
+		width: initial;
+        padding-left: 2em;
+        padding-right: 2em;        
+	}
+}
+
+/* --- Plans ---------------------------- */
+
+.my_planHeader {
+    text-align: center;
+    color: white;
+    padding: 10px;
+}
+.my_planTitle {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 32px;
+}
+.my_planPrice {
+    font-size: 26px;
+    font-weight: 400;    
+}
+.my_planDuration {
+    font-weight: 300;
+    line-height: 18px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .my_planTitle {
+        font-size:small;
+    }    
+}
+
+/* --- Features ------------------------- */
+
+.my_feature {
+    line-height: 16px;   
+    font-size: 14px;
+    padding: 10px 15px;
+}
+
+@media (max-width: 768px) {
+    .my_feature {
+        text-align: center
+    }
+ }
+
+.my_featureRow {
+    margin-top: 0;
+    margin-bottom: 1px;
+    margin-right: 0;
+}    
+
+/* --- Plan 1 --------------------------- */
+.my_plan1 {
+    background: rgb(224,234,242);
+}
+
+.my_planHeader.my_plan1 a {
+    background: rgb(72, 109, 139);
+    color:white;
+}
+
+.my_planHeader.my_plan1 {
+    background: rgb(105, 153, 193);
+    border-bottom: thick solid rgb(72, 109, 139);
+}
+
+/* --- Plan 2 --------------------------- */
+.my_plan2 {
+    background: #E1E9C1;
+}
+
+.my_planHeader.my_plan2 a {
+    background: rgb(108, 131, 62);
+    color:white;
+}
+
+.my_planHeader.my_plan2 {
+    background: #84A30E;
+    border-bottom: thick solid #5C7209;
+    border-radius: 10px 0 0 0;
+}
+
+/* --- Plan 3 --------------------------- */
+.my_plan3 {
+    background: #FFEFD2;
+}
+
+.my_planHeader.my_plan3 a {
+    background: rgb(199, 127, 40);
+    color:white;
+}
+
+.my_planHeader.my_plan3 {
+    background: #ED5E29;
+    border-bottom: thick solid #AA3205;
+    border-radius: 0 10px 0 0;
+}
+
+.my_planFeature {
+    text-align: center;
+    font-size: 2em;
+    line-height: 52px;
+    min-height: 15px;
+}
+.my_planFeature span {
+	font-size: 16px;
+	display: inline-block;
+	line-height: 0;
+	color: rgba(0,0,0,0.3);
+}
+
+.my_planFeature i.my_check {
+    color: #5C7209;
+}
+.my_planFeature i.my_check.fa-times {
+	color: red;
+}
+
+.my_featureRow:last-child .my_planFeature:first-child {
+	border-radius: 0 0 0 10px;
+}
+
+.my_featureRow:last-child .my_planFeature:last-child {
+	border-radius: 0 0 10px 0;
+}

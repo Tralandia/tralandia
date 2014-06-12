@@ -51,12 +51,6 @@ class Page extends \Entity\BaseEntity {
 	protected $h1Pattern;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $genericContent;
-
-	/**
 	 * @var Boolean
 	 * @ORM\Column(type="boolean")
 	 */
