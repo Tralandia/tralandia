@@ -5,6 +5,7 @@ namespace Robot;
 use Model;
 use Entity\Routing\PathSegment;
 use Nette\Utils\Strings;
+use Tralandia\BaseDao;
 
 /**
  * GeneratePathSegmentsRobot class
@@ -15,6 +16,9 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 {
 
 
+	/**
+	 * @var BaseDao
+	 */
 	protected $routingPathSegmentDao;
 	protected $languageDao;
 	protected $pageDao;
@@ -43,11 +47,14 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		$languageList = $this->languageDao->findBySupported(TRUE);
 
+		$this->deletePagesSegments();
 		$this->persistPagesSegments($languageList);
+
 		$this->persistLocationsSegments();
+
 		$this->persistRentalTypesSegments($languageList);
 
-		$this->languageDao->flush();
+		$this->routingPathSegmentDao->save();
 	}
 
 	public function runTypes()
@@ -57,14 +64,14 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		$this->persistRentalTypesSegments($languageList);
 
-		$this->languageDao->flush();
+		$this->routingPathSegmentDao->save();
 	}
 
 	public function runLocations()
 	{
 		$this->persistLocationsSegments();
 
-		$this->languageDao->flush();
+		$this->routingPathSegmentDao->save();
 	}
 
 
@@ -72,10 +79,22 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 		$languageList = $this->languageDao->findBySupported(TRUE);
 
+		$this->deletePagesSegments();
+
 		$this->persistPagesSegments($languageList);
 
-		$this->languageDao->flush();
+		$this->routingPathSegmentDao->save();
 
+	}
+
+	protected function deletePagesSegments()
+	{
+		$qb = $this->routingPathSegmentDao->createQueryBuilder('s');
+
+		$qb->delete()
+			->where('s.type = ?1')->setParameter(1, PathSegment::PAGE);
+
+		$qb->getQuery()->execute();
 	}
 
 	protected function persistPagesSegments($languageList)
@@ -98,7 +117,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				$entity->type = PathSegment::PAGE;
 				$entity->entityId = $page->id;
 
-				$this->pageDao->persist($entity);
+				$this->routingPathSegmentDao->add($entity);
 			}
 		}
 	}
@@ -120,7 +139,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$entity->type = PathSegment::LOCATION;
 			$entity->entityId = $location->id;
 
-			$this->locationDao->persist($entity);
+			$this->routingPathSegmentDao->add($entity);
 		}
 	}
 
@@ -137,7 +156,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				$entity->type = PathSegment::RENTAL_TYPE;
 				$entity->entityId = $type->id;
 
-				$this->rentalTypeDao->persist($entity);
+				$this->routingPathSegmentDao->add($entity);
 			}
 		}
 	}

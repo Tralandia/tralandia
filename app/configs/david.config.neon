@@ -6,7 +6,7 @@ nette:
 parameters:
 
 	templateCache:
-		enabled: no
+		enabled: yes
 
 #	staticDomain: NULL
 #	storageDir: /storage
@@ -20,4 +20,4 @@ parameters:
 
 
 services:
-#	nette.mailer: \Mail\SendmailMailer
+	nette.mailer: \Mail\SendmailMailer
