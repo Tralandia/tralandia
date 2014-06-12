@@ -50,7 +50,10 @@
 									{$review->ownerAnswer}
 								</p>
 							{else}
-								{control answerForm-$review->id}
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}" id="btn-answer-form-{$review->id}">odpovedat</a>
+								<div class="answer-form-{$review->id} hide">
+									{control answerForm-$review->id}
+								</div>
 							{/if}
 						</div>
 					</div>
