@@ -421,33 +421,34 @@
 										<div class="row-fluid">
 											<div class="span2">
 												<strong>{$review->senderFirstName}</strong><br/>
-												{include #avgRating, rating => $review->avgRating}
 												<i>{_$review->groupType}</i><br/>
-												{$review->created|date}
+												{$review->created|date}<br/>
+												{include #avgRating, rating => $review->avgRating}
 											</div>
-											<div class="comments span8">
-												<p>
-													<span class="line"></span>
-													<i class="icon-plus-sign"></i>
-													{$review->messagePositives}
-												</p>
-												<p>
-													<span class="line"></span>
-													<i class="icon-minus-sign"></i>
-													{$review->messageNegatives}
-												</p>
-											</div>
-										</div>
-										<div class="response" n:if="$review->hasAnswer()">
-											<div class="row-fluid">
-												<div class="span2">&nbsp;</div>
-												<div class="comments span8">
-													<div class="name"><strong>{_a50}</strong></div>
-													<p>
+											<div class="span6">
+												<div class="comments">
+													<p n:if="$review->messagePositives" class="positives">
 														<span class="line"></span>
-														<i class="icon-user"></i>
-														{$review->ownerAnswer}
+														<i class="icon-plus-sign"></i>
+														{$review->messagePositives}
 													</p>
+													<p n:if="$review->messageNegatives" class="negatives">
+														<span class="line"></span>
+														<i class="icon-minus-sign"></i>
+														{$review->messageNegatives}
+													</p>
+												</div>
+											</div>
+											<div class="span4">
+												<div class="response" n:if="$review->hasAnswer()">
+													<div class="comments">
+														<div class="name"><strong>{_a50}</strong></div>
+														<p>
+															<span class="line"></span>
+															<i class="icon-user"></i>
+															{$review->ownerAnswer}
+														</p>
+													</div>
 												</div>
 											</div>
 										</div>

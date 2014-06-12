@@ -717,10 +717,26 @@ function ulShowMore(obj) {
 $(function(){
 	$('.linkToSocialSite').click(function(){
 		window.open($(this).attr('href'),'_blank');
-	});	
+	});
+
+	initReviewForm();
 });
 
+function initReviewForm() {
+	// set ratings height
+	$('.rating .response .comments').each(function() {
+		var height = $(this).height() + 5;
+		$(this).parents('.item').css('min-height', height);
+	});
 
+	// reiinit on submit
+	$('form.rating-form').on('submit', function() {
+		$(document).ajaxComplete(function() {
+			initReviewForm();
+			$('.toggle').click(uitoggleClick);
+		})
+	});
+}
 
 
 
