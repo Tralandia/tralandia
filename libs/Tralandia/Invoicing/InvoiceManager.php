@@ -47,6 +47,7 @@ class InvoiceManager
 		$invoice->company = $company;
 		$invoice->rental = $rental;
 		$invoice->dateDue = $due;
+//		$invoice->datePaid = NULL;
 
 		$invoice->clientName = $info['clientName'];
 		$invoice->clientPhone = $info['clientPhone'];

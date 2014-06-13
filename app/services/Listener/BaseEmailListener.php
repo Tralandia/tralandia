@@ -83,6 +83,8 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 
 		$message->addTo($email);
 
+//		$message->addAttachment()
+
 		$this->mailer->send($message);
 	}
 

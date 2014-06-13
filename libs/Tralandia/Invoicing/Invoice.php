@@ -12,7 +12,7 @@ use Nette;
  * @property \Tralandia\Invoicing\Company $company m:hasOne()
  * @property \Tralandia\Rental\Rental $rental m:hasOne()
  * @property \DateTime $dateDue
- * @property \DateTime|null $datePaid
+ * @property \DateTime|null $datePaid = NULL
  * @property string|null $clientName
  * @property string|null $clientPhone
  * @property string|null $clientEmail
@@ -51,7 +51,7 @@ class Invoice extends \Tralandia\Lean\BaseEntity
 	 */
 	public function isPaid()
 	{
-		return (bool) $this->datePaid;
+		return (bool) $this->getDatePaid();
 	}
 
 

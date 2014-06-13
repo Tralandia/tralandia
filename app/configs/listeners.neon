@@ -19,6 +19,7 @@ services:
 	- [class: Listener\BacklinkEmailListener, tags: [kdyby.subscriber]]
 	- [class: Listener\PsOfferEmailListener, tags: [kdyby.subscriber]]
 	- [class: Tralandia\SearchCache\UpdateCalendarListener, tags: [kdyby.subscriber]]
+	- [class: Listener\InvoiceEmailListener, tags: [kdyby.subscriber]]
 
 factories:
 

@@ -25,7 +25,7 @@ ALTER TABLE invoicing_servicetype ADD CONSTRAINT FK_9E82AD9D71179CD6 FOREIGN KEY
 ALTER TABLE invoicing_company ADD slug VARCHAR(255) DEFAULT NULL;
 ALTER TABLE `invoicing_company` MODIFY COLUMN `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL AFTER `name`;
 
-ALTER TABLE invoicing_invoice ADD dateDue DATE NOT NULL, ADD datePaid DATE DEFAULT NULL, ADD dateFrom DATE DEFAULT NULL, ADD dateTo DATE DEFAULT NULL, DROP timeDue, DROP timePaid, DROP timeFrom, DROP timeTo, CHANGE givenFor givenFor ENUM('Share', 'Backlink', 'Paid Invoice');
+ALTER TABLE invoicing_invoice ADD dateDue DATE NOT NULL, ADD datePaid DATE DEFAULT NULL, ADD dateFrom DATE DEFAULT NULL, ADD dateTo DATE DEFAULT NULL, DROP timeDue, DROP timePaid, DROP timeFrom, DROP timeTo, CHANGE givenFor givenFor ENUM('Share', 'Backlink', 'Paid Invoice', 'Membership');
 ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateFrom` DATE DEFAULT NULL AFTER `paymentInfo`;
 ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateTo` DATE DEFAULT NULL AFTER `dateFrom`;
 ALTER TABLE `invoicing_invoice` MODIFY COLUMN `dateDue` DATE NOT NULL AFTER `rental_id`;

@@ -24,6 +24,7 @@ use Tralandia\User\UserRepository;
 class AddRentalForm extends \BaseModule\Components\BaseFormControl
 {
 
+	public $onInvoiceCreate = [];
 	public $onFormSuccess = [];
 
 	/**
@@ -208,6 +209,7 @@ class AddRentalForm extends \BaseModule\Components\BaseFormControl
 		$invoice = $this->invoiceManager->createInvoice($rental, $service, $this->user->login, $this->translator);
 		$this->invoiceManager->save($invoice);
 
+		$this->onInvoiceCreate($invoice);
 		$this->onFormSuccess($form, $doctrineRental);
 	}
 

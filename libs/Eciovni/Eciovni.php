@@ -45,24 +45,25 @@ class Eciovni extends Control {
     }
 
 
-    /**
-     * Exports Invoice template via passed mPDF.
-     *
-     * @param mPDF $mpdf
-     * @param string $name
-     * @param string $dest
-     * @return void
-     */
+	/**
+	 * Exports Invoice template via passed mPDF.
+	 *
+	 * @param mPDF $mpdf
+	 * @param string $name
+	 * @param string $dest
+	 *
+	 * @return string
+	 */
     public function exportToPdf(mPDF $mpdf, $name = NULL, $dest = NULL) {
         $this->generate($this->template);
         $mpdf->WriteHTML((string) $this->template);
 
         if (($name !== '') && ($dest !== NULL)) {
-            $mpdf->Output($name, $dest);
+            return $mpdf->Output($name, $dest);
         } elseif ($dest !== NULL) {
-            $mpdf->Output('', $dest);
+            return $mpdf->Output('', $dest);
         } else {
-            $mpdf->Output($name, $dest);
+            return $mpdf->Output($name, $dest);
         }
     }
 
@@ -214,14 +215,14 @@ class Eciovni extends Control {
         $template->finalUntaxedValue = $this->countFinalUntaxedValue();
         $template->finalTaxValue = $this->countFinalTaxValue();
         $template->finalValue = $finalValues;
-        $template->finalValueRound = $finalValues + $this->data->getInoviceRound(); 
+        $template->finalValueRound = $finalValues + $this->data->getInoviceRound();
         $template->finalSummary= $this->getFinalTaxSummary();
     }
-    
-    
+
+
     /**
      * Generate final tax sumary
-     * 
+     *
      * @return array
      */
     private function getFinalTaxSummary(){
