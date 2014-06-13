@@ -45,6 +45,13 @@ use Nette;
 class Invoice extends \Tralandia\Lean\BaseEntity
 {
 
+	/**
+	 * @return bool
+	 */
+	public function isForFree()
+	{
+		return (bool) !($this->priceEur > 0);
+	}
 
 	/**
 	 * @return bool

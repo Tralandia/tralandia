@@ -72,7 +72,7 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	}
 
 
-	protected function send(Compiler $emailCompiler, $email)
+	protected function send(Compiler $emailCompiler, $email, array $attachments = NULL)
 	{
 		$message = new \Nette\Mail\Message();
 
@@ -83,7 +83,9 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 
 		$message->addTo($email);
 
-//		$message->addAttachment()
+		foreach($attachments as $file => $content) {
+			$message->addAttachment($file, $content);
+		}
 
 		$this->mailer->send($message);
 	}

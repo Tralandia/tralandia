@@ -20,4 +20,4 @@ parameters:
 
 
 services:
-#	nette.mailer: \Mail\SendmailMailer
+	nette.mailer: \Mail\SendmailMailer

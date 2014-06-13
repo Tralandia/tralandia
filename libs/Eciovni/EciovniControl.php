@@ -34,16 +34,7 @@ class Eciovni extends Control {
         $this->templatePath = __DIR__ . '/Eciovni.latte';
     }
 
-
-	public function templatePrepareFilters($template)
-	{
-		$service = new \Nette\Latte\Engine;
-
-		$template->registerFilter($service);
-	}
-
-
-	/**
+    /**
      * Setter for path to template
      *
      * @param string $templatePath

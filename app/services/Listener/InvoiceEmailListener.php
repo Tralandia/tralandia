@@ -34,6 +34,8 @@ class InvoiceEmailListener extends BaseEmailListener implements \Kdyby\Events\Su
 
 	public function onSuccess(Invoice $invoice)
 	{
+		if($invoice->isForFree()) return NULL;
+
 		$emailCompiler = $this->prepareCompiler($invoice);
 
 		$email = $invoice->rental->getContactEmail();
@@ -41,9 +43,9 @@ class InvoiceEmailListener extends BaseEmailListener implements \Kdyby\Events\Su
 		$eciovni = $this->documentGenerator->getEciovni($invoice);
 
 		$mpdf = new \mPDF('utf-8');
-		$d = $eciovni->exportToPdf($mpdf, NULL, 'S');
+		$attachmentContent = $eciovni->exportToPdf($mpdf, NULL, 'S');
 
-		$this->send($emailCompiler, $email);
+		$this->send($emailCompiler, $email, ['invoice.pdf' => $attachmentContent]);
 	}
 
 
