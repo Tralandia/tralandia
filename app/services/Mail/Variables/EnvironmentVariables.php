@@ -139,6 +139,14 @@ class EnvironmentVariables extends Nette\Object
 		return $this->link('//:Front:SupportUs:default');
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getVariablePersonalSitesPromoLink()
+	{
+		return $this->link('//:Front:PsLandingPage:default');
+	}
+
 
 	/**
 	 * @param string $destination

@@ -142,7 +142,13 @@ class Newsletter extends EmailManager
 
 			$qbTotal->innerJoin('r.user', 'u')
 				->andWhere($qbTotal->expr()->eq('u.newsletter', ':newsletter'))->setParameter('newsletter', TRUE)
-				->andWhere($qbTotal->expr()->in('u.language', [62, 60]));
+				->andWhere($qbTotal->expr()->in('u.language', [
+					28, #cs
+					60, #hr
+					62, #hu
+					73, #it
+					129, #pl
+				]));
 
 			$qb = clone $qbTotal;
 			$qb->andWhere($qbTotal->expr()->eq('r.newsletterSent', ':newsletterSent'))->setParameter('newsletterSent', FALSE);

@@ -32,7 +32,7 @@ class PsOfferEmailListener extends BaseEmailListener implements \Kdyby\Events\Su
 		$receiver = $rental->getOwner();
 
 		$emailCompiler = $this->createCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
-		$emailCompiler->setTemplate($this->getTemplate('rental-sites-1'));
+		$emailCompiler->setTemplate($this->getTemplate('rental-sites-2'));
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addOwner('owner', $receiver);
 
