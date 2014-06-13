@@ -46,7 +46,10 @@ class ReviewPresenter extends BasePresenter {
 			$form = $this->simpleFormFactory->create();
 			$form->getElementPrototype()->addClass('ajax');
 
-			$form->addTextArea('answer');
+			$review = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->find($reviewId);
+
+			$form->addTextArea('answer')
+				->setValue($review->ownerAnswer);
 			$form->addHidden('reviewId', $reviewId);
 			$form->addSubmit('submit', 'odpovedat')
 				->setAttribute('class', 'btn btn-default pull-right');

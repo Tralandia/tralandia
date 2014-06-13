@@ -43,18 +43,21 @@
 					<div class="row-fluid">
 						<div class="comments span12">
 							{if $review->hasAnswer()}
-								<div class="name"><strong>{_a50}</strong></div>
-								<p>
-									<span class="line"></span>
-									<i class="icon-user"></i>
-									{$review->ownerAnswer}
-								</p>
-							{else}
-								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}" id="btn-answer-form-{$review->id}">odpovedat</a>
-								<div class="answer-form-{$review->id} hide">
-									{control answerForm-$review->id}
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}, #answer-{$review->id}" id="btn-answer-form-{$review->id}">upravit</a>
+								<div id="answer-{$review->id}">
+									<div class="name"><strong>{_a50}</strong></div>
+									<p>
+										<span class="line"></span>
+										<i class="icon-user"></i>
+										{$review->ownerAnswer}
+									</p>
 								</div>
+							{else}
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}, #answer-{$review->id}" id="btn-answer-form-{$review->id}">odpovedat</a>
 							{/if}
+							<div class="answer-form-{$review->id} hide">
+								{control answerForm-$review->id}
+							</div>
 						</div>
 					</div>
 				</div>
