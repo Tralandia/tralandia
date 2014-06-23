@@ -44,6 +44,15 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		$params['to_email'] = $toEmail;
 		$params['to_name'] = $toName;
 
+		$replyTo = $mail->getHeader('Reply-To');
+		if(is_array($replyTo)) {
+			$replyToKeys = array_keys($replyTo);
+			$replyToEmail = array_shift($replyToKeys);
+		} else {
+			$replyToEmail = NULL;
+		}
+		$params['replyto_email'] = $replyToEmail;
+
 		$bcc = $mail->getHeader('Bcc');
 		if (is_array($bcc)) {
 			$bccKeys = array_keys($bcc);
@@ -75,6 +84,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 				$t[] = '"' . $val['from_name'] . '"';
 				$t[] = '"' . $val['to_email'] . '"';
 				$t[] = '"' . $val['to_name'] . '"';
+				$t[] = '"' . $val['replyto_email'] . '"';
 				$t[] = '"' . $val['bcc_email'] . '"';
 				$t[] = '"' . $val['subject'] . '"';
 				$t[] = '"' . addslashes(gzcompress($val['body'])) . '"';
@@ -88,7 +98,7 @@ class EmailerMailer extends \Nette\Mail\SendmailMailer
 		}
 
 		if (count($insert)) {
-			$query = 'INSERT INTO emailer_queued (urgency, confirmed, batch_id, stamp, from_email, from_name, to_email, to_name, bcc_email, subject, body, body_html, attachments, domain, test) VALUES ' . implode(', ', $insert);
+			$query = 'INSERT INTO emailer_queued (urgency, confirmed, batch_id, stamp, from_email, from_name, to_email, to_name, replyto_email, bcc_email, subject, body, body_html, attachments, domain, test) VALUES ' . implode(', ', $insert);
 			//ape($query);
 			return (bool)$this->qEmailer($query);
 		} else {
