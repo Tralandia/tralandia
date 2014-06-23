@@ -65,6 +65,7 @@ class PsLandingPagePresenter extends BasePresenter
 		$this->mailer->send($message);
 
 		if($this->isAjax()) {
+			$this->template->orderSent = TRUE;
 			$this->invalidateControl('orderForm');
 		} else {
 			$this->redirect('this');

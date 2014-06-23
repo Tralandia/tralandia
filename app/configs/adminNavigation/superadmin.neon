@@ -104,6 +104,15 @@ common:
 					label: Dashboard
 					link: ':Admin:Cache:dashboard'
 
+		query:
+			label: Query
+			items:
+				test:
+					label: Test
+					link: ':Admin:Query:run'
+					linkArgs:
+						id: foo
+
 #		email:
 #			label: Email
 #			items:

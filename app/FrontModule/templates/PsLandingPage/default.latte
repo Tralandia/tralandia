@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<title>{_804113}</title>
-
-	<!-- Bootstrap core CSS -->
-	<link href="{$basePath}/packages/psLandingPage/css/bootstrap.css" rel="stylesheet">
-	<link href="{$basePath}/packages/psLandingPage/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700" rel="stylesheet" type="text/css">
-
-	<!-- Custom CSS -->
-	<link href="{$basePath}/packages/psLandingPage/css/main.css" rel="stylesheet">
-</head>
-
-<body>
-
+{block content}
 <div class="header-image">
 
 	<div class="headline">
@@ -254,32 +234,36 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
-			{form orderForm}
-				<h3>{_804151}</h3>
-				<div class="row">
-					<div class="form-group col-lg-6">
-						{label name /}
-						{input name, class => form-control}
+		<div class="col-sm-6" n:snippet="orderForm">
+			{ifset $orderSent}
+				<div class="alert alert-success">{_604}</div>
+			{else}
+				{form orderForm, class => ajax}
+					<h3>{_804151}</h3>
+					<div class="row">
+						<div class="form-group col-lg-6">
+							{label name /}
+							{input name, class => form-control}
+						</div>
+						<div class="form-group col-lg-6">
+							{label email /}
+							{input email, class => form-control}
+						</div>
+						<div class="form-group col-lg-12">
+							{label service /}
+							{input service, class => form-control}
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group col-lg-12">
+							{label message /}
+							{input message, class => form-control}
+						</div>
+						<div class="form-group col-lg-12">
+							{input submit, class => "btn btn-primary"}
+						</div>
 					</div>
-					<div class="form-group col-lg-6">
-						{label email /}
-						{input email, class => form-control}
-					</div>
-					<div class="form-group col-lg-12">
-						{label service /}
-						{input service, class => form-control}
-					</div>
-					<div class="clearfix"></div>
-					<div class="form-group col-lg-12">
-						{label message /}
-						{input message, class => form-control}
-					</div>
-					<div class="form-group col-lg-12">
-						{input submit, class => "btn btn-primary"}
-					</div>
-				</div>
-			{/form}
+				{/form}
+			{/ifset}
 		</div>
 	</div>
 </div>
@@ -309,11 +293,15 @@
 <!-- JavaScript -->
 <script src="{$basePath}/packages/psLandingPage/js/jquery-1.10.2.js"></script>
 <script src="{$basePath}/packages/psLandingPage/js/bootstrap.js"></script>
+<script src="{$basePath}/packages/psLandingPage/js/nette.ajax.js"></script>
 <script n:syntax="double">
+
+	$(function () {
+		$.nette.init();
+	});
+
 	$('input[name=nospam]').each(function(e){
 		$('input[name=nospam]').val('no'+'spam');
 	});
 </script>
-</body>
 
-</html>

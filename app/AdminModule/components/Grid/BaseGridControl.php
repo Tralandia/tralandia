@@ -20,6 +20,8 @@ abstract class BaseGridControl extends BaseControl {
 	 */
 	private $grid;
 
+	protected $useTranslator = true;
+
 
 	/**
 	 * @param \Nextras\Datagrid\Datagrid $grid
@@ -39,7 +41,11 @@ abstract class BaseGridControl extends BaseControl {
 			$grid = new Datagrid;
 			$grid->setRowPrimaryKey('id');
 
-			$grid->setTranslator($this->presenter->getContext()->getService('translator'));
+			if($this->useTranslator) {
+				$grid->setTranslator($this->presenter->getContext()->getService('translator'));
+			} else {
+				$grid->setTranslator(new \Tralandia\Localization\NullDevTranslator);
+			}
 
 			foreach($this->getCellsTemplatesFiles() as $value) {
 				$grid->addCellsTemplate($value);
