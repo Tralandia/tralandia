@@ -813,6 +813,12 @@ factories:
 		class: AdminModule\Grids\Dictionary\ManagerGrid
 		implement: AdminModule\Grids\Dictionary\IManagerGridFactory
 
+	queryGridFactory:
+		class: AdminModule\Grids\QueryGrid
+		arguments: [%queryString%]
+		parameters: [queryString]
+		implement: AdminModule\Grids\IQueryGridFactory
+
 
 	reservationSearchQuery:
 		class: \Tralandia\Reservation\SearchQuery
