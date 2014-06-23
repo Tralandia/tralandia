@@ -91,7 +91,10 @@ class RentalPresenter extends AdminPresenter {
 	{
 		$form = new Form;
 
+		$rental = $this->findRental($this->getParameter('id'));
+
 		$form->addText('url', 'Personal site url:')
+			->setDefaultValue($rental->getPersonalSiteUrl())
 			->addRule(Form::URL, 'Zadaj validne URL');
 		$form->addSubmit('submit');
 
@@ -103,6 +106,7 @@ class RentalPresenter extends AdminPresenter {
 	public function personalSiteSetupFormOnSuccess(Form $form)
 	{
 		$values = $form->getValues();
+		$rentalId = $this->getParameter('id');
 
 		$url = Strings::replace($values->url, '~^(https?://)?~', null);
 		if(Strings::contains($url, '.tralandia.') || Strings::contains($url, '.uns.')) {
@@ -115,27 +119,38 @@ class RentalPresenter extends AdminPresenter {
 		}
 
 
-		if($rental = $this->findRental($url, false, 'personalSiteUrl')) {
-			$form->addError('Tato domena je uz priradena objektu. >> id: '.$rental->getId().', email: '.$rental->getContactEmail());
+		$psConfigurationRepository = $this->em->getRepository(PERSONAL_SITE_CONFIGURATION_ENTITY);
+
+		$psConfiguration = $psConfigurationRepository->findOneBy(['url' => $url]);
+		if($psConfiguration && $psConfiguration->rental->id != $rentalId) {
+			$form->addError('Tato domena je uz priradena objektu. >> id: '.$psConfiguration->rental->id.', email: '.$psConfiguration->rental->getContactEmail());
 		}
 
 		if($form->hasErrors()) {
 			return null;
 		}
 
-		$rental = $this->findRental($this->getParameter('id'));
+		$rental = $this->findRental($rentalId);
+		$psConfiguration = $rental->personalSiteConfiguration;
 
+		$isNewPs = null;
 		/** @var $psConfiguration \Entity\PersonalSite\Configuration */
-		$psConfiguration = $this->em->getRepository(PERSONAL_SITE_CONFIGURATION_ENTITY)->createNew();
+		if(!$psConfiguration) {
+			$psConfiguration = $psConfigurationRepository->createNew();
+			$psConfiguration->rental = $rental;
+			$rental->personalSiteConfiguration = $psConfiguration;
+			$isNewPs = true;
+		}
 		$psConfiguration->url = $url;
-		$psConfiguration->rental = $rental;
-		$rental->personalSiteConfiguration = $psConfiguration;
 
 		$this->rentalDao->save($rental, $psConfiguration);
 
-		if($rental->getPrimaryLocation()->iso == 'sk') { // lebo je clenom UNS.sk
+		if($isNewPs && $rental->getPrimaryLocation()->getIso() == 'sk') { // lebo je clenom UNS.sk
 			$this->prolongService($rental, Service::GIVEN_FOR_MEMBERSHIP, Service::TYPE_PREMIUM_PS);
 		}
+
+		$this->flashMessage('done', self::FLASH_SUCCESS);
+		$this->redirect('list');
 	}
 
 
