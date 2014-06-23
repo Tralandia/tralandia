@@ -43,8 +43,8 @@ doctrine:
 
 
 services:
-#	nette.mailer: \Mail\EmailerMailer
-	nette.mailer: \Mail\SmtpMailer(%smtp%, ...)
+	nette.mailer: \Mail\EmailerMailer
+#	nette.mailer: \Mail\SmtpMailer(%smtp%, ...)
 
 	tester: Tester\NoTester
 
