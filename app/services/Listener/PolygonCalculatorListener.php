@@ -31,11 +31,20 @@ class PolygonCalculatorListener implements \Kdyby\Events\Subscriber
 	{
 		return [
 			'FormHandler\RegistrationHandler::onSuccess',
-			'FormHandler\RentalEditHandler::onSubmit' => 'onSuccess',
+			'OwnerModule\RentalEdit\AboutForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\MediaForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\PricesForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\AmenitiesForm::onFormSuccess' => 'onControlSubmit',
+			'OwnerModule\RentalEdit\InterviewForm::onFormSuccess' => 'onControlSubmit',
 			'Tralandia\Harvester\RegistrationData::onRegister' => 'onSuccess',
 		];
 	}
 
+
+	public function onControlSubmit($form, $rental)
+	{
+		$this->onSuccess($rental);
+	}
 
 	/**
 	 * @param Rental $rental
