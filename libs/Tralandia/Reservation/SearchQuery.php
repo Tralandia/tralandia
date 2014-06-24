@@ -25,6 +25,11 @@ class SearchQuery extends QueryObject
 	/**
 	 * @var array
 	 */
+	private $reservationsIds;
+
+	/**
+	 * @var array
+	 */
 	private $rentals;
 
 	/**
@@ -59,6 +64,12 @@ class SearchQuery extends QueryObject
 	}
 
 
+	public function filterIds(array $ids)
+	{
+		$this->reservationsIds = $ids;
+	}
+
+
 	/**
 	 * @param \Kdyby\Persistence\Queryable $repository
 	 *
@@ -67,6 +78,10 @@ class SearchQuery extends QueryObject
 	protected function doCreateQuery(Kdyby\Persistence\Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder('e');
+
+		if($this->reservationsIds) {
+			$qb->andWhere($qb->expr()->in('e.id', $this->reservationsIds));
+		}
 
 		$qb->leftJoin('e.units', 'u');
 

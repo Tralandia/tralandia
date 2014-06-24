@@ -87,8 +87,8 @@ class ReservationManagerPresenter extends BasePresenter
 
 		$this->em->flush($reservation);
 
-//		$this->invalidateControl('reservation-'.$reservation->id);
-		$this->invalidateControl('allReservations');
+//		$this->template->editedReservation = $reservation->id;
+		$this->invalidateControl('allReservationsWrapper');
 	}
 
 
@@ -97,14 +97,21 @@ class ReservationManagerPresenter extends BasePresenter
 		if($restoreSearch = $this->getParameter('restoreSearch')) {
 			$this->restoreSearch($restoreSearch);
 		}
+		$this->template->storedSearch = $this->storeSearch();
+	}
+
+	public function renderList()
+	{
 		if($this->rental) {
 			$rentals = [$this->findRental($this->rental)];
 		} else {
 			$rentals = $this->loggedUser->getRentals()->toArray();
 		}
 		$query = $this->searchFactory->create($rentals, $this->period, $this->fulltext, $this->showCanceled);
+		if(isset($this->template->editedReservation)) {
+			$query->filterIds([$this->template->editedReservation]);
+		}
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
-		$this->template->storedSearch = $this->storeSearch();
 	}
 
 	protected function storeSearch($expiration = '+ 10 minutes')
