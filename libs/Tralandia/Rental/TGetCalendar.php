@@ -256,5 +256,11 @@ trait TGetCalendar
 	}
 
 
+	public function getLastCalendarUpdate()
+	{
+		return $this->useOldCalendar() ? $this->getOldCalendarUpdated() : $this->getCalendarUpdated();
+	}
+
+
 
 }
