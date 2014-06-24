@@ -144,10 +144,10 @@ class Newsletter extends EmailManager
 				->andWhere($qbTotal->expr()->eq('u.newsletter', ':newsletter'))->setParameter('newsletter', TRUE)
 				->andWhere($qbTotal->expr()->in('u.language', [
 					28, #cs
-					60, #hr
+//					60, #hr
 					62, #hu
 					73, #it
-					129, #pl
+//					129, #pl
 				]));
 
 			$qb = clone $qbTotal;

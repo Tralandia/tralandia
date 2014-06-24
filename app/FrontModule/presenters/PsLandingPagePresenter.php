@@ -23,8 +23,12 @@ class PsLandingPagePresenter extends BasePresenter
 	{
 		$form = $this->simpleFormFactory->create();
 
-		$form->addText('name', '587');
-		$form->addText('email', '580');
+		$form->addText('name', '587')
+			->setRequired('791');
+
+		$form->addText('email', '580')
+			->setRequired('791')
+			->addRule($form::EMAIL, '791');
 
 		$services = [
 			'free' => 1129,
@@ -32,7 +36,7 @@ class PsLandingPagePresenter extends BasePresenter
 		];
 		$form->addSelect('service', 'a59', $services)
 			->setPrompt('415')
-			->setRequired(true);
+			->setRequired('791');
 
 		$form->addTextArea('message', '610', NULL, 6);
 
