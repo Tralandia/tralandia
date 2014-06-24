@@ -18,6 +18,7 @@
 	</button>
 {/form}
 
+{snippet allReservationsWrapper}
 {snippet allReservations}
 {foreach $reservations as $reservation}
 	<div class="row-fluid" n:snippet="reservation-$reservation->id">
@@ -58,6 +59,7 @@
 		</div>
 	</div>
 {/foreach}
+{/snippet}
 {/snippet}
 
 {control p}
