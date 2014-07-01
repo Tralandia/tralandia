@@ -25,7 +25,6 @@
 				{snippet reservationForm}
 					{ifset $reservationSent}
 						<blockquote><p>{_o1029}</p></blockquote>
-						{dump [$fireConversions, $conversionOnReservation, isset($conversionOnReservation)]}
 						<script type="text/javascript" n:syntax="double" n:if="$fireConversions && $conversionOnReservation">
 
 							{{!$conversionOnReservation}}
