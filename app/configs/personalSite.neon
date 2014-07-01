@@ -11,6 +11,9 @@ parameters:
 		lazy: TRUE
 		profiler: true
 
+	showGaCode: false
+	fireConversions: true
+
 services:
 
 factories:
@@ -67,6 +70,6 @@ factories:
 
 	contactControlFactory:
 		class: \PersonalSiteModule\Contact\ContactControl
-		arguments: [%rental%]
+		arguments: [%rental%, %fireConversions%]
 		parameters: [\Tralandia\Rental\Rental rental]
 		implement: \PersonalSiteModule\Contact\IContactControlFactory

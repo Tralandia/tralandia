@@ -25,12 +25,18 @@ class ContactControl extends BaseControl
 	 */
 	protected $reservationFormFactory;
 
+	/**
+	 * @var null
+	 */
+	private $fireConversions;
 
-	public function __construct(Rental $rental, \FrontModule\Forms\Rental\IReservationFormFactory $reservationFormFactory)
+
+	public function __construct(Rental $rental, $fireConversions, \FrontModule\Forms\Rental\IReservationFormFactory $reservationFormFactory)
 	{
 		parent::__construct();
 		$this->rental = $rental;
 		$this->reservationFormFactory = $reservationFormFactory;
+		$this->fireConversions = $fireConversions;
 	}
 
 	public function render()
@@ -59,6 +65,8 @@ class ContactControl extends BaseControl
 		$form->onSuccess[] = function ($form) {
 			//$form->presenter->redirect('this');
 			$form->parent->template->reservationSent = TRUE;
+			$this->template->fireConversions = $this->fireConversions;
+			$this->template->conversionOnReservation = $this->rental->personalSiteConfiguration->conversionOnReservation;
 			$form->parent->invalidateControl('reservationForm');
 		};
 

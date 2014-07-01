@@ -81,8 +81,9 @@ class EnvironmentVariables extends Nette\Object
 	 */
 	public function getVariableSiteName()
 	{
+		$requests = $this->application->getRequests();
 		/** @var $request \Nette\Application\Request */
-		$request = reset($this->application->getRequests());
+		$request = reset($requests);
 		$presenterName = $request->getPresenterName();
 		if(Nette\Utils\Strings::startsWith($presenterName, 'PersonalSite:')) {
 			$parameters = $request->getParameters();

@@ -7,6 +7,8 @@ use Nette;
 
 /**
  * @property string $template m:enum(self::TEMPLATE_*)
+ * @property string|null $gaCode
+ * @property string|null $conversionOnReservation
  */
 class Configuration extends \Tralandia\Lean\BaseEntity
 {

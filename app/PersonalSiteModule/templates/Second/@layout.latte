@@ -284,21 +284,9 @@
 	<script type="text/javascript" src="{$basePath}/personalSite/libs/jquery.fitvids.js"></script>
 	<script type="text/javascript" src="{$basePath}/packages/nette/lib/nette.ajax.js"></script>
 	<script type="text/javascript" src="{$basePath}/personalSite/Second/js/jquery.custom.js?ver=3.8.1"></script>
-	<script type="text/javascript">
 
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-1541490-19']);
-	  _gaq.push(['_setDomainName', 'none']);
-	  _gaq.push(['_setAllowLinker', true]);
-	  _gaq.push(['_trackPageview']);
+	{include ../gaCode.latte}
 
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script>
 </body>
 
 </html>
