@@ -25,6 +25,11 @@
 				{snippet reservationForm}
 					{ifset $reservationSent}
 						<blockquote><p>{_o1029}</p></blockquote>
+						<script type="text/javascript" n:syntax="double" n:if="$fireConversions && $conversionOnReservation">
+
+							{{!$conversionOnReservation}}
+
+						</script>
 					{else}
 						{include '../../../FrontModule/forms/Rental/personalReservationForm.latte'}
 					{/ifset}

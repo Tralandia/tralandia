@@ -52,6 +52,7 @@ class DefaultPresenter extends BasePresenter
 		$this->template->rental = $rental;
 		$this->template->showCalendar = !$rental->isCalendarEmpty();
 		$this->template->hasPremiumService = $this->serviceManager->hasPremiumPS($rental);
+		$this->template->customGaCode = $rental->personalSiteConfiguration->gaCode;
 	}
 
 

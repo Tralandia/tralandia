@@ -18,6 +18,10 @@ abstract class BasePresenter extends \BasePresenter
 
 		$this->template->currentLanguage = $this->language;
 		$this->template->loggedUser = $this->loggedUser;
+
+		$parameters = $this->getContext()->getParameters();
+		$this->template->showGaCode = $parameters['showGaCode'];
+		$this->template->fireConversions = $parameters['fireConversions'];
 	}
 
 

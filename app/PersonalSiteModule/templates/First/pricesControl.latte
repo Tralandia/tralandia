@@ -15,7 +15,6 @@
 							<div class="grid-6">
 								<span n:if="$row->seasonFrom" class="date">{$row->seasonFrom|date}</span> <i class="icon icon-arrow-right"></i> <span n:if="$row->seasonTo" class="date">{$row->seasonTo|date}</span>
 							</div>
-							{dump $row->price}
 							<div class="grid-6"><strong>{$row->price}</strong> / {_$row->priceFor->firstPartId}{if $row->priceFor->secondPartId} / {_$row->priceFor->secondPartId}{/if}</div>
 							<div class="grid-12">
 								<span class="small">{_$row->noteId}</span>

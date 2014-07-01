@@ -8,6 +8,8 @@ parameters:
 		lazy: TRUE
 		profiler: false
 
+	showGaCode: true
+	fireConversions: true
 
 services:
 

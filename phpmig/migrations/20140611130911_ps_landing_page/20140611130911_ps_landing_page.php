@@ -12,7 +12,7 @@ class PsLandingPage extends \Migration\Migration
 
 	public function up()
 	{
-//		$this->executeSqlFromFile('up');
+		$this->executeSqlFromFile('up');
 
 		$em = $this->getEm();
 		/** @var $page \Entity\Page */

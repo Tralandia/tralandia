@@ -397,10 +397,12 @@ class Rental extends \Tralandia\Lean\BaseEntity
 	public function getFormattedCapacity()
 	{
 		$unitCapacity = $this->getUnitsCapacity();
-		$capacity = [];
+
+		$capacity = array_fill_keys($unitCapacity, 0);
 		foreach($unitCapacity as $value) {
 			$capacity[$value] += 1;
 		}
+		array_filter($capacity);
 
 		$formatted = [];
 		foreach($capacity as $key => $value) {
