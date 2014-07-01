@@ -12,7 +12,7 @@ parameters:
 		profiler: true
 
 	showGaCode: false
-	fireConversions: true
+	fireConversions: false
 
 services:
 
