@@ -182,6 +182,7 @@ class ReservationEditPresenter extends BasePresenter
 			foreach($units as $unit) {
 				$reservation->addUnit($unit);
 			}
+			$reservation->unsetRental();
 		} else {
 			$rental = $this->loggedUser->getFirstRental();
 			$reservation->setRental($rental);

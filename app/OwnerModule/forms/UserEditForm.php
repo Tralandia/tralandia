@@ -64,7 +64,9 @@ class UserEditForm extends BaseForm {
 
 		$user = $this->user;
 		$user->setLogin($values->login);
-		if($values->passwordOld == $user->getPassword() && $values->password == $values->confirmPassword) {
+		if(\Security\Authenticator::calculatePasswordHash($values->passwordOld) == $user->getPassword()
+			&& $values->password == $values->confirmPassword)
+		{
 			$user->setPassword($values->password);
 		}
 		$user->setNewsletter($values->newsletter);

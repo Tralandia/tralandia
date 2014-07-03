@@ -1,0 +1,1 @@
+-- RmFixRentalId migration DOWN file
