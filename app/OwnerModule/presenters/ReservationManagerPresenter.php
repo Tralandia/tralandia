@@ -111,6 +111,7 @@ class ReservationManagerPresenter extends BasePresenter
 		if(isset($this->template->editedReservation)) {
 			$query->filterIds([$this->template->editedReservation]);
 		}
+
 		$this->template->reservations = $this->reservationDao->fetch($query)->applyPaginator($this['p']->getPaginator());
 	}
 

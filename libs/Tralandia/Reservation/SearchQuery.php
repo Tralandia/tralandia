@@ -83,7 +83,7 @@ class SearchQuery extends QueryObject
 			$qb->andWhere($qb->expr()->in('e.id', $this->reservationsIds));
 		}
 
-		$qb->leftJoin('e.units', 'u');
+		$qb->innerJoin('e.units', 'u');
 
 		$qb->andWhere($qb->expr()->orX(
 			$qb->expr()->in('e.rental', ':rentals'),
