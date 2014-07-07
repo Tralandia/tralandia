@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   -webkit-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -moz-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
   -o-transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
-  transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0; 
+  transition: all 0.2s ease-in-out, width 0, height 0, top 0, left 0;
 }
 */
 html, body, div, span, applet, object, iframe,
@@ -1708,7 +1708,7 @@ h3#pings {
 .portfolio-details {
     font-weight: normal;
   position: relative;
-  
+
   border: 1px solid #dfdfdf;
   width: 470px;
   max-width: 100%;
@@ -2292,12 +2292,12 @@ h1.incoming-gateway, .loader {
 
 div.stars {
     float: left;
-  
+
     font-size: 40px;
 }
 div.stars i {
     margin-right: 5px;
-  
+
 }
 div.stars i.icon-star, div.stars i.icon-star-half-o {
     color: #D5BE17;
@@ -2343,7 +2343,7 @@ form.review-form .row label {
   margin: 10px 0px;
 }
 form.review-form .row.submit a {
-  padding: 0 10px; 
+  padding: 0 10px;
   color: #aaa;
 }
 form.review-form .dates .grid-6:last-child {
@@ -2380,7 +2380,7 @@ div.day {
   margin-bottom: 1px;
   background: #f3f3f3;
   border-radius: 3px;
-} 
+}
 div.day.inactive {
   border: none;
   background: none;
@@ -2432,18 +2432,16 @@ div.day..inactive {
 }
 
 div.day.selected {
-  background-color: #f68703;
-  border-color: #f68703;
+  /*background-color: #f68703;*/
+  /*border-color: #f68703;*/
 }
 
 div.day.s01 {
-  background: url(../img/calendar-half-orange.png) right bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #f3f3f3;
 }
 div.day.s10 {
-  background: url(../img/calendar-half-orange-end.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
   background-color: #f3f3f3;
 }
@@ -2465,15 +2463,15 @@ div.day.s22 {
   background: #f65103;
 }
 div.day.s21 {
-  background: url(../img/calendar-red-orange.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-half-red-end.png) left bottom no-repeat #f3f3f3;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
 }
 div.day.s12 {
-  background: url(../img/calendar-orange-red.png) left bottom no-repeat;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
+  background: url(../img/calendar-half-red.png) left bottom no-repeat #f3f3f3;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
   background-repeat: no-repeat;
 }
 div.day.active.selected abbr {
-  color: #fff;
+  /*color: #fff;*/
 }
 div.day.active.selected.s10 abbr, div.day.active.selected.s20 abbr {
   color: #AAA;
@@ -2575,7 +2573,7 @@ input[type=submit]:hover,
   content: "\f005";
   color: #333;
 }
-.stars.rating {   
+.stars.rating {
   position: relative;
   font-size: 40px;
 }
