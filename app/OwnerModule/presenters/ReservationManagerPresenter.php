@@ -88,7 +88,9 @@ class ReservationManagerPresenter extends BasePresenter
 		$this->em->flush($reservation);
 
 //		$this->template->editedReservation = $reservation->id;
-		$this->invalidateControl('allReservationsWrapper');
+//		$this->invalidateControl('allReservationsWrapper');
+
+		$this->redirect('this');
 	}
 
 
