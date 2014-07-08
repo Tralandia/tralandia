@@ -65,10 +65,10 @@ form.quick-search {
 }
 form.quick-search input[name="fulltext"] {
 	float: left;
-	width: 153px;
+	width: 415px;
 	padding: 3px 8px;
 	border: 1px solid @lightGreen;
-	margin: 0 10px 0 10px;
+	margin: 0 10px 0 0px;
 	border-radius: 4px;
 }
 form.quick-search input[name="fulltext"].norentals {
@@ -199,6 +199,32 @@ form.quick-search .select2-container:first-child {
 }
 .order-manager-item h2 small {
 	font-size: 12px;
+
+.table-reservations {}
+.table-reservations tr {}
+.table-reservations tr th {}
+.table-reservations tr td {}
+.table-reservations tr.more td {
+	text-align: center;
+	padding: 4px;
+	font-size: 12px;
+}
+.table-reservations tr td button {
+	color: #fff;
+	padding: 0px 5px;
+}
+.table-reservations tr:nth-child(odd) td, 
+.table-reservations tr:nth-child(odd) th {
+	background: #F9FAF4 !important;
+}
+
+.manager-calendar {
+	padding-top: 10px;
+	background: #fff;
+}
+.manager-calendar div.calendar {
+	height: 220px;
+
 }
 
 .brown {
