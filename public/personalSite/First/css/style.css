@@ -2401,11 +2401,11 @@ div.day.active abbr {
   right: 2px;
 }
 
-div.day..ro {
+div.day.ro {
   cursor: default!Important;
 }
 
-div.day..inactive {
+div.day.inactive {
   color: #eeeeee;
   border: 1px solid #eeeeee!Important;
   cursor: default!Important;
@@ -2445,6 +2445,10 @@ div.day.s10 {
   background-repeat: no-repeat;
   background-color: #f3f3f3;
 }
+div.day.s01 abbr, div.day.s11 abbr {
+  font-weight: bold;
+  color: #666;
+}
 
 div.day.s02 {
   background: url(../img/calendar-half-red.png) right bottom;
@@ -2461,6 +2465,9 @@ div.day.s20 {
 }
 div.day.s22 {
   background: #f65103;
+}
+div.day.s02 abbr, div.day.s22 abbr, div.day.s12 abbr {
+  color: #fff;
 }
 div.day.s21 {
   background: url(../img/calendar-half-red-end.png) left bottom no-repeat #f3f3f3;    -webkit-background-size: cover;   -moz-background-size: cover;   -o-background-size: cover;   background-size: cover;
