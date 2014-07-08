@@ -88,6 +88,8 @@ class RentalPriceUploadContainer extends BaseContainer
 					$pricelist->language = $languageRepository->find($row['language']);
 				} else if ($row['entity']) {
 					$pricelist = $pricelistRepository->find($row['entity']);
+					$pricelist->name = $row['name'];
+					$pricelist->language = $languageRepository->find($row['language']);
 				} else {
 					continue;
 				}
