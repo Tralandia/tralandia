@@ -1,0 +1,67 @@
+{block content}
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="rating" n:snippet="reviews">
+			<h3>
+				{_a49}
+
+				{if count($rentals)>1}
+					<select class="select2 pull-right marginTop" id="rentalSelect">
+						<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //Rating:, id => $rental->id}">{_$rental->name}</option>
+					</select>
+				{/if}
+			</h3>
+			<div class="item" n:foreach="$reviews as $review" n:snippet="review-$review->id">
+				<div class="row-fluid">
+					<div class="span3">
+						<strong>{$review->getCustomerFullName()}</strong><br/>
+						<span class="stars" n:inner-foreach="range(1,5) as $i">
+							{if $i < $review->avgRating}
+								<i class="icon-star icon"></i>
+							{else}
+								<i class="icon icon-star-empty"></i>
+							{/if}
+						</span>
+						<i>{_$review->groupType}</i><br/>
+						{$review->created|date}
+					</div>
+					<div class="comments span9">
+						<p>
+							<span class="line"></span>
+							<i class="icon-plus-sign"></i>
+							{$review->messagePositives}
+						</p>
+						<p>
+							<span class="line"></span>
+							<i class="icon-minus-sign"></i>
+							{$review->messageNegatives}
+						</p>
+					</div>
+				</div>
+				<div class="owner-response">
+					<div class="row-fluid">
+						<div class="comments span12">
+							{if $review->hasAnswer()}
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}, #answer-{$review->id}" id="btn-answer-form-{$review->id}">upravit</a>
+								<div id="answer-{$review->id}">
+									<div class="name"><strong>{_a50}</strong></div>
+									<p>
+										<span class="line"></span>
+										<i class="icon-user"></i>
+										{$review->ownerAnswer}
+									</p>
+								</div>
+							{else}
+								<a href="#" class="toggle pull-right" for="answer-form-{$review->id}" data-destroy-onclick="#btn-answer-form-{$review->id}, #answer-{$review->id}" id="btn-answer-form-{$review->id}">odpovedat</a>
+							{/if}
+							<div class="answer-form-{$review->id} hide">
+								{control answerForm-$review->id}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

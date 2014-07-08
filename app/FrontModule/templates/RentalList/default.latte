@@ -46,6 +46,7 @@
 						{var $rentalData = $findRental($rentalId); }
 						{var $firstInterviewAnswerText = $rentalData['firstInterviewAnswerText']; }
 						{var $rental = $rentalData['entity'] }
+						{var $avgRating = $rentalData['avgRating'] }
 						{var $teaser = $rental->getTeaser()->getTranslation($language)}
 						{var $featured = $isRentalFeatured($rental); }
 
@@ -57,7 +58,10 @@
 										{if $mainImage = $rental->getMainImage()}
 											<img alt="{_$rental->name}" n:image="$mainImage"/>
 										{/if}
-
+										<div class="rental-rating" n:if="$avgRating">
+											<b>{$avgRating}</b>
+											<span class="stars"><i class="icon-star icon"></i></span>
+										</div>
 									</a>
 								</div>
 								<div class="span8">

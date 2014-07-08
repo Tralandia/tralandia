@@ -62,12 +62,18 @@ class InvalidateRentalListener implements \Kdyby\Events\Subscriber
 			'OwnerModule\RentalEdit\PricesForm::onFormSuccess' => 'onControlSubmit',
 			'OwnerModule\RentalEdit\AmenitiesForm::onFormSuccess' => 'onControlSubmit',
 			'OwnerModule\RentalEdit\InterviewForm::onFormSuccess' => 'onControlSubmit',
+			'FrontModule\RentalReview\AddReviewForm::onFormSuccess' => 'onReview',
 		];
 	}
 
 	public function onControlSubmit($form, $rental)
 	{
 		$this->onSuccess($rental);
+	}
+
+	public function onReview($form, $review)
+	{
+		$this->onSuccess($review->rental);
 	}
 
 

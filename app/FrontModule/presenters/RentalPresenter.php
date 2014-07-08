@@ -5,6 +5,7 @@ namespace FrontModule;
 use Entity\Rental\Image;
 use Entity\Rental\Rental;
 use FrontModule\Forms\Rental\IformatedCalendarFormFactory;
+use FrontModule\RentalReview\IAddReviewFormFactory;
 use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
@@ -39,8 +40,15 @@ class RentalPresenter extends BasePresenter {
 		}
 	}
 
+
+	public function renderDetail($rental)
+	{
+		$this->template->avgRating = $this->rentalReviewRepository->getRentalAvgRate($rental);
+		$this->template->reviews = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental, 'language' => $this->language->id], ['created' => 'DESC']);
+	}
+
+
 	public function desktopDetail($rental) {
-//		d('detail', t('detail'));
 		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -117,7 +125,6 @@ class RentalPresenter extends BasePresenter {
 
 
 		$this->setLayout('detailLayout');
-//		d('detail', t('detail'));
 	}
 
 
@@ -194,6 +201,17 @@ class RentalPresenter extends BasePresenter {
 		};
 
 		return $form;
+	}
+
+	protected function createComponentAddReview(IAddReviewFormFactory $factory)
+	{
+		$component = $factory->create($this->getParameter('rental'));
+
+		$component->onFormSuccess[] = function () {
+			$this->invalidateControl('rating');
+		};
+
+		return $component;
 	}
 
 	protected function createComponentCalendar()

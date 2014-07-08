@@ -136,17 +136,24 @@ uitoggleClick = function(){
 	var forClass = '.'+$(this).attr('for');
 	var openText = $(this).attr('data-opentext');
 	var closeText = $(this).attr('data-closetext');
+	var destroyBtnOnClick = $(this).data('destroy-onclick');
 
-	if($(this).hasClass('active')){
+	if($(forClass).hasClass('active')){
 		$(forClass).slideUp('fast');
-		$(this).removeClass('active').html($(this).attr('close'));
+		$(forClass).removeClass('active');
+		$(this).html($(this).attr('close'));
 
 		$(this).html(openText);
 	} else {
 		$(forClass).slideDown('fast');
-		$(this).addClass('active').html($(this).attr('opened'));
+		$(forClass).addClass('active');
+		$(this).html($(this).attr('opened'));
 
 		$(this).html(closeText);		
+	}
+
+	if (destroyBtnOnClick) {
+		$(destroyBtnOnClick).detach();
 	}
 
 	return false;
@@ -710,10 +717,26 @@ function ulShowMore(obj) {
 $(function(){
 	$('.linkToSocialSite').click(function(){
 		window.open($(this).attr('href'),'_blank');
-	});	
+	});
+
+	initReviewForm();
 });
 
+function initReviewForm() {
+	// set ratings height
+	$('.rating .response .comments').each(function() {
+		var height = $(this).height() + 5;
+		$(this).parents('.item').css('min-height', height);
+	});
 
+	// reiinit on submit
+	$('form.rating-form').on('submit', function() {
+		$(document).ajaxComplete(function() {
+			initReviewForm();
+			$('.toggle').click(uitoggleClick);
+		})
+	});
+}
 
 
 

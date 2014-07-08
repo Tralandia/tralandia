@@ -170,7 +170,7 @@
 
 										{if count($rental->customPricelistRows) > 0}
 											{foreach $rental->customPricelistRows as $row}
-												<li tooltip="true" n:class="$iterator->getCounter() > 3 ? hide">
+												<li tooltip="true">
 													<div class="row-fluid">
 														<div class="span6">
 															<span class="dateFrom" n:if="$row->seasonFrom">{$row->seasonFrom|date}</span> - <span class="dateTo" n:if="$row->seasonTo">{$row->seasonTo|date}</span>
@@ -188,9 +188,6 @@
 													</div>
 													{/if}
 												</li>
-												{if $iterator->last && $iterator->count() > 3}
-												<li align="center"><a href="#" onclick="ulShowMore(this);">{_297353}</a></li>
-												{/if}
 											{/foreach}
 										{else}
 											{foreach $rental->pricelistRows as $pricelistRow}
@@ -297,11 +294,15 @@
 
 					<!-- right sidebar -->
 					<div class="span3 sidebarRightDetail">
+							<div class="rating-header" n:if="$avgRating">
+								{* <b>{$avgRating}</b> *}
+								<span class="ratings-count"><a href="#">12 hodnotení (3.23)</a></span>
+								{include #avgRating, rating => $avgRating}
+							</div>
 
 							<div class="sidebarContact">
 
 								<div class="sidebarInner first">
-
 
 								<div class="headerInformation">
 									<span class="name">
@@ -382,21 +383,17 @@
 							<!-- right sidebar -->
 						</div>
 
-
+						{* Gallery *}
 						<div class="row-fluid">
 							<div class="span12">
-
-
 								<div class="metaObjectInfo" id="gallery">
 									<h3>{_537}</h3>
 									<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
-
 									<ul class="bigGallery">
 										{var $mainVideo = $rental->getMainVideo()}
 										<li n:if="$mainVideo">{!$mainVideo->getEmbedCode(467, 276)}</li>
 										{foreach $rental->getImages() as $photo}
 										<li n:class="$iterator->getCounter() > 10 ? 'hide toggleHide'">
-
 											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:image="$photo"/>
 											{* <div class="pinterestShare"><i class="icon-pinterest"></i> {$pinterestShare($rental, $photo)}</div> *}
 										</li>
@@ -406,23 +403,68 @@
 									{if count($rental->getImages()) > 10}
 										<a href="#" data-open-text="{_152660}" data-toggle-hide-for="ul.bigGallery .toggleHide" data-close-text="{_152659}" class="showMorePhotos onClickThisHide toggleHide"><i class="icon-arrow-down"></i><span>{_152659}</span> </a>
 									{/if}
-
 								<div class="clearfix"></div>
 							</div>
-
 							<div class="metaObjectInfo" id="priceTable">
 						</div>
 
-
-
-
-
+						{* Rating *}
+						<div class="row-fluid">
+							<div class="span12">
+								<div class="rating" n:snippet="rating">
+									<h3>
+										{_a44}
+										<a href="#" class="toggle btn btn-small btn-orange pull-right" for="review-form" data-destroy-onclick="a#reviewform-btn">{_a47}</a>
+									</h3>
+									{control addReview}
+									<div class="item" n:foreach="$reviews as $review">
+										<div class="row-fluid">
+											<div class="span2">
+												<strong>{$review->senderFirstName}</strong><br/>
+												<i>{_$review->groupType}</i><br/>
+												{$review->created|date}<br/>
+												{include #avgRating, rating => $review->avgRating}
+											</div>
+											<div class="span6">
+												<div class="comments">
+													<p n:if="$review->messagePositives" class="positives">
+														<span class="line"></span>
+														<i class="icon-plus-sign"></i>
+														{$review->messagePositives}
+													</p>
+													<p n:if="$review->messageNegatives" class="negatives">
+														<span class="line"></span>
+														<i class="icon-minus-sign"></i>
+														{$review->messageNegatives}
+													</p>
+												</div>
+											</div>
+											<div class="span4">
+												<div class="response" n:if="$review->hasAnswer()">
+													<div class="comments">
+														<div class="name"><strong>{_a50}</strong></div>
+														<p>
+															<span class="line"></span>
+															<i class="icon-user"></i>
+															{$review->ownerAnswer}
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{if count($reviews) == 0}
+										<p align="center"><a href="#" class="toggle" for="review-form" data-destroy-onclick="a#reviewform-btn" id="reviewform-btn">{_a58}</a></p>
+									{/if}
+								</div>
+							</div>
+						</div>
 
 						<div class="metaObjectInfo">
 							<h3>{_o100045}</h3>
 							<a href="#" class="backToTop scrollTo" data-scroll-to="#container"><span>{_152272}</span> <i class="icon-chevron-up"></i></a>
 
-							<div id="objectDetailMap" data-rental-id="{$rental->id}" data-zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
+							<div id="objectDetailMap" data-rental-id="{$rental->id}" data-zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width100%;float:left;height:450px;"><i class="icon-spinner icon-spin"></i></div>
 							{* <ul id="placesImage"></ul> *}
 
 {* 							<div class="rentalInfoBox hide">
@@ -556,3 +598,18 @@
 
 	{/cache}
 
+
+
+{define #avgRating}
+	{var $rest = $rating - floor($rating)}
+	<span class="stars" n:inner-foreach="range(1,5) as $i">
+		{if $i < $rating}
+			<i class="icon-star icon"></i>
+		{elseif $rest > 0}
+			<i class="icon-star-half-full icon"></i>
+			{var $rest = 0;}
+		{else}
+			<i class="icon icon-star-empty"></i>
+		{/if}
+	</span>
+{/define}

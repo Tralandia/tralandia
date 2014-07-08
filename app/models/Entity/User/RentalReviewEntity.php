@@ -12,8 +12,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RentalReview extends \Entity\BaseEntity {
 
-	// static const STATUS_PENDING = 0;
-	// static const STATUS_APROVED = 1;
+	const STATUS_BANNED = 0;
+	const STATUS_LIVE = 1;
+
+	const GROUP_TYPE_SOLO = 'a51';
+	const GROUP_TYPE_YOUNG_PAIR = 'a52';
+	const GROUP_TYPE_OLD_PAIR = 'a54';
+	const GROUP_TYPE_GROUP = 'a53';
+	const GROUP_TYPE_FRIENDS = 'a57';
+	const GROUP_TYPE_FAMILY_YOUNG_KIDS = 'a55';
+	const GROUP_TYPE_FAMILY_OLD_KIDS = 'a56';
+
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer")
+	 */
+	protected $status = self::STATUS_LIVE;
 
 	/**
 	 * @var Collection
@@ -37,266 +51,136 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $senderName;
+	protected $senderFirstName;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Phone", cascade={"persist"})
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $senderPhone;
+	protected $senderLastName;
 
 	/**
-	 * @var datetime
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $groupType;
+
+	/**
+	 * @var \Datetime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $arrivalDate;
 
 	/**
-	 * @var datetime
+	 * @var \Datetime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $departureDate;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
 	 */
-	protected $capacity;
+	protected $messagePositives;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
-	protected $message;
+	protected $messageNegatives;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $messageLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $messageRegion;
 
 
-			//@entity-generator-code --- NEMAZAT !!!
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer")
+	 */
+	protected $ratingLocation;
 
-	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct()
-	{
-		parent::__construct();
-	}
-		
 	/**
-	 * @param \Entity\Language
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function setLanguage(\Entity\Language $language)
-	{
-		$this->language = $language;
+	protected $ratingCleanness;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function unsetLanguage()
-	{
-		$this->language = NULL;
+	protected $ratingAmenities;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\Language|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rental = $rental;
+	protected $ratingPersonal;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\User\RentalReview
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function unsetRental()
-	{
-		$this->rental = NULL;
+	protected $ratingServices;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\Rental\Rental|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getRental()
-	{
-		return $this->rental;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderEmail($senderEmail)
-	{
-		$this->senderEmail = $senderEmail;
+	protected $ratingAttractions;
 
-		return $this;
-	}
-		
 	/**
-	 * @return string|NULL
+	 * @var int
+	 * @ORM\Column(type="integer")
 	 */
-	public function getSenderEmail()
-	{
-		return $this->senderEmail;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderName($senderName)
-	{
-		$this->senderName = $senderName;
+	protected $ratingPrice;
 
-		return $this;
-	}
-		
 	/**
-	 * @return string|NULL
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
-	public function getSenderName()
-	{
-		return $this->senderName;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Phone
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setSenderPhone(\Entity\Contact\Phone $senderPhone)
-	{
-		$this->senderPhone = $senderPhone;
+	protected $avgRating;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetSenderPhone()
-	{
-		$this->senderPhone = NULL;
 
-		return $this;
-	}
-		
 	/**
-	 * @return \Entity\Contact\Phone|NULL
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
 	 */
-	public function getSenderPhone()
-	{
-		return $this->senderPhone;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setArrivalDate(\DateTime $arrivalDate)
-	{
-		$this->arrivalDate = $arrivalDate;
+	protected $ownerAnswer;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetArrivalDate()
-	{
-		$this->arrivalDate = NULL;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getArrivalDate()
-	{
-		return $this->arrivalDate;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setDepartureDate(\DateTime $departureDate)
-	{
-		$this->departureDate = $departureDate;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalReview
-	 */
-	public function unsetDepartureDate()
+	public function updateAvgRating()
 	{
-		$this->departureDate = NULL;
+		$ratings = array_filter([
+			$this->ratingLocation,
+			$this->ratingCleanness,
+			$this->ratingAmenities,
+			$this->ratingPersonal,
+			$this->ratingServices,
+			$this->ratingAttractions,
+			$this->ratingPrice
+		]);
+		$this->avgRating = round((array_sum($ratings) / count($ratings)),2);
+	}
 
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDepartureDate()
+	public function getCustomerFullName()
 	{
-		return $this->departureDate;
+		return $this->senderFirstName . ' ' . $this->senderLastName;
 	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setCapacity($capacity)
-	{
-		$this->capacity = $capacity;
 
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getCapacity()
+	public function hasAnswer()
 	{
-		return $this->capacity;
+		return (boolean) strlen($this->ownerAnswer);
 	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\RentalReview
-	 */
-	public function setMessage($message)
-	{
-		$this->message = $message;
 
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getMessage()
-	{
-		return $this->message;
-	}
 }
