@@ -2,7 +2,7 @@
 
 <div class="review-form hide">
 	{form form , class => 'rating-form ajax'}
-		<variables for="starrr" data-default="Ohodnotte!" data-first="Hrozne" data-second="Zle" data-third="Dobre" data-fourth="Vyborne" data-fifth="Najlepsie"></variables>
+		<variables for="starrr" data-default="{_820332}" data-first="{_820327}" data-second="{_820328}" data-third="{_820329}" data-fourth="{_820330}" data-fifth="{_820331}"></variables>
 		<table cellpadding="0">
 			<tr>
 				<td>{$form['firstName']->caption}</td>
@@ -14,7 +14,7 @@
 								<span class="caption">{$rating->getOption('caption')} <strong></strong></span>
 								<div id="stars" class="starrr pull-left"></div>
 								{input $rating}
-								<div class="starrr-text pull-left">ohodnotte!</div>
+								<div class="starrr-text pull-left">{_820332}</div>
 							</div>
 						{/foreach}
 						<div class="submit">
