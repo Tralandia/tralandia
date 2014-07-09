@@ -19,6 +19,7 @@ use Nette;
 use Nette\Utils\Html;
 use Tralandia\Currency\Currencies;
 use Tralandia\Rental\Amenities;
+use Nette\Localization\ITranslator;
 
 class AddReviewForm extends \BaseModule\Components\BaseFormControl
 {
@@ -46,6 +47,8 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 	 */
 	private $formFactory;
 
+	private $translator;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
@@ -54,12 +57,13 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 	 * @param \Kdyby\Doctrine\EntityManager $em
 	 */
 	public function __construct(Rental $rental, Environment $environment, ISimpleFormFactory $formFactory,
-								EntityManager $em){
+								EntityManager $em, ITranslator $translator){
 		parent::__construct();
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->em = $em;
 		$this->formFactory = $formFactory;
+		$this->translator = $translator;
 	}
 
 
@@ -67,10 +71,11 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 	public function createComponentForm()
 	{
 		$form = $this->formFactory->create();
+		$form->setTranslator($this->translator);
 
-		$form->addText('firstName', 'a27');
-		$form->addText('lastName', 'a28');
-		$form->addText('email', 'a29');
+		$form->addText('firstName', $this->translate('a27'));
+		$form->addText('lastName', $this->translate('a28'));
+		$form->addText('email', $this->translate('a29'));
 
 		$form->addAdvancedDatePicker('date_from')
 			->getControlPrototype()
@@ -90,26 +95,26 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 			\Entity\User\RentalReview::GROUP_TYPE_FAMILY_YOUNG_KIDS,
 			\Entity\User\RentalReview::GROUP_TYPE_FAMILY_OLD_KIDS,
 		];
-		$form->addSelect('group', 'a30')
-			->setPrompt('a45')
+		$form->addSelect('group', $this->translate('a30'))
+			->setPrompt($this->translate('a45'))
 			->setItems($groups, FALSE)
 			->setRequired(TRUE);
 
 		$messages = $form->addContainer('messages');
-		$messages->addTextArea('positives', 'a31');
-		$messages->addTextArea('negatives', 'a32');
-		$messages->addTextArea('locality', 'a33');
-		$messages->addTextArea('region', 'a34');
+		$messages->addTextArea('positives', $this->translate('a31'));
+		$messages->addTextArea('negatives', $this->translate('a32'));
+		$messages->addTextArea('locality', $this->translate('a33'));
+		$messages->addTextArea('region', $this->translate('a34'));
 
 		$ratingContainer = $form->addContainer('rating');
 		$ratings = [
-			['position', 'a35'],
-			['purity', 'a36'],
-			['amenities', 'a37'],
-			['personal', 'a38'],
-			['services', 'a39'],
-			['activities', 'a40'],
-			['price', 'a41'],
+			['position', $this->translate('a35')],
+			['purity', $this->translate('a36')],
+			['amenities', $this->translate('a37')],
+			['personal', $this->translate('a38')],
+			['services', $this->translate('a39')],
+			['activities', $this->translate('a40')],
+			['price', $this->translate('a41')],
 		];
 		foreach($ratings as $value) {
 			$ratingContainer->addHidden($value[0])
@@ -120,7 +125,7 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 
 		}
 
-		$form->addSubmit('submit', 'a46');
+		$form->addSubmit('submit', $this->translate('a46'));
 
 		$form->onValidate[] = $this->validateForm;
 		$form->onSuccess[] = $this->processForm;
