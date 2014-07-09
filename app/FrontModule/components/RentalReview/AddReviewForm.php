@@ -125,7 +125,7 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		$form->onValidate[] = $this->validateForm;
 		$form->onSuccess[] = $this->processForm;
 
-		$form->setDefaults($this->getTestDefaults());
+//		$form->setDefaults($this->getTestDefaults());
 
 		return $form;
 	}
