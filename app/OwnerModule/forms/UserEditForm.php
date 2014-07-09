@@ -6,6 +6,7 @@ use Entity\Rental\Rental;
 use Entity\User\User;
 use Nette\Forms\Form;
 use Nette\Localization\ITranslator;
+use Security\Authenticator;
 use Tralandia\BaseDao;
 
 class UserEditForm extends BaseForm {
@@ -36,7 +37,9 @@ class UserEditForm extends BaseForm {
 	public function buildForm() {
 		$this->addText('login', 'o1096');
 		$this->addPassword('passwordOld', 'o100157');
-		$this->addPassword('password', 'o997');
+		$this->addPassword('password', 'o997')
+			->addConditionOn($this["passwordOld"], self::FILLED)
+			->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 
 		$this->addPassword('confirmPassword', 'o100148')
 			->addConditionOn($this["password"], self::FILLED)
@@ -46,6 +49,7 @@ class UserEditForm extends BaseForm {
 
 		$this->addSubmit('submit', 'o100151');
 
+		$this->onValidate[] = [$this, 'validateForm'];
 		$this->onSuccess[] = [$this, 'process'];
 	}
 
@@ -58,16 +62,26 @@ class UserEditForm extends BaseForm {
 		]);
 	}
 
+	public function validateForm(UserEditForm $form)
+	{
+		$values = $form->getValues();
+
+		$user = $this->user;
+		if(Authenticator::calculatePasswordHash($values->passwordOld) != $user->getPassword()) {
+			$this['passwordOld']->addError($this->translate(820326));
+		}
+	}
+
 	public function process(UserEditForm $form)
 	{
 		$values = $form->getValues();
 
 		$user = $this->user;
 		$user->setLogin($values->login);
-		if(\Security\Authenticator::calculatePasswordHash($values->passwordOld) == $user->getPassword()
+		if(Authenticator::calculatePasswordHash($values->passwordOld) == $user->getPassword()
 			&& $values->password == $values->confirmPassword)
 		{
-			$user->setPassword($values->password);
+			$user->setPassword(Authenticator::calculatePasswordHash($values->password));
 		}
 		$user->setNewsletter($values->newsletter);
 

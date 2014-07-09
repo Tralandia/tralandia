@@ -10,6 +10,7 @@ namespace PersonalSiteModule\Contact;
 
 use Nette;
 use PersonalSiteModule\BaseControl;
+use Tralandia\Rental\CalendarManager;
 use Tralandia\Rental\Rental;
 
 class ContactControl extends BaseControl
@@ -47,10 +48,12 @@ class ContactControl extends BaseControl
 
 		$formattedCalendar = [];
 		foreach($rental->getCalendar() as $day) {
-			$formattedCalendar[] = $day['d']->format('d-m-Y');
+			if($day[CalendarManager::KEY_FREE_CAPACITY] == 0) {
+				$formattedCalendar[] = $day['d']->format('d-m-Y');
+			}
 		}
 
-		$this->template->formatedCalendar = implode(',', $formattedCalendar);
+		$this->template->formattedCalendar = implode(',', $formattedCalendar);
 //		$this->template->reservationSent = FALSE;
 
 		$this->template->render();

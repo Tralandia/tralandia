@@ -36,10 +36,10 @@
 	{var $dateContainer = $form['date']}
 	<div n:class="$dateContainer['to']->hasErrors() ? 'row grids error' : 'row grids' ">
 		<div class="grid-6">
-			{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" , data-reservations => $formatedCalendar }
+			{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" , data-reservations => $formattedCalendar }
 		</div>
 		<div class="grid-6">
-			{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to" , data-reservations => $formatedCalendar}
+			{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to" , data-reservations => $formattedCalendar}
 		</div>
 		<span class="control-error" id="error-msg-reservation-to">
 			{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
