@@ -122,8 +122,8 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 			$ratingContainer->addText($value[0])
 				->setOption('caption', $value[1])
 				->setDefaultValue(0)
-				->addRule($form::INTEGER)
-				->addRule($form::RANGE, $this->translate('a23'), [1,5]);
+				->addRule($form::INTEGER, $this->translate('820332'))
+				->addRule($form::RANGE, $this->translate('820332'), [1,5]);
 		}
 
 		$form->addSubmit('submit', $this->translate('a46'));
