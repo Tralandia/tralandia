@@ -1,59 +1,102 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
-<div class="review-form hide">
+{$errors = $form->getAllErrors()}
+{if count($errors) > 0}
+	{var $hasErrors = TRUE}
+{else}
+	{var $hasErrors = FALSE}
+{/if}
+
+<div n:class="review-form, !$hasErrors ? hide, $hasErrors ? active">
 	{form form , class => 'rating-form ajax'}
 		<variables for="starrr" data-default="{_820332}" data-first="{_820327}" data-second="{_820328}" data-third="{_820329}" data-fourth="{_820330}" data-fifth="{_820331}"></variables>
 		<table cellpadding="0">
-			<tr>
-				<td>{$form['firstName']->caption}</td>
+			<tr class="simpleInput">
+				<td>{$form['firstName']->caption} <i class="icon-asterisk"></i></td>
 				<td>{$form['lastName']->caption}</td>
 				<td colspan="2" rowspan="14" width="461" valign="top">
 					<div class="starrr-group">
 						{foreach $form['rating']->getComponents() as $rating}
 							<div class="form-control clearfix">
-								<span class="caption">{$rating->getOption('caption')} <strong></strong></span>
-								<div id="stars" class="starrr pull-left"></div>
-								{input $rating}
+								<span class="caption">
+									{var $errors = $rating->getErrors()}
+									{$rating->getOption('caption')} <i class="icon-asterisk"></i>
+									{if $errors}<p class="form-error">{$errors|implode}</p>{/if}
+									<strong></strong>
+								</span>
+								<div id="stars" n:class="starrr, pull-left, $rating->value > 0 ? checked" data-rating="{$rating->value}"></div>
+								{input $rating, type => 'hidden'}
 								<div class="starrr-text pull-left">{_820332}</div>
 							</div>
 						{/foreach}
 						<div class="submit">
 							{input submit, class => 'btn btn-large btn-orange'}
-							<a href="#" class="toggle active" for="review-form">{_a43}</a>
+							<a href="#" class="toggle active" for="review-form">cancel</a>
+							<div class="mandatory">{_a43}</a>
 						</div>
 					</div>
 				</td>
 			<tr>
-				<td>{input firstName}</td>
+				<td>
+					{var $errors = $form['firstName']->getErrors()}
+					{input firstName, "class" => ($errors ? "error")}
+					{if $errors}<p class="form-error">{$errors|implode}</p>{/if}
+				</td>
 				<td>{input lastName}</td>
 			</tr>
 			<tr>
-				<td>{$form['email']->caption}</td>
-				<td>{_a42}</td>
+				<td>{$form['email']->caption} <i class="icon-asterisk"></i></td>
+				<td>{_a42} <i class="icon-asterisk"></i></td>
 			</tr>
 			<tr>
-				<td>{input email}</td>
 				<td>
-					{input date_from, class => 'datepicker'}
-					{input date_to, class => 'datepicker'}
+					{var $errors = $form['email']->getErrors()}
+					{input email, "class" => ($errors ? "error")}
+					{if $errors}<p class="form-error">{$errors|implode}</p>{/if}
+				</td>
+				<td class="dates">
+					{var $errors = $form['date_from']->getErrors()}
+					{if !$errors}
+						{var $errors = $form['date_to']->getErrors()}
+					{/if}
+					{input date_from, class => 'datepicker full' . ($errors ? ' error')}
+					{input date_to, class => 'datepicker full' . ($errors ? ' error')}
+					{if $errors}<p class="form-error">{$errors|implode}</p>{/if}
 				</td>
 			</tr>
 			<tr>
-				<td>{$form['group']->caption}</td>
+				<td>{$form['group']->caption} <i class="icon-asterisk"></i></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					{input group, class => select2}
+				<td colspan="2" class="select">
+					{var $errors = $form['group']->getErrors()}
+					{input group, class => 'select2' . ($errors ? ' error')}
+					{if $errors}
+						<p class="form-error">{$errors|implode}</p>
+					{/if}
 				</td>
 			</tr>
+
 			{foreach $form['messages']->getComponents() as $message}
+				{var $errors=FALSE}
+				{if $message->getName() == 'positives' || $message->getName() == 'negatives'}
+					{var $errors = $form['messages']['positives']->getErrors()}
+				{/if}
 				<tr>
 					<td colspan="2">{$message->caption}</td>
 				</tr>
 				<tr>
-					<td colspan="2">{input $message}</td>
+					<td colspan="2">{input $message, class => $errors ? 'error'}</td>
 				</tr>
+
+				{if $message->getName() == 'positives'}
+					{if $errors}
+						<tr>
+							<td colspan="2"><p class="form-error-inline"><i class="icon-asterisk"></i> {$errors|implode}</p></td>
+						<tr>
+					{/if}
+				{/if}
 			{/foreach}
 		</table>
 	{/form}

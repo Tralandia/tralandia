@@ -102,6 +102,10 @@ var __slice = [].slice;
 
 var starrrTexts = [];
 $(function() {
+  initStarrr();
+});
+
+function initStarrr() {
   var variables = $('variables[for="starrr"]').data();
   for(var n in variables) {
     starrrTexts.push(variables[n]);
@@ -130,7 +134,7 @@ $(function() {
       setStarrrText($target, false);
     }
   });
-});
+}
 
 function setStarrrText($target, targetIndex) {
   var index = 0;
