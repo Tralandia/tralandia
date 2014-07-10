@@ -66,25 +66,26 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		$this->translator = $translator;
 	}
 
-
-
 	public function createComponentForm()
 	{
 		$form = $this->formFactory->create();
 		$form->setTranslator($this->translator);
 
-		$form->addText('firstName', $this->translate('a27'));
+		$form->addText('firstName', $this->translate('a27'))
+			->setRequired(TRUE);
 		$form->addText('lastName', $this->translate('a28'));
-		$form->addText('email', $this->translate('a29'));
+		$form->addText('email', $this->translate('a29'))
+			->addRule($form::EMAIL);
 
 		$form->addAdvancedDatePicker('date_from')
 			->getControlPrototype()
-			->setPlaceholder($this->translate('o1043'));
-
+			->setPlaceholder($this->translate('o1043'))
+			->setRequired(TRUE);
 
 		$form->addAdvancedDatePicker('date_to')
 			->getControlPrototype()
-			->setPlaceholder($this->translate('o1044'));
+			->setPlaceholder($this->translate('o1044'))
+			->setRequired(TRUE);
 
 		$groups = [
 			\Entity\User\RentalReview::GROUP_TYPE_SOLO,
@@ -97,6 +98,7 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 		];
 		$form->addSelect('group', $this->translate('a30'))
 			->setPrompt($this->translate('a45'))
+			->setAttribute('style', 'width:445px;')
 			->setItems($groups, FALSE)
 			->setRequired(TRUE);
 
@@ -117,12 +119,11 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 			['price', $this->translate('a41')],
 		];
 		foreach($ratings as $value) {
-			$ratingContainer->addHidden($value[0])
+			$ratingContainer->addText($value[0])
 				->setOption('caption', $value[1])
 				->setDefaultValue(0)
 				->addRule($form::INTEGER)
-				->addRule($form::RANGE, NULL, [0,5]);
-
+				->addRule($form::RANGE, $this->translate('a23'), [1,5]);
 		}
 
 		$form->addSubmit('submit', $this->translate('a46'));
@@ -162,7 +163,20 @@ class AddReviewForm extends \BaseModule\Components\BaseFormControl
 
 	public function validateForm(BaseForm $form)
 	{
+		$this->presenter->invalidateControl('rating');
 
+		$values = $form->getValues();
+		if (!$values['messages']['positives'] && !$values['messages']['negatives']) {
+			$form['messages']['positives']->addError($this->translate('a60'));
+		}
+
+		if (!$values['date_from']) {
+			$form['date_from']->addError($this->translate('a61'));
+		} else if (!$values['date_to']) {
+			$form['date_to']->addError($this->translate('a62'));
+		} else if (strtotime($values['date_from']) > strtotime($values['date_to'])) {
+			$form['date_to']->addError($this->translate('a63'));
+		}
 	}
 
 

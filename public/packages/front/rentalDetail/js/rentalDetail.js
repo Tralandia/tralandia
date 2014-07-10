@@ -609,7 +609,7 @@ function rentalDetailDatepickerInit(){
 	$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
 
 
-	$( ".datepicker" ).datepicker({ 
+	$( ".datepicker:not(.full)" ).datepicker({ 
 		minDate: 0, 
 		maxDate: "+12M +10D" , 
 		firstDay: 1,
@@ -627,6 +627,12 @@ function rentalDetailDatepickerInit(){
 			onChangeCalendar(this);
 		}	
 	});	
+
+	$( ".datepicker.full" ).datepicker({ 
+		maxDate: "+12M +10D" , 
+		firstDay: 1,
+		dateFormat: "yy-mm-dd"
+	});
 
 
 	$( ".datepickerto" ).datepicker({ 

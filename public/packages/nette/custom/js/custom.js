@@ -67,6 +67,7 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
  */
 Nette.initForm = function(form) {
 	$("select.select2").select2();
+	initStarrr();
 };
 
 

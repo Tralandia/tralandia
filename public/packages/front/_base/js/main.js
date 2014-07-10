@@ -134,6 +134,7 @@ App.prototype.uitoggleOldClick = function(){
 
 uitoggleClick = function(){
 	var forClass = '.'+$(this).attr('for');
+	console.log(this);
 	var openText = $(this).attr('data-opentext');
 	var closeText = $(this).attr('data-closetext');
 	var destroyBtnOnClick = $(this).data('destroy-onclick');
@@ -155,8 +156,6 @@ uitoggleClick = function(){
 	if (destroyBtnOnClick) {
 		$(destroyBtnOnClick).detach();
 	}
-
-	return false;
 }
 
 
@@ -365,7 +364,7 @@ $(document).ready(function(){
 
 	/* register listeners */
 	/* UI toggle function */
-	$('.toggle').click(uitoggleClick);
+	$('.toggle').bind('click', uitoggleClick);
 
 	/* object detail init large map after small map click */
 	$('.mapsImage').click(A.initMapsObjectDetail);
@@ -729,12 +728,12 @@ function initReviewForm() {
 		$(this).parents('.item').css('min-height', height);
 	});
 
+	$('.toggle').unbind('click');
+	$('.toggle').bind('click', uitoggleClick);
+
 	// reiinit on submit
-	$('form.rating-form').on('submit', function() {
-		$(document).ajaxComplete(function() {
-			initReviewForm();
-			$('.toggle').click(uitoggleClick);
-		})
+	$(document).ajaxComplete(function() {
+		initReviewForm();
 	});
 }
 
