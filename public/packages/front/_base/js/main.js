@@ -731,13 +731,27 @@ function initReviewForm() {
 	$('.toggle').unbind('click');
 	$('.toggle').bind('click', uitoggleClick);
 
-	// reiinit on submit
-	$(document).ajaxComplete(function() {
-		initReviewForm();
-	});
 }
 
+// reiinit on submit
+$(document).ajaxComplete(function(event, XMLHttpRequest, options) {
+	if (!options.data) return;
 
+	var data = options.data.split('&');
+	for(var n in data) {
+		var item = data[n].split('=');
+		if (item[0]=='do') {
+			switch(item[1]) {
+				case 'addReview-form-submit':
+					var response = $.parseJSON(XMLHttpRequest.responseText);
+					if ($(response.snippets['snippet--rating']).hasClass('alert-success')) {
+						$('a.btn[for="review-form"]').detach();
+					}
+					initReviewForm();
+				break;
+			}
+			break;
+		}
+	}
 
-
-
+});
