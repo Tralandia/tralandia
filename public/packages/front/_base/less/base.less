@@ -199,6 +199,7 @@ form.quick-search .select2-container:first-child {
 }
 .order-manager-item h2 small {
 	font-size: 12px;
+}
 
 .table-reservations {}
 .table-reservations tr {}
@@ -209,9 +210,24 @@ form.quick-search .select2-container:first-child {
 	padding: 4px;
 	font-size: 12px;
 }
+.table-reservations tr td:nth-child(2) i {
+	font-size: 18px;
+}
+.table-reservations tr td:nth-child(2) i.icon-question {
+	color: #CF1802;
+}
+.table-reservations tr td:nth-child(2) i.icon-check {
+	color: #698308;
+}
+.table-reservations tr td:nth-child(2) i.icon-trash {
+	color: #999;
+}
 .table-reservations tr td button {
-	color: #fff;
+	color: rgba(255,255,255,0.8);
 	padding: 0px 5px;
+}
+.table-reservations tr td button:hover {
+	color: #fff;
 }
 .table-reservations tr:nth-child(odd) td, 
 .table-reservations tr:nth-child(odd) th {
@@ -220,11 +236,19 @@ form.quick-search .select2-container:first-child {
 
 .manager-calendar {
 	padding-top: 10px;
-	background: #fff;
+	background: #EAF0D7;
+	height: 240px;
+	overflow: auto;
+}
+.baseBorder .manager-calendar .inner {
+    width: 9999px;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
 }
 .manager-calendar div.calendar {
 	height: 220px;
-
 }
 
 .brown {
