@@ -57,33 +57,34 @@ ul {
 	list-style: none;
 }
 
-form.quick-search {
+.quick-search {
 	text-align: left;
 	padding: 0 10px 10px;
 	margin-bottom: 0;
 	border-bottom: 1px solid #DDD;
 }
-form.quick-search input[name="fulltext"] {
+.quick-search form input[name="fulltext"] {
 	float: left;
-	width: 415px;
 	padding: 3px 8px;
-	border: 1px solid @lightGreen;
-	margin: 0 10px 0 0px;
-	border-radius: 4px;
+	border: 1px solid #B0C13B;
+	margin: 0;
+	border-radius(4px 0 0 4px);
+	border-right: none;
 }
-form.quick-search input[name="fulltext"].norentals {
+.quick-search form input[name="fulltext"].norentals {
 	width: 338px;
 	margin-left: 0;
 }
-form.quick-search button[type="submit"] {
+.quick-search form button[type="submit"] {
 	background: @lightGreen;
 	color: #FFF;
 	padding: 4px 9px;
+	.border-radius(0 4px 4px 0);
 }
-form.quick-search .select2-container {
+.quick-search form .select2-container {
 	float: left;
 }
-form.quick-search label {
+.quick-search form label {
 	float: left;
 	width: 30px;
 	margin: 0 10px 0 0;
@@ -94,15 +95,15 @@ form.quick-search label {
 	border-radius: 5px;
 	padding: 2px 5px 4px;
 }
-form.quick-search label input {
+.quick-search form label input {
 	margin-top: 0;
 }
-form.quick-search label i {
+.quick-search form label i {
 	margin: 5px 0 0 5px;
 	position: absolute;
 	color: #666;
 }
-form.quick-search .select2-container:first-child {
+.quick-search form .select2-container:first-child {
 	margin-right: 10px;
 }
 
@@ -210,6 +211,11 @@ form.quick-search .select2-container:first-child {
 	padding: 4px;
 	font-size: 12px;
 }
+.table-reservations tr.title td {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 28px;
+}
 .table-reservations tr td:nth-child(2) i {
 	font-size: 18px;
 }
@@ -236,16 +242,29 @@ form.quick-search .select2-container:first-child {
 
 .manager-calendar {
 	padding-top: 10px;
-	background: #EAF0D7;
-	height: 240px;
-	overflow: auto;
+	background: #F6F8ED;
+	height: 285px;
+}
+.manager-calendar form {
+	text-align: center;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+	color: #999;
+}
+.manager-calendar form input {
+	margin-bottom: 0;
+	width: 100px;
 }
 .baseBorder .manager-calendar .inner {
-    width: 9999px;
+	overflow: auto;
     padding: 0;
     margin: 0;
     background: none;
     border: none;
+}
+.baseBorder .manager-calendar .inner .scroll {
+    width: 9999px;
 }
 .manager-calendar div.calendar {
 	height: 220px;
