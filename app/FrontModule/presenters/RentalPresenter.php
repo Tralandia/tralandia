@@ -44,6 +44,7 @@ class RentalPresenter extends BasePresenter {
 	public function renderDetail($rental)
 	{
 		$this->template->avgRating = $this->rentalReviewRepository->getRentalAvgRate($rental);
+		$this->template->reviewsCount = count($this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental], ['created' => 'DESC']));
 		$this->template->reviews = $this->em->getRepository(RENTAL_REVIEW_ENTITY)->findBy(['rental' => $rental, 'language' => $this->language->id], ['created' => 'DESC']);
 	}
 
