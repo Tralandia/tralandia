@@ -57,33 +57,34 @@ ul {
 	list-style: none;
 }
 
-form.quick-search {
+.quick-search {
 	text-align: left;
 	padding: 0 10px 10px;
 	margin-bottom: 0;
 	border-bottom: 1px solid #DDD;
 }
-form.quick-search input[name="fulltext"] {
+.quick-search form input[name="fulltext"] {
 	float: left;
-	width: 153px;
 	padding: 3px 8px;
-	border: 1px solid @lightGreen;
-	margin: 0 10px 0 10px;
-	border-radius: 4px;
+	border: 1px solid #B0C13B;
+	margin: 0;
+	.border-radius(4px 0 0 4px);
+	border-right: none;
 }
-form.quick-search input[name="fulltext"].norentals {
+.quick-search form input[name="fulltext"].norentals {
 	width: 338px;
 	margin-left: 0;
 }
-form.quick-search button[type="submit"] {
+.quick-search form button[type="submit"] {
 	background: @lightGreen;
 	color: #FFF;
 	padding: 4px 9px;
+	.border-radius(0 4px 4px 0);
 }
-form.quick-search .select2-container {
+.quick-search form .select2-container {
 	float: left;
 }
-form.quick-search label {
+.quick-search form label {
 	float: left;
 	width: 30px;
 	margin: 0 10px 0 0;
@@ -94,15 +95,15 @@ form.quick-search label {
 	border-radius: 5px;
 	padding: 2px 5px 4px;
 }
-form.quick-search label input {
+.quick-search form label input {
 	margin-top: 0;
 }
-form.quick-search label i {
+.quick-search form label i {
 	margin: 5px 0 0 5px;
 	position: absolute;
 	color: #666;
 }
-form.quick-search .select2-container:first-child {
+.quick-search form .select2-container:first-child {
 	margin-right: 10px;
 }
 
@@ -199,6 +200,85 @@ form.quick-search .select2-container:first-child {
 }
 .order-manager-item h2 small {
 	font-size: 12px;
+}
+
+#content .table-reservations h4 {
+	font-size: 16px;
+	padding: 10px;
+	font-weight: normal;
+	color: #698308;
+}
+.table-reservations a.more {
+	display: block;
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-size: 12px;
+}
+.table-reservations table {}
+.table-reservations table tr {}
+.table-reservations table tr th {}
+.table-reservations table tr td {}
+.table-reservations table tr.more td {
+	text-align: center;
+	padding: 4px 10px;
+	font-size: 12px;
+}
+.table-reservations table tr.title td {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 28px;
+}
+.table-reservations table tr td:nth-child(2) i {
+	font-size: 18px;
+}
+.table-reservations table tr td:nth-child(2) i.icon-question {
+	color: #CF1802;
+}
+.table-reservations table tr td:nth-child(2) i.icon-check {
+	color: #698308;
+}
+.table-reservations table tr td:nth-child(2) i.icon-trash {
+	color: #999;
+}
+.table-reservations table tr td button {
+	color: rgba(255,255,255,0.8);
+	padding: 0px 5px;
+}
+.table-reservations table tr td button:hover {
+	color: #fff;
+}
+.table-reservations table tr:nth-child(odd) td, 
+.table-reservations table tr:nth-child(odd) th {
+	background: #F9FAF4 !important;
+}
+
+.manager-calendar {
+	padding-top: 10px;
+	background: #fff;
+	height: 285px;
+}
+.manager-calendar form {
+	text-align: center;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	color: #999;
+}
+.manager-calendar form input {
+	margin-bottom: 0;
+	width: 100px;
+}
+.baseBorder .manager-calendar .inner {
+	overflow: auto;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+}
+.baseBorder .manager-calendar .inner .scroll {
+    width: 9999px;
+}
+.manager-calendar div.calendar {
+	height: 220px;
 }
 
 .brown {

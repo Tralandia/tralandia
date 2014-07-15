@@ -94,6 +94,11 @@ class ReservationManagerPresenter extends BasePresenter
 	}
 
 
+	public function actionNew()
+	{
+
+	}
+
 	public function actionList()
 	{
 		if($restoreSearch = $this->getParameter('restoreSearch')) {
