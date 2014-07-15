@@ -68,7 +68,7 @@ ul {
 	padding: 3px 8px;
 	border: 1px solid #B0C13B;
 	margin: 0;
-	border-radius(4px 0 0 4px);
+	.border-radius(4px 0 0 4px);
 	border-right: none;
 }
 .quick-search form input[name="fulltext"].norentals {
@@ -202,9 +202,17 @@ ul {
 	font-size: 12px;
 }
 
-.table-reservations h4 {
+#content .table-reservations h4 {
 	font-size: 16px;
-	padding: 10px !important;
+	padding: 10px;
+	font-weight: normal;
+	color: #698308;
+}
+.table-reservations a.more {
+	display: block;
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-size: 12px;
 }
 .table-reservations table {}
 .table-reservations table tr {}
