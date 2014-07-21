@@ -8,9 +8,10 @@
 			<i class="icon-search"></i> Hledej
 		</button>
 		<input type="text" name="fulltext" value="{$fulltext}" data-redirect="{link //this, rental => null, unit => null, fulltext => '__fulltext__'}">
+		<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 	</form>
 	<select name="period" id="frm-searchForm-period" class="select2 notFulltext" style="width:175px;">
-		<option selected>Všetky ubytovacie jednotky</option>
+		<option value="{link //this, rental => $rental->id}" selected>Všetky ubytovacie jednotky</option>
 		{foreach $userRentals as $rental}
 			<option value="{link //this, rental => $rental->id, unit => null}" n:attr="selected => $selectedRentalId == $rental->id">{_$rental->getName()}</option>
 			{if $rental->hasUnits()}
@@ -20,6 +21,36 @@
 			{/if}
 		{/foreach}
 	</select>
+	<script type="text/javascript">
+		$(function() {
+			// Select rental
+			$('select[name="period"]').on("change", function() {
+				var value = $(this).val();
+				if (value.substring(0, 4) == 'http') {
+					window.location.href = value;
+				}
+			});
+
+			// Search form
+			var $searchForm = $('div.quick-search form');
+
+			$("input", $searchForm).keypress(function(event) {
+			    if (event.which == 13) {
+			        event.preventDefault();
+			        $searchForm.submit();
+			    }
+			});
+
+			$searchForm.on("submit", function(event) {
+				event.preventDefault();
+
+				var value = $(this).find('input[name="fulltext"]').val();
+				var redirect = $(this).find('input[name="fulltext"]').data('redirect');
+
+				window.location.href = redirect.replace('__fulltext__', value);
+			});
+		});
+	</script>
 </div>
 
 
@@ -94,8 +125,8 @@
 				<td>{$reservation->totalPrice} {if $reservation->currency}{$reservation->currency->getSymbol()}{/if}</td>
 				<td>{$reservation->paidPrice} {if $reservation->currency}{$reservation->currency->getSymbol()}{/if}</td>
 				<td>
-					<button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="{link ReservationEdit: $reservation->id}" data-placement="top" rel="tooltip"><i class="icon-pencil"></i></button>
-					<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="{link delete $reservation->id}" data-placement="top" rel="tooltip"><i class="icon-trash"></i></button>
+					<a href="{link ReservationEdit: $reservation->id}" class="btn btn-primary btn-xs" data-title="Edit"><i class="icon-pencil"></i></a>
+					<a href="{link delete $reservation->id}" class="btn btn-danger btn-xs" data-title="Delete"><i class="icon-trash"></i></a>
 				</td>
 			</tr>
 		{/foreach}
