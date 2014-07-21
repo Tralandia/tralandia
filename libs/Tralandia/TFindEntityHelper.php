@@ -39,6 +39,19 @@ trait TFindEntityHelper {
 	 * @param bool $need
 	 * @param string $by
 	 *
+	 * @return \Entity\Rental\Unit|null
+	 */
+	public function findUnit($id, $need = TRUE, $by = 'id')
+	{
+		return $this->findHelper(UNIT_ENTITY, $id, $need, $by);
+	}
+
+
+	/**
+	 * @param $id
+	 * @param bool $need
+	 * @param string $by
+	 *
 	 * @return \Entity\Rental\Type|null
 	 */
 	public function findRentalType($id, $need = TRUE, $by = 'id')

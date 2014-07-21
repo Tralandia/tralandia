@@ -402,6 +402,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->units;
 	}
 
+	public function hasUnits()
+	{
+		return (bool) count($this->getUnits());
+	}
+
 	public function getUnitsCapacity()
 	{
 		$capacity = [];
