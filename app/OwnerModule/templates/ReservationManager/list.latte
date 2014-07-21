@@ -1,65 +1,103 @@
 {block content}
 
-<div class="clearfix">
-	<a n:href="add" class="btn short btn-mini marginTop marginRight btn-blue pull-right">{_719604}</a>
-	<h1 class="rentalEditHeader">{_719603}</h1>
-</div>
-{form searchForm, class => quick-search}
-	{var $moreRentals = false}
-	{ifset $form['rental']}
-		{var $moreRentals = true}
-		{input rental, class => "select2 notFulltext", style => 'width:175px;'}
-	{/ifset}
-	{input period, class => "select2 notFulltext", style => 'width:175px;'}
-	{input fulltext, class => ($moreRentals ? '' : 'norentals')}
-	<label class="tooltipElem" title="{_759414}">{input showCanceled} <i class="icon-trash"></i></label>
-	<button type="submit" class="btn btn-small" name="{$form['submit']->getHtmlName()}" id="{$form['submit']->getHtmlId()}">
-		<i class="icon-search"></i> {_664}
-	</button>
-{/form}
+<h1>Rezervační manažer</h1>
 
-{snippet allReservationsWrapper}
-{snippet allReservations}
-{foreach $reservations as $reservation}
-	<div class="row-fluid" n:snippet="reservation-$reservation->id">
-		<div class="order-manager-item span12">
-			<h2>
-				{if $reservation->status=='confirmed'}
-					<span class="status ok"><i class="icon-ok"></i></span>
-				{elseif $reservation->status=='opened'}
-					<span class="status"><i class="icon-question"></i></span>
-				{elseif $reservation->status=='canceled'}
-					<span class="status"><i class="icon-trash"></i></span>
-				{/if}
-				{if $reservation->senderName}
-					<a n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{$reservation->senderName}</a>
-				{else}
-					<i>{_719605}</i>
-				{/if}
-				<small>({_748130} {$reservation->created|timeago})</small>
-			</h2>
-			<div class="details">
-				<i><b>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</b></i><br/>
-				{var $adults = $template->translate('o12277', NULL, ['count' => $reservation->adultsCount])}
-				{var $children = $template->translate('o100061', NULL, ['count' => $reservation->childrenCount])}
-				{$reservation->adultsCount} {$adults}, {$reservation->childrenCount} {$children} {if $reservation->childrenAge}({$reservation->childrenAge}){/if}
-			</div>
-			<div class="clearfix"></div>
-			<div class="detail-box">
-				<p><a href="mailto: {$reservation->senderEmail}" target="_blank" class="email">{$reservation->senderEmail}</a>, {$reservation->senderPhone->international}</p>
-				<p class="answer">{$reservation->ownersNote}</p>
-				<a class="btn btn-small btn-orange pull-right" n:href="ReservationEdit: $reservation->id, backlink => $storedSearch">{_719627} <i class="icon-arrow-right"></i></a>
-				<a n:if="$reservation->status != 'canceled'" n:href="changeStatus! $reservation->id, status => canceled" class="ajax pull-right remove"><i class="icon-trash"></i></a>
-				{if $reservation->totalPrice}
-				<p class="prices">{_719607} {$reservation->totalPrice} {$reservation->getSomeCurrency()->getIso()|upper}, <strong>{_719609} {($reservation->totalPrice - $reservation->paidPrice)} {$reservation->getSomeCurrency()->getIso()|upper}</strong></p>
-				{else}
-				<p class="prices"><i>{_719606}</i></p>
-				{/if}
+<div class="quick-search clearfix">
+	<form class="pull-right clearfix">
+		<button type="submit" class="btn btn-small pull-right" name="_submit" id="frm-searchForm-submit">
+			<i class="icon-search"></i> Hledej
+		</button>
+		<input type="text" name="fulltext" value="{$fulltext}" data-redirect="{link //this, rental => null, unit => null, fulltext => '__fulltext__'}">
+	</form>
+	<select name="period" id="frm-searchForm-period" class="select2 notFulltext" style="width:175px;">
+		<option selected>Všetky ubytovacie jednotky</option>
+		{foreach $userRentals as $rental}
+			<option value="{link //this, rental => $rental->id, unit => null}" n:attr="selected => $selectedRentalId == $rental->id">{_$rental->getName()}</option>
+			{if $rental->hasUnits()}
+				{foreach $rental->getUnits() as $unit}
+					<option value="{link //this, unit => $unit->id, rental => null}" n:attr="selected => $selectedUnitId == $unit->id">|-- {_$unit->getName()}</option>
+				{/foreach}
+			{/if}
+		{/foreach}
+	</select>
+</div>
+
+
+<div class="manager-calendar clearfix" id="calendar">
+	{form newReservationForm}
+		Nový pobyt:
+		{input date_from, class => datepicker}
+		{input date_to, class => datepicker}
+		{input submit, class => 'btn btn-default'}
+	{/form}
+	{foreach $userRentals as $rental}
+		<h3>{_$rental->getName()}</h3>
+		<div class="inner">
+			<div class="scroll">
+				{control calendar-$rental->id, 4, []}
+				<div class="cleaner"></div>
 			</div>
 		</div>
-	</div>
-{/foreach}
-{/snippet}
+	{/foreach}
+</div>
+
+{snippet pastReservations}
+<div class="table-reservations">
+	<h4>Minulé pobyty</h4>
+	{ifset $pastReservations}
+		{include #reservationsGrid, reservations => $pastReservations}
+	{else}
+		<a n:href="getPast!" class="more ajax">zobtaziť minulé pobyty ({$pastReservationsCount}) <i class="icon-chevron-down"></i></a>
+	{/ifset}
+</div>
 {/snippet}
 
-{control p}
+<div class="table-reservations">
+	<h4>opened</h4>
+	{include #reservationsGrid, reservations => $openedReservations}
+</div>
+
+<div class="table-reservations">
+	<h4>present</h4>
+	{include #reservationsGrid, reservations => $presentReservations}
+</div>
+
+<div class="table-reservations">
+	<h4>Future</h4>
+	{include #reservationsGrid, reservations => $futureReservations}
+</div>
+
+{define reservationsGrid}
+	<table class="table table-bordred table-striped">
+		<tr>
+			<th>ID</th>
+			<th>Status</th>
+			<th>Meno</th>
+			<th>Termín</th>
+			<th>K úhrade</th>
+			<th>Uhradené</th>
+			<th width="80"></th>
+		</tr>
+		{foreach $reservations as $reservation}
+			{if $reservation->getStatus() == 'confirmed'}
+				{var $iconClass = 'icon-check'}
+			{elseif $reservation->getStatus() == 'opened'}
+				{var $iconClass = 'icon-question'}
+			{else}
+				{var $iconClass = 'icon-trash'}
+			{/if}
+			<tr class="unseen">
+				<td>{$reservation->id}</td>
+				<td><i n:class="$iconClass"></i></td>
+				<td>{$reservation->senderName}</td>
+				<td>{$reservation->arrivalDate|date} - {$reservation->departureDate|date}</td>
+				<td>{$reservation->totalPrice} {if $reservation->currency}{$reservation->currency->getSymbol()}{/if}</td>
+				<td>{$reservation->paidPrice} {if $reservation->currency}{$reservation->currency->getSymbol()}{/if}</td>
+				<td>
+					<button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="{link ReservationEdit: $reservation->id}" data-placement="top" rel="tooltip"><i class="icon-pencil"></i></button>
+					<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="{link delete $reservation->id}" data-placement="top" rel="tooltip"><i class="icon-trash"></i></button>
+				</td>
+			</tr>
+		{/foreach}
+	<table>
+{/define}

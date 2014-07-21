@@ -438,7 +438,8 @@
 {define #rentalUnit}
 {var
 	$container = $control;
-	$mainControl = $container->getMainControl()
+	$mainControl = $container->getMainControl();
+	$availableUnits = $availableUnits;
 }
 {var $errors = $mainControl->getErrors()}
 {?unset($control)}
@@ -446,11 +447,16 @@
 <tr n:class="units, count($errors) > 0 ? error">
 	<td colspan="2">
 		{foreach $container->getRentals() as $rental}
+			{var $rentalId = $rental->id}
 			{var $unitsControl = $container->getUnitsControl()}
 			<h3>{_$rental->name} (<a n:href=":Owner:Unit:default">{_719635}</a>)</h3>
 			<div class="units-container clearfix" id="unit{$rental->getId()}">
-				{foreach $unitsControl[$rental->getId()] as $key => $label}
-					<label>{$unitsControl[$rental->getId()]->getControlItem($key)}{_$label}</label>
+				{foreach $unitsControl[$rentalId] as $key => $label}
+					{if isset($availableUnits[$rentalId]) and isset($availableUnits[$rentalId][$key])}
+						<label>{input $unitsControl[$rentalId]:$key}{_$label}</label>
+					{else}
+						<label>{input $unitsControl[$rentalId]:$key, disabled => 1, checked => FALSE}{_$label}</label>
+					{/if}
 				{/foreach}
 			</div>
 		{/foreach}

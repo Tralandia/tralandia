@@ -2,13 +2,16 @@
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
+
+
 {form editForm}
 	<h1>{_719628} {$reservation->id}</h1>
 	<table class="formTable innerPadding">
-		{include #rentalUnit, control => $form['units'] }
+
+		{include #rentalUnit, control => $form['units'], availableUnits => $availableUnits }
 
 		{include #select, control => $form['status'], controlClass => 'select2 notFulltext'}
-		
+
 		{include #text, control => $form['senderName']}
 		{include #email, control => $form['senderEmail']}
 		{include #phone, control => $form['senderPhone']}
