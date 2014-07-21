@@ -28,6 +28,12 @@ class ReservationEditPresenter extends BasePresenter
 	protected $currencies;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\CalendarManager
+	 */
+	protected $calendarManager;
+
+	/**
 	 * @var \Entity\User\RentalReservation
 	 */
 	protected $reservation;
@@ -45,7 +51,17 @@ class ReservationEditPresenter extends BasePresenter
 		$this->reservation = $this->findReservation($id);
 		$this->checkPermission($this->reservation, 'edit');
 		$this->template->reservation = $this->reservation;
+
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, $this->reservation->getArrivalDate(), $this->reservation->getDepartureDate());
+		$this->template->availableUnits = $availableUnits;
 	}
+
+	public function handleGetUnitAvailability($from, $to)
+	{
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, new \DateTime($from), new \DateTime($to));
+		$this->sendJson($availableUnits);
+	}
+
 
 	public function createComponentEditForm()
 	{

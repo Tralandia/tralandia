@@ -8,6 +8,8 @@
 namespace Tralandia\Reservation;
 
 
+use Entity\Rental\Rental;
+use Entity\Rental\Unit;
 use Entity\User\RentalReservation;
 use Kdyby\Doctrine\QueryObject;
 use Kdyby;
@@ -27,10 +29,7 @@ class SearchQuery extends QueryObject
 	 */
 	private $reservationsIds;
 
-	/**
-	 * @var array
-	 */
-	private $rentals;
+	private $rentalOrUnit;
 
 	/**
 	 * @var null
@@ -48,19 +47,19 @@ class SearchQuery extends QueryObject
 	private $phoneBook;
 
 	/**
-	 * @var bool
+	 * @var null
 	 */
-	private $showCanceled;
+	private $status;
 
 
-	public function __construct(array $rentals, $period = NULL, $fulltext = NULL, $showCanceled = NULL, \Extras\Books\Phone $phoneBook)
+	public function __construct($rentalOrUnit, $period = NULL, $status = NULL, $fulltext = NULL, \Extras\Books\Phone $phoneBook)
 	{
 		parent::__construct();
-		$this->rentals = $rentals;
+		$this->rentalOrUnit = $rentalOrUnit;
 		$this->period = $period;
 		$this->fulltext = $fulltext;
 		$this->phoneBook = $phoneBook;
-		$this->showCanceled = $showCanceled;
+		$this->status = $status;
 	}
 
 
@@ -79,17 +78,22 @@ class SearchQuery extends QueryObject
 	{
 		$qb = $repository->createQueryBuilder('e');
 
-		if($this->reservationsIds) {
-			$qb->andWhere($qb->expr()->in('e.id', $this->reservationsIds));
+		$qb->leftJoin('e.units', 'u');
+
+		if($this->rentalOrUnit instanceof Rental) {
+			$this->rentalOrUnit = [$this->rentalOrUnit];
 		}
 
-		$qb->innerJoin('e.units', 'u');
+		if(is_array($this->rentalOrUnit)) {
+			$qb->andWhere($qb->expr()->orX(
+				$qb->expr()->in('e.rental', ':rentals'),
+				$qb->expr()->in('u.rental', ':rentals')
+			))
+				->setParameter('rentals', $this->rentalOrUnit);
 
-		$qb->andWhere($qb->expr()->orX(
-			$qb->expr()->in('e.rental', ':rentals'),
-			$qb->expr()->in('u.rental', ':rentals')
-		))
-			->setParameter('rentals', $this->rentals);
+		} else if($this->rentalOrUnit instanceof Unit) {
+			$qb->andWhere($qb->expr()->eq('u.id', ':unit'))->setParameter('unit', $this->rentalOrUnit);
+		}
 
 		if($this->period) {
 			$today = Nette\DateTime::from(strtotime('today'));
@@ -108,6 +112,10 @@ class SearchQuery extends QueryObject
 				$or->add($qb->expr()->isNull('e.departureDate'));
 				$qb->andWhere($or);
 			}
+		}
+
+		if($this->status) {
+			$qb->andWhere($qb->expr()->eq('e.status', ':status'))->setParameter('status', $this->status);
 		}
 
 		if($this->fulltext) {
@@ -130,12 +138,6 @@ class SearchQuery extends QueryObject
 			$qb->andWhere($fulltextOr);
 		}
 
-		$findStatus = [RentalReservation::STATUS_CONFIRMED, RentalReservation::STATUS_OPENED];
-		if($this->showCanceled) {
-			$findStatus[] = RentalReservation::STATUS_CANCELED;
-		}
-		$qb->andWhere($qb->expr()->in('e.status', $findStatus));
-
 		$qb->orderBy('e.arrivalDate', 'ASC');
 
 		return $qb;
@@ -146,5 +148,5 @@ class SearchQuery extends QueryObject
 
 interface ISearchQueryFactory
 {
-	public function create(array $rentals, $period = NULL, $fulltext = NULL, $showCanceled = NULL);
+	public function create($rentalOrUnit, $period = NULL, $status = NULL, $fulltext = NULL);
 }

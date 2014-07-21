@@ -50,6 +50,26 @@ class CalendarManager
 	}
 
 
+	public function getAvailableUnits(User $user, \DateTime $from, \DateTime $to)
+	{
+		$available = [];
+		foreach($user->getRentals() as $rental) {
+			$available[$rental->id] = $rental->getUnitsCapacity();
+			foreach($rental->getCalendar() as $day) {
+				if($from <= $day[self::KEY_DATE] and $day[self::KEY_DATE] >= $to) {
+					foreach($day[self::KEY_BOOKED_UNITS] as $bookedUnitId => $value) {
+						unset($available[$rental->id][$bookedUnitId]);
+					}
+				}
+			}
+		}
+
+		$available = array_filter($available, function($v) {return count($v);});
+
+		return $available;
+	}
+
+
 	public function update(User $user)
 	{
 		$occupancy = $this->calculateOccupancy($user);

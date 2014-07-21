@@ -829,8 +829,8 @@ factories:
 
 	reservationSearchQuery:
 		class: \Tralandia\Reservation\SearchQuery
-		arguments: [%rentals%, %period%, %fulltext%, %showCanceled%]
-		parameters: [array rentals, period = NULL, fulltext = NULL, showCanceled = NULL]
+		arguments: [%rentalOrUnit%, %period%, %status%, %fulltext%]
+		parameters: [rentalOrUnit, period = NULL, status = NULL, fulltext = NULL]
 		implement: \Tralandia\Reservation\ISearchQueryFactory
 
 includes:
