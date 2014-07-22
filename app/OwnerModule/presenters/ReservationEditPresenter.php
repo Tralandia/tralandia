@@ -5,6 +5,7 @@ namespace OwnerModule;
 
 use BaseModule\Forms\BaseForm;
 use Nette\Application\UI\Form;
+use Nette\DateTime;
 
 class ReservationEditPresenter extends BasePresenter
 {
@@ -52,13 +53,16 @@ class ReservationEditPresenter extends BasePresenter
 		$this->checkPermission($this->reservation, 'edit');
 		$this->template->reservation = $this->reservation;
 
-		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, $this->reservation->getArrivalDate(), $this->reservation->getDepartureDate());
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, $this->reservation->getArrivalDate(), $this->reservation->getDepartureDate(), $this->reservation);
 		$this->template->availableUnits = $availableUnits;
 	}
 
-	public function handleGetUnitAvailability($from, $to)
+	public function handleGetUnitAvailability($id, $from, $to)
 	{
-		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, new \DateTime($from), new \DateTime($to));
+		$reservation = $this->findReservation($id);
+		$this->checkPermission($reservation, 'edit');
+
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, DateTime::from($from), DateTime::from($to), $reservation);
 		$this->sendJson($availableUnits);
 	}
 
