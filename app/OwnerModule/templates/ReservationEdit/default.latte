@@ -56,7 +56,7 @@
 			calculateUnpaid();
 		})
 		calculateUnpaid();
-		dateRangeCheck();
+//		dateRangeCheck();
 	});
 
 	function dateRangeCheck() {
@@ -65,8 +65,8 @@
 		var uri = {{plink getUnitAvailability!, from => '__from__', to => '__to__'}};
 
 		if (arrivalDate && departureDate) {
-			var from = arrivalDate.getYear() + '-' + arrivalDate.getMonth() + '-' + arrivalDate.getDate();
-			var to = departureDate.getYear() + '-' + departureDate.getMonth() + '-' + departureDate.getDate();
+			var from = arrivalDate.getTime() / 1000;
+			var to = departureDate.getTime() / 1000;
 
 			uri = uri.replace('__from__', from);
 			uri = uri.replace('__to__', to);

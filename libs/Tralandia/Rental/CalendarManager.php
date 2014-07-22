@@ -50,15 +50,19 @@ class CalendarManager
 	}
 
 
-	public function getAvailableUnits(User $user, \DateTime $from, \DateTime $to)
+	public function getAvailableUnits(User $user, \DateTime $from, \DateTime $to, RentalReservation $excludeReservation = NULL)
 	{
+		$occupancy = $this->calculateOccupancy($user, $excludeReservation);
+
 		$available = [];
 		foreach($user->getRentals() as $rental) {
 			$available[$rental->id] = $rental->getUnitsCapacity();
-			foreach($rental->getCalendar() as $day) {
-				if($from <= $day[self::KEY_DATE] and $day[self::KEY_DATE] >= $to) {
-					foreach($day[self::KEY_BOOKED_UNITS] as $bookedUnitId => $value) {
-						unset($available[$rental->id][$bookedUnitId]);
+			if(isset($occupancy[$rental->id])) {
+				foreach($occupancy[$rental->id] as $day) {
+					if($from <= $day[self::KEY_DATE] and $to >= $day[self::KEY_DATE]) {
+						foreach($day[self::KEY_BOOKED_UNITS] as $bookedUnitId => $value) {
+							unset($available[$rental->id][$bookedUnitId]);
+						}
 					}
 				}
 			}
@@ -85,7 +89,7 @@ class CalendarManager
 	}
 
 
-	public function calculateOccupancy(User $user)
+	public function calculateOccupancy(User $user, RentalReservation $excludeReservation = NULL)
 	{
 		$today = Nette\DateTime::from(strtotime('today'));
 		$reservations = $this->reservations->getUsersReservations($user, RentalReservation::STATUS_CONFIRMED, $today);
@@ -93,6 +97,7 @@ class CalendarManager
 		$interval = new \DateInterval('P1D');
 		$occupancy = [];
 		foreach($reservations as $reservation) {
+			if($excludeReservation and $reservation->id == $excludeReservation->id) continue;
 			$units = $reservation->getUnits();
 			$from = $reservation->getArrivalDate();
 			$to = $reservation->getDepartureDate();
@@ -112,7 +117,7 @@ class CalendarManager
 			}
 		}
 
-		$occupancy = self::formatOccupancy($occupancy);
+		$occupancy = self::formatOccupancy($occupancy, !isset($excludeReservation));
 
 		return $occupancy;
 	}
