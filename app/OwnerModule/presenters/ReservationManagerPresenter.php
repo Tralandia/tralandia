@@ -99,8 +99,8 @@ class ReservationManagerPresenter extends BasePresenter
 		if(isset($this->template->showPastReservations)) {
 			$this->template->pastReservations = $pastReservations;
 		} else {
-			$presentQuery = $this->searchFactory->create($this->rentalOrUnit, SearchQuery::PERIOD_PRESENT, NULL, $fulltext);
-			$futureQuery = $this->searchFactory->create($this->rentalOrUnit, SearchQuery::PERIOD_FUTURE, NULL, $fulltext);
+			$presentQuery = $this->searchFactory->create($this->rentalOrUnit, SearchQuery::PERIOD_PRESENT, RentalReservation::STATUS_CONFIRMED, $fulltext);
+			$futureQuery = $this->searchFactory->create($this->rentalOrUnit, SearchQuery::PERIOD_FUTURE, RentalReservation::STATUS_CONFIRMED, $fulltext);
 			$openedQuery = $this->searchFactory->create($this->rentalOrUnit, NULL, RentalReservation::STATUS_OPENED, $fulltext);
 
 			$this->template->presentReservations = $this->reservationDao->fetch($presentQuery);
