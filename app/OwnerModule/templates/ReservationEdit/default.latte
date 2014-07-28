@@ -2,13 +2,18 @@
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
+
+
 {form editForm}
 	<h1>{_719628} {$reservation->id}</h1>
 	<table class="formTable innerPadding">
-		{include #rentalUnit, control => $form['units'] }
 
+		{include #text, control => $form['arrivalDate'], class => 'datepicker'}
+		{include #text, control => $form['departureDate'], class => 'datepicker'}
 		{include #select, control => $form['status'], controlClass => 'select2 notFulltext'}
-		
+
+		{include #rentalUnit, control => $form['units'], availableUnits => $availableUnits }
+
 		{include #text, control => $form['senderName']}
 		{include #email, control => $form['senderEmail']}
 		{include #phone, control => $form['senderPhone']}
@@ -16,9 +21,6 @@
 		{include #text, control => $form['adultsCount']}
 		{include #text, control => $form['childrenCount']}
 		{include #text, control => $form['childrenAge']}
-
-		{include #text, control => $form['arrivalDate'], class => 'datepicker'}
-		{include #text, control => $form['departureDate'], class => 'datepicker'}
 
 		{include #textArea, control => $form['message']}
 		{include #textArea, control => $form['ownersNote']}
@@ -40,16 +42,60 @@
 {/form}
 
 <script type="text/javascript" n:syntax="double">
+
+	var $form = $('form#frm-editForm');
 	var totalPriceInput = '[name="totalPrice"]';
 	var paidPriceInput = '[name="paidPrice"]';
 
 	$(function() {
-		$('.datepicker input').datepicker();
+		$('.datepicker input').datepicker({
+			dateFormat: "yy-mm-dd",
+			onClose: dateRangeCheck
+		});
 		$(totalPriceInput+','+paidPriceInput).keyup(function() {
 			calculateUnpaid();
 		})
 		calculateUnpaid();
+//		dateRangeCheck();
 	});
+
+	function dateRangeCheck() {
+		var arrivalDate = $('input[name="arrivalDate"]', $form).datepicker("getDate");
+		var departureDate = $('input[name="departureDate"]', $form).datepicker("getDate");
+		var uri = {{plink getUnitAvailability!, from => '__from__', to => '__to__'}};
+
+		if (arrivalDate && departureDate) {
+			var from = arrivalDate.getTime() / 1000;
+			var to = departureDate.getTime() / 1000;
+
+			uri = uri.replace('__from__', from);
+			uri = uri.replace('__to__', to);
+
+			$.ajax({
+				type: "POST",
+				dataType: 'json',
+				url: uri,
+				success: function(data) {
+					// disable all
+					$(".units label input", $form).attr("disabled", "disabled");
+
+					for(var n in data) {
+						var unit = data[n];
+						$('input[name="units[unit'+n+'][]"]').each(function() {
+							var value = $(this).val();
+
+							if (unit[value] > 0) {
+						    	$(this).removeAttr("disabled");
+							} else {
+								// stay disabled and deselected
+								$(this).attr("checked", false);
+							}
+						});
+					}
+				}
+			});
+		}
+	}
 
 	function calculateUnpaid() {
 		var price = $(totalPriceInput).val();

@@ -57,33 +57,34 @@ ul {
 	list-style: none;
 }
 
-form.quick-search {
+.quick-search {
 	text-align: left;
 	padding: 0 10px 10px;
 	margin-bottom: 0;
 	border-bottom: 1px solid #DDD;
 }
-form.quick-search input[name="fulltext"] {
+.quick-search form input[name="fulltext"] {
 	float: left;
-	width: 153px;
 	padding: 3px 8px;
-	border: 1px solid @lightGreen;
-	margin: 0 10px 0 10px;
-	border-radius: 4px;
+	border: 1px solid #B0C13B;
+	margin: 0;
+	.border-radius(4px 0 0 4px);
+	border-right: none;
 }
-form.quick-search input[name="fulltext"].norentals {
+.quick-search form input[name="fulltext"].norentals {
 	width: 338px;
 	margin-left: 0;
 }
-form.quick-search button[type="submit"] {
+.quick-search form button[type="submit"] {
 	background: @lightGreen;
 	color: #FFF;
 	padding: 4px 9px;
+	.border-radius(0 4px 4px 0);
 }
-form.quick-search .select2-container {
+.quick-search form .select2-container {
 	float: left;
 }
-form.quick-search label {
+.quick-search form label {
 	float: left;
 	width: 30px;
 	margin: 0 10px 0 0;
@@ -94,15 +95,15 @@ form.quick-search label {
 	border-radius: 5px;
 	padding: 2px 5px 4px;
 }
-form.quick-search label input {
+.quick-search form label input {
 	margin-top: 0;
 }
-form.quick-search label i {
+.quick-search form label i {
 	margin: 5px 0 0 5px;
 	position: absolute;
 	color: #666;
 }
-form.quick-search .select2-container:first-child {
+.quick-search form .select2-container:first-child {
 	margin-right: 10px;
 }
 
@@ -201,6 +202,88 @@ form.quick-search .select2-container:first-child {
 	font-size: 12px;
 }
 
+#content .table-reservations h4 {
+	font-size: 16px;
+	padding: 10px;
+	font-weight: normal;
+	color: #698308;
+}
+.table-reservations a.more {
+	display: block;
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-size: 12px;
+}
+.table-reservations table {}
+.table-reservations table tr {}
+.table-reservations table tr th {}
+.table-reservations table tr td {}
+.table-reservations table tr.more td {
+	text-align: center;
+	padding: 4px 10px;
+	font-size: 12px;
+}
+.table-reservations table tr.title td {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 28px;
+}
+.table-reservations table tr td:nth-child(2) i {
+	font-size: 18px;
+}
+.table-reservations table tr td:nth-child(2) i.icon-question {
+	color: #CF1802;
+}
+.table-reservations table tr td:nth-child(2) i.icon-check {
+	color: #698308;
+}
+.table-reservations table tr td:nth-child(2) i.icon-trash {
+	color: #999;
+}
+.table-reservations table tr td a.btn {
+	color: rgba(255,255,255,0.8);
+	padding: 0px 5px;
+}
+.table-reservations table tr td a.btn i {
+	cursor: pointer;
+}
+.table-reservations table tr td a.btn:hover {
+	color: #fff;
+}
+.table-reservations table tr:nth-child(odd) td,
+.table-reservations table tr:nth-child(odd) th {
+	background: #F9FAF4 !important;
+}
+
+.manager-calendar {
+	padding-top: 10px;
+	background: #fff;
+	/* height: 285px; */
+}
+.manager-calendar form {
+	text-align: center;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	color: #999;
+}
+.manager-calendar form input {
+	margin-bottom: 0;
+	width: 100px;
+}
+.baseBorder .manager-calendar .inner {
+	overflow: auto;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+}
+.baseBorder .manager-calendar .inner .scroll {
+    width: 9999px;
+}
+.manager-calendar div.calendar {
+	height: 220px;
+}
+
 .brown {
 	color: @brown;
 
@@ -233,7 +316,7 @@ a.btn-danger {
 	max-width: 200px;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;	
+	text-overflow: ellipsis;
 }
 
 /****************************************************************************************
@@ -255,12 +338,12 @@ a.btn-danger {
 		-moz-border-radius: 10px;
 		border-radius: 10px;
 		box-shadow: 0 0 5px rgb(139, 139, 139);
-	
+
 
 		.close {
 			top: -1px; right: -23px;
 		}
-	}	
+	}
 }
 
 .borderSeparator {
@@ -279,7 +362,7 @@ a.btn-danger {
 
 	h2.blue , h3.blue , h4.blue , h5.blue  {
 		color: #174a90;
-	}	
+	}
 
 	.forgotPasswordForm {
 		padding-top: 20px;
@@ -362,7 +445,7 @@ ul.hints {
 			display: block;
 			font-weight: bold;
 		}
-	}	
+	}
 }
 
 .blue , a.blue {
@@ -459,9 +542,9 @@ ul.hints {
 
 	.caret {
 		border-top-color: rgb(0, 0, 0);
-		border-bottom-color: rgb(0, 0, 0);		
+		border-bottom-color: rgb(0, 0, 0);
 	}
-	
+
 	&:hover  {
 		background: #ddd;
 		background-position: 0;
@@ -506,7 +589,7 @@ ul.hints {
 			height: 22px;
 			float: left;
 			margin-top: 0;
-			position: relative;			
+			position: relative;
 			font-size: 20px;
 		}
 
@@ -526,7 +609,7 @@ ul.hints {
 		.icon-ok {
 			display: none;
 		}
-	}	
+	}
 }
 
 .btn.btn-orangeDark {
@@ -541,7 +624,7 @@ ul.hints {
 
 }
 
-.btn.btn-greenDark {	
+.btn.btn-greenDark {
 	/*#gradient > .vertical(#A7BA24,#4C6505);*/
 	border: 1px solid #4C6505;
 	color: @white;
@@ -550,7 +633,7 @@ ul.hints {
 	font-size: 14px;
 	margin-top: 5px;
 
-	&:hover , &.active {		
+	&:hover , &.active {
 		/*#gradient > .vertical(#B8CC2D,#5D7A0A);*/
 		background-position: 0;
 	}
@@ -558,25 +641,25 @@ ul.hints {
 }
 
 .btn.btn-silver {
-	
+
 	#gradient > .vertical(#e8e8e8,#adadad);
 	border: 1px solid #adadad;
 	color: #333;
-	&:hover {		
+	&:hover {
 		#gradient > .vertical(#adadad,#e8e8e8);
 		background-position: 0;
 	}
 }
 
 .btn.btn-cancel {
-	
+
 
 	#gradient > .vertical(rgb(255, 255, 255),rgb(230, 230, 230));
 	border: 1px solid rgb(206, 206, 206);
 	color: rgb(114, 114, 114);
 	padding: 2px 10px;
 	&:hover {
-		
+
 		#gradient > .vertical(rgb(230, 230, 230),rgb(255, 255, 255));
 		background-position: 0;
 	}
@@ -589,14 +672,14 @@ ul.hints {
 
 	.yellow-gradient {
 		text-shadow: -1px -1px 0px #f68703;
-		border-top: 1px solid #f68703;		
+		border-top: 1px solid #f68703;
 		#gradient > .vertical(#fdbe33,#f68703);
 	}
 
 	.yellow-gradient .btn {
 		border: 1px solid #f68703;
 		color: #c87009;
-		
+
 		#gradient > .vertical(#fff,#ffe4ab);
 		.basic-shadow(18px , #ffe4ab);
 
@@ -730,7 +813,7 @@ ul.hints {
 
 
 .gadientGreen {
-	
+
 	#gradient > .vertical( @lightGreen , @darkGreen );
 	color: @white;
 }
@@ -999,7 +1082,7 @@ ul.hints {
 				a {
 					color: #777;
 				}
-			}	
+			}
 
 }
 
@@ -1020,13 +1103,13 @@ ul.hints {
 
 .btn-red {
 	border: 1px solid @btnRedBorderColor;
-	
+
 	#gradient > .vertical(@btnRedGradientStartColor,@btnRedGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnRedGradientStopColor;
 	&:hover {
 		color: #fff;
-		
+
 		#gradient > .vertical(@btnRedGradientStopColor,@btnRedGradientStartColor);
 	}
 }
@@ -1056,7 +1139,7 @@ ul.hints {
 
 		i.icon-ok {
 			display: none;
-		}		
+		}
 	}
 
 	i {
@@ -1070,7 +1153,7 @@ ul.hints {
 	.btn-mini {
 		padding: 1px 10px;
 	}
-	
+
 }
 
 .btn-text-wrap {
@@ -1096,7 +1179,7 @@ ul.hints {
 @contentH5color : @brown;
 
 #content {
-	
+
 	color: @brown;
 	padding: 0 10px;
 
@@ -1134,7 +1217,7 @@ ul.hints {
 		&.home {
 			padding-top: 19px;
 			margin-bottom: 20px;
-			
+
 			&.rootHome {
 
 			}
@@ -1209,11 +1292,11 @@ ul.hints {
 .btn {
 	&:hover {
 		background-position: 0;
-	}	
+	}
 }
 
 .btn.btn-compare{
-	
+
 	#gradient > .vertical(#FEFEFE,#D9DFEB);
 	color: #444;
 	border: 1px solid rgb(147, 172, 218);
@@ -1247,7 +1330,7 @@ ul.hints {
 		&:hover {
 			background: transparent;
 			color: #d32c16;
-		
+
 		}
 
 
@@ -1284,7 +1367,7 @@ ul.hints {
 		color: #fff;
 		border: 1px solid #27407e;
 
-		
+
 
 		#gradient > .vertical(#5b78af,#27407e);
 
@@ -1352,7 +1435,7 @@ ul.hints {
 	.owner-rentals {
 	    margin: 10px 10px 20px;
 
-		.item {	
+		.item {
 		    padding: 15px;
 		    position: relative;
 		    background: #F8FAE9;
@@ -1537,8 +1620,8 @@ img.flag {
 		line-height: 26px;
 		display: block;
 		width: 25px;
-		padding: 0;	
-	}	
+		padding: 0;
+	}
 
 	&.googlePlus {
 		color: #cf3301;
@@ -1570,7 +1653,7 @@ form.donateForm {
 	width: 30px;
 	text-align: center;
 	top: 105px;
-	
+
 	.border-radius(8px);
 
 	i {
@@ -1600,7 +1683,7 @@ form.donateForm {
 .modal-body {
 	textarea {
 		width: 514px;
-		height: 180px;		
+		height: 180px;
 	}
 }
 

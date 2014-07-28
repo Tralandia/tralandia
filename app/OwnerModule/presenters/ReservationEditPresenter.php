@@ -5,6 +5,7 @@ namespace OwnerModule;
 
 use BaseModule\Forms\BaseForm;
 use Nette\Application\UI\Form;
+use Nette\DateTime;
 
 class ReservationEditPresenter extends BasePresenter
 {
@@ -28,6 +29,12 @@ class ReservationEditPresenter extends BasePresenter
 	protected $currencies;
 
 	/**
+	 * @autowire
+	 * @var \Tralandia\Rental\CalendarManager
+	 */
+	protected $calendarManager;
+
+	/**
 	 * @var \Entity\User\RentalReservation
 	 */
 	protected $reservation;
@@ -45,7 +52,20 @@ class ReservationEditPresenter extends BasePresenter
 		$this->reservation = $this->findReservation($id);
 		$this->checkPermission($this->reservation, 'edit');
 		$this->template->reservation = $this->reservation;
+
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, $this->reservation->getArrivalDate(), $this->reservation->getDepartureDate(), $this->reservation);
+		$this->template->availableUnits = $availableUnits;
 	}
+
+	public function handleGetUnitAvailability($id, $from, $to)
+	{
+		$reservation = $this->findReservation($id);
+		$this->checkPermission($reservation, 'edit');
+
+		$availableUnits = $this->calendarManager->getAvailableUnits($this->loggedUser, DateTime::from($from), DateTime::from($to), $reservation);
+		$this->sendJson($availableUnits);
+	}
+
 
 	public function createComponentEditForm()
 	{
