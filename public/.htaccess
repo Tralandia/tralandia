@@ -239,6 +239,75 @@ Deny from 188.143.232.111
   RewriteCond %{HTTP_HOST} ^(.*)tralandia.com.hr
   RewriteRule (.*) http://%1tralandia.hr/$1 [R=301,L]
 
+
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.mx
+  RewriteRule (.*) http://%1mx.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.qa
+  RewriteRule (.*) http://%1qa.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.cc
+  RewriteRule (.*) http://%1cc.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.sg
+  RewriteRule (.*) http://%1sg.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.ae
+  RewriteRule (.*) http://%1ae.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.tw
+  RewriteRule (.*) http://%1tw.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.cn
+  RewriteRule (.*) http://%1cn.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.gl
+  RewriteRule (.*) http://%1gl.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.ph
+  RewriteRule (.*) http://%1ph.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.co.il
+  RewriteRule (.*) http://%1il.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.hk
+  RewriteRule (.*) http://%1hk.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.vn
+  RewriteRule (.*) http://%1vn.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.kr
+  RewriteRule (.*) http://%1kr.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.jp
+  RewriteRule (.*) http://%1jp.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.com.ar
+  RewriteRule (.*) http://%1ar.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.com.br
+  RewriteRule (.*) http://%1br.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.co.ke
+  RewriteRule (.*) http://%1ke.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.co.id
+  RewriteRule (.*) http://%1id.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.je
+  RewriteRule (.*) http://%1je.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.gg
+  RewriteRule (.*) http://%1gg.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.do
+  RewriteRule (.*) http://%1do.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.my
+  RewriteRule (.*) http://%1my.tralandia.com/$1 [R=301,L]
+
+
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
   RewriteRule \.(gif|jpe?g|png|bmp) http://www.tralandiastatic.com/placeholder.png [NC,L]
 
