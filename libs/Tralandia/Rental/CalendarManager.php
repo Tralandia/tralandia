@@ -50,7 +50,7 @@ class CalendarManager
 	}
 
 
-	public function getAvailableUnits(User $user, \DateTime $from, \DateTime $to, RentalReservation $excludeReservation = NULL)
+	public function getAvailableUnits(User $user, \DateTime $from = NULL, \DateTime $to = NULL, RentalReservation $excludeReservation = NULL)
 	{
 		$occupancy = $this->calculateOccupancy($user, $excludeReservation);
 
@@ -59,7 +59,7 @@ class CalendarManager
 			$available[$rental->id] = $rental->getUnitsCapacity();
 			if(isset($occupancy[$rental->id])) {
 				foreach($occupancy[$rental->id] as $day) {
-					if($from <= $day[self::KEY_DATE] and $to >= $day[self::KEY_DATE]) {
+					if($from and $to and $from <= $day[self::KEY_DATE] and $to >= $day[self::KEY_DATE]) {
 						foreach($day[self::KEY_BOOKED_UNITS] as $bookedUnitId => $value) {
 							unset($available[$rental->id][$bookedUnitId]);
 						}
