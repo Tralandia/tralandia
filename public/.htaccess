@@ -307,6 +307,12 @@ Deny from 188.143.232.111
   RewriteCond %{HTTP_HOST} ^(.*)tralandia.my
   RewriteRule (.*) http://%1my.tralandia.com/$1 [R=301,L]
 
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.by
+  RewriteRule (.*) http://%1by.tralandia.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(.*)tralandia.is
+  RewriteRule (.*) http://%1is.tralandia.com/$1 [R=301,L]
+
 
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
   RewriteRule \.(gif|jpe?g|png|bmp) http://www.tralandiastatic.com/placeholder.png [NC,L]
